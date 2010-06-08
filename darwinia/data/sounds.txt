@@ -1,0 +1,3778 @@
+# =========================================================
+ENTITY LaserTroop
+	EVENT Attack              
+		SOUNDNAME          0lasers
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.10  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.93     1.03     0.00  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          darwiniandie
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.83     1.09     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+ENTITY Engineer
+	EVENT Create              
+		SOUNDNAME          engineer_hover
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT BeginReprogramming  
+		SOUNDNAME          engineer_reprog_radar_loop
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT EndReprogramming    
+		SOUNDNAME          engineer_repog_radar_loop_end
+		SOURCETYPE         0
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        6.48  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          engineerinjury
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.58     1.89     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        5.03  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          engineerdie
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.95     1.05     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+ENTITY Virii
+	EVENT Attack              
+		SOUNDNAME          virusattack
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.91     1.12     0.00  UpdateOncePerLoop
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          viruspain
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.81     1.01     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        2.71  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       27.42  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       28.71  UpdateConstantly
+		END
+	END
+	EVENT ChangeDirection     
+		SOUNDNAME          newsamplegroup11
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        6.55  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.70     2.17     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          newsamplegroup9
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        175.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.54     1.79     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateOncePerLoop
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+END
+
+
+# =========================================================
+ENTITY Squadie
+	EVENT Create              
+		SOUNDNAME          newsamplegroup1
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       1
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        5.23  UpdateOncePerLoop
+		LOOPDELAY          PARAMETER TypeLinked            6.80     0.00     0.00     2.90     0.00  Velocity  UpdateOncePerLoop
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeLinked          180.00     0.00   620.00    97.10     0.00  CameraDistance  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          newsamplegroup5
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.91  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        4.06  UpdateOncePerLoop
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT WeaponReturns       
+		SOUNDNAME          grenade_return3
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       1
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateOncePerLoop
+	END
+	EVENT ThrowAirStrike      
+		SOUNDNAME          airstrike_alarm
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT FireLaser           
+		SOUNDNAME          turretfire
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.77  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.90     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          squaddiedeath
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.97  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.76     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT EnterTeleport       
+		SOUNDNAME          enterteleport
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT ExitTeleport        
+		SOUNDNAME          exitteleport
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.10  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY Egg
+	EVENT Die                 
+		SOUNDNAME          eggsplat
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        3.90  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY SporeGenerator
+	EVENT Create              
+		SOUNDNAME          sporegengroan
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.32  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeLinked            4.00     0.19   164.00     5.81     0.00  HeightAboveGround  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          sporegenlosehealt
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          sporegeneratordie
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.86     1.10     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue       10.45  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeLinked          140.00     0.00   620.00    93.55     0.00  CameraDistance  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT LayEgg              
+		SOUNDNAME          spideregglay
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY Tripod
+	EVENT Create              
+		SOUNDNAME          tripodcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.84     1.14     0.00  UpdateOncePerLoop
+	END
+	EVENT Attack              
+		SOUNDNAME          tprdattac
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.98     1.15     0.00  UpdateOncePerLoop
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          trpodlosehealth
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.68     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          ttripoddie
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.81     1.02     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+ENTITY Centipede
+	EVENT Attack              
+		SOUNDNAME          newsamplegroup25
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.88     1.08     0.00  UpdateOncePerLoop
+	END
+	EVENT Create              
+		SOUNDNAME          newsamplegroup26
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        80.09
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.95     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          newsamplegroup27
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.94  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      281.55  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue        3.23  UpdateConstantly
+		END
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          newsamplegroup28
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.58     1.59     0.56  UpdateOncePerLoop
+		LOOPDELAY          PARAMETER TypeLinked           11.20     0.58     0.00     4.84     0.00  Velocity  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+ENTITY SpaceInvader
+	EVENT DropGrenade         
+		SOUNDNAME          airstrike_drop
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          airstrike_hover2
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeLinked           13.20     0.91    74.40     1.96     0.00  Velocity  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY Spider
+	EVENT Create              
+		SOUNDNAME          spidercreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.93  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.77     1.21     0.00  UpdateOncePerLoop
+		LOOPDELAY          PARAMETER TypeLinked            4.80     0.00     0.00     3.10     0.00  Velocity  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          newsamplegroup13
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeLinked            1.20     0.58    34.40     0.82     0.00  Velocity  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       16.65  UpdateConstantly
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      207.35  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      194.45  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+	EVENT Attack              
+		SOUNDNAME          spiderpounce
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.74     1.03     0.00  UpdateOncePerLoop
+	END
+	EVENT Pounce              
+		SOUNDNAME          spiderpounce
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.89     1.22     0.00  UpdateOncePerLoop
+	END
+	EVENT LayEgg              
+		SOUNDNAME          spideregglay
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          spiderdeath
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT FootFall            
+		SOUNDNAME          spiderfeet
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        62.63
+		VOLUME             PARAMETER TypeLinked            0.00     4.71    27.20     8.06     0.00  Velocity  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY Darwinian
+	EVENT Die                 
+		SOUNDNAME          darwiniandie
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          darwinianlosehealth
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.06  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT Create              
+		SOUNDNAME          darwiniancreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       1
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.58     1.59     0.56  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        1.16  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeRangedRandom      0.87     4.84     0.00  UpdateOncePerLoop
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT GivenOrders         
+		SOUNDNAME          officercreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.80     1.06     0.00  UpdateOncePerLoop
+	END
+	EVENT SeenThreatRunAway   
+		SOUNDNAME          darwinrunaway
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.90     1.09     0.00  UpdateOncePerLoop
+	END
+	EVENT SeenThreatAttack    
+		SOUNDNAME          darwinseethreatattack
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       1
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       12.39  UpdateConstantly
+	END
+	EVENT Officer             
+		SOUNDNAME          officercreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.81  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.99     1.15     0.00  UpdateOncePerLoop
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          darwinianlosehealth
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.91  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          darwiniandie
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.77  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       11.81  UpdateConstantly
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+	EVENT Attack              
+		SOUNDNAME          0lasers
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT VictoryJump         
+		SOUNDNAME          victoryjum
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        10.12
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.96     1.21     0.00  UpdateOncePerLoop
+	END
+	EVENT OnFire              
+		SOUNDNAME          darwinnianburncry
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        101.16
+		VOLUME             PARAMETER TypeFixedValue        9.35  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeFixedValue        0.58  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY Officer
+	EVENT SetOrderGoto        
+		SOUNDNAME          officerordergoto
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.19  UpdateConstantly
+	END
+	EVENT SetOrderAbsorb      
+		SOUNDNAME          officerabsorb
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.02  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.26  UpdateConstantly
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      104.17  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+	EVENT SetOrderFollow      
+		SOUNDNAME          officerleftright
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.68  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          officercreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.23  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          darwinianlosehealth
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.71  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          darwiniandie
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT Attack              
+		SOUNDNAME          darwinseethreatattack
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT EnterTeleport       
+		SOUNDNAME          enterteleport
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.16  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY ArmyAnt
+	EVENT Attack              
+		SOUNDNAME          antatack
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.50  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.81     1.38     0.00  UpdateOncePerLoop
+	END
+	EVENT Create              
+		SOUNDNAME          antcreat
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        61.12
+		VOLUME             PARAMETER TypeRangedRandom      5.52     8.00     0.60  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.67     1.34     0.45  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeFixedValue        0.10  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          antlosehealth
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.85     1.23     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          antdeath
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.70     1.28     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+ENTITY Armour
+	EVENT Create              
+		SOUNDNAME          tank_hover
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeLinked            1.20     9.03    26.00    10.00     0.00  Velocity  UpdateConstantly
+		FREQUENCY          PARAMETER TypeLinked            0.00     1.01    22.40     1.68     0.00  Velocity  UpdateConstantly
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          tankloseheath
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.88     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          tankdeath
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.73     0.94     0.00  UpdateOncePerLoop
+	END
+	EVENT Create              
+		SOUNDNAME          tankcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.35  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          tankcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.19  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY SoulDestroyer
+	EVENT Create              
+		SOUNDNAME          souldestroycreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.71  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeLinked            0.00     1.01   300.00     1.65     0.00  HeightAboveGround  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        0.19  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        0.39  UpdateOncePerLoop
+	END
+	EVENT LoseHealth          
+		SOUNDNAME          souldestpain
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Die                 
+		SOUNDNAME          souldestdeath
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.78     1.05     0.00  UpdateOncePerLoop
+	END
+	EVENT Attack              
+		SOUNDNAME          soulattack
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.10  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.78     1.01     0.00  UpdateOncePerLoop
+	END
+	EVENT EnemySighted        
+		SOUNDNAME          soulenemysighted
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeLinked          812.00     0.00     0.00     8.68     0.00  HeightAboveGround  UpdateConstantly
+		FREQUENCY          PARAMETER TypeLinked           72.00     0.37     0.00     0.76     0.69  HeightAboveGround  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        0.58  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue       10.45  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+ENTITY TriffidEgg
+	EVENT Create              
+		SOUNDNAME          triffidegglaunc
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.10  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.89     1.19     0.00  UpdateOncePerLoop
+	END
+	EVENT Bounce              
+		SOUNDNAME          triffideggbounce
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.00     1.19     0.00  UpdateOncePerLoop
+	END
+	EVENT BurstOpen           
+		SOUNDNAME          triffeggbursts
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.55  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.91     0.99     0.00  UpdateOncePerLoop
+	END
+	EVENT Die                 
+		SOUNDNAME          souldestdeath
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING RadarDish
+	EVENT BeginRotation       
+		SOUNDNAME          radar_start_turn
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT EndRotation         
+		SOUNDNAME          radar_stop_turn
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT BeginRotation       
+		SOUNDNAME          radar_motor_run
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.97  UpdateConstantly
+	END
+	EVENT ReprogramComplete   
+		SOUNDNAME          radar_reprog_complete
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        8.97  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       17.61  UpdateConstantly
+	END
+	EVENT ConnectionEstablished
+		SOUNDNAME          radarconnect
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        8.16  UpdateConstantly
+	END
+	EVENT ConnectionLost      
+		SOUNDNAME          radarlose
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue        8.94  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       14.32  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      407.32  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       64.84  UpdateConstantly
+		END
+	END
+END
+
+
+# =========================================================
+BUILDING LaserFence
+	EVENT Create              
+		SOUNDNAME          fence_hum
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        20.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateOncePerLoop
+	END
+	EVENT Spark               
+		SOUNDNAME          elec_cackle
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.84     1.40     0.00  UpdateOncePerLoop
+	END
+	EVENT Damage              
+		SOUNDNAME          elecfence@damage
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.94     1.09     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+BUILDING GunTurret
+	EVENT FireShell           
+		SOUNDNAME          turretfire
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.94     1.16     0.00  UpdateOncePerLoop
+	END
+	EVENT Damage              
+		SOUNDNAME          battlecannondamage
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.75     0.93     0.00  UpdateOncePerLoop
+	END
+	EVENT Create              
+		SOUNDNAME          armourtransform
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Powerstation
+	EVENT Create              
+		SOUNDNAME          power_station_online
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Tree
+	EVENT Create              
+		SOUNDNAME          treeatmos
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        20.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        2.55  UpdateOncePerLoop
+		SUSTAIN            PARAMETER TypeRangedRandom      5.81     9.68     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        2.55  UpdateConstantly
+	END
+	EVENT Burn                
+		SOUNDNAME          treeonfire
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        95.68
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING TrunkPort
+	EVENT ReprogramComplete   
+		SOUNDNAME          portcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING ResearchItem
+	EVENT Create              
+		SOUNDNAME          researchcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+	END
+	EVENT AquireResearch      
+		SOUNDNAME          aquireresearch
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Library
+	EVENT Create              
+		SOUNDNAME          ablaster
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        30.00
+		VOLUME             PARAMETER TypeFixedValue        3.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Generator
+	EVENT ReprogramComplete   
+		SOUNDNAME          generator_online
+		SOURCETYPE         0
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.84  UpdateOncePerLoop
+	END
+	EVENT TriggerSurge        
+		SOUNDNAME          generatorburst
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.86     1.21     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+BUILDING Pylon
+	EVENT TriggerSurge        
+		SOUNDNAME          ylonelecsurge
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        7.10  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.94     1.55     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+BUILDING SolarPanel
+	EVENT TriggerSurge        
+		SOUNDNAME          solarpanelenable
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        7.06  UpdateOncePerLoop
+		FREQUENCY          PARAMETER TypeRangedRandom      0.89     1.24     0.00  UpdateOncePerLoop
+	END
+	EVENT Operate             
+		SOUNDNAME          solarcharge
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.15     1.18     0.24  UpdateOncePerLoop
+		ATTACK             PARAMETER TypeFixedValue        4.06  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING TrackLink
+	EVENT CogTurn             
+		SOUNDNAME          minecartcreak
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeRangedRandom      8.19     9.74     0.00  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+BUILDING Refinery
+	EVENT CogTurn             
+		SOUNDNAME          refineryrun
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateOncePerLoop
+	END
+	EVENT Create              
+		SOUNDNAME          mineambience
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        500.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.62  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Mine
+	EVENT CogTurn             
+		SOUNDNAME          minerun
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue        8.97  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.95  UpdateOncePerLoop
+		EFFECT             DSound_I3DL2Reverb
+			Room               PARAMETER TypeFixedValue     -193.55  UpdateConstantly
+			RoomHF             PARAMETER TypeFixedValue     -100.00  UpdateOncePerLoop
+			RoomRolloffFactor  PARAMETER TypeFixedValue        0.00  UpdateConstantly
+			DecayTime          PARAMETER TypeFixedValue        3.89  UpdateConstantly
+			DecayHFRatio       PARAMETER TypeFixedValue        0.14  UpdateConstantly
+			Reflections        PARAMETER TypeFixedValue    -2602.00  UpdateConstantly
+			ReflectionsDelay   PARAMETER TypeFixedValue        0.01  UpdateConstantly
+			Reverb             PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			ReverbDelay        PARAMETER TypeFixedValue        0.01  UpdateConstantly
+			Diffusion          PARAMETER TypeFixedValue      100.00  UpdateConstantly
+			Density            PARAMETER TypeFixedValue      100.00  UpdateConstantly
+			HFReference        PARAMETER TypeFixedValue     5000.00  UpdateConstantly
+			Quality            PARAMETER TypeFixedValue        2.00  UpdateConstantly
+		END
+	END
+END
+
+
+# =========================================================
+BUILDING Yard
+	EVENT Create              
+		SOUNDNAME          yard
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       1
+		LOOPTYPE           1
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.50  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Incubator
+	EVENT Reprogramming       
+		SOUNDNAME          engineer_reprog_radar_loop
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        8.06  UpdateConstantly
+	END
+	EVENT SpawnEntity         
+		SOUNDNAME          incubatorspawn
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        8.61  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.90     1.02     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        7.16  UpdateConstantly
+	END
+	EVENT AddSpirit           
+		SOUNDNAME          incubatoraddspirit
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.38     0.52     0.00  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue       15.10  UpdateConstantly
+		EFFECT             Gargle
+			WetDryMix          PARAMETER TypeFixedValue       36.77  UpdateOncePerLoop
+			RateHz             PARAMETER TypeFixedValue       29.68  UpdateConstantly
+			WaveShape          PARAMETER TypeFixedValue        0.99  UpdateConstantly
+		END
+	END
+END
+
+
+# =========================================================
+BUILDING AntHill
+	EVENT Damage              
+		SOUNDNAME          1anthilldamage
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT Explode             
+		SOUNDNAME          newsamplegroup3
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.31  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       12.19  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING Triffid
+	EVENT Damage              
+		SOUNDNAME          sporegenlosehealt
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.67  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       12.00  UpdateConstantly
+	END
+	EVENT Burn                
+		SOUNDNAME          triffidburn
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.58  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING SpiritReceiver
+	EVENT Create              
+		SOUNDNAME          spiritdescent
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        3.29  UpdateConstantly
+		SUSTAIN            PARAMETER TypeFixedValue        8.71  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        6.39  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeFixedValue        3.87  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING SpiritProcessor
+	EVENT Create              
+		SOUNDNAME          spiritdescent
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        3.29  UpdateConstantly
+		SUSTAIN            PARAMETER TypeFixedValue        7.74  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        8.32  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeFixedValue        3.10  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING BlueprintStore
+	EVENT Create              
+		SOUNDNAME          elec_cackle
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.42  UpdateConstantly
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       24.19  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      194.45  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      291.18  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+END
+
+
+# =========================================================
+BUILDING BlueprintConsole
+	EVENT Create              
+		SOUNDNAME          relayhover
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.30  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING BlueprintRelay
+	EVENT Create              
+		SOUNDNAME          relayhover
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        50.00
+		VOLUME             PARAMETER TypeFixedValue        8.48  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+BUILDING Spam
+	EVENT Create              
+		SOUNDNAME          samcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT Damage              
+		SOUNDNAME          emaildamage
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.67  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       13.16  UpdateConstantly
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+	EVENT Attack              
+		SOUNDNAME          spamattack
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      1.00     1.28     0.00  UpdateOncePerLoop
+	END
+	EVENT Explode             
+		SOUNDNAME          spamboom
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.92     1.21     0.00  UpdateOncePerLoop
+		EFFECT             DSound_Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Feedback           PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			LeftDelay          PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			RightDelay         PARAMETER TypeFixedValue      500.00  UpdateConstantly
+			PanDelay           PARAMETER TypeFixedValue        0.00  UpdateConstantly
+		END
+	END
+	EVENT CreateResearch      
+		SOUNDNAME          researchcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING GodDish
+	EVENT ConnectToGod        
+		SOUNDNAME          connectgod
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.87  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.56  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       12.00  UpdateConstantly
+	END
+	EVENT DisconnectFromGod   
+		SOUNDNAME          disconnectgod
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        250.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          goddishcreate
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.11  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING FuelGenerator
+	EVENT PumpUp              
+		SOUNDNAME          fuelpumpexhale1
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        202.34
+		VOLUME             PARAMETER TypeFixedValue        8.45  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.03  UpdateConstantly
+	END
+	EVENT PumpUp              
+		SOUNDNAME          bigmetalgroan
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.87  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.02  UpdateConstantly
+	END
+	EVENT PumpDown            
+		SOUNDNAME          fuelpumpup1
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.77  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.98  UpdateConstantly
+	END
+	EVENT PumpDown            
+		SOUNDNAME          kickverb
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        195.22
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.99  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING FuelPipe
+	EVENT PumpFuel            
+		SOUNDNAME          fuelpipe2_loop
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.57  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        5.23  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING FuelStation
+	EVENT LoadPassenger       
+		SOUNDNAME          loadpassenger
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        49.62
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        4.65  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+BUILDING EscapeRocket
+	EVENT Happy               
+		SOUNDNAME          shiphappy
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        6.94  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.60     0.99     0.00  UpdateOncePerLoop
+		LOOPDELAY          PARAMETER TypeFixedValue        4.65  UpdateConstantly
+	END
+	EVENT Happy               
+		SOUNDNAME          shipheartbeat1
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        200.10
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.72     0.82     0.59  UpdateOncePerLoop
+	END
+	EVENT Malfunction         
+		SOUNDNAME          shipmalfunction1
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        163.95
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Explode             
+		SOUNDNAME          engineexplode
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        245.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       13.35  UpdateConstantly
+	END
+	EVENT Damage              
+		SOUNDNAME          shipscream
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.05  UpdateConstantly
+	END
+	EVENT EngineBurn          
+		SOUNDNAME          engineburn
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT EngineBurn          
+		SOUNDNAME          ignitionzap1
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.50  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        6.39  UpdateConstantly
+	END
+	EVENT Unhappy             
+		SOUNDNAME          shiphungry
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       2
+		LOOPTYPE           1
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.35  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeRangedRandom      4.06    16.06     0.00  UpdateOncePerLoop
+	END
+	EVENT Flight              
+		SOUNDNAME          choir1
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        10000.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       12.00  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeRangedRandom      0.00     3.48     0.00  UpdateOncePerLoop
+	END
+	EVENT Explode             
+		SOUNDNAME          newsamplegroup27
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.48  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.62  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Laser
+	EVENT Richochet           
+		SOUNDNAME          laserricochet
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT HitGround           
+		SOUNDNAME          laserhitentity
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.97  UpdateConstantly
+	END
+	EVENT HitEntity           
+		SOUNDNAME          laserhitgnd
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT HitBuilding         
+		SOUNDNAME          laserhitbuild
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.06  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Grenade
+	EVENT Explode             
+		SOUNDNAME          newsamplegroup3
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		EFFECT             DSound_WavesReverb
+			InGain             PARAMETER TypeFixedValue       -0.31  UpdateConstantly
+			ReverbMix          PARAMETER TypeFixedValue       -8.98  UpdateConstantly
+			ReverbTime         PARAMETER TypeFixedValue     3000.00  UpdateConstantly
+			HighFreqRTRatio    PARAMETER TypeFixedValue        0.65  UpdateConstantly
+		END
+	END
+	EVENT Create              
+		SOUNDNAME          newsamplegroup4
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.55  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.74     1.54     0.84  UpdateConstantly
+	END
+	EVENT Flash               
+		SOUNDNAME          grenade_beep
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.90  UpdateConstantly
+	END
+	EVENT ExplodeController   
+		SOUNDNAME          hypno_loop_run
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Bounce              
+		SOUNDNAME          newsamplegroup6
+		SOURCETYPE         1
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeLinked            0.00     4.87    10.00     8.00     0.00  Velocity  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.96     1.56     0.66  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+OTHER Rocket
+	EVENT Explode             
+		SOUNDNAME          newsamplegroup7
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeRangedRandom      0.80     1.20     0.00  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          rocket_fire4_run
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT Create              
+		SOUNDNAME          rocketlauncher
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        150.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.94  UpdateOncePerLoop
+	END
+END
+
+
+# =========================================================
+OTHER AirStrikeBomb
+	EVENT Explode             
+		SOUNDNAME          airstrikeexplode
+		SOURCETYPE         1
+		POSITIONTYPE       1
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        200.00
+		VOLUME             PARAMETER TypeFixedValue        9.23  UpdateConstantly
+	END
+	EVENT Flash               
+		SOUNDNAME          grenade_beep
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Spirit
+	EVENT PickedUp            
+		SOUNDNAME          sonar
+		SOURCETYPE         0
+		POSITIONTYPE       2
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Sepulveda
+	EVENT Appear              
+		SOUNDNAME          sepulveda_appear
+		SOURCETYPE         0
+		POSITIONTYPE       3
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.00  UpdateOncePerLoop
+	END
+	EVENT Disappear           
+		SOUNDNAME          sepulveda_disappear
+		SOURCETYPE         0
+		POSITIONTYPE       3
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.97  UpdateOncePerLoop
+		RELEASE            PARAMETER TypeFixedValue        7.94  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Gesture
+	EVENT GestureBegin        
+		SOUNDNAME          gesturestart
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT GestureSuccess      
+		SOUNDNAME          gesturesuccess
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT GestureFail         
+		SOUNDNAME          gesturefail
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Ambience
+	EVENT EnterLocation       
+		SOUNDNAME          newsamplegroup8
+		SOURCETYPE         1
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeLinked          832.00     0.03   188.00     8.61     0.00  Ypos  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		SUSTAIN            PARAMETER TypeFixedValue       10.84  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.00  UpdateConstantly
+	END
+	EVENT EnterLocation       
+		SOUNDNAME          white_noise
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        500.00
+		VOLUME             PARAMETER TypeLinked            0.00     3.03   992.00     7.03     0.00  Ypos  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.50  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      523.41  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       50.00  UpdateConstantly
+		END
+	END
+	EVENT EnterGlobalWorld    
+		SOUNDNAME          worldviewdry
+		SOURCETYPE         1
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        6.84  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        8.32  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeRangedRandom      0.00     2.71     0.00  UpdateOncePerLoop
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeRangedRandom    117.09   523.41     0.00  UpdateOncePerLoop
+			Attenuation        PARAMETER TypeRangedRandom     28.06    71.29     0.00  UpdateOncePerLoop
+		END
+	END
+	EVENT EnterGlobalWorld    
+		SOUNDNAME          worldviewwet
+		SOURCETYPE         1
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        6.10  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeRangedRandom      0.19     2.52     0.00  UpdateOncePerLoop
+	END
+	EVENT EnterGlobalWorld    
+		SOUNDNAME          worldamb
+		SOURCETYPE         1
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           2
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        6.00  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.37  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        9.68  UpdateConstantly
+		SUSTAIN            PARAMETER TypeFixedValue        0.97  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       11.03  UpdateConstantly
+		LOOPDELAY          PARAMETER TypeFixedValue        0.39  UpdateConstantly
+		EFFECT             Echo
+			WetDryMix          PARAMETER TypeFixedValue       50.00  UpdateConstantly
+			Delay              PARAMETER TypeFixedValue      200.00  UpdateConstantly
+			Attenuation        PARAMETER TypeFixedValue       77.74  UpdateConstantly
+		END
+	END
+	EVENT EnterGlobalWorld    
+		SOUNDNAME          altitude1
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        5.23  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.70  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        6.19  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       11.23  UpdateConstantly
+	END
+	EVENT EnterGlobalWorld    
+		SOUNDNAME          rumble1
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.74  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.60  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        5.42  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        6.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Music
+	EVENT Cutscene1           
+		SOUNDNAME          tresk_-_excuses
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       20.13  UpdateConstantly
+	END
+	EVENT Cutscene2           
+		SOUNDNAME          tresk_-_faces-of-a-fashion
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       20.13  UpdateConstantly
+	END
+	EVENT Cutscene3           
+		SOUNDNAME          trash80_-_pain-fade-down
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        5.23  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       20.13  UpdateConstantly
+	END
+	EVENT Cutscene4           
+		SOUNDNAME          tresk_-_impact-of-silence
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        2.90  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       20.13  UpdateConstantly
+	END
+	EVENT LoaderRaytrace      
+		SOUNDNAME          dma_sc-visitors_from_dreams
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateConstantly
+	END
+	EVENT LoaderFodder        
+		SOUNDNAME          fodder
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT LoaderSoul          
+		SOUNDNAME          tresk_-weeklies-_schroeders-failure
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           1
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateConstantly
+	END
+	EVENT EndSequence         
+		SOUNDNAME          tresk_-_faces-of-a-fashion
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        5.23  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        3.29  UpdateConstantly
+	END
+	EVENT Credits             
+		SOUNDNAME          trash80_-_pain-fade-down
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        2.71  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateConstantly
+	END
+	EVENT StartSequence       
+		SOUNDNAME          dma_sc-visitors_from_dreams
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateConstantly
+	END
+	EVENT Cutscene5           
+		SOUNDNAME          tresk_-_excuses
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue       10.00  UpdateConstantly
+		ATTACK             PARAMETER TypeFixedValue        3.10  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       15.48  UpdateConstantly
+	END
+	EVENT LoaderSpeccy        
+		SOUNDNAME          speccyloader
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+	END
+	EVENT LoaderAmiga         
+		SOUNDNAME          pang
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.06  UpdateConstantly
+	END
+	EVENT LoaderMatrix        
+		SOUNDNAME          matrix
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue        7.55  UpdateConstantly
+	END
+	EVENT LoaderGameOfLife    
+		SOUNDNAME          twoataris
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       10.26  UpdateConstantly
+	END
+	EVENT Demo2Intro          
+		SOUNDNAME          trash80_-_pain-fade-down
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.03  UpdateConstantly
+	END
+	EVENT Demo2Mid            
+		SOUNDNAME          tresk_-_faces-of-a-fashion
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.00  UpdateConstantly
+		RELEASE            PARAMETER TypeFixedValue       20.71  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+OTHER Interface
+	EVENT Show                
+		SOUNDNAME          taskin
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.48  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        1.05  UpdateConstantly
+	END
+	EVENT Hide                
+		SOUNDNAME          taskout
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        8.52  UpdateConstantly
+		FREQUENCY          PARAMETER TypeFixedValue        0.72  UpdateConstantly
+	END
+	EVENT Slide               
+		SOUNDNAME          menuscroll2
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.48  UpdateConstantly
+	END
+	EVENT DeleteTask          
+		SOUNDNAME          deselect1
+		SOURCETYPE         0
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        9.13  UpdateConstantly
+	END
+	EVENT MouseOverIcon       
+		SOUNDNAME          mouseovericon
+		SOURCETYPE         1
+		POSITIONTYPE       0
+		INSTANCETYPE       0
+		LOOPTYPE           0
+		MINDISTANCE        100.00
+		VOLUME             PARAMETER TypeFixedValue        7.00  UpdateConstantly
+	END
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup1
+	SAMPLE  squaddie_chatter1
+	SAMPLE  squaddie_chatter2
+	SAMPLE  squaddie_chatter3
+	SAMPLE  squaddie_chatter4
+	SAMPLE  squaddie_chatter5
+	SAMPLE  squaddie_chatter6
+	SAMPLE  squaddie_chatter7
+	SAMPLE  squaddie_chatter8
+	SAMPLE  squaddie_chatter9
+	SAMPLE  squaddie_chatter10
+	SAMPLE  squaddie_chatter11
+	SAMPLE  squaddie_chatter12
+	SAMPLE  squaddie_chatter13
+	SAMPLE  squaddie_chatter14
+	SAMPLE  squaddie_chatter15
+	SAMPLE  squaddie_chatter16
+	SAMPLE  squaddie_chatter19
+	SAMPLE  squaddie_chatter18
+	SAMPLE  squaddie_chatter19
+	SAMPLE  squaddie_chatter20
+	SAMPLE  squaddie_chatter21
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup3
+	SAMPLE  gren_boom3
+	SAMPLE  gren_boom1
+	SAMPLE  gren_boom2
+	SAMPLE  gren_boom4
+	SAMPLE  gren_boom5
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup4
+	SAMPLE  gren_fire1
+	SAMPLE  gren_fire2
+	SAMPLE  gren_fire3
+	SAMPLE  gren_fire4
+	SAMPLE  gren_fire5
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup5
+	SAMPLE  squad_lose_health1
+	SAMPLE  squad_lose_health3
+	SAMPLE  squad_lose_health4
+	SAMPLE  squad_lose_health6
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup6
+	SAMPLE  gren_bounce1
+	SAMPLE  gren_bounce2
+	SAMPLE  gren_bounce3
+	SAMPLE  gren_bounce4
+	SAMPLE  gren_bounce5
+	SAMPLE  gren_bounce6
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup7
+	SAMPLE  rocket_boom1
+	SAMPLE  rocket_boom2
+	SAMPLE  rocket_boom3
+	SAMPLE  rocket_boom4
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup9
+	SAMPLE  redvirus_death
+	SAMPLE  redvirus_death3
+	SAMPLE  redvirus_losehealth
+	SAMPLE  redvirus_losehealth2
+	SAMPLE  redvirus_losehealth3
+	SAMPLE  redvirus_losehealth4
+	SAMPLE  redvirus_losehealth7
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup11
+	SAMPLE  virus_cd10
+	SAMPLE  virus_cd11
+	SAMPLE  virus_cd12
+	SAMPLE  virus_cd13
+	SAMPLE  virus_cd14
+	SAMPLE  virus_cd15
+	SAMPLE  virus_cd16
+	SAMPLE  virus_cd17
+	SAMPLE  virus_cd18
+	SAMPLE  virus_cd19
+	SAMPLE  virus_cd2
+	SAMPLE  virus_cd20
+	SAMPLE  virus_cd21
+	SAMPLE  virus_cd22
+	SAMPLE  virus_cd23
+	SAMPLE  virus_cd24
+	SAMPLE  virus_cd25
+	SAMPLE  virus_cd26
+	SAMPLE  virus_cd27
+	SAMPLE  virus_cd28
+	SAMPLE  virus_cd29
+	SAMPLE  virus_cd3
+	SAMPLE  virus_cd30
+	SAMPLE  virus_cd4
+	SAMPLE  virus_cd5
+	SAMPLE  virus_cd6
+	SAMPLE  virus_cd7
+	SAMPLE  virus_cd8
+	SAMPLE  virus_cd9
+END
+
+
+# =========================================================
+SAMPLEGROUP darwiniandie
+	SAMPLE  darwin_death
+	SAMPLE  darwin_death2
+	SAMPLE  darwin_death3
+	SAMPLE  darwin_death4
+	SAMPLE  darwin_death5
+	SAMPLE  darwin_death6
+	SAMPLE  darwin_death7
+	SAMPLE  darwin_death9
+END
+
+
+# =========================================================
+SAMPLEGROUP darwinianlosehealth
+	SAMPLE  darwin_losehealth10
+	SAMPLE  darwin_losehealth11
+	SAMPLE  darwin_losehealth12
+	SAMPLE  darwin_losehealth13
+	SAMPLE  darwin_losehealth6
+	SAMPLE  darwin_losehealth14
+	SAMPLE  darwin_losehealth15
+	SAMPLE  darwin_losehealth16
+	SAMPLE  darwin_losehealth17
+	SAMPLE  darwin_losehealth18
+	SAMPLE  darwin_losehealth2
+	SAMPLE  darwin_losehealth3
+	SAMPLE  darwin_losehealth4
+	SAMPLE  darwin_losehealth5
+	SAMPLE  darwin_losehealth7
+	SAMPLE  darwin_losehealth8
+	SAMPLE  darwin_losehealth9
+	SAMPLE  darwin_losehealth
+END
+
+
+# =========================================================
+SAMPLEGROUP airstrikeexplode
+	SAMPLE  airstrike_boom5
+	SAMPLE  airstrike_boom1
+	SAMPLE  airstrike_boom2
+	SAMPLE  airstrike_boom3
+	SAMPLE  airstrike_boom4
+END
+
+
+# =========================================================
+SAMPLEGROUP darwiniancreate
+	SAMPLE  darwin_create
+	SAMPLE  darwin_create2
+	SAMPLE  darwin_create3
+	SAMPLE  darwin_create4
+	SAMPLE  darwin_create5
+	SAMPLE  darwin_create6
+	SAMPLE  darwin_create7
+	SAMPLE  darwin_create8
+	SAMPLE  darwin_create9
+	SAMPLE  darwin_create10
+	SAMPLE  darwin_create11
+	SAMPLE  darwin_create12
+	SAMPLE  darwin_create13
+	SAMPLE  darwin_create18
+	SAMPLE  darwin_create16
+END
+
+
+# =========================================================
+SAMPLEGROUP officercreate
+	SAMPLE  officer_create4
+	SAMPLE  officer_create5
+	SAMPLE  officer_create6
+	SAMPLE  officer_create9
+	SAMPLE  officer_create10
+	SAMPLE  officer_create11
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup25
+	SAMPLE  centipede_attack
+	SAMPLE  centipede_attack2
+	SAMPLE  centipede_attack3
+	SAMPLE  centipede_attack3
+	SAMPLE  centipede_attack4
+	SAMPLE  centipede_attack5
+	SAMPLE  centipede_attack6
+	SAMPLE  centipede_attack7
+	SAMPLE  centipede_attack8
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup26
+	SAMPLE  centipede_create2
+	SAMPLE  centipede_create3
+	SAMPLE  centipede_create4
+	SAMPLE  centipede_create
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup27
+	SAMPLE  centipede_death
+	SAMPLE  centipede_death2
+	SAMPLE  centipede_death3
+	SAMPLE  centipede_death4
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup28
+	SAMPLE  centipede_losehealth
+	SAMPLE  centipede_losehealth2
+	SAMPLE  centipede_losehealth3
+	SAMPLE  centipede_losehealth4
+	SAMPLE  centipede_losehealth5
+END
+
+
+# =========================================================
+SAMPLEGROUP antatack
+	SAMPLE  ant_attack
+	SAMPLE  ant_attack2
+	SAMPLE  ant_attack3
+	SAMPLE  ant_attack4
+	SAMPLE  ant_attack5
+	SAMPLE  ant_attack6
+END
+
+
+# =========================================================
+SAMPLEGROUP antcreat
+	SAMPLE  ants_create
+	SAMPLE  ants_create2
+	SAMPLE  ants_create3
+	SAMPLE  ants_create4
+	SAMPLE  ants_create5
+	SAMPLE  ants_create6
+	SAMPLE  ants_create7
+	SAMPLE  ants_create8
+END
+
+
+# =========================================================
+SAMPLEGROUP antlosehealth
+	SAMPLE  ant_lose_health2
+	SAMPLE  ant_lose_health3
+	SAMPLE  ant_lose_health4
+	SAMPLE  ant_lose_health5
+	SAMPLE  ant_lose_health6
+	SAMPLE  ant_lose_health7
+	SAMPLE  ant_lose_health
+END
+
+
+# =========================================================
+SAMPLEGROUP antdeath
+	SAMPLE  ant_death
+	SAMPLE  ant_death2
+	SAMPLE  ant_death3
+	SAMPLE  ant_death4
+	SAMPLE  ant_death5
+	SAMPLE  ant_death6
+END
+
+
+# =========================================================
+SAMPLEGROUP tripodcreate
+	SAMPLE  tripod_create
+	SAMPLE  tripod_create2
+	SAMPLE  tripod_create3
+END
+
+
+# =========================================================
+SAMPLEGROUP tprdattac
+	SAMPLE  tripod_attack1
+	SAMPLE  tripod_attack2
+	SAMPLE  tripod_attack3
+	SAMPLE  tripod_attack4
+	SAMPLE  tripod_attack5
+END
+
+
+# =========================================================
+SAMPLEGROUP trpodlosehealth
+	SAMPLE  tripod_lose_health2
+	SAMPLE  tripod_lose_health3
+	SAMPLE  tripod_lose_health4
+	SAMPLE  tripod_lose_health5
+	SAMPLE  tripod_lose_health6
+	SAMPLE  tripod_lose_health7
+	SAMPLE  tripod_lose_health
+END
+
+
+# =========================================================
+SAMPLEGROUP ttripoddie
+	SAMPLE  tripod_death1
+	SAMPLE  tripod_death2
+	SAMPLE  tripod_death3
+	SAMPLE  tripod_death4
+END
+
+
+# =========================================================
+SAMPLEGROUP virusattack
+	SAMPLE  virus_attack
+	SAMPLE  virus_attack2
+	SAMPLE  virus_attack3
+	SAMPLE  virus_attack4
+	SAMPLE  virus_attack5
+	SAMPLE  virus_attack6
+	SAMPLE  virus_attack7
+	SAMPLE  virus_attack8
+END
+
+
+# =========================================================
+SAMPLEGROUP viruspain
+	SAMPLE  virus_lose_health
+	SAMPLE  virus_lose_health2
+	SAMPLE  virus_lose_health3
+END
+
+
+# =========================================================
+SAMPLEGROUP 0lasers
+	SAMPLE  laser1
+	SAMPLE  laser2
+	SAMPLE  laser3
+	SAMPLE  laser4
+	SAMPLE  laser5
+	SAMPLE  laser6
+	SAMPLE  laser7
+	SAMPLE  laser8
+	SAMPLE  laser9
+	SAMPLE  laser10
+	SAMPLE  laser11
+	SAMPLE  laser12
+	SAMPLE  laser13
+	SAMPLE  laser14
+	SAMPLE  laser15
+	SAMPLE  laser16
+	SAMPLE  laser17
+	SAMPLE  laser18
+	SAMPLE  laser19
+	SAMPLE  laser20
+	SAMPLE  laser21
+	SAMPLE  laser22
+	SAMPLE  laser23
+	SAMPLE  laser24
+END
+
+
+# =========================================================
+SAMPLEGROUP laserricochet
+	SAMPLE  squadlasers3
+	SAMPLE  squadlasers4
+	SAMPLE  squadlasers5
+	SAMPLE  squadlasers6
+	SAMPLE  squadlasers7
+	SAMPLE  squadlasers8
+END
+
+
+# =========================================================
+SAMPLEGROUP laserhitgnd
+	SAMPLE  laser_hitgnd
+	SAMPLE  laser_hitgnd2
+	SAMPLE  laser_hitgnd3
+	SAMPLE  laser_hitgnd4
+	SAMPLE  laser_hitgnd5
+	SAMPLE  laser_hitgnd6
+	SAMPLE  laser_hitgnd7
+	SAMPLE  laser_hitgnd8
+	SAMPLE  laser_hitgnd9
+END
+
+
+# =========================================================
+SAMPLEGROUP laserhitentity
+	SAMPLE  laser_hitent1
+	SAMPLE  laser_hitent2
+	SAMPLE  laser_hitent3
+	SAMPLE  laser_hitent4
+	SAMPLE  laser_hitent5
+	SAMPLE  laser_hitent6
+	SAMPLE  laser_hitent7
+	SAMPLE  laser_hitent8
+	SAMPLE  laser_hitgnd9
+END
+
+
+# =========================================================
+SAMPLEGROUP laserhitbuild
+	SAMPLE  laser_hit_building
+	SAMPLE  laser_hit_building10
+	SAMPLE  laser_hit_building2
+	SAMPLE  laser_hit_building3
+	SAMPLE  laser_hit_building4
+	SAMPLE  laser_hit_building5
+	SAMPLE  laser_hit_building6
+	SAMPLE  laser_hit_building7
+	SAMPLE  laser_hit_building8
+	SAMPLE  laser_hit_building9
+END
+
+
+# =========================================================
+SAMPLEGROUP officercreate
+	SAMPLE  officer_create4
+	SAMPLE  officer_create5
+	SAMPLE  officer_create6
+	SAMPLE  officer_create9
+	SAMPLE  officer_create10
+	SAMPLE  officer_create11
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup8
+	SAMPLE  alien_lands3
+	SAMPLE  rumble1
+	SAMPLE  evil
+END
+
+
+# =========================================================
+SAMPLEGROUP spidercreate
+	SAMPLE  spider_create2
+	SAMPLE  spider_create3
+	SAMPLE  spider_create4
+	SAMPLE  spider_create5
+	SAMPLE  spider_create6
+	SAMPLE  spider_create7
+	SAMPLE  spider_create8
+	SAMPLE  spider_create9
+	SAMPLE  spider_create
+	SAMPLE  spider_create1e
+	SAMPLE  spider_create2e
+	SAMPLE  spider_create4e
+	SAMPLE  spider_create5e
+	SAMPLE  spider_create6e
+	SAMPLE  spider_create7e
+	SAMPLE  spider_create8e
+	SAMPLE  spider_create9e
+END
+
+
+# =========================================================
+SAMPLEGROUP spiderdeath
+	SAMPLE  spider_death2
+	SAMPLE  spider_death
+END
+
+
+# =========================================================
+SAMPLEGROUP elec_cackle
+	SAMPLE  elec_cackle2
+	SAMPLE  elec_cackle
+	SAMPLE  elec_cackle6
+	SAMPLE  elec_cackle5
+	SAMPLE  elec_cackle3
+	SAMPLE  elec_cackle4
+END
+
+
+# =========================================================
+SAMPLEGROUP newsamplegroup13
+	SAMPLE  spider_death
+	SAMPLE  spider_death2
+	SAMPLE  spider_death3
+	SAMPLE  spider_death4
+	SAMPLE  spider_death5
+	SAMPLE  spider_death6
+	SAMPLE  spider_death7
+END
+
+
+# =========================================================
+SAMPLEGROUP portcreate
+	SAMPLE  trunk_create
+	SAMPLE  trunk_create2
+	SAMPLE  trunk_create3
+	SAMPLE  trunk_create4
+	SAMPLE  trunk_create5
+END
+
+
+# =========================================================
+SAMPLEGROUP refineryrun
+	SAMPLE  refinery_cog
+	SAMPLE  refinery_cog2
+	SAMPLE  refinery_cog3
+	SAMPLE  refinery_cog4
+	SAMPLE  refinery_cog5
+	SAMPLE  refinery_cog6
+	SAMPLE  refinery_cog7
+	SAMPLE  refinery_cog8
+END
+
+
+# =========================================================
+SAMPLEGROUP solarpanelenable
+	SAMPLE  solar_panel
+	SAMPLE  solar_panel2
+	SAMPLE  solar_panel3
+	SAMPLE  solar_panel4
+	SAMPLE  solar_panel5
+END
+
+
+# =========================================================
+SAMPLEGROUP eggsplat
+	SAMPLE  eggsplat7
+	SAMPLE  eggsplat6
+	SAMPLE  eggsplat5
+	SAMPLE  eggsplat4
+	SAMPLE  eggsplat3
+	SAMPLE  eggsplat2
+	SAMPLE  eggsplat
+END
+
+
+# =========================================================
+SAMPLEGROUP minerun
+	SAMPLE  mine_cog2
+	SAMPLE  mine_cog3
+	SAMPLE  mine_cog4
+	SAMPLE  mine_cog5
+	SAMPLE  mine_cog6
+	SAMPLE  mine_cog7
+	SAMPLE  mine_cog
+END
+
+
+# =========================================================
+SAMPLEGROUP treeatmos
+	SAMPLE  tree_atmos1
+	SAMPLE  tree_atmos2
+	SAMPLE  tree_atmos3
+	SAMPLE  tree_atmos4
+	SAMPLE  tree_atmos5
+	SAMPLE  tree_atmos6
+	SAMPLE  tree_atmos7
+	SAMPLE  tree_atmos8
+END
+
+
+# =========================================================
+SAMPLEGROUP souldestroycreate
+	SAMPLE  soul_dest_create11
+	SAMPLE  soul_dest_create10
+	SAMPLE  soul_dest_create9
+	SAMPLE  soul_dest_create8
+	SAMPLE  soul_dest_create7
+	SAMPLE  soul_dest_create6
+	SAMPLE  soul_dest_create5
+	SAMPLE  soul_dest_create4
+	SAMPLE  soul_dest_create3
+	SAMPLE  soul_dest_create2
+	SAMPLE  soul_dest_create
+END
+
+
+# =========================================================
+SAMPLEGROUP souldestpain
+	SAMPLE  soulpain10
+	SAMPLE  soulpain9
+	SAMPLE  soulpain8
+	SAMPLE  soulpain7
+	SAMPLE  soulpain6
+	SAMPLE  soulpain5
+	SAMPLE  soulpain4
+	SAMPLE  soulpain3
+	SAMPLE  soulpain2
+	SAMPLE  soulpain
+END
+
+
+# =========================================================
+SAMPLEGROUP souldestdeath
+	SAMPLE  souldeath
+	SAMPLE  souldeath2
+	SAMPLE  souldeath3
+	SAMPLE  souldeath4
+	SAMPLE  souldeath5
+	SAMPLE  souldeath6
+	SAMPLE  souldeath7
+	SAMPLE  souldeath8
+	SAMPLE  souldeath9
+	SAMPLE  souldeath10
+END
+
+
+# =========================================================
+SAMPLEGROUP soulattack
+	SAMPLE  soul_attack
+	SAMPLE  soul_attack7
+	SAMPLE  soul_attack6
+	SAMPLE  soul_attack5
+	SAMPLE  soul_attack4
+	SAMPLE  soul_attack3
+	SAMPLE  soul_attack2
+END
+
+
+# =========================================================
+SAMPLEGROUP triffideggbounce
+	SAMPLE  triffid_egg_bounce
+	SAMPLE  triffid_egg_bounce5
+	SAMPLE  triffid_egg_bounce4
+	SAMPLE  triffid_egg_bounce3
+	SAMPLE  triffid_egg_bounce2
+END
+
+
+# =========================================================
+SAMPLEGROUP triffeggbursts
+	SAMPLE  triffid_egg_burst2
+	SAMPLE  triffid_egg_burst10
+	SAMPLE  triffid_egg_burst
+	SAMPLE  triffid_egg_burst9
+	SAMPLE  triffid_egg_burst5
+	SAMPLE  triffid_egg_burst3
+	SAMPLE  triffid_egg_burst4
+	SAMPLE  triffid_egg_burst6
+	SAMPLE  triffid_egg_burst7
+	SAMPLE  triffid_egg_burst8
+END
+
+
+# =========================================================
+SAMPLEGROUP triffidegglaunc
+	SAMPLE  triffid_egg_launch
+	SAMPLE  triffid_egg_launch5
+	SAMPLE  triffid_egg_launch3
+	SAMPLE  triffid_egg_launch2
+	SAMPLE  triffid_egg_launch4
+END
+
+
+# =========================================================
+SAMPLEGROUP sporegengroan
+	SAMPLE  spore_gen_groan2
+	SAMPLE  spore_gen_groan3
+	SAMPLE  spore_gen_groan4
+END
+
+
+# =========================================================
+SAMPLEGROUP sporegenlosehealt
+	SAMPLE  spore_gen_pain6
+	SAMPLE  spore_gen_pain5
+	SAMPLE  spore_gen_pain4
+	SAMPLE  spore_gen_pain3
+	SAMPLE  spore_gen_pain2
+	SAMPLE  spore_gen_pain
+END
+
+
+# =========================================================
+SAMPLEGROUP sporegeneratordie
+	SAMPLE  spore_gen_death
+	SAMPLE  spore_gen_death2
+	SAMPLE  spore_gen_death3
+	SAMPLE  spore_gen_death4
+	SAMPLE  spore_gen_death5
+	SAMPLE  spore_gen_death6
+END
+
+
+# =========================================================
+SAMPLEGROUP triffidburn
+	SAMPLE  triffid_burn
+	SAMPLE  triffid_burn3
+	SAMPLE  triffid_burn2
+END
+
+
+# =========================================================
+SAMPLEGROUP spideregglay
+	SAMPLE  spider_egg_lay2
+	SAMPLE  spider_egg_lay3
+	SAMPLE  spider_egg_lay5
+	SAMPLE  spider_egg_lay4
+	SAMPLE  spider_egg_lay6
+	SAMPLE  spider_egg_lay7
+	SAMPLE  spider_egg_lay8
+	SAMPLE  spider_egg_lay9
+	SAMPLE  spider_egg_lay10
+	SAMPLE  spider_egg_lay
+END
+
+
+# =========================================================
+SAMPLEGROUP spiderpounce
+	SAMPLE  spider_pounce
+	SAMPLE  spider_pounce6
+	SAMPLE  spider_pounce5
+	SAMPLE  spider_pounce4
+	SAMPLE  spider_pounce3
+	SAMPLE  spider_pounce2
+END
+
+
+# =========================================================
+SAMPLEGROUP incubatorspawn
+	SAMPLE  incubator_birth
+	SAMPLE  incubator_birth2
+	SAMPLE  incubator_birth3
+	SAMPLE  incubator_birth4
+	SAMPLE  incubator_birth5
+	SAMPLE  incubator_birth6
+END
+
+
+# =========================================================
+SAMPLEGROUP tankloseheath
+	SAMPLE  tank_damage2
+	SAMPLE  tank_damage3
+	SAMPLE  tank_damage4
+	SAMPLE  tank_damage5
+	SAMPLE  tank_damage6
+	SAMPLE  tank_damage7
+	SAMPLE  tank_damage8
+	SAMPLE  tank_damage9
+	SAMPLE  tank_damage10
+	SAMPLE  tank_damage
+END
+
+
+# =========================================================
+SAMPLEGROUP tankdeath
+	SAMPLE  tank_death2
+	SAMPLE  tank_death3
+	SAMPLE  tank_death4
+	SAMPLE  tank_death5
+	SAMPLE  tank_death6
+	SAMPLE  tank_death8
+	SAMPLE  tank_death7
+	SAMPLE  tank_death9
+	SAMPLE  tank_death10
+END
+
+
+# =========================================================
+SAMPLEGROUP elecfence@damage
+	SAMPLE  fence_damage
+	SAMPLE  fence_damage16
+	SAMPLE  fence_damage15
+	SAMPLE  fence_damage14
+	SAMPLE  fence_damage13
+	SAMPLE  fence_damage12
+	SAMPLE  fence_damage11
+	SAMPLE  fence_damage10
+	SAMPLE  fence_damage9
+	SAMPLE  fence_damage8
+	SAMPLE  fence_damage7
+	SAMPLE  fence_damage6
+	SAMPLE  fence_damage5
+	SAMPLE  fence_damage4
+	SAMPLE  fence_damage3
+	SAMPLE  fence_damage2
+END
+
+
+# =========================================================
+SAMPLEGROUP incubatoraddspirit
+	SAMPLE  incubator_addspirit2
+	SAMPLE  incubator_addspirit3
+	SAMPLE  incubator_addspirit4
+	SAMPLE  incubator_addspirit5
+	SAMPLE  incubator_addspirit6
+	SAMPLE  incubator_addspirit
+END
+
+
+# =========================================================
+SAMPLEGROUP soulenemysighted
+	SAMPLE  soul_enemy_sighted1
+	SAMPLE  soul_enemy_sighted2
+	SAMPLE  soul_enemy_sighted3
+	SAMPLE  soul_enemy_sighted4
+	SAMPLE  soul_enemy_sighted5
+	SAMPLE  soul_enemy_sighted6
+	SAMPLE  soul_enemy_sighted7
+	SAMPLE  soul_enemy_sighted8
+	SAMPLE  soul_enemy_sighted9
+END
+
+
+# =========================================================
+SAMPLEGROUP spiritdescent
+	SAMPLE  spirit_descent2
+	SAMPLE  spirit_descent3
+	SAMPLE  spirit_descent4
+	SAMPLE  spirit_descent5
+	SAMPLE  spirit_descent6
+	SAMPLE  spirit_descent7
+	SAMPLE  spirit_descent8
+	SAMPLE  spirit_descent9
+	SAMPLE  spirit_descent
+	SAMPLE  spirit_descent22
+	SAMPLE  spirit_descent23
+	SAMPLE  spirit_descent24
+	SAMPLE  spirit_descent25
+	SAMPLE  spirit_descent16
+	SAMPLE  spirit_descent17
+	SAMPLE  spirit_descent18
+	SAMPLE  spirit_descent19
+	SAMPLE  spirit_descent20
+	SAMPLE  spirit_descent21
+	SAMPLE  spirit_descent10
+	SAMPLE  spirit_descent11
+	SAMPLE  spirit_descent12
+	SAMPLE  spirit_descent13
+	SAMPLE  spirit_descent14
+	SAMPLE  spirit_descent15
+END
+
+
+# =========================================================
+SAMPLEGROUP engineerinjury
+	SAMPLE  engineer_losehealth2
+	SAMPLE  engineer_losehealth3
+	SAMPLE  engineer_losehealth4
+	SAMPLE  engineer_losehealth5
+	SAMPLE  engineer_losehealth6
+	SAMPLE  engineer_losehealth7
+	SAMPLE  engineer_losehealth8
+	SAMPLE  engineer_losehealth9
+	SAMPLE  engineer_losehealth
+END
+
+
+# =========================================================
+SAMPLEGROUP engineerdie
+	SAMPLE  engineer_die
+	SAMPLE  engineer_die2
+	SAMPLE  engineer_die3
+	SAMPLE  engineer_die4
+	SAMPLE  engineer_die5
+END
+
+
+# =========================================================
+SAMPLEGROUP 1anthilldamage
+	SAMPLE  anthill_damage2
+	SAMPLE  anthill_damage3
+	SAMPLE  anthill_damage5
+	SAMPLE  anthill_damage4
+	SAMPLE  anthill_damage6
+	SAMPLE  anthill_damage7
+	SAMPLE  anthill_damage8
+	SAMPLE  anthill_damage9
+	SAMPLE  anthill_damage10
+	SAMPLE  anthill_damage
+END
+
+
+# =========================================================
+SAMPLEGROUP squaddiedeath
+	SAMPLE  squad_death5
+	SAMPLE  squad_death4
+	SAMPLE  squad_death3
+	SAMPLE  squad_death2
+	SAMPLE  squad_death
+END
+
+
+# =========================================================
+SAMPLEGROUP generatorburst
+	SAMPLE  generator_burst2
+	SAMPLE  generator_burst3
+	SAMPLE  generator_burst4
+	SAMPLE  generator_burst5
+	SAMPLE  generator_burst
+END
+
+
+# =========================================================
+SAMPLEGROUP ylonelecsurge
+	SAMPLE  pylon_surge5
+	SAMPLE  pylon_surge4
+	SAMPLE  pylon_surge3
+	SAMPLE  pylon_surge2
+	SAMPLE  pylon_surge6
+	SAMPLE  pylon_surge7
+	SAMPLE  pylon_surge8
+	SAMPLE  pylon_surge9
+	SAMPLE  pylon_surge10
+	SAMPLE  pylon_surge11
+	SAMPLE  pylon_surge12
+	SAMPLE  pylon_surge13
+	SAMPLE  pylon_surge14
+	SAMPLE  pylon_surge15
+	SAMPLE  pylon_surge16
+	SAMPLE  pylon_surge17
+	SAMPLE  pylon_surge18
+	SAMPLE  pylon_surge19
+	SAMPLE  pylon_surge20
+	SAMPLE  pylon_surge21
+	SAMPLE  pylon_surge22
+	SAMPLE  pylon_surge
+END
+
+
+# =========================================================
+SAMPLEGROUP minecartcreak
+	SAMPLE  mine_cart_creak2
+	SAMPLE  mine_cart_creak41
+	SAMPLE  mine_cart_creak40
+	SAMPLE  mine_cart_creak39
+	SAMPLE  mine_cart_creak38
+	SAMPLE  mine_cart_creak37
+	SAMPLE  mine_cart_creak36
+	SAMPLE  mine_cart_creak35
+	SAMPLE  mine_cart_creak34
+	SAMPLE  mine_cart_creak33
+	SAMPLE  mine_cart_creak42
+	SAMPLE  mine_cart_creak32
+	SAMPLE  mine_cart_creak31
+	SAMPLE  mine_cart_creak30
+	SAMPLE  mine_cart_creak29
+	SAMPLE  mine_cart_creak28
+	SAMPLE  mine_cart_creak27
+	SAMPLE  mine_cart_creak26
+	SAMPLE  mine_cart_creak25
+	SAMPLE  mine_cart_creak24
+	SAMPLE  mine_cart_creak23
+	SAMPLE  mine_cart_creak22
+	SAMPLE  mine_cart_creak21
+	SAMPLE  mine_cart_creak20
+	SAMPLE  mine_cart_creak19
+	SAMPLE  mine_cart_creak18
+	SAMPLE  mine_cart_creak17
+	SAMPLE  mine_cart_creak16
+	SAMPLE  mine_cart_creak15
+	SAMPLE  mine_cart_creak14
+	SAMPLE  mine_cart_creak12
+	SAMPLE  mine_cart_creak13
+	SAMPLE  mine_cart_creak11
+	SAMPLE  mine_cart_creak10
+	SAMPLE  mine_cart_creak9
+	SAMPLE  mine_cart_creak8
+	SAMPLE  mine_cart_creak7
+	SAMPLE  mine_cart_creak6
+	SAMPLE  mine_cart_creak5
+	SAMPLE  mine_cart_creak4
+	SAMPLE  spore_gen_groan4
+	SAMPLE  mine_cart_creak3
+	SAMPLE  mine_cart_creak
+END
+
+
+# =========================================================
+SAMPLEGROUP turretfire
+	SAMPLE  gun_turret_fire
+	SAMPLE  gun_turret_fire2
+	SAMPLE  gun_turret_fire3
+	SAMPLE  gun_turret_fire4
+	SAMPLE  gun_turret_fire5
+	SAMPLE  gun_turret_fire6
+END
+
+
+# =========================================================
+SAMPLEGROUP armourtransform
+	SAMPLE  armour_to_turret
+	SAMPLE  armour_to_turret6
+	SAMPLE  armour_to_turret5
+	SAMPLE  armour_to_turret4
+	SAMPLE  armour_to_turret3
+	SAMPLE  armour_to_turret2
+END
+
+
+# =========================================================
+SAMPLEGROUP relayhover
+	SAMPLE  blueprint_sateilte3
+	SAMPLE  blueprint_sateilte2
+	SAMPLE  blueprint_sateilte
+	SAMPLE  blueprint_sateilte4
+END
+
+
+# =========================================================
+SAMPLEGROUP darwinseethreatattack
+	SAMPLE  darwinian_threat_attack2
+	SAMPLE  darwinian_threat_attack
+	SAMPLE  darwinian_threat_attack3
+END
+
+
+# =========================================================
+SAMPLEGROUP battlecannondamage
+	SAMPLE  battle_cannon_damage10
+	SAMPLE  battle_cannon_damage
+	SAMPLE  battle_cannon_damage2
+	SAMPLE  battle_cannon_damage3
+	SAMPLE  battle_cannon_damage4
+	SAMPLE  battle_cannon_damage5
+	SAMPLE  battle_cannon_damage6
+	SAMPLE  battle_cannon_damage7
+	SAMPLE  battle_cannon_damage8
+	SAMPLE  battle_cannon_damage9
+END
+
+
+# =========================================================
+SAMPLEGROUP tankcreate
+	SAMPLE  tank_create2
+	SAMPLE  tank_create4
+	SAMPLE  tank_create3
+	SAMPLE  tank_create5
+	SAMPLE  tank_create6
+	SAMPLE  tank_create
+END
+
+
+# =========================================================
+SAMPLEGROUP radarconnect
+	SAMPLE  radar_transmission4
+	SAMPLE  radar_transmission3
+	SAMPLE  radar_transmission2
+	SAMPLE  radar_transmission
+END
+
+
+# =========================================================
+SAMPLEGROUP radarlose
+	SAMPLE  radar_lose_connection2
+	SAMPLE  radar_lose_connection4
+	SAMPLE  radar_lose_connection3
+	SAMPLE  radar_lose_connection
+END
+
+
+# =========================================================
+SAMPLEGROUP darwinrunaway
+	SAMPLE  darwinian_threat_run
+	SAMPLE  darwinian_threat_run2
+	SAMPLE  darwinian_threat_run3
+	SAMPLE  darwinian_threat_run4
+	SAMPLE  darwinian_threat_run5
+	SAMPLE  darwinian_threat_run6
+	SAMPLE  darwinian_threat_run7
+	SAMPLE  darwinian_threat_run9
+	SAMPLE  darwinian_threat_run8
+	SAMPLE  darwinian_threat_run10
+END
+
+
+# =========================================================
+SAMPLEGROUP victoryjum
+	SAMPLE  darwin_jump
+	SAMPLE  darwin_jump9
+	SAMPLE  darwin_jump8
+	SAMPLE  darwin_jump7
+	SAMPLE  darwin_jump6
+	SAMPLE  darwin_jump5
+	SAMPLE  darwin_jump4
+	SAMPLE  darwin_jump3
+	SAMPLE  darwin_jump2
+END
+
+
+# =========================================================
+SAMPLEGROUP samcreate
+	SAMPLE  spam_create
+	SAMPLE  spam_create8
+	SAMPLE  spam_create7
+	SAMPLE  spam_create6
+	SAMPLE  spam_create5
+	SAMPLE  spam_create4
+	SAMPLE  spam_create3
+	SAMPLE  spam_create2
+END
+
+
+# =========================================================
+SAMPLEGROUP emaildamage
+	SAMPLE  spam_damage2
+	SAMPLE  spam_damage3
+	SAMPLE  spam_damage4
+	SAMPLE  spam_damage5
+	SAMPLE  spam_damage6
+	SAMPLE  spam_damage7
+	SAMPLE  spam_damage
+END
+
+
+# =========================================================
+SAMPLEGROUP enterteleport
+	SAMPLE  enter_teleport6
+	SAMPLE  enter_teleport5
+	SAMPLE  enter_teleport4
+	SAMPLE  enter_teleport3
+	SAMPLE  enter_teleport2
+	SAMPLE  enter_teleport
+END
+
+
+# =========================================================
+SAMPLEGROUP officerordergoto
+	SAMPLE  officer_order_goto
+	SAMPLE  officer_order_goto4
+	SAMPLE  officer_order_goto3
+	SAMPLE  officer_order_goto2
+END
+
+
+# =========================================================
+SAMPLEGROUP officerabsorb
+	SAMPLE  flag_wave
+	SAMPLE  flag_wave10
+	SAMPLE  flag_wave11
+	SAMPLE  flag_wave12
+	SAMPLE  flag_wave2
+	SAMPLE  flag_wave3
+	SAMPLE  flag_wave4
+	SAMPLE  flag_wave5
+	SAMPLE  flag_wave7
+	SAMPLE  flag_wave6
+	SAMPLE  flag_wave8
+	SAMPLE  flag_wave9
+END
+
+
+# =========================================================
+SAMPLEGROUP officerleftright
+	SAMPLE  officer_order
+	SAMPLE  officer_order10
+	SAMPLE  officer_order12
+	SAMPLE  officer_order11
+	SAMPLE  officer_order13
+	SAMPLE  officer_order14
+	SAMPLE  officer_order15
+	SAMPLE  officer_order16
+	SAMPLE  officer_order17
+	SAMPLE  officer_order2
+	SAMPLE  officer_order3
+	SAMPLE  officer_order4
+	SAMPLE  officer_order5
+	SAMPLE  officer_order6
+	SAMPLE  officer_order7
+	SAMPLE  officer_order8
+	SAMPLE  officer_order9
+END
+
+
+# =========================================================
+SAMPLEGROUP mineambience
+	SAMPLE  chug1
+	SAMPLE  chug2
+	SAMPLE  chug3
+	SAMPLE  chug4
+	SAMPLE  chug5
+	SAMPLE  chug6
+END
+
+
+# =========================================================
+SAMPLEGROUP spiderfeet
+	SAMPLE  spider_foot
+	SAMPLE  spider_foot10
+	SAMPLE  spider_foot11
+	SAMPLE  spider_foot12
+	SAMPLE  spider_foot13
+	SAMPLE  spider_foot2
+	SAMPLE  spider_foot3
+	SAMPLE  spider_foot4
+	SAMPLE  spider_foot5
+	SAMPLE  spider_foot6
+	SAMPLE  spider_foot7
+	SAMPLE  spider_foot8
+	SAMPLE  spider_foot9
+END
+
+
+# =========================================================
+SAMPLEGROUP spamattack
+	SAMPLE  spam_attack2
+	SAMPLE  spam_attack3
+	SAMPLE  spam_attack4
+	SAMPLE  spam_attack5
+	SAMPLE  spam_attack6
+	SAMPLE  spam_attack7
+	SAMPLE  spam_attack
+END
+
+
+# =========================================================
+SAMPLEGROUP spamboom
+	SAMPLE  spam_death6
+	SAMPLE  spam_death5
+	SAMPLE  spam_death4
+	SAMPLE  spam_death3
+	SAMPLE  spam_death2
+	SAMPLE  spam_death
+END
+
+
+# =========================================================
+SAMPLEGROUP treeonfire
+	SAMPLE  tree_fire
+	SAMPLE  tree_fire10
+	SAMPLE  tree_fire11
+	SAMPLE  tree_fire12
+	SAMPLE  tree_fire13
+	SAMPLE  tree_fire14
+	SAMPLE  tree_fire2
+	SAMPLE  tree_fire3
+	SAMPLE  tree_fire4
+	SAMPLE  tree_fire5
+	SAMPLE  tree_fire6
+	SAMPLE  tree_fire7
+	SAMPLE  tree_fire8
+	SAMPLE  tree_fire9
+	SAMPLE  tree_on_fire
+END
+
+
+# =========================================================
+SAMPLEGROUP aquireresearch
+	SAMPLE  aquire_research
+	SAMPLE  aquire_research2
+	SAMPLE  aquire_research3
+	SAMPLE  aquire_research4
+	SAMPLE  aquire_research5
+	SAMPLE  aquire_research6
+	SAMPLE  aquire_research7
+END
+
+
+# =========================================================
+SAMPLEGROUP researchcreate
+	SAMPLE  research_create10
+	SAMPLE  research_create9
+	SAMPLE  research_create8
+	SAMPLE  research_create7
+	SAMPLE  research_create5
+	SAMPLE  research_create3
+	SAMPLE  research_create
+	SAMPLE  research_create4
+	SAMPLE  research_create6
+END
+
+
+# =========================================================
+SAMPLEGROUP exitteleport
+	SAMPLE  exit_teleport
+	SAMPLE  exit_teleport2
+	SAMPLE  exit_teleport3
+	SAMPLE  exit_teleport4
+	SAMPLE  exit_teleport5
+	SAMPLE  exit_teleport6
+END
+
+
+# =========================================================
+SAMPLEGROUP disconnectgod
+	SAMPLE  god_dish_disconnect
+	SAMPLE  god_dish_disconnect2
+	SAMPLE  god_dish_disconnect3
+END
+
+
+# =========================================================
+SAMPLEGROUP connectgod
+	SAMPLE  god_dishconnect
+	SAMPLE  god_dishconnect2
+	SAMPLE  god_dishconnect3
+END
+
+
+# =========================================================
+SAMPLEGROUP goddishcreate
+	SAMPLE  goddish_create
+	SAMPLE  goddish_create2
+	SAMPLE  goddish_create3
+	SAMPLE  goddish_create4
+	SAMPLE  goddish_create5
+END
+
+
+# =========================================================
+SAMPLEGROUP worldviewdry
+	SAMPLE  worlddry1
+	SAMPLE  worlddry2
+	SAMPLE  worlddry3
+	SAMPLE  worlddry4
+	SAMPLE  worlddry5
+	SAMPLE  worlddry6
+	SAMPLE  worlddry7
+	SAMPLE  worlddry8
+END
+
+
+# =========================================================
+SAMPLEGROUP worldviewwet
+	SAMPLE  world1
+	SAMPLE  world2
+	SAMPLE  world3
+	SAMPLE  world4
+	SAMPLE  world5
+	SAMPLE  world6
+	SAMPLE  world7
+	SAMPLE  world8
+END
+
+
+# =========================================================
+SAMPLEGROUP worldamb
+	SAMPLE  alien_lands1
+	SAMPLE  alien_lands3
+	SAMPLE  evil
+	SAMPLE  ocean1
+END
+
+
+# =========================================================
+SAMPLEGROUP shiphappy
+	SAMPLE  shippurr1
+	SAMPLE  shippurr2
+	SAMPLE  shippurr3
+	SAMPLE  shippurr4
+	SAMPLE  shippurr5
+END
+
+
+# =========================================================
+SAMPLEGROUP shipscream
+	SAMPLE  shipscream1
+	SAMPLE  shipscream2
+END
+
+
+# =========================================================
+SAMPLEGROUP loadpassenger
+	SAMPLE  fuel_load_passenger
+	SAMPLE  fuel_load_passenger2
+	SAMPLE  fuel_load_passenger3
+	SAMPLE  fuel_load_passenger4
+	SAMPLE  fuel_load_passenger5
+END
+
+
+# =========================================================
+SAMPLEGROUP darwinnianonfire
+	SAMPLE  darwin_on_fire1
+	SAMPLE  darwin_on_fire2
+	SAMPLE  darwin_on_fire3
+	SAMPLE  darwin_on_fire4
+	SAMPLE  darwin_on_fire5
+	SAMPLE  darwin_on_fire6
+	SAMPLE  darwin_on_fire7
+	SAMPLE  darwin_on_fire8
+	SAMPLE  darwin_on_fire9
+	SAMPLE  darwin_on_fire10
+	SAMPLE  darwin_on_fire11
+	SAMPLE  darwin_on_fire12
+	SAMPLE  darwin_on_fire13
+END
+
+
+# =========================================================
+SAMPLEGROUP darwinnianburncry
+	SAMPLE  darwin_burn_death1
+	SAMPLE  darwin_burn_death2
+	SAMPLE  darwin_burn_death3
+	SAMPLE  darwin_burn_death4
+	SAMPLE  darwin_burn_death5
+	SAMPLE  darwin_burn_death6
+	SAMPLE  silence1
+	SAMPLE  silence2
+	SAMPLE  silence3
+	SAMPLE  silence4
+	SAMPLE  silence5
+	SAMPLE  silence6
+	SAMPLE  silence7
+END
+
+
+# =========================================================
+SAMPLEGROUP shiphungry
+	SAMPLE  shiphungry1
+	SAMPLE  shiphungry7
+	SAMPLE  shiphungry6
+	SAMPLE  shiphungry5
+	SAMPLE  shiphungry4
+	SAMPLE  shiphungry3
+	SAMPLE  shiphungry2
+END
+
+
+# =========================================================
+SAMPLEGROUP choir1
+	SAMPLE  choir2
+	SAMPLE  choir3
+	SAMPLE  choir4
+	SAMPLE  choir5
+	SAMPLE  choir6
+	SAMPLE  choir1
+END
+
+
+# =========================================================
+SAMPLEGROUP kickverb
+	SAMPLE  kickverb3
+	SAMPLE  kickverb1
+	SAMPLE  kickverb2
+END
+
+
+# =========================================================
+SAMPLEGROUP mouseovericon
+	SAMPLE  mouse2
+	SAMPLE  mouse3
+END
+
+
+# =========================================================
+SAMPLEGROUP bigmetalgroan
+	SAMPLE  bigmetal1
+	SAMPLE  bigmetal2
+	SAMPLE  bigmetal3
+	SAMPLE  bigmetal4
+	SAMPLE  bigmetal5
+END
+
+

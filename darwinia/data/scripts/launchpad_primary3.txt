@@ -1,0 +1,22 @@
+
+PermitEscape
+CamBuildingFocus		3	300		400
+
+Say						launchpad_primary_1
+Say						launchpad_primary_2
+
+WaitSay
+CamBuildingFocus		42	300		200
+
+Say						launchpad_primary_4
+Say						launchpad_primary_5
+
+WaitSay
+CamBuildingFocus		42	500		300
+
+Say						launchpad_primary_6
+Say						launchpad_primary_7
+
+WaitSay
+CamReset
+

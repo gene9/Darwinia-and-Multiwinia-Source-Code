@@ -1,0 +1,66 @@
+Fragment: Box01
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: -0.08 -2.30 3.67
+	Positions: 8
+		0:   0.296   0.000   2.862
+		1:   3.362   0.000 -10.706
+		2:  -0.173   0.000   2.862
+		3:  -2.510   0.000 -10.706
+		4:   3.849   9.263  14.711
+		5:   7.154   9.263 -14.711
+		6:  -2.871   9.263  14.711
+		7:  -7.154   9.263 -14.711
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 8    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   3   0
+		3:   1   0
+		4:   4   0
+		5:   5   0
+		6:   7   0
+		7:   6   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 21
+			v1   	v1   	v0   	v2   	v3   	v6   	v5   	v4   	v0   	v4   	v1   	v7   	v2   	v7   
+			v6   	v4   	v4   	v0   	v0   	v3   	v5   
+
+Fragment: Box02
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: 0.01 5.35 -4.85
+	Positions: 8
+		0:  -3.555  -1.381   3.596
+		1:   3.555  -1.381   3.596
+		2:  -3.555   1.381  -3.596
+		3:   3.555   1.381  -3.596
+		4:  -3.555   1.305   4.628
+		5:   3.555   1.305   4.628
+		6:  -3.555   4.067  -2.564
+		7:   3.555   4.067  -2.564
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 8    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   3   0
+		3:   1   0
+		4:   4   0
+		5:   5   0
+		6:   7   0
+		7:   6   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 21
+			v1   	v1   	v0   	v2   	v3   	v6   	v5   	v4   	v0   	v4   	v1   	v7   	v2   	v7   
+			v6   	v4   	v4   	v0   	v0   	v3   	v5   
+

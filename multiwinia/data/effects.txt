@@ -1,0 +1,115 @@
+# EFFECTS list
+# Name			:	Name of the Effect or Parameter
+# Min			:   The minimum allowable value
+# Max			:   The maximum allowable value
+# Default		:   The starting value
+# DataType		:	0 = float, 1 = long
+
+
+#   Name                MIN     MAX     Default     DataType
+# ===================================================================
+
+EFFECT DSound_Chorus
+    WetDryMix           0       100     50          0
+    Depth               0       100     10          0
+    Feedback            -99     99      25          0
+    Frequency           0       10      1.1         0
+    Waveform            0       1       1           1
+    Delay               0       20      16          0
+    Phase               0       4       3           1
+END
+
+EFFECT DSound_Compressor    
+    Gain                -60     60      0           0
+    Attack              0.01    500     10          0    
+    Release             50      3000    200         0
+    Threshold           -60     0       -20         0
+    Ratio               1       100     3           0
+    PreDelay            0       4       4           0
+END
+
+EFFECT DSound_Distortion
+    Gain                -60     0       -18         0
+    Edge                0       100     15          0
+    PostEQCentreFreq    100     8000    2400        0
+    PostEQBandwidth     100     8000    2400        0
+    PreLowpassCutoff    100     8000    8000        0
+END
+
+EFFECT DSound_Echo
+    WetDryMix           0       100     50          0
+    Feedback            0       100     50          0
+    LeftDelay           1       2000    500         0
+    RightDelay          1       2000    500         0
+    PanDelay            0       1       0           1
+END
+
+EFFECT DSound_Flanger
+    WetDryMix           0       100     50          0
+    Depth               0       100     100         0
+    Feedback            -99     99      -50         0
+    Frequency           0       10      0.25        0
+    Waveform            0       1       1           1
+    Delay               0       4       2           0
+    Phase               0       4       2           1
+END
+
+EFFECT DSound_Gargle
+    RateHz              1       100     20          1
+    WaveShape           0       1       0           1
+END
+
+EFFECT DSound_I3DL2Reverb
+    Room                -10000  0       -1000       1
+    RoomHF              -10000  0       -100        1
+    RoomRolloffFactor   0       10      0           0
+    DecayTime           0.1     20      1.49        0
+    DecayHFRatio        0.1     2       0.83        0
+    Reflections         -10000  1000    -2602       1
+    ReflectionsDelay    0       0.3     0.01        0
+    Reverb              -10000  2000    200         1
+    ReverbDelay         0       0.1     0.01        0
+    Diffusion           0       100     100         0
+    Density             0       100     100         0
+    HFReference         20      20000   5000        0
+	Quality				0		3		2			1
+END
+
+EFFECT DSound_ParamEQ	
+    Centre              80      16000   8000        0
+    Bandwidth           1       36      12          0
+    Gain                -15     15      0           0
+END
+
+EFFECT DSound_WavesReverb
+    InGain              -96     0       0           0
+    ReverbMix           -96     0       0           0
+    ReverbTime          0.01    3000    1000        0
+    HighFreqRTRatio     0.01    0.99    0.01        0
+END
+
+EFFECT ResonantLowPass
+    CutoffFrequency     100     20000   2500        0
+    Resonance           0.1     20      7           0
+	Gain				0		10		1			0
+END
+
+EFFECT BitCrusher
+	BitRate				1		16		16			0
+END
+
+EFFECT Gargle
+	WetDryMix			0		100		50			0
+    RateHz              0.01    100     20          0
+    WaveShape           0       1       0           1
+END
+
+EFFECT Echo
+	WetDryMix			0		100		50			0
+	Delay				1		3000	200			0
+	Attenuation			0		100		50			0
+END
+
+EFFECT SimpleReverb
+	WetDryMix			0		100		50			0
+END

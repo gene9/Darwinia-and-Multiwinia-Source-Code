@@ -1,0 +1,207 @@
+<h1>Translation for Darwinia <a name="top"></a></h1>
+
+<p>This is a short guide to the creation or modification of translated strings files for Darwinia. The format is currently maintained by James Lawton <a href="&#x6D;a&#x69;&#x6C;&#116;&#111;:j&#x61;&#x6D;&#x65;&#x73;&#108;&#64;&#x69;n&#x74;&#x72;&#x6F;v&#x65;&#x72;&#x73;&#x69;&#111;&#110;&#x2E;&#99;&#x6F;&#x2E;&#x75;&#x6B;">j&#x61;&#x6D;&#x65;&#x73;&#108;&#64;&#x69;n&#x74;&#x72;&#x6F;v&#x65;&#x72;&#x73;&#x69;&#111;&#110;&#x2E;&#99;&#x6F;&#x2E;&#x75;&#x6B;</a>. Please email for support.</p>
+
+<h2>Contents</h2>
+
+<ol>
+<li><a href="#struct">Structure of the Strings File</a></li>
+<li><a href="#expand">Text Expansions</a></li>
+<li><a href="#modes">Modes of Play</a></li>
+<li><a href="#conventions">Conventions</a></li>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#update">Updating an Old Strings File</a></li>
+<li><a href="#update_ex1">Example: Updating french.txt</a></li>
+</ol>
+
+<h2>Structure of the Strings File  <a name="struct"></a> <a href="#top">^</a></h2>
+
+<p>Darwinia stores all of its translated text in strings files. Each string used in the game is given a unique identifier so that it can be looked up. The strings file has the format:</p>
+
+<div class="code"><pre>
+<span class="comment"># This is a comment.</span>
+<span class="comment"># Anything after a hash up to the end of a line is ignored.</span>
+<span class="id">string_identifier1</span>                 <span class="string">Translated text goes here.</span>
+<span class="id">string_identifier2</span>                 <span class="string">More translated text goes here.</span>
+</pre></div>
+
+<p>At the most basic level, the strings file must simply comply with the above format and provide strings for all of the identifiers that the game expects.</p>
+
+<p>String identifiers must not include any whitespace characters (spaces, tabs, etc.) or punctuation and must be lower case. Keep to the english alphanumeric characters, plus underscore. The identifier and corresponding translated text must all appear on the same line.</p>
+
+<h2>Text Expansions  <a name="expand"></a> <a href="#top">^</a></h2>
+
+<p>Within the translated text, there are a number of places where dynamically generated content must or can be be inserted. Dynamic replacements are always indicated by square brackets. For example, you may write:</p>
+
+<div class="code"><pre>
+<span class="id">help_taskmanager_1_kbd</span>             <span class="string">Hold down <span class="key">[KEYICONSTASKMANAGERDISPLAY]</span> to access the Task Manager.</span>
+</pre></div>
+
+<p>In this case, <span class="key">[KEYICONSTASKMANAGERDISPLAY]</span> will be replaced with the name of the keyboard key that opens the in-game Task Manager. In fact, many of the game controls are available as keyboard key expansions and these should be used wherever possible, in preference to inserting actual key names directly.</p>
+
+<p>All key expansions are written in capitals and are of the form [KEY*]. You should look in the english file for relevant key names. Failing that (if you are creating an entirely new string for the game) you must have access to the file &#8220;input_preferences.txt&#8221; or the Darwinia source code to find names.</p>
+
+<p>There is also a way to insert the text of one translation string into another. This is done simply by writing the unique identifier of the string between square brackets. Optionally, the identifier may be preceded by a single space character, which indicates that a space is to be included preceding the inserted text, should the inserted text expand to anything other than an empty string. The following example illustrates this:</p>
+
+<div class="code"><pre>
+<span class="id">part_select_point</span>                      <span class="string">select</span>
+<span class="id">help_radardish</span>                     <span class="string">You may <span class="inc">[part_select_point]</span> the Radar Dish to take control of it.</span>
+<span class="comment"># The above lines will result in the printed text:</span>
+<span class="comment">#   You may select the Radar Dish to take control of it.</span>
+<span class="comment"># wherever "help_radardish" is referenced in the game.</span>
+</pre></div>
+
+<h2>Modes of Play  <a name="modes"></a> <a href="#top">^</a></h2>
+
+<p>Darwinia currently recognises two modes of play: KEYBOARD (actually, &#8220;keyboard and mouse&#8221;) and GAMEPAD. Different text may be presented to a player depending on the current mode. To do this, you may specify mode-specific text for any string by appending &#8220;_kbd&#8221; (for KEYBOARD mode) or &#8220;_xin&#8221; (for GAMEPAD mode) to its identifier. Mode-specific strings will be used in preference to non-specific ones, where they exist. This mechanism applies both where strings are referenced by the game and where strings are included within other strings. Expanding on the above example:</p>
+
+<div class="code"><pre>
+<span class="id">part_select_point</span>                      <span class="string">select</span>
+<span class="id">part_select_point_kbd</span>                  <span class="string">click on</span>
+<span class="id">help_radardish</span>                     <span class="string">You may <span class="inc">[part_select_point]</span> the Radar Dish to take control of it.</span>
+<span class="comment"># The above lines will result in the printed text:</span>
+<span class="comment">#   You may click on the Radar Dish to take control of it.</span>
+<span class="comment"># if the game is in KEYBOARD mode, or</span>
+<span class="comment">#   You may select the Radar Dish to take control of it.</span>
+<span class="comment"># if the game is not in KEYBOARD mode,</span>
+<span class="comment"># wherever "help_radardish" is referenced in the game.</span>
+</pre></div>
+
+<p>the same could have been accomplished by writing:</p>
+
+<div class="code"><pre>
+<span class="id">help_radardish</span>                     <span class="string">You may select the Radar Dish to take control of it.</span>
+<span class="id">help_radardish_kbd</span>                 <span class="string">You may click on the Radar Dish to take control of it.</span>
+</pre></div>
+
+<p>but there are likely to be many places where &#8220;select&#8221; and &#8220;click on&#8221; must be interchanged, so with the definition of <span class="id">part_select_point</span>, we have created an opportunity to reuse that replacement many times without doubling the number of entries in the strings file. Similarly:</p>
+
+<div class="code"><pre>
+<span class="id">tutorial_spoons</span>                    <span class="string">Grab the shiny spoons<span class="inc">[ part_tut_spoons_1]</span> and bend them<span class="inc">[ part_tut_spoons_2]</span>.</span>
+<span class="id">part_tut_spoons_1_kbd</span>                  <span class="string">by double-clicking on them</span>
+<span class="id">part_tut_spoons_2_kbd</span>                  <span class="string">by moving the mouse vigorously</span>
+</pre></div>
+
+<p>Where a string does not exist in the current mode, as is the case above if we&#8217;re in GAMEPAD mode (there is no <span class="id">part_tut_spoons_1_xin</span> or <span class="id">part_tut_spoons_1</span>), then the expansion of that text is empty, so the above example will produce &#8220;Grab the shiny spoons and bend them.&#8221;</p>
+
+<p>Generally, where mouse or keyboard controlsa re mentioned, they need to be moved into a keyboard-specific string, while maintaining information unrelated to specific controls in the generic string. Most gamepad-specific stuff is handled using short phrases and needn&#8217;t be incorporated into the body of full sentenses.</p>
+
+<h2>Conventions  <a name="conventions"></a> <a href="#top">^</a></h2>
+
+<p>Here are a few conventions that should be followed to increase consistency between translations.</p>
+
+<p>You may add new entries into the strings file in order to include them within other strings (see <a href="#expand">Text Expansions</a>). Should you do this, please use an identifier of the form &#8220;part_*&#8221;, so that it is clear that this entry is never referenced directly by the game. This is partly so that the intention is clear at a glanse, and partly to ensure that there are no name clashes with strings added to the game in the future.</p>
+
+<p>Where a &#8220;part_*&#8221; entry is only included in a single string, give it a name that reflects the string in which it is used and add it to the file close after the place that it is used. There are many examples of this in the english strings file.</p>
+
+<p>Please try to keep identifiers to a maximum length of 28 characters (32 with &#8220;_kbd&#8221; or &#8220;_xin&#8221; appended). This is partly because we are aiming to keep a consistent indentation for the translated strings and partly to ensure that the identifiers do not exceed the maximum length allowed for use within <a href="#expand">text expansions</a>. Some existing identifiers break this guideline.</p>
+
+<p>We use monospace (fixed-width) fonts when editing and viewing strings files and try to ensure that the translations all start aligned with each other, using spaces and not tabs. &#8220;part_*&#8221; entries have an extra 4 spaces of indentation so that they are easily distinguished. At least, try to maintain consistent indentation within groups of entries.</p>
+
+<p>Where a string consists of multiple sentences, these are separated with two spaces (where appropriate in the target language).</p>
+
+<h2>Tools <a name="tools"></a> <a href="#top">^</a></h2>
+
+<h3>test_translation.exe <a name="test_translation"></a> <a href="#top">^</a></h3>
+
+<p>There is a tool called test_translation.exe (or test_translation.tcl) which can help in determining whether or not a strings file is written correctly. This tool can generate a file (HTML) describing errors and potential errors that it finds. These may be invalid identifiers in string expansions, probably indicating a typo, or key expansions showing outside of KEYBOARD mode, indicating that a string may need to be spit into a KEYBOARD mode version and a generic one.</p>
+
+<p>This tool is especially useful while converting older translations, since the <a href="#modes">modes of play</a> were not implemented in the original files and picking up the places where changes are required is the main strength of the tool. The tool will also check a strings file against one called &#8220;english.txt&#8221; and return information about missing fields.</p>
+
+<p>CAVEAT: Be aware that this tool can only find particular kinds of error. For instance, it knows nothing about valid key expansions, so it will assume that they are correct.</p>
+
+<p>Due to a slight technical quirk in MS Windows<a href="#fn1"><sup>1</sup></a>, the simplest procedure for using test_translation.exe is as follows:</p>
+
+<ol>
+<li>Copy test_translation.exe to a folder which also contains a current &#8220;english.txt&#8221; and your current strings file.</li>
+<li>Right-click and drag test_translation.exe to an empty area in the same folder. Select &#8220;Create shortcut(s) here&#8221;.</li>
+<li>When you want to run a test, drag your strings file onto the shortcut you created.</li>
+<li>A file called translation_test_report.html should appear (or be overwritten if it was there already).</li>
+<li>Open translation_test_report.html in your favorite web browser.</li>
+</ol>
+
+<p>One advanced use of test_translation.exe is to add a full list of expanded strings to the output file. This can be achieved as follows:</p>
+
+<ol>
+<li>Do the same procedure as for the simple method.</li>
+<li>Right-click on the shortcut and select &#8220;Properties&#8221;.</li>
+<li>Add &#8220;&nbsp;-long&#8221; onto the end of the &#8220;target&#8221; text and click &#8220;OK&#8221;. My target looks like:
+<div class="note">&#8220;C:\Documents and Settings\James\Desktop\translation\test_translation.exe&#8221; -long</div></li>
+<li>Drag your strings file onto the modified shorcut as before.</li>
+</ol>
+
+<p>The program can happily be called from the command line, should you be comfortable with that method.</p>
+
+<div class="note"><a name="fn1"><sup>1</sup></a>Technical note (interest only): The shortcut to test_translation.exe is required to make Windows run the tool with the correct working directory. Windows sets the working directory to the one containing the program if it is double-clicked, but it is set to the user&#8217;s home directory if a file is dragged directly onto the program. A shortcut, by default, forces the working directory back to the one containing the executable. We want to find &#8220;english.txt&#8221; in the working directory, and the output file is created there.</div>
+
+<h3>translation_fields.pl <a name="test_translation"></a> <a href="#top">^</a></h3>
+
+<p>There is a Perl script called translation_fields.pl which is designed to find differences between versions of a strings file. It may be useful for discovering minor changes to &#8220;english.txt&#8221; which have yet to be reflected in other strings files. It requires Perl to run and is designed for use at the command prompt. It also does not have many useful features for handling the transition to <a href="#modes">modes of play</a>.</p>
+
+<p>This is considered an advanced tool, and at present should only be used to examine minor updates in strings files. When creating a new translation or performing a major update, I expect it to be less useful. I document it here simply to present it as &#8220;available&#8221; for the future.</p>
+
+<h2>Updating an Old Strings File <a name="update"></a> <a href="#top">^</a></h2>
+
+<p>Older strings files are different from the current version in two major respects. First, there have been a number of new strings added, which are used by new features in the game. Second, the concept of <a href="#modes">modes of play</a> has been added and some strings have been split into two versions (different depending on the method used to control the game).</p>
+
+<p>The tool called <a href="#test_translation">test_translation.exe</a> can be used to find most of the places that have been affected by these changes. While it is a good starting point, it is not perfect. It cannot find all kinds of errors, but will uncover the most common ones.</p>
+
+<p>It is important that you understand <a href="#expand">key and text expansions</a> and <a href="#modes">modes of play</a>. Please ask for clarification if needed. If you are unsure about something, no doubt this guide is lacking. The latest &#8220;english.txt&#8221; should provide a good source of examples.</p>
+
+<h3>Example: Updating french.txt <a name="update_ex1"></a> <a href="#top">^</a></h3>
+
+<p>Assuming that you have a working direcory containing &#8220;english.txt&#8221;, &#8220;french.txt&#8221; and &#8220;<a href="#test_translation">test_translation.exe</a>&#8221;, here is a run-through of how you would update french.txt.</p>
+
+<ol>
+<li>Drag french.txt onto your shortcut for test_translation.exe to generate translation_test_report.html</li>
+<li>Open (double-click) the HTML report file, english.txt and french.txt</li>
+<li><p>Looking at the report file, you should see something like the following:</p>
+
+<div class="note"><h1>Error Report for french.txt</h1>
+<h2>Looking for Errors in the Translation Strings</h2>
+<b><span style="color: green;">[ TESTING MODE: _kbd ]</span></b><br/>
+help_taskmanager_1 (line <span style="color: red;">10</span>) &#8212;&gt; Sur Darwinia, vous créez des choses en dessinant des figures dans le gestionnaire de programmes. Maintenez enfoncée la touche &lt;<b>ERROR:</b> alt&gt; pour y accéder.<br/>
+
+
+&#8230;<br/>
+<b><span style="color: green;">[ TESTING MODE: _xin ]</span></b><br/>
+help_camera_movement (line <span style="color: red;">6</span>) &#8212;&gt; Déplacez la caméra avec les touches &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt;, &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt;, &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt; et &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt;. Vous pouvez changer la hauteur de la caméra avec la molette de la souris, ou avec les touches &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt; et &lt;<b>ERROR:</b> KEY outside KEYBOARD mode&gt;.<br/>
+&#8230;
+<h2>Looking for Omissions</h2>
+Translation has unknown string: <span style="color: #f60;">control_alt</span><br/>
+&#8230;</div></li>
+<li>Notice that the report is split into sections. The first is a list of errors, the second a list of missing translations.</li>
+<li>Let&#8217;s look at the first error in the error section:
+<ul>
+<li>First, we have the name of the string which reported an error. In his case &#8220;help_taskmanager_1&#8221;, and it&#8217;s on line 10 in french.txt</li>
+<li>After the arrow is a view of the string, with the error marked. Here, we have got [ALT] appearing in the string without a corresponding translation named &#8220;alt&#8221; in the file.</li>
+<li>Refer to english.txt to find the updated version of the string &#8220;help_taskmanager_1&#8221;. This will likely be on a different line number than in french.txt.</li>
+</ul></li>
+</ol>
+
+<div class="code"><pre>
+<span class="id">help_taskmanager_1_kbd</span>             <span class="string">To create things in Darwinia you draw gestures in the Task Manager.  Hold down [KEYICONSTASKMANAGERDISPLAY] to access the Task Manager.</span>
+</pre></div>
+
+<p><style type="text/css">
+    a { text-decoration: none; font-weight: bold; color: #006; }
+    a:hover { color: #669; }
+    .code {
+        margin: 1.5em;
+        border: 1px #900 dashed;
+        background-color: #ffd;
+        padding: 0 1em 0 1em;
+        font-family: monospace;
+    }
+  .comment { color: #060; font-family: monospace; }
+    .id { color: #000; font-weight: bold; font-family: monospace; }
+    .string { color: #900; font-family: monospace; }
+    .key { color: #009; font-weight: bold; font-family: monospace; }
+    .inc { color: #009; font-weight: bold; font-family: monospace; }
+    .note {
+        margin: 1.5em;
+        border: 1px #999 dashed;
+        background-color: #ffd;
+        padding: 1em;
+    }
+</style></p>

@@ -1,0 +1,66 @@
+#ifndef _RAR_RARCOMMON_
+#define _RAR_RARCOMMON_
+
+#include "raros.h"
+#include "os.h"
+
+
+#ifdef RARDLL
+#include "dll.h"
+#endif
+
+#ifndef _WIN_CE
+#include "version.h"
+#endif
+#include "rartypes.h"
+#include "rardefs.h"
+#include "rarlang.h"
+#include "int64.h"
+#include "unicode.h"
+#include "errhnd.h"
+#include "array.h"
+#include "timefn.h"
+#include "headers.h"
+#include "rarfn.h"
+#include "pathfn.h"
+#include "strfn.h"
+#include "strlist.h"
+#include "file.h"
+#include "sha1.h"
+#include "crc.h"
+#include "rijndael.h"
+#include "crypt.h"
+#include "filefn.h"
+#include "filestr.h"
+#include "find.h"
+#include "scantree.h"
+#include "savepos.h"
+#include "getbits.h"
+#include "rdwrfn.h"
+#include "options.h"
+#include "archive.h"
+#include "match.h"
+#include "cmddata.h"
+#include "filcreat.h"
+#include "consio.h"
+#include "system.h"
+#include "isnt.h"
+#include "log.h"
+#include "rawread.h"
+#include "encname.h"
+#include "rarresource.h"
+#include "compress.h"
+#include "rarvm.h"
+#include "model.h"
+#include "unpack.h"
+#include "extinfo.h"
+#include "extract.h"
+#include "list.h"
+#include "rs.h"
+#include "recvol.h"
+#include "volume.h"
+#include "smallfn.h"
+#include "ulinks.h"
+#include "global.h"
+
+#endif

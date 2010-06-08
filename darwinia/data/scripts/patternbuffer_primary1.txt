@@ -1,0 +1,32 @@
+
+# blueprint store 1
+# blueprint consoles 32  3   23  31
+# trunk port biosphere_gamma  36
+
+ClearHighlights
+CamBuildingFocus            1   800     -200
+
+Say                         yardend_11
+Say                         yardend_12
+Say                         patternbuffer_primary_1
+
+WaitSay
+
+Highlight                   32
+Highlight                   3
+Highlight                   23
+Highlight                   31
+
+CamMove                     intro1      3
+WaitCam
+CamMove                     intro2      30
+
+Say                         patternbuffer_primary_2
+Say                         patternbuffer_primary_3
+Say                         patternbuffer_primary_4
+Say                         patternbuffer_primary_5
+
+WaitSay
+ClearHighlights
+CamReset
+

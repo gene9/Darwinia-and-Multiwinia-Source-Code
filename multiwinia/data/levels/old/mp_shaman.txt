@@ -1,0 +1,82 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	Shaman
+	PopulationCap	-1
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2393
+	worldSizeZ 2393
+	cellSize 16.00
+	outsideHeight -10.00
+	landColourFile landscape_desert.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   180   0.00    107    622  2.00   3.00    200      1  69342   0.50     0
+	   212   0.00    516    622  2.00   3.00    200      1 157493   0.50     0
+	   758   0.00   1670    622  2.00   3.00    270      1 196961   0.50     0
+	   674   0.00   1257    622  2.00   3.00    270      1 245610   0.50     0
+	   866   0.00     72    622  2.00   3.00    200      1 429541   0.50     0
+	  1194   0.00    233    622  2.00   3.00    200      1 534485   0.50     0
+	  1285   0.00    874    622  2.00   3.00    200      1 655424   0.50     0
+	  1527   0.00   1074    622  2.00   3.00    200      1 830059   0.50     0
+	  1703   0.00   1462    622  2.00   3.00    200      1 961809   0.50     0
+	   601   0.00    589    814  2.00   3.00    200      1 374745   0.50     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.57   0.39  -0.72     1.05   0.81   0.81
+	  0.27   0.00  -0.96     1.05   1.02   0.72
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Incubator           0       558.60  434.59  0       -0.03   1.00    1          500
+	Incubator           1       1537.99 607.66  3       0.83    -0.56   1          500
+	Incubator           2       2009.00 1621.69 2       -0.67   -0.75   1          500
+	Incubator           3       1083.06 1861.05 1       -0.13   -0.99   1          500
+	Portal              4       570.86  715.10  1       1.00    0.00    0       
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player2         2103.46  366.44 1570.15 -0.59 -0.80 -0.03 -0.80 0.59 -0.03
+	player1         1004.81  347.99 1976.18 0.20 -0.79 -0.58 0.26 0.61 -0.75
+	player0          321.25  354.35  415.97 0.60 -0.75 0.28 0.67 0.67 0.32
+	player3         1714.85  378.36  458.43 -0.49 -0.78 0.40 -0.60 0.63 0.50
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	Shaman           0   458.4   494.4      1    0      -1     6.0     0.0     0.0   -1   -1
+	Shaman           1  1028.7  1864.9      1    0      -1     6.0     0.0     0.0   -1   -1
+	Shaman           2  1932.0  1551.6      1    0      -1     6.0     0.0     0.0   -1   -1
+	Shaman           3  1609.1   566.8      1    0      -1     6.0     0.0     0.0   -1   -1
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

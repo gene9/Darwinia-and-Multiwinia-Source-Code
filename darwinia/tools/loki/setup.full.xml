@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="yes"?>
+<install product="darwinia"
+	 desc="Darwinia"
+	 version="SHORT_VERSION"
+         promptbinaries="yes"
+	 splashpos="top">
+  <cdrom id="cd" name="Darwinia CD">gamefiles/main.dat</cdrom>
+  <readme>
+    README
+  </readme>
+  <eula>
+   license.txt
+  </eula>
+  <option required="true">Darwinia Linux client
+    <binary arch="x86" libc="any" symlink="darwinia" play="no" icon="darwinian.png">
+      darwinia
+    </binary>
+    <files mode="755">
+      lib/darwinia.bin.x86
+    </files>
+    <files>
+      lib/patch.dat
+      lib/libSDL-1.2.so.0
+      lib/libgcc_s.so.1
+      lib/libogg.so.0
+      lib/libvorbis.so.0
+      lib/libvorbisfile.so.3
+      lib/open-www.sh
+      darwinian.png
+    </files>
+  </option>
+  <option size="28M">CD data files
+    <files cdromid="cd" path="lib" srcpath="gamefiles">
+      main.dat
+      sounds.dat
+    </files>
+  </option>
+</install>

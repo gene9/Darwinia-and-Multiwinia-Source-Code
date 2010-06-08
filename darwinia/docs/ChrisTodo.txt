@@ -1,0 +1,4 @@
+
+- The objectives screen should display the counters.  Eg Number of darwinians
+  in the safe area, number of refined primitives etc
+

@@ -1,0 +1,98 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	Assault
+	PopulationCap	-1
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 3000
+	worldSizeZ 3000
+	cellSize 14.00
+	outsideHeight -10.00
+	landColourFile landscape_desert.bmp
+	wavesColourFile waves_desert.bmp
+	waterColourFile water_icecaps.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    62 -10.00     46   2900  1.20   1.00    200      1      1   1.00     5   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBFBEBDAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKBDBDBGBDBEBAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBDBDBMCABJBEBEBEANAAAAAAAABDBBABAAAAAAAAAAAAAAAAAAAAAAAAAAAGBDBDBNCOCFBOCHBKBEBEAAAAAAAAAHAEAIAIAAAAAAAAAAAJAJAABAAIAAAAAKBECIDECHDECGBMBEBEAMAAAAAFAAAAAAAJADAAAAAAAAAABBBJAAAIAAAAAAAMBFDBEADGCPBGBEBDANAAAAAHBFAJAAAAAOAIAAAAAAAAAAAKBLAHAAAAAAAAAABEBGBKCOCMBFBEAEAAAAAAACBHCDANAAAAAAAAAAAAAAAAAHALACAAAAAAAAAAAHBEBFCDBJBDAFAAAAAAAAALBCALAAAAAAAAAAAAAAAAAAAAAAADAJBAABAAAAAOBCBDCBBLBEAAAAAAAAAAAJAHAAAAAAAAAAAAAAAAAAAAAAAAACAKCNBEAAAAAHBFBECPCHBEAAAAAAAAAAAOAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAGAAAAAGAOBLDIBNDFBEAAAAAAAHAOAAAAAAAAAAAAAAAAABABACACAAAAAAAAAAAABGPPNPCACABJDBLLDLAAAAAAAAAAAAAAAAAAAAAAAOBFBHBIAHADAAAAAAAAAKPPPPIKBEBMBMCBPPPFAAAAAAAAAAAAAPBEBEANAABEBJCFBEAKADAAAAAAAAHBPPKNBIBICDBNBNFFNABDAGABAGAGBLCDBHBKBEAABECHDHBEBEAOALBCBDBCGMKMCFBLBMCDCDBIBFDHBDANBDBFBLCBDHCLBIBDACBECEDCBOCHCDCCBMBMBOBKBDBKCFDBCNBPBECABNBLBEBOCLDDCFDCCPBGBFANBFCBDBBKDFENCOBJBKCACFBLCADFEFCOBLCODKBLBEBEBHCACLCJDOEEBIBEANBHDKDNCBBKCKBMBDBDDPFBBIBEBKCCBPCPCJCBBEAMBDBEBECABOBPCPBJBGAMBMDCCNCCBEAAAAAAAAGHPPODDBBIBNCJDCDBMCPCCNAAAAAAAAAGBDBPBLBDADBDBOCEBEAOAAAAAAAAACMFPPIPBFBLBJGBPPPPLIAAAAAAAAAAAAAAAHAHAIAABEBICFBHAIAAAAAAAAAAAEFEDMCDCFCDJOPADGAAAAAAAAAAAAAAAAAAAAAAAAAABEBEBEAAAAAAALAHAAAAAABKCGCLBECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAABBBKBGBFBDAAAAAAAAAIAJAAAIAIALAGAAAAAAAAAAAAAAAAAAAFBDAHAAAAAABECLCIBJADAAAAAAAAALBAAAAIAOCAAIAAAAAAAAAAAAAHAAAAANAPAAAAAAACBDCKDECCAGAAAAAAAAAFAPAEAAAAANABABAAAAAAAAAHBIBDAAACAFAAAAAAAHBEBODHCGANAHAAAAAAAAAJAIADABACAIADAAAAAAAAAABDBMAAAAACABAAAABEBFBNCMCICCBDAAAAAAAAAAACAPBKBEANAAAAAAAAAAAAAAAAAAAAADADAAANBGCHDDCGCICKBEAJAAAAAAAAAAAJAPAEACAAAAAAAAAAAAAAAAAAAAAAAAAABDBMDCEODMCLCDBDAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBEBJCGCFCEBJBEALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKBEBGBIBBBDAOAAAAAAAAAAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.02   0.99   0.16     0.51   0.51   0.22
+	 -0.88   0.00   0.47     2.00   2.00   2.00
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	GunTurret           0       1865.56 1422.27 1       1.00    0.00    0       
+	GunTurret           1       1867.95 1623.91 1       1.00    0.00    0       
+	GunTurret           2       1634.04 1043.07 1       1.00    0.00    0       
+	GunTurret           3       1405.66 1065.44 1       1.00    0.00    0       
+	GunTurret           4       1009.59 1439.43 1       1.00    0.00    0       
+	GunTurret           5       1016.92 1632.74 1       1.00    0.00    0       
+	GunTurret           6       1528.23 1959.19 1       0.97    -0.25   0       
+	GunTurret           7       1285.32 1953.03 1       1.00    0.00    0       
+	TrunkPort           8       2736.93 1517.24 1       -1.00   -0.04   1       -1      
+	TrunkPort           9       1423.70 2766.64 1       -0.13   -0.99   1       -1      
+	TrunkPort           10      1566.81 176.23  1       -0.03   1.00    1       -1      
+	TrunkPort           11      202.50  1584.00 1       1.00    0.00    1       -1      
+	AISpawnPoint        12      1419.98 2734.36 0       0.07    -1.00   0       -1     12     50     20     -1     -1    
+	AISpawnPoint        13      225.31  1587.69 2       1.00    0.00    0       -1     12     50     20     -1     -1    
+	AISpawnPoint        14      1561.38 202.95  0       0.07    1.00    0       -1     12     50     20     -1     -1    
+	AISpawnPoint        15      2709.86 1515.81 2       -1.00   0.01    0       -1     12     50     20     -1     -1    
+	AITarget            16      1416.87 2722.86 1       1.00    0.00    0       -1    -1.00
+	AITarget            17      1401.74 2256.68 1       1.00    0.00    0       -1    0.00
+	AITarget            18      1423.94 1533.87 1       1.00    0.00    0       -1    0.00
+	AITarget            19      1556.09 251.84  1       1.00    0.00    0       -1    -1.00
+	AITarget            20      1499.04 720.94  1       1.00    0.00    0       -1    0.00
+	AITarget            21      1658.75 714.44  1       1.00    0.00    0       -1    0.00
+	AITarget            22      1343.81 697.36  1       1.00    0.00    0       -1    0.00
+	AITarget            23      242.34  1595.67 1       1.00    0.00    0       -1    -1.00
+	AITarget            24      705.44  1564.20 1       1.00    0.00    0       -1    0.00
+	AITarget            25      711.26  1668.86 1       1.00    0.00    0       -1    0.00
+	AITarget            26      717.51  1435.19 1       1.00    0.00    0       -1    0.00
+	AITarget            27      1259.70 2241.17 1       1.00    0.00    0       -1    0.00
+	AITarget            28      1534.96 2245.73 1       1.00    0.00    0       -1    0.00
+	AITarget            29      2688.53 1520.48 1       1.00    0.00    0       -1    -1.00
+	AITarget            30      2162.12 1527.12 1       1.00    0.00    0       -1    0.00
+	AITarget            31      2154.56 1648.24 1       1.00    0.00    0       -1    0.00
+	AITarget            32      2165.13 1420.01 1       1.00    0.00    0       -1    0.00
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	Darwinian        1  1108.7  1559.3     40    0      -1    75.0     0.0     0.0   -1   -1
+	Darwinian        1  1405.5  1894.2     40    0      -1    75.0     0.0     0.0   -1   -1
+	Darwinian        1  1509.1  1148.1     40    0      -1    75.0     0.0     0.0   -1   -1
+	Darwinian        1  1804.2  1533.1     40    0      -1    75.0     0.0     0.0   -1   -1
+	Darwinian        1  1474.0  1565.3     40    0      -1   200.0     0.0     0.0   -1   -1
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

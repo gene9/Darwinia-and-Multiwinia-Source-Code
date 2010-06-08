@@ -1,0 +1,59 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           -528.58  499.81   52.77 0.10 -0.93 0.35 0.26 0.36 0.90
+	obj1            1993.73  481.84 1379.24 -0.43 -0.34 0.84 -0.16 0.94 0.31
+	obj2             564.68  206.27 1534.45 0.47 -0.16 0.87 0.08 0.99 0.14
+	intro1           305.70  362.92 -107.36 0.44 -0.23 0.87 0.10 0.97 0.20
+	tutorial1        335.41  204.98  157.54 0.25 -0.63 0.73 0.21 0.77 0.60
+	tutorial2        917.06  129.02  610.73 -0.50 -0.56 -0.66 -0.34 0.83 -0.44
+	tutorial3        798.89   67.28  563.16 0.57 -0.35 -0.74 0.22 0.94 -0.28
+	tutorial4        911.82  112.43  461.59 -0.07 -0.30 0.95 -0.02 0.95 0.30
+	tutorial5        861.73  340.62  785.18 -0.09 -0.73 0.68 -0.09 0.69 0.72
+	tutorial6       1051.18  256.30  305.49 -0.40 -0.65 0.65 -0.33 0.76 0.55
+	tutorial7        789.49  175.31  991.06 -0.61 -0.56 0.56 -0.41 0.83 0.38
+	intro2           791.54  166.52  331.00 0.55 -0.58 0.60 0.40 0.81 0.43
+	gamestart        154.44  223.15  132.17 0.68 -0.24 0.69 0.17 0.97 0.17
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ResearchItem        101     2534.33 1998.19 1       -0.19   -0.23   0       AirStrike      1
+	ScriptTrigger       100     1914.35 2408.80 0       1.00    0.00    0       89     67.60  pixelmines_yardport Darwinian
+	ScriptTrigger       99      1430.11 1004.93 0       1.00    0.00    0       -1     79.70  mine_minehelp.txt Darwinian
+	Incubator           97      833.43  473.72  1       0.07    1.00    1            0
+	Incubator           108     1192.72 2329.05 1       -0.13   -0.99   1            0
+	Incubator           12      602.96  1141.27 1       1.00    0.00    1            0
+	ScriptTrigger       120     549.17  400.58  1       1.00    0.00    0       -1     100.00 mine_demo_intro.txt always
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Virii            1   953.8   472.6     40    1      -1   156.8     0.0     0.0
+	Virii            1   798.9  1137.8     40    1      -1   200.0     0.0     0.0
+	Virii            1  1654.5   617.4     40    1      -1   145.4     0.0     0.0
+	Centipede        1   776.7  1001.9     16    1      -1   182.9     0.0     0.0
+	Virii            1  1223.0  1096.8     20    1      -1   103.5     0.0     0.0
+	Spider           1  1627.1  2027.8      1    0      -1   200.0     0.0     0.0
+	Spider           1   874.4  1917.1      2    0      -1   200.0     0.0     0.0
+	Virii            1  1548.4  2070.7     50    1      -1   258.4     0.0     0.0
+	Centipede        1  1271.8  2033.8     20    1      -1   287.8     0.0     0.0
+	Virii            1  1271.6   880.7     20    1      -1   113.3     0.0     0.0
+	Virii            1   849.6  2003.0     61    1      -1   215.0     0.0     0.0
+	SporeGenerator   1  1464.2  2096.3      1    0      -1   213.1     0.0     0.0
+	SporeGenerator   1   801.4  1891.6      1    0      -1   306.0     0.0     0.0
+	Virii            1  1065.7  2290.3     40    1      -1   144.0     0.0     0.0
+	Virii            1  2375.1   337.7     40    1      -1   200.0     0.0     0.0
+	Virii            1  2442.3   584.7     40    1      -1   200.0     0.0     0.0
+	Spider           1  2458.8   511.8      2    0      -1   200.0     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :mine,90 	pixelmines_objective1	mine_primary1.txt
+	BuildingOnline :mine,89 	pixelmines_objective2	mine_primary2.txt
+PrimaryObjectives_EndDefinition

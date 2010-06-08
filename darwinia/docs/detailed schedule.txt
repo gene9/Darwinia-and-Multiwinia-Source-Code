@@ -1,0 +1,134 @@
+        
+======
+CODING
+======
+            
+- Save system                                                               
+    Dynamic building data to be saved:
+        pattern buffer                      game file
+        Officer absorb shields
+
+- Sound System                                                              
+    Stream music / ambient oggs rather than caching
+    Stereo support for music
+    Rename CachedSampleHandle to SampleHandle
+        permit reading of oggs without cache use
+            
+- (OPTIONAL) Pause while options menus are up
+
+- (OPTIONAL) Intro bootloaders                                                
+    - Subversion mind control signals
+    - Uplink start seq
+    - Black&White
+
+- (OPTIONAL) Rewrite font outline renderer for efficiency
+
+
+======
+THINGS
+======
+                                                         
+SQUADDIE            - Decent death animation (replace shape explosion)
+      
+OFFICER             - Flag is bugged at low frame rates
+
+RESEARCH            - Decent capture animation
+
+
+=========
+CUTSCENES
+=========
+
+- Intro cutscene should always play when a new profile is created
+
+
+==================
+CONTROLS THAT SUCK
+==================
+
+- "Too many programs running" shouldn't play the gesture success sound
+
+- Radar Dish control : no guides for what to aim for
+
+- Cannon: aren't sensible enough when firing...they often slaughter friendly units or try to fire through hills
+- Cannon: are hard to fire upwards, camera bounces around a lot
+- Cannon: Selection causes the camera to raise up a lot
+
+- Officer: Cancelling orders doesn't do anything immediately - some people remain looking until they are sure
+    no more orders come out of the officer
+
+
+====
+BUGS
+====
+
+- Fix ding sound when ALT-ASWD is pressed
+- Fix alt-tab not working for some people
+    THIS IS CAUSED BY WINXP POWER TOOLS, which rebinds ALT-TAB in some way
+- Anthill sometimes saves ant population as a silly number, which causes a crash on reloading
+- Crashes reported on biosphere...memory leak?
+- Spam mail graphical effect is invisible when Christmas mode is running
+- Radar Dish : When reloaded from save game, takes several seconds to re-align
+
+- If you have an officer on FOLLOW and he goes into a tp, it takes sometime for the DGs 
+    following him to realise.  Sometimes they go into the water
+- http://forums.introversion.co.uk/darwinia/viewtopic.php?t=2100
+
+=========
+TODO LIST
+=========
+
+- Loading a savegame that used a mod causes a crash
+- Invert Mouse Option?
+
+- Add acosfSafe and asinfSafe (JOHNNY)
+
+- (POST GOLD) Bonus Material for the website   
+        1 - before launch
+        2 - at launch
+        3 - after launch
+                    
+        STORY
+            1.Adverts from the manual eg the Protologic 68000 ad
+
+        PROMOS
+            1.Post Card
+            1.Flyers
+
+        FUTUREWAR
+            3.Old versions of Darwinia                                    (eg the 4 way battle demo, or an early alpha of the mine)
+
+        DEVELOPMENT
+            3.Concept document                                            (there are two, I could scan them, about 20 pages)
+        
+- UI improvements
+    Selecting a unit already causes yellow arrows to appear.  These should start larger and animate
+        down to the current size, before fading out.  A selection sound should play.
+    Deselecting a unit should run the animation in reverse, with a deselection sound.    
+    Clicking somewhere that fails (eg creating a unit, or navigating an impossible route) should play a
+        failure sound.
+    Add instant animation when officer orders are cleared
+    Allow rebinding of alt-tab, ctrl-c
+
+- Translation System working
+    Use English strings as fallback if they aren't in translated file
+    Issues:
+        - "none" is used a possible mod name in the codebase
+        - "none" and "random" are used as possible bootloader names
+        - control_bindings.cpp at the bottom. Event names like "Left", "Zoom" are statically defined
+            These strings are used in building the prefs names.
+    Missed out:
+        Sound Stats Window
+        Sound Parameter Window
+        Sound Editor Window
+        Sound Profile Window
+        Profile Window
+        Pokey Window
+        Network Window
+        Input Logger
+        Grabber Window
+        Gesture Window
+        Debug Menu
+        Cheat Window
+        Camera Anim Window
+

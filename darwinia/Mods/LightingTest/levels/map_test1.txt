@@ -1,0 +1,45 @@
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   612   0.00    660   1000  1.20   1.00    200      0      1   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.41   0.45   0.79     0.00   1.30   0.00
+	  0.61   0.10  -0.79     1.30   0.00   0.00
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	RadarDish           0       1380.35 906.88  1       -0.75   0.66    1       
+	RadarDish           1       1339.32 845.05  1       -0.01   -1.00   1       
+	ResearchItem        2       1301.38 800.23  1       -0.72   -0.37   0       AirStrike      1
+	TrunkPort           3       1293.71 981.94  1       0.90    0.43    1       -1      
+	TrunkPort           4       1178.24 892.44  1       0.54    -0.84   1       -1      
+	TrunkPort           5       804.46  1405.59 1       -0.85   -0.53   1       -1      
+	TrunkPort           6       987.10  1502.67 1       0.41    -0.91   1       -1      
+	AntHill             7       1340.33 1350.15 1       1.00    0.00    0       0
+	AntHill             8       1207.21 1352.90 1       0.22    -0.98   0       0
+	ControlTower        9       1387.15 1025.91 1       1.00    0.00    1           -1
+	ControlTower        10      1136.96 1252.58 1       -0.99   0.16    1           -1
+Buildings_EndDefinition
+

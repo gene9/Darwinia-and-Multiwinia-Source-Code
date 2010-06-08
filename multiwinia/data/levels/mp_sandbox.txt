@@ -1,0 +1,76 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	none
+	PopulationCap	2500
+	NumPlayers	2
+	Difficulty	basic
+	AttackingTeams	1 
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 3290
+	worldSizeZ 3290
+	cellSize 20.35
+	outsideHeight -15.39
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   530  -3.08    501   2224  0.57   1.12    398      0 376701   1.00     3   ALAAAAAAAAFPAAAADODEAAAAAAEFAAAAAAAAAAAAAAAAAAAAAAAACEAAAADOAAAAAAEBBOAAEAAAAAAACIAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.85   0.52   0.09     1.24   1.16   1.04
+	 -0.66   0.30  -0.69     1.04   1.16   1.24
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Incubator           1       1581.82 1878.03 0       -0.23   -0.97   1          500
+	ControlTower        3       1657.84 1892.37 0       1.00    0.00    1            1
+	Statue              4       1572.93 1668.94 0       1.00    0.00    0       
+	Wall                0       1588.06 1503.99 255     1.00    0.00    0       
+	Wall                2       1547.37 1557.64 255     0.27    0.96    0       
+	Wall                5       1476.64 1539.70 255     0.66    -0.75   0       
+	AITarget            6       1523.93 1442.78 255     1.00    0.00    0       -1    0.00
+	AITarget            7       1382.96 1490.93 255     1.00    0.00    0       -1    0.00
+	AITarget            8       1512.90 1648.23 255     1.00    0.00    0       -1    0.00
+	AITarget            9       1674.68 1609.76 255     1.00    0.00    0       -1    0.00
+	AITarget            10      1704.68 1389.92 255     1.00    0.00    0       -1    0.00
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start            916.18  140.36 1678.35 0.93 -0.21 -0.30 0.20 0.98 -0.06
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :sandbox,2 
+	BuildingOnline :sandbox,2 
+PrimaryObjectives_EndDefinition

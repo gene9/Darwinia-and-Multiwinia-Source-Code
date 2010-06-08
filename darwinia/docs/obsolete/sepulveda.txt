@@ -1,0 +1,46 @@
+
+=============
+= SEPULVEDA =
+=============
+
+    Recorded input for tutorials
+    Put text on screen from script
+    Give mission briefings at start of map
+    
+    Cut scenes and flashbacks in Locations and Global map
+    "Flashback" video effect
+
+    - Text renderer, icon, graphical effect etc when he talks to you
+    - Handle long strings, next lines, queues of text etc
+
+
+=======================
+TUTORIALS AND BRIEFINGS
+=======================
+
+    - Script file (possibly part of mission)
+    - List of textIDs for his spoken text
+    - Interleaved with WAIT conditions, eg WAITFORSUMMONSQUAD
+    - Smooth camera control
+    - Playback of recorded mouse input for demos of gesture system
+    - Tool to record mouse input
+
+
+====================
+INFORMATION MESSAGES
+====================
+
+    - Locked down onto a level file
+    - Give small bits of info when close enough
+    - Eg "Power station is online, congratulations"
+
+
+========================
+CUTSCENES AND FLASHBACKS
+========================
+
+    - Full recording of mouse input AND server history
+    - Playback must be framerate independant
+    - Need scripted control of global map
+        Camera
+        Entering level / leaving level

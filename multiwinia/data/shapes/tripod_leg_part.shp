@@ -1,0 +1,50 @@
+Fragment: LegPart
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: -0.02 0.00 -0.00
+	Positions: 11
+		0:   0.000   0.000   0.000
+		1:   0.150   0.000   0.000
+		2:  -0.075   0.000  -0.130
+		3:  -0.075   0.000   0.130
+		4:   0.514   7.938   0.000
+		5:  -0.257   7.938  -0.445
+		6:  -0.257   7.938   0.445
+		7:   0.174  15.875   0.000
+		8:  -0.087  15.875  -0.150
+		9:  -0.087  15.875   0.150
+		10:   0.000  15.875   0.000
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 11    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   1   0
+		3:   3   0
+		4:   5   0
+		5:   4   0
+		6:   6   0
+		7:   8   0
+		8:   7   0
+		9:   9   0
+		10:  10   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 29
+			v4   	v4   	v6   	v1   	v3   	v0   	v3   	v2   	v3   	v5   	v6   	v8   	v9   	v9   
+			v0   	v0   	v0   	v1   	v2   	v4   	v5   	v7   	v8   	v10   	v9   	v7   	v9   	v4   
+			v6   
+
+Marker: MarkerEnd
+	ParentName: sceneroot
+	Depth: 1
+	Up:    -1.00 -0.00 -0.00
+	Front: -0.00  1.00  0.00
+	Pos:    0.00 15.87 -0.00
+	MarkerEnd
+
+
+

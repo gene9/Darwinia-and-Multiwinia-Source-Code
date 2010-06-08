@@ -1,0 +1,27 @@
+
+========================
+RESEARCH AND DEVELOPMENT
+========================
+
+    Takes place on LAB map
+    Player input to determine Sepulvedas research direction
+    Status screens
+    Continues to progress while you aren't present
+
+
+
+
+
+
+Squad
+
+Engineer
+
+Grenade             Rocket                  Airstrike
+
+Green AI            Call to arms            Persuadatron
+
+Shield
+
+Green Vehicle
+

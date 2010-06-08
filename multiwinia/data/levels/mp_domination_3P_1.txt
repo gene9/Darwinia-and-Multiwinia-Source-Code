@@ -1,0 +1,130 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	Domination 
+	PopulationCap	1800
+	DefenderPopulationCap	-1
+	NumPlayers	3
+	PlayTime	10
+	Difficulty	basic
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2345
+	worldSizeZ 2345
+	cellSize 16.00
+	outsideHeight -10.00
+	maxHeight 0.00
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_containmentfield.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    23  -5.00     14   2286  1.20   2.29    200      1 279209   0.88     2   AAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.07   0.35   0.93     1.00   1.00   1.00
+	 -0.04   0.43   0.90     2.77   1.07   0.00
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	SpawnPoint          4       302.19  1663.32 1       0.97    -0.25   0       
+	SpawnPoint          5       460.25  1759.06 1       -0.23   -0.97   0       
+	SpawnPoint          6       365.97  675.49  0       0.73    0.68    0       
+	SpawnPoint          7       533.34  586.78  0       -0.28   0.96    0       
+	SpawnPoint          8       1461.07 1287.52 2       -0.79   -0.61   0       
+	SpawnPoint          9       1480.37 1102.35 2       -0.63   0.78    0       
+	SpawnPoint          10      238.17  1167.52 255     1.00    0.00    0       
+	SpawnPoint          11      1033.85 1683.67 255     -0.37   -0.93   0       
+	SpawnPoint          12      1082.49 673.36  255     -0.51   0.86    0       
+	SpawnPointMaster    13      1589.27 2096.54 255     1.00    0.00    1       14    
+	SpawnLink           14      1502.08 1853.70 255     1.00    0.00    0       23    15    
+	SpawnLink           15      1505.15 1556.22 255     1.00    0.00    0       17    16    
+	SpawnLink           16      1592.01 1212.68 255     1.00    0.00    0       9     8     
+	SpawnLink           17      1301.58 1520.41 255     1.00    0.00    0       18    
+	SpawnLink           18      1154.53 1186.52 255     1.00    0.00    0       19    53    
+	SpawnLink           19      1082.89 858.08  255     1.00    0.00    0       12    20    
+	SpawnLink           20      794.56  832.28  255     1.00    0.00    0       26    21    
+	SpawnLink           21      706.42  639.74  255     1.00    0.00    0       22    
+	SpawnLink           22      469.55  416.84  255     1.00    0.00    0       7     6     
+	SpawnLink           23      1216.66 1898.71 255     1.00    0.00    0       24    
+	SpawnLink           24      949.69  1896.72 255     1.00    0.00    0       11    25    
+	SpawnLink           25      353.60  1935.81 255     1.00    0.00    0       5     4     
+	SpawnLink           26      483.29  911.74  255     1.00    0.00    0       27    
+	SpawnLink           27      231.26  973.93  255     1.00    0.00    0       10    
+	StaticShape         28      304.60  1980.73 255     -0.13   0.99    0         1.00  rockhead.shp  
+	StaticShape         29      408.85  368.73  255     -0.23   -0.97   0         1.00  rockhead.shp  
+	StaticShape         30      1968.06 1234.46 255     1.00    -0.10   0         1.00  rockhead.shp  
+	AITarget            31      1409.13 1195.88 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            32      1051.42 730.09  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            33      1005.79 1634.08 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            36      310.71  1169.88 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            40      554.48  1177.31 255     1.00    0.00    0       -1    0.00 1     
+	Tree                45      1650.75 1522.13 255     1.00    0.00    0       69.88   10.00   1.14    1.00    7       37137   1681873407  624669789   0       0       0       
+	Tree                46      1783.62 1570.01 255     1.00    0.00    0       62.69   10.00   1.14    1.00    7       37146   1681873407  624669789   0       0       0       
+	Tree                47      2006.84 457.92  255     1.00    0.00    0       63.04   10.00   1.14    1.00    7       37177   1681873407  624669789   0       0       0       
+	Tree                48      1932.71 982.00  255     1.00    0.00    0       70.58   10.00   1.14    1.00    7       37198   1681873407  624669789   0       0       0       
+	Tree                49      1793.31 842.47  255     1.00    0.00    0       78.12   10.00   1.14    1.00    7       37216   1681873407  624669789   0       0       0       
+	Tree                50      522.39  319.93  255     1.00    0.00    0       78.47   10.00   1.14    1.00    7       37247   1681873407  624669789   0       0       0       
+	Tree                51      594.02  1326.99 255     1.00    0.00    0       88.48   10.00   0.76    1.05    7       52598   1681873407  624669789   0       0       0       
+	SpawnPoint          53      825.27  1180.02 255     -1.00   0.01    0       
+	AITarget            58      766.13  1187.32 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            37      913.24  936.43  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            38      413.27  1663.21 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            39      460.41  674.20  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            55      892.03  1409.60 255     1.00    0.00    0       -1    0.00 1     
+	Tree                42      647.15  1386.54 255     1.00    0.00    0       75.39   10.00   0.76    1.05    7       17261   1681873407  624669789   0       0       0       
+	Tree                2       624.97  1036.91 255     1.00    0.00    0       77.51   10.00   0.76    1.05    7       17410   1681873407  624669789   0       0       0       
+	Tree                3       674.44  982.23  255     1.00    0.00    0       86.64   10.00   0.76    1.05    7       17428   1681873407  624669789   0       0       0       
+	Tree                0       1038.46 1186.78 255     1.00    0.00    0       97.51   10.00   0.76    1.05    7       17718   1681873407  624669789   0       0       0       
+	Tree                1       1033.60 1113.82 255     1.00    0.00    0       97.93   10.00   0.76    1.05    7       17749   1681873407  624669789   0       0       0       
+	StaticShape         35      668.17  1167.83 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         34      828.01  1029.59 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         43      970.32  1183.07 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         44      819.00  1315.46 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         52      707.82  1272.31 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         54      927.61  1285.22 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         56      924.76  1073.02 255     1.00    0.00    0         1.00  temple4.shp  
+	StaticShape         57      719.37  1069.47 255     1.00    0.00    0         1.00  temple4.shp  
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0          209.03  335.68  404.46 0.58 -0.42 0.70 0.27 0.91 0.32
+	player1          180.05  321.87 1984.17 0.55 -0.42 -0.72 0.26 0.91 -0.33
+	player2         1774.94  291.56 1151.63 -0.91 -0.42 -0.06 -0.41 0.91 -0.02
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+	Darwinian        0   458.1   642.2     40    0      -1    42.7     0.0     0.0   -1   -1    0
+	Darwinian        1   375.5  1724.5     40    0      -1    42.7     0.0     0.0   -1   -1    0
+	Darwinian        2  1417.6  1200.5     40    0      -1    42.7     0.0     0.0   -1   -1    0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

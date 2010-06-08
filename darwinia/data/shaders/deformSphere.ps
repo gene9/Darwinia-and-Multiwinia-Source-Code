@@ -1,0 +1,17 @@
+#include "globals.h"
+
+sampler deformSampler;
+float   time;
+float2  center;
+float   invSize;
+float   height;
+float   aspect;
+
+float4 ps_main(in float2 iUv : TEXCOORD0) : COLOR
+{
+	float2 dir = (iUv-center);
+	float dist = length(dir*float2(aspect,1));
+	float2 delta = tex2D(deformSampler,float2(time,dist*invSize)).x*height/dist*dir;
+	delta *= DEFORM_PRECISION;
+	return float4(delta.x,delta.y,-delta.x,-delta.y);
+}

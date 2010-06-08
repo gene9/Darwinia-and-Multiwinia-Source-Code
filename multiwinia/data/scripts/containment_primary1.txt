@@ -1,0 +1,24 @@
+
+Highlight           82
+Highlight           83
+Highlight           84
+CamBuildingFocus    82  200     50
+
+Say                 containment_primary_1
+Say                 containment_primary_2
+Say                 containment_primary_3
+
+WaitSay
+#Highlight           69
+CamMove             safearea    13
+
+Say                 containment_primary_4
+
+WaitSay
+CamBuildingFocus    69   700     100
+
+Say                 containment_primary_5
+
+WaitSay
+ClearHighlights
+CamReset

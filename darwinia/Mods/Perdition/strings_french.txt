@@ -1,0 +1,89 @@
+#############################
+# Jailbreak
+#############################
+
+jailbreak_objective1	3 groupes de Darwiniens sont détenus dans ce secteur. Il ne reste plus qu'eux, les autres ont déjà servis à alimenter l'arme.
+jailbreak_objective2	Il ne nous reste que peu de temps. Vous devez libérer les Darwiniens emprisonnés. Il nous en faut au moins 75 pour avoir une chance de désactiver l'arme.
+jailbreak_objective3	Ils sont détenus derrière ces lasers. Il faut trouver le moyen de les désactiver pour libérer les Darwiniens.
+jailbreak_objective4	Après les avoir libérés, vous devrez les diriger vers ce point de passage, c'est le meilleur chemin vers l'arme. Je vais essayer de ralentir les Rouges pendant que vous agissez. Bonne chance.
+
+jailbreak_objective5	Des fourmis. La forme du virus la plus prolifique peut-être. À chaque fois que je crois qu'elles sont éliminées, elles réapparaissent ailleurs.
+jailbreak_objective6	Je commence à croire que les Darwiniens rouges placent intentionnellement des nids. Mais j'ignore bien pourquoi.
+jailbreak_objective7	En tous les cas, nous ne pouvons pas nous permette qu'elles évoluent vers d'autres secteurs. Il pourrait alors ne plus y avoir de Darwinia à sauver. Vous devrez les éradiquer avant de partir.
+
+jailbreak_objective8	Les Rouges ont désarmé les Darwiniens verts peu après leur capture. Le code contenu dans ce fichier devrait permettre de les ré-armer.
+jailbreak_objective9	Demandez à un ingénieur de télécharger le fichier sur mon système et nous aurons une chance de les combattre.
+
+jailbreak_intro_1	Dieu soit loué, vous voilà ! J'ai besoin de votre aide. C'est le sort de Darwinia qui est entre vos mains.
+jailbreak_intro_2	Les Darwiniens rouges ont créé une arme et utilisent des tubes comme ceux-ci partout sur Darwinia pour l'alimenter en Darwiniens verts.
+jailbreak_intro_3	Je ne sais pas exactement pourquoi, mais je crois qu'ils se servent des esprits des Darwiniens verts pour la calibrer.
+jailbreak_intro_4	Ils ont rassemblé toute une armée et se sont emparés de plusieurs endroits stratégiques sur Darwinia. Tout est arrivé si vite… Les Darwiniens verts ont été totalement pris au dépourvu.
+jailbreak_intro_5	Cette arme… Elle a directement pris pour cible la mémoire morte. Si elle tire, tous les esprits de la mémoire deviendront corrompus. Et tous les Darwiniens renaissants seront rouges.
+jailbreak_intro_6	Et si cela arrive, Darwinia telle que nous la connaissons cessera d'exister. Nous devons les stopper.
+
+# New version
+jailbreak_objective_1	Éradiquer l'infestation des fourmis
+jailbreak_objective_2	Secourir 75 Darwiniens
+jailbreak_objective_3	Armer les Darwiniens
+
+jailbreak_trunkport_1	Hmm, quelqu'un a activé ce point de passage…
+jailbreak_trunkport_2	Oh non, je croyais que ces choses avaient toutes été détruites. Vous devez l'éliminer, vite.
+jailbreak_trunkport_3	Utilisez ceci. Ça a été abandonné il y a quelque temps, mais ça devrait toujours marcher.
+jailbreak_trunkport_4	Souvenez-vous que vous devez protéger les Darwiniens à tous prix. Sans eux, nous n'avons aucune chance de stopper l'arme.
+
+jailbreak_armed_1	Ah, parfait, les Darwiniens sont armés à présent.
+jailbreak_armed_2	Nous avons maintenant des chances de nous battre pour accéder à l'arme.
+
+jailbreak_control_1	Ce bâtiment ressemble à un genre de centre de contrôle pour les lasers.
+jailbreak_control_2	Si vous détruisez les Darwiniens le faisant fonctionner, les lasers pourraient être désactivés.
+
+jailbreak_switch_1	On dirait que ce bâtiment est relié à deux groupes de lasers…
+jailbreak_switch_2	Vous allez devoir capturer ce bâtiment avec des Darwiniens verts et désactiver manuellement les lasers pour libérer les prisonniers.
+jailbreak_switch_3	OK, maintenant que vous l'avez capturé, vous pouvez vous en servir pour désactiver manuellement les deux groupes lasers qu'il contrôle.
+jailbreak_switch_4
+
+#############################
+# Stronghold
+#############################
+
+stronghold_objective	Éradiquer les Darwiniens rouges
+stronghold_intro_1	À l'issue de la grande guerre, les Darwiniens commencèrent à se développer à une vitesse incroyable.
+stronghold_intro_2	Il ne fallut pas longtemps pour qu'ils se construisent une seconde terre de naissance pour les aider à maintenir leur population tandis qu'ils progressaient vers de nouveaux secteurs.
+stronghold_intro_3	Les Rouges ont malheureusement submergé le secteur et ont rassemblé une véritable armée pour protéger leur arme le temps de sa préparation.
+stronghold_intro_4	Si nous voulons avoir la moindre chance de désactiver l'arme, nous devons d'abord reconquérir ce secteur.
+stronghold_intro_5	Servez-vous des Darwiniens que vous avez libérés pour capturer les points d'apparition des îles et construire une armée.
+stronghold_intro_6	Vous allez devoir entièrement éradiquer les Rouges. Si trop d'entre eux survivent, ils pourraient reconquérir le secteur, et nous ne pourrions jamais arrêter l'arme. Bonne chance.
+
+stronghold_weapon_1	J'ai de mauvaises nouvelles. De très mauvaises nouvelles.
+stronghold_weapon_2	J'ai essayé de comprendre quels seraient les effets exacts de l'arme si elle tirait lorsque j'ai remarqué qu'elle avait des points communs avec les tueurs d'âmes…
+stronghold_weapon_3	Ils ne vont pas corrompre la mémoire morte, ils vont la détruire ! Vous devez faire vite.
+
+#############################
+# Doomsday
+#############################
+
+
+doomsday_objective	Désactiver l'arme
+
+doomsday_turret_1	On dirait que les Darwiniens rouges ont trouvé des tourelles…
+doomsday_turret_2	Essayez de les capturer en un seul morceau, elles pourraient être utiles pour les retenir le temps que vous désactivez l'arme.
+
+doomsday_intro_1	Ça y est. Nous n'avons pas beaucoup de temps, ils se préparent déjà à tirer avec l'arme.
+doomsday_intro_2	Vous devez capturer les points de contrôle et les défendre suffisamment longtemps pour la désactiver.
+doomsday_intro_3	Ils semblent avoir malheureusement placé de nombreuses défenses pour nous en empêcher. Vous devez capturer les points de contrôle des barrières également.
+doomsday_intro_4	Une fois que les Rouges auront découvert que vous êtes là, ils enverront certainement des renforts. Je prendrai le reste des Darwiniens et essaierai de les arrêter.
+doomsday_intro_5	Je ne crois pas avoir à vous rappeler les enjeux de cette bataille. Bonne chance.
+
+doomsday_trunkports_1	Les rouges ont enfoncé mes défenses ! Ils vont arriver des points de passage d'une minute à l'autre !
+doomsday_trunkports_2	Vous devez défendre ces points de contrôle à tous prix !
+
+#############################
+# Outro
+#############################
+
+outro1	Vous avez réussi. Je dois admettre que je ne m'attendais pas à une telle explosion. Les Darwiniens l'ont probablement surchargée au lieu de simplement la désactiver.
+outro2	Une fois encore, vous avez sauvé Darwinia. Je ne pourrai jamais assez vous remercier.
+outro3	Ce jour va probablement devenir un autre chapitre primordial de l'histoire darwinienne. Ils semblent se souvenir de tout, et je sais qu'ils vous sont reconnaissants pour votre aide.
+outro4	Je ne crois pas que nous serons vraiment débarrassés du virus. Et les événements que nous avons vécus aujourd'hui prouvent que cet endroit est toujours aussi dangereux.
+outro5	Mais avec votre aide, je pense que nous arriverons à ce que Darwinia et ses habitants restent en sécurité.
+outro6	Merci. Pour tout.

@@ -1,0 +1,39 @@
+
+WaitPlayerNotBusy
+
+ShutUp
+PermitEscape
+
+CamMove                 finalisland1    0
+CamCut                  finalisland1
+CamFov                  50      0
+Say                     launchpad_finalisland_1
+Wait                    1
+
+CamMove                 finalisland2    8
+CamFov                  30      0
+WaitSay
+
+CamBuildingFocus        120     170     150
+CamFov                  60      0
+Say                     launchpad_finalisland_2
+Say                     launchpad_finalisland_3
+WaitSay
+
+CamBuildingFocus        121     200     150
+Say                     launchpad_finalisland_4
+WaitSay
+
+CamBuildingFocus        122     200     150
+Say                     launchpad_finalisland_5
+Say                     launchpad_finalisland_6
+WaitSay
+
+CamBuildingFocus        72      200     150
+Say                     launchpad_finalisland_7
+Say                     launchpad_finalisland_8
+WaitSay
+
+CamReset
+Say                     launchpad_finalisland_9
+

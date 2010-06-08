@@ -1,0 +1,13 @@
+
+Say                 containment_officer_1
+
+WaitSay
+DemoGesture         officer.txt
+
+Say                 containment_officer_2
+
+WaitSay
+DemoGesture         officer.txt
+
+Highlight           69
+Say                 containment_officer_3

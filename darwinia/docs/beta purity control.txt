@@ -1,0 +1,13 @@
+
+- Tool to enumerate system ID and produce text file
+  Also needs to be embeddable in the game for decoding.
+
+- Write a method to encode/decode the main.dat data file, 
+  using the system ID and the personal ID as keys
+
+- Display the personal ID on screen.
+
+- Write a server side script which accepts a system ID file and the users
+  personal data, and provides a customized version for download.
+
+- Implement a maximum-number-of-downloads checker for each user.  3 max.

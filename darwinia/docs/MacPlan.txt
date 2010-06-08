@@ -1,0 +1,65 @@
+=======================                                          
+MAC OS X FIRST PLAYABLE                                          
+=======================                                          
+
+The plan is to first port Darwinia to GCC/SDL for Mac OS X. Targetting Mac OS 
+Classic is being initially ruled out because:
+
+1. OS X comes with a free IDE/Compiler that is supported by SDL. The compiler
+   is GCC, with which we have lots of experience. OS Classic would probably
+   require the purchase of Codewarrior.
+2. OS Classic would require the purchase and installation of OS Classic -
+   either by repartitioning the harddisk in the Mac we buy, or by buying
+   an extra harddisk.
+3. Typical consumer CPU and GFX hardware is lower spec on the Mac than
+   the PC. Darwinia is going to struggle to run on any Mac more than a year
+   or two old. I'm guessing that most Macs capable of running Darwinia will
+   have OS X anyway.
+
+The minimum spec is probably around an 700mhz G4 with a Geforce 2 MX standard
+of graphics hardware. 
+
+Below is an ordered list of the work that needs doing. The last item,
+the control system, can be done at any time.
+
+    
+                                                            ============        ============
+                                                            MINIMUM TIME        MAXIMUM TIME
+                                                            ============        ============
+
+1. Sound system mixer                                       5 days              10 days
+    Implement a simple interface for playing stereo sound
+    Write a basic mixer w/ fixed freq, volume and pan
+    Implement volume and panning
+    Implement frequency shifting
+    (optional) Implement 3D positioning (filtering etc)
+2. SDL port                                                 2 days              4 days
+    Window manager
+    High resolution timer
+    Stub out AVI generator
+    Stub out Netclass
+    Keyboard and mouse input
+    Sound output
+3. GCC port                                                 2 days              4 days
+    Release/Debug asserts
+    Strip Visual C++ Precompiled headers
+    Switch system header file names (float.h==limits.h etc)
+    Filesys Utils
+4. Endian issues                                            2 days              4 days
+    Binary file reader
+    Bitmap loader
+5. Compile and test on Mac                                  1 day               7 days
+    Get Rar and Ogg libraries to compile                    
+    Optimisations                                           
+6. Control system                                           2 days              5 days              
+    Remap controls to suit standard Mac hardware            
+
+                                        TOTAL TIME          14 days             34 days
+
+
+
+
+Mac version starts AFTER alpha July 27th
+Mac beta takes 19 working days for Andy -> done by late August
+Beta phase for PC starts early July, runs until min Sept
+Beta phase for Mac starts late August, runs until mid October

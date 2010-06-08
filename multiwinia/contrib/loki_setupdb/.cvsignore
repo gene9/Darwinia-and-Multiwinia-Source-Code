@@ -1,0 +1,14 @@
+.depend
+convert
+brandelf
+register
+setupdb
+sparc
+ppc
+x86
+hppa
+mips
+Makefile
+configure
+config.*
+autom4te*

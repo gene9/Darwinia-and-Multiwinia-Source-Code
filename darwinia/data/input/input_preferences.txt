@@ -1,0 +1,240 @@
+MenuLeft                          = key left down
+MenuRight                         = key right down
+MenuUp                            = key up down
+MenuDown                          = key down down
+MenuActivate                      = key enter down
+MenuEscape                        = key esc down
+
+MenuLeft                          = XInput dpadleft repeat
+MenuRight                         = XInput dpadright repeat
+MenuLeft                          ~ icons/button_dpad_lr.bmp
+MenuUp                            = XInput dpadup repeat
+MenuDown                          = XInput dpaddown repeat
+MenuActivate                      = XInput a down
+MenuActivate                      ~ icons/button_a.bmp
+MenuEscape                        = XInput start down
+MenuClose                         = XInput back down
+MenuClose                         = XInput b down
+
+MenuLeft                          = XInput leftthumbstickleft repeat
+MenuRight                         = XInput leftthumbstickright repeat
+MenuUp                            = XInput leftthumbstickup repeat
+MenuDown                          = XInput leftthumbstickdown repeat
+
+MenuLeft                          = XInput rightthumbstickleft repeat
+MenuRight                         = XInput rightthumbstickright repeat
+MenuUp                            = XInput rightthumbstickup repeat
+MenuDown                          = XInput rightthumbstickdown repeat
+SkipMessage                       = key enter down
+SkipMessage                       = key esc down
+SkipMessage                       = XInput start down
+SkipMessage                       = XInput a down
+SkipMessage                       = XInput b down
+SkipMessage                       = XInput y down
+
+SkipCutscene                      = key enter down
+SkipCutscene                      = XInput b down
+
+CameraLeft                        = key a pressed
+CameraRight                       = key d pressed
+CameraUp                          = key q pressed
+CameraDown                        = key e pressed
+CameraForwards                    = key w pressed
+CameraBackwards                   = key s pressed
+CameraZoom                        = key z pressed
+CameraDeZoom                      = key c pressed
+
+CameraZoom                        = mouse middle pressed
+
+CameraMove                        = XInput leftthumbstick position
+CameraMove                        ~ icons/button_la.bmp
+CameraUp                          = XInput dpadup pressed
+CameraUp                          ~ icons/button_la.bmp
+CameraDown                        = XInput dpaddown pressed
+CameraDown                        ~ icons/button_ra.bmp
+CameraZoom                        = XInput lefttrigger position
+CameraRotate                      = XInput lefttrigger position
+CameraRotate                      ~ icons/button_lt_ra.bmp
+CameraRotateLeft                  = XInput lefttrigger position
+CameraRotateRight                 = XInput righttrigger position
+
+TargetMove                        = mouse axes move
+TargetMoveSecondary               = XInput rightthumbstick position
+TargetMove                        ~ icons/button_ra.bmp
+TargetMoveZ                       = mouse wheel move
+CameraZoomChange                  = XInput lefttrigger position
+CameraSpeedup                     = key shift pressed
+CameraSlowdown                    = mouse right pressed
+
+#CameraSwitchMode                  = XInput y down
+
+CameraDebugRotate                 = mouse right pressed
+GestureActive                     = mouse left pressed
+GestureActive                     = XInput a pressed
+
+UnitDeselect                      = key space down
+UnitDeselect                      = XInput b down
+UnitDeselect                      ~ icons/button_b.bmp
+UnitCycleLeft                     = XInput leftbumper up
+UnitCycleLeft                     ~ icons/button_lb.bmp
+UnitCycleRight                    = XInput rightbumper up
+UnitCycleRight                    ~ icons/button_rb.bmp
+
+UnitCycleLeft                     = key openbrace down
+UnitCycleRight                    = key closebrace down
+
+UnitEndSetTarget                  = mouse left up
+UnitEndSetTarget                  = XInput a up
+UnitSetTarget                     = mouse left pressed && not mouse right pressed
+UnitPrimaryFireTarget             = mouse right pressed
+UnitSecondaryFireTarget           = mouse left down && mouse right pressed
+UnitSetTarget                     = XInput a down
+UnitSetTarget                     ~ icons/button_a.bmp
+UnitMove                          = XInput leftthumbstick position
+UnitMove                          ~ icons/button_la.bmp
+UnitMoveDirectionChange           = XInput leftthumbstick move
+UnitPrimaryFireDirected           = XInput rightthumbstick position
+UnitPrimaryFireDirected           ~ icons/button_ra.bmp
+
+# Grenade fire just simply activate right trigger
+UnitStartSecondaryFireDirected    = XInput righttrigger position
+UnitStartSecondaryFireDirected    ~ icons/button_rt.bmp
+UnitSecondaryFireDirected         = XInput righttrigger down
+UnitSecondaryFireDirected         ~ icons/button_lt.bmp
+UnitSecondaryAim                  ~ icons/button_rt_ra.bmp
+
+UnitCreate                        = mouse left down
+UnitCreate                        = XInput a down
+
+WeaponCycleLeft                   = XInput dpadleft down
+#WeaponCycleLeft                   = key left down
+WeaponCycleRight                  = XInput dpadright down
+#WeaponCycleRight                  = key right down
+
+TaskManagerSwitchTask             INPUT_TYPE_BOOL
+
+GesturesTaskManagerDisplay        = key alt pressed
+GesturesTaskManagerHide           = key alt up
+GesturesTaskManagerEndTask        = key control ++ key c
+GesturesChatLog                   = key l pressed
+GesturesSwitchUnit                = key tab down
+GesturesTaskManagerDisplay        = XInput x pressed
+GesturesTaskManagerHide           = XInput x up
+GesturesTaskManagerEndTask        = XInput y down
+GestureLeft                       = key a down
+GestureLeft                       = key left down
+GestureLeft                       = XInput leftbumper down
+GestureLeft                       = XInput dpadleft donw
+GestureRight                      = key d down
+GestureRight                      = key right down
+GestureRight                      = XInput rightbumper down
+GestureRight                      = XInput dpadright down
+
+IconsTaskManagerDisplay           = key tab pressed
+IconsTaskManagerHide              = key tab up
+IconsTaskManagerEndTask           = key c down
+IconsChatLog                      = key l pressed
+IconsTaskManagerEndTask           =  XInput y down
+IconsTaskManagerEndTask           ~ icons/button_y.bmp
+IconsTaskManagerDisplayDown       = XInput x down
+IconsTaskManagerDisplayPressed    = XInput x pressed
+IconsTaskManagerDisplayUp         = XInput x up
+IconsTaskManagerHide              = XInput x down
+IconsTaskManagerHide              = XInput b down
+IconsTaskManagerDisplay           ~ icons/button_x.bmp
+
+#IconsTaskManagerQuickUnit         = XInput x down
+#IconsTaskManagerQuickUnitCreate   = XInput a down
+#IconsTaskManagerQuickUnitLeft     = XInput dpadleft down
+#IconsTaskManagerQuickUnitRight    = XInput dpadright down
+
+ActivateTMButton                  = mouse left up
+ActivateTMButton                  = XInput a up
+
+EclipseLMouseDown                 = mouse left down
+EclipseLMousePressed              = mouse left pressed
+EclipseRMousePressed              = mouse right down
+ScrollSpeedup                     = key shift pressed
+
+SelectLocation                    = mouse left down
+LocationDragActive                = mouse left pressed
+DeselectLocation                  = mouse left up
+SelectLocation                    = XInput a down
+
+TileSelect                        = mouse left down
+TileDrop                          = mouse left up
+TileDrag                          = mouse left pressed
+
+FileMultiSelect                   = key control pressed
+
+DebugDropPacket                   = key f pressed
+
+TaskManagerSelectTask1            = key 1 down
+TaskManagerSelectTask2            = key 2 down
+TaskManagerSelectTask3            = key 3 down
+TaskManagerSelectTask4            = key 4 down
+TaskManagerSelectTask5            = key 5 down
+TaskManagerSelectTask6            = key 6 down
+TaskManagerSelectTask7            = key 7 down
+TaskManagerSelectTask8            = key 8 down
+TaskManagerSelectTask9            = key 9 down
+
+IconsTaskManagerNewSquad          = key f1 down
+IconsTaskManagerNewEngineer       = key f2 down
+IconsTaskManagerNewOfficer        = key f3 down
+IconsTaskManagerNewArmour         = key f4 down
+
+IconsTaskManagerSelectGrenade     = key f5 down
+IconsTaskManagerSelectRocket      = key f6 down
+IconsTaskManagerSelectAirStrike   = key f7 down
+IconsTaskManagerSelectController  = key f8 down
+
+LoaderHelp                        = key h pressed
+SepulvedaHelp                     = key h down
+
+
+GOLLoaderSpeedup                  = key p pressed
+GOLLoaderSlowdown                 = key o pressed
+GOLLoaderReset                    = key g down
+
+RTLoaderReflectivenessIncrease    = key p pressed
+RTLoaderReflectivenessDecrease    = key o pressed
+RTLoaderPixelWaveIncrease         = key l pressed
+RTLoaderPixelWaveDecrease         = key k pressed
+RTLoaderMotionBlurIncrease        = key m pressed
+#RTLoaderMotionBlurDecrease        = key n pressed
+RTLoaderPixelBlurIncrease         = key i down
+RTLoaderPixelBlurDecrease         = key u down
+RTLoaderBrightnessIncrease        = key b pressed
+RTLoaderBrightnessDecrease        = key v pressed
+RTLoaderResolutionIncrease        = key x down
+RTLoaderResolutionDecrease        = key c down
+RTLoaderCameraMode1               = key 1 pressed
+RTLoaderCameraMode2               = key 2 pressed
+RTLoaderCameraMode3               = key 3 pressed
+RTLoaderLMB                       = mouse left pressed
+RTLoaderLMB                       = mouse right pressed
+
+#StartAttractMode                  = key f1 down
+#StartAttractMode                  = idle reaches 60
+StopAttractMode                   = idle no longer
+StopAttractMode                   = key space down
+StopAttractMode                   = key enter down
+StopAttractMode                   = key esc down
+StopAttractMode                   = XInput start down
+StopAttractMode                   = XInput b down
+
+CameraFreeMovement                = key f2 pressed
+
+DebugCameraFixUp                  = key g pressed
+
+SkipTutorial                      = key t pressed
+SkipTutorial                      = XInput back down
+
+GamePause                         = key pause down
+ToggleEditor                      = key f9 down
+CreateScreenShot                  = key p down
+ToggleCheatMenu                   = key f11 down
+
+ControllerUnplugged               = XInput plug up
+ControllerPlugged                 = XInput plug down

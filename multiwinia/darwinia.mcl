@@ -1,0 +1,22 @@
+<application
+	Title = "Darwinia"
+	ID = ""
+	Run = ".\Darwinia\darwinia.lnk"
+	BGColor = "RGB(0,0,0)" 
+	Name = "Darwinia"
+	CompanyName = "Introversion SOftware"
+	StartImage = "Darwinia\darwinia.png" 
+	ThumbnailImage = "Darwinia\darwinia.png" 
+	SharedViewport = ""
+	NowPlayingDirective = ""
+>
+    <capabilitiesRequired
+        directX="True"
+        audio="False" <!-- Set false even if your game uses audio -->
+        video="False" <!-- Set false even if your game uses video -->
+        intensiveRendering="True"
+        console="False"
+    />
+
+</application>
+

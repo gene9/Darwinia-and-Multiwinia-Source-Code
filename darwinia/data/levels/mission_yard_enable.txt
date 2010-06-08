@@ -1,0 +1,75 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           1024.93  212.64  765.90 0.55 -0.24 0.80 0.13 0.97 0.19
+	intro1          1586.04  647.87  746.12 0.42 -0.37 0.83 0.17 0.93 0.33
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ScriptTrigger       100     416.14  832.70  1       1.00    0.00    0       -1     100.00 yard_intro.txt always
+	Triffid             56      1068.48 4326.26 1       0.70    -0.72   0       1.00   1.44   164.80 0.07   60.00  1 207.92   -460.28  169.75 0 1 0 0 0 0 0 
+	Triffid             95      1080.09 4376.42 1       0.54    -0.84   0       1.00   1.44   156.36 0.00   60.00  1 174.82   -808.09  169.75 1 0 0 0 0 0 0 
+	Triffid             96      1039.45 4371.68 1       0.70    -0.72   0       1.00   1.44   179.71 0.00   60.00  1 247.91   -513.00  169.75 0 0 0 1 0 0 0 
+	AntHill             102     4005.99 2971.71 1       -0.58   0.82    0       30
+	AntHill             103     3587.91 2803.28 1       -1.00   0.04    0       30
+	AntHill             104     3630.21 2811.09 1       0.60    -0.80   0       30
+	AntHill             106     3967.90 3093.34 1       -1.00   0.01    0       30
+	AntHill             107     3565.59 3126.72 1       -0.92   0.38    0       30
+	AntHill             105     3429.28 3118.75 1       -0.83   0.55    0       30
+	Triffid             108     2959.49 1274.88 1       -0.03   1.00    0       1.00   2.02   162.14 0.15   60.00  1 -42.54   533.25   189.90 0 1 1 0 0 0 0 
+	Triffid             109     2882.38 1263.18 1       0.13    0.99    0       1.00   2.30   176.49 0.14   60.00  1 21.80    549.02   197.69 0 1 1 0 0 0 0 
+	Incubator           53      2976.19 1397.53 1       -0.03   1.00    1            0
+	Incubator           2       2902.26 1397.00 1       0.02    1.00    1            0
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Virii            1   879.6  1389.5     40    1      -1   154.8     0.0     0.0
+	Virii            1   649.5  1121.1     40    1      -1   154.8     0.0     0.0
+	Virii            1   705.7  1337.4     40    1      -1   154.8     0.0     0.0
+	Centipede        1   775.2  1362.3     17    1      -1   200.0     0.0     0.0
+	Virii            1   734.7  1573.9     40    1      -1   200.0     0.0     0.0
+	Centipede        1   757.0  1643.6     17    1      -1   200.0     0.0     0.0
+	SporeGenerator   1   807.7  1611.5      2    0      -1   200.0     0.0     0.0
+	Virii            1  1016.3  2028.8     20    1      -1   138.9     0.0     0.0
+	Spider           1   778.2  1492.5      1    0      -1   200.0     0.0     0.0
+	Spider           1   901.0  1313.8      1    0      -1   200.0     0.0     0.0
+	Virii            1  1284.1  3762.9     40    1      -1   144.6     0.0     0.0
+	Virii            1  1295.1  3622.0     40    1      -1   131.7     0.0     0.0
+	Virii            1   959.4  4468.0     40    1      -1   132.7     0.0     0.0
+	Virii            1   820.8  4469.9     40    1      -1   139.6     0.0     0.0
+	Virii            1  1284.5  3985.5     40    1      -1   156.8     0.0     0.0
+	SporeGenerator   1  1291.6  3825.1      2    0      -1   200.0     0.0     0.0
+	SporeGenerator   1  1330.8  4046.8      2    0      -1   200.0     0.0     0.0
+	Spider           1   964.4  4540.7      3    0      -1   200.0     0.0     0.0
+	Centipede        1  1093.1  4581.3     15    1      -1   200.0     0.0     0.0
+	Virii            1  2049.4  2434.8     40    1      -1   200.0     0.0     0.0
+	Virii            1  2319.5  2415.0     40    1      -1   200.0     0.0     0.0
+	Virii            1  2564.5  2135.1     40    1      -1   200.0     0.0     0.0
+	Spider           1  3696.9  3016.2      2    0      -1   295.4     0.0     0.0
+	Virii            1  2990.7  1579.0     40    1      -1   200.0     0.0     0.0
+	Virii            1  2818.3  1385.6     40    1      -1   200.0     0.0     0.0
+	Virii            1  3049.8  1416.7     40    1      -1   200.0     0.0     0.0
+	Spider           1  2912.9  1653.9      2    0      -1   200.0     0.0     0.0
+	Centipede        1  3079.9  1697.1     17    1      -1   200.0     0.0     0.0
+	Centipede        1  2825.6  1611.9     17    1      -1   200.0     0.0     0.0
+	Virii            1  3222.4  1748.9     40    1      -1   200.0     0.0     0.0
+	SporeGenerator   1  3038.4  1648.4      1    0      -1   200.0     0.0     0.0
+	ArmyAnt          1  3594.8  2998.7     20    0      -1   143.8     0.0     0.0
+	Spider           1  3138.0  1683.8      2    0      -1   200.0     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :yard,5 	yard_objective_1	yard_primary1.txt
+	BuildingOnline :yard,4 	yard_objective_2	yard_primary2.txt
+	BuildingOnline :yard,101 	yard_objective_3	yard_primary3.txt
+	BuildingOnline :yard,3 	objective_capture_trunk
+	BuildingOnline :yard,1 	objective_capture_trunk
+	BuildingOnline :yard,110 	objective_capture_trunk
+PrimaryObjectives_EndDefinition

@@ -1,0 +1,54 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           1650.27  411.96 2759.23 -0.55 -0.52 -0.65 -0.33 0.86 -0.39
+	intro2          3340.24  266.38 3241.51 -0.52 -0.12 -0.84 -0.06 0.99 -0.11
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Spam                81      3404.43 1115.61 1       0.34    -0.66   1       
+	Spam                76      1415.60 824.05  1       0.26    -0.87   1       
+	Spam                77      1296.80 2313.48 1       0.13    0.80    1       
+	Incubator           78      2916.19 2007.68 1       -1.00   0.09    1            0
+	Incubator           79      2177.85 1092.54 1       -1.00   0.04    1            0
+	Incubator           83      2075.51 3436.86 1       0.73    -0.68   1            0
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Virii            1  3330.1  1115.8     70    1      -1   200.0     0.0     0.0
+	Spider           1  1256.1  2107.2      2    0      -1   200.0     0.0     0.0
+	Centipede        1  3300.5  1260.0     20    1      -1   200.0     0.0     0.0
+	Virii            1  1196.1  2353.2     70    1      -1   200.0     0.0     0.0
+	Centipede        1  3023.8   996.4     20    1      -1   200.0     0.0     0.0
+	SporeGenerator   1  1238.9  2186.1      2    0      -1   200.0     0.0     0.0
+	Centipede        1  1251.2  2016.2     20    1      -1   200.0     0.0     0.0
+	Darwinian        1   933.0  1327.4     20    0      -1    94.0     0.0     0.0
+	Darwinian        1  1205.0  1385.6     20    0      -1    97.8     0.0     0.0
+	Darwinian        1  1242.0   671.3     20    0      -1    98.7     0.0     0.0
+	Darwinian        1  1583.5   803.1     20    0      -1    90.8     0.0     0.0
+	AI               1   510.9   371.2      1    0      -1   200.0     0.0     0.0
+	Spider           1  3005.1   963.6      2    0      -1   200.0     0.0     0.0
+	Centipede        1  1306.4  2203.9     20    1      -1   200.0     0.0     0.0
+	SoulDestroyer    1  1344.2  2211.2      1    0      -1   572.4     0.0     0.0
+	Centipede        1  2912.7  2586.6     20    1      -1   200.0     0.0     0.0
+	Virii            1  2850.0  2242.9     40    1      -1   200.0     0.0     0.0
+	Spider           1  2803.6  2171.7      1    0      -1   200.0     0.0     0.0
+	SporeGenerator   1  2857.2  2151.4      1    0      -1   200.0     0.0     0.0
+	Spider           1  2161.0  1174.3      1    0      -1   200.0     0.0     0.0
+	Virii            1  1342.8  2130.6     60    0      -1   200.0     0.0     0.0
+	SoulDestroyer    1  1213.6  2214.5      1    0      -1   555.7     0.0     0.0
+	Spider           1  1984.1  3422.6      2    0      -1   152.3     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :temple,81 	temple_objective	temple_primary.txt
+	BuildingOnline :temple,76 	temple_objective	temple_primary.txt
+	BuildingOnline :temple,77 	temple_objective	temple_primary.txt
+PrimaryObjectives_EndDefinition

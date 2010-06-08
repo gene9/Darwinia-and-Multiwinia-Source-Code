@@ -1,0 +1,10 @@
+
+-----------------------
+
+- Remove Tripod
+- Stop music from decompressing
+- Write fractal tree scroll text demo
+- Make "press return" in the sepuveda window readable in 640x480
+- Fix lighting bug
+- Implement interleaved vertex array data for landscape and water (if possible)
+- Convert window names to use english.txt

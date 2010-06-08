@@ -1,0 +1,53 @@
+Difficulty_StartDefinition
+	CreatedAsDifficulty 1
+Difficulty_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           3559.72  173.06 3502.78 -0.18 -0.59 0.79 -0.13 0.81 0.57
+	intro1          2531.45  343.01 1528.16 -0.54 -0.54 0.65 -0.35 0.84 0.41
+	intro2          1814.56  370.29 2053.21 -0.53 -0.52 0.67 -0.33 0.85 0.41
+	intro3           351.27  199.54 1245.56 0.88 -0.43 0.20 0.42 0.90 0.10
+	intro4          2313.64  191.16  377.21 0.77 -0.44 0.46 0.38 0.90 0.23
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ScriptTrigger       102     3871.99 3561.92 1       1.00    0.00    0       -1     100.00 stronghold_intro.txt always
+	ScriptTrigger       108     686.18  1618.04 0       1.00    0.00    1       -1     100.00 stronghold_weapon Darwinian
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	AI               1  3801.0  2259.2      1    0      -1   200.0     0.0     0.0,   -1
+	Darwinian        1  3000.5  3608.6      8    0      -1    60.0     0.0     0.0,   -1
+	Darwinian        1  1704.3  2365.1     20    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1  1172.3  2591.5     40    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1  1502.6  2721.7     40    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1  1218.0  3061.9     30    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1   836.2  2235.4     20    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1   634.3  2923.9     20    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1   554.4  1422.3     40    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1  1196.0  1192.5     80    0      -1   100.0     0.0     0.0,   -1
+	Darwinian        1  2722.9   910.9     20    0      -1   100.0     0.0     0.0,   -1
+	Darwinian        1  2570.9   467.8     20    0      -1   100.0     0.0     0.0,   -1
+	Darwinian        1  3430.4   444.2     20    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        1  3425.7  1164.4     20    0      -1    50.0     0.0     0.0,   -1
+	Darwinian        0  3548.4  3725.3     75    0      -1   100.0     0.0     0.0,   -1
+	Darwinian        1  2963.5  3044.1      8    0      -1    60.0     0.0     0.0,   -1
+	Darwinian        1  2755.0  3385.9      8    0      -1    60.0     0.0     0.0,   -1
+InstantUnits_EndDefinition
+
+Routes_StartDefinition
+Routes_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :stronghold,2 	stronghold_objective	stronghold_intro.txt
+	BuildingOnline :stronghold,80 	objective_capture_trunk
+PrimaryObjectives_EndDefinition

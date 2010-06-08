@@ -1,0 +1,51 @@
+Landscape_StartDefinition
+	worldSizeX 2002
+	worldSizeZ 2002
+	cellSize 10.66
+	outsideHeight -26.13
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	  1122  19.20    656    884  1.87   4.31     82      1 16238019   0.70     0
+	   842   0.00   1181    884  1.87   4.31     82      1 16416736   0.70     0
+	   862   0.00   1092    564  2.79   4.31     86      1 16416754   0.70     0
+	  1357   0.00    527    694  1.90   4.31     73      1 16946320   0.87     0
+	   506 -14.77    192    884  1.87   4.31    107      1 17994891   0.70     0
+	   124  14.99    808    884  1.87   4.66    106      1 19686760   0.80     0
+	   402   0.00   1251    634  3.23   2.00     43      1 20788641   0.80     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.04   0.39  -0.92     1.06   0.96   0.72
+	  0.57   0.00  -0.82     3.58   0.79   0.14
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ResearchItem        1       1576.60 740.76  255     -0.01   0.90    0       Grenade      1
+	RadarDish           2       1693.73 624.97  1       0.43    0.90    1       
+	RadarDish           3       1139.98 440.62  1       -0.68   -0.74   1       
+	TrunkPort           8       341.54  1547.94 255     -0.03   -1.00   1       3       
+	ControlTower        9       579.49  1511.10 1       1.00    0.08    1            8
+	ControlTower        10      1176.95 1466.21 2       0.86    -0.52   1           -1
+	ControlTower        11      1820.91 691.59  1       0.82    0.57    1            2
+	ControlTower        12      1089.08 378.28  1       -0.18   -0.98   1            3
+	Tree                6       676.63  743.51  1       1.00    0.00    0       50.00   3.70    0.70    1.00    6       0       -16440471   -1912585699 
+	Tree                7       703.64  698.23  1       1.00    0.00    0       53.77   3.70    0.70    1.00    6       94191   -16440471   -1912585699 
+	Tree                13      669.67  590.23  1       1.00    0.00    0       43.93   3.70    0.70    1.00    6       94209   -16440471   -1912585955 
+Buildings_EndDefinition
+

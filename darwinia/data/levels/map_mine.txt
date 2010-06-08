@@ -1,0 +1,143 @@
+Landscape_StartDefinition
+	worldSizeX 3782
+	worldSizeZ 3782
+	cellSize 20.00
+	outsideHeight -26.13
+	landColourFile landscape_mine.bmp
+	wavesColourFile waves_containmentfield.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	  2093   2.16     17    874  1.26   0.20     98      1  72036   1.00     0
+	    10   4.73   1817   1134  1.00   0.40    291      2      1   0.00     2   AKALBGAAHIAAIBHBPP
+	  1176  23.69   1815   1084  1.00   0.40    288      2      1   0.00     2   ADAEACFADHFAKEPAPP
+	   716  67.81   1698    884  0.80   0.40     23      2      1   0.00     2   BFBEBEBFBEBEBFBFBF
+	   101  -6.38    668   1334  0.80   0.40     30      2      1   1.00     4   AAAAAAAAAAAAAKBEBFBEBFAIAAAJBBAAAAAAAAAAAABFBFBFBFBFAEAAAEAMAAAAAAAAAAAABEBFBEBFAOAAAAAAAFAAAAAAAABEBEBDBEBEAAAAAJADAAAAAAAAAAAHBDBEBEBEBFAMAPAAAAAAAAAAAAAAADBEBEBEBEBDBEBEBEBEAAAAAAAAAAADAHBEBDBEBEBEBEBFBEAAAAAAAAABAAAAAGAIBEBEBEAIAOBFAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEBEAAACAAAAAAAAAAAAAAAAAAAAAAACBEBEAGAHADACAAAAAAAEAAAAAAAABEBDBDBEBEAPAHAAAAACAAAAAAAAAAAABDBFBEBEBEBCBBBFAJAAAAAAAAAABEBCBDBDBEBGBABJBBBEAAAAAAAAAABCBDBCBEBEBDBABFBDBFAA
+	   834  -4.40    330   1184  1.00   0.84    128      2     38   0.00     3   DHDACCAEEACFAADLCKEGDNENFCAAAALILNLADAAAAAHHMBLCLKBEAAAAFLKDLCLEBFAAAAGBKILAJFBEBFAAGJGJHBFFBFBDAA
+	  2123   1.38   1896    734  1.00   0.40    300      2      1   0.00     2   ABCAAAPFDNCBPPBMAA
+	   169 -17.56    131   1134  0.80   0.40     54      2      1   1.00     3   BDBCALAJAAAAAABEBFBDAPBBBCBEAAAABFBEBEBEBEAAAAAAAABEBEBEAAAAAAAABEBDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  2852   0.63   2182    764  1.30   0.20    150      0 974291   1.00     0
+	  3065   1.07    700    534  1.30   1.20    150      1     15   1.00     0
+	  3429   0.99   1680    314  1.30   1.00    200      1 1259692   1.00     0
+	  2618   7.49   2840    234  1.40   0.40     86      0      4   1.00     0
+	   824  -1.32   2950    634  1.50   0.30    200      1      6   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+	1951.9    0.0 2314.9   14.3
+	1468.1    6.0 2583.6   13.9
+	1005.9    5.0 2568.1   13.0
+	 450.7    0.0 2680.2   13.0
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.79   0.49   0.38     1.60   0.80   0.36
+	 -0.93   0.00   0.36     5.00   2.42   1.15
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrackLink           53      1681.45 1917.76 255     0.17    -0.99   0       64      
+	TrackLink           54      1877.11 2032.39 255     0.79    -0.61   0       53      
+	TrackLink           56      1826.80 2309.78 255     0.85    -0.52   0       54      
+	TrackLink           58      1925.47 2613.92 255     -0.01   -1.00   0       59      
+	TrackLink           59      1716.08 2628.51 255     -0.01   -1.00   0       60      
+	TrackLink           60      1588.17 2594.35 255     0.47    -0.88   0       43      
+	TrackLink           61      1348.69 2558.57 255     0.89    -0.46   0       62      
+	TrackLink           62      1396.55 2319.01 255     0.95    0.30    0       63      
+	TrackLink           63      1386.97 2190.25 255     1.00    0.02    0       64      
+	TrackLink           64      1359.59 1911.14 255     0.58    -0.81   0       65      
+	TrackLink           65      1190.19 1897.97 255     0.50    -0.87   0       71      
+	TrackLink           66      560.50  2710.46 255     0.36    -0.93   0       45      
+	TrackLink           68      848.96  2362.39 255     0.70    0.72    0       69      
+	TrackLink           69      1067.12 2282.36 255     0.70    0.72    0       70      
+	TrackLink           70      1095.45 2103.48 255     1.00    0.00    0       71      
+	TrackLink           71      980.52  1900.39 255     0.50    -0.87   0       72      
+	TrackLink           72      831.93  1771.34 255     0.66    -0.75   0       78      
+	TrackLink           73      996.13  2780.01 255     1.00    0.01    0       44      
+	TrackLink           75      777.31  2201.86 255     0.95    -0.30   0       76      
+	TrackLink           76      755.65  2050.65 255     0.92    -0.39   0       77      
+	TrackLink           77      683.26  1835.74 255     1.00    0.00    0       78      
+	TrackLink           78      709.49  1629.96 255     1.00    0.00    0       79      
+	TrackLink           79      801.56  1301.94 255     0.62    0.78    0       80      
+	TrackLink           80      1037.58 1309.96 255     0.22    0.98    0       81      
+	TrackLink           81      1207.24 1267.10 255     0.70    0.71    0       83      
+	TrackLink           83      1358.27 1183.78 255     0.94    0.34    0       90      
+	TrackLink           84      1249.74 648.90  255     1.00    -0.05   0       85      
+	TrackLink           85      1346.51 529.51  255     0.58    0.81    0       86      
+	TrackLink           86      1648.14 485.48  255     -0.08   1.00    0       87      
+	TrackLink           87      1791.14 427.11  255     -0.01   1.00    0       88      
+	TrackLink           88      2156.94 414.50  255     -0.02   1.00    0       6       
+	TrunkPort           89      2526.31 445.43  2       0.88    -0.48   1       6       
+	Refinery            90      1356.00 1006.90 0       1.00    -0.02   1       119     
+	TrunkPort           92      263.66  429.93  255     1.00    0.05    1       3       
+	TrackLink           119     1335.93 758.81  255     1.00    0.00    0       84      
+	ControlTower        0       2609.55 507.22  1       0.70    0.72    1           89
+	ControlTower        1       350.58  372.52  1       0.77    -0.64   1           92
+	RadarDish           3       2236.07 567.99  1       0.93    -0.37   1       
+	RadarDish           4       1776.36 553.75  1       -0.68   -0.74   1       
+	RadarDish           8       1691.55 1427.91 1       0.09    -1.00   1       
+	RadarDish           9       2087.21 1944.82 1       0.56    0.83    1       
+	ControlTower        10      1997.12 1970.27 1       -0.74   0.68    1            9
+	ControlTower        11      1756.63 1379.34 1       1.00    0.00    1            8
+	TrackLink           15      2838.14 374.41  255     -0.46   0.89    0       16      
+	TrackLink           16      3249.99 776.58  255     -0.80   0.60    0       17      
+	TrackLink           17      3308.59 939.31  255     -1.00   -0.01   0       18      
+	TrackLink           18      3327.69 1114.33 255     -0.97   0.24    0       19      
+	TrackLink           19      3593.49 1747.12 255     -0.99   -0.16   0       20      
+	TrackLink           20      3539.17 1841.02 255     -0.67   -0.75   0       21      
+	TrackLink           21      3390.27 2428.85 255     -0.92   -0.38   0       30      
+	TrackLink           22      3029.27 2324.74 255     0.47    -0.88   0       25      
+	TrackLink           23      2419.76 2386.47 255     -0.46   -0.89   0       26      
+	TrackLink           24      2118.63 2547.39 255     -0.46   -0.89   0       58      
+	TrackLink           25      2701.76 2298.43 255     -0.08   -1.00   0       23      
+	TrackJunction       26      2281.42 2396.13 255     0.17    -0.99   0       -1      27  28  
+	TrackLink           27      2282.33 2396.40 255     0.14    -0.99   0       24      
+	TrackLink           28      2282.22 2396.42 255     0.17    -0.99   0       29      
+	TrackLink           29      2095.97 2319.46 255     -0.03   -1.00   0       42      
+	TrackJunction       30      3240.32 2518.24 255     0.02    -1.00   0       -1      31  32  
+	TrackLink           31      3239.86 2517.87 255     0.02    -1.00   0       22      
+	TrackLink           32      3239.61 2518.26 255     -0.02   -1.00   0       33      
+	TrackLink           33      2976.90 2648.38 255     -0.66   -0.76   0       34      
+	TrackLink           34      2733.70 2954.87 255     -0.06   -1.00   0       35      
+	TrackLink           35      1963.42 2790.62 255     -0.21   -0.98   0       36      
+	TrackLink           36      1297.07 3286.67 255     -0.45   -0.89   0       37      
+	TrackJunction       37      1234.51 3329.84 255     0.47    -0.88   0       -1      39  38  
+	TrackLink           38      1234.27 3330.04 255     0.45    -0.89   0       40      
+	TrackLink           39      1234.16 3329.70 255     0.45    -0.89   0       41      
+	TrackLink           40      1083.24 3321.73 255     0.54    -0.84   0       66      
+	TrackLink           41      1146.34 3214.97 255     1.00    0.00    0       73      
+	Mine                42      1945.03 2351.97 0       1.00    -0.01   1       56      
+	Mine                44      968.32  2580.56 0       0.12    0.99    1       50      
+	Mine                43      1456.17 2611.71 0       1.00    0.05    1       61      
+	Mine                45      449.29  2711.56 0       1.00    0.05    1       67      
+	TrackLink           46      622.50  2459.46 255     0.70    0.72    0       68      
+	TrackLink           47      478.85  2482.32 255     0.88    0.48    0       46      
+	Tree                2       1795.27 2509.33 255     0.50    0.87    0       88.44   4.93    0.76    0.91    5       96031   -2026668322 655935915   
+	TrackLink           67      309.33  2647.65 255     0.62    -0.78   0       95      
+	TrackLink           95      301.02  2574.32 255     0.76    0.64    0       47      
+	Tree                7       1708.39 2458.79 255     0.50    0.87    0       87.70   4.93    0.76    0.91    5       12213   -2026668322 655935915   
+	Tree                14      1728.81 2364.24 255     0.50    0.87    0       96.82   4.93    0.76    0.91    5       12231   -2026668322 655935915   
+	Tree                48      1630.12 2377.84 255     0.50    0.87    0       97.67   4.93    0.76    0.91    5       12292   -2026668322 655935915   
+	Tree                49      1630.47 2275.04 255     0.50    0.87    0       89.39   4.93    0.76    0.91    5       12332   -2026668322 655935915   
+	TrackLink           50      1020.62 2451.27 255     0.94    -0.34   0       75      
+	TrackLink           5       2729.23 299.76  255     0.27    0.96    0       15      
+	TrackEnd            6       2394.86 548.74  255     0.02    1.00    0       5       89      
+	ControlTower        13      2252.42 650.69  1       -0.13   0.99    1            3
+	ControlTower        51      1691.45 662.78  1       -0.98   0.19    1            4
+	ControlTower        52      906.68  444.86  1       0.73    0.68    1           97
+	ControlTower        55      565.82  1070.89 1       0.02    -1.00   1           12
+	ControlTower        57      1122.00 2293.65 1       -0.46   -0.89   1          108
+	TrunkPort           94      265.82  2093.40 1       1.00    -0.05   1       4       
+	ControlTower        96      334.59  2034.59 1       0.28    -0.96   1           94
+Buildings_EndDefinition
+

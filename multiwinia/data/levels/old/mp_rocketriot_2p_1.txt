@@ -1,0 +1,153 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	RocketRiot 
+	PopulationCap	-1
+	NumPlayers	2
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 5372
+	worldSizeZ 5372
+	cellSize 20.00
+	outsideHeight -26.13
+	landColourFile landscape_mine.bmp
+	wavesColourFile waves_generator.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	  1270   0.00   3429   1804  1.20   1.00    200      1      1   1.00     1   AA
+	  2183   0.00     16   2094  1.20   1.00    200      1     31   1.00     1   AA
+	   445   0.00    870   1294  1.20   1.00     97      0     16   1.00     1   AA
+	  3234   0.00   2413   1514  1.20   1.00     97      1     66   1.00     1   AA
+	  1679   0.00   1585   1854  1.50   1.00    100      1 192869   1.00     1   AA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.76   0.13   0.64     0.71   0.71   0.71
+	 -0.99   0.00   0.11     5.00   2.35   0.77
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	EscapeRocket        0       3183.69 491.20  1       1.00    0.00    0           -1   0.00      0     -1      0
+	EscapeRocket        1       2058.19 4600.03 0       0.62    0.78    0           -1   0.00      0     -1      0
+	FuelGenerator       2       1286.66 3210.56 1       -0.92   0.40    0            8 
+	FuelGenerator       3       3194.25 3671.50 1       -0.99   -0.15   0           16 
+	FuelGenerator       4       4337.30 1257.74 1       1.00    0.00    0           60 
+	FuelGenerator       5       1862.25 1063.01 1       0.32    0.95    0           53 
+	FuelStation         6       1938.44 4525.52 1       -0.77   -0.64   0            1 
+	FuelStation         7       2155.85 4491.64 1       0.66    -0.75   0            1 
+	FuelPipe            8       1482.71 3378.69 1       1.00    0.00    0            9 
+	FuelPipe            9       1482.75 3577.03 1       1.00    0.00    0           10 
+	FuelPipe            10      1580.52 3743.11 1       1.00    0.00    0           11 
+	FuelPipe            11      1533.72 3934.36 1       1.00    0.00    0           12 
+	FuelPipe            12      1627.07 4102.93 1       1.00    0.00    0           13 
+	FuelPipe            13      1680.38 4300.36 1       1.00    0.00    0           14 
+	FuelPipe            16      3043.86 3822.87 1       1.00    0.00    0           17 
+	FuelPipe            17      2967.28 4014.86 1       1.00    0.00    0           18 
+	FuelPipe            18      2968.59 4218.56 1       1.00    0.00    0           19 
+	FuelPipe            19      2896.54 4398.69 1       1.00    0.00    0           20 
+	FuelPipe            20      2726.30 4514.64 1       1.00    0.00    0           21 
+	FuelPipe            21      2536.46 4464.17 1       1.00    0.00    0           22 
+	FuelPipe            22      2355.13 4545.40 1       1.00    0.00    0            7 
+	SolarPanel          23      1091.95 1468.53 0       -0.00   0.98    0       25      
+	SolarPanel          24      1115.40 1677.82 0       0.00    0.99    0       26      
+	SolarPanel          25      942.53  1600.57 0       0.00    0.99    0       26      
+	SolarPanel          26      951.06  1776.55 0       0.00    0.98    0       28      
+	SolarPanel          27      804.26  1438.41 0       -0.00   0.99    0       25      
+	Pylon               28      865.81  2067.22 1       -1.00   0.06    0       29      
+	Pylon               29      841.04  2385.47 1       -0.88   -0.47   0       30      
+	Pylon               30      859.05  2769.95 1       0.99    0.10    0       31      
+	Pylon               31      1029.85 3049.80 1       0.63    -0.78   0       15      
+	FuelPipe            14      1761.05 4476.48 1       1.00    0.00    0            6 
+	SolarPanel          35      2108.94 2485.91 255     0.00    0.98    0       36      
+	SolarPanel          36      2297.92 2763.91 255     -0.00   1.00    0       34      
+	SolarPanel          38      2379.38 2427.69 255     0.00    1.00    0       34      
+	Pylon               39      2487.46 2644.54 0       1.00    -0.05   0       40      
+	Pylon               40      2467.08 2847.45 1       -0.92   0.40    0       41      
+	Pylon               41      2652.67 3107.55 1       -0.83   -0.56   0       42      
+	Pylon               42      2949.10 3542.80 1       0.98    0.20    0       43      
+	PylonEnd            43      3133.99 3640.37 1       -0.94   -0.33   0       3       
+	SolarPanel          46      2656.01 2857.72 255     0.00    1.00    0       34      
+	SolarPanel          47      2926.33 2801.11 255     -0.00   0.90    0       48      
+	SolarPanel          48      2714.77 2571.46 255     -0.00   0.97    0       34      
+	Pylon               49      2494.12 2566.32 1       1.00    0.00    0       50      
+	Pylon               50      2619.42 2261.66 1       -1.00   0.06    0       51      
+	Pylon               51      2594.19 2024.45 1       -0.89   0.46    0       52      
+	PylonEnd            52      1878.64 1124.09 1       0.12    0.99    0       5       
+	FuelPipe            53      2101.49 1071.24 1       1.00    0.00    0           54 
+	FuelPipe            54      2293.72 1016.79 1       1.00    0.00    0           55 
+	FuelPipe            55      2413.42 863.16  1       1.00    0.00    0           56 
+	FuelPipe            56      2514.27 690.26  1       1.00    0.00    0           57 
+	FuelPipe            57      2667.74 561.23  1       1.00    0.00    0           59 
+	FuelStation         58      3071.29 571.98  1       -0.67   0.75    0            0 
+	FuelPipe            59      2868.78 577.16  1       1.00    0.00    0           58 
+	FuelPipe            60      4107.93 1176.38 1       1.00    0.00    0           61 
+	FuelPipe            61      4038.61 979.15  1       1.00    0.00    0           62 
+	FuelPipe            62      3891.92 846.39  1       1.00    0.00    0           63 
+	FuelPipe            63      3852.59 655.43  1       1.00    0.00    0           65 
+	FuelPipe            65      3675.37 557.24  1       1.00    0.00    0           66 
+	FuelPipe            66      3487.44 630.63  1       1.00    0.00    0           67 
+	FuelStation         67      3294.36 565.01  1       0.76    0.64    0            0 
+	SolarPanel          64      4203.27 2882.22 1       -0.00   0.99    0       78      
+	SolarPanel          68      4330.64 3018.11 1       0.00    0.98    0       72      
+	SolarPanel          69      4096.96 3076.61 1       0.00    0.98    0       68      
+	SolarPanel          70      4223.37 3191.93 1       0.00    0.99    0       71      
+	SolarPanel          71      4432.72 3182.51 1       0.00    0.99    0       72      
+	Pylon               72      4518.83 2984.14 1       -0.95   -0.30   0       73      
+	Pylon               73      4542.46 2704.91 1       -1.00   0.09    0       74      
+	Pylon               74      4573.14 2303.94 1       0.97    -0.25   0       75      
+	Pylon               75      4107.01 1939.92 1       -0.90   0.44    0       76      
+	Pylon               76      4092.00 1676.73 1       -0.32   0.95    0       79      
+	Pylon               78      4373.30 2780.62 1       -0.32   -0.95   0       73      
+	PylonEnd            79      4289.30 1308.71 1       -0.67   0.75    0       4       
+	SpawnPopulationLock 85      1989.70 4355.61 1       1.00    0.00    0       571.53   200   
+	SpawnPopulationLock 89      3189.24 756.86  1       1.00    0.00    0       566.93   200   
+	SpawnPopulationLock 102     1076.21 3024.77 1       1.00    0.00    0       500.00   100   
+	SpawnPopulationLock 103     1009.37 1549.55 1       1.00    0.00    0       500.00   100   
+	SpawnPopulationLock 104     4182.64 3064.77 1       1.00    0.00    0       500.00   100   
+	SpawnPopulationLock 105     4158.62 1669.91 1       1.00    0.00    0       500.00   100   
+	SpawnPopulationLock 106     2510.53 2572.53 1       1.00    0.00    0       751.59   300   
+	TrunkPort           80      2077.10 4202.20 255     -0.03   -1.00   1       -1      
+	AISpawnPoint        81      2046.54 4275.76 0       1.00    0.00    0       -1     12     50     30     -1     -1    
+	AISpawnPoint        82      2114.62 4278.69 0       1.00    0.00    0       -1     15     1      60     -1     -1    
+	PylonEnd            15      1224.59 3227.17 255     -1.00   -0.04   0       2       
+	TrunkPort           32      3174.34 967.07  255     -0.03   -1.00   1       -1      
+	AISpawnPoint        33      3194.16 897.52  1       1.00    0.00    0       -1     12     50     30     -1     -1    
+	AISpawnPoint        77      3129.25 895.37  1       1.00    0.00    0       -1     15     1      60     -1     -1    
+	PowerSplitter       34      2503.13 2611.19 255     1.00    0.00    0       -1      39  49  
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           2550.08 1088.68 5056.05 0.01 -0.56 -0.83 0.01 0.83 -0.56
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

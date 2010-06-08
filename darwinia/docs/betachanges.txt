@@ -1,0 +1,110 @@
+v 1.5.11
+ - Final effect tweaks
+ 
+v 1.5.10
+ - Grenade effect changed
+ - Fix graphical overruns for languages
+ - Toned down spirit effect, and apply it depth sorted now.
+ 
+v 1.5.9
+ - Pixel shader option split into three levels: 
+	disabled 
+	partial (enables pixellation effect on squaddies, etc).
+	full (enables reflective water, explosion effect and spirts effect)	
+ - Game cursor now anti-aliased 
+ - Toned down the explosion effect a little so that it's easier to see what's going on.
+ 
+v 1.5.8
+ - The game will now properly move on to the world map after finishing prologue
+ - The new default resolution is automatically set to the desktop resolution
+ - The game will now pause properly when not in focus, instead of catching up at high speed
+
+v 1.5.7
+ - The Prologue will no longer crash if you have the AccessAllAreas profile selected
+ - Fixed numerous issues relating to the task manager when leaving/re-entering levels
+ - Prologue will now fully reset when using the Reset Level button
+ - Fixed crashes in the tutorial caused by missing buildings (normally the first research item)
+
+v 1.5.6
+ - The game will no longer crash when Prologue is selected
+ - The main menu will no longer close when B is pressed on the 360 controller
+ - Dead tasks will now be properly removed from the task manager
+ - The reset location option in Prologue will now take you back into the level instead of to the main menu
+
+v 1.5.5
+ - Fixed: Radar beam not being reflected
+ - Fixed: Dead unit polygons appearing above pixel shaded explosion effect
+
+v 1.5.4 
+ - Fixed: Issue where Alt key would remain depressed when switching away with Alt-tab
+ - Fixed: Clipping issue with doomsday.
+ - Fixed: RadarDishes should now work properly for Squadies and Officers/Darwinians when using both the keyboard and the game pad
+ - Fixed: Control names in the Control Options window should now appear properly
+ - Fixed: Navigating menus with the control pad will no longer cause the camera to move when you close the menu
+ - Fixed: Yellow water after resolution change
+ - Fixed: Possible crash after Alt-Tab in fullscreen
+ - Fixed: Black landscape after location, world, change resolution, location
+ - Fixed: Alt-F4 caused the game to be saved
+ - Fixed: Unplugging the Xinput controller causes the game to be paused.
+ - Fixed: Window close button quits the game (game is saved)
+ - Fixed: Icons task manager used when use Xbox 360 controller regardless of setting
+ - Fixed: Mouse cursor visible on non-client areas of Darwinia.
+
+v 1.5.3
+ - Fixed: Issue where Darwinia would "trap" the mouse if started without application focus
+ - Fixed: The Jailbreak Souldestroy should continue on its path if you exit the game and reload before it finishes
+ - Fixed: FenceSwitches will no longer turn off their fences when you change the graphics detail
+ - Fixed: Darwinians should no longer appear outside of the LaserFence on the last prison of Jailbreak, causing the Souldestroyer script to run at the wrong time.
+ - Fixed: Laser Fences will no longer be clipped after changing graphics options
+ - Fixed: Officers should be able to direct Darwinian's into RadarDish's using the control pad properly
+ - Fixed: Collision detection between Armour and LaserFences should now work properly
+ - Fixed: The standard mouse cursor will no longer show when aiming radar dishes/highlighting objects while using the game pad
+ - Fixed: Xbox360 controller help should give help on 'A' button when aiming radar
+ - Fixed: The tab key will now work properly in Icons control mode
+ - Screenshots now saved as PNG
+ - Fixed an issue where Gestures wouldn't work on certain computers above a certain frame rate
+ - Doomsday
+   - The lighting has been lowered to prevent chronic migranes
+   - The final Fence Switch has been made Once Only, preventing constant cutscene triggering during battle
+   - An Incubator has been placed near the first Control Point
+ 
+v 1.5.2
+ - Fixed: The current percentage on The Weapon will now save properly
+ - Fixed: Issues with double switching FenceSwitches
+ - Fixed: States of laserfences/fenceswitches in Doomsday should now be saved
+ - Fixed: FenceSwitch connections no longer disappear at certain camera angles
+ - Fixed: AISpawnPoints will now properly save the number of entities they have spawned, fixing the issue of multiple soul destroyers on Jailbreak if you reload the game.
+ - Fixed: Armour can no longer go through LaserFences
+ - Fixed: Error message "Failed to set screen mode" on older graphics cards
+ - Fixed: Alt-Tab sometimes causes black screen & looping sound when returning to fullscreen game
+ - Fixed: Spectrum bootloader: 'Program: Darwinia' text distorted
+ - Fixed: Texture alignment, please check e.g. in Pattern Buffer.
+ 
+ - Various issues with Perdition have been fixed and it should now be playable from start to finish without any problems
+ - The population limit on Doomsday has been lowered to help with performance issues as well as difficulty problems with the bulk of the level
+ - The final part of the level (holding the control points against waves of red Darwinians) has been made more difficult
+ 
+ - Gestures Mode
+ - Switch unit has been changed from Alt+Tab to just Tab. The Chatlog can now be viewed using the L key.
+
+v 1.5.1
+ - Fixed: RayTrace bootloader: Performance is extremely poor
+ - Fixed: Bars of light on explosion detonation
+ - Fixed: Darwinia now starts off in full screen mode by default
+ - Fixed: Control options not saving in prefs file
+ - Fixed: Input Mode no longer rendered.
+ - Fixed: Pixel Effect can be seen through terrain
+ - Fixed: Transparent green Darwinians
+ - Fixed: Other options overlapping Window when Christmas mode is available
+ - Fixed: The Large Menu options can now be set to Automatic properly
+ - Fixed: Issues that would make it difficult to tell Officers to order Darwinians into a Radar Dish
+ - Fixed: Gestures Task manager not displaying when alt is pressed
+ - Fixed: You can now use shift to speed up the camera while turning in the editor
+ - Fixed: Buttons will scroll in the correct order when changing from Icon to Gestures mode in the Control window=======
+ - Fixed: Connections between FeedingTube buildings no longer disappears at certain camera positions
+ - Fixed: Bars at edge of screen during transitions (Fade outs)
+ - Fixed: Underwater objects reflect above themselves
+ - Fixed: GunTurrets will now appear properly in the editor
+ - Fixed: FenceSwitches will now default to Global in the editor
+ - Added: WaitVerticalRetrace preference (defaults to 1)
+ - Updated the ending sequence and fixed related crash bugs

@@ -1,0 +1,8 @@
+CameraLeft                        = key q pressed
+CameraRight                       = key d pressed
+CameraUp                          = key a pressed
+CameraDown                        = key e pressed
+CameraForwards                    = key z pressed
+CameraBackwards                   = key s pressed
+CameraZoom                        = key w pressed
+CameraDeZoom                      = key c pressed

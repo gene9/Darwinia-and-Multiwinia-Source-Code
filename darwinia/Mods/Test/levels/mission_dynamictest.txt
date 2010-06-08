@@ -1,0 +1,29 @@
+Difficulty_StartDefinition
+	CreatedAsDifficulty 1
+Difficulty_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Darwinian        0   711.0   267.1     40    0      -1    40.0     0.0     0.0
+	Darwinian        0  1800.8  1262.8     40    0      -1    50.0     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :dynamictest,0 	objective1
+	BuildingOnline :dynamictest,8 	objective2
+	BuildingOnline :dynamictest,14 	objective3
+PrimaryObjectives_EndDefinition

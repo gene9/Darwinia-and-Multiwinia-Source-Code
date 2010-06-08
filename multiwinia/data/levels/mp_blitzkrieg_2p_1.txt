@@ -1,0 +1,136 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	Blitzkrieg 
+	PopulationCap	1500
+	DefenderPopulationCap	-1
+	NumPlayers	2
+	LevelOptions	trunkportreinforcements 100	trunkportarmour 3	
+	Difficulty	basic
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 3500
+	worldSizeZ 3500
+	cellSize 12.00
+	outsideHeight -10.00
+	maxHeight 0.00
+	landColourFile landscape_earth.bmp
+	wavesColourFile waves_earth.bmp
+	waterColourFile water_icecaps.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   911  -5.40    803   1354  4.86  10.00     88      1    155   0.03     2   AAAAAAAAAAAAAAAAAA
+	  1831   1.29    220   1134  4.86  10.00    282      1     66   1.00     1   AA
+	   741   1.29   1906   1134  4.86  10.00    268      1     98   1.00     1   AA
+	-67487  -2.57 -80089    884  4.86  10.00     38      1    157   1.00     3   CNELEBDMBKAOAADGEHCLCIBJBEAFBMBKAABEBFBEAJAAAAAAAEBEBEANAAAAAAAMBEBEBEAAAAAABDBEBEBEAAAAAABEBEBEAJ
+	  1353  -2.57    372    684  4.86  10.00    140      1    192   0.44     0
+	  1842  -2.57    720    284  4.86  10.00     36      1    192   0.44     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+	1658.7   53.4  686.7  258.5      3   30.3
+	1603.9   74.5 2253.1  244.6      3   40.0
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.69   0.27   0.67     0.81   0.81   0.81
+	  0.98   0.00   0.21     3.19   2.07   1.22
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrunkPort           0       1031.55 2612.51 0       0.76    -0.64   1       -1      
+	TrunkPort           1       2660.77 755.55  1       -1.00   -0.01   1       -1      
+	SpawnPoint          2       1932.33 1841.92 255     -0.65   -0.76   0       
+	SpawnPointMaster    3       280.81  237.07  255     1.00    0.00    0       2     
+	MultiwiniaZone      4       1645.18 1524.15 255     1.00    0.00    0       100.00   6
+	MultiwiniaZone      5       1064.54 2344.57 0       1.00    0.00    0       100.00   4
+	MultiwiniaZone      6       2372.14 836.45  1       1.00    0.00    0       100.00
+	SolarPanel          7       1443.86 2197.19 0       0.00    1.00    0       23      
+	SolarPanel          8       1595.05 2161.00 0       -0.00   0.99    0       7       
+	SolarPanel          9       1713.95 2322.79 0       -0.00   0.99    0       8       
+	SolarPanel          10      1507.87 510.29  1       -0.00   0.95    0       11      
+	SolarPanel          11      1606.41 663.54  1       0.00    0.99    0       12      
+	SolarPanel          12      1759.93 596.75  1       -0.00   0.99    0       35      
+	LaserFence          13      1007.72 2042.99 0       1.00    0.00    0       55      1.00  2
+	LaserFence          14      791.85  2247.22 0       1.00    0.00    0       13      1.36  2
+	LaserFence          15      771.22  2782.28 0       1.00    0.00    0       14      1.69  2
+	LaserFence          16      984.28  3002.90 0       1.00    0.00    0       15      1.75  2
+	LaserFence          17      1334.04 2967.26 0       1.00    0.00    0       16      1.63  2
+	LaserFence          18      1378.22 2493.86 0       1.00    0.00    0       17      1.45  2
+	LaserFence          19      1258.16 2207.87 0       1.00    0.00    0       18      1.00  2
+	LaserFence          21      1167.26 2081.50 0       1.00    0.00    0       19      1.00  2
+	PylonEnd            22      1249.55 2020.78 255     1.00    0.00    0       54      
+	Pylon               23      1371.57 2065.60 255     1.00    0.00    0       22      
+	LaserFence          24      1974.31 882.50  1       1.00    0.00    0       25      1.00  2
+	LaserFence          25      2100.04 728.69  1       1.00    0.00    0       26      1.00  2
+	LaserFence          26      2321.54 617.01  1       1.00    0.00    0       27      1.00  2
+	LaserFence          27      2384.66 321.74  1       1.00    0.00    0       28      1.60  2
+	LaserFence          28      2474.66 233.55  1       1.00    0.00    0       29      1.74  2
+	LaserFence          29      2740.38 249.87  1       1.00    0.00    0       30      1.66  2
+	LaserFence          30      2924.34 382.41  1       1.00    0.00    0       31      1.59  2
+	LaserFence          31      2920.32 949.14  1       1.00    0.00    0       32      1.73  2
+	LaserFence          32      2511.68 1063.72 1       1.00    0.00    0       33      1.71  2
+	LaserFence          33      2185.67 1087.02 1       1.00    0.00    0       34      1.00  2
+	LaserFence          34      2091.29 1003.66 1       1.00    0.00    0       52      1.00  2
+	PylonEnd            35      1880.85 924.67  255     1.00    0.00    0       53      
+	Tree                20      1904.00 1706.99 255     1.00    0.00    0       97.99   5.16    0.53    1.14    6       0       -16761747   -14736359   0       0       0       
+	Tree                36      1806.99 1705.74 255     1.00    0.00    0       108.81  5.16    0.53    1.14    6       66959   -16761747   -14736359   0       0       0       
+	Tree                37      1742.22 1797.05 255     1.00    0.00    0       109.28  5.16    0.53    1.14    6       66990   -16761747   -14736359   0       0       0       
+	Tree                38      1807.38 1858.14 255     1.00    0.00    0       90.94   5.16    0.53    1.14    6       67069   -16761747   -14736359   0       0       0       
+	Tree                39      1529.84 1172.31 255     1.00    0.00    0       111.63  5.16    0.53    1.14    6       67140   -16761747   -14736359   0       0       0       
+	Tree                40      1465.59 1223.96 255     1.00    0.00    0       92.34   5.16    0.53    1.14    6       67158   -16761747   -14736359   0       0       0       
+	Tree                41      1579.75 1254.99 255     1.00    0.00    0       102.45  5.16    0.53    1.14    6       67179   -16761747   -14736359   0       0       0       
+	AITarget            42      1060.19 2364.88 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            43      1122.32 1942.43 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            44      1639.40 1533.22 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            45      1882.31 1796.68 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            46      1335.40 1710.28 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            47      1870.01 1044.30 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            48      1770.82 1288.56 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            49      2383.43 848.23  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            50      1636.63 566.56  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            51      1629.94 2203.63 255     1.00    0.00    0       -1    0.00 1     
+	LaserFence          52      1999.95 1059.26 255     1.00    0.00    0       -1      0.46  0
+	LaserFence          53      1898.69 944.68  1       1.00    0.00    0       24      0.35  2
+	LaserFence          54      1185.60 1992.36 0       1.00    0.00    0       21      0.64  2
+	LaserFence          55      1038.73 1943.59 255     1.00    0.00    0       -1      0.47  0
+	AITarget            56      2023.06 927.10  255     1.00    0.00    0       -1    0.00 0     
+	AITarget            57      1079.45 2120.05 255     1.00    0.00    0       -1    0.00 1     
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0         1170.90  549.40 2990.89 0.17 -0.58 -0.79 0.12 0.81 -0.57
+	player2         1868.94  353.78  352.53 -0.39 -0.77 0.50 -0.48 0.64 0.61
+	player1         2740.13  479.41  282.24 -0.62 -0.43 0.66 -0.29 0.90 0.31
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+	Darwinian        0  1588.7  2231.4     40    0      -1    89.3     0.0     0.0   -1   -1    0
+	Darwinian        1  1640.2   625.1     40    0      -1   109.7     0.0     0.0   -1   -1    0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

@@ -1,0 +1,53 @@
+
+
+SetMission mine mission_mine_attract.txt
+SetMission pattern_buffer mission_pattern_buffer_attract.txt
+SetMission biosphere mission_biosphere_attract.txt
+
+EnterLocation mine
+CamMove	attract1 10
+WaitCam
+CamMove attract2 10
+WaitCam
+CamMove attract3 10
+WaitCam
+CamMove attract4 10
+WaitCam
+CamMove attract5 10
+Wait 7
+
+ExitLocation
+EnterLocation pattern_buffer
+
+CamMove	attract1 20
+WaitCam
+CamMove attract2 10
+WaitCam
+CamMove attract3 10
+WaitCam
+CamMove attract4 10
+WaitCam
+CamMove attract5 10
+WaitCam
+CamMove attract6 10
+Wait 7
+
+ExitLocation
+EnterLocation biosphere
+
+CamMove	attract1 10
+WaitCam
+CamMove attract2 10
+WaitCam
+CamMove attract3 10
+WaitCam
+CamMove attract4 10
+WaitCam
+CamMove attract5 10
+WaitCam
+CamMove attract6 10
+Wait 7
+
+ExitLocation
+CamReset
+

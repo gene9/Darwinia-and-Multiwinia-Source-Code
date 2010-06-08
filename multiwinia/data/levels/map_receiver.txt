@@ -1,0 +1,194 @@
+Landscape_StartDefinition
+	worldSizeX 4800
+	worldSizeZ 4800
+	cellSize 20.00
+	outsideHeight -26.13
+	landColourFile landscape_mine.bmp
+	wavesColourFile waves_containmentfield.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   114   0.85   2108   1224  1.50   0.90    200      1     34   1.00     0
+	   664   0.00    803    984  1.50   0.90    200      1      4   1.00     0
+	  1138   0.00    293   1014  1.50   0.90    200      1     83   1.00     0
+	   633   0.00    290   1014  1.50   0.90    200      1     31   1.00     0
+	   851   0.00   1030   1014  1.50   0.90    200      1     12   1.00     0
+	   431   0.00   1255   1014  1.50   0.90    300      1     43   1.00     0
+	  1910   0.00   1337   1214  1.50   0.90    200      1    167   1.00     0
+	  2035   0.00   1675   1224  1.50   0.90    200      1     31   1.00     0
+	   514   0.00   2521   1224  1.50   0.90    400      1      3   1.00     0
+	  2137   0.00    452    914  1.50   1.00    400      1   1003   1.00     0
+	  2707   0.00   1016   1224  1.50   0.90    100      1   1025   1.00     0
+	  1806   0.00   2181   1224  1.50   0.90    200      1   1037   1.00     0
+	  3505   0.00   1445   1224  1.50   0.90    200      1   1055   1.00     0
+	  3353   0.00   2310   1224  1.50   0.90    200      1   1074   1.00     0
+	  2784   0.00   2943   1224  1.50   0.90    200      1   1086   1.00     0
+	  2787   0.00   3274   1224  1.50   0.90    200      1   1092   1.00     0
+	  1654   0.00   2868   1500  1.00   0.40     50      1   1077   1.00     0
+	  2917   0.00   1002    424  1.20   1.00     50      1      9   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.88   0.47   0.03     2.52   1.41   0.31
+	 -0.97   0.00   0.24     3.28   2.21   1.38
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrunkPort           143     4533.61 1730.73 255     1.00    0.00    1       6       
+	TrunkPort           144     591.97  3298.51 255     1.00    0.00    1       8       
+	TrunkPort           145     3356.99 1198.91 255     0.07    -1.00   1       9       
+	SpiritReceiver      0       1564.33 968.94  0       0.00    0.95    0       17      
+	SpiritProcessor     1       2763.87 1939.14 2       0.12    0.99    1       83      
+	SpiritReceiver      2       1448.16 1411.24 0       0.00    0.93    0       21      
+	SpiritReceiver      4       1604.57 1568.74 0       0.00    0.98    0       7       
+	ReceiverLink        5       1409.18 1688.76 1       1.00    0.00    0       7       
+	ReceiverLink        6       1299.81 1604.39 1       1.00    0.00    0       5       
+	ReceiverLink        7       1636.63 1705.20 1       1.00    0.00    0       30      
+	SpiritReceiver      8       1069.79 861.67  0       0.00    0.94    0       24      
+	SpiritReceiver      9       1735.39 479.67  0       0.00    0.92    0       14      
+	SpiritReceiver      10      1452.00 515.07  0       0.00    0.64    0       15      
+	SpiritReceiver      11      1288.26 1031.74 0       0.00    0.82    0       17      
+	SpiritReceiver      12      1413.51 691.15  0       0.00    0.74    0       15      
+	SpiritReceiver      13      1916.17 689.27  0       0.00    0.94    0       34      
+	ReceiverLink        14      1777.76 617.64  1       1.00    0.00    0       34      
+	ReceiverLink        15      1562.75 635.47  1       1.00    0.00    0       14      
+	ReceiverLink        17      1437.24 1041.82 1       1.00    0.00    0       20      
+	ReceiverLink        18      1150.26 1049.41 1       1.00    0.00    0       48      
+	ReceiverLink        19      943.34  1053.16 1       1.00    0.00    0       18      
+	ReceiverLink        20      1453.12 1196.49 1       1.00    0.00    0       21      
+	ReceiverLink        21      1335.06 1404.53 1       1.00    0.00    0       6       
+	SpiritReceiver      22      808.73  1110.38 0       0.00    0.71    0       19      
+	SpiritReceiver      23      792.63  766.89  0       0.00    0.80    0       24      
+	ReceiverLink        24      893.01  894.90  1       1.00    0.00    0       19      
+	SpiritReceiver      16      1540.08 1874.25 0       0.00    0.92    0       5       
+	SpiritReceiver      25      1275.30 1814.68 0       0.00    0.88    0       27      
+	SpiritReceiver      26      814.55  1673.17 0       0.00    0.81    0       47      
+	ReceiverLink        27      1180.18 1741.27 1       1.00    0.00    0       6       
+	SpiritReceiver      28      1138.80 1464.66 0       0.00    0.74    0       6       
+	SpiritReceiver      29      1079.53 1157.27 0       0.00    0.80    0       18      
+	ReceiverLink        30      1785.60 1799.50 1       1.00    0.00    0       31      
+	ReceiverLink        31      2065.39 1831.45 1       1.00    0.00    0       32      
+	ReceiverLink        32      2234.64 1771.75 1       1.00    0.00    0       33      
+	ReceiverLink        33      2382.12 1769.17 1       1.00    0.00    0       76      
+	ReceiverLink        34      1968.65 471.50  1       1.00    0.00    0       36      
+	ReceiverLink        36      2335.90 568.64  1       1.00    0.00    0       39      
+	SpiritReceiver      37      2541.65 724.51  0       0.00    0.92    0       39      
+	SpiritReceiver      38      2817.54 1087.63 0       0.00    0.85    0       41      
+	ReceiverLink        39      2343.76 846.24  1       1.00    0.00    0       40      
+	ReceiverLink        40      2575.62 982.21  1       1.00    0.00    0       41      
+	ReceiverLink        41      2644.53 1095.90 1       1.00    0.00    0       43      
+	SpiritReceiver      42      1663.51 799.64  0       0.00    0.98    0       15      
+	ReceiverLink        43      2654.41 1250.04 1       1.00    0.00    0       44      
+	ReceiverLink        44      2550.40 1483.11 1       1.00    0.00    0       45      
+	ReceiverLink        45      2616.86 1621.48 1       1.00    0.00    0       77      
+	SpiritReceiver      46      845.82  1909.48 0       0.00    0.87    0       47      
+	ReceiverLink        47      976.47  1751.63 1       1.00    0.00    0       27      
+	ReceiverLink        48      1236.62 1156.58 1       1.00    0.00    0       21      
+	SpiritReceiver      35      4379.55 3171.03 0       0.00    0.98    0       53      
+	SpiritReceiver      49      4176.01 3270.71 0       0.00    0.92    0       53      
+	SpiritReceiver      50      3989.97 3161.85 0       0.00    0.97    0       54      
+	SpiritReceiver      51      3789.72 3211.18 0       0.00    0.94    0       55      
+	SpiritReceiver      52      3487.92 3296.85 0       0.00    0.91    0       62      
+	ReceiverLink        53      4165.41 3135.03 1       1.00    0.00    0       54      
+	ReceiverLink        54      3989.99 3305.33 1       1.00    0.00    0       55      
+	ReceiverLink        55      3774.17 3356.28 255     1.00    0.00    0       56      
+	ReceiverLink        56      3631.93 3495.83 1       1.00    0.00    0       63      
+	SpiritReceiver      57      3537.72 3024.65 0       0.00    0.89    0       62      
+	SpiritReceiver      58      3362.35 3610.52 0       0.00    0.95    0       63      
+	SpiritReceiver      59      3548.04 3686.67 0       0.00    0.95    0       64      
+	SpiritReceiver      60      3341.29 4059.89 0       0.00    0.77    0       66      
+	SpiritReceiver      61      3659.73 3943.43 0       0.00    0.94    0       65      
+	ReceiverLink        62      3623.89 3244.93 1       1.00    0.00    0       55      
+	ReceiverLink        63      3425.61 3442.82 1       1.00    0.00    0       71      
+	ReceiverLink        64      3680.24 3733.43 1       1.00    0.00    0       56      
+	ReceiverLink        65      3524.59 3838.94 1       1.00    0.00    0       64      
+	ReceiverLink        66      3338.46 3896.90 1       1.00    0.00    0       65      
+	SpiritReceiver      3       3152.43 3940.21 0       0.00    0.84    0       70      
+	SpiritReceiver      67      2976.62 4109.52 0       0.00    0.93    0       70      
+	SpiritReceiver      68      3113.47 4262.75 2       0.00    0.74    0       70      
+	SpiritReceiver      69      3571.55 4221.43 0       0.00    0.90    0       72      
+	ReceiverLink        70      3141.19 4058.78 1       1.00    0.00    0       66      
+	ReceiverLink        71      3252.30 3269.23 1       1.00    0.00    0       73      
+	ReceiverLink        72      3488.15 4031.03 1       1.00    0.00    0       65      
+	ReceiverLink        73      2916.58 3325.03 1       1.00    0.00    0       74      
+	ReceiverLink        74      2875.13 3124.33 1       1.00    0.00    0       75      
+	ReceiverLink        75      2740.45 2920.01 1       1.00    0.00    0       79      
+	ReceiverLink        76      2468.21 1838.38 1       1.00    0.00    0       77      
+	ReceiverLink        77      2611.13 1792.97 1       1.00    0.00    0       1       
+	ReceiverLink        79      2698.32 2733.84 1       1.00    0.00    0       80      
+	ReceiverLink        80      2775.26 2552.24 1       1.00    0.00    0       81      
+	ReceiverLink        81      2703.04 2334.99 1       1.00    0.00    0       82      
+	ReceiverLink        82      2797.30 2124.36 1       1.00    0.00    0       1       
+	ReceiverLink        83      2883.02 1928.27 1       1.00    0.00    0       84      
+	ReceiverLink        84      2973.45 1816.02 1       1.00    0.00    0       86      
+	ReceiverLink        86      3141.14 1727.22 1       1.00    0.00    0       87      
+	ReceiverLink        87      3254.17 1594.34 1       1.00    0.00    0       88      
+	ReceiverLink        88      3282.40 1399.70 1       1.00    0.00    0       89      
+	ReceiverLink        89      3369.46 1170.85 1       1.00    0.00    0       -1      
+	SpiritReceiver      91      277.12  2839.45 0       0.00    0.92    0       107     
+	SpiritReceiver      92      457.08  3021.04 0       0.00    0.94    0       107     
+	SpiritReceiver      93      514.88  2766.33 0       0.00    0.98    0       108     
+	SpiritReceiver      94      343.02  2529.86 0       0.00    0.89    0       105     
+	SpiritReceiver      95      351.18  2268.48 0       0.00    0.87    0       105     
+	SpiritReceiver      96      603.58  2520.11 0       0.00    0.65    0       106     
+	SpiritReceiver      97      785.42  2805.49 0       0.00    0.94    0       109     
+	SpiritReceiver      98      994.91  2856.03 0       0.00    0.97    0       110     
+	SpiritReceiver      99      1210.40 2853.44 0       0.00    0.83    0       116     
+	SpiritReceiver      100     1016.36 2489.81 0       0.00    0.98    0       110     
+	SpiritReceiver      101     1078.44 3289.44 0       0.00    0.80    0       113     
+	SpiritReceiver      102     1305.81 3372.29 0       0.00    0.88    0       117     
+	SpiritReceiver      103     1464.29 3518.02 0       0.00    0.99    0       117     
+	SpiritReceiver      104     1499.22 3242.77 0       0.00    0.78    0       117     
+	ReceiverLink        105     462.47  2410.80 1       1.00    0.00    0       106     
+	ReceiverLink        106     484.22  2625.03 1       1.00    0.00    0       108     
+	ReceiverLink        107     402.76  2874.04 1       1.00    0.00    0       106     
+	ReceiverLink        108     660.95  2709.93 1       1.00    0.00    0       109     
+	ReceiverLink        109     868.74  2650.74 1       1.00    0.00    0       110     
+	ReceiverLink        110     1077.33 2723.42 1       1.00    0.00    0       111     
+	ReceiverLink        111     1288.16 2676.02 1       1.00    0.00    0       112     
+	ReceiverLink        112     1536.46 2648.67 1       1.00    0.00    0       118     
+	ReceiverLink        113     1181.09 3253.48 1       1.00    0.00    0       114     
+	ReceiverLink        114     1289.60 3175.04 1       1.00    0.00    0       115     
+	ReceiverLink        115     1390.68 3048.31 1       1.00    0.00    0       116     
+	ReceiverLink        116     1422.48 2823.36 1       1.00    0.00    0       112     
+	ReceiverLink        117     1410.51 3364.84 1       1.00    0.00    0       115     
+	ReceiverLink        118     1886.42 2697.65 1       1.00    0.00    0       119     
+	ReceiverLink        119     2046.36 2617.58 1       1.00    0.00    0       120     
+	ReceiverLink        120     2162.38 2398.54 1       1.00    0.00    0       121     
+	ReceiverLink        121     2324.09 2298.96 1       1.00    0.00    0       122     
+	ReceiverLink        122     2513.80 2127.13 1       1.00    0.00    0       123     
+	ReceiverLink        123     2598.20 1986.80 1       1.00    0.00    0       1       
+	SpiritReceiver      124     2527.37 1127.45 0       0.00    0.87    0       41      
+	ControlTower        125     4489.47 1827.19 1       -0.32   0.95    1          143
+	RadarDish           126     4416.40 3069.73 1       0.00    1.00    1       
+	RadarDish           127     4282.69 2722.55 1       0.71    -0.70   1       
+	RadarDish           128     3125.62 2206.43 1       -0.91   -0.42   1       
+	RadarDish           129     2073.29 2040.93 1       0.91    0.41    1       
+	RadarDish           130     1730.97 1598.16 1       -0.78   -0.63   1       
+	RadarDish           131     1574.52 2724.71 1       -0.93   0.36    1       
+	ControlTower        132     4336.93 2656.71 1       0.85    -0.52   1          127
+	ControlTower        133     4467.52 3086.02 1       1.00    0.00    1          126
+	ControlTower        134     3066.14 2258.68 1       -0.27   0.96    1          128
+	ControlTower        135     2061.84 1985.08 1       -0.08   -1.00   1          129
+	ControlTower        136     1593.41 2769.52 1       0.83    0.56    1          131
+	ControlTower        137     1738.27 1539.06 1       0.73    -0.68   1          130
+	ControlTower        139     3595.49 1917.82 1       -0.86   -0.52   1          138
+	ControlTower        140     3450.16 1219.28 1       1.00    0.00    1          145
+	ControlTower        155     522.06  3228.75 1       -0.03   -1.00   1          144
+	SpawnPopulationLock 156     966.27  2989.28 1       1.00    0.00    0       786.45   300   
+	ControlTower        158     2216.91 1866.42 1       0.54    -0.84   1          157
+Buildings_EndDefinition
+

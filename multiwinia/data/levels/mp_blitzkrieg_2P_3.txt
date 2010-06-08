@@ -1,0 +1,139 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	Blitzkrieg 
+	PopulationCap	2000
+	DefenderPopulationCap	-1
+	NumPlayers	2
+	LevelOptions	trunkportreinforcements 100	trunkportarmour 3	
+	Difficulty	intermediate
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 3000
+	worldSizeZ 3000
+	cellSize 16.00
+	outsideHeight -10.00
+	maxHeight 0.00
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	  2059  -4.20     16    884  4.00   4.00    237      1 312869   0.13     1   AA
+	  1927  -4.20     29    884  4.00   4.00     53      1 338626   0.13     1   AA
+	   755  -7.94    730   1544  4.00   5.37    155      1 832530   1.87     4   AAAAAAABAJBGBEDCBKBCAGAHAAAAAAAAAAANBCCFBOBCAPBDBKCLCHBGAAAAAABBFOFJAKAEAAAAAAABAMCLBNBAAABDFBCDAFAAAAAAAAAAAAAAAABFCFAAAMDDAAAAAAAAAEDHCCAAAAAAAACGAIBACHAAAAAAGLFNGMHADGBHAAAABGAGBHBOAAAAAAEKHKHJHBCDBEAAAABPAHCDBFAAAABFEJGKKHFMEBBDAAAACLAGBJCCAAAABNELHAJCFHCMBEAAAACJAABGDAAAAAAABBCGDDCBBEAAAACFBDALABDDAGAAAAAAAAAAAAAAAAADGHAJADAACODDAKAAAAAAAAAAAAAMEFDBAJAAAAAACMDBEPCPAGCEAHAKDKFCALAAAAAAAAAKDICFFGEIEBDDDEBIBAAAAAAAAAAAAAAAAKAGAGAIAEAGAMACAAAAAA
+	     0  -4.20   2033    884  4.00   4.00    237      1 207309   0.13     1   AA
+	   223  -4.20   1648    884  4.00   4.00     81      1 247544   0.13     1   AA
+	   448   0.00   1708    484  4.00   4.00     49      1 311904   1.00     1   AA
+	  1926  -4.20    624    634  4.00   4.00     53      1 359270   0.13     1   AA
+	  1703   0.00   1801    684  4.00   4.00    200      1 521668   1.00     1   AA
+	   578   0.00    433    684  4.00   4.00    200      1 129845   1.00     1   AA
+	  1348   0.00     93    684  4.00   4.00    200      1 390967   1.00     1   AA
+	   960   0.00   2218    684  4.00   4.00    200      1 518666   1.00     1   AA
+	  2489   0.00   1474    474  4.00   4.00    200      1 101120   1.00     1   AA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.51   0.11   0.85     2.06   1.52   0.67
+	  0.70   0.70  -0.16     0.42   0.36   0.19
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	MultiwiniaZone      0       1540.69 1483.79 255     -0.13   0.99    0       100.00   1
+	MultiwiniaZone      1       2424.24 676.15  0       1.00    0.00    0       100.00
+	MultiwiniaZone      2       502.74  2191.33 1       0.98    -0.20   0       100.00   0
+	LaserFence          3       2068.89 825.34  0       -0.77   0.64    0       4       1.00  2
+	LaserFence          4       2063.43 742.77  0       -1.00   -0.09   0       13      1.00  2
+	LaserFence          5       2141.54 894.18  255     -0.63   0.78    0       -1      1.00  0
+	LaserFence          6       2236.02 909.65  0       -0.03   1.00    0       5       1.00  2
+	LaserFence          7       2459.76 870.19  0       0.36    0.93    0       6       1.00  2
+	LaserFence          8       2682.91 757.33  0       0.76    0.64    0       7       1.00  2
+	LaserFence          9       2769.14 612.00  0       0.97    -0.25   0       8       1.00  2
+	LaserFence          10      2616.18 467.84  0       0.41    -0.91   0       9       1.00  2
+	LaserFence          11      2424.18 442.13  0       0.02    -1.00   0       10      1.00  2
+	LaserFence          12      2207.85 506.83  0       -0.80   -0.60   0       11      1.00  2
+	LaserFence          13      2148.91 676.74  0       -0.77   -0.64   0       12      1.00  2
+	LaserFence          14      793.73  1988.99 1       0.73    -0.68   0       16      1.00  2
+	LaserFence          15      722.86  1906.91 255     0.62    -0.78   0       -1      1.00  0
+	LaserFence          16      832.19  2180.57 1       0.97    0.25    0       17      1.00  2
+	LaserFence          17      657.25  2352.57 1       0.85    0.52    0       18      1.00  2
+	LaserFence          18      519.10  2461.46 1       -0.03   1.00    0       19      1.00  2
+	LaserFence          19      390.57  2413.71 1       -0.46   0.89    0       20      1.00  2
+	LaserFence          20      273.46  2318.21 1       -0.90   0.43    0       21      1.00  2
+	LaserFence          21      283.53  2117.42 1       -0.94   -0.33   0       22      1.00  2
+	LaserFence          22      423.10  1931.09 1       -0.42   -0.91   0       23      1.00  2
+	LaserFence          23      620.37  1891.52 1       0.12    -0.99   0       15      1.00  2
+	TrunkPort           24      2576.00 561.17  0       -0.70   0.71    1       -1      
+	TrunkPort           25      430.62  2362.19 1       0.45    -0.89   1       -1      
+	SpawnPoint          27      928.29  780.21  255     0.76    0.64    0       
+	SpawnPoint          28      1724.85 505.92  255     0.85    0.52    0       
+	SpawnPoint          29      1321.29 2715.79 255     -0.77   -0.64   0       
+	TrunkPort           30      2631.34 1611.07 255     -1.00   0.01    1       -1      
+	SpawnPointMaster    31      2752.06 1269.13 255     1.00    0.00    0       32    
+	SpawnLink           32      2629.36 1557.50 255     1.00    0.00    0       33    
+	SpawnLink           33      2291.23 1617.14 255     1.00    0.00    0       34    26    
+	SpawnLink           34      1850.74 1689.88 255     1.00    0.00    0       35    37    
+	SpawnLink           35      1549.88 2216.72 255     1.00    0.00    0       36    
+	SpawnLink           36      1488.45 2723.52 255     -0.63   0.78    0       29    
+	SpawnLink           37      1851.06 1130.45 255     1.00    0.00    0       38    
+	SpawnLink           38      1712.55 690.50  255     1.00    0.00    0       28    39    
+	SpawnLink           39      1240.04 646.43  255     1.00    0.00    0       40    
+	SpawnLink           40      835.43  603.57  255     1.00    0.00    0       27    
+	JumpPad             41      1904.15 585.47  255     0.90    0.43    0       76.17 0.92 
+	JumpPad             42      1129.22 2583.47 255     -0.67   -0.75   0       104.98 0.68 
+	AITarget            43      2109.75 2117.33 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            44      1526.83 1463.17 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            45      500.59  2190.66 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            46      2423.20 675.76  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            47      1773.16 528.65  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            48      1898.81 588.63  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            49      1280.15 2682.95 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            50      1127.78 2562.17 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            51      977.34  828.13  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            52      2028.32 941.19  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            53      1456.10 872.73  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            54      947.55  1186.69 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            55      925.82  1774.86 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            56      1187.75 2006.19 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            57      1743.54 2025.83 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            58      1972.03 1816.57 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            59      2123.91 1512.44 255     1.00    0.00    0       -1    0.00 1     
+	SpawnPoint          26      2140.36 2167.68 255     -0.55   -0.84   0       
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0         2980.76  463.10  285.48 -0.77 -0.36 0.53 -0.30 0.93 0.20
+	player1           98.86  444.43 2602.93 0.71 -0.36 -0.60 0.27 0.93 -0.23
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

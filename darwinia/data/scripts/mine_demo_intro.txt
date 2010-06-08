@@ -1,0 +1,30 @@
+
+CamMove                 intro1      30
+WaitFade
+
+Say                     tutorial_intro_1
+Say                     tutorial_intro_2
+Say                     tutorial_intro_3
+
+WaitSay
+Wait                    6
+
+CamMove                 intro2      30
+Say                     tutorial_intro_4
+Say                     tutorial_intro_5
+
+WaitSay
+
+CamBuildingFocus        90      400     100
+
+Say                     tutorial_intro_6
+Say                     tutorial_intro_7
+Say                     tutorial_intro_8
+Say                     tutorial_intro_9
+
+WaitSay
+
+CamMove                 gamestart      5
+Say                     tutorial_intro_10
+WaitCam
+CamReset

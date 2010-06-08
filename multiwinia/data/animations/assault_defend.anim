@@ -1,0 +1,1532 @@
+WIDTH      900
+HEIGHT     250
+START      0.00
+STOP       12.02
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       wmd.bmp
+		XPOS            90.00
+		YPOS            110.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       turretbase.bmp
+		XPOS            291.00
+		YPOS            150.00
+		COLOUR          1
+		SCALE           1.00
+		ANGLE           10.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       darwinian.bmp
+		XPOS            255.00
+		YPOS            178.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           0.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       3.27
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           -5.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.01
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           5.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.47
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           20.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       11.62
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           0.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       9.97
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           20.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       1.52
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           -10.00
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       3.76
+		IMAGENAME       turretbarrel.bmp
+		XPOS            285.00
+		YPOS            141.00
+		COLOUR          0
+		SCALE           0.90
+		ANGLE           -0.95
+		FLIPHORIZ       1
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       trunkport.bmp
+		XPOS            807.00
+		YPOS            92.00
+		COLOUR          0
+		SCALE           0.70
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       darwinian.bmp
+		XPOS            40.00
+		YPOS            194.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       9.60
+		IMAGENAME       darwinian.bmp
+		XPOS            46.00
+		YPOS            215.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.15
+		IMAGENAME       darwinian.bmp
+		XPOS            47.00
+		YPOS            69.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           180.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.73
+		IMAGENAME       darwinian.bmp
+		XPOS            45.00
+		YPOS            211.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       12.02
+		IMAGENAME       darwinian.bmp
+		XPOS            40.00
+		YPOS            194.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       darwinian.bmp
+		XPOS            104.00
+		YPOS            206.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       9.84
+		IMAGENAME       darwinian.bmp
+		XPOS            111.00
+		YPOS            217.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.34
+		IMAGENAME       darwinian.bmp
+		XPOS            112.00
+		YPOS            69.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           -280.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.86
+		IMAGENAME       darwinian.bmp
+		XPOS            123.00
+		YPOS            207.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           -360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       12.02
+		IMAGENAME       darwinian.bmp
+		XPOS            96.00
+		YPOS            208.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           -360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       darwinian.bmp
+		XPOS            165.00
+		YPOS            187.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.02
+		IMAGENAME       darwinian.bmp
+		XPOS            185.00
+		YPOS            198.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       10.55
+		IMAGENAME       darwinian.bmp
+		XPOS            182.00
+		YPOS            69.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           200.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       11.02
+		IMAGENAME       darwinian.bmp
+		XPOS            188.00
+		YPOS            204.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       12.02
+		IMAGENAME       darwinian.bmp
+		XPOS            165.00
+		YPOS            191.00
+		COLOUR          1
+		SCALE           0.40
+		ANGLE           360.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       0.00
+		IMAGENAME       cloudyglow.bmp
+		XPOS            806.00
+		YPOS            92.00
+		COLOUR          2
+		SCALE           0.80
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       12.14
+		IMAGENAME       cloudyglow.bmp
+		XPOS            806.00
+		YPOS            92.00
+		COLOUR          2
+		SCALE           0.80
+		ANGLE           200.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       1.42
+		IMAGENAME       darwinian.bmp
+		XPOS            794.00
+		YPOS            71.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           300.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       2.27
+		IMAGENAME       darwinian.bmp
+		XPOS            780.00
+		YPOS            178.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       3.65
+		IMAGENAME       darwinian.bmp
+		XPOS            768.00
+		YPOS            178.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.68
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            576.36
+		YPOS            185.20
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.85
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            703.30
+		YPOS            145.94
+		COLOUR          3
+		SCALE           0.40
+		ANGLE           400.00
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       1.71
+		IMAGENAME       darwinian.bmp
+		XPOS            823.00
+		YPOS            70.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           -563.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       2.48
+		IMAGENAME       darwinian.bmp
+		XPOS            856.00
+		YPOS            175.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.78
+		IMAGENAME       darwinian.bmp
+		XPOS            865.00
+		YPOS            193.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.86
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            575.16
+		YPOS            192.37
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       9.03
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            695.47
+		YPOS            174.07
+		COLOUR          3
+		SCALE           0.40
+		ANGLE           800.00
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       1.60
+		IMAGENAME       darwinian.bmp
+		XPOS            826.00
+		YPOS            94.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           324.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       2.27
+		IMAGENAME       darwinian.bmp
+		XPOS            842.00
+		YPOS            188.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.40
+		IMAGENAME       darwinian.bmp
+		XPOS            831.00
+		YPOS            188.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.26
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            554.41
+		YPOS            193.84
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.56
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            671.68
+		YPOS            206.89
+		COLOUR          3
+		SCALE           0.40
+		ANGLE           600.00
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       1.89
+		IMAGENAME       darwinian.bmp
+		XPOS            785.00
+		YPOS            79.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           -768.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       2.68
+		IMAGENAME       darwinian.bmp
+		XPOS            799.00
+		YPOS            197.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       3.99
+		IMAGENAME       darwinian.bmp
+		XPOS            797.00
+		YPOS            210.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.37
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            579.65
+		YPOS            210.00
+		COLOUR          2
+		SCALE           0.40
+		ANGLE           0.00
+		FLIPHORIZ       0
+		ALPHA           255
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.74
+		IMAGENAME       darwinian_ouch4.bmp
+		XPOS            734.13
+		YPOS            205.00
+		COLOUR          3
+		SCALE           0.40
+		ANGLE           700.00
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+END
+
+BEGIN Object
+	BEGIN Keyframe
+		TIMEINDEX       4.70
+		IMAGENAME       muzzleflash.bmp
+		XPOS            400.69
+		YPOS            149.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.80
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            147.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.90
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            149.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.00
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            151.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.10
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            151.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.19
+		IMAGENAME       muzzleflash.bmp
+		XPOS            400.69
+		YPOS            150.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.30
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.40
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.50
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            153.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.60
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.70
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            154.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.80
+		IMAGENAME       muzzleflash.bmp
+		XPOS            401.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.90
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            156.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.00
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.10
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.20
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            154.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.30
+		IMAGENAME       muzzleflash.bmp
+		XPOS            391.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.40
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.50
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.61
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.70
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.80
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.90
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.00
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.10
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            162.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.20
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.30
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.40
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.50
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            165.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.60
+		IMAGENAME       muzzleflash.bmp
+		XPOS            387.69
+		YPOS            165.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.70
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.80
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.90
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            170.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.00
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.10
+		IMAGENAME       muzzleflash.bmp
+		XPOS            393.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.20
+		IMAGENAME       muzzleflash.bmp
+		XPOS            391.69
+		YPOS            166.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.30
+		IMAGENAME       muzzleflash.bmp
+		XPOS            393.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.40
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.50
+		IMAGENAME       muzzleflash.bmp
+		XPOS            389.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.60
+		IMAGENAME       muzzleflash.bmp
+		XPOS            389.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.70
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.80
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            167.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.90
+		IMAGENAME       muzzleflash.bmp
+		XPOS            392.69
+		YPOS            169.16
+		COLOUR          3
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           250
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.75
+		IMAGENAME       muzzleflash.bmp
+		XPOS            400.69
+		YPOS            149.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.85
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            147.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       4.95
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            149.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.05
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            151.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.15
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            151.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.25
+		IMAGENAME       muzzleflash.bmp
+		XPOS            400.69
+		YPOS            150.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.35
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.45
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.55
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            153.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.65
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            152.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.75
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            154.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.85
+		IMAGENAME       muzzleflash.bmp
+		XPOS            401.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       5.95
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            156.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.05
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.15
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.25
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            154.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.35
+		IMAGENAME       muzzleflash.bmp
+		XPOS            391.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.45
+		IMAGENAME       muzzleflash.bmp
+		XPOS            398.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.55
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.65
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            157.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.75
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.85
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       6.95
+		IMAGENAME       muzzleflash.bmp
+		XPOS            396.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.05
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            160.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.15
+		IMAGENAME       muzzleflash.bmp
+		XPOS            399.69
+		YPOS            162.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.25
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            159.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.35
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.45
+		IMAGENAME       muzzleflash.bmp
+		XPOS            394.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.55
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            165.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.65
+		IMAGENAME       muzzleflash.bmp
+		XPOS            387.69
+		YPOS            165.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.75
+		IMAGENAME       muzzleflash.bmp
+		XPOS            395.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.85
+		IMAGENAME       muzzleflash.bmp
+		XPOS            397.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       7.95
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            170.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.05
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            163.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.15
+		IMAGENAME       muzzleflash.bmp
+		XPOS            393.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.25
+		IMAGENAME       muzzleflash.bmp
+		XPOS            391.69
+		YPOS            166.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.35
+		IMAGENAME       muzzleflash.bmp
+		XPOS            393.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.45
+		IMAGENAME       muzzleflash.bmp
+		XPOS            390.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.55
+		IMAGENAME       muzzleflash.bmp
+		XPOS            389.69
+		YPOS            164.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.65
+		IMAGENAME       muzzleflash.bmp
+		XPOS            389.69
+		YPOS            168.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.75
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            171.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.85
+		IMAGENAME       muzzleflash.bmp
+		XPOS            388.69
+		YPOS            167.16
+		COLOUR          0
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+	BEGIN Keyframe
+		TIMEINDEX       8.95
+		IMAGENAME       muzzleflash.bmp
+		XPOS            392.69
+		YPOS            169.16
+		COLOUR          3
+		SCALE           2.00
+		ANGLE           10.77
+		FLIPHORIZ       0
+		ALPHA           0
+	END
+END
+

@@ -1,0 +1,304 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	RocketRiot 
+	PopulationCap	1800
+	DefenderPopulationCap	-1
+	NumPlayers	4
+	Difficulty	advanced
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 4186
+	worldSizeZ 4186
+	cellSize 18.00
+	outsideHeight -10.00
+	maxHeight 0.00
+	landColourFile landscape_icecaps.bmp
+	wavesColourFile waves_yellow.bmp
+	waterColourFile water_icecaps.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   239  -8.94    159    789  1.70   4.74    260      0 336508   0.00     4   AAAAAAAHBJAPAIAAAAAAAAAAAAAAAAAAAAAAECJMICCKAIAIAAAAAAAAAAAAAAAPGMPPMEJLDICGCEBIBOBGAFAAAAAAFIPPOLEMCKDCEBCJCKEEDKBBAAAAAALLPPIGAAAAFMFGCLEBDLCGAIAAAAAAGLLHFDFBEIEJDPDODOCEALAAAAAAAAAOIKFHGBBEBECADADABKAFAAAAAAAAAGBEFAENCIDEDKCABNBHAEAAAAAAAAAAAKAPBGCMCNCICBCFBJBDAAAAAAAAAAAAAABPAACPCADBCGDCAIAAAAAAAAAAAPBDCADDCJCCBKCCDNCBAAAAAAAAAHBGBOBEBBAHAIAIALCNDJAIAAAAAAAAAHAIABAAAAAAAAAAAAAABNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  3248  -8.94     27    893  1.70   4.74    260      0 336508   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAHAAAAAAAABCBAAAAAAAAAAAAABECHAMAPBOCNCAGPFOAIAAAAAAAAAADDDPDADHEFGBFKJKKACDAAAAAAAAAABPDCEJEJDHEDDJEAFGFDANAAAAAAAADCFADGDJFFDKDNFJFAFGCGAAAAAAAAALDCFKEDGKDBEBDKCNDNBDAAAAAAAAAACMGFDGFJDDEDCOAIAAAAAAAAAAAAAABFDOCODLDJDJBOAAAAANAAAAAAAAAAAAAKCEDHDFCMBFAABNCNAAAAAJCLBCAAAAADCJFEBMAIAJJHPPAAAAAADJEHBIAAAABCCDAECJEAMMHAAAAAAABGEDDBACAAAAAAAAAKBDDIAOAAAAAAAAABADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  3303  -8.94   3292    789  1.70   4.74    260      0 336508   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAFAKAFAAAAAAAAAAAAAAAAAGALALBIBOBJBMDGEDBIAAAAAAAFBICBCOEBDPCFCBFBHMHPCJAAAAAAAMDJDMEPECDGBPCECMFPHMBFAAAAAABKENDLEADCCNCLEIDFGJIBANAAAAAABEDPFBDIDABLDDGAFFEMDEAAAAAAAAALELELDGCLBFDEDJDFDNFMAAAAAAAAAICNCODGBICOEMFHFOKJICAAAAAAAADIFECEDDDFDCHJJFDGJLINAAAAAAANHOMAJHKAFCDIFOAADDOJKJAGAAAABBBAFJMAPIPDOALDAAAAONGNAGAEAAAAABBKDJDIHBMINJPFPPPPHHAEAMAAAAAAAAAAAAAMAKACBMECCGBKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	    13  -8.94   3260    908  1.70   4.74    260      0 336508   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAGAGAAAAAAAAAAAAAABFBBAIALBJDADBDDBOAAAAAAAAAAEMEKEACCDNEFDJCCBCADAAAAAAAAEKFKCHCKDDEEDHCFBOAKABAAAAAAAADIDGCEBPDECBCDEHDGAKAAAAAAACAADGBJBBBKCLCDCNDKBPAEAAAAAAADBNCFBJBCCEDFEFCOCHACAAAAAAAAAAAKAOBGBKBICMDCDACGAAAAAAAAAAAAAACMBGCBCGCNFCDPFKAAAAAAAAAAAAAAAACBCGDLBGEFEGFDAAAAAFAAAAAFAAAAAACCDDCDCBBNBOAABDEAAJAAAAAHAAAAAACIBMBMBDAIACHHLHAAAAAAAAAAANBAANAAACAPDFFDEMINAAAAAAAAAAAAAAAAAAAAAAAEALAAAAAA
+	   161  -8.94   1341   1068  1.70   4.74    260      0 1659471   0.00     4   AAAAAAAAAAACACAAAAAAAAAAAAAAAAAAAAAAAAAHALAJACAAAAAOBBAGAAAAAAAAAEAHBCBIBAAFAABADGEJCFAKAAAAAFAPCKDLEIEFDJDGFIFOGOENCBAAAAAMBKECGGGCHLIHIHGKIHGKGAFIBCAAAMBKDCGEILKLLNLNIOHIGDEKDCAAAAAHAPAPEGHEKCPDNIKCHNEDCLBKAAAAACBCAMDIGMKCLNLNIHFBCHBDAHAAAAAABHAJCBFIGMIHIHGMDGAAAAAAAAAAAEBABCBLDCECFKFBDGBLAAAAAAAAAAAAABBPDGEGDGDMCNAAAAAABBALAAAAAAAFBODOFEEHCPBCAAAACCFMCBAAAAAAAFBBCFDBCMBJAJAACCJBHKAIAAAAAAAAAFANAPAIAAAAAAAKCKCFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   848  -8.94    971    803  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAABCNDHEOBEAAAGAAAAABAAAAAAAAAABIFJFCEHDEAPALBEBDBEACAAAAAAAACBFGCHDDCOBEBABDCPBKBEACAAAAAAAHEKCJBEBEBEBBDJFBDOBEBEAAAAAAAAAPBEBDBDBCDGHCIGFMBEALAAAAAAAAAAAABEBGEFGOKCKIGLBEBEAAAAAAADAJBHBOEBHAJOKOKOHGBPBDAAAAACBBBOCBEAHBIMINIMIKHGEKBEAHAABECBCPFHIBIJIAFFELFKHJGNDOBGAADDCNEBFHJGIDFIBDBEDEGKHBENCCAHCJDLGCGFFMFJDEALAIBEBPEHDIBEAADEEFHFHHFGCIBNAHAAALBEBEBCAGAADADOFDDEBECBAMAAAAAAAAAAAAAAAABGBKCICGBDCNAEAAAAAAAAAAAAAAAA
+	  1679  -8.94    112   1011  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAAAAAEAKBBBBBAAAAAAAAAAAAAAAAAAEAPBGBFBEBEBEBPBPCPAFAAAAAABDBEDCFAGFCCCBDEELPPPPCNAAAAAAAADMIFKMHFCHBGDMHJDMPPCJAAAAAAAADOGMILHLBCBECEGDHFDBBBAAAAAAAACIGGHEFNFGBECKCKFOEBCDAAAAAAAAFNGJHACLEHEHBEBEANBHBGACAAAJDOEKEBFJCDDJGHFNBLBEBEBGAAAAAABABEBEDFDJFCGDIHICDJBEBBAFAAAIBCBEBEDAFNIGIEJLLCGOCOBDAAAAAAAABHBABPEOFPJFJLKPKFFBBHADAAAAAAAABEBDCKFBHKKAMIKAFABEADAAAAAAAABDBEBDCBENGJHMGECIBEADAAAAAAAAAABEBEBEBDBJCEBNBFAHAAAAAAAAAAAAAAAPAOAMAOAKAGAGAAAA
+	  2092  -8.94    662   1011  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAFAAAAAAADAGAAAAAAAAAAAAAAABCBDHDGBKANAJAMAAAAAAAAAAAAABAFDKHIIMGADEBIAPAAAAAAAAAAAAACALDKGNJGGLGJBJAJAAAAAAAAAAAAACAKBOEMHGJHICCNBNAAAAAAAAAAAAAAAECGDLJGIFJOFBCHDCDJAAAAAAAAAAAGCIDLDLFFGPIKEDDBEDDGAAAAAAAAAACNHFHLGBHKKGGMEADDDCBCAGAAAAAACCGGHLJINHNPKFJJFHCEBKAAAAAAAGPPEKHCJJLAMLNJNINEGFCAAAAAAAAGPPPPLOMFILIHLAKGOKJICPBAAAAAACDBEHJDJAGNKEICGEHAGADJBGAAAAALFHHEEODKDNGECOBOCLCMBNALAAAAAECPDGALAAAAAAAAAAAEANAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  2678  -8.94   1083   1011  1.70   4.74    260      0 5149385   0.00     4   ACACABABABAAAAAAAAAAAAAAAAAAAABPBICFCGBPBEAKAJAKAGAKAIAFACAAFPGIGMGPFNEADHDJDODCCPBPBJAHACJGJFIPJNJBGMFPHCHJGDFGEJDMCDACGFHDHFIGHNIBHAIHIKHIHLFOFECOAMBECCDJEMFJGBGKFJFCGMEKEJEEBOAAAAAAAICOFIFGEFDABKDFBFCCCIAOAAAAAAAFCOEPFBDECJBEBEBEDACFAKAAAAAAABCFFCFCDGCKCLCHEHFHCPALAAAAAABBFAEFDGCIDLFAEIHBJDELADAAAAAACEGDICEDEAFGELEALEPPHKAJAAAABMGBIDKICNCPDODICHENFOBLABAAAAEEIMHCCIAGBCBIBCBAAJBBANAAAAAABJCNCJAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  1490  -8.94   1767   1011  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGBBAHAGAJANBMBJAFCGEPCHAAAAAABACFBIBJCDCNEEEEFKJALAFCAAAAAAAMCCCKCPDECIDGILMELOHGCLAAAAAAAMBMDGDPEADKGPMCNDHJBIAEAAAAACALCFEDGAFCHDJIKMHGCBBIBEAHAAAAAPCNEIFFGHLBLHHBDLBNBJCAANAAAACBEGEAEMIGOIOFHNEDCLBHBCAFAAAADBGFEFDDFGLMMGHFEHDEBAAEAAAAANFKIMFFCNEEFJGEFEFHEEBEAAAAAABGFHJPIDGAEODNEBEAFGECBGAAAAAAAACBGJJHJBGHEIDNCKDECFAFAAAAAAAAAABNDIDPDMCJBPBAAKAGAAAAAAAAAAAAAAAAAAACAGACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	  2156  -8.94   2147   1011  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOABBCCGGCLLAJAAAAAAAAAAADAHAHBODNFMEBFKNCMNMOAAAAAAAEAJBEBPCKBJCCCGEGEPDFJADHAAAABFBEBDBNCJCMCPDIECDICNDDDPAAAAAPBEBEBDBFCIDBDPDHDBCICABLAAAAALBDBEBEBMBPDACOCFDACOCCAMAAAABFBECMEFDLCPCBCGCNDODMCFBBADAAAOBPEBFOEGCCBPBPCNDKDPCOBNANAAAFBFDOINEHBFAPBCBHCDCKDECGBBAAAAAECAGKDOBPAEAFADAIBJFKCJAKAAAAAAAADCEBDNCEADABANDNDBABAAAAAAAAAAALBOCHEHDECODIEPBEAAAAAAAAAAAAAAAAANBPBOCIDGCEAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAA
+	  2875  -8.94   2194   1011  1.70   4.74    260      0 1709169   0.00     4   AAAAAAAAAAAEAIAMBCBIBIBLALAKADAAAAAAAAAIBABDBECACPDIDBAAAAANACAGBCBEBEBFCCCNDHEAEPECCPAABHBEBEBDBEBDBNDDDPEPFFFLFFEAAACBBEBBBEBECMDLFAFEGAHEHHGKFBAAAABFBEBDBFDGEHFHGHGPJFNKLKAAENAABDBEBDCPDKEDFPGMHCLMPPOAHNAAAABEBFBFBJBKCEFAGDGHHMLHJMGPAAAABGBDBEBDBEBEDMFLGGGKHCHGHDFKAABEBEBBBEBEBDDCECFAFIFOGPGOGAAABEBEAEBEBEBECGCODDDMEJFOGJAAAAAAAAABAMBFBFBHBHBJBNCJECEOAACLAAAAAAADAGAIAIAKALANBDCDAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAPBCAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	    95  -8.94   2300   1068  1.70   4.74    260      0 6507202   0.00     4   AAAAADAHAEACAAAAAAAAAAAAAAAAAAAAADAPBJBHBCAEACAABADCDKCKAIAAAAAJBJAAAACOCBBCCFFAHGIIGBBOAIAAAMCAAAAAAAAADGFLJLMCLPIMEHAIAAAGBKCHDLAAAAGAIHLPOEMLJDEPAIAAAAAOBEBKEAFBHEKBMMNGKEGHBMAIAAAAAABHDFBNBIFKJFLHKHHHDBAKAAAAAAABBLECBMBDBJGHIOHGFODDBBADAAAAABBNDNELBGBFCBEKFJHJFFDIBEAAAAAHCAAAEEDBBFBGCAFEHOHGFDDAAAABCKAAAAEHDEDKCJCJEIGMHPFJDAAAAABIAAAACJCHCDDGDBDDEGFAEGCHAAAAAJFDEBALAABDBJAOBCBMCICEBCAAAAAACABJAAAAAFADAAAAAAAJAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	   864  -8.94   2702   1068  1.70   4.74    260      0 6507202   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAHALAFAAAAAAAAAAAAAAAAAAAAAABACDDDCOBJAHAAAAAAAAABEBAMAAAABLDMGEHGFIDABBADAFAKFCIICBAAAABKDPHDJBHLFCCKDGEBEKGACEAAAAAAAPCOFGGNFOEEEGENENDPBKAAAAAAAAAHBFCGCFBNCBECGFGMEKBLAEAAAAAAAAAAACAIAAAGCKFOGNFDDOCGBDAAAAAAAAAAAAAAAIDADCCHDIELECCMAOAEAAAAAAAAACEIFIBEABBCCMEACNBGAKAAAIAPBFDFJNCOAAAAAAAOBLBDAMAKAABADIGIIBMEIPFJANAAAAAAABADAFAAAAAEEGLAPPPPHKANAAAAAAAAAAAAAAAAAAAABDFJDLCOAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAA
+	  1607  -8.94   2985   1068  1.70   4.74    260      0 6507202   0.00     4   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAEACAAAAAAAAAAAAAAAAAAAAAAADAMBAAOAIAHAAAAACACADAGAAAAAAAHBDBMBJBEBEAJAGBEBEBDBEAJACACAHBDBMBLBDBEBKCABMBOCODFBLAMAGADAJBBBFCBECFAEJDKEDFLFPEEBJADAFAHAHBEDBFEJPKEGDGHLJIPFBBPAGALAOBFCHDNFPKMPFPPPCMDHCEOBMAGAOBHCADBEEFLGLHPIHHHGMFEEABNAMALBBBJCACNDOEGFHFJFADMDIDECCANAFAHAKBEBFBECCCICACBBKAAAACFBCAAAABDALAHAHAIADAPBAADBEAACBBAAAAAAABABDBDAAAABDAPBEBEBEBEALAAAAAAAAAAAHAEAEAPAAABBFALALAFAAAAAAAAAAAAADADAAAAAAABACACAA
+	  3663   0.00   1901    265  1.70   1.00    200      1 2075239   1.00     0
+	  1003  -8.94   1459    803  1.70   4.74    260      0 5642541   0.00     4   ELMJPHJEDHAAAAAAAAAAAAAAAAAAAAECGHIKHNDNBGABAAAAAAAAAAAAAAAADMFEGHGEFDCPBEAPAHADABAAAAAAAACABJCIFAEPCIBEBEBDBEAOAAAAAAAABDBEBHDDDLBPBFBEBEBDBEALAAAAAAAGBEBDBHDEDFCMCBCGBNBEBEAMAAAAAAAFBEBEBEDOEBDFCMCKBOBDBEBEAAAAACAKBEBDBMDCDFDFDDCHBNBFBDAAAAACAGAJADANBDCDDMDIDIDABFBEBEAAAAACAIAMAKAMBECJDECPBFBEBCCAAAAAABALBEBDAHAJBDCBCKBDBEBEBOAAAAAAAIAPAIADBEAPAJBIBFBEBEBDAAAABECICIAAAAAHAHAAAABCBCALAAAAAACIPPDMBEAAAAAAAAAAAAAAAAAAAAAABEDMDMBEAAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.72   0.64  -0.28     0.62   0.62   0.62
+	 -0.75   0.00   0.66     2.39   1.55   0.77
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	EscapeRocket        0       646.19  577.62  0       1.00    0.00    0           -1   0.00      0     -1      0
+	EscapeRocket        1       3697.95 398.42  1       0.85    -0.52   0           -1   0.00      0     -1      0
+	EscapeRocket        2       3613.94 3643.67 2       0.73    -0.68   0           -1   0.00      0     -1      0
+	EscapeRocket        3       451.73  3623.16 3       0.85    0.52    0           -1   0.00      0     -1      0
+	SolarPanel          4       2376.86 438.61  255     0.00    0.75    0       7       
+	SolarPanel          5       2131.47 487.28  255     0.00    0.92    0       7       
+	SolarPanel          6       2338.73 380.37  255     0.00    0.74    0       4       
+	SolarPanel          7       2187.78 570.97  255     0.00    0.95    0       52      
+	SolarPanel          8       3084.97 1690.50 255     0.00    0.94    0       9       
+	SolarPanel          9       3203.80 1800.01 255     0.00    0.95    0       66      
+	SolarPanel          10      3339.57 2594.60 255     0.00    0.98    0       11      
+	SolarPanel          11      3437.62 2419.88 255     -0.00   0.92    0       66      
+	SolarPanel          12      488.27  2116.34 255     -0.00   0.93    0       13      
+	SolarPanel          13      544.16  2028.51 255     -0.00   0.93    0       26      
+	SolarPanel          14      842.52  2623.63 255     -0.00   0.90    0       26      
+	SolarPanel          15      780.01  2705.76 255     0.00    0.96    0       14      
+	SolarPanel          16      2217.19 3420.53 255     -0.00   0.76    0       77      
+	SolarPanel          17      2151.63 3594.11 255     0.00    0.75    0       77      
+	SolarPanel          18      2014.61 3535.81 255     0.00    0.82    0       19      
+	SolarPanel          19      2101.52 3493.38 255     -0.00   0.76    0       77      
+	SolarPanel          20      1862.51 2050.95 255     -0.00   0.93    0       21      
+	SolarPanel          21      1953.00 2043.71 255     -0.00   0.92    0       24      
+	SolarPanel          22      1877.03 2203.06 255     -0.00   0.91    0       24      
+	SolarPanel          23      1893.74 2311.68 255     0.00    0.75    0       22      
+	SolarPanel          24      1973.59 2208.36 255     -0.00   0.57    0       88      
+	SolarPanel          25      1758.44 2126.07 255     -0.00   0.91    0       22      
+	PowerSplitter       26      1033.60 2154.47 255     -0.82   0.57    0       -1      40  39  
+	FuelGenerator       27      426.02  1120.61 255     1.00    0.00    0          121 
+	FuelGenerator       28      1186.07 387.63  255     1.00    0.00    0          127 
+	FuelGenerator       29      1094.10 810.95  255     1.00    0.00    0          124 
+	FuelGenerator       30      3759.70 935.31  255     1.00    0.00    0          139 
+	FuelGenerator       31      3177.88 544.58  255     1.00    0.00    0          133 
+	FuelGenerator       32      3315.94 900.09  255     1.00    0.00    0          136 
+	FuelGenerator       33      3200.76 3696.24 255     1.00    0.00    0          151 
+	FuelGenerator       34      3899.61 3212.67 255     1.00    0.00    0          145 
+	FuelGenerator       35      3214.68 3354.71 255     1.00    0.00    0          148 
+	FuelGenerator       36      998.89  3922.23 255     0.70    0.72    0          157 
+	FuelGenerator       37      129.64  3153.06 255     -0.63   -0.78   0          163 
+	FuelGenerator       38      906.65  3558.65 255     1.00    0.00    0          160 
+	Pylon               39      1012.40 2164.80 3       -1.00   -0.01   0       46      
+	Pylon               40      1017.39 2159.94 0       0.02    -1.00   0       41      
+	Pylon               41      997.20  1953.07 255     -0.99   0.11    0       42      
+	Pylon               42      954.66  1787.16 255     -0.90   0.44    0       43      
+	Pylon               43      829.58  1623.08 255     -0.50   0.86    0       44      
+	Pylon               44      604.94  1400.05 255     -0.69   0.72    0       45      
+	PylonEnd            45      401.20  1151.73 255     0.76    0.64    0       27      
+	Pylon               46      788.42  2267.98 255     0.36    0.93    0       47      
+	Pylon               47      569.03  2342.81 255     0.62    0.78    0       48      
+	Pylon               48      414.07  2467.78 255     0.76    0.64    0       49      
+	Pylon               49      259.05  2690.50 255     1.00    0.00    0       50      
+	Pylon               50      291.16  2998.77 255     -0.90   -0.43   0       51      
+	PylonEnd            51      166.28  3150.60 255     0.41    -0.91   0       37      
+	PowerSplitter       52      2321.28 739.43  255     0.54    0.84    0       -1      53  54  
+	Pylon               53      2327.19 756.98  0       -1.00   0.06    0       55      
+	Pylon               54      2336.93 757.33  1       1.00    0.00    0       60      
+	Pylon               55      2198.87 793.85  255     -0.13   -0.99   0       56      
+	Pylon               56      1998.92 776.52  255     -0.08   -1.00   0       57      
+	Pylon               57      1709.77 834.59  255     0.04    -1.00   0       58      
+	Pylon               58      1396.37 646.69  255     0.24    -0.97   0       59      
+	PylonEnd            59      1220.56 397.30  255     -0.03   1.00    0       28      
+	Pylon               60      2524.42 671.10  255     0.70    0.72    0       61      
+	Pylon               61      2645.55 506.13  255     0.73    0.68    0       62      
+	Pylon               62      2799.46 331.43  255     0.41    0.91    0       63      
+	Pylon               63      2971.08 318.54  255     0.12    0.99    0       64      
+	Pylon               64      3073.32 397.84  255     -0.86   0.52    0       65      
+	PylonEnd            65      3145.85 567.15  255     -0.77   -0.64   0       31      
+	PowerSplitter       66      3745.48 1975.58 255     1.00    0.00    0       -1      68  67  
+	Pylon               67      3765.02 1971.48 1       -0.03   -1.00   0       69      
+	Pylon               68      3765.44 1981.34 2       0.07    1.00    0       72      
+	Pylon               69      3768.41 1728.01 255     -0.99   -0.14   0       70      
+	Pylon               70      3827.66 1381.14 255     -0.99   0.11    0       71      
+	Pylon               71      3821.95 1155.30 255     -0.99   0.16    0       75      
+	Pylon               72      3888.77 2298.84 255     -0.82   0.57    0       73      
+	Pylon               73      3985.12 2657.32 255     -1.00   0.01    0       74      
+	Pylon               74      3991.70 2990.27 255     -0.97   -0.24   0       76      
+	PylonEnd            75      3793.42 945.30  255     -0.03   1.00    0       30      
+	PylonEnd            76      3934.73 3209.77 255     0.22    -0.98   0       34      
+	PowerSplitter       77      2223.97 3498.41 255     0.45    0.89    0       -1      78  79  
+	Pylon               78      2228.22 3519.40 3       -1.00   0.06    0       83      
+	Pylon               79      2237.98 3519.02 2       1.00    0.00    0       80      
+	Pylon               80      2409.12 3528.15 255     0.27    -0.96   0       81      
+	Pylon               81      2635.91 3629.03 255     0.45    -0.89   0       82      
+	Pylon               82      2912.15 3725.68 255     0.32    -0.95   0       87      
+	Pylon               83      2069.65 3567.02 255     0.62    0.78    0       84      
+	Pylon               84      1796.44 3757.47 255     0.45    0.89    0       85      
+	Pylon               85      1474.13 3864.14 255     0.41    0.91    0       86      
+	PylonEnd            86      1027.15 3950.77 255     0.80    -0.61   0       36      
+	PylonEnd            87      3169.36 3718.29 255     -0.88   -0.47   0       33      
+	PowerSplitter       88      2035.04 2232.89 255     0.88    -0.48   0       -1      89  92  91  90  
+	Pylon               89      2050.85 2226.61 3       -0.59   0.81    0       109     
+	Pylon               90      2057.93 2225.18 2       0.85    0.52    0       99      
+	Pylon               91      2056.97 2219.06 1       0.58    -0.81   0       100     
+	Pylon               92      2049.47 2220.06 0       -0.86   -0.52   0       94      
+	Pylon               94      2022.52 1972.10 255     0.95    -0.30   0       95      
+	Pylon               95      1907.10 1653.01 255     0.80    -0.61   0       96      
+	Pylon               96      1629.22 1450.35 255     0.85    -0.52   0       97      
+	Pylon               97      1544.78 1098.99 255     -0.50   0.86    0       98      
+	Pylon               98      1210.48 1029.87 255     0.66    -0.75   0       115     
+	Pylon               100     2282.49 1986.44 255     0.62    0.78    0       101     
+	Pylon               101     2505.08 1818.99 255     0.62    0.78    0       102     
+	Pylon               102     2748.64 1560.77 255     0.80    0.61    0       103     
+	Pylon               103     2874.30 1383.71 255     0.83    0.56    0       104     
+	Pylon               104     2921.03 1285.86 255     0.85    0.52    0       105     
+	Pylon               105     3248.30 1064.32 255     -0.59   -0.81   0       117     
+	Pylon               99      2261.89 2354.39 255     0.54    -0.84   0       106     
+	Pylon               106     2577.34 2562.46 255     -0.79   0.61    0       107     
+	Pylon               107     2810.06 2885.17 255     0.70    -0.72   0       108     
+	Pylon               108     2923.02 3245.53 255     0.73    -0.68   0       116     
+	Pylon               109     1927.93 2399.58 255     0.73    0.68    0       110     
+	Pylon               110     1804.84 2516.14 255     0.80    0.61    0       111     
+	Pylon               111     1680.37 2726.72 255     -0.55   -0.84   0       112     
+	Pylon               112     1356.23 2865.39 255     0.83    0.56    0       113     
+	Pylon               113     1258.79 3078.96 255     -0.90   -0.43   0       114     
+	Pylon               114     1021.57 3324.25 255     0.80    0.61    0       118     
+	PylonEnd            115     1127.47 820.43  255     -0.08   1.00    0       29      
+	PylonEnd            116     3181.52 3379.85 255     -0.83   -0.56   0       35      
+	PylonEnd            117     3349.46 908.56  255     -0.08   1.00    0       32      
+	PylonEnd            118     894.88  3516.84 255     0.90    -0.43   0       38      
+	FuelStation         120     646.23  478.23  0       0.02    -1.00   0            0 
+	FuelStation         93      727.86  627.34  0       0.85    0.52    0            0 
+	FuelStation         119     566.09  629.51  0       -0.80   0.60    0            0 
+	FuelPipe            121     581.84  986.63  255     1.00    0.00    0          123 
+	FuelPipe            123     493.18  808.76  255     1.00    0.00    0          119 
+	FuelPipe            124     895.40  853.71  255     1.00    0.00    0          126 
+	FuelPipe            126     705.30  824.65  255     1.00    0.00    0           93 
+	FuelPipe            127     978.30  410.39  255     1.00    0.00    0          129 
+	FuelPipe            129     798.73  347.51  255     1.00    0.00    0          120 
+	FuelStation         130     3646.93 313.55  1       -0.50   -0.86   0            1 
+	FuelStation         131     3650.28 482.50  1       -0.49   0.87    0            1 
+	FuelStation         132     3792.45 398.62  1       1.00    0.00    0            1 
+	FuelPipe            133     3345.76 442.70  255     1.00    0.00    0          135 
+	FuelPipe            135     3473.38 297.82  255     1.00    0.00    0          130 
+	FuelPipe            136     3449.71 738.78  255     1.00    0.00    0          138 
+	FuelPipe            138     3470.81 537.37  255     1.00    0.00    0          131 
+	FuelPipe            139     3846.28 710.85  255     1.00    0.00    0          141 
+	FuelPipe            141     3933.11 532.26  255     1.00    0.00    0          132 
+	FuelStation         142     3706.91 3618.12 2       0.95    -0.30   0            2 
+	FuelStation         143     3592.34 3738.11 2       -0.13   0.99    0            2 
+	FuelStation         144     3540.76 3576.65 2       -0.77   -0.64   0            2 
+	FuelPipe            145     3687.31 3234.19 255     1.00    0.00    0          147 
+	FuelPipe            147     3722.93 3418.13 255     1.00    0.00    0          142 
+	FuelPipe            148     3372.08 3225.10 255     1.00    0.00    0          149 
+	FuelPipe            149     3448.43 3407.80 255     1.00    0.00    0          144 
+	FuelPipe            151     3363.07 3577.50 255     1.00    0.00    0          153 
+	FuelPipe            153     3405.94 3768.79 255     1.00    0.00    0          143 
+	FuelStation         154     499.14  3537.21 3       0.45    -0.89   0            3 
+	FuelStation         155     507.72  3698.70 3       0.70    0.72    0            3 
+	FuelStation         156     354.32  3626.07 3       -1.00   0.09    0            3 
+	FuelPipe            157     859.69  3742.22 255     1.00    0.00    0          159 
+	FuelPipe            159     670.28  3785.64 255     1.00    0.00    0          155 
+	FuelPipe            160     708.75  3601.22 255     1.00    0.00    0          162 
+	FuelPipe            162     651.66  3410.53 255     1.00    0.00    0          154 
+	FuelPipe            163     260.52  3330.00 255     1.00    0.00    0          165 
+	FuelPipe            165     193.32  3509.26 255     1.00    0.00    0          156 
+	TrunkPort           166     449.99  480.99  0       0.83    0.56    1       -1      
+	TrunkPort           167     3954.37 351.89  1       -1.00   0.06    1       -1      
+	TrunkPort           168     3822.92 3742.48 2       -0.74   -0.68   1       -1      
+	TrunkPort           169     302.50  3833.49 3       0.62    -0.78   1       -1      
+	AITarget            170     748.75  2704.19 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            171     529.47  2068.31 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            172     2177.26 534.95  255     1.00    0.00    0       -1    0.00 0     
+	AITarget            173     2361.04 416.33  255     1.00    0.00    0       -1    0.00 0     
+	AITarget            174     3133.38 1745.81 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            175     3368.54 2491.85 255     1.00    0.00    0       205   0.00 1     
+	AITarget            176     1987.21 3463.27 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            177     2174.72 3511.55 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            178     1799.49 2012.07 255     1.00    0.00    0       -1    0.00 0     
+	SpawnPoint          179     519.66  3026.28 255     0.45    -0.89   0       
+	SpawnPoint          180     2324.21 3724.49 255     -0.90   -0.43   0       
+	SpawnPoint          181     1611.01 3023.26 255     -0.69   0.72    0       
+	SpawnPoint          182     1402.25 3276.81 255     0.58    -0.81   0       
+	SpawnPoint          183     1294.12 1573.66 255     0.54    0.84    0       
+	SpawnPoint          184     1158.87 1433.75 255     -0.18   0.98    0       
+	SpawnPoint          185     2694.32 2780.61 255     0.62    -0.78   0       
+	SpawnPoint          186     2616.47 2349.82 255     -0.18   0.98    0       
+	SpawnPoint          187     2372.75 1251.70 255     0.80    -0.61   0       
+	SpawnPoint          188     2777.73 1105.46 255     -0.26   0.97    0       
+	SpawnPoint          189     3366.85 1565.53 255     -1.00   0.06    0       
+	SpawnPoint          190     1930.94 702.93  255     1.00    0.00    0       
+	SpawnPointMaster    191     1845.38 1338.15 255     1.00    0.00    0       190   187   188   189   186   185   184   183   179   181   182   180   
+	AITarget            192     1429.65 3244.97 255     1.00    0.00    0       194   0.00 1     
+	AITarget            193     1579.01 3059.13 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            194     531.71  2995.18 255     1.00    0.00    0       192   0.00 0     
+	AITarget            198     1351.60 1640.99 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            199     1153.12 1485.52 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            203     1807.38 2399.77 255     1.00    0.00    0       204   0.00 0     
+	AITarget            204     2617.85 2394.40 255     1.00    0.00    0       203   0.00 0     
+	AITarget            205     2712.96 2746.51 255     1.00    0.00    0       175   0.00 1     
+	AITarget            195     2284.95 3714.86 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            196     1997.62 713.38  255     1.00    0.00    0       197   0.00 0     
+	AITarget            197     2407.89 1224.64 255     1.00    0.00    0       196   0.00 0     
+	AITarget            200     2771.53 1151.03 255     1.00    0.00    0       201   0.00 0     
+	AITarget            201     3326.14 1570.47 255     1.00    0.00    0       200   0.00 0     
+	RestrictionZone     122     3700.06 3684.50 255     1.00    0.00    0       447.49    0
+	RestrictionZone     125     3732.86 480.81  255     1.00    0.00    0       447.49    0
+	RestrictionZone     128     617.96  565.97  255     1.00    0.00    0       447.49    0
+	RestrictionZone     134     545.83  3744.85 255     1.00    0.00    0       504.37    0
+	AITarget            137     3715.27 3705.87 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            140     3832.45 355.88  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            146     346.59  3779.45 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            150     513.19  543.36  255     1.00    0.00    0       -1    0.00 1     
+	AIObjectiveMarker   152     3401.94 2503.06 2       1.00    0.00    0       140.09   -1   0   0
+	AIObjectiveMarker   158     3154.31 1747.51 2       1.00    0.00    0       140.09   -1   0   0
+	AIObjectiveMarker   161     2152.92 3513.32 2       1.00    0.00    0       211.20   -1   0   0
+	AIObjectiveMarker   164     2156.71 3514.41 2       1.00    0.00    0       211.20   -1   0   0
+	AIObjectiveMarker   202     2125.49 3525.46 3       1.00    0.00    0       221.73   -1   0   0
+	AIObjectiveMarker   206     1885.03 2118.21 3       1.00    0.00    0       221.73   -1   0   0
+	AIObjectiveMarker   207     790.04  2659.29 3       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   208     489.45  2069.70 3       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   209     801.74  2651.72 0       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   210     516.22  2071.68 0       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   211     1855.02 2134.44 0       1.00    0.00    0       226.06   -1   0   0
+	AIObjectiveMarker   212     2226.58 481.81  0       1.00    0.00    0       226.06   -1   0   0
+	AIObjectiveMarker   213     2284.23 472.93  1       1.00    0.00    0       162.12   -1   0   0
+	AIObjectiveMarker   214     1877.73 2147.02 1       1.00    0.00    0       209.91   -1   0   0
+	AIObjectiveMarker   215     3159.63 1742.26 1       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   216     3390.69 2505.79 1       1.00    0.00    0       133.85   -1   0   0
+	AIObjectiveMarker   217     1856.42 2110.37 2       1.00    0.00    0       221.73   -1   0   0
+	AITarget            218     879.93  1686.69 255     1.00    0.00    0       -1    0.00 1     
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0          143.58  874.22  151.16 0.62 -0.57 0.54 0.43 0.82 0.37
+	player1         3958.42  693.43   -6.78 -0.54 -0.47 0.70 -0.28 0.88 0.37
+	player2         4066.36  619.71 3994.07 -0.65 -0.48 -0.58 -0.37 0.87 -0.32
+	player3           95.09  713.35 4112.83 0.61 -0.48 -0.64 0.33 0.88 -0.35
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

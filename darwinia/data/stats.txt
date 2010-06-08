@@ -1,0 +1,33 @@
+# =================
+# ENTITY STATS FILE
+# =================
+
+# NAME : Name of the creature
+# HLTH : Health
+# SPED : Speed of movement          (m/s)
+# RATE : Rate of fire               (secs to reload)
+
+
+# NAME              HLTH    SPED    RATE
+# ======================================
+
+Invalid             0       0       0
+LaserTroop          20      15      1
+Engineer            255     28      0
+Virii               10      32      0
+InsertionSquadie	75      30      0.5
+Egg                 10      0       0
+SporeGenerator      200     20      10
+Lander              255     40      1
+Tripod              155     20      1
+Centipede           255     80      1
+SpaceInvader        255     40      1
+Spider				150		50		1
+Darwinian			50		20		3
+Officer             255     30      3
+ArmyAnt             20      25      0
+Armour              255     60      5
+SoulDestroyer       255     150     1
+TriffidEgg          50      100     1
+AI                  255     255     255
+

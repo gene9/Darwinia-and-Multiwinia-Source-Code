@@ -1,0 +1,10 @@
+
+Highlight                   145
+CamBuildingFocus            145   250   150
+
+Say                         receiver_trunk_1
+Say                         receiver_trunk_2
+
+WaitSay
+ClearHighlights
+CamReset

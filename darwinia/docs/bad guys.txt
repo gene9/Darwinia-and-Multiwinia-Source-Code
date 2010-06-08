@@ -1,0 +1,53 @@
+
+GROUPING BEHAVIOUR
+
+- Remain as a fixed static group, regardless of casualties eg Space Invaders.  
+        Their behaviour changes as they are reduced in number.
+        ie maybe they become faster / more aggressive as you attack
+
+- Groupings change based on casualties
+        ie Asteroids - a group splits up into smaller / faster groups 
+        when attacked
+
+- Swarming / flocking
+        No overall group objective, but emergent movements
+
+- Timid response
+        They march towards you, but back away when you attack
+
+
+- Herdable
+
+
+ATTACK TYPES
+
+- Exploding when they get near
+        Possibly on a timer
+        They are attracted to other creature types and will latch on
+
+- Flaming creatures
+        Aim to run into you and set fire to your group
+
+- Spawners
+        When they explode they shower the area in newborn seeds
+
+
+
+
+ARRIVAL TYPES
+
+- Spawn from hole in ground
+- Factory
+- Dropped of by mothership / flying thing on helipad
+- Crawl out of water
+- Egg fields
+
+
+
+LIFE CYCLES
+ 
+- Mother wasp, very large, shits out fields of eggs
+- Fields of eggs spawn into little wasps
+- Those wasps then will attack if you go near
+- Some attack, some grow until becoming mother wasps
+

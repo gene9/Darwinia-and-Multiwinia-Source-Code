@@ -1,0 +1,84 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	none
+	PopulationCap	-1
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 3290
+	worldSizeZ 3290
+	cellSize 20.35
+	outsideHeight -15.39
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   530  -3.08    501   2224  0.57   1.12    398      0 376701   1.00     3   ALAAAAAAAAFPAAAADODEAAAAAAEFAAAAAAAAAAAAAAAAAAAAAAAACEAAAADOAAAAAAEBBOAAEAAAAAAACIAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.85   0.52   0.09     1.24   1.16   1.04
+	 -0.66   0.30  -0.69     1.04   1.16   1.24
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Incubator           0       1572.10 1467.86 0       0.02    1.00    1          100
+	Incubator           1       1581.82 1878.03 1       -0.23   -0.97   1          100
+	ControlTower        2       1653.05 1465.83 0       1.00    0.00    1           -1
+	ControlTower        3       1657.84 1892.37 1       1.00    0.00    1           -1
+	Tree                7       1873.74 1723.44 1       1.00    0.00    0       43.54   3.15    1.00    1.00    6       88783   2100198143  1360133235  0       
+	Tree                9       1876.71 1659.45 1       1.00    0.00    0       53.86   3.15    1.00    1.00    6       88826   2100198143  1360133235  0       
+	SpawnPoint          4       1465.09 1602.89 1       1.00    0.00    0       
+	SpawnPoint          5       1464.71 1759.39 1       1.00    0.00    0       
+	SpawnPointMaster    6       830.84  1994.89 1       1.00    0.00    0       15    
+	SpawnLink           8       1073.63 1577.73 1       1.00    0.00    0       10    11    
+	SpawnLink           10      1188.96 1676.02 1       1.00    0.00    0       5     
+	SpawnLink           11      1291.81 1481.03 1       1.00    0.00    0       4     
+	SpawnPoint          12      1697.70 1745.30 1       -1.00   0.06    0       
+	SpawnPoint          13      1695.21 1580.15 1       -0.99   -0.14   0       
+	SpawnLink           14      942.80  1686.94 1       1.00    0.00    0       8     
+	SpawnLink           15      772.91  1788.19 1       1.00    0.00    0       14    16    
+	SpawnLink           16      986.69  1979.26 1       1.00    0.00    0       17    
+	SpawnLink           17      1172.57 1997.32 1       1.00    0.00    0       21    
+	SpawnLink           18      1762.88 1905.38 1       1.00    0.00    0       12    19    
+	SpawnLink           19      1814.82 1602.82 1       1.00    0.00    0       13    
+	SpawnLink           20      1612.31 2094.94 1       1.00    0.00    0       18    
+	SpawnLink           21      1413.63 2146.67 1       1.00    0.00    0       20    
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start            916.18  140.36 1678.35 0.93 -0.21 -0.30 0.20 0.98 -0.06
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :sandbox,2 
+	BuildingOnline :sandbox,2 
+PrimaryObjectives_EndDefinition

@@ -1,0 +1,227 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	RocketRiot 
+	PopulationCap	1800
+	DefenderPopulationCap	-1
+	NumPlayers	3
+	LevelOptions	nogunturrets	
+	Difficulty	advanced
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 4500
+	worldSizeZ 4500
+	cellSize 16.00
+	outsideHeight -10.00
+	maxHeight 0.00
+	landColourFile landscape_mine.bmp
+	wavesColourFile waves_earth.bmp
+	waterColourFile water_launchpad.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	  1524  -7.10   1427   1574  1.12   4.00    484      1 279392   1.30     2   AAAAAAAAAAAAAAAAAA
+	    62  -7.10   3194   1254  1.12   4.00    484      1 380238   1.30     2   AAAAAAAAAAAAAAAAAA
+	  3171  -7.10   2547   1254  1.12   4.00    484      1 408644   1.30     2   AAAAAAAAAAAAAAAAAA
+	  1368  -7.10     42   1254  1.12   4.00    484      1 453028   1.30     2   AAAAAAAAAAAAAAAAAA
+	  3134  -7.10    116   1254  1.12   4.00    484      1 578931   1.30     2   AAAAAAAAAAAAAAAAAA
+	    19  -7.10   1139   1254  1.12   4.00    484      1 617217   1.30     2   AAAAAAAAAAAAAAAAAA
+	  1478  -7.10   3248   1254  1.12   4.00    484      1 641975   1.30     2   AAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+	1908.4  388.7  738.1  168.1      3   42.8
+	3696.4  310.7 3215.9  162.0      3   40.0
+	 699.9  327.9 3780.4  166.7      3   40.0
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.79   0.59  -0.15     0.82   0.52   0.28
+	 -0.61   0.00  -0.79     5.23   1.80   1.05
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrunkPort           0       2466.27 2196.86 1       0.80    -0.61   1       -1      
+	TrunkPort           1       2347.74 2200.67 0       -0.84   -0.54   1       -1      
+	TrunkPort           2       2419.42 2302.55 2       0.07    1.00    1       -1      
+	EscapeRocket        3       1895.17 738.99  0       0.83    0.56    0           -1   0.00      0     -1      0
+	EscapeRocket        4       3735.62 3186.86 1       0.58    -0.81   0           -1   0.00      0     -1      0
+	EscapeRocket        5       700.14  3759.19 2       0.58    -0.81   0           -1   0.00      0     -1      0
+	SolarPanel          6       2562.23 2587.95 255     -0.00   0.96    0       7       
+	SolarPanel          7       2389.25 2581.89 255     0.00    0.97    0       24      
+	SolarPanel          8       2755.20 2060.41 255     -0.00   0.94    0       24      
+	SolarPanel          9       2663.32 1953.86 255     -0.00   0.94    0       8       
+	SolarPanel          10      2164.81 2020.17 255     0.00    0.99    0       24      
+	SolarPanel          11      2060.30 2112.65 255     0.00    0.97    0       10      
+	SolarPanel          12      3784.51 858.15  255     0.00    0.97    0       15      
+	SolarPanel          13      3694.01 766.19  255     0.00    0.95    0       15      
+	SolarPanel          14      3798.99 747.30  255     -0.00   0.90    0       13      
+	SolarPanel          15      3632.50 863.47  255     0.00    0.96    0       62      
+	SolarPanel          16      572.05  1609.33 255     0.00    1.00    0       17      
+	SolarPanel          17      544.89  1687.48 255     0.00    0.98    0       53      
+	SolarPanel          18      575.62  1799.32 255     0.00    0.99    0       17      
+	SolarPanel          19      654.42  1560.20 255     -0.00   0.99    0       16      
+	SolarPanel          20      2220.00 3995.13 255     0.00    0.97    0       71      
+	SolarPanel          21      2121.16 3922.11 255     0.00    0.88    0       20      
+	SolarPanel          22      2194.62 3814.77 255     -0.00   0.91    0       21      
+	SolarPanel          23      2053.09 3815.15 255     -0.00   0.88    0       21      
+	PowerSplitter       24      2381.07 2237.93 255     0.93    -0.37   0       -1      25  26  27  
+	Pylon               25      2407.57 2216.55 0       -0.03   -1.00   0       30      
+	Pylon               26      2413.69 2227.71 1       0.83    0.56    0       29      
+	Pylon               27      2402.77 2228.59 2       -0.73   0.69    0       28      
+	Pylon               28      2045.27 2572.34 255     0.80    0.61    0       47      
+	Pylon               29      2748.56 2448.73 255     0.32    -0.95   0       49      
+	Pylon               30      2399.12 1708.63 255     1.00    0.00    0       43      
+	FuelGenerator       31      3982.29 2501.03 255     0.27    -0.96   0           51 
+	FuelGenerator       32      3449.78 3863.66 255     0.32    0.95    0           52 
+	FuelGenerator       33      3249.83 2829.06 255     -0.85   -0.53   0           50 
+	FuelGenerator       34      657.27  3113.37 255     0.07    -1.00   0           44 
+	FuelGenerator       35      1332.09 4128.58 255     1.00    0.00    0           46 
+	FuelGenerator       36      1214.37 3499.70 255     1.00    0.00    0           45 
+	FuelGenerator       37      1254.14 865.56  255     1.00    0.00    0           42 
+	FuelGenerator       38      2649.43 707.47  255     -0.63   -0.78   0           41 
+	FuelGenerator       39      2293.14 1254.45 255     0.50    0.87    0           40 
+	FuelPipe            40      2268.82 1036.27 255     1.00    0.00    0           91 
+	FuelPipe            41      2458.63 655.83  255     0.95    0.30    0           94 
+	FuelPipe            42      1418.84 795.46  255     1.00    0.00    0           92 
+	PylonEnd            43      2319.23 1299.30 255     0.99    -0.15   0       39      
+	FuelPipe            44      529.39  3314.24 255     1.00    0.00    0           83 
+	FuelPipe            45      1015.88 3502.31 255     1.00    0.00    0           87 
+	FuelPipe            46      1146.34 4013.65 255     1.00    0.00    0           85 
+	Pylon               47      1547.91 3342.92 255     -0.88   -0.47   0       48      
+	PylonEnd            48      1263.44 3496.58 255     -0.03   -1.00   0       36      
+	PylonEnd            49      3207.68 2804.65 255     -0.63   0.78    0       33      
+	FuelPipe            50      3425.44 2963.64 255     1.00    0.00    0          103 
+	FuelPipe            51      3992.76 2695.34 255     1.00    0.00    0           99 
+	FuelPipe            52      3610.78 3669.79 255     1.00    0.00    0          101 
+	PowerSplitter       53      734.81  1778.29 255     1.00    0.00    0       -1      54  55  
+	Pylon               54      763.53  1770.51 0       0.45    -0.89   0       56      
+	Pylon               55      760.00  1784.05 2       0.02    1.00    0       59      
+	Pylon               56      981.70  1524.86 255     -1.00   -0.04   0       57      
+	Pylon               57      803.69  1301.54 255     0.97    -0.25   0       58      
+	PylonEnd            58      1207.37 899.09  255     -0.80   -0.60   0       37      
+	Pylon               59      745.08  2030.37 255     1.00    0.00    0       60      
+	Pylon               60      848.57  2512.77 255     -1.00   -0.04   0       61      
+	PylonEnd            61      674.28  3065.30 255     0.98    0.20    0       34      
+	PowerSplitter       62      3466.31 950.83  255     -0.82   0.57    0       -1      63  64  
+	Pylon               63      3439.40 961.91  0       -0.59   -0.81   0       65      
+	Pylon               64      3448.26 972.76  1       0.66    0.75    0       69      
+	Pylon               65      3309.76 825.86  255     1.00    0.00    0       66      
+	Pylon               66      3009.00 505.97  255     -0.13   0.99    0       67      
+	PylonEnd            67      2699.86 702.60  255     0.32    -0.95   0       38      
+	PylonEnd            68      3992.38 2461.20 255     -0.74   -0.68   0       31      
+	Pylon               69      3767.80 1121.43 255     -0.50   0.86    0       70      
+	Pylon               70      3513.78 2013.11 255     0.88    -0.48   0       68      
+	PowerSplitter       71      2173.02 4147.89 255     0.12    -0.99   0       -1      72  73  
+	Pylon               72      2169.70 4116.09 2       -1.00   -0.06   0       74      
+	Pylon               73      2183.77 4116.93 1       1.00    0.10    0       76      
+	Pylon               74      1938.43 4095.18 255     0.12    0.99    0       75      
+	Pylon               75      1728.83 4092.92 255     0.41    0.91    0       79      
+	Pylon               76      2424.15 4187.80 255     0.45    -0.89   0       77      
+	Pylon               77      2888.46 4347.54 255     0.32    -0.95   0       78      
+	PylonEnd            78      3396.38 3845.95 255     -0.42   0.91    0       32      
+	PylonEnd            79      1383.75 4126.88 255     0.32    -0.95   0       35      
+	FuelStation         80      585.28  3676.59 2       -0.80   -0.60   0            5 
+	FuelStation         81      825.53  3707.02 2       0.92    -0.39   0            5 
+	FuelStation         82      690.39  3895.23 2       -0.03   1.00    0            5 
+	FuelPipe            83      445.75  3475.90 255     1.00    0.00    0           84 
+	FuelPipe            84      403.59  3662.29 255     1.00    0.00    0           80 
+	FuelPipe            85      973.98  4086.18 255     1.00    0.00    0           86 
+	FuelPipe            86      772.38  4084.36 255     1.00    0.00    0           82 
+	FuelPipe            87      827.96  3524.23 255     1.00    0.00    0           81 
+	FuelStation         88      1952.74 862.35  0       0.45    0.89    0            3 
+	FuelStation         89      1757.81 730.83  0       -1.00   -0.04   0            3 
+	FuelStation         90      1979.12 626.70  0       0.62    -0.78   0            3 
+	FuelPipe            91      2111.73 976.28  255     1.00    0.00    0           88 
+	FuelPipe            92      1573.63 871.58  255     1.00    0.00    0           93 
+	FuelPipe            93      1576.00 697.03  255     1.00    0.00    0           89 
+	FuelPipe            94      2354.70 568.80  255     1.00    0.00    0           95 
+	FuelPipe            95      2183.88 658.88  255     1.00    0.00    0           90 
+	FuelStation         96      3861.35 3133.62 1       0.92    -0.39   0            4 
+	FuelStation         97      3720.17 3323.20 1       -0.13   0.99    0            4 
+	FuelStation         98      3616.46 3110.55 1       -0.86   -0.52   0            4 
+	FuelPipe            99      4061.82 2842.12 255     1.00    0.00    0          100 
+	FuelPipe            100     4029.89 3028.12 255     1.00    0.00    0           96 
+	FuelPipe            101     3712.47 3583.58 255     1.00    0.00    0          102 
+	FuelPipe            102     3570.19 3442.58 255     1.00    0.00    0           97 
+	FuelPipe            103     3434.74 3152.65 255     1.00    0.00    0           98 
+	AITarget            104     2162.73 3915.51 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            105     628.80  1671.67 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            106     3733.96 803.24  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            107     2135.67 2085.31 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            108     2703.47 2020.01 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            109     2472.18 2562.01 255     1.00    0.00    0       -1    0.00 1     
+	GunTurret           117     3710.95 3060.60 255     0.00    0.97    0       0   0.00 0.00 0.00 0.00 
+	GunTurret           118     2043.60 763.73  255     1.00    0.00    0       0   0.00 0.00 0.00 0.00 
+	GunTurret           119     798.17  3859.29 255     1.00    0.00    0       0   0.00 0.00 0.00 0.00 
+	AITarget            110     2421.94 2376.79 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            111     2532.85 2151.29 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            112     2273.25 2145.29 255     1.00    0.00    0       -1    0.00 1     
+	AIObjectiveMarker   113     2124.03 2079.50 2       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   114     2702.82 2009.73 1       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   115     2476.27 2567.68 0       1.00    0.00    0       135.80   -1   0   0
+	AIObjectiveMarker   116     3720.24 799.96  0       1.00    0.00    0       162.91   -1   0   0
+	AIObjectiveMarker   120     616.35  1674.63 0       1.00    0.00    0       165.64   -1   0   0
+	AIObjectiveMarker   121     616.71  1678.99 2       1.00    0.00    0       165.64   -1   0   0
+	AIObjectiveMarker   122     2161.31 3887.33 2       1.00    0.00    0       165.64   -1   0   0
+	AIObjectiveMarker   123     2157.39 3888.84 1       1.00    0.00    0       165.64   -1   0   0
+	AIObjectiveMarker   124     3723.76 816.03  1       1.00    0.00    0       165.64   -1   0   0
+	AIObjectiveMarker   125     2476.80 2566.80 2       1.00    0.00    0       135.80   -1   0   0
+	AIObjectiveMarker   126     2479.62 2570.72 1       1.00    0.00    0       135.80   -1   0   0
+	AIObjectiveMarker   127     2121.24 2077.43 0       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   128     2121.24 2077.43 1       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   129     2700.22 2010.56 0       1.00    0.00    0       100.00   -1   0   0
+	AIObjectiveMarker   130     2699.58 2013.28 2       1.00    0.00    0       100.00   -1   0   0
+	AITarget            131     3747.33 3086.91 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            132     3843.97 3275.44 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            133     3594.27 3253.37 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            134     700.17  3646.25 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            135     557.53  3852.27 255     1.00    0.00    0       -1    0.00 0     
+	AITarget            136     833.93  3861.83 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            137     2046.11 770.34  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            138     1853.82 586.71  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            139     1852.15 857.41  255     1.00    0.00    0       -1    0.00 1     
+	GunTurret           140     3802.88 3322.18 255     0.00    0.97    0       0   0.00 0.00 0.00 0.00 
+	GunTurret           141     569.92  3781.05 255     0.00    0.97    0       0   0.00 0.00 0.00 0.00 
+	GunTurret           142     1823.41 629.70  255     0.00    0.97    0       0   0.00 0.00 0.00 0.00 
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0         1591.99  573.07 1981.95 0.55 -0.83 0.05 0.83 0.56 0.08
+	player1         2269.79  519.91 1566.90 -0.20 -0.69 0.70 -0.19 0.73 0.66
+	player2         2389.61  482.50 2347.91 -0.66 -0.72 -0.23 -0.68 0.69 -0.24
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+	Darwinian        1  3714.2  3064.7      4    0      -1    10.0     0.0     0.0   -1   -1    0
+	Darwinian        0  2049.6   772.2      4    0      -1    10.0     0.0     0.0   -1   -1    0
+	Darwinian        2   802.1  3859.3      4    0      -1    10.0     0.0     0.0   -1   -1    0
+	Darwinian        0  1828.0   633.2      4    0      -1    10.0     0.0     0.0   -1   -1    0
+	Darwinian        1  3810.0  3331.7      4    0      -1    10.0     0.0     0.0   -1   -1    0
+	Darwinian        2   571.2  3776.2      4    0      -1    10.0     0.0     0.0   -1   -1    0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

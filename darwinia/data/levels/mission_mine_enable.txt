@@ -1,0 +1,54 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start            129.94  268.79  156.02 0.66 -0.30 0.69 0.21 0.95 0.22
+	obj1            1993.73  481.84 1379.24 -0.43 -0.34 0.84 -0.16 0.94 0.31
+	obj2             564.68  206.27 1534.45 0.47 -0.16 0.87 0.08 0.99 0.14
+	intro1           758.74  494.41  571.81 0.36 -0.44 0.82 0.17 0.90 0.41
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ResearchItem        101     2534.33 1998.19 1       -0.15   -0.59   0       AirStrike      1
+	ScriptTrigger       100     1914.35 2408.80 0       1.00    0.00    0       89     67.60  pixelmines_yardport Darwinian
+	ScriptTrigger       98      835.79  514.26  0       1.00    0.00    0       90     61.02  pixelmines_refinery Darwinian
+	ScriptTrigger       99      1430.11 1004.93 0       1.00    0.00    0       -1     79.70  mine_minehelp.txt Darwinian
+	Triffid             74      532.90  1685.24 1       0.45    -0.89   0       1.16   1.09   176.69 0.31   70.00  1 658.73   -697.40  100.00 1 1 0 0 0 0 0 
+	Triffid             82      566.65  1696.96 1       0.45    -0.89   0       1.00   0.83   231.77 0.52   60.00  1 663.48   -757.38  100.00 1 1 0 0 0 0 0 
+	Triffid             91      699.86  2450.18 1       0.88    -0.48   0       1.00   1.78   204.77 0.27   102.25 1 648.45   -268.78  189.25 1 0 1 0 0 0 0 
+	Triffid             93      752.77  2465.08 1       0.85    -0.52   0       1.00   1.67   212.80 0.39   78.61  1 765.84   -352.21  215.74 1 0 1 0 0 0 0 
+	Incubator           97      833.43  473.72  1       0.07    1.00    1            0
+	Incubator           108     1192.72 2329.05 1       -0.13   -0.99   1            0
+	Incubator           12      602.96  1141.27 1       1.00    0.00    1            0
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Virii            1   953.8   472.6     40    1      -1   156.8     0.0     0.0
+	Virii            1   798.9  1137.8     40    1      -1   200.0     0.0     0.0
+	Virii            1  1285.8   551.3     40    1      -1   200.0     0.0     0.0
+	Centipede        1   799.8   949.4     16    1      -1   237.8     0.0     0.0
+	Virii            1  1223.0  1096.8     20    1      -1   103.5     0.0     0.0
+	Spider           1  1627.1  2027.8      1    0      -1   200.0     0.0     0.0
+	Spider           1   874.4  1917.1      2    0      -1   200.0     0.0     0.0
+	Virii            1  1548.4  2070.7     50    1      -1   258.4     0.0     0.0
+	Centipede        1  1271.8  2033.8     20    1      -1   287.8     0.0     0.0
+	Virii            1  1243.7   870.1     20    1      -1   113.3     0.0     0.0
+	Virii            1   849.6  2003.0     61    1      -1   215.0     0.0     0.0
+	SporeGenerator   1  1464.2  2096.3      1    0      -1   213.1     0.0     0.0
+	SporeGenerator   1   801.4  1891.6      1    0      -1   306.0     0.0     0.0
+	Virii            1  1065.7  2290.3     40    1      -1   144.0     0.0     0.0
+	Virii            1  2375.1   337.7     40    1      -1   200.0     0.0     0.0
+	Virii            1  2442.3   584.7     40    1      -1   200.0     0.0     0.0
+	Spider           1  2458.8   511.8      2    0      -1   200.0     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :mine,90 	pixelmines_objective1	mine_primary1.txt
+	BuildingOnline :mine,89 	pixelmines_objective2	mine_primary2.txt
+PrimaryObjectives_EndDefinition

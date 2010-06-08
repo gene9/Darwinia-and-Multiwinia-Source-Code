@@ -1,0 +1,12 @@
+ServerAddress = 127.0.0.1
+BypassNetwork = 1
+IAmAServer = 1
+
+#TextLanguage = english
+
+TextSpeed = 15
+
+ControlMethod = 1
+
+
+WaitVerticalRetrace = 0

@@ -1,0 +1,26 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start            916.18  140.36 1678.35 0.93 -0.21 -0.30 0.20 0.98 -0.06
+	blah308         1386.88  209.05 1758.85 0.89 -0.44 -0.07 0.44 0.90 -0.03
+	blah32089       1663.56  211.34 1347.69 0.04 -0.37 0.93 0.01 0.93 0.37
+	blah16270       2031.65  213.71 1750.87 -0.92 -0.39 -0.04 -0.39 0.92 -0.02
+	blah4467        1673.17  215.97 2099.99 0.02 -0.40 -0.92 0.01 0.92 -0.40
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :sandbox,2 
+PrimaryObjectives_EndDefinition

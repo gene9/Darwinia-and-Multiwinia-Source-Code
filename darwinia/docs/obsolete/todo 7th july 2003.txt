@@ -1,0 +1,35 @@
+ENTITIES
+    - Specifying Engineer type is difficult, they move around when you're aiming at them
+    - Make it so they respond to mountains
+
+BUILDINGS
+    - Ability to blow-up building
+    - Put the same fogginh on buildings that the landscape has
+
+SOUNDS
+    - Small explosion
+
+EDITOR
+    - Ability to set height of building in editor
+    - implement consistent height scaling
+    - implement none power of two sizes for tiles
+    - Landscape::DeleteTile method
+    
+LANDSCAPE
+    - Try making coastlines blocky
+
+
+FIRST PLAYABLE SHIT LIST
+========================
+
+- Engineers need to be expensive
+- Easy to build 2 bridges by accident
+- Bridges can be any length - no cost
+- Not enough sound density
+- Big gun doesn't feel / look right
+- Camera is very volatile at low frame rates
+- No visual distinction between engineer types
+- No engineer-action visual effects
+- Nothing explaining power station -> force field link
+- A new player wouldn't have a clue
+- Need better bridge building diagram

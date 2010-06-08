@@ -1,0 +1,136 @@
+
+ ==============
+ FIRST PLAYABLE
+ ==============
+
+
+This document details all the work that must be completed for first playable
+of project Future War.  This represents a cut down version of the game
+which can still be played and enjoyed.  It will have a few unit types and 
+spell types, and virtually no visual effects.  It will be multiplayer only.
+
+
+
+- ENTITY STATISTICS
+    All entities will be created from a blueprint
+    Each entity will have a number of stats
+        Health              Higher means I can take more damage
+        Strength            Controls how much damage I can cause
+        Speed               Controls how fast I move and Fight
+        Toughness           Enemy strength must overcome this to cause damage
+        Intelligence        Higher means I can think better, but might refuse orders
+        Morale              Low means i'm likely to run or refuse orders
+
+
+- WIZARDS
+    Each player will be given one wizard at the start of the game.
+    That wizard can be moved around directly.
+    Death = game over + all creatures / spells destroyed
+
+
+- MANA / CONCENTRATION
+    Each wizard will have a set of stats
+    He will also have Mana and Concentration
+    Mana will be depleated when spells are cast
+    Mana will recharge at a fixed rate, up to a maximum
+    Concentration will be allocated by spells
+    Loss of concentration will result in random spells failing
+
+
+- COMBAT
+    Implement combat based on range / health / strength etc.
+
+
+- SPELL CAST
+    All spells are cast as sequences of runes.
+    Basic gesture recognition in place.
+    Targetting lines or effects over Wizard and over target area
+    Range of spells : summon = close, lightning = long etc
+
+
+- TROOP TYPES:
+    Demons                  Chaos, fast, tough, agressive, dumb, close range only
+                            RUNES : SUMMON ANIMAL SPEED TOUGHNESS
+                            Should move as a pack 
+                            Charge straight into the enemy, no fear
+
+    Ravens                  Chaos, flying, fast, weak
+                            RUNES : SUMMON BIRD SPEED
+                            Flocking behaviours based on birds
+                            Implement "dive bombing"
+
+    Archers                 Order, slow, weak, ranged, intelligent
+                            RUNES : CREATE MAN RANGE
+                            Can directly control their target like Cannon Fodder
+
+    Knights                 Order, slow, tough, close range, brave
+                            RUNES : CREATE MAN TOUGHNESS STRENGTH
+                            Should march in formation (basically what we have now)
+
+
+    Only a basic summon system will be required for first playable.  Some kind 
+    of visual marker for the summon point, and the time to summon implemented.
+    It will be possible to set the size of the summon gate.
+    It will be possible to summon creatures as illusion.  (extra rune : ILLUSION)
+
+
+- SPELL TYPES:
+    Lightning               The wizard summons a lightning bolt and can strike X times (ranged damage)
+                            RUNES : DESTROY STRENGTH RANGE
+
+    Shield                  The wizard creates a shield around a target area (blocks spells + arrows)
+                            RUNES : PROTECT HEALTH
+
+    Stat Boost              The wizard can increase a single stat on a bunch of troops
+                            RUNES : CONTROL ( Stat Type )
+
+    Disbelieve              Destroys all illusion creatures in range of target
+                            RUNES : DESTROY ILLUSION
+
+    No need to implement "permenance" yet.
+    No need for fancy effects yet.  Just basic markers (possibly text) for spell type.
+    Other players should be able to see spells being cast
+
+
+- GRAPHICS
+    Placeholder sprites for all unit types
+    Facing the right direction
+    No need for animation
+    HUD : Mana / Concentration / Health / Current spell
+    Basic lines and effects for spell casts / portals etc
+
+- SOUND
+    Magical voices on rune casting
+    Placeholders for combat, death, troop types etc
+
+
+ =============
+ EXTRA DETAILS
+ =============
+
+
+- COMPLETE RUNE LIST
+
+    Spell type 
+        SUMMON
+        CREATE                                
+        DESTROY
+        PROTECT
+        CONTROL
+
+    Unit type
+        ANIMAL
+        BIRD
+        MAN
+
+    Stat type
+        HEALTH
+        STRENGTH
+        SPEED
+        TOUGHNESS
+        INTELLIGENCE
+        MORALE
+
+    Other
+        RANGE
+        ILLUSION

@@ -1,0 +1,11 @@
+
+CamMove	trunk1	3
+Say	doomsday_trunkports_1
+Say	doomsday_trunkports_2
+ActivateTrunkport 119
+ActivateTrunkport 120
+
+WaitCam
+
+CamReset
+

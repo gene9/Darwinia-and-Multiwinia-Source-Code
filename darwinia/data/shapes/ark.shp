@@ -1,0 +1,351 @@
+Fragment: Cylinder01
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: -6.95 3.10 -10.99
+	Positions: 16
+		0:   0.000   0.000   0.000
+		1:  35.775   0.000   0.000
+		2:  22.305   0.000 -27.970
+		3:  -7.961   0.000 -34.878
+		4: -32.232   0.000 -15.522
+		5: -32.232   0.000  15.522
+		6:  -7.961   0.000  34.878
+		7:  22.305   0.000  27.970
+		8:  35.775 157.450   0.000
+		9:  22.305 157.450 -27.970
+		10:  -7.961 157.450 -34.878
+		11: -32.232 157.450 -15.522
+		12: -32.232 157.450  15.522
+		13:  -7.961 157.450  34.878
+		14:  22.305 157.450  27.970
+		15:   0.000 157.450   0.000
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 16    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   1   0
+		3:   3   0
+		4:   4   0
+		5:   5   0
+		6:   6   0
+		7:   7   0
+		8:   9   0
+		9:   8   0
+		10:  10   0
+		11:  11   0
+		12:  12   0
+		13:  13   0
+		14:  14   0
+		15:  15   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 47
+			v4   	v12   	v11   	v12   	v15   	v12   	v13   	v12   	v5   	v4   	v4   	v1   	v1   	v1   
+			v2   	v8   	v9   	v15   	v14   	v13   	v6   	v5   	v0   	v4   	v3   	v3   	v4   	v4   
+			v3   	v11   	v10   	v15   	v10   	v8   	v10   	v1   	v3   	v1   	v0   	v2   	v7   	v9   
+			v7   	v14   	v7   	v6   	v0   
+
+Fragment: Cylinder02
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: -40.47 3.10 17.07
+	Positions: 16
+		0:   0.000   0.000   0.000
+		1:  17.971   0.000  -6.915
+		2:   5.798   0.000 -18.362
+		3: -10.741   0.000 -15.982
+		4: -19.192   0.000  -1.567
+		5: -13.191   0.000  14.028
+		6:   2.743   0.000  19.059
+		7:  16.611   0.000   9.739
+		8:  17.971 108.220  -6.915
+		9:   5.798 108.220 -18.362
+		10: -10.741 108.220 -15.982
+		11: -19.192 108.220  -1.567
+		12: -13.191 108.220  14.028
+		13:   2.743 108.220  19.059
+		14:  16.611 108.220   9.739
+		15:   0.000 108.220   0.000
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 16    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   1   0
+		3:   3   0
+		4:   4   0
+		5:   5   0
+		6:   6   0
+		7:   7   0
+		8:   9   0
+		9:   8   0
+		10:  10   0
+		11:  11   0
+		12:  12   0
+		13:  13   0
+		14:  14   0
+		15:  15   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 47
+			v4   	v12   	v11   	v12   	v15   	v12   	v13   	v12   	v5   	v4   	v4   	v1   	v1   	v1   
+			v2   	v8   	v9   	v15   	v14   	v13   	v6   	v5   	v0   	v4   	v3   	v3   	v4   	v4   
+			v3   	v11   	v10   	v15   	v10   	v8   	v10   	v1   	v3   	v1   	v0   	v2   	v7   	v9   
+			v7   	v14   	v7   	v6   	v0   
+
+Fragment: Cylinder03
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: 26.07 3.10 -32.68
+	Positions: 16
+		0:   0.000   0.000   0.000
+		1:  17.971   0.000  -6.915
+		2:   5.798   0.000 -18.362
+		3: -10.741   0.000 -15.982
+		4: -19.192   0.000  -1.567
+		5: -13.191   0.000  14.028
+		6:   2.743   0.000  19.059
+		7:  16.611   0.000   9.739
+		8:  17.971 108.220  -6.915
+		9:   5.798 108.220 -18.362
+		10: -10.741 108.220 -15.982
+		11: -19.192 108.220  -1.567
+		12: -13.191 108.220  14.028
+		13:   2.743 108.220  19.059
+		14:  16.611 108.220   9.739
+		15:   0.000 108.220   0.000
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 16    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   1   0
+		3:   3   0
+		4:   4   0
+		5:   5   0
+		6:   6   0
+		7:   7   0
+		8:   9   0
+		9:   8   0
+		10:  10   0
+		11:  11   0
+		12:  12   0
+		13:  13   0
+		14:  14   0
+		15:  15   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 47
+			v4   	v12   	v11   	v12   	v15   	v12   	v13   	v12   	v5   	v4   	v4   	v1   	v1   	v1   
+			v2   	v8   	v9   	v15   	v14   	v13   	v6   	v5   	v0   	v4   	v3   	v3   	v4   	v4   
+			v3   	v11   	v10   	v15   	v10   	v8   	v10   	v1   	v3   	v1   	v0   	v2   	v7   	v9   
+			v7   	v14   	v7   	v6   	v0   
+
+Fragment: Cone01
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: -6.37 157.91 -10.85
+	Positions: 16
+		0:   0.000   0.000   0.000
+		1:  34.979   0.000   0.000
+		2:  21.809   0.000 -27.347
+		3:  -7.784   0.000 -34.102
+		4: -31.515   0.000 -15.177
+		5: -31.515   0.000  15.177
+		6:  -7.784   0.000  34.102
+		7:  21.809   0.000  27.347
+		8:   7.454  43.629   0.000
+		9:   4.647  43.629  -5.828
+		10:  -1.659  43.629  -7.267
+		11:  -6.716  43.629  -3.234
+		12:  -6.716  43.629   3.234
+		13:  -1.659  43.629   7.267
+		14:   4.647  43.629   5.828
+		15:   0.000  43.629   0.000
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 16    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   1   0
+		3:   3   0
+		4:   4   0
+		5:   5   0
+		6:   6   0
+		7:   7   0
+		8:   9   0
+		9:   8   0
+		10:  10   0
+		11:  11   0
+		12:  12   0
+		13:  13   0
+		14:  14   0
+		15:  15   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 47
+			v4   	v12   	v11   	v12   	v15   	v12   	v13   	v12   	v5   	v4   	v4   	v1   	v1   	v1   
+			v2   	v8   	v9   	v15   	v14   	v13   	v6   	v5   	v0   	v4   	v3   	v3   	v4   	v4   
+			v3   	v11   	v10   	v15   	v10   	v8   	v10   	v1   	v3   	v1   	v0   	v2   	v7   	v9   
+			v7   	v14   	v7   	v6   	v0   
+
+Fragment: Box01
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: 13.54 0.56 18.03
+	Positions: 8
+		0: -22.750   0.000  31.533
+		1:  36.928   0.000 -12.177
+		2: -36.928   0.000  12.177
+		3:  22.750   0.000 -31.533
+		4: -22.750  81.430  31.533
+		5:  36.928  81.430 -12.177
+		6: -36.928  81.430  12.177
+		7:  22.750  81.430 -31.533
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 8    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   3   0
+		3:   1   0
+		4:   4   0
+		5:   5   0
+		6:   7   0
+		7:   6   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 21
+			v1   	v1   	v0   	v2   	v3   	v6   	v5   	v4   	v0   	v4   	v1   	v7   	v2   	v7   
+			v6   	v4   	v4   	v0   	v0   	v3   	v5   
+
+Fragment: Box02
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  0.00  0.00  1.00
+	pos: 24.61 -0.69 33.24
+	Positions: 8
+		0: -10.438   0.000  20.812
+		1:  22.593   0.000  -5.627
+		2: -22.593   0.000   5.627
+		3:  10.438   0.000 -20.812
+		4: -10.438  48.825  20.812
+		5:  22.593  48.825  -5.627
+		6: -22.593  48.825   5.627
+		7:  10.438  48.825 -20.812
+	Normals: 0
+	Colours: 1
+		0: 128 128 128
+	Vertices: 8    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   3   0
+		3:   1   0
+		4:   4   0
+		5:   5   0
+		6:   7   0
+		7:   6   0
+	Strips: 1
+		Strip: 0
+			Material: GunMetal
+			Verts: 21
+			v1   	v1   	v0   	v2   	v3   	v6   	v5   	v4   	v0   	v4   	v1   	v7   	v2   	v7   
+			v6   	v4   	v4   	v0   	v0   	v3   	v5   
+
+Marker: MarkerRocket1
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   -8.46  0.00 -10.42
+	MarkerEnd
+
+
+Marker: MarkerRocket2
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   26.83  0.00 -31.67
+	MarkerEnd
+
+
+Marker: MarkerRocket3
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   -40.95  0.00 16.54
+	MarkerEnd
+
+
+Marker: MarkerLight01
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   30.83  0.00 39.47
+	MarkerEnd
+
+
+Marker: MarkerLight02
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   45.78 47.26 27.27
+	MarkerEnd
+
+
+Marker: MarkerLight03
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   12.45 47.26 52.52
+	MarkerEnd
+
+
+Marker: MarkerLight04
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   -9.40 79.88 47.06
+	MarkerEnd
+
+
+Marker: MarkerLight05
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   48.81 79.88  5.13
+	MarkerEnd
+
+
+Marker: MarkerLight06
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front:  0.00  0.00 -1.00
+	Pos:   16.15 156.96 17.16
+	MarkerEnd
+
+

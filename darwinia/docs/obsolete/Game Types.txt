@@ -1,0 +1,31 @@
+
+- Chess
+    Each player has a fixed number of each troop type at the start,
+    arranged in a perfectly symmetrical layout.  Objective is to wipe
+    out the opponent or the opponent's leading general.
+
+    Variant:  Choose starting troops from a fixed budget.
+
+- Capture the objectives
+    There are a number of flag-objectives around the map.
+    Players receive points for each second they own a flag.
+    Winner is declared after a fixed time frame.
+
+    Other objective types:
+        runway  -   allows dropships of troops to be flown in.
+        mines   -   gives money to use on factories
+        factories - allows construction of new troops
+
+    Variant: Winner must capture all flags.
+    Variant: Winner is the player with the most flags at the end.
+
+- Destroy enemy Base
+    One team starts in a fortified base.
+    Other team must attack and destroy.
+
+- Island warfare
+    Battlefield consists of multiple seperated islands
+    Winner has to capture each island
+    In order to move between islands, must use boats (slow)
+
+- Saving Private Ryan

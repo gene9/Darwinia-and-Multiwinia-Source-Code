@@ -1,0 +1,1724 @@
+# =================================================
+# Errors
+# =================================================
+
+error                                  Error
+error_incompatible                     Darwinia: Vista Edition is only compatible with Windows Vista.\nPlease visit http://www.darwinia.co.uk for a compatible version of Darwinia.\nWould you like to visit http://www.darwinia.co.uk now?
+error_parental                         Current Parental Control Settings will not allow Darwinia: Vista Edition to be played
+darwinia_vistaedition                  Darwinia: Vista Edition
+
+# =================================================
+# About Darwinia
+# =================================================
+
+about_darwinia                         About Darwinia
+
+# ================================================
+# Game controller actions
+# ================================================
+
+gc_select                              Select
+gc_destroy                             Destroy
+gc_create                              Create
+gc_close                               Close
+gc_deselect                            Deselect
+gc_place                               Place
+gc_promote                             Promote
+gc_move                                Move
+gc_aim                                 Look
+gc_fire                                Fire
+gc_grenade                             Grenade
+gc_rocket                              Rocket
+gc_airstrike                           Airstrike
+gc_changeweapon                        Change Weapon
+gc_changeorders                        Change Orders
+gc_cameraup                            Up
+gc_cameradown                          Down
+gc_setgoto                             Set Goto
+gc_setturret                           Set Turret
+gc_prev                                Prev
+gc_next                                Next
+gc_rotateleft                          Rotate Left
+gc_rotateright                         Rotate Right
+gc_zoom                                Zoom
+gc_radaraim                            Aim
+gc_skip                                Skip
+gc_setfollow                           Set Follow
+
+
+# ================================================
+# Key names
+# ================================================
+
+control_alt                            ALT
+control_asterisk                       *
+control_at                             @
+control_backslash                      \
+control_backspace                      BACKSPACE
+control_capslock                       CAPSLOCK
+control_comma                          COMMA
+control_control                        CTRL
+control_del                            Del
+control_end                            End
+control_enter                          Enter
+control_equals                         =
+control_esc                            Esc
+control_home                           Home
+control_insert                         Ins
+control_minus                          -
+control_pause                          PAUSE
+control_pgdn                           PGDN
+control_pgup                           PGUP
+control_quote                          QUOTE
+control_shift                          Shift
+control_slash                          /
+control_space                          Space
+control_stop                           .
+control_tab                            TAB
+control_tilde                          ~
+
+control_left                           Left
+control_right                          Right
+control_up                             Up
+control_down                           Down
+
+control_plus_pad                       NUM_+
+control_minus_pad                      NUM_-
+control_del_pad                        NUM_DEL
+control_slash_pad                      NUM_/
+
+control_numlock                        NUMLOCK
+control_scrlock                        SCRLOCK
+
+control_openbrace                      {
+control_closebrace                     }
+
+# =================================================
+# CONTROL EVENTS
+# Used in "Main Menu -> Options -> Control Options"
+# =================================================
+
+control_event_left                     Left
+control_event_right                    Right
+control_event_forwards                 Forwards
+control_event_backwards                Backwards
+control_event_up                       Up
+control_event_down                     Down
+control_event_zoom                     Zoom
+control_event_deselect                 Deselect
+control_event_chatlog                  Chat Log
+control_event_skipmessage              Skip Message
+control_event_iconstaskmanagerdisplay  Display Task Manager
+control_event_iconstaskmanagerendtask  End Task
+control_event_iconschatlog             Chat Log
+control_event_unitmove                 Unit Move
+control_event_unitprimaryfire          Unit Primary Fire
+control_event_unitsecondaryfire        Unit Secondary Fire
+control_event_taskmanagerdisplay       Display Task Manager
+control_event_taskmanagerswitchtask    Switch Task
+control_event_taskmanagerendtask       End Task
+
+
+# =================================================
+# 360 Control Help
+# =================================================
+
+control_help_move                      Move Unit
+control_help_lasers                    Fire Lasers
+control_help_cameramove                Move Camera
+control_help_cameraturn                Turn Camera
+control_help_directmovecam             Move Camera
+control_help_cameraup                  Cam Up (Press)
+control_help_cameradown                Cam Down (Press)
+control_help_quickunitstart            Open TaskManager
+control_help_quickunitcreate           Create Unit
+control_help_quickunitplace            Place Unit
+control_help_endtask                   Close Task
+control_help_radar                     Aim Radar
+control_help_fireturret                Fire Guns
+control_help_deselect                  Deselect Unit
+control_help_confirm                   Confirm / Select
+control_help_next                      Next Unit
+control_help_previous                  Previous Unit
+control_help_secondaryaim              Aim (Hold)
+control_help_secondaryfire             Fire
+control_help_changesecondary           Change Weapon
+control_help_officergoto               Set Goto
+control_help_officermode               Change Mode
+control_help_armourturret              Drop Gunturret
+control_help_armourmode                Pick Up/Drop Mode
+
+
+#- ================================================
+#- Common verb phrases
+#- ================================================
+
+#- Note that any entry with a name beginning "part_" is never used directly by the program,
+#- just by other strings, and may be safely excluded where they are not used. If you add your
+#- own entries which are only included within others, then please keep to this naming
+#- convention, so that this is clear.
+
+# ================================================
+# Help strings
+# ================================================
+
+help_camera_movement_kbd               Move the camera around using the [KEYCAMERAFORWARDS], [KEYCAMERALEFT], [KEYCAMERABACKWARDS] and [KEYCAMERARIGHT] keys.  You can control the camera's height by scrolling the mouse wheel, or by using the [KEYCAMERAUP] and [KEYCAMERADOWN] keys.
+help_camera_movement_xin               Move the camera around.
+help_camera_height_kbd                 If you have a middle mouse button, you can scroll it to change the height of the camera.  Or you can use the [KEYCAMERAUP] and [KEYCAMERADOWN] keys to go up and down.
+help_camera_zoom_kbd                   If you have a middle mouse button, click it to zoom the camera.  Or you can press the [KEYCAMERAZOOM] key.
+help_camera_movefast_kbd               You can make the camera move faster by holding down [KEYCAMERASPEEDUP] while you are moving.
+help_taskmanager_1_kbd                 To create things in Darwinia you draw gestures in the Task Manager.  Hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager.
+help_taskmanager_2_kbd                 To see a list of available gestures, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager and scroll left by moving the mouse to the left of the screen, or by pressing [KEYMENULEFT].
+help_taskmanager_3_kbd                 You can only run up to THREE tasks at once.  You can shut down existing tasks by holding down [KEYGESTURESTASKMANAGERDISPLAY], tabbing along to the task, and pressing CTRL-C.
+help_taskmanager_3_xin                 You can only run up to THREE tasks at once.  You can shut down existing tasks.
+help_taskmanager_4_kbd                 To reselect an existing task, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager and tab along to the icon representing the task.
+help_showchatlog_kbd                   To read a log of everything I've said, hold the [KEYGESTURESCHATLOG] key.
+help_taskmanager_1_icons_kbd           To create things in Darwinia you need to bring up the Task Manager.  Hold [KEYICONSTASKMANAGERDISPLAY] to access the Task Manager.
+help_taskmanager_1_icons_xin           To create things in Darwinia you need to bring up the Task Manager.
+help_taskmanager_2_icons_kbd           You can see a list of available programs while holding [KEYICONSTASKMANAGERDISPLAY].  Click any of them to create a new program.
+help_taskmanager_3_icons_kbd           You can only run up to THREE tasks at once.  You can shut down the current task by pressing [KEYICONSTASKMANAGERENDTASK], or you can click on its delete icon in the Task Manager.
+help_taskmanager_3_icons_xin           You can only run up to THREE tasks at once.
+help_taskmanager_4_icons_kbd           To reselect an existing task, hold [KEYICONSTASKMANAGERDISPLAY] and click on its icon.  Or you can press the number keys to select tasks.
+help_showchatlog_icons_kbd             To read a log of everything I've said, hold the [KEYICONSCHATLOG] key.
+
+help_deselect_kbd                      To deselect the current object press [KEYUNITDESELECT]
+help_squad_summon_1_kbd                To create a Squad, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager, then draw this gesture.
+help_squad_summon_1_icons_kbd          To create a Squad, hold [KEYICONSTASKMANAGERDISPLAY] to access the Task Manager, then click the Squad icon.
+help_squad_summon_2_kbd                Click inside one of the starting areas, now highlighted, to create your squad within the world.
+help_squad_summon_2_xin                Select one of the starting areas, now highlighted, to create your squad within the world.
+help_squad_use_kbd                     Left Click to move your squad.  Right Click to fire their lasers.  Press [KEYUNITDESELECT] to deselect them. Squads cannot move into the water.
+help_squad_use_1mb_kbd                 Click to move your squad.  Click and hold to fire their lasers.  Press [KEYUNITDESELECT] to deselect them.
+help_squad_grenade_kbd                 You can throw a grenade by tapping the Left Mouse Button whilst you are firing lasers with the Right mouse button.
+help_squad_grenade_1mb_kbd             You can throw a grenade by shift clicking.
+help_squad_setgrenade                  To change to the Grenade weapon, draw the Grenade gesture.
+help_squad_setrocket                   To change to the Rocket weapon, draw the Rocket gesture.
+help_squad_setairstrike                To change to the Airstrike weapon, draw the Airstrike gesture.
+help_squad_setgrenade_icons_kbd        To change to the Grenade weapon, hold [KEYICONSTASKMANAGERDISPLAY] and click on the Grenade icon next to your Squad.
+help_squad_setgrenade_icons_xin        To change to the Grenade weapon, open the Task Manager and select the Grenade icon next to your Squad.
+help_squad_setrocket_icons_kbd         To change to the Rocket weapon, hold [KEYICONSTASKMANAGERDISPLAY] and click on the Rocket icon next to your Squad.
+help_squad_setrocket_icons_xin         To change to the Rocket weapon, open the Task Manager and select the Rocket icon next to your Squad.
+help_squad_setairstrike_icons_kbd      To change to the Airstrike weapon, hold [KEYICONSTASKMANAGERDISPLAY] and click on the Airstrike icon next to your Squad.
+help_squad_setairstrike_icons_xin      To change to the Airstrike weapon, open the Task Manager and select the Airstrike icon next to your Squad.
+
+
+help_building_reprogram                This building must be reprogrammed before it can be used.  To do this you must create an Engineer and move him within range of the nearby Control Tower.
+help_engineer_summon_kbd               Engineers are used to collect dead spirits, and to reprogram buildings.  Hold [KEYGESTURESTASKMANAGERDISPLAY] and draw this gesture to summon an Engineer.
+help_engineer_summon_xin               Engineers are used to collect dead spirits, and to reprogram buildings.  Open the Task Manager and draw this gesture to summon an Engineer.
+help_engineer_summon_icons_kbd         Engineers are used to collect dead spirits, and to reprogram buildings.  Hold [KEYICONSTASKMANAGERDISPLAY] and click on the Engineer icon to summon an Engineer.
+help_engineer_summon_icons_xin         Engineers are used to collect dead spirits, and to reprogram buildings.  Open the Task Manager and select the Engineer icon to summon an Engineer.
+help_engineer_summon_2_kbd             Click inside one of the starting areas, now highlighted, to create your Engineer.  Or you may press CTRL-C to terminate the Engineer program.
+help_engineer_summon_2_xin             Select one of the starting areas, now highlighted, to create your Engineer.  Or you may terminate the Engineer program.
+help_engineer_summon_2_icons_kbd       Click inside one of the starting areas, now highlighted, to create your Engineer.  Or you may press CTRL-C to terminate the Engineer program.
+help_engineer_summon_2_icons_xin       Select one of the starting areas, now highlighted, to create your Engineer.  Or you may terminate the Engineer program.
+help_engineer_use_kbd                  Engineers will automatically do anything nearby that needs doing, such as collecting dead spirits or reprogramming buildings.  Just Left Click to move them near a task.
+help_engineer_use_xin                  Engineers will automatically do anything nearby that needs doing, such as collecting dead spirits or reprogramming buildings.  Just move them near a task.
+
+help_officer_create_kbd                You can use ordinary Darwinians to order other Darwinians around, by promoting them to officers.  Draw this gesture for Officer and click on a Darwinian.
+help_officer_create_xin                You can use ordinary Darwinians to order other Darwinians around, by promoting them to officers.  Draw this gesture for Officer and select a Darwinian.
+help_officer_create_icons_kbd          You can use ordinary Darwinians to order other Darwinians around, by promoting them to officers.  Bring up the Task Manager and click on the Officer icon, then click on a Darwinian.
+help_officer_create_icons_xin          You can use ordinary Darwinians to order other Darwinians around, by promoting them to officers.  Bring up the Task Manager and select the Officer icon, then select a Darwinian.
+help_officer_create_2_kbd              Click on a Darwinian to promote him to an Officer.  Or press CTRL-C to terminate the Officer program.
+help_officer_create_2_xin              Select a Darwinian to promote him to an Officer.  Or terminate the Officer program.
+help_officer_create_2_icons_kbd        Click on a Darwinian to promote him to an Officer.  Or press [KEYICONSTASKMANAGERENDTASK] to terminate the Officer program.
+help_officer_create_2_icons_xin        Select a Darwinian to promote him to an Officer.  Or terminate the Officer program.
+help_officer_use_kbd                   You can move an officer by Left Clicking.  Right click on the landscape to set GOTO Orders for other Darwinians to follow.  Right click near the Officer to cancel his orders.
+help_officer_use_1mb_kbd               You can move an officer by clicking.  Click and hold on the landscape to set GOTO Orders for other Darwinians to follow.  Click and hold near the Officer to cancel his orders.
+help_officer_toggle_kbd                To toggle through all available orders, Right Click near the officer.
+help_officer_toggle_1mb_kbd            To toggle through all available orders, Click and hold near the officer.
+
+help_showobjectives_kbd                To see a list of objectives, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager, then scroll right by moving the mouse to the right of the screen, or by pressing [KEYCAMERARIGHT].
+help_showobjectives_xin                To see a list of objectives, open the Task Manager, then scroll right.
+help_showobjectives_icons_kbd          To see a list of objectives, hold [KEYICONSTASKMANAGERDISPLAY], then scroll down by moving the mouse to the bottom of the screen, or by pressing [KEYMENUDOWN].
+help_showobjectives_icons_xin          To see a list of objectives, open the Task Manager, then scroll down.
+help_armour_summon_kbd                 Click inside one of the starting areas, now Highlighted, to create your Armour.  Armour can only be created near Trunk Ports that you control.
+help_armour_summon_xin                 Select one of the starting areas, now Highlighted, to create your Armour.  Armour can only be created near Trunk Ports that you control.
+help_armour_use_kbd                    Left Click to move your Armour.  Right Click near the armour to toggle loading and unloading of Darwinians.  Right Click on the landscape to deploy your Armour as a Battle Cannon.
+help_armour_use_1mb_kbd                Left Click to move your Armour.  Click and hold the mouse button near the armour to toggle loading and unloading of Darwinians.  Click and hold the mouse button on the landscape to deploy your Armour as a Battle Cannon.
+
+help_radardish_1_kbd                   This Radar Dish can be used to beam people to other Radar Dishes.  Click on it to control it.
+help_radardish_1_xin                   This Radar Dish can be used to beam people to other Radar Dishes.  Select it to control it.
+help_radardish_2_kbd                   To aim the Radar Dish simply point and click on the Radar Dish you wish to travel to.  The receiving Radar Dish must be facing you.  Press [KEYUNITDESELECT] to deselect the Radar Dish.
+help_radardish_2_xin                   To aim the Radar Dish simply point and select the Radar Dish you wish to travel to.  The receiving Radar Dish must be facing you.
+help_incubator                         This building is an Incubator.  You can use Engineers to carry spirits here, which will then be reborn into more Darwinians.
+help_trunkport                         This is a Trunk Port.  It acts as a stargate, connecting different locations within Darwinia together.
+help_refinery                          This is the main Refinery.  It powers the entire mining rig on these islands.  To bring it online you will need to safely escort some Darwinians up here.
+help_mine                              This building is a Mine.  It will extract raw polygons from the hillside and dump them into the carts passing through.  It needs several Darwinians to operate.
+help_anthill                           Euurgh, disgusting!  This area is infested with Ants!  This appears to be one of their nests.  A few well placed grenades should do the trick.
+help_controltower                      This is a Control Tower.  Send one of your engineers to reprogram it, and you'll be able to make use of the building it's connected to.
+help_researchitem                      You've found some of my research!  Excellent.  Create some Engineers nearby and they will download the research into my system.  Hopefully it will be something useful.
+help_gunturret_1_kbd                   This Battle Cannon needs Darwinians operating it before it can be used.  They will automatically shoot at any nearby enemies.  Alternatively you can click on it to control it yourself.
+help_gunturret_1_xin                   This Battle Cannon needs Darwinians operating it before it can be used.  They will automatically shoot at any nearby enemies.  Alternatively you can select it to control it yourself.
+help_gunturret_2_kbd                   This Battle Cannon will track your cursor.  Right Click to fire.  Press [KEYUNITDESELECT] to deselect.
+help_gunturret_2_1mb_kbd               This Battle Cannon will track your cursor.  Click and hold to fire.  Press [KEYUNITDESELECT] to deselect.
+
+help_pressh_kbd                        Press [KEYSEPULVEDAHELP] for help
+help_keyboardshortcut                  Keyboard shortcut
+help_explainobjective                  Explain this objective
+
+language_english                       English
+language_french                        French
+language_german                        German
+language_italian                       Italian
+language_spanish                       Spanish
+
+
+# ================================================
+# Entity type names
+# ================================================
+
+entityname_invalidtype                 InvalidType
+entityname_engineer                    Engineer
+entityname_virii                       Virii
+entityname_squadie                     Squadie
+entityname_egg                         Egg
+entityname_sporegenerator              SporeGenerator
+entityname_centipede                   Centipede
+entityname_spaceinvader                SpaceInvader
+entityname_spider                      Spider
+entityname_darwinian                   Darwinian
+entityname_officer                     Officer
+entityname_armyant                     ArmyAnt
+entityname_armour                      Armour
+entityname_souldestroyer               SoulDestroyer
+entityname_triffidegg                  TriffidEgg
+entityname_ai                          AI
+entityname_lander                      Lander
+entityname_lasertroop                  LaserTroop
+entityname_tripod                      Tripod
+
+
+# ================================================
+# Engineer states
+# ================================================
+
+engineer_idle                          idle
+engineer_towaypoint                    goto
+engineer_tospirit                      collect
+engineer_toincubator                   return
+engineer_reprogramming                 reprogram
+engineer_researching                   research
+engineer_bridge                        bridge
+
+# ================================================
+# Task Manager messages
+# ================================================
+
+taskmanager_msg0                       RUN PROGRAM
+taskmanager_msg1                       SYNTAX ERROR
+taskmanager_msg2                       PROGRAM TERMINATED
+taskmanager_msg3                       ACQUIRED
+taskmanager_msg4                       UPGRADED
+taskmanager_msg5                       OBJECTIVES COMPLETED
+taskmanager_mapeditor                  Map Editor
+taskmanager_accessallareas             Access All Areas
+
+taskmanager_taskmanager                TASK MANAGER
+taskmanager_research                   RESEARCH
+taskmanager_objectives                 OBJECTIVES
+taskmanager_primarys                   PRIMARY OBJECTIVES
+taskmanager_secondarys                 SECONDARY OBJECTIVES
+taskmanager_complete                   COMPLETE
+taskmanager_incomplete                 INCOMPLETE
+
+
+# ================================================
+# Sepulveda status messages
+# ================================================
+
+task_manager_full_kbd                  You cannot run any more programs.  Try shutting some down by holding [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager, tabbing along to old tasks and pressing CTRL-C.
+task_manager_full_xin                  You cannot run any more programs.  Try shutting some down.
+task_manager_full_icons_kbd            You cannot run any more programs.  Hold [KEYICONSTASKMANAGERDISPLAY] and close some programs down to free up some space.  Just click on their close icons.
+task_manager_full_icons_xin            You cannot run any more programs.
+task_manager_targetfirst_kbd           You can't create any more programs until you've placed your existing one.  Click inside one of the starting areas to place it.
+task_manager_targetfirst_xin           You can't create any more programs until you've placed your existing one.  Select one of the starting areas to place it.
+task_manager_needsquadfirst            You need to create a squad first before you can set their weapon type.
+officer_notwalkable                    I'm afraid the Darwinians aren't clever enough to find their way along that route.  They need to see where they are going.
+armour_cantconvert                     The ground there is too steep...you can only set up a Battle Cannon on flat ground.
+
+objective_capture_trunk                Enable Trunk Port
+objective_research                     Collect Research Item
+objective_capturetrunk_1               What I need you to do here is to open up this Trunk Port for me.
+objective_capturetrunk_2               It's got a standard Control Tower nearby, so you can send in one of your Engineers to reprogram it.
+objective_capturetrunk_3               Once it's reprogrammed, the location it is connected to will become available to us.
+objective_research_1                   I can see some of my research up ahead.  I need you to retrieve it for me.
+objective_research_2                   Create an Engineer nearby and he will download the Research into my computer system.  Hopefully it will be something that we can use against the Viral infection.
+
+building_captured                      The Engineers have finished reprogramming a building
+primaryObjectivesComplete_kbd          Good work, it looks like you've completed all the Primary Objectives.  Press [KEYMENUESCAPE] to leave this location when you're done.
+primaryObjectivesComplete_xin          Good work, it looks like you've completed all the Primary Objectives.
+primaryObjectiveComplete               Primary Objective Complete.
+primaryObjectiveFail_kbd               It looks like you've failed at your mission.  Feel free to try again.  Press [KEYMENUESCAPE] now.
+primaryObjectiveFail_xin               It looks like you've failed at your mission.  Feel free to try again.
+
+privatedemo1                           > INTERNAL PRE-ALPHA BUILD FOR SOMEBODY
+privatedemo2                           > STRICTLY CONFIDENTIAL
+privatedemo3_kbd                       > Press [KEYCREATESCREENSHOT] for screenshot
+
+sepulveda_pressreturn_kbd              (press [KEYSKIPMESSAGE])
+sepulveda_pressreturn_skipall_kbd      (press [KEYSKIPMESSAGE] to skip cutscene)
+
+objective_currentcount                 Current count
+objective_totalinfection               Total Infection
+objective_output                       output
+objective_refined                      refined
+objective_fuelpressure                 Fuel Pressure
+objective_fuel                         Fuel
+objective_passengers                   Passengers
+objective_redpopulation                red population
+objective_throughput                   throughput
+
+
+# ================================================
+# Research messages
+# ================================================
+
+researchname_darwinian                 Darwinians
+researchname_squad                     Squad
+researchname_engineer                  Engineer
+researchname_laser                     Laser
+researchname_grenade                   Grenade
+researchname_rocket                    Rocket
+researchname_airstrike                 AirStrike
+researchname_armour                    Armour
+researchname_taskmanager               TaskManager
+researchname_officer                   Officer
+researchname_controller                Controller
+
+research_notyetavailable               I haven't finished researching that program yet, you'll have to wait before you can use it.
+research_nomorepossible                I don't think I can make any more improvements to this Program.  I think you should pick something else for me to work on.
+
+research_squad                         I'll work on improving the Squad program.  I should be able to increase the number of squad members in a single squad.
+# research_squad_v1                  Unused
+research_squad_v2                      I've upgraded the Squad program that you are using.  You can now have 4 members in a squad.
+research_squad_v3                      I've made some more progress on the Squad program...you'll now get 5 members to a squad.
+research_squad_v4                      I've done as much as I can on the Squad program now.  You can now have 6 members.  I don't think I can get anymore out of this codebase.
+
+research_laser                         I will try to improve the Laser program for you.  Hopefully I can get the range up a bit.
+# research_laser_v1                  Unused
+research_laser_v2                      I've made some improvements to the Lasers.  They should have a longer range now.
+research_laser_v3                      I've improved the range of the Laser weapon again.
+research_laser_v4                      These lasers are amazing now.  They're nearly 3 times longer ranged than the originals.  I'm pretty much done with this program now.
+
+research_grenade                       I'll work on the Grenade program.  I should be able to increase the weapon range.
+research_grenade_v1_kbd                You've found my research into the Grenade weapon!  This is fantastic.  While you are firing lasers with your squad, tap the Left Mouse Button to throw a Grenade.
+research_grenade_v1_xin                You've found my research into the Grenade weapon!  This is fantastic.  Your squad can now throw Grenades.
+research_grenade_v1_1mb_kbd            You've found my research into the Grenade weapon!  This is fantastic.  Shift click to throw a Grenade.
+research_grenade_v2                    I've increased the throw range of the Grenade program.
+research_grenade_v3                    I've made another increase to the Grenade throw range.
+research_grenade_v4                    That's it, I'm done with the grenades now.  The throw range has been pushed up as far as it will go.
+
+research_rocket                        I'll get to work on the Rockets.  Hopefully I can increase their maximum range a bit.
+research_rocket_v1_kbd                 Excellent, you've recovered the Rocket program.  You can select this Weapon with the Rocket gesture.  While you are firing lasers with your squad, tap the Left Mouse Button to launch a Rocket.
+research_rocket_v1_xin                 Excellent, you've recovered the Rocket program.  You can select this Weapon with the Rocket gesture.  Your squad can now fire Rockets.
+
+research_rocket_v1_icons_kbd           Excellent, you've recovered the Rocket program.  Click on the Rocket icon next to your Squad in the Task Manager to select this Weapon.  While you are firing lasers with your squad, tap the Left Mouse Button to launch a Rocket.
+research_rocket_v1_icons_xin           Excellent, you've recovered the Rocket program.  Select the Rocket icon next to your Squad in the Task Manager to select this Weapon.  Your squad can now fire Rockets.
+research_rocket_v1_1mb_kbd             Excellent, you've recovered the Rocket program.  You can select this Weapon with the Rocket gesture.  Shift click to launch a Rocket.
+research_rocket_v2                     The Rocket range has been increased.
+research_rocket_v3                     I've managed to increase the Rocket range again.
+research_rocket_v4                     The rocket range is at its maximum now.
+
+research_airstrike                     I'll try to improve the AirStrike for you.
+research_airstrike_v1                  Oh my goodness, this is excellent.  You've found my AirStrike program!  Select Airstrike as your Squad weapon by drawing the gesture, then throw the marker grenade to show the program where to bomb.
+research_airstrike_v1_icons_kbd        Oh my goodness, this is excellent.  You've found my AirStrike program!  Click on the Airstrike icon in the Task Manager to select this Weapon, then throw the marker grenade to show the program where to bomb.
+research_airstrike_v1_icons_xin        Oh my goodness, this is excellent.  You've found my AirStrike program!  Select the Airstrike icon in the Task Manager to select this Weapon, then throw the marker grenade to show the program where to bomb.
+research_airstrike_v2                  I've improved the AirStrike program.  Each marker grenade will now summon two Invaders to drop their bombs.
+research_airstrike_v3                  I've added another Invader to each AirStrike unit.
+research_airstrike_v4                  There will now be four Invaders for every AirStrike marker.  I've done all I can here.
+
+research_taskmanager                   I'll work on upgrading the Task Manager for you. It should be possible to run more programs simultaneously, with some tweaking.
+# research_taskmanager_v1            Unused
+# research_taskmanager_v2            Unused
+research_taskmanager_v3                I've made some changes to the Task Manager.  You can now run up to four programs simultaneously.
+research_taskmanager_v4                I've upgraded the Task Manager.  Now you can run five programs at once.  This is already pushing the system to its limits, so I don't think I can improve it anymore.
+
+research_darwinian                     I'll try to improve the basic Darwinian code template.  Hopefully I should be able to give them some decent weapons to defend themselves.
+# research_darwinian_v1              Unused
+# research_darwinian_v2              Unused
+research_darwinian_v3                  I've upgraded the Darwinians so they can use Lasers!  This should help them defend against the Viral attack.
+research_darwinian_v4                  I've given the Darwinians Grenades.  It's a bit scary, but they should have a chance against stronger foes now.  I've done all I can here.
+
+research_engineer                      I'll work on improving the Engineers.  I think I can increase the number of spirits they can carry.
+# research_engineer_v1               Unused
+research_engineer_v2                   I've increased the number of spirits your Engineers can carry to 15.
+research_engineer_v3                   I've increased the number of spirits your Engineers can carry to 25.
+research_engineer_v4                   I've increased the spirit capacity of your Engineers to 30.  I've finished work on the Engineers now.
+
+research_armour                        I'll do some more work on the Armour program.  I think I can improve the capacity of the Armour, and maybe the range of the Battle Cannon.
+# research_armour_v1                 Unused
+research_armour_v2                     I've upgraded the Armour program.  You can now fit 20 Darwinians inside.  I've also increased the range of the Battle Cannon.
+research_armour_v3                     The Armour program has been upgraded again.  You can now fit 30 Darwinians inside.  And I've increased the range of the Battle Cannon to more than twice its original spec.
+research_armour_v4                     I've increased the capacity of the Armour program to 40 Darwinians.  And the Battle Cannon is now at its maximum range.  I've done all I can here.
+
+research_officer                       I will get to work improving the Officer program.  I should be able to give him some useful Orders which we can use to influence the Darwinians.
+# research_officer_v1                Unused
+# research_officer_v2                Unused
+research_officer_v3_kbd                I've upgraded the Officer program so they can now issue a FOLLOW order as well as the existing GOTO order.  Right click near an officer to toggle his orders.
+research_officer_v3_xin                I've upgraded the Officer program so they can now issue a FOLLOW order as well as the existing GOTO order.
+research_officer_v3_1mb_kbd            I've upgraded the Officer program so they can now issue a FOLLOW order as well as the existing GOTO order.  Click and hold near an officer to toggle his orders.
+research_officer_v4_kbd                I've given the Officers a new order called ABSORB.  This will absorb all nearby friendly Darwinians into a protective shield, which will keep the Officer safe in dangerous areas.  Right click near an officer to toggle his orders.
+research_officer_v4_xin                I've given the Officers a new order called ABSORB.  This will absorb all nearby friendly Darwinians into a protective shield, which will keep the Officer safe in dangerous areas.
+research_officer_v4_1mb_kbd            I've given the Officers a new order called ABSORB.  This will absorb all nearby friendly Darwinians into a protective shield, which will keep the Officer safe in dangerous areas.  Click and hold near an officer to toggle his orders.
+
+research_explanation_1                 I'm going to keep working on the programs you are using for a while...the Squads, Engineers etc.
+research_explanation_2                 Most of them are still in very early stages of beta testing and I think I can improve all of them quite a bit with some work.
+research_explanation_3_kbd             To see how I'm getting along, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager, then scroll left by pushing the mouse to the left of the screen, or by pressing [KEYCAMERALEFT].
+research_explanation_3_xin             To see how I'm getting along, open the Task Manager, then scroll left.
+research_explanation_3_icons_kbd       To see how I'm getting along, hold [KEYICONSTASKMANAGERDISPLAY], then scroll up by pushing the mouse to the top of the screen, or by pressing [KEYCAMERAFORWARDS].
+research_explanation_3_icons_xin       To see how I'm getting along, open the Task Manager, then scroll up.
+research_explanation_4                 From there you can set priorities for me...and I'll try to work on improving what you think is most important.
+
+
+# ================================================
+# Tutorial
+# ================================================
+
+tutorial_intro_1                       Who the hell are you?  I thought I'd terminated all external connections.
+tutorial_intro_2                       Ok fine, if you're going to stay you might as well make yourself useful.
+tutorial_intro_3                       Welcome to Darwinia...what's left of it.
+tutorial_intro_4                       Darwinia is the world's first ever Digital Theme Park - everything you see here is simulated on a computer.
+tutorial_intro_5                       Unfortunately we're currently under attack by a major Viral Infection which has destroyed pretty much everything.
+tutorial_intro_6                       This location is called the Pixel Mines.  Raw Polygons are mined from the Quarries in the distance and are refined into Primitives in this building.
+tutorial_intro_7                       Essentially this entire location produces the raw materials we need to build things in Darwinia.
+tutorial_intro_8                       Unfortunately it's all offline right now due to the viral infection.  I want you to help me fix that.
+tutorial_intro_9                       We're going to need to wipe out the Viral infection, and rebuild the population of the native Darwinians.
+tutorial_intro_10                      But let's start with the basics.
+
+tutorial_1_kbd                         Firstly let's get to grips with the camera.Use the [KEYCAMERAFORWARDS],[KEYCAMERALEFT],[KEYCAMERABACKWARDS],[KEYCAMERARIGHT] keys to move the camera around.
+tutorial_1_xin                         Firstly let's get to grips with the camera. Use the left stick to move the camera around.
+tutorial_2_kbd                         To change the camera's height, scroll your middle mouse button up and down.  Or you can press [KEYCAMERAUP] and [KEYCAMERADOWN].
+tutorial_3                             Good stuff.  Now the first thing I want you to do is to destroy these evil Red Virii.
+tutorial_3b                            We will then harvest the Souls from their dead bodies and convert them into some perky new Darwinians.
+tutorial_4                             In order to destroy those Virii, we will need to create an armed offensive unit called a SQUAD.
+tutorial_4b_kbd                        To create things in Darwinia you draw gestures in the Task Manager.  Hold the [KEYGESTURESTASKMANAGERDISPLAY] key to bring up the Task Manager.
+tutorial_4b_xin                        To create things in Darwinia you draw gestures in the Task Manager.
+tutorial_5                             With the Task Manager open, draw this gesture to create a SQUAD.  You don't need to be very accurate, just draw it fast.
+tutorial_5_kbd                         While holding [KEYGESTURESTASKMANAGERDISPLAY], draw this gesture to create a SQUAD.  You don't need to be very accurate, just draw it fast.
+tutorial_5_error                       Whoops, that's the wrong gesture.  Try again.
+tutorial_7_kbd                         Excellent.  Now in order to place the SQUAD into the world, click inside the highlighted starting area.
+tutorial_7_xin                         Excellent.  Now in order to place the SQUAD into the world, select the highlighted starting area.
+tutorial_8_kbd                         Squads need to be directly controlled.  Click the Left Mouse Button to move them around the landscape.
+tutorial_9_kbd                         Hold the Right Mouse Button to fire their lasers.
+tutorial_10_kbd                        They can also throw grenades.  Hold the Right Mouse Button to fire lasers, then tap the Left Mouse Button to throw a grenade.
+tutorial_11                            Looks like you've got the hang of it.  Take your squad over to those evil Red Virii and kill them!
+tutorial_12                            Fantastic, you've destroyed half of them already.
+tutorial_13                            You're very nearly done.  Just a few more Virii remain.
+
+tutorial_20                            This building is an Incubator.  Its purpose is to convert the Souls of dead creatures into fresh new Darwinians.
+tutorial_20b                           Unfortunately it's currently offline, due to the red viral Infection.  We need to use it to start creating Darwinians.
+tutorial_20c                           To bring the building online we will need to use an ENGINEER.
+tutorial_21_kbd                        To summon an ENGINEER, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager and draw this gesture.
+tutorial_21_xin                        To summon an ENGINEER, open the Task Manager and draw this gesture.
+tutorial_22                            Engineers can be placed in starting points, or near Squads.  Place your Engineer and move him near the Incubator.
+tutorial_23                            The first thing the Engineer will do is to reprogram the Incubator and remove the Viral infection, using the nearby Control Tower.
+tutorial_24                            The Engineer will now collect up the Souls left behind by the dead Virii and carry them to the Incubator.
+tutorial_24b                           All creatures in Darwinia have a Soul.  The Souls used to belong to the Darwinians before the Virus corrupted them.
+tutorial_24c                           Using Engineers and Incubators, we can gradually harvest the evil Virus Souls and convert them back into native Darwinians.
+tutorial_25                            The first Darwinians have been reborn!  This is fantastic news.
+tutorial_26                            These guys used to own the planet, before the Virus invaded.  And it's these guys that we're going to help to recapture the world.
+
+tutorial_28_kbd                        Hold [KEYGESTURESTASKMANAGERDISPLAY] and draw this gesture to create another SQUAD.
+tutorial_28_xin                        Open the Task Manager and draw this gesture to create another SQUAD.
+tutorial_29                            You can now start your SQUAD closer to the action, by placing them near the Control Tower you captured.
+
+tutorial_30                            Ok, next task.
+tutorial_31                            There are more evil creatures in this direction, including a rather nasty Centipede.
+tutorial_31b                           I want you to wipe them out with Squads, then harvest their spirits into Darwinians.
+tutorial_32                            Now take your Squad and attack the Viral infection that I just showed you.
+tutorial_33                            Excellent work.  I'm very impressed.
+tutorial_33b                           We now want to use an Engineer to reprogram this Incubator, and to collect up the nearby Souls.
+tutorial_34_kbd                        Now move the Engineer near to the new Incubator so he can begin Reprogramming it.  Just Left Click to move an Engineer.
+tutorial_34_xin                        Now move the Engineer near to the new Incubator so he can begin Reprogramming it.
+tutorial_35                            That Engineer will now pick up the nearby Souls and place them in the Incubator, creating more Darwinians.
+tutorial_35b                           Let me show you how to move the existing Darwinians around.
+tutorial_35c                           Darwinians can't be directly controlled, but we can issue orders to them using an Officer.
+tutorial_351                           To create an Officer, draw this gesture.
+tutorial_36_kbd                        Click on an existing Darwinian to promote him to an Officer.
+tutorial_36_xin                        Select an existing Darwinian to promote him to an Officer.
+tutorial_37                            The most useful function if Officers is that they can order Darwinians around.
+tutorial_37_kbd                        Officers can be moved around by Left Clicking.  But they're most useful function is that they can order Darwinians around.
+tutorial_37b_kbd                       You can right click somewhere on the ground to order all the nearby Darwinians to walk there.
+tutorial_38                            The ultimate objective here is to get this Refinery online so we can start producing some Primitives.
+tutorial_38b                           The Refinery needs Darwinians at its base in order to operate.
+tutorial_38c                           However the Darwinians can't currently defend themselves, so you'll need to clear the area out first using Squads.
+tutorial_38d                           Once you've done that, use Officers to order the Darwinians up to the Refinery and they will begin operating it.
+tutorial_38e                           Don't forget to use Engineers to collect up the Souls of dead Virii and Darwinians.
+tutorial_39_kbd                        If you get stuck at any time, you can press [KEYSEPULVEDAHELP] and I'll try to help you. Good luck!
+
+tutorial_40                            You have a Squad running already, but you aren't currently controlling it because it isn't the selected unit.
+tutorial_40b_kbd                       To select your Squad, hold [KEYICONSTASKMANAGERDISPLAY] and press the TAB key until the Squad is selected.  Or you can just click on the Squad directly.
+
+tutorial_41_kbd                        To summon another ENGINEER, hold [KEYGESTURESTASKMANAGERDISPLAY] to access the Task Manager and draw this gesture.
+tutorial_41_xin                        To summon another ENGINEER, open the Task Manager and draw this gesture.
+tutorial_42                            Now place the Engineer near a Squad or a Control Tower.
+
+tutorial_43                            You already have an Engineer running, but it isn't currently selected.
+tutorial_43b_kbd                       To select your Engineer, hold [KEYICONSTASKMANAGERDISPLAY] and TAB along until it is selected.  Or you can just click directly on the Engineer.
+
+tutorial_squaddeath                    Looks like your SQUAD has been destroyed.  Not to worry, we can just create another.
+tutorial_engineerdeath                 Unfortunately your ENGINEER has been destroyed.  We'll need to create another.
+
+tutorial_skipped_kbd                   Ok I'll just let you get on with it.  Remember you can press [KEYSEPULVEDAHELP] at any time for help.  Good luck!
+tutorial_skipped_xin                   Ok I'll just let you get on with it. Good luck!
+
+
+# ================================================
+# Pixel Mines
+# ================================================
+
+pixelmines_objective1                  Refine 20 Primitives
+pixelmines_objective2                  Enable Yard Trunk Port
+
+pixelmines_intro_1                     This entire location is one giant mining facility, unfortunately now overrun by this damn Virus.
+pixelmines_refinery_1                  This building at the centre of the facility is the Refinery.  It converts mined Polygons into Primitives which can be used later to build things.
+pixelmines_refinery_1b                 It also drives the motor system that moves the carts around the track.
+pixelmines_refinery_2                  This Refinery needs Darwinians at its control pads or else it's useless.  You'll need to safely escort some Darwinians up here to get the facility moving.
+pixelmines_mines_1                     There are four underground mines built into the side of the landscape.  Each one pulls raw Polygons from the mountainside.
+pixelmines_mines_1b                    Generations of Darwinian miners have worked these quarries and it's starting to show its toll on the hillside.
+pixelmines_mines_2                     The Darwinians will extract the Polygons from deep inside the quarry and dump them into the mining carts as they move past, on their way to the Refinery.
+pixelmines_mines_3                     We'll need to mine at least 20 Primitives to be able to build anything substantial.
+
+pixelmines_yardport_1                  Once the Primitives have been refined, they need to be transported to the Construction Yard where they can be used to build things.
+pixelmines_yardport_2                  Bring this Trunk Port online so the refined Primitives can be transported away.
+
+pixelmines_progress_1                  Wonderful work, the Refinery is online and the motor system is running.  But the mine carts are still empty.  We need to bring the Mines themselves online to fill the carts.
+pixelmines_progress_2                  There are four underground mines built into the side of the landscape.  Each one pulls raw Polygons from the mountainside.
+
+
+# =================================================
+# Dialog strings
+# =================================================
+
+dialog_newlocationfail1                Failed to create New Location
+dialog_newlocationfail2                You cannot create a new location.\nYou must first create a MOD from the main menu\nbefore you can add locations.
+
+dialog_savelocationsfail1              Failed to Save
+dialog_savelocationsfail2              You cannot save the location data.\nYou must first create a MOD from the main menu\nbefore you can edit and save locations.
+
+dialog_mainmenu                        Main Menu
+dialog_leavedarwinia                   Leave Darwinia
+dialog_visitwebsite                    Visit Website
+dialog_close                           Close
+dialog_apply                           Apply
+dialog_cancel                          Cancel
+dialog_create                          Create
+dialog_yes                             Yes
+dialog_no                              No
+dialog_ok                              Ok
+
+dialog_mods                            Mods
+dialog_currentmod                      Current Mod
+dialog_loadmod                         Load Mod
+dialog_unloadmod                       Unload Mod
+dialog_createnewmod                    Create New Mod
+
+dialog_profile                         Profile
+dialog_newprofile                      Create New Profile
+dialog_currentprofilename              Current Profile Name
+dialog_loadprofile                     Load Profile
+dialog_name                            Name:
+
+dialog_options                         Options
+dialog_high                            High
+dialog_medium                          Medium
+dialog_low                             Low
+dialog_upgrade                         I need to upgrade
+dialog_full							   Full
+dialog_partial						   Partial
+dialog_enabled                         Enabled
+dialog_disabled                        Disabled
+
+dialog_otheroptions                    Other Options
+dialog_helpsystem                      Help System
+dialog_controlhelpsystem               Control Pad Help
+dialog_bootloaders                     Boot Loaders
+dialog_christmas                       Christmas
+dialog_language                        Language
+dialog_difficulty                      Difficulty
+dialog_standard_difficulty             Standard
+dialog_hard_difficulty                 Hard
+
+dialog_inputoptions                    Control Options
+dialog_restoredefaults                 Restore Defaults
+dialog_mousebuttons                    Mouse Buttons
+
+dialog_soundoptions                    Sound Options
+dialog_unavailable                     unavailable
+dialog_soundlibrary                    Sound Library
+dialog_directsound                     DirectSound
+dialog_softwaresound                   Software Sound
+dialog_mixfrequency                    Mix Frequency
+dialog_11khz                           11 KHz Low Quality
+dialog_22khz                           22 KHz Medium Quality
+dialog_44khz                           44 KHz High Quality
+dialog_numchannels                     Num Channels
+dialog_8channels                       8 Channels
+dialog_16channels                      16 Channels
+dialog_32channels                      32 Channels
+dialog_64channels                      64 Channels
+dialog_memoryusage                     Memory Usage
+dialog_swapstereo                      Swap Stereo
+dialog_hw3dsound                       Hardware3d Sound
+dialog_realtimeeffects                 Realtime Effects
+dialog_cpuusage                        CPU Usage
+dialog_cpuusageunknown                 CPU Usage unknown
+
+dialog_graphicsoptions                 Graphics Options
+dialog_landscapedetail                 Landscape Detail
+dialog_waterdetail                     Water Detail
+dialog_skydetail                       Sky Detail
+dialog_buildingdetail                  Building Detail
+dialog_entitydetail                    Entity Detail
+dialog_pixeleffect                     Pixel Effect
+
+dialog_screenoptions                   Screen Options
+dialog_refreshrate                     Refresh Rate
+dialog_windowed                        Windowed
+dialog_windowedmode                    (windowed mode)
+dialog_resolution                      Resolution
+dialog_colourdepth                     Colour Depth
+dialog_colourdepth_16                  16 bit
+dialog_colourdepth_24                  24 bit
+dialog_colourdepth_32                  32 bit
+dialog_zbufferdepth                    Z Buffer Depth
+
+dialog_locationmenu                    Location Menu
+dialog_leavelocation                   Leave Location
+dialog_buyonline                       Buy Online
+
+dialog_resetlocation                   Reset Location
+dialog_reset1                          Are you sure you wish
+dialog_reset2                          to reset this location?
+dialog_reset3                          Your progress on this island
+dialog_reset4                          will be lost and you will
+dialog_reset5                          have to begin from scratch.
+
+dialog_toolsmenu                       Tools Menu
+
+dialog_multiplefiles                   (multiple files selected)
+
+dialog_largemenus                      Large Menus
+dialog_auto                            Automatic
+dialog_autocam                         Automatic Camera
+
+dialog_unplugged1                      Controller disconnected
+dialog_unplugged2                      Your controller has been disconnected. Please connect the controller to continue.
+
+dialog_skiptutorial_kbd                Press [KEYSKIPTUTORIAL] to skip the tutorial
+dialog_skiptutorial_xin                Press BACK to skip the tutorial
+
+dialog_skipprologue                    Skip Prologue
+dialog_playprologue                    Play Prologue
+
+dialog_skip1                           Are you sure you wish to skip the Prologue and begin the main game?
+dialog_prologue1                       Are you sure you want to stop your game and play the Prologue level?
+
+dialog_buydarwinia					   Buy Darwinia
+dialog_buynow						   Buy Now
+dialog_buynow1						   We hope you've enjoyed playing Darwinia!
+dialog_buynow2						   To carry on playing please buy the game.
+dialog_later						   Later
+
+
+# ================================================
+# Location Names
+# ================================================
+
+location_garden                        Garden
+location_containment                   Containment
+location_mine                          Mine
+location_generator                     Generator
+location_yard                          Yard
+location_escort                        Escort
+location_pattern_buffer                Pattern Buffer
+location_biosphere                     Biosphere
+location_receiver                      Receiver
+location_temple                        Temple
+
+location_unknown                       unknown location
+
+
+# =================================================
+# New Controls
+# =================================================
+
+newcontrols_prefsoption                Control Mode
+newcontrols_prefs_gestures             Gesture based
+newcontrols_prefs_icons                Icon based
+
+newcontrols_createnewtask              CREATE NEW TASK
+
+newcontrols_create_squad               Create new Squad
+newcontrols_create_engineer            Create new Engineer
+newcontrols_create_officer             Create new Officer
+newcontrols_create_armour              Create new Armour
+
+newcontrols_delete_squad               Delete this Squad
+newcontrols_delete_engineer            Delete this Engineer
+newcontrols_delete_officer             Delete this Officer
+newcontrols_delete_armour              Delete this Armour
+
+newcontrols_select_squad               Select this Squad
+newcontrols_select_engineer            Select this Engineer
+newcontrols_select_officer             Select this Officer
+newcontrols_select_armour              Select this Armour
+
+newcontrols_place_squad                Place this Squad
+newcontrols_place_engineer             Place this Engineer
+newcontrols_place_officer              Place this Officer
+newcontrols_place_armour               Place this Armour
+
+newcontrols_select_grenade             Select Grenade weapon
+newcontrols_select_rocket              Select Rocket weapon
+newcontrols_select_airstrike           Select Airstrike weapon
+newcontrols_select_controller          Select Controller weapon
+
+newcontrols_showresearch               Show research screen
+newcontrols_showtaskmanager            Show task manager screen
+newcontrols_showobjectives             Show objectives screen
+
+newcontrols_research_darwinian         Research the Darwinian program (equips them with better weapons)
+newcontrols_research_officer           Research the Officer program (equips them with more order types)
+newcontrols_research_squad             Research the Squad program (improves number of squaddies)
+newcontrols_research_laser             Research the Laser program (increases the range)
+newcontrols_research_grenade           Research the Grenade program (increases the range)
+newcontrols_research_rocket            Research the Rocket program (increases the range)
+newcontrols_research_airstrike         Research the Airstrike program (increases the number of bombers)
+newcontrols_research_armour            Research the Armour program (increases the carrying capacity, and the Cannon range)
+newcontrols_research_taskmanager       Research the Task Manager program (allows you to run more programs at once)
+newcontrols_research_engineer          Research the Engineer program (increases spirit carrying capacity)
+
+newcontrols_hidetaskmanager_kbd        To exit the Task Manager press TAB or click the screen
+
+
+# =================================================
+# Demo 2 level (launchpad)
+# =================================================
+
+launchpad_objective1                   Enable primary fuel pump
+launchpad_objective2                   Enable secondary fuel pump
+launchpad_objective3                   Enable tertiary fuel pump
+launchpad_objective0                   Launch Rocket
+
+launchpad_primary_1                    There are three Fuel Pumps on this map.
+launchpad_primary_2                    Their function is to extract raw minerals from the sea bed, and process it into liquid fuel the Rocket can use in its engines.
+launchpad_primary_4                    The Fuel Pumps are powered by Solar Panels nearby.
+launchpad_primary_5                    These Solar panels require Darwinians at their base in order to operate.
+launchpad_primary_6                    Clear out the Viral infection around the Solar panels, then escort some Darwinians to them using Officers.
+launchpad_primary_7                    Once operational the Solar Panels will power the Fuel Pump, which will in-turn push liquid fuel into the Rocket.
+
+launchpad_primary_rocket_1             Our primary aim is to help the Darwinians launch their Rocket.
+launchpad_primary_rocket_2             In order to do that we will first need to refuel it.
+launchpad_primary_rocket_3             The fuel is generated by the 3 highlighted Fuel Pumps, which push the fuel direct into the Rocket's fuel tanks.
+launchpad_primary_rocket_4             Bring those Fuel Pumps online by manning the solar panels around the map with Darwinians.
+launchpad_primary_rocket_5             Once the Rocket is fully refuelled we will be able to attempt another launch.
+
+launchpad_intro_1                      Greetings visitor, and welcome to Darwinia!
+launchpad_intro_2                      My name is Dr Sepulveda and I'm the creator of this digital world.
+launchpad_intro_3                      You've come at a great time.  The native Darwinians have been busy.
+launchpad_intro_4                      Since the end of the Great War they've taken it upon themselves to build a rocket.
+launchpad_intro_5                      The Darwinians are a totally digital lifeform, running inside a very large supercomputer.
+launchpad_intro_6                      Each generation is more ambitious than the last.  They all want to be the first into their new rocket.
+launchpad_intro_7                      They're incredibly curious little fellows!
+launchpad_intro_8                      I'm not sure what the Darwinians ultimately wish to achieve here.
+launchpad_intro_9                      But this is clearly their most ambitious project yet.
+launchpad_intro_9b                     They've been growing and improving for thousands of generations and have their very own culture and beliefs.
+launchpad_intro_9c                     This rocket is the culmination of all their dreams and ambitions, and it's taken them an incredibly long time to get this far.
+launchpad_intro_10                     My God, we're under attack!
+launchpad_intro_11                     The Red Darwinians are attacking!
+launchpad_intro_12                     My God, they're trying to destroy the Rocket!
+launchpad_intro_13                     This is insane, they'll cause an explosion that will wipe out all the Darwinians inside!
+launchpad_intro_14                     My God.
+launchpad_intro_15                     I can't believe this is happening.
+
+launchpad_middemo_1                    Darwinia wasn't always like this.
+launchpad_middemo_2                    I can still remember a time before the Virus came, before the great war that almost destroyed this world.
+launchpad_middemo_3                    The Darwinians fought so hard, and came so far, and I really did think we'd cleared the system of the infection.
+launchpad_middemo_4                    But it seems now that every time I turn my back, there's another outbreak somewhere and more Darwinians are killed.
+launchpad_middemo_5                    The control the Darwinians now have over their world is amazing.
+launchpad_middemo_6                    The Launchpad is one of many locations in Darwinia, but it's the first the Darwinians have built entirely on their own.
+launchpad_middemo_8                    Look at what they've achieved!
+launchpad_middemo_9                    The renderer you're looking at didn't know what to do outside the confines of the world...it used to be just a blank space.
+launchpad_middemo_10                   But the Darwinians knew there was more.  They manipulated the rendering subsystem until they could see beyond their world.
+launchpad_middemo_11                   Those star systems are other mainframes and servers on the Internet, all connected in a giant world wide web.
+launchpad_middemo_12                   I realise now that their intention is to explore the millions of computer systems they can now see around them.
+launchpad_middemo_13                   The Great Rocket project will be their finest achievement, and it will open their horizons to every computer system in the world.
+launchpad_middemo_14                   And if it wasn't for this Virus, they'd already be out there.
+
+# launchpad_middemo_5                As bleak as the Great War was for the Darwinians, it made them grow and learn at an astonishing rate.
+# launchpad_middemo_6                Forced to fight for their lives or face extinction, the Darwinians came further in those few intensely violent days than the entire decade of evolution beforehand.
+
+launchpad_tutorial_1                   Right, we're going to have to help the Darwinians.
+launchpad_tutorial_2_kbd               Firstly let's get to grips with the camera.  Use the [KEYCAMERAFORWARDS], [KEYCAMERALEFT], [KEYCAMERABACKWARDS] and [KEYCAMERARIGHT] keys to move the camera around.
+launchpad_tutorial_2_xin               Firstly let's get to grips with the camera.  Use the left stick to move the camera.
+launchpad_tutorial_3                   To change the camera's height, press up or down on the D-Pad.
+launchpad_tutorial_3_kbd               To change the camera's height, scroll your middle mouse button up and down.  Or you can press [KEYCAMERAUP] and [KEYCAMERADOWN].
+launchpad_tutorial_4_kbd               In order to combat the Red menace, we're going to have to create some offensive units.  Hold the [KEYICONSTASKMANAGERDISPLAY] key to bring up the Task Manager.
+launchpad_tutorial_4_xin               In order to combat the Red menace, we're going to have to create some offensive units. Press X to open the TaskManager.
+launchpad_tutorial_5_kbd               The SQUAD is your primary weapon against the evil Red army.  Create a SQUAD by clicking on the squad icon in the middle of the screen while the Task Manager is open.
+launchpad_tutorial_5_xin               The SQUAD is your primary weapon against the evil Red army.  Create a SQUAD by selecting the squad icon in the middle of the screen and pressing A.
+launchpad_tutorial_5_error             That's the wrong Icon.  Try again.
+launchpad_tutorial_6_kbd               In order to place the new SQUAD into the world, click inside the highlighted starting area.
+launchpad_tutorial_6_xin               In order to place the new SQUAD into the world, move your cursor into the highlighted starting area and press A.
+launchpad_tutorial_7_kbd               Squads need to be directly controlled. Click the Left Mouse Button to move them around the landscape.
+launchpad_tutorial_7_xin               Squads need to be directly controlled. Use the left stick to move them around.
+launchpad_tutorial_8                   Use the right stick to fire their lasers. Move the stick in the direction you want to fire.
+launchpad_tutorial_8_kbd               Hold the Right Mouse Button to fire their lasers.
+launchpad_tutorial_9                   Now take your Squad and wipe out those evil Virii nearby. Don't let them get too close!
+launchpad_tutorial_9_error             Looks like your Squad has been destroyed.  Not to worry, we can just create another.
+launchpad_tutorial_10                  That blue glowing item up ahead is a piece of my Research.  It contains a weapon we can use against the Red Virii.
+launchpad_tutorial_11_kbd              In order to capture this Research we need to create an Engineer. Hold [KEYICONSTASKMANAGERDISPLAY], then click on the Engineer button.
+launchpad_tutorial_11_xin              In order to capture this Research we need to create an Engineer. Open the Task Manager, select the Engineer button, and press A.
+launchpad_tutorial_12                  Place your new Engineer near your Squad and move him near the Research item.
+launchpad_tutorial_12b                 Engineers are just dumb debugging tools, but they serve a number of purposes.
+launchpad_tutorial_12c                 Here you can see the Engineer collecting up that piece of research.
+launchpad_tutorial_12d                 Once he's done he will upload it to my system, and we can make some use of it.
+launchpad_tutorial_12e                 You might find other Research floating around like this.  It would be very helpful if you could collect it for me.
+launchpad_tutorial_13                  Fantastic, you've managed to recapture the Grenade weapon.
+launchpad_tutorial_13b_kbd             Click on the existing Squad to switch control back to them.  Alternatively you can click on them in the Task Manager, or you can press 1.
+launchpad_tutorial_13b_xin             Highlight existing Squad and press A to switch control back to them.  Alternatively you can select them in the Task Manager, or switch between your active tasks using the Left and Right bumper buttons.
+launchpad_tutorial_14                  To throw a grenade, pull the right trigger while firing your lasers. The further you move the right stick, the further you will throw the grenade.
+launchpad_tutorial_14_kbd              While you are holding the Right Mouse Button to fire lasers, tap the Left Mouse Button to throw a Grenade.
+launchpad_tutorial_15                  Now I'd recommend you take your squad, and wipe out those Virii over the hill using your new weapons.
+launchpad_tutorial_16                  We need to reach the Radar dish nearby, so make sure you get them all.
+launchpad_tutorial_17                  This building is a Radar Dish.  Radar dishes can be used to travel between disconnected islands.
+launchpad_tutorial_18                  We're now going to use it to open up a link to the neighbouring island, then we're going to send the Squad through that link.
+launchpad_tutorial_19                  Unfortunately this Radar Dish has been infected with the same Red virus you've been fighting.
+launchpad_tutorial_20                  In order to use it we must first make our Engineer reprogram it to clear out the viral infection.
+launchpad_tutorial_21_kbd              Reselect your Engineer and move him near the Radar Dish to begin reprogramming.  Click on his icon in the Task Manager to reselect him, or just click on him directly.
+launchpad_tutorial_21_xin              Reselect your Engineer and move him near the Radar Dish to begin reprogramming.  Select his icon in the Task Manager to reselect him, or just select him directly.
+launchpad_tutorial_22                  The Engineer can access the Radar Dish via the nearby Control Tower.  He's reprogramming it now so we can use it.
+launchpad_tutorial_23_kbd              Ok the Radar Dish is now under our control.  Deselect your Engineer by pressing [KEYUNITDESELECT], then click on the Radar Dish.
+launchpad_tutorial_23_xin              Ok the Radar Dish is now under our control.  Deselect your Engineer by pressing B, and then select the Radar Dish by highlighting it and pressing A.
+launchpad_tutorial_24_kbd              Now align the Dish by clicking on the receiver on the distant island.  I've highlighted the receiver for you.  You can zoom with the middle mouse button or the [KEYCAMERAZOOM] key.
+launchpad_tutorial_24_xin              Now align the Dish by aiming at the receiver on the distant island and pressing A.  I've highlighted the receiver for you. You can zoom in by pulling and holding the left trigger.
+launchpad_tutorial_25_kbd              You should now see the dishes are aligned, and we can send our Squad through.  Deselect the dish by pressing [KEYUNITDESELECT], then reselect your SQUAD.
+launchpad_tutorial_25_xin              You should now see the dishes are aligned, and we can send our Squad through.  Deselect the dish by pressing B, then reselect your SQUAD.
+launchpad_tutorial_26_kbd              You can now send your SQUAD through the dish by clicking on it while they are selected.
+launchpad_tutorial_26_xin              You can now send your SQUAD through the dish simply by moving your Squad towards it.
+
+launchpad_tutorial_defend_1            Be careful, there are more Virii nearby.
+launchpad_tutorial_defend_2            Defend yourself!
+
+launchpad_tutorial_40                  This building is an Incubator.  It's a very important building in Darwinia.
+launchpad_tutorial_41                  We can use it to convert the souls of those creatures you've just killed into Darwinians.
+launchpad_tutorial_42                  But just like the Radar Dish, the first thing we need to do is reprogram it to remove the viral infection.
+launchpad_tutorial_43_kbd              Create an Engineer near the Incubator to reprogram it.  Just hold [KEYICONSTASKMANAGERDISPLAY] and click on the Engineer button.  Or you can press [KEYICONSTASKMANAGERNEWENGINEER].
+launchpad_tutorial_43_xin              Create an Engineer near the Incubator to reprogram it.  Just open the Task Manager and select the Engineer button.
+launchpad_tutorial_44                  Now that the Incubator is online, you will see the Engineer harvesting souls.
+launchpad_tutorial_45                  All creatures in this world have a soul - regardless if they are a friendly Darwinian or an evil Virus.
+launchpad_tutorial_46                  Engineers can pick up the souls of dead creatures and deposit them into Incubator buildings for rebirth.
+launchpad_tutorial_47                  The Incubators will convert the souls one at a time into new Darwinians.
+launchpad_tutorial_48                  This is how we fight the virus - we destroy their evil red forms, harvest their souls, and convert them into friendly Darwinians.
+launchpad_tutorial_49                  Good work - the first Darwinians have been born.
+launchpad_tutorial_50                  As I was saying earlier, they're an incredibly curious lot, and I made a point of designing them with their own sense of free will.
+launchpad_tutorial_51                  We can't directly control them like we do with the Squaddies and Engineers.
+launchpad_tutorial_52                  But they will listen to their own - we can influence them using Officers.
+launchpad_tutorial_53                  The Officer research is up ahead.  Wipe out the Virus around it, and capture the research using an Engineer.
+launchpad_tutorial_54                  Ok to fill you in on the plan, what I'm trying to do is to refuel the Rocket so the Darwinians can have another go at launching it.
+launchpad_tutorial_54b                 Eventually we're going to have to face those evil Red Darwinians around the rocket, but before we can do that we need to refuel it.
+launchpad_tutorial_55                  Most of the rocket fuel was burnt away in the previous attack and we need to resupply it.
+launchpad_tutorial_56                  The rocket fuel is generated by three Fuel Pumps dotted around the main island.  Here's one of them.
+launchpad_tutorial_57                  Their job is to extract raw fuel from the sea bed and refine it into Rocket fuel, which is then pumped into the rocket's fuel tanks.
+launchpad_tutorial_58                  Unfortunately all three Fuel Pumps are offline, and need power in order to operate.
+launchpad_tutorial_59                  That power is generated by these Solar Panels.
+launchpad_tutorial_60                  In order to make these Solar Panels work we need to escort some Darwinians to each of them.
+launchpad_tutorial_61                  And the piece of Research you've just picked up will do just that - it will allow us to guide the Darwinians around using Officers.
+launchpad_tutorial_62_kbd              Hold [KEYICONSTASKMANAGERDISPLAY] and click on the button to create an Officer.  Or you can press [KEYICONSTASKMANAGERNEWOFFICER].
+launchpad_tutorial_62_xin              Open the Task Manager and select the button to create an Officer.
+launchpad_tutorial_63_kbd              Now we need to select a Darwinian to promote to be our Officer.  Click on any of these Darwinians to promote them.
+launchpad_tutorial_63_xin              Now we need to select a Darwinian to promote to be our Officer.  Highlight one of the Darwinians and press A to promote them.
+launchpad_tutorial_64_kbd              We can now influence the other Darwinians around us. Right click on the Officer to put him into FOLLOW mode.
+launchpad_tutorial_64_xin              We can now influence the other Darwinians around us. Highlight the Officer and pull the right trigger to put him into FOLLOW mode.
+launchpad_tutorial_65                  Those Darwinians would now follow the Officer wherever he went.  In this case, we've gathered together all the Darwinians nearby.
+launchpad_tutorial_66_kbd              Right click near the Solar Panels to put the Officer into GOTO mode.
+launchpad_tutorial_66_xin              Move your cursor near the Solar Panels and pull the right trigger to put the Officer into GOTO mode.
+launchpad_tutorial_67                  The Officer is ordering all the nearby Darwinians to march to that spot.
+launchpad_tutorial_68                  You can have as many Officers as you need.  Now use Officers to occupy the control panels around the base of each of the three Solar Panels.
+launchpad_tutorial_69                  Excellent work.  The first batch of Solar Panels are up and running.
+launchpad_tutorial_70                  So long as they have Darwinians operating them they will continue to generate power for as long as we need it.
+launchpad_tutorial_71                  The first Fuel Pump is now receiving that power and has begun extracting raw fuel from the ocean bed.
+launchpad_tutorial_72                  There's a whole digital ecosystem under the ocean that has been running for over a decade, so there's no shortage of minerals that we can use as fuel.
+launchpad_tutorial_73                  Of course, I didn't realise this - the Darwinians came up with the idea of mining the ocean beds for fuel.
+launchpad_tutorial_74                  You can see the first of the Rocket Fuel being pumped into the rocket's fuel tanks now.
+launchpad_tutorial_75                  Anyway.
+launchpad_tutorial_76                  There are still two more Fuel Pumps that need powering up, so we'd better get on with it.
+launchpad_tutorial_77                  You should probably head this way next.
+
+launchpad_reprogram_1_kbd              To align this Radar Dish, first wait until it has been reprogrammed, then deselect your current task by pressing [KEYUNITDESELECT].
+launchpad_reprogram_1_xin              To align this Radar Dish, first wait until it has been reprogrammed, then deselect your current task by pressing B.
+launchpad_reprogram_2_kbd              You can then click on the Radar Dish, and align it by clicking on the receiving Radar Dish.
+launchpad_reprogram_2_xin              You can then select the Radar Dish by pressing A, and align it by targetting the receiving Radar Dish and pressing A again.
+launchpad_reprogram_3_kbd              When you are done, deselect the dish by pressing [KEYUNITDESELECT].
+launchpad_reprogram_3_xin              When you are done, deselect the dish by pressing B.
+
+launchpad_dgupgrade_1                  You've found some of my Research into Darwinian weaponry!
+launchpad_dgupgrade_2                  This research item will equip our green Darwinians with the same grenades your Squaddies are using.
+launchpad_dgupgrade_3                  Our Darwinians will stand a much better chance against those evil Red Virii now that they have Grenades.
+
+launchpad_finalintro_1                 This island is heavily infected with the Virus.
+launchpad_finalintro_2                 Remember to capture the nearby Incubator with an Engineer, and harvest the souls of the dead as you kill them.
+launchpad_finalintro_3                 Don't be afraid to use the newly born Darwinians as fighters, by ordering them to attack the enemy with your Officers.
+
+launchpad_finalisland_1                The three Fuel Pumps are now operating perfectly, and the Rocket is being refuelled.  Well done.
+launchpad_finalisland_2                We now face the final hurdle.  We must attack and destroy the evil red Darwinians that occupy the launch pad.
+launchpad_finalisland_3                Those buildings they are clustered around are called Spawn Points.  You'll need to take control of them from the Red Army.
+launchpad_finalisland_4                You can think of these buildings as Incubators running on automatic - they will spawn new Darwinians endlessly, until a certain population is reached.
+launchpad_finalisland_5                Currently they are controlled by the Red Darwinians, so the newly spawned Darwinians will also be Red.
+launchpad_finalisland_6                Once you capture the first of these Spawn Points you will start receiving new Green Darwinians immediately.
+launchpad_finalisland_7                In order to capture the first Spawn Point you will need to bring friendly Green Darwinians through this Radar Dish link.
+launchpad_finalisland_8                The Red Darwinians will attack you as soon as you take the first Spawn Point from them, so be careful.
+launchpad_finalisland_9                And good luck!
+
+launchpad_reprogram2_1                 Align this Radar dish to the centre island.
+launchpad_reprogram2_2                 You can then guide Darwinians through the link using an Officer.
+
+launchpad_success_1                    We've done it!
+launchpad_success_2                    I want to thank you, from the bottom of my heart.
+launchpad_success_3                    If you want to see more of this world and learn about the Great War, please buy the full game now.
+launchpad_success_4                    Goodbye, my friend!
+
+launchpad_success_5                    Come, I will show you how this all began, when Darwinia was changed forever...
+
+launchpad_button_exitdemo              EXIT DEMO
+launchpad_button_buynow                BUY NOW
+
+launchpad_buyme_1                      WANT MORE?
+launchpad_buyme_2                      Buy Darwinia online and
+launchpad_buyme_3                      DOWNLOAD THE GAME IMMEDIATELY!
+launchpad_buyme_4                      Just a 30Mb download stands
+launchpad_buyme_5                      between you and the full game.
+
+launchpad_buyme_oberon_1a              WANT MORE?
+launchpad_buyme_oberon_2               Buy Darwinia now and
+launchpad_buyme_oberon_3               PLAY THE FULL GAME IMMEDIATELY!
+
+
+# ================================================
+# END OF STRINGS FILE FOR DEMO
+# All strings below this line will NOT 
+# be included in the DEMO build
+# ================================================
+
+demo_endoffile                         Unused
+
+
+# ================================================
+# Garden
+# ================================================
+
+garden_intro_1                         Who the hell are you?  How did you get in here?
+garden_intro_2                         I thought I'd terminated all external connections.
+garden_intro_3                         OK fine, if you're going to stay you can at least make yourself useful.
+garden_intro_4                         Take some time to get your bearings, then help me wipe out this Red Virus.
+garden_intro_5_kbd                     If you get stuck, press [KEYSEPULVEDAHELP] and I'll give you some tips.
+
+garden_foundscroll_1                   Excellent work!  The Engineers will now busy themselves downloading that item of Research into my computer.
+garden_foundscroll_2                   Unfortunately almost all of my research was lost a few hours ago when this virus outbreak occurred, so you may run into more research like this one later on.
+garden_foundscroll_3                   It will be extremely helpful to me if you could use Engineers to download each research item when you find them.  I'm extremely busy right now trying to stop this damn Virus, and I don't have time to sort it out myself.
+
+garden_souls_1                         You may have noticed those Virii leaving little red things behind when you killed them.  Those are digital DNA...digital souls, if you'll excuse the term.
+garden_souls_2                         Every living creature in Darwinia has its own digital soul.  Originally they were intended for the Darwinians, but the Virus has swallowed most of them up by now.
+garden_opentrunkport_1                 Before we can sort this out, we need to get out of this location.  What I need you to do here is to open up this Trunk Port for me.
+garden_opentrunkport_2                 It's got a standard Control Tower nearby, so you can send in one of your Engineers to reprogram it and then we'll be able to use it.
+
+
+# ================================================
+# Cutscene after Garden
+# ================================================
+
+gardenfinished_1                       I'm sorry if I was rude to you on that island, I've had my hands full for the past few hours.
+gardenfinished_2                       My name is Dr Sepulveda, and I'm the Creator of the Darwin Digital Life project.  I would normally welcome you to Darwinia and show you around, but I'm afraid things have gone a bit wrong today and we'll have to give the guided tour a miss.
+gardenfinished_3                       I need you to help me open up some more of the infected locations.  The Containment location is sort of a hub world.  Please go to that location and I'll explain more when you've connected.
+
+
+# ================================================
+# Containment field
+# ================================================
+
+containment_primary_1                  We need to start rebuilding the Darwinian population.  The Incubators are the key.
+containment_primary_2                  Clear the viral infection outside the shielded area, then use Engineers to collect the souls of the dead Virii and carry them to the Incubators.
+containment_primary_3                  There are three Incubators dotted around this location, and they will rebirth the collected enemy souls into Darwinians.
+containment_primary_4                  Promote some of the Darwinians to Officers, and use them to escort the remaining Darwinians safely back to the inside of the shielded area.
+containment_primary_5                  I want you to rescue at least 150 Darwinians in this manner, just to be on the safe side.  The Darwinians will be safe inside the shielded area, for now.
+
+containment_intro1                     When the viral outbreak occurred, I had a lot of trouble getting it under control.
+containment_intro1b                    I had no choice but to shut down the Trunk Port gate system that connects each location in Darwinia.
+containment_intro2                     This is the only place where I was able to hold my ground against the Virus.  The double shield of this location acts as a fantastic barrier.
+containment_intro3                     I've highlighted the three disabled Trunk Ports on this island, and you'll need to open all of them.
+containment_intro3b                    Once opened, the Trunk Ports will give us access to a number of important locations for later.
+containment_rescuedw1                  But really, this is the important bit.  These guys are the Darwinians.
+containment_rescuedw1b                 I've spent the better part of the last decade nurturing these fellows, and I'm very proud of them indeed.
+containment_rescuedw2                  If the virus had its way, they'd all be dead already.  But I've managed to save a few of them.
+containment_rescuedw2b                 There have been over ten-thousand generations of Darwinians, and the loss in AI research alone would be unthinkable.
+containment_rescuedw3                  They're an astonishing act of creation.  Each and every Darwinian has his own digital soul which occupies his body during life, and returns to the Central Repository after death.
+containment_rescuedw4                  You'll need to help me rebuild their numbers.  I'll help you out as you go.  For now, start clearing out the viral infection outside the shielded area.
+
+containment_incubator_1                The incubator is running!  This is excellent.  The Engineers will pick up all the souls of the dead creatures nearby, and drop them into this building.
+containment_incubator_2                Those souls will then be converted back into Darwinians, one at a time.  This is how we will rebuild the Darwinian population.
+containment_incubator_3                Unfortunately, I designed the system so that the Darwinians have their own free will - which means we can't directly control them like you do with the Squad.
+containment_incubator_4                But there are ways we can influence them indirectly.  Carry on clearing up the infection and harvesting the spirits...I'll get back to you.
+
+containment_officer_1                  Oh fantastic, you've found my code for the Officer program.  This handy little program will enable you to promote individual Darwinians to Officers, and use those Officers to order the other Darwinians around.
+containment_officer_2_kbd              To create an Officer, draw this gesture then click on a Darwinian you wish to Promote.
+containment_officer_2_xin              To create an Officer, draw this gesture then select a Darwinian you wish to Promote.
+containment_officer_2_icons_kbd        To create an Officer, bring up the Task Manager and click on the Officer icon.  Then click on a Darwinian you wish to Promote.
+containment_officer_2_icons_xin        To create an Officer, bring up the Task Manager and select the Officer icon.  Then select a Darwinian you wish to Promote.
+containment_officer_3                  The Darwinians that you've birthed so far aren't safe...I want you to move them under the tree inside the shielded area (highlighted), using the Officer program.
+
+containment_rescuedws_1                Good work, looks like some of the Darwinians have reached the safe area.  But it's not enough.  If we're going to get Darwinia back online, we'll need quite a few more.
+containment_rescuedws_2                I think we should aim to get around 150 Darwinians into the safe area.  Clear out the infection on the neighbouring islands, harvest the souls, and escort the Darwinians safely back until you have enough.
+
+containment_objective_2                Rescue 150 Darwinians
+
+containment_finished_1                 I think that's plenty of Darwinians in the safe area now.
+
+
+# ================================================
+# Cutscene after containment
+# ================================================
+
+containmentend_1                       I've been working on a design for a Weapons Platform that the Darwinians can use to fight the Virus.
+containmentend_1b                      There's still a lot of work to do, but we can manufacture these weapons within Darwinia.
+containmentend_2                       Darwinia already has a solid engineering system for building things, but like everything else, it's offline.
+containmentend_2b                      The system is built over three locations - the Mine, the Generator, and the Yard.
+containmentend_3                       Let me show you the Mines first.
+
+containmentend_mine1                   This entire location is one giant mining facility, unfortunately now overrun by this damn Virus.
+containmentend_mine1b                  Raw Polygons are ripped out of the hillside and dumped onto the passing mine carts.
+containmentend_mine2                   Those Polygons then pass through this Refinery which converts them into Primitives.
+containmentend_mine3                   I designed this world to be owned and operated entirely by the Darwinians.  All these buildings need Darwinians at their controls in order to function.
+containmentend_mine3b                  Entire generations of Darwinian miners have worked these quarries before the Virus arrived.
+containmentend_mine4                   Anyway,
+containmentend_mine5                   Once the Primitives have been refined, they need to be transported to the Construction Yard where we can make some use of them.
+
+containmentend_5                       So the Mines produce refined Primitives and send them to the Yard.
+containmentend_5b                      The Yard also requires Energy, which comes from the Generator.
+
+containmentend_generator1              This is the Generator.  Here the Energy that drives Darwinia is produced and regulated.
+containmentend_generator1b             The Solar Panels dotted around this location harness the energy radiated out by the Soul Repository at the centre of Darwinia.
+containmentend_generator2              Like most buildings in Darwinia, these Solar Panels require Darwinians at their control pads in order to operate.
+containmentend_generator3              This building is Darwinia's Primary Power Generator.
+containmentend_generator3b             It modulates the power from the Solar Panels into a Regulated Energy Stream that we can use.
+containmentend_generator4              That Energy Stream then passes through the Trunk Port to the Construction Yard.
+containmentend_generator5              Unfortunately this Trunk Port is broken, so we'll have to enable the link from the other end once we reach the Yard.
+
+containmentend_6                       So the Generator produces the Energy.
+containmentend_6b                      The Yard receives the Energy and the Primitives, and that's where we will be building the new weapons platform.
+containmentend_7                       If you need help with these tasks, open the Objectives Screen...
+containmentend_7_kbd                   If you need help with these tasks, just hold [KEYICONSTASKMANAGERDISPLAY] and push your mouse to the right for the Objectives Screen...
+containmentend_7_icons                 If you need help with these tasks, open the Objectives Screen...
+containmentend_7_icons_kbd             If you need help with these tasks, just hold [KEYICONSTASKMANAGERDISPLAY] and push your mouse down for the Objectives Screen...
+containmentend_7b_kbd                  ...There you can click on an objective and I'll do my best to clarify it for you.
+containmentend_7b_xin                  ...There you can select an objective and I'll do my best to clarify it for you.
+containmentend_8                       Good luck!
+
+
+# ================================================
+# Purity Control
+# ================================================
+
+puritycontrol_1                        Ok, it's time for us to come clean.  We know you didn't actually pay for this game and that you downloaded it from the Internet instead.
+puritycontrol_2                        Fair enough, we're not going to judge you for that, and we know that it's not the same thing as actually stealing something from a shop.
+puritycontrol_3                        But this game was made by a tiny team of independent developers, who worked for 3 years to bring the game to completion.
+puritycontrol_4                        Introversion Software will not survive and we won't be able to make more games like Darwinia and Uplink if everybody pirates our games instead of buying them.
+puritycontrol_5                        If you've enjoyed playing the game so far, we'd like to request that you now visit our website and buy the full game.
+puritycontrol_6                        Thank you very much for playing Darwinia, and we really do hope that you choose to do the right thing.
+
+
+# ================================================
+# Generator
+# ================================================
+
+generator_objective1                   Generate 65 Gq/s Energy
+
+generator_primary_1                    This building is Darwinia's primary power Generator.  It supplies power to every location and every building in this world.
+generator_primary_2                    We're going to start building things we can use as weapons against the invasion, and for that we're going to need a lot more Energy.
+generator_panels_1                     There are three groups of Solar Panels dotted around the landscape.  Like most of the buildings in this world, they require Darwinians manning them in order to operate.
+generator_panels_2                     Once they're online, they will harness the energy radiated out from the Soul Repository at the centre of Darwinia.
+generator_panels_3                     That energy is then transferred through pylons to the primary Generator, where it is modulated into a form that can be used by buildings all around the world.
+generator_panels_4                     We'll need to achieve a power output of at least 65 Gigaquads per second in order to do anything substantial.
+generator_panels_5                     This trunk port would normally transfer the modulated energy to the Construction Yard.
+generator_panels_6                     Unfortunately there's no way to access it here, so we'll have to open it from the other end at the Construction Yard.
+generator_panels_7                     But we'll worry about that later.
+
+
+# ================================================
+# Cutscene after Mine and Generator
+# ================================================
+
+yard_available_1                       OK I've finished the blueprints for the Weapons Platform and uploaded them into the system.
+yard_available_2                       When you're ready, come down to the Yard level.  We'll need to bring it online and begin production immediately.
+
+
+# ================================================
+# Construction Yard
+# ================================================
+
+yard_objective_1                       Enable Generator Trunk Port
+yard_objective_2                       Begin Armour Production
+yard_objective_3                       Destroy Ant Infection
+
+yard_intro_1                           This is the Construction Yard.  From here I was able to boot-strap the production of virtually every building in Darwinia.
+yard_intro_2                           The Darwinians sometimes use the Yard to build things of their own when they think I'm not looking.  I would show you if I had the time.
+yard_intro_3                           But that will all have to wait.
+yard_genport_1                         If you remember, we couldn't open the Trunk Port connection from the Generator.
+yard_genport_2                         You'll need to open the connection from this end to allow the Regulated Energy Stream to pass through.
+yard_intro_4                           This Construction Yard drives the mine carts.  The refined Primitives from the Mine will come through once the carts are moving.
+yard_intro_5                           The Yard will take the refined Primitives and the Regulated Energy Stream, and will start producing our weapons platforms, which I've called Armour.
+yard_intro_6                           What I've designed is sort of an armoured troop carrier that can be converted into a Battle Cannon, that either you or the Darwinians can operate.
+yard_safearea_1                        Once the Yard is online and producing Armour, wipe out the Ant infestation around this area and open up the Trunk Ports.
+yard_safearea_2                        This is a jumping off point to the heavily infected areas of Darwinia, so it needs to be completely cleared.
+yard_intro_7                           Once we have these new weapons, we'll stand a very good chance against the core infection.  Good luck.
+
+yard_progress_1                        OK, the Trunk Port link from the Generator is up and running, and we're receiving the Energy stream.
+yard_progress_2                        Let's push on to the Construction Yard and get it up and running.
+
+yard_progressarmour_1                  Well done, we're now producing Armour.
+yard_progressarmour_2                  We now need to clear out the Ant Infestation that's currently clogging up the valley.
+yard_progressarmour_3                  I'd recommend you make use of the new Armour.  It can be deployed as a Battle Cannon, which should have no trouble clearing up that mess.
+
+yard_finished_1                        I've added the Armour program to your gesture list.  You can now summon Armour to any location by drawing this gesture.
+yard_finished_1_icons_kbd              I've added the Armour program to your list.  You can now summon Armour to any location from the Task Manager by clicking on the Armour icon.
+yard_finished_1_icons_xin              I've added the Armour program to your list.  You can now summon Armour to any location from the Task Manager by selecting the Armour icon.
+yard_finished_2                        The Armour will have to travel through the Trunk Port system, so you'll only be able to summon Armour near a local Trunk Port that you control.
+
+
+# ================================================
+# Biosphere Alpha (hostage rescue)
+# ================================================
+
+biospherealpha_objective               Rescue 100 Darwinians
+
+biospherealpha_primary1                A large number of Darwinians are trapped here and need to be rescued.
+biospherealpha_primary2                They've no way to reach safety on their own, and right now we need every Darwinian we can get.
+biospherealpha_primary3                Open up the Radar Dish links and escort the Darwinians through them onto the main island.
+biospherealpha_primary4                You'll have to fight your way through some fairly heavy viral infection.
+biospherealpha_primary5                This is the ultimate target area.  Once the Darwinians reach here they'll be safe.  I want you to get at least 100 into this area.
+
+
+# ================================================
+# Cutscene after Yard
+# ================================================
+
+yardend_1                              It's an unfortunate fact that the areas of Darwinia that used to be heavily populated are now the most heavily infected.
+yardend_1b                             Those are the areas we must now visit.
+yardend_2                              We need to make a concerted effort to rebuild the Darwinian population to its former strength, and wipe out the Viral Infection once and for all.
+yardend_3                              The Soul Repository at the centre of Darwinia is the key to the Evolution and Rebirth system for the Darwinians.
+yardend_3b                             The Souls of all the dead creatures eventually rise up and merge into the Repository, adding their experiences and wisdom to the group.
+yardend_4                              The Souls are slowly ordered based on how successful they were in life, and are sent back down to the Receiver location, to be eventually reborn into new Darwinians.
+
+yardend_5                              Here at the Receiver location, those Souls that were most successful in their previous lives slowly float down to the surface for another chance.
+yardend_6                              The buildings you see dotted around the landscape are designed to collect up the falling Souls and send them to the Biosphere.
+yardend_7                              For the Darwinians, this is the most sacred and holy site in all of the world.
+yardend_7b                             It is something of a ritual for Darwinians to journey here on a pilgrimage early in the lives, to help with the rebirthing process.
+yardend_8                              Through this method, each generation of Darwinian comes of age by helping the next generation into the world.
+
+yardend_9                              When a Soul has spent a certain amount of time in the central Repository, it loses a great deal of its former structure.
+yardend_9b                             In essence, a Soul forgets what it was like to exist on the surface.
+yardend_10                             These Souls need processing before they can re-enter the world as Darwinians.  Part of this Reprocessing occurs at the Pattern Buffer.
+
+yardend_11                             The Pattern Buffer contains the Master Blueprint for a Darwinian.
+yardend_12                             This chunk of data is the raw digital Pattern that prepares an Unprocessed Soul to be birthed into the world.
+yardend_13                             The Pattern is able to change as time passes, and represents the combined knowledge and abilities of every Darwinian that has ever lived.
+
+yardend_14                             So the Receiver collects up the Unprocessed Souls that fall from the Repository.
+yardend_15                             The Pattern Buffer stores the Master Blueprint for preparing an Unprocessed Soul.
+yardend_16                             The Pattern and the Unprocessed Souls are sent through the Trunk Port system to the Biosphere, where they are birthed into Darwinians.
+yardend_17                             Your task now is to re-enable these systems, and rebuild the Darwinian population.  Good luck.
+
+
+# ================================================
+# Receiver
+# ================================================
+
+receiver_objective1                    Collect 50 Souls per minute
+receiver_objective2                    Enable Biosphere Trunk Port
+
+receiver_primary_1                     Each of those collectors requires Darwinians at its base to operate, which means you'll have to clear out the viral infection first.
+receiver_primary_2                     The grid then transports those Unprocessed Souls here.  This building brings together all the Unprocessed Souls from the grid and feeds them down a single line.
+receiver_primary_3                     We will need to achieve a throughput of at least 50 Unprocessed Souls a minute to stand a chance of rebuilding the bulk of the Darwinian population.
+receiver_primary_4                     Those Unprocessed Souls are then transported to the Biosphere, where they are processed and birthed into new Darwinians.
+
+receiver_trunk_1                       Once the Souls have been collected by the Spirit Receivers, they need to be transported to Darwinia's primary Biosphere.
+receiver_trunk_2                       There they will be processed and birthed into new Darwinians.  Open this Trunk Port to allow the Souls to be transmitted.
+
+
+# ================================================
+# Pattern Buffer
+# ================================================
+
+patternbuffer_objective1               Clear Pattern Infection
+patternbuffer_objective2               Enable Biosphere Trunk Port
+
+patternbuffer_primary_1                Unfortunately, the viral infection has spread to the Master Blueprint, and we need to clear it up.
+patternbuffer_primary_2                There are four Pattern Loaders dotted around the location.  Each one must be occupied by Darwinians.
+patternbuffer_primary_3                The Pattern Loaders are a safety step that I'm glad I thought of.  They will analyse and copy the Pattern in the Darwinians occupying the building.
+patternbuffer_primary_4                That Pattern will then be beamed into the Master Blueprint by the hovering satellite dishes, overwriting the infection.
+patternbuffer_primary_5                You'll need to occupy at least three of the Pattern Loaders to overwhelm the corruption in the Master Pattern.
+
+patternbuffer_trunk_1                  The Master Blueprint needs to be transmitted to the Biosphere through this Trunk Port.
+patternbuffer_trunk_2                  That's strange, this Trunk Port has already been opened.
+
+patternbuffer_redarmy_1                What on Earth...
+patternbuffer_redarmy_2                How did they get here?
+patternbuffer_redarmy_3                Be careful, it looks like we've got some corrupted Darwinians transporting to the location, and they don't look friendly.
+
+
+# ================================================
+# Cutscene after Receiver and Pattern Buffer
+# ================================================
+
+prebiosphere_1                         Those evil Darwinians that we saw at the Pattern Buffer definitely came from the Biosphere.
+prebiosphere_2                         It looks like the Virus infected some of the birthing equipment, and the corrupted Pattern caused Red Darwinians to be born instead of Green.
+prebiosphere_3                         This is an unexpected development.  It's going to make recapturing the Biosphere a lot harder.
+
+
+# ================================================
+# Biosphere
+# ================================================
+
+biosphere_objective1                   Wipe out Red Army
+
+biosphere_primary_1                    This is it, the birthplace of the Darwinian civilisation.  Every Darwinian that has ever lived was originally born here.
+biosphere_primary_2                    If we can capture this Biosphere, we'll have the Darwinian population back to its former numbers in no time.
+biosphere_primary_3                    The Darwinians are born from Spawn Points that are dotted all around the local islands.  Like all buildings in Darwinia, these Spawn Points need Darwinians to operate.
+biosphere_primary_4                    In order to prevent chronic overpopulation, there are limits to how many Darwinians can be Spawned on each island.
+biosphere_primary_5                    This is the Master Spawn Point, and it is responsible for controlling the global birth rate.  It controls and synchronises every other Spawn Point around it.
+biosphere_primary_6                    It takes the Unprocessed Spirits from the Receiver Location, and processes them using the code signal from the Pattern Buffer.
+biosphere_primary_7                    It then sends out those newly processed Spirits to the Spawn Points that need them.
+biosphere_primary_8                    Unfortunately, the Viral corruption to the Pattern has resulted in this whole location being filled with Evil Darwinians.
+biosphere_primary_9                    You'll have to build up your Green Darwinian Army and take them on directly for control of the Spawn Points.
+biosphere_primary_10                   This is going to be a tough battle, but hopefully a decisive one.  This is one of the last locations that is still heavily infected.  Good luck.
+
+biosphere_reddead_1                    It looks like we've pretty much wiped out the Red Army.
+
+biosphere_end_1                        I've figured it out!  I've figured out how this whole thing happened.
+biosphere_end_2                        Come down to the Temple...I'll show you.  And I know how to stop it once and for all.
+
+rockhead_1                             The Darwinian's saw a picture of me once.  They didn't stop celebrating for days.  For just a few seconds, my ridiculous face was projected onto the sky all over Darwinia.
+rockhead_2                             I was working on the code for rendering the sky, and the texture data was accidentally overwritten with a live image from my Webcam, similar to what you see on your screen when I'm talking to you.
+rockhead_3                             Ever since that day, the Darwinians have been hijacking the Construction Yard when I'm not looking and using it to build these rock faces, which they then transport all over the world.
+rockhead_4                             It made me realise what an enormous responsibility I have as their Creator.
+
+
+# ================================================
+# Temple
+# ================================================
+
+temple_intro_1                         Long ago, the Darwinians began work on a temple.  It was their dream, I think, to somehow begin communicating with me.
+temple_intro_2                         It never occurred to me that one day they might actually succeed.
+temple_intro_3                         It's really quite ingenious.  They found a way to align one of the Trunk Ports with what they believed was Heaven...the Soul Repository at the centre of Darwinia.
+temple_intro_4                         Thinking they were talking to God, they'd managed to open up a data stream and began downloading files from my computer.
+temple_intro_5                         My Research Programs were the first files to move through the link.
+temple_intro_6                         My attention was elsewhere.  I should have been watching them more closely.
+temple_intro_7                         They had the schematics and designs for how Darwinia was built.  They weren't ready for this information.
+temple_intro_8                         For the first time ever, they began to understand the nature of their simulated digital existence.
+temple_intro_9                         Next they downloaded all of my emails.  This was when I noticed something was wrong.
+temple_intro_10                        Fearing what would happen next, I shut down the Link.  But it was too late.
+temple_intro_11                        Amongst the emails were a couple of Spam Mails, infected with a particularly nasty strain of Internet Virus.
+temple_intro_13                        I couldn't quite believe it was happening.
+temple_intro_14                        The Virus warped the Darwinians into the destructive creatures we've been fighting all this time.
+temple_intro_15                        Then they turned on the survivors.
+temple_intro_16                        They replicated themselves at such a terrifying rate.  They'd taken over most of the system before I could contain them.
+temple_intro_17                        In all honesty I had my finger on the Global Reset button.  I really did think my life's work had been ruined.
+temple_intro_18                        It was just at that moment when you arrived.  And thank God you arrived when you did!
+
+temple_primary_1                       Three of the infected spam emails still exist, and they are all still active.
+temple_primary_1b                      Anything that goes near them will be corrupted and converted into the Virus.
+temple_primary_2                       The good news is that we've cornered the Virus at this location.  These infected emails are the last source of the Virus that need to be destroyed.
+temple_primary_3                       You'll need to fight your way up to them and destroy them with explosives at close range.  Go for it!
+
+temple_objective                       Destroy Infected Email
+
+
+# =================================================
+# Game Over
+# =================================================
+
+gameover_1                             Fantastic, that's the last of the Infected Spam Mail destroyed!
+gameover_2                             When you're ready, exit the location and we'll have a look around the revitalised world together.
+
+
+# =================================================
+# Intro
+# =================================================
+
+intro_1                                Introversion Software Presents
+intro_2                                DARWINIA
+intro_3                                Connecting to Darwin Research Associates Project Server...
+intro_4                                Data stream established.
+intro_5                                Welcome to the Internet's first Digital Theme Park.
+intro_6                                Please try not to harm or scare the native Darwinians.
+intro_7                                Warning : Errors detected in data stream.
+intro_8                                On behalf of Dr Sepulveda and the team, we hope you enjoy your visit.
+intro_9                                Warning : Errors detected in data stream.
+intro_10                               W3rning  : ErroHrs det.c.d in data stre.m.
+
+intro_ambrosia_1                       Mac OS X Port Published by
+intro_ambrosia_2                       Ambrosia Software
+
+intro_bootloader                       Show First Time Intro
+
+# =================================================
+# Outro
+# =================================================
+
+outro_biosphere_1                      I don't think the Darwinians will ever truly forget what has happened.
+outro_biosphere_1b                     In fact, I think this will turn out to be a defining moment in their history.
+outro_biosphere_2                      They're much more ambitious now, bolder and stronger and smarter than they ever were.  But their innocence has been lost.
+outro_biosphere_2b                     The battle at the Biosphere is without doubt the darkest chapter yet in Darwinia's history.
+outro_biosphere_3                      The horrific loss of life in such a short period of time, and the very concept of Darwinians fighting and killing their own kin, makes it particularly potent for me.
+
+outro_receiver_1                       Of all those who died, the Darwinians who fell under the Soul Destroyers will linger most in the survivors' memories.
+outro_receiver_2                       Their Souls are irretrievably lost, with no possible hope of afterlife or rebirth awaiting them.
+outro_receiver_3                       Their broken spirits will continue to haunt the places where they fell, until the end of the world.
+outro_receiver_4                       Because of this, the Darwinians now understand, for the first time I think, what it truly means for one of their kind to die.
+
+outro_containment_1                    It is my dream that Darwinia will continue to evolve and grow, long after I am gone.
+outro_containment_1b                   I started the Darwin Digital Life project over a decade ago, and I've worked on it every single day in virtual isolation for all this time...
+outro_containment_2                    ...only for my life's work to be saved today by a total stranger.
+outro_containment_3                    I want you to help me continue my work.  I'm transferring a profile to you that will give you access to every location in Darwinia.
+outro_containment_4                    It is clear to me now that I am no longer capable of running Darwinia on my own.  I want to give you the tools I used to build this world.
+outro_containment_5                    I want you to help me finish it.
+
+outro_10                               I'm transferring permissions to the World Editor to your computer.  That's the tool I used to build every location you've seen so far.  You can access it from the Main Menu when you're up in Heaven.
+outro_11                               I'm also transferring a new user profile to your system, which I've called AccessAllAreas.  You can load it from the Profiles menu.  It will give you full access to all the locations you've visited in Darwinia.
+
+outro_1                                When I think of the number of stories and legends that must have been created since this outbreak occurred, well, it scares me.
+outro_2                                I'm afraid the Darwinians have a very long memory.  They still tell mournful stories of the island that was lost in the Server crash last year.
+outro_3                                I don't know what effect this war will have on the Darwinians.  And I don't know what they'll want to do next.
+outro_4                                But I do know that our actions here will live on through tale and folklore, for generations of Darwinians to come.
+
+
+# =================================================
+# Editor strings
+# =================================================
+
+editor_savesettings                    Save Settings
+editor_generate                        Generate
+editor_randomise                       Randomise
+editor_clone                           Clone
+editor_delete                          Delete
+editor_deletenow                       !DELETE!
+editor_size                            Size
+editor_height                          Height
+editor_seed                            Seed
+editor_move                            Move
+editor_rotate                          Rotate
+
+editor_mainedit                        Main Edit
+editor_editlandtiles                   Edit Land Tiles
+editor_editflattenareas                Edit Flatten Areas
+editor_editlights                      Edit Lights
+editor_editbuildings                   Edit Buildings
+editor_editinstantunits                Edit Instant Units
+editor_editcameramounts                Edit Camera Mounts
+editor_save                            Save
+
+editor_landscape                       Landscape
+editor_landscapetile                   Landscape Tile
+editor_guidegrid                       Guide Grid
+editor_noiseperiod                     Noise Period
+editor_noisescale                      Noise Scale
+editor_method                          Method
+editor_lowlandsmooth                   Low Land Smooth
+editor_posX                            PosX
+editor_posY                            PosY
+editor_posZ                            PosZ
+editor_newtile                         New Tile
+editor_newflattenarea                  New Flatten Area
+editor_scaledown                       Scale Down
+editor_scaleup                         Scale Up
+editor_outsideheight                   Outside Height
+editor_cellsize                        Cell Size
+editor_worldsizeX                      World Size X
+editor_worldsizeZ                      World Size Z
+editor_movebuildings                   Move Buildings
+
+editor_resolution                      Resolution
+editor_toolsize                        Tool Size
+editor_freehand                        Freehand
+editor_flatten                         Flatten
+editor_binary                          Binary
+
+editor_treeditor                       Tree Editor
+editor_clonesimilar                    Clone Similar
+editor_branchcolour                    Branch Col
+editor_leafcolour                      Leaf Col
+editor_budsize                         Bud Size
+editor_pushup                          PushUp
+editor_pushout                         PushOut
+editor_iterations                      Iterations
+
+editor_lights                          Lights
+editor_newlight                        New Light
+editor_deselectlights                  Deselect Lights
+editor_selectlight                     Select Light
+editor_adjustbrightness                Adjust Brightness
+
+editor_instantunits                    Instant Units
+editor_instantuniteditor               Instant Unit Editor
+editor_numentities                     Num Ents
+editor_spread                          Spread
+editor_inunit                          In Unit
+
+editor_coloureditor                    Colour Editor
+editor_red                             Red
+editor_green                           Green
+editor_blue                            Blue
+editor_alpha                           Alpha
+
+editor_toggleeditor                    Toggle Editor
+
+editor_globalworldeditor               Global World Editor
+editor_editlocations                   Edit Locations
+editor_movelocations                   Move Locations
+editor_createnewlocation               Create New Location
+editor_savelocations                   Save Locations
+
+editor_cameramounts                    Camera Mounts
+editor_cameraanims                     Camera Anims
+editor_cameraanim                      Camera Anim
+editor_createnewmount                  Create New Mount
+editor_goto                            Goto
+editor_update                          Update
+editor_del                             Del
+
+editor_buildings                       Buildings
+editor_buildingid                      Building ID
+editor_link                            Link
+editor_dynamic                         Dynamic
+editor_isglobal                        Is Global
+editor_buildingtype                    Building Type
+editor_createbuilding                  Create Building
+
+editor_spirits                         Spirits
+editor_targetlocation                  Target Location
+editor_scale                           Scale
+editor_mode                            Mode
+editor_disabling                       Disabling
+editor_enabling                        Enabling
+editor_enabled                         Enabled
+editor_disabled                        Disabled
+editor_numants                         NumAnts
+editor_capacity                        Capacity
+editor_entitytype                      EntityType
+editor_toggledby                       ToggledBy
+editor_research                        Research
+editor_level                           Level
+editor_pitch                           Pitch
+editor_force                           Force
+editor_variance                        Variance
+editor_reload                          Reload
+editor_usetrigger                      UseTrigger
+editor_triggerX                        TriggerX
+editor_triggerZ                        TriggerZ
+editor_triggerrad                      TriggerRad
+editor_altitude                        Altitude
+editor_segment                         Segment
+editor_count                           Count
+editor_period                          Period
+editor_searchradius                    SearchRadius
+editor_maxpopulation                   MaxPopulation
+editor_clearlinks                      Clear Links
+editor_range                           Range
+editor_script                          Script
+editor_always                          Always
+editor_never                           Never
+editor_cameraenter                     Camera Enter
+editor_cameraview                      Camera View
+editor_shape                           Shape
+editor_fuel                            Fuel
+editor_passengers                      Passengers
+editor_spawnport                       Spawn Port
+editor_requiredscore                   Required Score
+editor_pointspersec                    PointsPerSecond
+editor_minlinks                        MinimumActiveNodes
+editor_powerlink1                      Pylon 1
+editor_powerlink2                      Pylon 2
+editor_spawnlimit                      Max Spawns
+editor_leafdrop                        Leaf Droprate
+editor_neveron                         Never On
+editor_switchonce                      Switch Once
+
+spawnname_spawnvirii                   SpawnVirii
+spawnname_spawncentipedes              SpawnCentipedes
+spawnname_spawnspider                  SpawnSpider
+spawnname_spawnspirits                 SpawnSpirits
+spawnname_spawneggs                    SpawnEggs
+spawnname_spawntriffideggs             SpawnTriffidEggs
+spawnname_spawndarwinians              SpawnDarwinians
+
+
+# =================================================
+# Building Names
+# =================================================
+
+buildingname_invalid                   Invalid
+buildingname_factory                   Factory
+buildingname_cave                      Cave
+buildingname_radardish                 RadarDish
+buildingname_laserfence                LaserFence
+buildingname_controltower              ControlTower
+buildingname_gunturret                 GunTurret
+buildingname_bridge                    Bridge
+buildingname_powerstation              Powerstation
+buildingname_tree                      Tree
+buildingname_wall                      Wall
+buildingname_trunkport                 TrunkPort
+buildingname_researchitem              ResearchItem
+buildingname_library                   Library
+buildingname_generator                 Generator
+buildingname_pylon                     Pylon
+buildingname_pylonstart                PylonStart
+buildingname_pylonend                  PylonEnd
+buildingname_solarpanel                SolarPanel
+buildingname_tracklink                 TrackLink
+buildingname_trackjunction             TrackJunction
+buildingname_trackstart                TrackStart
+buildingname_trackend                  TrackEnd
+buildingname_refinery                  Refinery
+buildingname_mine                      Mine
+buildingname_yard                      Yard
+buildingname_displayscreen             DisplayScreen
+buildingname_upgradeport               UpgradePort
+buildingname_primaryupgrade            PrimaryUpgrade
+buildingname_incubator                 Incubator
+buildingname_anthill                   AntHill
+buildingname_safearea                  SafeArea
+buildingname_triffid                   Triffid
+buildingname_spiritreceiver            SpiritReceiver
+buildingname_receiverlink              ReceiverLink
+buildingname_spiritspawner             SpiritSpawner
+buildingname_spiritprocessor           SpiritProcessor
+buildingname_spawnpoint                SpawnPoint
+buildingname_spawnpopulationlock       SpawnPopulationLock
+buildingname_spawnpointmaster          SpawnPointMaster
+buildingname_spawnlink                 SpawnLink
+buildingname_aitarget                  AITarget
+buildingname_aispawnpoint              AISpawnPoint
+buildingname_blueprintstore            BlueprintStore
+buildingname_blueprintconsole          BlueprintConsole
+buildingname_blueprintrelay            BlueprintRelay
+buildingname_scripttrigger             ScriptTrigger
+buildingname_spam                      Spam
+buildingname_goddish                   GodDish
+buildingname_staticshape               StaticShape
+
+
+# =================================================
+# Bootloaders
+# =================================================
+
+bootloader_amiga                       .                               Darwinia  -  Final Release                    Cracked by                DMA Crew                I've been coding for 38 hours straight getting this crack working. I just quickly wrote this intro. Sorry it's a bit crap but I only spent 12 minutes on it. Been drinking coffee and Red Bull all day - I think my frontal lobes are bleeding. Greetz to Alistair, Chris, Jo, Johnny, Mark, Michael, Tom and all the beta testers. Further greetz to the late Jay Miner for creating the Amiga and all demo coders everywhere for showing the rest of the world what computers are really for.                See you all again on the next quality release from DMA Crew...
+
+bootloader_credits_1                   Created by
+bootloader_credits_2                   Chris Delay
+bootloader_credits_3                   Andrew Bainbridge
+bootloader_credits_4                   Produced by
+bootloader_credits_5                   Introversion Software
+bootloader_credits_6                   Mark Morris
+bootloader_credits_7                   Thomas Arundel
+bootloader_credits_8                   Chris Delay
+bootloader_credits_9                   John Knottenbelt
+bootloader_credits_10                  Sound Design and Production
+bootloader_credits_11                  Alistair Lindsay
+bootloader_credits_12                  Michael Maidment
+bootloader_credits_13                  Music
+bootloader_credits_14                  Trash80
+bootloader_credits_15                  www.trash80.net
+bootloader_credits_16                  Intro Theme Music
+bootloader_credits_17                  Mathieu Stempell
+bootloader_credits_18                  (Dma-Sc)
+bootloader_credits_19                  Additional Music
+bootloader_credits_20                  Paul Slocum
+bootloader_credits_21                  Starring
+bootloader_credits_22                  Peter Hutchison
+bootloader_credits_23                  as Dr Sepulveda
+bootloader_credits_24                  and Maddie the cat
+bootloader_credits_25                  as the voice of the Darwinians
+bootloader_credits_26                  Additional shapes
+bootloader_credits_27                  Michelle Jones
+bootloader_credits_28                  Kelvin Liew
+bootloader_credits_29                  Additional graphic design
+bootloader_credits_30                  Jo Stansfield
+bootloader_credits_31                  Mac and Linux Ports
+bootloader_credits_32                  John Knottenbelt
+bootloader_credits_33                  UK Distribution
+bootloader_credits_34                  Pinnacle Software
+bootloader_credits_35                  Mac Publisher
+bootloader_credits_36                  Ambrosia Software
+bootloader_credits_37                  Beta Testers
+bootloader_credits_38                  DARWINIA
+bootloader_credits_39                  A digital dreamscape
+bootloader_credits_40                  by Introversion Software
+bootloader_credits_41                  Further Development
+bootloader_credits_42                  Gary Chambers
+bootloader_credits_43                  Stepan Hbrek
+bootloader_credits_44                  James Lawton
+
+bootloader_fodder_1                    This game is not in any way
+bootloader_fodder_2                    endorsed by
+bootloader_fodder_3                    SENSIBLE SOFTWARE
+
+bootloader_life                        GAME OF LIFE
+bootloader_life_1                      These complex behaviour patterns emerge from a very
+bootloader_life_2                      simple set of basic rules, that all darwinians in the colony obey.
+bootloader_life_3                      These rules are based on the well known 'Game Of Life' designed by John Conway.
+bootloader_life_4                      - Three darwinians clustered around an empty cell will birth a new darwinian in that cell
+bootloader_life_5                      - A darwinian in a cell with 2 or 3 neighbours will live a happy and sociable life
+bootloader_life_6                      - A darwinian in a cell with just 1 neighbour or no neighbours will die a lonely soul
+bootloader_life_7                      - A darwinian with 4 neighbours or more will die of starvation
+bootloader_life_8                      - (added) A darwinian has a maximum life of 50 years
+bootloader_life_9                      The Darwinians will live many happy and prosperous years under this simple system.
+bootloader_life_10                     The final rule governing age is unique to Darwinia, and even though the colony may live
+bootloader_life_11                     for many hundreds of years, this cruel addition is the touch of doom,
+bootloader_life_12                     guaranteeing the eventual extinction of the entire tribe.
+bootloader_life_13                     It was agreed by all on the Darwin Digital Life project that the Darwinians
+bootloader_life_14                     must be taught the concept of their own mortality at the earliest possible opportunity.
+bootloader_life_15                     Press g to regenerate
+bootloader_life_16a                    Music by Paul Slocum
+bootloader_life_16b                    (http://qotile.net/)
+bootloader_life_17                     Colony age in years :
+bootloader_life_18                     Press h for help
+
+bootloader_raytrace_1                  Don't panic, the game will begin shortly,
+bootloader_raytrace_2                  but before we get started we thought we'd
+bootloader_raytrace_3                  whet your appetite with a lovely
+bootloader_raytrace_4                  software raytracer hehehe :)
+bootloader_raytrace_5                  Introversion sends out greetz to DMA_SC
+bootloader_raytrace_6                  for letting us use this wicked old-school
+bootloader_raytrace_7                  track which is called
+bootloader_raytrace_8                  VISITORS FROM DREAMS
+bootloader_raytrace_9                  Press h for help
+
+bootloader_raytrace_10                 RAY TRACER HELP
+bootloader_raytrace_11                 Resolution
+bootloader_raytrace_12                 Reflectiveness
+bootloader_raytrace_13                 Pixel Wave
+bootloader_raytrace_14                 Motion Blur
+bootloader_raytrace_15                 Pixel Blur
+bootloader_raytrace_16                 Brightness
+bootloader_raytrace_17                 Static Camera
+bootloader_raytrace_18                 Controllable Camera
+bootloader_raytrace_19                 Rotating Camera
+bootloader_raytrace_20                 Rotate Light Source
+bootloader_raytrace_21                 Rotate Camera
+bootloader_raytrace_22                 Horizontal Camera Movement
+bootloader_raytrace_23                 Vertical Camera Movement
+
+bootloader_soul_0                      thinking
+bootloader_soul_1                      feeling
+bootloader_soul_2                      judgement
+bootloader_soul_3                      perception
+bootloader_soul_4                      sensation
+bootloader_soul_5                      intuition
+bootloader_soul_6                      extroversion
+bootloader_soul_7                      introversion
+bootloader_soul_8                      INTROVERSION SOFTWARE
+bootloader_soul_9                      Video game design with soul
+
+
+
+

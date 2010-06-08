@@ -1,0 +1,74 @@
+ 
+# MULTIWINIA GAME TYPES
+# Name			:	Name of the variable
+# Min			:   The minimum allowable value
+# Max			:   The maximum allowable value
+# Default		:   The starting value
+# Change        :	Amount to change option by.  0 = DropDownMenu   -1 = CheckBox
+#
+# TimeLimit added to Rocket Riot by John for testbed
+
+
+#   Name                MIN     MAX     Default     Change
+# ===================================================================
+
+GAMETYPE Domination
+    ScoreMode           0       1       0           0
+    TimeLimit           0       60      10          1
+    Handicap            0       90      90          10
+    CrateDropRate       0       300     40          10
+    StartingPowerups    0       3       0           1
+    RetributionMode     0       1       1           -1
+    SuddenDeath         0       1       1           -1 
+    CrateDropMode       0       1       1           0
+END
+
+GAMETYPE KingOfTheHill
+    ScoreMode           0       3       0           0
+    TimeLimit           1       60      5           1
+    Handicap            0       90      90          10
+    CrateDropRate       0       300     40          10
+    StartingPowerups    0       3       0           1
+    RetributionMode     0       1       1           -1
+    SuddenDeath         0       1       1           -1
+    CrateDropMode       0       1       1           0
+END
+
+GAMETYPE CaptureTheStatue
+    TimeLimit           1        60     10          1
+    CrateDropRate       0       300     40          10
+    RetributionMode     0       1       1           -1
+    SuddenDeath         0       1       1           -1
+    CrateDropMode       0       1       1           0
+END
+
+GAMETYPE Assault
+    Handicap            0       90      90          10
+    CrateDropRate       0       300     40          10
+END
+
+GAMETYPE RocketRiot
+    TimeLimit           0       60      10          1
+    CrateDropRate       0       300     40          10    
+    ReinforcementTimer  10      300     60          10    
+    ReinforcementCount  1       100     40          1
+    MaxArmour           1       10      2           1
+    TurretFrequency     0       10      7           1
+    MaxTurrets          0       5       3           1
+END
+
+GAMETYPE Blitzkrieg
+    TimeLimit           0       60      15          1
+    CrateDropRate       0       300     40          10    
+    ReinforcementTimer  10      300     60          10    
+    ReinforcementCount  1       100     40          1
+    MaxArmour           1       10      2           1
+    TurretFrequency     0       10      2           1
+    RetributionMode     0       1       1           -1
+    SuddenDeath         0       1       1           -1 
+    MaxTurrets          0       5       2           1
+END
+
+GAMETYPE TankBattle
+    NumTanks            3       10      3           1
+END

@@ -1,0 +1,490 @@
+ 
+=   MAJOR
+-   MINOR
+
+
+REQUESTED FEATURES and KNOWN BUGS are at the bottom of this file
+
+
+=======
+CHANGES
+=======
+
+- New Events:
+    Interface           HighlightUnit
+    Interface           SelectUnit
+    Interface           DeselectUnit
+
+
+=================
+15th January 2005
+=================
+
+
+- New Events:
+    Soul Destroyer      Panic
+    Music               StartSequence
+    Music               EndSequence
+    Music               Credits
+    GodDish             ConnectToGod
+    GodDish             DisconnectFromGod
+
+- Fixed stuttering sound bug with sounds using ADSR and LoopDelay
+
+- Fixed : Purge Sounds window was broken
+
+=================
+10th January 2005
+=================
+
+- New Events:
+    Triffid             Burn
+    SpiritReceiver      TriggerSpirit
+    SpiritProcessor     TriggerSpirit
+    ReceiverLink        TriggerSpirit
+    Spam                Explode
+    Spam                Attack
+    Generator           Enable
+    Ambience            ExitLocation
+    Ambience            EnterGlobalWorld
+
+
+- All entities now have an ExitTeleport event which will trigger when they
+    exit from a teleport.
+
+- Fixed : Officer::SetOrder... events weren't toggling off when the order 
+    was cancelled
+
+- SporeGenerator::LayEgg definately works fine for me
+
+- Spam objects can be found on the final level, titled "Temple".
+
+- Tree::Create will now be stopped when Tree::Burn begins.
+- Tree::Create will be triggered when Tree::Burn ends.
+
+- To test Generator::Enable, simply go to the Generator level and create an 
+    engineer near the central Generator.  He will reprogram the nearby
+    control tower.
+
+- Worked on sound code for Sepulveda.
+    New events : Appear and Disappear, for when he pops up then goes away.
+    TextAppear should now work.
+    Make sure you set positiontype to TYPE2D or you won't here anything.
+
+
+================
+3rd January 2005
+================
+
+- Modified the DropDownMenu so it will split into two colums or more if there
+  are enough entries to make it stretch off the screen.  This mostly affects
+  the sample group selector, since there are so many of them.
+
+- Modified the sound priority code, so that a sound with ADSR would have its
+  priority affected by its volume AFTER ADSR had been applied.  This helps 
+  with samples with 10 second release phases, as their priorities now fall.
+
+- New Events:
+    Armour          LoadDarwinian
+    Armour          UnloadDarwinian
+    Officer         SetOrderNone
+    Officer         SetOrderGoto
+    Officer         SetOrderFollow
+    Officer         SetOrderAbsorb
+    AntHill         Damage
+    AntHill         Explode                     (best to set to Type3DStationary)
+    ResearchItem    AquireResearch              (best to set to Type3DStationary)
+    GunTurret       TargetSighted
+
+- SporeGenerator::LayEggs does appear to work fine for me.  Check your settings?
+    Alternatively you can use Egg::Create
+
+- Fixed : Engineer:LoseHealth event not triggering
+- Fixed : Engineer:Die event not triggering
+
+- Fixed : Accessing Officer in the sound editor caused a crash
+- Fixed : Accessing Armour in the sound editor caused a crash
+
+- Fixed : The key 'p' could not be used for names as it always triggered
+          a screengrab
+
+- To see a research item, create a brand new profile:
+    In the global world, press esc to get the main menu.  Then click profile.
+    Type in an unused profile name, then click Create.  You should have one 
+    location visible : labs.  Go there.  You will see a blue spinning box - this
+    is a research item.
+    (In the BoredBetaTester profile you already have all research, so you won't
+    see any research items lying around)
+    
+- Yard Animations are finished
+
+- Set your credit entries to:
+    Sound Design and Production by Alistair Lindsay and Michael Maidment.
+
+- Fixed : TrunkPorts.  Use the PowerUp event to trigger a looping sound.
+          This event will only be triggered when a trunk port comes on.
+
+
+
+=============
+14th Oct 2004
+=============
+
+- New events:
+    Mine        CogTurn             (applies to all buildings on the mine)
+    Triffid     LaunchEgg
+    TriffidEgg  Bounce
+    TriffidEgg  BurstOpen
+    LaserFence  Spark
+    Incubator   AddSpirit
+    Incubator   SpawnEntity
+    SolarPanel  TriggerSurge        (applies to all buildings on the Generator)
+    Tree        Burn
+    TrunkPort   PowerUp             (There is no PowerDown event, as that never happens)
+
+
+- Linked building sounds to the centre position of a building, rather than 
+  the base position
+
+- Fixed : Location ambiences were not being stopped when you exited a location
+
+- Fixed : It was impossible to make a tree burn
+
+- Fixed : RadarDish:EndRotation event was going off a few seconds too late
+
+- Fixed : With the sound stats window open and all sounds being rendered in 3d,
+          sounds that faded out would get larger and larger on screen until
+          they filled the entire screen
+
+- Fixed : Changing a sounds MinDistance parameter had no effect until the
+          sound was restarted.
+
+- Fixed : We were permitting MinDistance values of less than 1.0, but that is
+          illegal and was causing a crash within Direct Sound
+
+
+==============
+28th Sept 2004
+==============
+
+- New events:
+    Engineer    BeginReprogramming
+    Engineer    EndReprogramming
+    Engineer    ReprogrammingComplete
+    Spider      Pounce
+    Spider      PounceLand
+    Spider      FootFall
+    RadarDish   BeginRotation
+    RadarDish   EndRotation
+    RadarDish   ConnectionEstablished
+    RadarDish   ConnectionLost
+
+- Extended range of ADSR to Attack:60 secs, Sustain:300 secs, Release:60 secs
+
+- Fixed : Illegal values were permitted for WavesReverb filter
+
+
+===============
+6th August 2004
+===============
+
+= Wrote our own software sound mixer to replace Direct Sound in software mode.
+= Wrote replacement filters for Gargle and Echo
+
+- Changed the volume system to work on a new and improved scale
+- Modified the Parameter editor to allow you to edit on a logarithmic scale as
+  well as a linear scale
+
+- Fixed : Officer Create event was not being triggered
+
+
+==============
+25th June 2004
+==============
+
+= Wrote an entirely new priority system, that no longer requires User 
+  Priorities.  A sounds priority is now based on its volume, distance to 
+  camera, and the number of existing instances already playing.
+
+- When the SoundStats window is visible (F7), blue speaker icons will be 
+  drawn over all currently playing sound effects in the world.  The size of the
+  icon represents the volume, and the brightness represents the priority.
+
+- Fixed some problems with filters
+
+
+==============
+10th June 2004
+==============
+
+= Improved the stability of the whole system but with some speed penalty. The
+  result is that sounds with freq > 1 should work better now. Also, there
+  should be less lag between events being triggered and the sound being played.
+
+- Fixed the problem that cause echo and reverb filters to shutdown the game
+
+- Added new events for Centipede : Panic, EnemySighted
+
+
+=============
+3rd June 2004
+=============
+
+= Made another change to the priority system.  A sound will now have a lower 
+  priority if there are already many instances of the sound playing.  Each
+  existing instance of a sound decreases all identical sounds priorities by
+  10%.  Eg if you have 4 lasers already playing, their priorities will all be
+  reduced by 40%.  This stops heavily used sounds from dominating the sound
+  stage - eg Lasers.
+
+- New "Purge Sounds" window, designed for clearing out unused sounds. 
+  You can access it by clicking on the Purge Sounds button in the
+  main Sounds Editor window, bottom left corner.
+
+- Scrollbar added to SampleGroup Editor
+
+
+=============
+18th May 2004
+=============
+
+- New events for Darwinians
+
+- Airstrike bombs now have their own sound events, seperate from standard 
+  grenades.  The object type is Other::AirstrikeBomb.
+
+
+============
+9th May 2004
+============
+
+- Fixed : Engineer's Create event was not triggering properly.
+          This bug also affected the Darwinians.
+
+- Fixed : Rocket Explode event was not killing its Create event properly
+
+- Fixed : Volume setting wasn't working, all sounds we're playing with the
+          same volume.
+
+- Added ability to rename SampleGroups.  The rename button can be found in the
+  sample group editor.
+
+= Made a change to the way sound priorities are handled.  Previously a maximum
+  of 10 new sounds would be started every second, with all failed requests
+  being discarded.  This caused important sounds to be discarded if they went
+  off at the same time - eg Grenade Flash and Grenade Bang both occur 
+  simultaniously, but one would be discarded.  Now all sounds will have a 
+  number of restart attempts based on their priority.  The sound system will
+  attempt to restart them this many times. This does mean that high priority
+  sounds could (in theory) start up to 300ms late, although this is unlikely.
+  Looping sounds will never be discarded until they are stopped, as before.
+  Initial testing shows an obvious improvement when there are lots of big
+  sounds on screen at once - eg an Air Strike.
+  Priority 0 - 99    :    1 attempt only (as before)
+  Priority 100 - 199 :    2 restart attempts
+  Priority 200 - 255 :    3 restart attempts
+  Looping sounds     :    unlimited restart attempts
+
+
+===============
+29th April 2004
+===============
+
+- Added in lots of hooks for Other objects - weapons, rockets, grenades etc
+
+- Made it possible to attach sounds to Other objects.  Eg you can now attach
+  a sound to a Grenade in flight.
+
+
+===============
+13th April 2004
+===============
+
+= Ability to select Parameter Update Type.  You now have the option for any 
+  parameter (eg Frequency) to update either constantly (10 times per second)
+  or only once per restart.  Selecting the latter would cause frequency to
+  change only when the sound was restarted - ie after a loop has occured.
+  The default is to update constantly.
+  This option can be set in the Parameter Editor Window.  
+
+= Polyphonic and Monophonic sound types now available as options.
+  Making a sound Polyphonic will behave just as before : one seperate sound
+  instance for every event, eg a group of 5 squadies with a create event 
+  would spawn 5 seperate sounds.
+  Making a sound Monophonic will mean there will be a maximum of one particular
+  sound instance at any time.  Eg 5 squadies with a create event would all be
+  sharing one single sound instance.
+  The monophonic sound option is currently only available for Entities, and you
+  can chose how the sound attaches to them.  Select MonophonicRandom and the
+  single instance will move randomly between all the sources.  Select
+  MonophonicNearest and the single instance will be attached to the nearest
+  sound source to the camera. 
+
+- Better error trapping.  Darwinia will now pop up a message box with some 
+  additional information about an error, such as error code, description etc.
+
+- Sound Stats window (F8) now displays the sound hardware devices that are
+  installed on the system
+
+- When the Sound Stats Window is visible, all currently playing sounds will be
+  rendered within the game world as white stars.  The size of the star 
+  represents the sound's volume, and the brightness of the star represents its
+  priority.
+
+- Darwinia will now check you have directX9 before running
+
+- Sound Selector dialog will now allow you to select multiple files at a time,
+  by holding down the ctrl key and clicking on each file
+
+- Fixed a crashing bug that occurred if you clicked in certain places in the
+  sound editor window when no object was selected
+  
+- Reduced distortion in the RLP filter. Also made it 20% faster.
+
+- Reduced Doppler effect to 20% of the default value (it was far too prominent)
+
+- Darwinia will now report an error if sound samples aren't in the correct
+  format. The samples must be mono and must not have spaces in the filename.
+  
+- Sounds engaged in a Loop Delay (ie waiting to restart) will have their 
+  priorities set to zero since they are making no sound
+
+
+===============
+22nd March 2004
+===============
+
+= ADSR functionality.  All SoundInstances now have three new 
+  parameters: Attack, Sustain and Release.  These only apply to looping sounds.
+  Attack specifies time (in seconds) for the volume to fade up at start.
+  Release specifies time (in seconds) for the volume to fade down at end.
+  If Sustain is set to zero, sounds will loop forever until released by an event
+  (eg the entity which the sound is attached to died).  Once released they will
+  continue to loop while fading out over the time specified by Release.
+  If Sustain is set to greater than zero, the sound will fade up, loop for this
+  length of time, then fade out.
+  
+= Loop Delay parameter.  This specifies the time (in seconds) to wait between
+  a looping sound coming to its end, and restarting.  Eg set this to 2 on a
+  looping sound - the sound will play, then silence for 2 seconds, then play,
+  then silence for 2 seconds etc.
+  NOTE : Attack is only applied when the event is triggered, and Release is
+  only applied when the event is released.  If sustain is specified then this
+  event will last for that length of time.  This means the adsr fading is not
+  attached to the sample looping itself..but to the event that is playing the
+  sample.
+
+= New Loop Mode : LoopADSR.  This mode applies ADSR to the looping sound sample
+  rather than the parent event.  Used in conjunction with Loop Delay and Sound 
+  Groups it can be used to smoothly cross fade sounds.
+  A sound in this mode will fade up in (Attack)secs, then play for (Sustain)secs.
+  It will then begin its Release phase and fade out over (Release)secs.  After
+  (Delay)secs have passed since the beginning of the Release phase, the same 
+  sound will be triggered again and will begin in Attack phase.
+  Note the Delay period can be less than the Release period, which would mean
+  2 sounds would be playing at once and overlapping.  This is the intention.
+  Eg creating a sound with Attack=3, Sustain=10, Release=3, LoopDelay=0 will
+  cause the sound to fade up in 3 secs, play for 10, then cross fade over 3 
+  seconds into another instance of the same sound.
+
+= SampleGroup support added.  This allows you to select multiple sound sources
+  for a given event, rather than just one.  Do this by setting the SourceType
+  field to SampleGroupRandom, then add your chosen samples to a new sample
+  group.  When looping the chosen sample will be randomly selected from the 
+  list every loop.  If you are using LoopADSR mode the chosen sample will be
+  changed only when the current instance fades out and the new one fades in,
+  ie when the Sustain period has passed.
+  This is a bit complex, call Chris if it doesn't make any sense to you.
+
+= Rewrote entire sound library to get rid of FMOD and use directSound.
+  We can now play sounds pretty much latency free
+  We can do FX on those sounds latency free
+  There is no longer a minimum sample size for FX
+
+= New sound system profiler has been created. Press F9 to bring it up.
+
+- Resonant low pass filter now works
+
+- New filter : BitCrusher, which dynamically resamples a sound to a 
+  lower bit rate
+
+- Can now click the "Select Object" button in the sound editor window and
+  the click on an object to bring up it's sound event handlers
+
+- Volume has now changed - there are now two parameters
+  MinDistance - the distance at which the sound begins to attenuate
+  Volume      - Logarithmic value from 0.0f to 10.0f 
+				representing maximum sound volume
+
+- Looping sounds will now continue playing from where they left off after being
+  switched out, rather than restarting from the beginning
+
+- Lowered font size in File Dialog
+  
+- Double click now works in file dialogs
+
+- Slightly improved smoothing factor range
+
+- Implemented a save on exit dialog
+
+
+
+==================
+REQUESTED FEATURES
+==================
+
+- souls - in 'reciever' level, couldnt test the sounds for the soul descending, 
+  then shooting down the wires.
+ 
+- solar panels - got sounds in for the initial burst of electricity, but it 
+  needs something as they zing down the wires.
+
+- trunkports - some levels have them enabled at the start, so using the 
+  reprogram link means that enabled trunkports are silent, using the create 
+  means ports awaiting enabling are already making a noise.
+
+- Radar dish align STOP event is a couple of second too late
+- Echo decrease frequency every loop effect
+  
+- is there any way to display which samples are being played- at the moment the 
+  stats screen only tellme which samplegroup is being played, not the individual 
+  samples? 
+
+- Is it possible to configure your random number generator so that it will 
+  never pick the same number twice in X generations where X is the total 
+  number of samples in a sample group? 
+  
+- Option to apply LoopDelay before sample is played for the first time.  
+  Currently all sounds are played immediately, then loop delay begins.
+   
+- Unable to select subdirectories for sound effects in file selector dialog
+
+- Fix the click through that causes the squadies to move around when editing
+  sounds
+
+- "Quorking" occurs because lots of entities start the same sound at the same time
+  when their create event goes off, causing nasty flange effects
+
+
+
+==========
+KNOWN BUGS
+==========
+
+- Anyone who goes through a Teleport will have their permenantly looping sounds
+  stopped - eg the Squadie chatter.  This is because their unit ID changes, 
+  so they are no longer accessable by their old entityID.  The sound system
+  assumes they have died and kills their looping sounds.
+
+- Trying to run multiple different FX on one sample causes a crash
+
+- Will crash if you pick an event already running (eg Building Create), then 
+  change to selecting a sample group.  Tries to load sample filename as a group
+
+- Flanger: Feedback values approaching +99% cause sound to cut in and out.
+  Value of -99%is ok though.
+
+- Parameter Editor Window.  Select parameter type of Ranged Random, with update
+  type set to OncePerRestart.  The green line representing the chosen random
+  frequency does not match the sound coming out of the speakers, because it is
+  a seperate sound parameter which generates a different random answer.

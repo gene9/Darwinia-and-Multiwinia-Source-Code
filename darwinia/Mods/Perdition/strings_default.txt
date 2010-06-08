@@ -1,0 +1,90 @@
+
+#############################
+# Jailbreak
+#############################
+
+jailbreak_objective1	3 groups of Darwinians are being held at this location. They are the only ones left, the rest have already been fed into the weapon.
+jailbreak_objective2	We don't have much time left. You'll need to free the Darwinians imprisoned here. We'll need at least 75 of them to have a chance of disabling the weapon.
+jailbreak_objective3    They are being held behind these laser fences. You'll have to find some way of disabling them to release the Darwinians.
+jailbreak_objective4	Once you've rescued them, you'll need to bring them to this trunk port, its the easiest way to the weapon. I'm going to try and slow the Reds down while you do this. Good Luck!
+
+jailbreak_objective5	Ants. Probably the most prolific form of the virus. Every time I think we've wiped them all out, another outbreak occurs somewhere.
+jailbreak_objective6	I'm starting to think that the Red Darwinians are intentionally planting AntNests, although I have no idea how.
+jailbreak_objective7	At any rate, we can't let them spread beyond this location. If they do, there might not be a Darwinia left to save. You'll need to wipe them out before you leave.
+
+jailbreak_objective8	The Reds disarmed the Green Darwinians shortly after capture. The code stored in this file should be able to re-arm them.
+jailbreak_objective9	Use an Engineer to upload the file to my system and I we'll have a fighting chance.
+
+jailbreak_intro_1	Oh thank goodness you're here! I need your help. The fate of all of Darwinia is at stake.
+jailbreak_intro_2	The Red Darwinians have created a weapon, and they are using tubes like these all over Darwinia to feed green Darwinians into it.
+jailbreak_intro_3	I dont know why exactly, but I think they are using the souls of the green Darwinians to calibrate it.
+jailbreak_intro_4	They've amassed an entire army, and captured several key points all over Darwinia. It all happened so quickly... the green Darwinians were taken completely by surprise.
+jailbreak_intro_5	This weapon... its aimed directly at the soul repository. If it fires, every single soul in the repository will be corrupted. Every new Darwinian born will be Red.
+jailbreak_intro_6	If that happens, Darwinia as we know it will cease to exist. We have to stop them.
+
+# New version
+jailbreak_objective_1	Clear Ant Infestation
+jailbreak_objective_2	Rescue 75 Darwinians
+jailbreak_objective_3	Arm the Darwinians
+
+jailbreak_trunkport_1	Huh, someone activated this Trunk Port...
+jailbreak_trunkport_2   Oh no! I thought those things were all destroyed! You have to kill it, quickly!
+jailbreak_trunkport_3	Here, use this. It was abandoned some time ago, but it should still be functional.
+jailbreak_trunkport_4	Remember, you must protect the Darwinians at all costs! Without them, we've no hope of stopping the weapon!
+
+jailbreak_armed_1	Ok, excellent. The Darwinians are now armed. 
+jailbreak_armed_2	Now we have a chance of fighting our way to the weapon.
+
+jailbreak_control_1	This building looks like some kind of control station for the Laser Fences. 
+jailbreak_control_2	If you destroy the Darwinians operating it, hopefully the fence will shut down.
+
+jailbreak_switch_1	This building seems to be connected to two sets of Laser Fences...
+jailbreak_switch_2	You'll need to capture the building with Green Darwinians and manually switch the fences to free the captives.
+jailbreak_capture_1	Ok, now that you've captured this Switch, you can use it to manually switch the two fences it controls.
+jailbreak_capture_2	Simply click on the building to toggle the fences.
+
+#############################
+# Stronghold
+#############################
+
+stronghold_objective	Wipe out the Red Darwinians
+stronghold_intro_1	After the Great War, the Darwinians started developing at an incredible speed.
+stronghold_intro_2	It wasn't long before they built themselves a second birthing ground to help maintain the population as they spread out.
+stronghold_intro_3	Unfortunately, the Reds have overrun the area and built themselves an army to protect their weapon while they prepare to fire it.
+stronghold_intro_4	If we are to have any hope of disabling the weapon, we must first retake this area.
+stronghold_intro_5	Use the Darwinians you rescued from the prison to capture the spawn points on the islands and build an army.
+stronghold_intro_6	You'll need to wipe out the reds entirely. If too many of them survive, they could retake the area, and we would never stop the weapon. Good Luck.
+
+stronghold_weapon_1	This is not good, not good at all.
+stronghold_weapon_2	I've been trying to work out what the exact effects of the weapon would be if it fired, when I noticed that it has areas in common with the Soul Destroyers...
+stronghold_weapon_3	They aren't going to corrupt the Soul Repository, they're going to destroy it! You have to hurry.
+
+#############################
+# Doomsday
+#############################
+
+
+doomsday_objective	Disable the Weapon
+
+doomsday_turret_1	Looks like the Red Darwinians have found some turrets of their own...
+doomsday_turret_2	Try and capture them in one piece, they could prove useful in holding them off while you disable the weapon.
+
+doomsday_intro_1	This is it. We don't have much time, they are already getting ready to fire the weapon.
+doomsday_intro_2	You'll need to capture and hold the control points for long enough to shut it down.
+doomsday_intro_3	Unfortunately they seem to have set up a lot of defences to stop us from doing that. You'll need to capture the fence control points too.
+doomsday_intro_4	Once the Reds find out that you're here, they'll be sure to send reinforcements. I'll take the rest of the Darwinians and try to stop them.
+doomsday_intro_5	I'm sure I don't need to remind you of what is at stake here. Good luck.
+
+doomsday_trunkports_1	The Reds have broken through my defences! They'll start coming through the Trunk Ports any minute!
+doomsday_trunkports_2	You have to hold those control points, at all costs!
+
+#############################
+# Outro
+#############################
+
+outro1			You did it! I must admit, I didn't expect the weapon to explode like that. The Darwinians must have overloaded it instead of simply shutting it down.
+outro2			Once again you have saved Darwinia. I cannot thank you enough.
+outro3			This will probably become another major chapter in the Darwinians history. They seem to remember everything, and I know they are grateful for your help.
+outro4			I dont think we will ever truely be rid of the virus. And the events here today prove that it is as dangerous as ever.
+outro5			But with your help, I think we will be able to keep Darwinia and its inhabitants safe.
+outro6			Thank you, for everything.

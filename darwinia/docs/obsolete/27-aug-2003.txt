@@ -1,0 +1,13 @@
+
+-   Troops acting more like sheep
+    Predictable puzzle style obstacles to be defeated by engineers
+
+-   Cities / square or rectangular shapes
+    Generated somehow rather than created
+
+-   Real Time Strategy
+    Units that take care of themselves, simple click mechanism of C&C
+
+-   Dr Sepulveda's theme park
+    Virtual life on a grand scale
+    Then it all goes wrong

@@ -1,0 +1,84 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	KingOfTheHill	Skirmish
+	PopulationCap	1000
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_earth.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    15   0.00     30   1950  2.00   7.00    200      1     92   1.00     0
+	   271   0.00    378    574  2.00   7.00     50      1   1343   1.00     0
+	   871   0.00   1040    574  2.00   7.00     50      1   1343   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.00   0.45   0.89     1.30   1.30   1.30
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	SpawnPointMaster    0       386.55  648.93  1       -0.77   0.64    1       1     
+	SpawnPoint          1       1000.43 1065.91 1       -0.03   1.00    0       2     3     
+	SpawnPoint          2       676.98  1345.55 1       1.00    0.00    0       8     
+	SpawnPoint          3       1319.39 1433.40 1       -0.94   -0.33   0       6     
+	SpawnPoint          4       191.53  1849.72 1       0.27    -0.96   0       
+	SpawnPoint          5       1679.51 872.89  1       0.17    0.99    0       
+	SpawnPoint          6       1755.92 1295.57 1       -0.82   0.57    0       7     5     
+	SpawnPoint          7       1438.37 1763.90 1       -0.59   -0.81   0       
+	SpawnPoint          8       300.88  1540.39 1       0.90    0.43    0       9     4     
+	SpawnPoint          9       305.76  1091.44 1       0.04    1.00    0       
+	AITarget            10      197.70  1800.20 1       1.00    0.00    0       -1    
+	AITarget            11      345.38  1555.45 1       1.00    0.00    0       -1    
+	AITarget            12      317.46  1167.61 1       1.00    0.00    0       -1    
+	AITarget            13      721.28  1338.91 1       1.00    0.00    0       -1    
+	AITarget            14      1000.20 1135.60 1       1.00    0.00    0       -1    
+	AITarget            15      1261.71 1434.95 1       1.00    0.00    0       -1    
+	AITarget            16      1404.70 1728.32 1       1.00    0.00    0       -1    
+	AITarget            17      1708.37 1329.38 1       1.00    0.00    0       -1    
+	AITarget            18      1692.67 923.14  1       1.00    0.00    0       -1    
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player1         1633.02  357.27  760.24 0.12 -0.80 0.59 0.16 0.60 0.78
+	player0          175.62  293.54 1963.65 0.02 -0.84 -0.55 0.04 0.55 -0.84
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	Darwinian        0   205.9  1788.1     10    0      -1    20.0     0.0     0.0   -1   -1
+	Darwinian        1  1693.6   936.5     10    0      -1    20.0     0.0     0.0   -1   -1
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

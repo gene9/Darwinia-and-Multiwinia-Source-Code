@@ -1,0 +1,49 @@
+Mac OS X
+--------
+
+- Linux input manager not working.
+
+- Cmd-F    	ToggleFullscreen (some code exists in input_sdl.cpp but is disabled)
+- Capslock	Pause the game
+- Cmd-Tab 
+		If in Full Screen:
+		 	1. become windowed.
+			2. Wait for the focus to leave the app
+			3. Wait for the focus to return to the app
+			4. become fullscreen.
+
+- WindowManagerSDL::SaveDesktop() 
+		- get currently display resolution for linux
+		
+- There is a problem if the user has LittleSnitch installed (A personal firewall)
+	- causes NetSocketSession::WriteData to fail if not authorised.
+	- If we're in fullscreen, we need to switch to windowed mode so that the user can
+	  authorise the firewall, or, we need to pop up a dialog box saying 'Network Error'
+	  'Cannot connect to metaserver. Please check your internet settings, including 
+	   any personal firewalls.'
+	- Perhaps the solution here is for the default mode to be Windowed in Mac OS X? 
+	
+
+SystemIV on Mac OS X
+--------------------
+
+debug.txt 	should go to -> ~/Application Support/<App name>/debug.txt
+blackbox.txt should go to -> /Application Support/<App name>/blackbox.txt
+preferences.txt should be read from ~/Application Support/<App name>/preferences.txt
+
+General
+-------
+
+- Rename input.h to input_manager.h (consistency with window_manager)
+
+- Input is currently linked to Eclipse.  This means I have to include
+	Eclipse in projects that don't use it.
+
+- New method for quick 3d stuff : Renderer::SetupFor3D
+	
+- Create a Sample starting application that uses systemIV to:
+	open a window
+	set up input system
+	set up rendering
+	render a basic square or something
+

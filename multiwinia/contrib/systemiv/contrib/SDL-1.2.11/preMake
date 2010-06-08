@@ -1,0 +1,5 @@
+all: Makefile
+
+Makefile:
+	sh autogen.sh
+	sh configure --disable-video-directfb --prefix=`pwd`/../bin CC=apgcc CXX=apg++

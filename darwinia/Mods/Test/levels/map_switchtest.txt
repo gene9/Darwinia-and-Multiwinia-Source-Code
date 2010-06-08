@@ -1,0 +1,46 @@
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+	 735.4   30.0 1428.7  400.0
+	1450.7   30.0  516.0  400.0
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.00   0.11   0.99     0.87   0.97   1.30
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	FenceSwitch         0       965.42  1694.41 1       1.00    0.00    0       1       -1      1       1       
+	LaserFence          1       476.08  1541.97 1       1.00    0.00    0       2       1.00  0
+	LaserFence          2       554.06  1399.05 1       1.00    0.00    0       3       1.00  0
+	LaserFence          3       640.89  1280.45 1       1.00    0.00    0       -1      1.00  0
+	LaserFence          5       1623.02 228.55  1       1.00    0.00    0       6       1.00  0
+	LaserFence          6       1614.18 368.72  1       1.00    0.00    0       7       1.00  4
+	LaserFence          7       1802.87 431.29  1       1.00    0.00    0       11      1.00  0
+	LaserFence          8       1480.62 714.45  1       1.00    0.00    0       9       1.00  0
+	LaserFence          9       1421.95 812.44  1       1.00    0.00    0       10      1.00  0
+	LaserFence          10      1301.45 858.59  1       1.00    0.00    0       -1      1.00  0
+	FenceSwitch         4       1139.94 264.47  1       1.00    0.00    0       5       8       8       1       
+	LaserFence          11      1740.92 595.43  1       1.00    0.00    0       -1      1.00  0
+Buildings_EndDefinition
+

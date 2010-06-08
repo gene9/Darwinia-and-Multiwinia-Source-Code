@@ -1,0 +1,49 @@
+
+# yard 0
+# safe area 4
+# yard display screen 101 
+# receiver port 1
+# pattern buffer port 3
+# generator port 5
+# mine port 7
+# containment port 98
+
+TriggerSound            cutscene3
+
+CamMove                 intro1      30
+
+WaitFade
+
+Say                     yard_intro_1
+Say                     yard_intro_2
+WaitSay
+
+Highlight               5
+CamBuildingFocus        5   600     300
+Say                     yard_intro_3
+Say                     yard_genport_1
+Say                     yard_genport_2
+WaitSay
+
+CamBuildingFocus        0   800     300
+Wait                    2
+
+Say                     yard_intro_4
+Say                     yard_intro_5
+Say                     yard_intro_6
+WaitSay
+
+ClearHighlights
+CamBuildingFocus        101   500     300
+Say                     yard_safearea_1
+Say                     yard_safearea_2
+WaitSay
+
+CamMove                 start       10
+Say                     yard_intro_7
+WaitSay
+WaitCam
+
+ClearHighlights
+CamReset
+StopSound               cutscene3

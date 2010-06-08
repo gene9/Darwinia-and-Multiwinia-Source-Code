@@ -1,0 +1,23 @@
+
+==============                                                          =======             =======             ==========
+XTREME VERSION                                                          MINIMUM             MAXIMUM             CONFIDENCE
+==============                                                          =======             =======             ==========
+
+Started December 10th 2003
+Finished January 21st 2004
+
+- Global World Event system                                             2 weeks                                 High
+- Global World + Editor                                                 1 week                                  High
+- Sepulveda                                                             1 week                                  High
+- Golden scroll                                                         1 day                                   High
+- Port object                                                           1 day                                   High
+
+- Locations (x10)                                                       5 days                                  High
+- Missions  (x19)                                                       10 days                                 High
+- Cutscenes (x7)                                                        7 days                                  High
+
+- Babel Virus                                                           2 days                                  High
+- Ark                                                                   1 day                                   High
+
+                                                        TOTAL           10 weeks
+

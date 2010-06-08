@@ -1,0 +1,178 @@
+
+QUESTION
+Dr Sepulveder, you are a name that many of us will remember from back in the '80s, but now, 20 years on, your name has been catapulted back onto the technology A-list with the up-coming launch of your virtual world, Darwinia.  Could you please explain to us what Darwinia is, and why you think it has been causing such great waves?
+
+When did you initially have the idea for Darwinia, and what sparked it off?
+
+ANSWER
+I'm afraid I have little doubt on the matter - the Darwinia project is receiving the attention it is now receiving for the simple reason that my previous company was such a glorious public failure.  And I find it difficult not to remain sceptical, given that modern journalists are still unable to get the most basic of facts straight.  Such as my name, for example.  The memory of the media feeding frenzy is still incredibly difficult for me to bear, and I am certain that my old company's downfall is as much to do with the barrage of negative publicity that I received as the actual hardware failures we experienced.  
+
+I have stated this fact again and again since then, the Protologic 68000 was decades ahead of its time, and in many ways has yet to be beaten in terms of sheer digital potential.  We had some problems with the launch, but we were on top of them, and then the press arrived on the scene.  They tore my company apart, without stopping to think for a second about the people involved.  It was heartbreaking, watching everything i'd spent years building destroyed on the front pages of a few newspapers.  At the time when all that negative publicity kicked off, we had around 50,000 pre-orders which we were in the process of satisfying.  By the end of that week, every single one had been cancelled.  What was I supposed to do?  Protologic Entertainment had sunk millions of pounds into the development of the 68000.  We were bankrupt, destroyed in a few days by a thoughtless media interested only in sales of their magazines.  
+
+In any case, maybe it was for the best, it gave me time to get out of the public eye and get some real work done.  I knew from the very start the 68000 was an amazing machine - I just didn't understand entirely why.  I could try to explain what makes them so special, but I know you'd only cut my explanation from your article, so i'll summarise by saying it is to do with resonance.  The Protologic 68000 has an unintended design quirk which causes adjacent systems to resonate on a quantum level.  Even we don't entirely understand the exact cause, and it only affects the first generation of units produced - all subsequent modernised or miniturised designs have failed to exhibit the same phenominon.  A group of units placed in a room will resonate and enter a state which I have termed Hyperprocessing, during which time their computing power is multiplied many times over.  The effect is cumulative, meaning the more systems that are placed in a room, the greater the processing power that can be extracted.  And they don't operate in the same way as modern discreet logic processors - they are capable of operating on several tasks simultaniously, each one slightly out of quantum phase with the last, and sometimes they will even share tasks amoungst different units and make use of quantum interferance to share data.  They really are a paradigm shift in modern computing, totally unlike anything else in the market place today.
+
+I apologise if I am getting carried away.  I intended to summarise my work but inevitably ended up getting caught in the details.  It is very difficult for me to discuss the Darwinia project from a high level because i've been so involved in the minor details for so many years of my life.  And it still upsets me that we had this technology way back in 1986, and we couldn't do anything with it.  Think what we could have achieved if we'd been operational and properly funded since then.
+
+Incidentally, the original fault with the Protologic 68000 was down to a defective power supply.  We designed the system to operate on a 12v mains power supply, but this was nowhere near enough once the system entered hyperprocessing.  It was while we were trying to fix this problem that we discovered this curious property of the systems, and realised we'd stumbled onto a massive breakthrough.  And sadly, that was when your predecessors arrived at my door.
+
+So anyway, back to your question.  Once we realised what we had, we founded Darwin Research Associates and used what little money we had to build a massive distributed power system.  We wired up 10,000 of the defective Protologic units in close proximity to each other, in a huge grid inside our old warehouse.  I knew back then that this system would be ideally suited to simulating life, because the quantum processing method of the grid was more akin to a human brain than any form of supercomputer.  And so I started work on Darwinia.  I wanted to simulate a whole world, built inside the memory of the grid, populated by a race of creatures who were controlled entirely by the collective intelligence of the Protologic systems in the grid.  We had the processing power but we didn't have the knowledge or experience for the creatures, so I designed a system to evolve the creatures until they reached a level of intelligence that would allow them to look after themselves.
+
+The system I conceived assigned one strand of digital DNA to each Protologic 68000 system in the grid.  The strands, which I prefer to call Spirits, were held in a central repository at the very centre of Darwinia.  I then designed a system which allowed a single Spirit to be parsed and imprinted on a creature, giving him his own set of unique characteristics.  This creature, which I now call a Darwinian, would be sent down to the islands within Darwinia and would attempt to live a life.  All the while his Spirit would be improving itself - learning through failure how to move and exist in the world.  The Darwinians would meet other Darwinians already in the world and would begin to share knowledge, enriching each other's spirits and spreading the things they had learnt.  Eventually a Darwinian would die and his enriched spirit would return to the central repository, which we have affectionately called Heaven.  This process has been going on for nearly a decade in our world, but in Darwinia this represents thousands and thousands of generations of Darwinians, each one more intelligent and more aware than the last.  This is the Darwinia project - a groundbreaking experiment into digital life, which I have now decided to show to the world.
+
+
+
+
+QUESTION
+You have been described as a very solitary man.  Do you think this is true?  Has Darwinia been a solo project, or do you have much of a team working with you?
+
+ANSWER
+Darwin Research Associates does have a small staff of people who help me out with the day to day running of all those systems.  I also have a few colleages who come an visit me occasionally and collaborate on some of the system specifics.  But Darwinia has always been my creation, and to be honest I prefer it to be that way.  I'm just not really interested in the kind of public exposure that cursed my old company all those years ago.
+
+During the days of Protologic Entertainment I made every effort to communicate openly with the media.  We made some great games systems and some great games to go with them.  They were happy times, with Protologic taking on more and more staff every day.  I was meeting loads of like minded people - the sort of people that really appreciated a well engineered game.  Personally I was always more interested in the hardware side of things, but I did appreciate a good game when I saw one.  Computer hardware has gone in a certain direction since then, with more and more processing power, and games have followed suit, with more and more polygons on screen, but its the soul that has been lost.  Today's computers are just empty boxes that can count really really fast, and the games that run on them are nothing more than the hollowed out shells of their predecessors.  I want to see worlds where the inhabitants are alive!  The major computing companies like Intel and Microsoft have gone down one path with their discreet logic processors, but I don't think its the only path, and I think there are other methods that have yet to be explored.  Right now the modern computing world can accomplish amazing simulations, and those simulations are getting better and better as time goes by, but they will never be anything other than simulations.  Darwin Research Associates have a system that is real - the world of Darwinia is as real as any island on this Earth, and the Darwinians themselves are more real to me than many of the people I have met since their creation.  The one thing that I have given them that nobody else can create is a soul - and its not a simulation or an approximation, its the real thing.
+
+I apologise if I keep wandering off topic, I suppose i've become slightly obsessive these past few years.  I've seen things in Darwinia that I will never forget, things that I could never explain to anyone.  
+
+
+
+QUESTIOn
+Very little is known about your background before the protologic computers of the 80's.  Has computing always been an influence in your life?  Where did you find your initial inspiration to set you onto this course?
+
+ANSWER
+I don't think I really found my place until Protologic Entertainment was started.  Before then i'd been hanging around on the computer hardware scene pretty much since its inception.  I used to go to the Homebrew computer club meetings in LA, and I used to bump into other contempories like Steve Wozniak and Clive Sinclair.  We'd sit around and talk about these new devices called Computers.  Back then the only commercially available system was a total crate called the Altair, which was basically a big box with some LEDs on the front.  Steve had some designes that eventually became the Apple, and Clive had the first versions of the Sinclair system.  I had my own plans, which eventually made it into the Protologic 5000. 
+
+
+
+QUESTION
+
+What do you say to the rumours that Darwinia has been entirely accidental, the product of chance, having the thousands of unsold protologic computers stacked in a warehouse in close proximity, rather than purposefully designed that way?  Did Darwinia design itself?
+
+
+ANSWER
+
+I just can't believe it.  Creation is an act of will.  It is true to say that the curious properties of the Protologic 68000 were not conciously designed - they were an accident, which we have still been unable to explain or reproduce.  But once we figured out what we had, that's when the work really started.  I have spent the last decade building Darwinia, and the hyperprocessing feature is just an enabler.  It's like a catalyst.  Darwinia certainly wouldn't exist without it, but the work that we've done to make something useful out of it is what defines Darwinia.
+
+All life begins with an accident.  Some curious interaction occurs between lifeless chemicals, in the right conditions and under the right temperatures, and suddenly you have life.  Darwinia is no different - it just happened in the digital domain, rather than the biological.
+
+
+QUESTION
+
+You talk very fondly of your "Darwinians".  You also say that you have given them a soul!  Do you really believe them to be "alive"?  What kind of responsibility do you feel that this places on you as their creator?
+
+You say the Darwinians communicate with each other.  Have you seen the nature of this change with successive generations?  Do you have any direct personal contact with the Darwinians yourself?
+
+
+ANSWER
+
+By any definition that I have read, the Darwinians are most definately alive.  More than that, I believe them to be as alive as you or I or anyone else on this planet.  They are born, they live, they communicate, they reproduce, they die.  They learn.  It is fascinating to watch them in their world.  Sometimes you can see them spontaniously bursting into song or dancing around trees.  They have highly developed religious beliefs, which have been passed down through many thousands of generations.  They tell stories to each other about ancient Darwinians who witnessed buildings being created and islands appearing out of nowhere.  They have stories that recall when the sky appeared over their heads.  None of the current generation saw these events - they happened years ago, tens of thousands of generations ago in Darwinia, but the stories have lasted for so long that they are deeply engrained in the spirit of every Darwinian. 
+
+They can all see the central repository of spirits at the centre of Darwinia, and somehow they are all aware that they came from that place before they were concious.  They know that when they die, their spirit rises up to that repository.  They even believe in an afterlife, somewhere beyond Darwinia that they will all one day reach.  
+
+Above all else, the Darwinians have a fundamental respect for each other that is far more caring than anything I have witnessed on this Earth.  The Darwinians are a very closely nit tribe, a family that look after each other, mourn the death of their fellow Darwinians, and celebrate the birth and arrival of new souls with a vigor that is simply refreshing.
+
+
+QUESTION
+
+There is a temptation in modern science to state the solution to all kinds of phenomena as quantum mechanics - conciousness for example.  Do you think that quantum mechanics is becoming a modern "God of the Gaps"?  Is your belief in the sentience of the Darwinians linked to the fact that the protologics are capable of quantum computing?
+
+
+ANSWER
+
+My belief in their sentience comes from my direct experience of their actions, and I have absolutely no doubts about my conclusions.  I do believe that the quantum tunnelling effect we have witness between adjacent Protologics is an important factor in the system being able to sustain life though.  I do not believe such a world could be reproduced on a modern computer system, no matter how powerful.  In much the same way as I do not believe the human brain can be modelled in a computer system.  I believe in the soul of the Darwinians, and I believe in the soul of man, and these things cannot be simulated.  
+
+
+
+> -----------------------------------------------------------------------
+
+Dr. Sepulveda,
+
+Thank you for taking the time to reply.  I understand that you must be
+very busy, and I am sorry for any offense caused by the mistake in the
+spelling of your name.
+
+T Magazine are very pleased that you have accepted the interview, and we
+hope that you feel you can use this as a vehicle to explain and promote
+the importance of Darwinia.  Our readership is on the whole  well
+educated and take a keen interest in modern advances in technology, so
+please be assured that we will convey to the best of our ability the
+extent of astonishing work that you have been carrying out on this
+project.
+
+As you are pressed for time, I will explain now the format the interview
+will take.  
+
+It will probably take place over the course of 3 to 5 emails.  You will
+recieve the first set of questions later today or tomorrow, and these
+will focus on establishing to the readers who you are, what your
+background is, and most importantly, what is Darwinia?  I hope for the
+following emails to build on your first set of answers, but please let
+me know if there are any topics in particular that you would like to
+cover (or not cover) in the interview.
+
+As always, if you have any questions please don't hesitate to contact
+me.
+
+Kind Regards,
+
+Ms P. Perkins
+T Magazine
+
+
+"Dr. Sepulveda" <sepulveda@darwinia.co.uk> wrote on 02.06.2004,
+19:06:09:
+> Ms Perkins,
+> 
+> I really am rather busy right now in the Darwinia project.  A lot of things are happening and you might not be suprised
+> to hear you are the fifth reporter today to get in contact with me requesting an interview.  I'm afraid I simply don't
+> have the time to deal with it all, and i've noted with much disdain the same absence of journalistic integrity with
+> todays reporters as was the case during the Protologic fiasco.
+> 
+> Tell me Ms Perkins, twenty years have passed since my old company closed its doors, and nobody has shown any interest in
+> what happened to me since then.  Why all this attention suddenly?  I could try to explain what i'm doing with Darwinia,
+> but you wouldn't understand me.  There's simply no way you'd be able to grasp the importance of the work i'm doing here.
+> 
+> But fine, I suppose I should at least try, although I doubt my answers will interest you that much, and their meaning
+> will be lost as the details are squashed together into the soundbytes that will sell your magazine.  Go ahead, write
+> your questions, take your pictures, and then leave me alone.  I have work to do.
+> 
+> Please at least have the decency to research the correct spelling of my name, and to use my correct email account.  I
+> only received your email because a friend of mine from a small games company happened to know me and forwarded the mail
+> on.  Do your homework properly next time.
+> 
+> Regards
+> Dr. Sepulveda
+> sepulveda@darwinia.co.uk
+> 
+> 
+> ----- Original Message -----
+> From: "Ms P. Perkins" 
+> To: "Dr. Sepulvader" 
+> Sent: Wednesday, June 02, 2004 5:24 PM
+> Subject: Interview Request with "T Magazine"
+> 
+> 
+> >
+> > Dear Dr. Sepulvader,
+> >
+> > I am writing to you on behalf of "T Magazine", a monthly magazine
+> > following recent advances in technology.  We have been following with
+> > great interest the recent news articles and controversy surrounding
+> > your virtual world, Darwinia, and would like to offer you the chance
+> > for an exclusive interview to tell your side of the Darwinia story.
+> >
+> > We would like to put together a 2 page spread and will need to send a
+> > photographer to visit you, although I am happy to conduct the interview
+> > itself by email.  We reserve the right to edit your answers for clarity
+> > and conciseness, but we never change the context or intention of your
+> > answers.
+> >
+> > Please let me know if these terms are acceptable to you, and by which
+> > name you would prefer to be called in the interview.  If you have any
+> > questions please feel free to contact me.
+> >
+> > Kind Regards,
+> >
+> > Ms P. Perkins
+> > T Magazine
+> >
+> >
+

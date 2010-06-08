@@ -1,0 +1,103 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	CaptureTheStatue 
+	PopulationCap	2000
+	DefenderPopulationCap	-1
+	NumPlayers	2
+	Difficulty	basic
+	OfficialLevel
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2332
+	worldSizeZ 2332
+	cellSize 15.76
+	outsideHeight -15.39
+	maxHeight 0.00
+	landColourFile landscape_launchpad.bmp
+	wavesColourFile waves_launchpad.bmp
+	waterColourFile water_launchpad.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   198  -3.98    221   1903  1.20   4.00    220      0 269472   1.00     2   AAAAAAAAAAAAAAAAAA
+	   356   1.57    989    742  1.20   4.00    220      1 904948   1.00     2   AAAAAAAAAAAAAAAAAA
+	   946  -7.00    715    742  2.07   2.04    334      1     21   1.00     0
+	  1178  -7.00    815    242  2.07   2.04    263      1     58   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.25   0.35   0.90     1.00   1.00   1.00
+	 -0.68   0.10   0.73     4.31   1.00   0.40
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	SpawnPoint          2       610.58  687.79  1       0.97    0.25    0       
+	SpawnPoint          3       600.09  1034.90 1       1.00    0.09    0       
+	SpawnPoint          4       1681.15 1634.00 0       -0.70   -0.71   0       
+	SpawnPoint          5       1838.81 1306.37 0       -0.77   -0.64   0       
+	SpawnPoint          6       1141.15 1253.09 255     -0.37   0.93    0       
+	SpawnPoint          7       1255.55 881.34  255     0.02    -1.00   0       
+	SpawnPointMaster    8       1095.06 1970.94 255     1.00    0.00    0       3     2     6     4     5     7     
+	MultiwiniaZone      9       1610.25 1442.00 0       1.00    0.00    0       80.00 
+	MultiwiniaZone      10      800.75  866.06  1       1.00    0.00    0       80.00 
+	SpawnPopulationLock 11      927.24  882.58  255     1.00    0.00    0       500.00   300   
+	SpawnPopulationLock 12      1466.35 1412.81 255     1.00    0.00    0       500.00   300   
+	MultiwiniaZone      13      721.83  1647.50 255     1.00    0.00    0       40.00 
+	MultiwiniaZone      1       1685.70 550.45  255     1.00    0.00    0       40.00 
+	Tree                0       1124.18 895.79  255     1.00    0.00    0       74.71   5.03    0.65    1.09    6       0       -352315076  -601246583  0       0       0       
+	Tree                14      1062.84 939.85  255     1.00    0.00    0       69.16   5.03    0.65    1.09    6       21591   -352315076  -600591218  0       0       0       
+	Tree                15      1244.33 1294.48 255     1.00    0.00    0       71.26   5.03    0.65    1.09    6       46564   -352315076  -600591218  0       0       0       
+	Tree                16      1322.88 1307.48 255     1.00    0.00    0       78.39   5.03    0.65    1.09    6       46586   -352315076  -600591218  0       0       0       
+	AITarget            17      1764.34 1275.50 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            18      1606.39 1582.98 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            19      672.54  1050.49 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            20      660.57  731.46  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            21      1175.14 1360.93 255     1.00    0.00    0       -1    0.00 1     
+	AITarget            22      1168.50 749.98  255     1.00    0.00    0       -1    0.00 1     
+	AITarget            23      1687.45 552.43  255     1.00    0.00    0       -1    0.20 0     
+	AITarget            24      732.22  1604.40 255     1.00    0.00    0       -1    0.20 1     
+	AITarget            25      1547.67 845.15  255     1.00    0.00    0       -1    0.00 1     
+	SpawnPopulationLock 26      1726.15 577.28  255     1.00    0.00    0       500.00   150   
+	SpawnPopulationLock 27      669.31  1661.77 255     1.00    0.00    0       500.00   150   
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start            -71.75  877.29 1022.85 0.87 -0.50 -0.04 0.50 0.87 -0.02
+	player0         2189.15  563.46 1886.28 -0.73 -0.44 -0.52 -0.36 0.90 -0.26
+	player1          125.75  696.73  258.61 0.66 -0.51 0.55 0.39 0.86 0.33
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+	Darwinian        0  1629.7  1609.3     20    0      -1    75.1     0.0     0.0   -1   -1    0
+	Darwinian        1   657.5   738.4     20    0      -1    67.5     0.0     0.0   -1   -1    0
+	Darwinian        0  1763.5  1291.0     20    0      -1   100.1     0.0     0.0   -1   -1    0
+	Darwinian        1   667.8  1042.5     20    0      -1    73.6     0.0     0.0   -1   -1    0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

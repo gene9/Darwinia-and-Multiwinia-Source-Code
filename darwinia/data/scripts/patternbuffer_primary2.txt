@@ -1,0 +1,10 @@
+
+Highlight           36
+CamBuildingFocus    36      200     300
+
+Say                 patternbuffer_trunk_1
+Say                 patternbuffer_trunk_2
+
+WaitSay
+ClearHighlights
+CamReset

@@ -1,0 +1,67 @@
+
+    ===================
+    SERVER LOBBY THREAD
+    ===================
+
+- One player clicks on HOST GAME
+   
+    Create an incoming connection listener (TCP)
+    Create a broadcast listener that responds to "Are you a server"
+    Listen for new Clients
+    
+    - When settings change
+        Send new data to Clients
+    
+    - When Server clicks on BEGIN GAME
+        Close the lobby
+        Show Load screen
+        Send message to all clients : LOAD MAP
+        Await confirms from all clients
+       
+        Create a UDP listener on port 4000
+        Open UDP sockets to all clients on port 4001
+        (Different ports in case client/server run on same system)
+        Shutdown all TCP connections to clients
+
+        START GAME LOOP
+
+
+    ============
+    CLIENT LOBBY
+    ============
+
+- Other Players click on FIND SERVER
+    Broadcast "Are you a server" message over network
+    Listen for replies, get Server IP
+
+- Alternative : Players enter a known IP
+- Alternative : Players get an IP from a central database
+
+- Other Players now have an IP of a Server
+    
+    Handshake with Server
+        - Are you running
+        - Compatible version?
+        - Any slots free?
+        - Security
+        - May I join?
+
+    Join Lobby
+        Show lobby screen
+        Receive updated game stats 
+
+        Connected clients
+        Chosen map
+        Game settings
+        
+           
+    Receive LOAD MAP message
+        Close the lobby
+        Show load screen
+        Load the map
+        Open a UDP listener on port 4001
+        Open a UDP socket to the Server on port 4000
+
+        Send CONFIRM back to Server        
+
+        START GAME LOOP

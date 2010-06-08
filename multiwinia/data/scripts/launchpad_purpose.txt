@@ -1,0 +1,56 @@
+
+WaitPlayerNotBusy
+
+PermitEscape
+ShutUp
+TriggerSound        Demo2Mid
+ 
+    # Pull back from wherever we were
+
+CamMove             purpose1        40
+CamFOV              40  0
+
+Wait                3
+
+Say                 launchpad_middemo_1
+Say                 launchpad_middemo_2
+Say                 launchpad_middemo_3
+Say                 launchpad_middemo_4
+
+WaitSay
+
+    # Zoom out to the global world
+
+ExitLocation
+WaitFade
+CamLocationFocus    launchpad   100
+
+Say                 launchpad_middemo_5
+Say                 launchpad_middemo_6
+WaitSay
+
+CamGlobalWorldFocus
+
+Say                 launchpad_middemo_8
+Say                 launchpad_middemo_9
+Say                 launchpad_middemo_10
+Say                 launchpad_middemo_11
+Say                 launchpad_middemo_12
+WaitSay
+
+CamLocationFocus    launchpad   1
+Wait                3
+
+    # Go back into launchpad
+
+EnterLocation       launchpad
+CamCut              purpose1
+CamMove             purpose2    20
+WaitFade
+
+Say                 launchpad_middemo_13
+Say                 launchpad_middemo_14
+
+Wait                16
+CamReset
+StopSound           Demo2Mid

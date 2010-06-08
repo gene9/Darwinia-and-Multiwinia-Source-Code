@@ -1,0 +1,89 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	none
+	PopulationCap	-1
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_firetop.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    59   0.00     54   1900  1.20   1.00    200      1      1   1.00     5   AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAMAKAAAAAAAAAJAAAAAAAAAAAAAAAAAAACACACACAAAAAAAAAAAAAAAAAAAAAOBIAPAAAAAAAAAAAAAAAAAAAAACAAAPAMBMBMBMBMAPAPACAFAAAAAAAAAAAAAOAOAFAAAAAAAAAAAAAAAAACAPAMBMCJCGDGDGDGDGCJCJBMAPBCAFAAADAIAHABAAAAAAAAAAAAAAAAAHBJCJCGCJDGEDEDFAFAFAFAEDEGDGCJBOBNCCCABNAPACAAAAAAAFAAAAAAAIBPDNEJEHEDFAFNFNGKGKGMGNFNGAFDEGEBEKFPEJCGAKAAAAAAAAAAAAAAAABAEBEFEPFEFNGLHHHHIEIEIEJOHHHKGNGAFMFGGCFOCCAAAAAAAAAAAAAAAAADCEEEEGGIGFGHJHIBJBJOJOJOKBJBKAIHGNGEGAFAFHCMAIAAAAAAAAAAAAADBIDCEFFKGFHHIEJBJOKLLHLHLHLKKLJOJEIHHNGAFHFIDPBIAAAAAAAAAAAAAFCLECEHFNHKIEJOKLLHLEMCLBLBLELHLKKOKEIHHNGDGEFKCCAIAAAAAAAAAABCCMDGHAGKIHJBKLLHLBKOKLOAKOKOMALELKLBJEIKHAFPEFDCBFAAAAAAAAAAAPCJEDFNHKJEJOMJLBKOLALAKILDLCLHLLLHLNKBJHKHGDEJCPBFAAAAAAAAAFBPDJFDGNIHJBKLLEKOKMLKKFKHKHKFPPKOLMLKLBJHINHDFJDPCFAOAAAAAAAMCPEPFDGNIHKBLKLELOLKLHKFJMLBKCKIKOLBLHLNKEIKHAFGDMCJBJAIAAAABLHIJKGEGNIHKBLKLLMFKPKDKJJKKMJPMEKLLBLHLNKEIKHAFGDMDGCIANAAAABMGDIEGEGNIHKBLKLGLEKNNIKAJPMEKCKILJLELKMAKHINHDFGEGECCGAGAAAAANCHDJFDGNIHKBLKLOMKKLKIKKKEKGKFKLLELILKMAKHINHDFJFBEJBOACAAAAAJCDDMFGHAIKKELNLKLGKOLDKILKKJKLMJMELHLNMDKKINHDFMFDDPBBAAAAAAAICCDMFGGDHNJHMMLNLHLEMGLDLFKPLFMELHLKMALHJKIAGGFMEJDABAAAAAAAAABFCPEJGDIAIKKHMALNPPLHLELELEMILHPPMAMDKKINIDGJEPDFBIAAAAAAAAACAKCCDMFGHDHNJKKHMALNLNLKNDLKLNLNMAMDKKJNIDHGFMECCFALABAAAAAAAFBEBJCPEMIBHDINLDKHLEMDMAMAMAMAMDLHKKJNJDHGFJEPDFBIAOAAAAAAAAADBABPCMDPEMGGHDIAINJKKHLHLHLHLHKKJNJAKAHGGJEPFMCIALABAAAAAAAAAABBCECLCNEHEMGJHGIDJAINJNJNJNLHJAJDIDHGGMEPECCIBLABAAAAAAAAAAAAAPDAEBEMEJENFBFJGGIMHOIDIDIDIDHGHGGJFMEPEJEMDEBAAAAAAAAAAAAAAABADBDGDFDLDKDMDPEMFMFJGJGJGJGJFMFMEPEKEFFMGEDJAIACAAAAAAAAAAAAADBBAMAAADCBCMDFDCEJGAFNFOFMEPFCECEFFFFGGFEMBIAIAHAKAAAAAAAAAAAAAAAAAAAAAAAOBLBIDAEJFEGIFJDIDICNDADIDFEGDJBCAFAPBJAKAAAAAAAAAAAAAAAAAAAAAAABAOAODEEKGBEBBOBOAOBHAJAIBJBHAFABAPBEAFAAAAAAAAAAAAAAAAAAAAAAAAAAAABECBBIADABABAAAAAAAAAAACADAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.21   0.62   0.75     1.43   1.43   1.43
+	  0.00   0.00   1.00     3.00   2.00   1.00
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Incubator           1       527.82  427.18  2       0.70    0.72    1          100
+	Incubator           2       1650.98 384.52  1       -0.74   0.68    1          100
+	Incubator           3       1598.02 1658.45 0       -0.72   -0.69   1          100
+	Incubator           4       364.78  1564.51 3       0.54    -0.84   1          100
+	AITarget            17      1570.55 1612.75 1       1.00    0.00    0       -1    0.00
+	AITarget            18      394.68  1516.98 1       1.00    0.00    0       -1    0.00
+	AITarget            19      555.14  461.36  1       1.00    0.00    0       -1    0.00
+	AITarget            20      1607.16 448.94  1       1.00    0.00    0       -1    0.00
+	AITarget            21      1427.46 588.10  1       1.00    0.00    0       -1    0.00
+	AITarget            22      655.24  548.74  1       1.00    0.00    0       -1    0.00
+	AITarget            23      612.21  1359.42 1       1.00    0.00    0       -1    0.00
+	AITarget            24      1399.88 1477.78 1       1.00    0.00    0       -1    0.00
+	AITarget            25      978.21  1646.28 1       1.00    0.00    0       -1    0.00
+	AITarget            26      1703.78 1035.13 1       0.94    -0.34   0       -1    0.00
+	AITarget            27      1060.36 408.80  1       1.00    0.00    0       -1    0.00
+	AITarget            28      378.42  976.64  1       1.00    0.00    0       -1    0.00
+	AITarget            29      798.33  1003.63 1       1.00    0.00    0       -1    0.00
+	AITarget            30      1035.35 1255.80 1       1.00    0.00    0       -1    0.00
+	AITarget            31      1309.05 977.76  1       1.00    0.00    0       -1    0.00
+	AITarget            32      1064.23 765.42  1       1.00    0.00    0       -1    0.00
+	CloneLab            0       1019.87 968.47  1       0.83    0.56    0          250
+	CloneLab            6       514.03  981.55  1       1.00    0.02    0          150
+	CloneLab            5       997.53  1551.65 1       0.02    -1.00   0          150
+	CloneLab            7       1599.39 1017.33 1       -1.00   -0.09   0          150
+	CloneLab            8       1058.29 518.19  1       0.02    1.00    0          150
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	player0         1764.07  388.79 1818.14 -0.48 -0.71 -0.52 -0.48 0.70 -0.52
+	player1         1840.42  364.81  195.27 -0.59 -0.62 0.51 -0.47 0.78 0.41
+	player2          373.91  470.36  281.98 0.47 -0.77 0.43 0.57 0.64 0.52
+	player3          248.55  456.25 1769.98 0.37 -0.73 -0.58 0.39 0.68 -0.62
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

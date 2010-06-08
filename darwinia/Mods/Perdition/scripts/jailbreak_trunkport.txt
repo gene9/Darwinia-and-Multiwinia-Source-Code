@@ -1,0 +1,20 @@
+
+WaitSay
+CamMove			trunk1 2
+WaitCam
+ActivateTrunkPort	51
+Say			jailbreak_trunkport_1
+Wait 3
+Say			jailbreak_trunkport_2
+Wait 4
+
+CamMove			trunk2 2
+Wait 3
+ActivateTrunkPort	90
+Wait			5
+Say			jailbreak_trunkport_3
+Wait 4
+Say 			jailbreak_trunkport_4
+
+CamReset
+

@@ -1,0 +1,99 @@
+Fragment: Box01
+	ParentName: sceneroot
+	up:     0.00  1.00  0.00
+	front:  1.00  0.00 -0.01
+	pos: -0.68 -0.40 0.07
+	Positions: 16
+		0: -11.553   0.000   8.802
+		1:  11.553   0.000   8.802
+		2: -11.553  -0.000  -8.802
+		3:  11.553  -0.000  -8.802
+		4: -15.801  12.684  12.038
+		5:  15.801  12.684  12.038
+		6: -15.801  12.684 -12.038
+		7:  15.801  12.684 -12.038
+		8: -12.072  12.757   8.309
+		9:  12.072  12.757   8.309
+		10: -12.072  12.757  -8.309
+		11:  12.072  12.757  -8.309
+		12: -11.122   3.398   7.359
+		13:  11.122   3.398   7.359
+		14: -11.122   3.398  -7.359
+		15:  11.122   3.398  -7.359
+	Normals: 0
+	Colours: 1
+		0: 227 152 152
+	Vertices: 16    # Position ID then Colour ID
+		0:   0   0
+		1:   2   0
+		2:   3   0
+		3:   1   0
+		4:  12   0
+		5:  13   0
+		6:  15   0
+		7:  14   0
+		8:   5   0
+		9:   4   0
+		10:   7   0
+		11:   6   0
+		12:   9   0
+		13:   8   0
+		14:  11   0
+		15:  10   0
+	Strips: 3
+		Strip: 0
+			Verts: 9
+			v7   	v7   	v4   	v15   	v13   	v11   	v9   	v11   	v1   
+		Strip: 1
+			Verts: 13
+			v9   	v9   	v0   	v1   	v2   	v11   	v10   	v15   	v14   	v7   	v6   	v4   	v5   
+		Strip: 2
+			Verts: 17
+			v4   	v4   	v5   	v13   	v12   	v9   	v8   	v0   	v3   	v2   	v3   	v10   	v8   	v14   
+			v12   	v6   	v5   
+
+Marker: MarkerTrack2
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front: -1.00  0.00  0.01
+	Pos:   -10.77 12.66 -0.31
+	MarkerEnd
+
+
+Marker: MarkerTrack1
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.00  1.00  0.00
+	Front: -1.00  0.00  0.01
+	Pos:    9.69 12.66 -0.43
+	MarkerEnd
+
+
+Marker: MarkerContents1
+	ParentName: sceneroot
+	Depth: 1
+	Up:    -0.26  0.86 -0.44
+	Front: -0.70 -0.48 -0.53
+	Pos:    3.83  5.21  6.96
+	MarkerEnd
+
+
+Marker: MarkerContents2
+	ParentName: sceneroot
+	Depth: 1
+	Up:    -0.54  0.84 -0.08
+	Front: -0.84 -0.54  0.01
+	Pos:    1.18  5.21 -3.84
+	MarkerEnd
+
+
+Marker: MarkerContents3
+	ParentName: sceneroot
+	Depth: 1
+	Up:     0.63  0.77 -0.06
+	Front:  0.60 -0.54 -0.59
+	Pos:   -3.53  7.06  6.03
+	MarkerEnd
+
+

@@ -1,0 +1,24 @@
+
+A river / lake
+    Requires : bridge builder
+
+
+Radar station (damaged)
+    Requires : 
+
+
+Air base
+    Requires : Troops to capture
+
+
+Force fields (power generator)
+    Requires : Demolition crew
+
+
+Gun crew
+
+
+Mine field
+
+
+Capture building

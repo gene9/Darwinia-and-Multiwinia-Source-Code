@@ -1,0 +1,10 @@
+
+GiveResearch        armour
+DemoGesture         armour.txt
+Say                 yard_finished_1
+WaitSay
+
+DemoGesture         armour.txt
+Say                 yard_finished_2
+WaitSay
+

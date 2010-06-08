@@ -1,0 +1,38 @@
+
+- Client inbox/outbox needs to be flushed between maps, to prevent fuckage
+
+- Team currently stores a m_currentUnitId, m_currentEntityId, and m_currentBuildingId.
+  These are updated by network requests.  However you now need an entityId AND
+  an entityUniqueId to correctly identify a single entity.  This will eventually
+  lead to a bug
+
+- The list of Research items (eg Squad, Engineer etc) is stored in GlobalResearch 
+  in string form.  These strings need to be moved into the language file as they
+  are used in game.  However they are also used as identifiers in our game.txt file.
+
+- Sound editor.  if you are running the game and create a new event, and that event
+  goes off before you've assigned a sound, a crash occurs.
+
+
+========
+RENDERER
+========
+
+- Boot loaders stretch on startup in widescreen
+
+
+========
+CONTROLS
+========
+
+- No way to shut down controller task because it cant be selected
+
+
+=======
+CONTENT
+=======
+
+
+==========
+CRAP STUFF
+==========

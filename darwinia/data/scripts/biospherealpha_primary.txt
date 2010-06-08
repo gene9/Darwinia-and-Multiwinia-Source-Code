@@ -1,0 +1,26 @@
+
+# incubator 14, 15
+# trunk 21
+
+CamBuildingFocus        14      200     100
+WaitFade
+
+Say                     biospherealpha_primary1
+
+WaitSay
+CamBuildingFocus        15      400     300
+Say                     biospherealpha_primary2
+
+WaitSay
+CamMove                 intro1  5
+WaitCam
+CamMove                 intro2  20
+Say                     biospherealpha_primary3
+Say                     biospherealpha_primary4
+
+WaitSay
+CamBuildingFocus        21      250     75
+Say                     biospherealpha_primary5
+
+WaitSay
+CamReset

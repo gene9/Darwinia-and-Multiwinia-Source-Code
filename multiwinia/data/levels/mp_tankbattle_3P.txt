@@ -1,0 +1,84 @@
+MultiwiniaOptions_StartDefinition
+	GameTypes	TankBattle 
+	PopulationCap	-1
+	NumPlayers	3
+	Difficulty	basic
+MultiwiniaOptions_EndDefinition
+
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_jailbreak.bmp
+	wavesColourFile waves_earth.bmp
+	waterColourFile water_icecaps.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    35  -5.00     64   1924  1.51   4.06    200      1 213487   1.08     2   AAAAAAAAAAAAAAAAAA
+	  1414   0.00    113    384  1.20   1.00    396      1      1   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	 -0.07   0.71  -0.94     0.95   0.95   0.95
+	  0.88   0.00   0.47     1.58   0.81   0.58
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Tree                9       941.00  915.52  255     1.00    0.00    0       118.45  5.52    1.05    1.03    6       45789   -16691209   -9015297    35      0       0       
+	Tree                0       968.51  1089.52 255     1.00    0.00    0       132.53  5.52    1.05    1.03    6       46546   -16691209   -9015297    35      0       0       
+	Tree                1       786.85  1080.24 255     1.00    0.00    0       120.87  5.52    1.05    1.03    6       46555   -16691209   -9015297    35      0       0       
+	Tree                2       831.24  1191.49 255     1.00    0.00    0       109.22  5.52    1.05    1.03    6       46564   -16691209   -9015297    35      0       0       
+	Tree                3       899.55  1228.66 255     1.00    0.00    0       121.44  5.52    1.05    1.03    6       46586   -16691209   -9015297    35      0       0       
+	Tree                4       1025.60 1281.36 255     1.00    0.00    0       109.78  5.52    1.05    1.03    6       46595   -16691209   -9015297    35      0       0       
+	Tree                5       1153.83 1332.23 255     1.00    0.00    0       133.66  5.52    1.05    1.03    6       46607   -16691209   -9015297    35      0       0       
+	Tree                6       1125.46 1137.65 255     1.00    0.00    0       110.35  5.52    1.05    1.03    6       46625   -16691209   -9015297    35      0       0       
+	Tree                7       1094.61 962.93  255     1.00    0.00    0       110.92  5.52    1.05    1.03    6       46656   -16691209   -9015297    35      0       0       
+	Tree                8       907.89  1529.64 255     1.00    0.00    0       123.14  5.52    1.05    1.03    6       46674   -16691209   -9015297    35      0       0       
+	Tree                10      914.79  1644.72 255     1.00    0.00    0       111.48  5.52    1.05    1.03    6       46686   -16691209   -9015297    35      0       0       
+	Tree                11      1060.97 1596.97 255     1.00    0.00    0       123.71  5.52    1.05    1.03    6       46705   -16691209   -9015297    35      0       0       
+	Tree                12      1440.32 735.46  255     1.00    0.00    0       124.27  5.52    1.05    1.03    6       46735   -16691209   -9015297    35      0       0       
+	Tree                13      1296.16 722.10  255     1.00    0.00    0       112.62  5.52    1.05    1.03    6       46744   -16691209   -9015297    35      0       0       
+	Tree                14      1450.41 860.62  255     1.00    0.00    0       113.18  5.52    1.05    1.03    6       46775   -16691209   -9015297    35      0       0       
+	Tree                15      437.45  736.18  255     1.00    0.00    0       125.41  5.52    1.05    1.03    6       46796   -16691209   -9015297    35      0       0       
+	Tree                16      536.49  562.91  255     1.00    0.00    0       113.75  5.52    1.05    1.03    6       46805   -16691209   -9015297    35      0       0       
+	Tree                17      557.36  656.00  255     1.00    0.00    0       125.98  5.52    1.05    1.03    6       46824   -16691209   -9015297    35      0       0       
+Buildings_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId runAsTask
+	# ==================================================================================
+	Tank             0   586.6  1383.2      1    0      -1     0.0     0.0     0.0   -1   -1    1
+	Tank             1  1550.8  1229.3      1    0      -1     0.0     0.0     0.0   -1   -1    1
+	Tank             2   989.8   631.8      1    0      -1     0.0     0.0     0.0   -1   -1    1
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition

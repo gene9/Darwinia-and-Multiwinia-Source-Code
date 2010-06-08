@@ -1,0 +1,36 @@
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+	start           1442.67  281.68 1822.40 -0.44 -0.48 -0.76 -0.24 0.88 -0.42
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	ScriptTrigger       0       1560.07 747.70  2       1.00    0.00    0       1      115.97 garden_foundscroll Engineer
+	ScriptTrigger       4       715.90  940.54  2       1.00    0.00    0       -1     100.00 garden_opentrunkport.txt Squadie
+	ScriptTrigger       5       1348.03 1496.45 1       1.00    0.00    0       -1     100.00 garden_intro.txt always
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
+	# ==================================================================================
+	Virii            1  1497.1  1471.2      5    0      -1   100.6     0.0     0.0
+	Virii            1  1742.7  1407.4     10    0      -1   103.4     0.0     0.0
+	Virii            1  1558.1  1175.8     12    0      -1   106.6     0.0     0.0
+	Virii            1  1413.7  1062.7     12    0      -1    97.2     0.0     0.0
+	Virii            1  1383.8   831.1     20    1      -1   112.3     0.0     0.0
+	Virii            1   915.3   396.4     40    1      -1    92.7     0.0     0.0
+	Virii            1   888.6   555.8     40    1      -1   114.5     0.0     0.0
+	Virii            1   710.6  1568.4     40    1      -1   146.7     0.0     0.0
+	Darwinian        0   598.8  1202.4     30    0      -1   143.7     0.0     0.0
+	Darwinian        0  1252.7  1353.9     20    0      -1   104.8     0.0     0.0
+InstantUnits_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	BuildingOnline :garden,8 	objective_capture_trunk
+	ResearchOwned :Grenade 	objective_research
+PrimaryObjectives_EndDefinition

@@ -1,0 +1,159 @@
+Locations_StartDefinition
+	# Id    Avail   mapFile                      	missionFile
+	# ==========================================================================
+	   1    0       map_sandbox.txt              	null
+	   2	1		map_garden.txt				 	mission_garden_liberate.txt
+	   3	0		map_containment.txt             null
+       4    0       map_generator.txt               null
+       5    0       map_mine.txt                    null
+       6    0       map_yard.txt                    null
+	   7	0		map_escort.txt			        mission_escort_escort.txt
+       8    0       map_pattern_buffer.txt          null
+	   9	0		map_biosphere.txt			    null
+       10   0       map_receiver.txt                null
+       11   0       map_temple.txt                  null
+Locations_EndDefinition
+
+
+Buildings_StartDefinition
+#	Id		TeamId	LocId	Type	Link	Online
+    36      2       8       0       0       1               # Trunk port at Pattern Buffer
+    21      2       8       0       0       1               # Trunk port at Pattern Buffer
+Buildings_EndDefinition
+
+
+Research_StartDefinition
+	Research Darwinian      0       2
+    Research Squad          0       1
+	Research Engineer       0       1
+    Research Laser          0       1
+	Research Grenade		0		0
+	Research Rocket			0		0
+	Research AirStrike		0		0
+	Research Controller		0		0
+	Research Officer		0		0
+    Research Armour         0       0
+    Research TaskManager    0       2
+    CurrentResearch         Squad
+Research_EndDefinition
+
+
+Events_StartDefinition
+
+    # ======
+    # Garden
+    # ======
+    
+    Event BuildingOnline:garden,8 ResearchOwned:grenade
+        Action RunScript music1.txt
+        End
+
+    Event NotInLocation BuildingOnline:garden,8 ResearchOwned:grenade        
+        Action SetMission containment mission_containment_enable.txt
+        Action RunScript gardenfinished        
+        End
+    
+
+    # ===========
+    # Containment
+    # ===========
+
+    Event ResearchOwned:officer
+        Action RunScript containment_officer.txt
+        End
+
+    Event BuildingOnline:containment,85
+        Action RunScript containment_finished
+        End
+
+	Event BuildingOnline:containment,85	BuildingOnline:containment,2 BuildingOnline:containment,3 BuildingOnline:containment,4
+	    Action RunScript music2.txt
+        End
+    
+	Event BuildingOnline:containment,85	BuildingOnline:containment,2 BuildingOnline:containment,3 BuildingOnline:containment,4 NotInLocation
+        Action SetMission mine mission_mine_enable.txt
+        Action SetMission generator mission_generator_enable.txt
+        Action RunScript containment_end.txt        
+        End
+
+
+    # ===================
+    # Mines and Generator
+    # ===================
+
+    Event BuildingOnline:generator,0 BuildingOnline:mine,90 BuildingOnline:mine,89
+        Action RunScript music3.txt
+        End
+
+    Event NotInLocation BuildingOnline:generator,0 BuildingOnline:mine,90 BuildingOnline:mine,89
+        Action SetMission yard mission_yard_enable.txt
+        Action RunScript yard_available
+        End
+
+
+    # ====
+    # Yard
+    # ====
+
+    Event BuildingOnline:yard,5
+        Action RunScript yard_progress
+        End
+
+    Event BuildingOnline:yard,4
+        Action RunScript yard_progressarmour
+        End
+
+    Event BuildingOnline:yard,4 BuildingOnline:yard,3 BuildingOnline:yard,1 BuildingOnline:yard,110 BuildingOnline:yard,101
+#        Action RunScript music4.txt
+        Action RunScript yard_armour.txt
+        End
+
+    Event NotInLocation BuildingOnline:yard,4 BuildingOnline:yard,3 BuildingOnline:yard,1 BuildingOnline:yard,110 BuildingOnline:yard,101
+        Action SetMission receiver mission_receiver_recapture.txt
+        Action SetMission pattern_buffer mission_pattern_buffer_recapture.txt
+        Action RunScript yard_end.txt
+        End
+
+
+    # ===========================
+    # Receiver and Pattern Buffer
+    # ===========================
+
+    Event BuildingOnline:pattern_buffer,1 BuildingOnline:receiver,1
+        Action RunScript music5.txt
+        End
+
+    Event NotInLocation BuildingOnline:pattern_buffer,1 BuildingOnline:receiver,1
+        Action SetMission biosphere mission_biosphere_recapture.txt
+        Action RunScript prebiosphere
+        End
+
+    
+    # ===========================
+    # Biosphere
+    # ===========================
+    
+    Event BuildingOnline:biosphere,90
+        Action RunScript biosphere_reddead
+        End
+
+    Event NotInLocation BuildingOnline:biosphere,90 BuildingOnline:biosphere,117
+        Action SetMission temple mission_temple_cutscene.txt
+        Action RunScript biosphere_end
+        End
+
+
+    # ===========================
+    # Game over
+    # ===========================
+
+    Event BuildingOnline:temple,76 BuildingOnline:temple,77 BuildingOnline:temple,81 
+        Action RunScript gameover
+        End
+
+    Event NotInLocation BuildingOnline:temple,76 BuildingOnline:temple,77 BuildingOnline:temple,81 
+        Action RunScript gameover.txt
+        End
+
+Events_EndDefinition
+

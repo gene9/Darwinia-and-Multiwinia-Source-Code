@@ -1,0 +1,86 @@
+
+TriggerSound                cutscene4
+
+########################### Bit in global world
+
+CamLocationFocus            yard        70
+
+WaitFade
+
+Say                         yardend_1
+Say                         yardend_1b
+Say                         yardend_2
+
+WaitSay
+CamLocationFocus            heaven      80
+Say                         yardend_3
+Say                         yardend_3b
+
+WaitSay
+CamLocationFocus            receiver    60
+Say                         yardend_4
+
+WaitSay
+EnterLocation               receiver
+
+########################### Now in receiver
+
+CamMove                     intro1      60
+
+WaitFade
+
+Say                         yardend_5
+Say                         yardend_6
+Say                         yardend_7
+Say                         yardend_7b
+Say                         yardend_8
+
+WaitSay
+ExitLocation
+
+########################### Back in global world
+
+CamLocationFocus            receiver    70
+WaitFade
+Say                         yardend_9           
+Say                         yardend_9b  
+WaitSay
+
+CamLocationFocus            pattern_buffer  70
+Say                         yardend_10
+WaitSay
+
+EnterLocation               pattern_buffer
+
+
+########################### Now in the Pattern Buffer
+
+CamBuildingFocus            1   800     -200
+
+WaitFade
+
+Say                         yardend_11
+Say                         yardend_12
+Say                         yardend_13
+
+WaitSay
+ExitLocation
+
+########################### Back in global world
+
+CamLocationFocus            receiver        70
+WaitFade
+Say                         yardend_14
+WaitSay
+
+CamLocationFocus            pattern_buffer  70
+Say                         yardend_15
+WaitSay
+
+CamLocationFocus            biosphere_gamma 70
+Say                         yardend_16
+Say                         yardend_17
+
+WaitSay
+StopSound                   cutscene4
+CamReset

@@ -1,0 +1,56 @@
+License Agreement and Limited Warranty
+
+IMPORTANT: PLEASE READ THIS AGREEMENT (“AGREEMENT”) CAREFULLY BEFORE USING THIS SOFTWARE. THIS AGREEMENT LICENSES SOFTWARE TO YOU AND CONTAINS WARRANTY AND LIABILITY DISCLAIMERS. BY SELECTING THE “AGREE” OR “ACCEPT” BUTTON, YOU ARE CONFIRMING THAT YOU HAVE READ AND UNDERSTAND THIS AGREEMENT, AND AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE WITH THE TERMS OF THIS AGREEMENT, FOR RETAIL PRODUCTS YOU SHOULD RETURN THE SOFTWARE AND ALL ACCOMPANYING ITEMS TO THE PLACE OF PURCHASE OR EGAMES WITHIN 10 DAYS OF PURCHASE FOR A FULL REFUND, OR FOR DOWNLOAD PRODUCTS YOU SHOULD EXIT THIS PAGE WITHOUT SELECTING THE “AGREE” OR “ACCEPT” BUTTON.  IN THE SOLE EVENT YOU WERE ONLY PRESENTED WITH THE AGREEMENT FOR REVIEW AFTER YOU HAVE MADE A PAYMENT FOR THE SOFTWARE AND YOU DID NOT CLICK THE “ACCEPT” OR “AGREE” BUTTON, YOU MAY SEEK A REFUND OF THE AMOUNT YOU PAID FOR THE SOFTWARE (IF ANY). 
+
+CINEMAWARE MARQUEE IS A TRADEMARK AND BRAND OF EGAMES, INC.
+
+Grant of License: This is not an agreement for sale but rather a license agreement in which eGames,Inc. ("eGames") provides you the non-exclusive right to use the enclosed copy of software program and any accompanying printed materials ("Software") pursuant to the terms of this Agreement.  eGames and its suppliers continue to own the Software. Your rights to use the Software are specified in this Agreement, and eGames and its suppliers retain all rights not expressly granted to you under this Agreement.
+
+Copy and Use Restrictions:
+You MAY DO the following:
+
+1. Install and use the Software for your own personal and non-commercial use on a single computer. If you wish to use the Software for two or more computers, you will need an upgraded license.  Please contact eGames for information concerning such a license.
+
+2. Make one copy of the Software for archive or back-up purposes to replace the original Software if it is destroyed or becomes defective, provided that the original Software and the copy are kept in your possession.
+
+3. Transfer the Software to someone else, only if you assign all of your rights under this Agreement, cease all use of the Software, erase or destroy any copy (including the hard disk copy) made in support of your use of the Software, transfer the Software along with a copy of this Agreement and all accompanying items, and the other person agrees to the terms of this Agreement.
+
+4. If the Software is an upgrade from an eGames product, the Software replaces and/or supplements the eGames product.  You may use or transfer the resulting upgraded Software in accordance with this Agreement.
+
+
+Copy and Use Restrictions:
+Without written permission from eGames, you MAY NOT do the following:
+
+1. Use, copy or transfer copies of the Software except as permitted in this Agreement.
+
+2. Copy any images, photographs, animations, video, audio, music, or text incorporated in the Software.  All such materials are owned by eGames or its suppliers and are protected by copyright laws and international treaty provisions.
+
+3. Translate, reverse engineer, decompile, or disassemble the Software, except to the extent that the foregoing restriction is expressly prohibited by applicable law.
+
+4. Rent, lease, resell, distribute, sublicense, or loan the Software.
+
+5. Modify the Software or merge all or any part of the Software into another program.
+
+6. In any way transmit the Software to a network or electronic bulletin board for any reason whatsoever.
+
+Term:  This Agreement will become effective upon clicking the “Agree” or “Accept” button and continues until it is terminated. You may terminate this Agreement by destroying all copies of the Software or by returning all such copies to eGames.  This Agreement will also terminate if you fail to comply with any of its terms or conditions and will terminate as to you if you assign this Agreement to another party.  Upon termination, you must destroy all copies of the Software in your possession.  The Warranty Disclaimer and Limitation of Liability set out below shall continue in force even after any termination.
+
+90 Day Warranty: eGames warrants that the storage media in this Software will be free from defects in materials and workmanship for 90 days from the date of purchase.  If such a defect occurs, return it to us at the address below and we will replace it free.  This remedy is your exclusive remedy for breach of this warranty.  It gives you certain rights and you may have other legislated rights which vary from jurisdiction to jurisdiction.
+
+WARRANTY DISCLAIMER: EXCEPT FOR THE WARRANTY SET FORTH ABOVE, THE SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, AND EGAMES AND ITS SUPPLIERS AND DISTRIBUTORS DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT, OR THOSE ARISING BY LAW, STATUTE, USAGE OF TRADE OR COURSE OF DEALING. YOU ASSUME THE ENTIRE RISK AS TO THE RESULTS AND PERFORMANCE OF THE SOFTWARE.
+
+LIMITATION OF LIABILITY: NEITHER EGAMES NOR ITS DISTRIBUTORS OR SUPPLIERS SHALL HAVE ANY LIABILITY TO YOU OR ANY OTHER PERSON OR ENTITY FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING LOSS OF PROFITS) EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  OUR MAXIMUM AGGREGATE LIABILITY TO YOU AND THAT OF OUR DISTRIBUTORS AND OUR SUPPLIERS SHALL NOT EXCEED THE AMOUNT PAID BY YOU FOR THE SOFTWARE.  
+
+SOME STATES/COUNTRIES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, SO THE ABOVE EXCLUSION OR LIMITATION MAY NOT APPLY TO YOU.
+
+General:  This Agreement is the entire agreement between eGames and you, supersedes any other agreement or discussions, oral or written and may not be changed except by written signed agreement.  This Agreement shall be governed by and construed in accordance with the laws of the Commonwealth of Pennsylvania, USA.  If any provision of this Agreement is declared by a court of competent jurisdiction to be invalid, illegal, or unenforceable, such provision shall be severed from the Agreement and the other provisions shall remain in full force and effect. 
+
+eGames, Inc.
+2000 Cabot Boulevard West, Suite 110
+Langhorne, PA 19047
+(215) 750-6606
+http://www.egames.com
+
+CINEMAWARE MARQUEE? is a brand and trademark of eGames, Inc.
+
+Cinemaware license version 1.6

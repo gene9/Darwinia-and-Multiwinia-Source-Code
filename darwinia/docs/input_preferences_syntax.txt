@@ -1,0 +1,65 @@
+A Brief Summary of the Syntax of Darwinia's "input_preferences.txt"
+===================================================================
+
+Each line is of the form:
+
+  [<control_name> = <input_spec>] [# <comment_text>]
+
+where there _must_ be whitespace between the tokens and
+Where all possible control_names are defined in the source in:
+
+  lib/input/control_types.inc
+
+and possible input_specs are defined by the loaded inputdrivers
+(all lib/input/inputdriver_*.{c,cpp} in the source), and in Windows
+are currently defined, roughly, (in pseudo-BNF) as:
+
+
+button_cond       := (down|pressed|up)
+analog_cond       := (position|move|release|zero|read)
+mouse_button      := (left|middle|right)
+xinput_analog     := (leftthumbstick|rightthumbstick|
+                      lefttrigger|righttrigger)
+xinput_button     := (leftthumbstick|rightthumbstick|
+                      leftbumper|rightbumper|
+                      dpadleft|dpadright|dpadup|dpaddown|
+                      a|b|x|y|start|back|plug)
+
+button_spec       := key <key_name>
+button_spec       := mouse <mouse_button>
+button_spec       := XInput <xinput_button>
+
+simple_input_spec := <button_spec> <button_cond>
+simple_input_spec := mouse (axes|wheel) (move|read)
+simple_input_spec := XInput <xinput_analog> <analog_cond> [with sensitivity <int:1-200>]
+simple_input_spec := idle (reaches|atleast) <seconds>
+
+simple_input_spec := idle no longer
+simple_input_spec := pref [(not|!)] <boolean_preference_name>
+
+invert_input_spec := [(not|!)] <simple_input_spec>
+
+chord_input_spec  := <button_spec> ++ <button_spec>
+chord_input_spec  := <button_spec> ++ <chord_input_spec>
+
+conj_input_spec   := <invert_input_spec> [&& <conj_input_spec>]
+conj_input_spec   := <chord_input_spec> [&& <conj_input_spec>]
+
+input_spec        := <conj_input_spec>
+
+
+where <key_name> is the name of a standard keyboard key (eg. "a" or
+"esc" or "control" or "up" or "openbrace"). For the key names, see
+the source file:
+
+  lib/input/keynames.cpp
+
+and <boolean_preference_name> is the name of a valid integer-type
+preference variable from the "preferences.txt" file (or otherwise
+finding its way into the preference manager.) A positive non-zero
+value is taken as true. A preference value is always false if there
+is no corresponding prefernce manager entry.
+
+IMPORTANT NOTE: The user input preferences will override the FIRST
+binding that apprears in the system preferences file for a particular
+control event.

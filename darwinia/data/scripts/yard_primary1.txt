@@ -1,0 +1,9 @@
+
+Highlight               5
+CamBuildingFocus        5   600     300
+Say                     yard_genport_1
+Say                     yard_genport_2
+
+WaitSay
+ClearHighlights
+CamReset
