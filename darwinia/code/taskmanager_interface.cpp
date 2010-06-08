@@ -51,7 +51,7 @@
 
 
 
-ScreenZone::ScreenZone( char *_name, char *_tooltip, 
+ScreenZone::ScreenZone( char *_name, char *_tooltip,
                         float _x, float _y, float _w, float _h,
                         int _data )
 :   m_x(_x),
@@ -137,7 +137,7 @@ void TaskManagerInterface::RunDefaultObjective ( GlobalEventCondition *_cond )
                     }
                 }
             }
-            
+
             if( building )
             {
                 g_app->m_sepulveda->HighlightBuilding( building->m_id.GetUniqueId(), "RunDefaultObjective" );
@@ -147,8 +147,8 @@ void TaskManagerInterface::RunDefaultObjective ( GlobalEventCondition *_cond )
                 m_viewingDefaultObjective = true;
             }
             break;
-        }                            
-    }       
+        }
+    }
 }
 
 void TaskManagerInterface::SetVisible( bool _visible )

@@ -69,8 +69,8 @@ BOOL CMiniVersion::Init()
 	dwSize = ::GetFileVersionInfoSize((LPSTR)(LPCTSTR)m_szPath, &dwHandle);
 	if (dwSize == 0)
 		return FALSE;
-		
-	m_pData = new BYTE [dwSize + 1];	
+
+	m_pData = new BYTE [dwSize + 1];
 	ZeroMemory(m_pData, dwSize+1);
 
 	rc = ::GetFileVersionInfo((LPSTR)(LPCTSTR)m_szPath, dwHandle, dwSize, m_pData);
@@ -80,7 +80,7 @@ BOOL CMiniVersion::Init()
 	// get fixed info
 
 	VS_FIXEDFILEINFO FixedInfo;
-	
+
 	if (GetFixedInfo(FixedInfo))
 	{
 		m_wFileVersion[0] = HIWORD(FixedInfo.dwFileVersionMS);
@@ -107,7 +107,7 @@ BOOL CMiniVersion::Init()
 	GetStringInfo(_T("FileDescription"), m_szFileDescription);
 	GetStringInfo(_T("ProductName"),     m_szProductName);
 
-	return TRUE;		
+	return TRUE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -129,7 +129,7 @@ BOOL CMiniVersion::GetFileVersion(WORD * pwVersion)
 	for (int i = 0; i < 4; i++)
 		*pwVersion++ = m_wFileVersion[i];
 	return TRUE;
-}					 	 
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetProductVersion
@@ -231,9 +231,9 @@ BOOL CMiniVersion::GetFixedInfo(VS_FIXEDFILEINFO& rFixedInfo)
 		rc = ::VerQueryValue(m_pData, _T("\\"), (void **) &pFixedInfo, &nLength);
 	else
 		rc = FALSE;
-		
+
 	if (rc)
-		memcpy (&rFixedInfo, pFixedInfo, sizeof (VS_FIXEDFILEINFO));	
+		memcpy (&rFixedInfo, pFixedInfo, sizeof (VS_FIXEDFILEINFO));
 
 	return rc;
 }
@@ -246,7 +246,7 @@ BOOL CMiniVersion::GetStringInfo(LPCSTR lpszKey, LPTSTR lpszReturnValue)
 	DWORD *pdwTranslation;
 	UINT nLength;
 	LPTSTR lpszValue;
-	
+
 	if (m_pData == NULL)
 		return FALSE;
 
@@ -258,7 +258,7 @@ BOOL CMiniVersion::GetStringInfo(LPCSTR lpszKey, LPTSTR lpszReturnValue)
 
 	*lpszReturnValue = 0;
 
-	rc = ::VerQueryValue(m_pData, _T("\\VarFileInfo\\Translation"), 
+	rc = ::VerQueryValue(m_pData, _T("\\VarFileInfo\\Translation"),
 								(void**) &pdwTranslation, &nLength);
 	if (!rc)
 		return FALSE;
@@ -272,7 +272,7 @@ BOOL CMiniVersion::GetStringInfo(LPCSTR lpszKey, LPTSTR lpszReturnValue)
 
 	if (!rc)
 		return FALSE;
-		
+
 	lstrcpy(lpszReturnValue, lpszValue);
 
 	return TRUE;

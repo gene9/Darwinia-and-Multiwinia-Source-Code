@@ -53,7 +53,7 @@ void Script::ReportError(LevelFile const *_levelFile, char *_fmt, ...)
 
 	if (_levelFile)
 	{
-		sprintf(location, " (%s %s line: %d)", 
+		sprintf(location, " (%s %s line: %d)",
 			_levelFile->m_mapFilename+12, _levelFile->m_missionFilename+12, m_in->m_lineNum);
 	}
 	else
@@ -96,7 +96,7 @@ Script::Script()
 bool Script::IsRunningScript()
 {
 	if (g_app->m_testHarness) return false;
-	
+
     return ( m_in != NULL );
 }
 
@@ -114,11 +114,11 @@ void Script::RunCommand_CamCut(char const *_mountName)
 void Script::RunCommand_CamMove(char const *_mountName, float _duration)
 {
     if( !g_app->m_location ) return;
-    
+
 	if (g_app->m_camera->SetTarget(_mountName))
 	{
 		g_app->m_camera->SetMoveDuration(_duration);
-		        
+
         g_app->m_camera->RequestMode(Camera::ModeMoveToTarget);
 	}
 }
@@ -207,7 +207,7 @@ void Script::RunCommand_LocationFocus(char const *_locationName, float _fov)
 
         targetPos = g_app->m_globalWorld->GetLocationPosition(locationId);
     }
-    
+
     if( !g_app->m_camera->IsInMode( Camera::ModeSphereWorldScripted ) )
     {
         g_app->m_camera->RequestMode( Camera::ModeSphereWorldScripted );
@@ -224,14 +224,14 @@ void Script::RunCommand_CamReset()
     {
         g_app->m_camera->StopAnimation();
     }
-    
+
     if( g_app->m_location )
     {
         g_app->m_camera->RequestMode( Camera::ModeFreeMovement );
     }
     else
     {
-        g_app->m_camera->RequestMode(Camera::ModeSphereWorld);       
+        g_app->m_camera->RequestMode(Camera::ModeSphereWorld);
     }
 }
 
@@ -244,7 +244,7 @@ void Script::RunCommand_EnterLocation(char *_name)
 
     GlobalLocation *loc = g_app->m_globalWorld->GetLocation(g_app->m_requestedLocationId);
     DarwiniaDebugAssert( loc );
-    
+
     strcpy(g_app->m_requestedMission, loc->m_missionFilename);
     strcpy(g_app->m_requestedMap, loc->m_mapFilename);
 }
@@ -261,10 +261,10 @@ void Script::RunCommand_ExitLocation()
 
 
 void Script::RunCommand_SetMission(char *_locName, char *_missionName )
-{    
+{
     GlobalLocation *loc = g_app->m_globalWorld->GetLocation(_locName);
     DarwiniaDebugAssert(loc);
-    strcpy(loc->m_missionFilename, _missionName);    
+    strcpy(loc->m_missionFilename, _missionName);
     loc->m_missionCompleted = false;
 }
 
@@ -283,7 +283,7 @@ void Script::RunCommand_ShutUp()
 
 void Script::RunCommand_Wait(double _time)
 {
-    m_waitUntil = max( m_waitUntil, 
+    m_waitUntil = max( m_waitUntil,
                        GetHighResTime() + _time );
 }
 
@@ -325,7 +325,7 @@ void Script::RunCommand_WaitPlayerNotBusy()
 void Script::RunCommand_Highlight(int _buildingId)
 {
     g_app->m_sepulveda->HighlightBuilding( _buildingId, "ScriptHighlight" );
-}   
+}
 
 
 void Script::RunCommand_ClearHighlights()
@@ -366,26 +366,26 @@ void Script::RunCommand_GiveResearch(char const *_name)
     {
         g_prefsManager->SetInt( "ModSystemEnabled", 1 );
         g_prefsManager->Save();
-    
+
         g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, 999, 4.0f );
     }
     else if( stricmp( _name, "accessallareas" ) == 0 )
     {
         char folderName[512];
         sprintf( folderName, "%susers/", g_app->GetProfileDirectory() );
-        bool success = CreateDirectory( folderName );        
-        if( !success ) 
+        bool success = CreateDirectory( folderName );
+        if( !success )
         {
             DebugOut( "failed to create folder %s\n", folderName );
         }
 
         sprintf( folderName, "%susers/AccessAllAreas/", g_app->GetProfileDirectory() );
         success = CreateDirectory( folderName );
-        if( !success ) 
+        if( !success )
         {
             DebugOut( "failed to create folder %s\n", folderName );
-        }    
-        
+        }
+
         g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, 998, 4.0f );
     }
     else
@@ -413,7 +413,7 @@ void Script::RunCommand_RunCredits()
 
 
 void Script::RunCommand_GameOver()
-{    
+{
     //
     // Go into the outro camera mode
 
@@ -501,7 +501,7 @@ void Script::RunCommand_PurityControl()
     char saveDir[256];
     sprintf( saveDir, "users/%s/", g_app->m_userProfileName );
     LList<char *> *allFiles = ListDirectory( saveDir, "*.*" );
-    
+
     for( int i = 0; i < allFiles->Size(); ++i )
     {
         char *filename = allFiles->GetData(i);
@@ -561,8 +561,8 @@ void Script::RunCommand_ActivateTrunkPort( int _buildingId, bool _fullActivation
 		}
 		else
 		{
-			GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( b->m_id.GetUniqueId(), g_app->m_locationId ); 
-			gb->m_online = true;			
+			GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( b->m_id.GetUniqueId(), g_app->m_locationId );
+			gb->m_online = true;
 		}
 	}
 }
@@ -594,7 +594,7 @@ void Script::RunScript(char *_filename)
             char stringName[256];
             sprintf( stringName, "%s_%d", _filename, stringIndex );
             if( !ISLANGUAGEPHRASE_ANY(stringName) ) break;
-            
+
             g_app->m_sepulveda->Say( stringName );
             ++stringIndex;
         }
@@ -623,7 +623,7 @@ bool Script::Skip()
         }
         else
         {
-            g_app->m_camera->RequestMode(Camera::ModeSphereWorld);       
+            g_app->m_camera->RequestMode(Camera::ModeSphereWorld);
         }
         return true;
     }
@@ -641,8 +641,8 @@ void Script::Advance()
 
     if( m_permitEscape ) g_app->m_taskManagerInterface->SetVisible(false);
 
-	if (m_waitForFade && !g_app->m_renderer->IsFadeComplete())          return;	
-    if (m_waitUntil > g_gameTime)                                       return;    
+	if (m_waitForFade && !g_app->m_renderer->IsFadeComplete())          return;
+    if (m_waitUntil > g_gameTime)                                       return;
     if (m_waitForSpeech && g_app->m_sepulveda->IsTalking())             return;
     if (m_waitForCamera && g_app->m_camera->IsAnimPlaying())        	return;
     if (m_waitForPlayerNotBusy && Demo2Tutorial::IsPlayerBusy())        return;
@@ -686,7 +686,7 @@ void Script::Advance()
     m_waitForFade = false;
     m_waitForRocket = false;
     m_waitForPlayerNotBusy = false;
-    
+
     if (m_in)
     {
         if (m_in->ReadLine())
@@ -710,15 +710,15 @@ void Script::AdvanceScript()
 	int opCode = GetOpCode(m_in->GetNextToken());
 	char *nextWord = NULL;
 	float nextFloat = 0.0f;
-	if (m_in->TokenAvailable()) 
+	if (m_in->TokenAvailable())
 	{
 		nextWord = m_in->GetNextToken();
 		nextFloat = atof(nextWord);
 	}
-	
+
 	switch (opCode)
 	{
-		case OpCamMove:		    
+		case OpCamMove:
 		{
 			float duration = atof(m_in->GetNextToken());
 			RunCommand_CamMove(nextWord, duration);
@@ -728,10 +728,10 @@ void Script::AdvanceScript()
 		case OpCamAnim:			    RunCommand_CamAnim(nextWord);						break;
         case OpCamFov:
         {
-            int immediate = m_in->TokenAvailable() ? 
+            int immediate = m_in->TokenAvailable() ?
                             atoi( m_in->GetNextToken() ) :
                             true;
-            RunCommand_CamFov(nextFloat, immediate);                       
+            RunCommand_CamFov(nextFloat, immediate);
             break;
         }
 
@@ -739,32 +739,32 @@ void Script::AdvanceScript()
         {
             float range = atof(m_in->GetNextToken());
             float height = atof(m_in->GetNextToken());
-            RunCommand_CamBuildingFocus((int)nextFloat, range, height);        
+            RunCommand_CamBuildingFocus((int)nextFloat, range, height);
             break;
         }
-                   
+
         case OpCamBuildingApproach:
         {
             float range = atof(m_in->GetNextToken());
             float height = atof(m_in->GetNextToken());
             float duration = atof(m_in->GetNextToken());
-            RunCommand_CamBuildingApproach((int)nextFloat, range, height, duration);        
+            RunCommand_CamBuildingApproach((int)nextFloat, range, height, duration);
             break;
         }
 
-        case OpCamLocationFocus:    
+        case OpCamLocationFocus:
         {
             float fov = atof(m_in->GetNextToken());
-            RunCommand_LocationFocus(nextWord,fov);                 
+            RunCommand_LocationFocus(nextWord,fov);
             break;
         }
-        
+
         case OpCamGlobalWorldFocus:
         {
             RunCommand_CamGlobalWorldFocus();
             break;
         }
-        
+
         case OpCamReset:            RunCommand_CamReset();                              break;
 
 		case OpEnterLocation:	    RunCommand_EnterLocation(nextWord);		            break;
@@ -777,7 +777,7 @@ void Script::AdvanceScript()
 		case OpWaitCam:			    RunCommand_WaitCam();								break;
         case OpWaitFade:            RunCommand_WaitFade();                              break;
 
-        case OpWaitRocket:          
+        case OpWaitRocket:
         {
             char *state = m_in->GetNextToken();
             int data = atoi( m_in->GetNextToken() );
@@ -786,16 +786,16 @@ void Script::AdvanceScript()
         }
 
         case OpWaitPlayerNotBusy:   RunCommand_WaitPlayerNotBusy();                     break;
-            
+
         case OpHighlight:           RunCommand_Highlight((int)nextFloat);               break;
         case OpClearHighlights:     RunCommand_ClearHighlights();                       break;
 
         case OpTriggerSound:        RunCommand_TriggerSound(nextWord);                  break;
         case OpStopSound:           RunCommand_StopSound(nextWord);                     break;
-            
+
         case OpDemoGesture:         RunCommand_DemoGesture(nextWord);                   break;
         case OpGiveResearch:        RunCommand_GiveResearch(nextWord);                  break;
-            
+
         case OpSetMission:
         {
             char *missionName = m_in->GetNextToken();
@@ -805,11 +805,11 @@ void Script::AdvanceScript()
 
         case OpResetResearch:       RunCommand_ResetResearch();                         break;
         case OpRestoreResearch:     RunCommand_RestoreResearch();                       break;
-            
+
         case OpGameOver:            RunCommand_GameOver();                              break;
         case OpRunCredits:          RunCommand_RunCredits();                            break;
 
-        case OpSetCutsceneMode:     
+        case OpSetCutsceneMode:
         {
             int cutsceneMode = atoi( nextWord );
             g_app->m_sepulveda->SetCutsceneMode( cutsceneMode );
@@ -828,7 +828,7 @@ void Script::AdvanceScript()
 
         case OpPermitEscape:        RunCommand_PermitEscape();                          break;
 
-		case OpDestroyBuilding:		
+		case OpDestroyBuilding:
 		{
 			float intensity = atof(m_in->GetNextToken());
 			RunCommand_DestroyBuilding( (int)nextFloat, intensity );
@@ -836,12 +836,12 @@ void Script::AdvanceScript()
 		}
 
 		case OpActivateTrunkPort:
-		case OpActivateTrunkPortFull:	
+		case OpActivateTrunkPortFull:
 		{
 			RunCommand_ActivateTrunkPort((int)nextFloat, opCode == OpActivateTrunkPortFull );
 			break;
 		}
-            
+
 		default:				    DarwiniaDebugAssert(false);									break;
 	}
 }
@@ -859,7 +859,7 @@ void Script::TestScript(char *_filename)
 	}
 
 	LevelFile *levelFile = NULL;
-	
+
 	while (m_in->ReadLine())
 	{
 		if (!m_in->TokenAvailable()) continue;
@@ -868,17 +868,17 @@ void Script::TestScript(char *_filename)
 		int opCode = GetOpCode(firstWord);
 		char *nextWord = NULL;
 		float nextFloat = 0.0f;
-		if (m_in->TokenAvailable()) 
+		if (m_in->TokenAvailable())
 		{
 			nextWord = m_in->GetNextToken();
 			nextFloat = atof(nextWord);
 		}
-		
+
 		switch (opCode)
 		{
 			case OpCamMove:
 			{
-				if (!nextWord) 
+				if (!nextWord)
 				{
 					ReportError(levelFile, "CamMove called with no mount specified");
 					break;
@@ -907,7 +907,7 @@ void Script::TestScript(char *_filename)
 				break;
 			}
 			case OpCamCut:
-				if (!nextWord) 
+				if (!nextWord)
 				{
 					ReportError(levelFile, "CamCut called with no mount specified");
 					break;
@@ -959,7 +959,7 @@ void Script::TestScript(char *_filename)
 			case OpWaitSay:
 			case OpWaitCam:
 				break;
-			case OpSay:				
+			case OpSay:
 				if (!nextWord)
 				{
 					ReportError(levelFile, "Say called with no language symbol specified");
@@ -1001,7 +1001,7 @@ void Script::TestScript(char *_filename)
 #endif // SCRIPT_TEST_ENABLED
 
 
-static char *g_opCodeNames[] = 
+static char *g_opCodeNames[] =
 {
 	"CamCut",
 	"CamMove",

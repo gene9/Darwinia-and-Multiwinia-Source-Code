@@ -40,7 +40,7 @@ void GodDish::Initialise( Building *_template )
 
 
 bool GodDish::Advance()
-{    
+{
     if( m_activated )
     {
         m_timer += SERVER_ADVANCE_PERIOD;
@@ -63,18 +63,18 @@ bool GodDish::IsInView()
 
 
 void GodDish::Render( float _predictionTime )
-{    
+{
     Building::Render( _predictionTime );
 }
 
 
 void GodDish::RenderAlphas( float _predictionTime )
 {
-    Building::RenderAlphas( _predictionTime );   
-    
+    Building::RenderAlphas( _predictionTime );
+
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
-        
+
     glDepthMask     ( false );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
@@ -88,19 +88,19 @@ void GodDish::RenderAlphas( float _predictionTime )
     int maxBlobs = 50;
     if( buildingDetail == 2 ) maxBlobs = 25;
     if( buildingDetail == 3 ) maxBlobs = 10;
-    
+
 
     //
     // Calculate alpha value
 
     float alpha = m_timer * 0.1f;
     alpha = min( alpha, 1.0f );
-    
+
     //
     // Central glow effect
 
     for( int i = 0; i < maxBlobs; ++i )
-    {        
+    {
         Vector3 pos = m_centrePos;
         pos.x += sinf(timeIndex+i) * i * 1.7f;
         pos.y += fabs(cosf(timeIndex+i) * cosf(i*20) * 64);
@@ -108,8 +108,8 @@ void GodDish::RenderAlphas( float _predictionTime )
 
         float size = 20.0f * sinf(timeIndex+i*13);
         size = max( size, 5.0f );
-        
-        glColor4f( 0.6f, 0.2f, 0.1f, alpha);        
+
+        glColor4f( 0.6f, 0.2f, 0.1f, alpha);
         glBegin( GL_QUADS );
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
@@ -118,7 +118,7 @@ void GodDish::RenderAlphas( float _predictionTime )
         glEnd();
     }
 
-    
+
     //
     // Central starbursts
 
@@ -127,7 +127,7 @@ void GodDish::RenderAlphas( float _predictionTime )
     int numStars = 10;
     if( buildingDetail == 2 ) numStars = 5;
     if( buildingDetail == 3 ) numStars = 2;
-    
+
     for( int i = 0; i < numStars; ++i )
     {
         Vector3 pos = m_centrePos;
@@ -136,7 +136,7 @@ void GodDish::RenderAlphas( float _predictionTime )
         pos.z += cosf(timeIndex+i) * i * 1.7f;
 
         float size = i * 30.0f;
-        
+
         glColor4f( 1.0f, 0.4f, 0.2f, alpha );
 
         glBegin( GL_QUADS );
@@ -163,7 +163,7 @@ void GodDish::Activate()
     // Make all green darwinians watch us
 
     Team *team = &g_app->m_location->m_teams[0];
-    
+
     for( int i = 0; i < team->m_others.Size(); ++i )
     {
         if( team->m_others.ValidIndex(i) )
@@ -203,11 +203,11 @@ void GodDish::SpawnSpam( bool _isResearch )
 
     Spam *spam = (Spam *) CreateBuilding( TypeSpam );
     spam->Initialise( &spamTemplate );
-    g_app->m_location->m_buildings.PutData( spam );    
+    g_app->m_location->m_buildings.PutData( spam );
 
     spam->SendFromHeaven();
     if( _isResearch ) spam->SetAsResearch();
-    spam->m_pos = m_pos;                
+    spam->m_pos = m_pos;
     spam->m_pos += Vector3(0,1500*0.75f,900*0.75f);
     spam->m_vel = ( m_pos - spam->m_pos );
     spam->m_vel.SetLength( 80.0f );

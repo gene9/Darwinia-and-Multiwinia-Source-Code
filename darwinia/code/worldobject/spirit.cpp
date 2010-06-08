@@ -29,7 +29,7 @@ Spirit::Spirit()
     m_eggSearchTimer(0.0f),
     m_numNearbyEggs(0),
     m_pushFromBuildings(true)
-{   
+{
 }
 
 Spirit::~Spirit()
@@ -37,7 +37,7 @@ Spirit::~Spirit()
 }
 
 void Spirit::Begin()
-{    
+{
     m_timeSync = 6.0f;
     m_state = StateBirth;
 
@@ -53,7 +53,7 @@ void Spirit::Begin()
 }
 
 bool Spirit::Advance()
-{   
+{
     m_vel *= 0.9f;
 
     if( m_state != StateAttached &&
@@ -75,24 +75,24 @@ bool Spirit::Advance()
         if( m_zaxisRate < 0.0f ) m_zaxisRate = 0.0f;
         m_hover.x = sinf( m_positionOffset ) * m_xaxisRate;
         m_hover.y = sinf( m_positionOffset ) * m_yaxisRate;
-        m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;            
-       
+        m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;
+
         switch( m_state )
         {
-            case StateBirth:                 
+            case StateBirth:
             {
                 m_hover.y = max( m_hover.y, 0.0f + syncfrand(0.5f) );
                 float heightAboveGround = m_pos.y - g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
                 if( heightAboveGround > 10.0f )
                 {
-                    float fractionAboveGround = heightAboveGround / 100.0f;                    
+                    float fractionAboveGround = heightAboveGround / 100.0f;
                     fractionAboveGround = min( fractionAboveGround, 1.0f );
                     m_hover.y = (-10.0f - syncfrand(10.0f)) * fractionAboveGround;
                 }
                 else if( m_timeSync <= 0.0f )
                 {
                     m_state = StateFloating;
-                    m_timeSync = 120.0f + syncsfrand(60.0f);                                                            
+                    m_timeSync = 120.0f + syncsfrand(60.0f);
                 }
                 break;
             }
@@ -109,22 +109,22 @@ bool Spirit::Advance()
 
             case StateInStore:
                 break;
-                
-            case StateDeath:            
+
+            case StateDeath:
                 m_hover.y = max(m_hover.y, 2.0f + syncfrand(2.0f));
                 if( m_timeSync <= 0.0f )
                 {
                     // We are now dead
                     return true;
                 }
-                break;                    
+                break;
         };
     }
 
     Vector3 oldPos = m_pos;
 
-    if( m_pushFromBuildings && 
-        m_state != StateInStore && 
+    if( m_pushFromBuildings &&
+        m_state != StateInStore &&
         m_state != StateDeath )
     {
         PushFromBuildings();
@@ -138,7 +138,7 @@ bool Spirit::Advance()
     if( m_pos.z < 0.0f ) m_pos.z = 0.0f;
     if( m_pos.x >= worldSizeX ) m_pos.x = worldSizeX;
     if( m_pos.z >= worldSizeZ ) m_pos.z = worldSizeZ;
-    
+
     if( m_state != StateInEgg && m_state != StateDeath )
     {
         float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
@@ -146,7 +146,7 @@ bool Spirit::Advance()
     }
 
     //m_vel = (m_pos - oldPos) / SERVER_ADVANCE_PERIOD;
-    
+
     //
     // Update nearby eggs
 
@@ -156,11 +156,11 @@ bool Spirit::Advance()
 
         if( m_eggSearchTimer <= 0.0f )
         {
-            m_eggSearchTimer = 3.0f;       
+            m_eggSearchTimer = 3.0f;
             m_numNearbyEggs = 0;
 
             int numNeighbours;
-            WorldObjectId *ids = g_app->m_location->m_entityGrid->GetNeighbours( 
+            WorldObjectId *ids = g_app->m_location->m_entityGrid->GetNeighbours(
 								    m_pos.x, m_pos.z, VIRII_MAXSEARCHRANGE, &numNeighbours );
 
             for( int i = 0; i < numNeighbours; ++i )
@@ -168,7 +168,7 @@ bool Spirit::Advance()
                 WorldObjectId id = ids[i];
                 Egg *egg = (Egg *) g_app->m_location->GetEntitySafe( id, Entity::TypeEgg );
                 if( egg &&
-                    egg->m_state == Egg::StateDormant && 
+                    egg->m_state == Egg::StateDormant &&
                     egg->m_onGround )
                 {
                     m_nearbyEggs[ m_numNearbyEggs ] = id;
@@ -227,7 +227,7 @@ void Spirit::AddToGlobalWorld()
     int locationId = g_app->m_locationId;
     GlobalLocation *location = g_app->m_globalWorld->GetLocation( locationId );
     DarwiniaDebugAssert(location);
-    location->AddSpirits(1);    
+    location->AddSpirits(1);
 }
 
 
@@ -265,7 +265,7 @@ void Spirit::EggDestroyed()
 }
 
 void Spirit::Render( float predictionTime )
-{       
+{
     int innerAlpha = 255;
     int outerAlpha = 100;
     float spiritInnerSize = 1.0;
@@ -293,36 +293,36 @@ void Spirit::Render( float predictionTime )
     RGBAColour colour;
     if( m_teamId != 255 )
     {
-        colour = g_app->m_location->m_teams[ m_teamId ].m_colour;      
+        colour = g_app->m_location->m_teams[ m_teamId ].m_colour;
     }
     else
     {
         colour.Set( 255, 255, 255 );
     }
-    
+
     predictionTime -= SERVER_ADVANCE_PERIOD;
-    
+
     Vector3 predictedPos = m_pos + predictionTime * m_vel;
     predictedPos += predictionTime * m_hover;
-        
+
     float size = spiritInnerSize;
-    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );            
-    
+    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );
+
     glBegin( GL_QUADS );
         glVertex3fv( (predictedPos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (predictedPos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (predictedPos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (predictedPos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize;
-    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );            
+    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );
     glBegin( GL_QUADS );
         glVertex3fv( (predictedPos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (predictedPos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (predictedPos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (predictedPos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 }
 
 int Spirit::NumNearbyEggs()

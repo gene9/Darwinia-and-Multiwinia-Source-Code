@@ -63,7 +63,7 @@ void GameMenuButton::Render( int realX, int realY, bool highlighted, bool clicke
     {
         glColor4f( 1.0, 0.3f, 0.3, 1.0f );
     }
-    
+
     g_gameFont.SetRenderOutline(false);
     g_gameFont.DrawText2DCentre( realX, realY, m_fontSize, m_iconName );
 
@@ -231,7 +231,7 @@ public:
             strcpy( g_app->m_requestedMap, g_app->m_gameMenu->m_maps[parent->m_gameType][parent->m_requestedMapId] );
             strcpy( g_app->m_requestedMission, "null" );
         }
-        
+
         g_app->m_requestToggleEditing = false;
         g_app->m_requestedLocationId = 999;
 
@@ -489,7 +489,7 @@ void GameMenuWindow::GetDefaultPositions(int *_x, int *_y, int *_gap)
     *_x = (w / 2) - 150;
     switch( m_newPage )
     {
-        case PageMain:     
+        case PageMain:
         case PageDarwinia:      *_y = float((h / 864.0f ) * 200.0f); *_gap = *_y;            break;
         case PageMultiwinia:    *_y = float((h / 864.0f ) * 200.0f); *_gap = *_y / 1.5f;     break;
         case PageGameSetup:

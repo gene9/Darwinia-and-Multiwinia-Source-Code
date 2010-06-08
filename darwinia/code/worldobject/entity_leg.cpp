@@ -17,14 +17,14 @@
 
 
 
-EntityLeg::EntityLeg(int _legNum, Entity *_parent, 
-                     char const *_shapeNameUpper, 
-                     char const *_shapeNameLower, 
+EntityLeg::EntityLeg(int _legNum, Entity *_parent,
+                     char const *_shapeNameUpper,
+                     char const *_shapeNameLower,
                      char const *_rootMarkerName)
 :	m_legNum(_legNum),
 	m_parent(_parent)
 {
-	m_shapeUpper = g_app->m_resource->GetShape(_shapeNameUpper);    
+	m_shapeUpper = g_app->m_resource->GetShape(_shapeNameUpper);
     m_shapeLower = g_app->m_resource->GetShape(_shapeNameLower);
 	DarwiniaReleaseAssert(m_shapeUpper, "EntityLeg: Couldn't load leg shape %s", _shapeNameUpper);
     DarwiniaReleaseAssert(m_shapeLower, "EntityLeg: Couldn't load leg shape %s", _shapeNameLower);
@@ -32,7 +32,7 @@ EntityLeg::EntityLeg(int _legNum, Entity *_parent,
 	ShapeMarker *endMarker = m_shapeUpper->m_rootFragment->LookupMarker("MarkerEnd");
 	Matrix34 const &endMatrix = endMarker->GetWorldMatrix(Matrix34(0));
 	m_thighLen = endMatrix.pos.Mag();
-	
+
     endMarker = m_shapeLower->m_rootFragment->LookupMarker("MarkerEnd");
     Matrix34 const &endMatrixLower = endMarker->GetWorldMatrix(Matrix34(0));
     m_shinLen = endMatrixLower.pos.Mag();
@@ -48,7 +48,7 @@ Vector3 EntityLeg::GetLegRootPos()
 {
 	Matrix34 rootMat(m_parent->m_front, g_upVector, m_parent->m_pos);
 	Matrix34 const &resultMat = m_rootMarker->GetWorldMatrix(rootMat);
-	
+
 	return resultMat.pos;
 }
 
@@ -56,7 +56,7 @@ Vector3 EntityLeg::GetLegRootPos()
 Vector3 EntityLeg::CalcFootHomePos(float _targetHoverHeight)
 {
 	Vector3 rootWorldPos = GetLegRootPos();
-	
+
 	Vector3 fromCentreToRoot = rootWorldPos - m_parent->m_pos;
 	fromCentreToRoot.HorizontalAndNormalise();
 
@@ -77,11 +77,11 @@ float EntityLeg::CalcFootsDesireToMove(float _targetHoverHeight)
 	Vector3 homePos = CalcFootHomePos(_targetHoverHeight);
 	Vector3 delta = m_foot.m_pos - homePos;
 	Vector3 deltaHoriNorm = delta; deltaHoriNorm.HorizontalAndNormalise();
-	
+
 	float scoreDueToDirection = 1.0f;
 //	if (m_parent->m_vel.Mag() > 0.1f)
 //	{
-//		Vector3 velHoriNorm = m_parent->m_vel; 
+//		Vector3 velHoriNorm = m_parent->m_vel;
 //		velHoriNorm.HorizontalAndNormalise();
 //		scoreDueToDirection = -(deltaHoriNorm * velHoriNorm);
 //	}
@@ -95,7 +95,7 @@ float EntityLeg::CalcFootsDesireToMove(float _targetHoverHeight)
 Vector3 EntityLeg::CalcDesiredFootPos(float _targetHoverHeight)
 {
 	Vector3 rv = CalcFootHomePos(_targetHoverHeight);
-	
+
 	float expectedRotation = 1.2f * m_parent->m_angVel.y;
 	Vector3 averageExpectedVel = m_parent->m_vel;
 	averageExpectedVel.RotateAroundY(expectedRotation * 0.5f);
@@ -150,7 +150,7 @@ void EntityLeg::PlantFoot()
 Vector3 EntityLeg::GetIdealSwingingFootPos(float _fractionComplete)
 {
 	float fractionIncomplete = 1.0f - _fractionComplete;
-	Vector3 pos = m_foot.m_lastGroundPos * fractionIncomplete + 
+	Vector3 pos = m_foot.m_lastGroundPos * fractionIncomplete +
 				  m_foot.m_targetPos * _fractionComplete;
 
 	if (_fractionComplete < 0.33f)
@@ -175,7 +175,7 @@ bool EntityLeg::Advance()
 {
 	if (m_foot.m_state == EntityFoot::Swinging)
 	{
-		float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp, 
+		float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp,
 											   m_legSwingDuration, g_gameTime);
 		if (fractionComplete > 1.0f)
 		{
@@ -220,10 +220,10 @@ void EntityLeg::Render(float _predictionTime, Vector3 const &_predictedMovement)
 		case EntityFoot::OnGround:
 			footPos = m_foot.m_pos;
 			break;
-		
+
 		case EntityFoot::Swinging:
 		{
-			float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp, 
+			float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp,
 												   m_legSwingDuration, g_gameTime);
 			footPos = GetIdealSwingingFootPos(fractionComplete);
 			break;
@@ -236,7 +236,7 @@ void EntityLeg::Render(float _predictionTime, Vector3 const &_predictedMovement)
 	}
 
 	Vector3 kneePos = CalcKneePos(footPos, rootPos, predictedPos);
-	
+
 	{
 		Vector3 up((kneePos - footPos).Normalise());
 		Vector3 front(up ^ g_upVector);
@@ -268,10 +268,10 @@ bool EntityLeg::RenderPixelEffect(float _predictionTime, Vector3 const &_predict
 		case EntityFoot::OnGround:
 			footPos = m_foot.m_pos;
 			break;
-		
+
 		case EntityFoot::Swinging:
 		{
-			float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp, 
+			float fractionComplete = RampUpAndDown(m_foot.m_leftGroundTimeStamp,
 												   m_legSwingDuration, g_gameTime);
 			footPos = GetIdealSwingingFootPos(fractionComplete);
 			break;

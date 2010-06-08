@@ -55,7 +55,7 @@ protected:
 	float			m_targetHoverHeight;
 	Vector3			m_targetPos;
 	Vector3			m_up;
-    
+
 	float			m_pounceStartTime;
 
 	int		CalcWhichFootToMove();
@@ -66,11 +66,11 @@ protected:
 	void	DetectCollisions();
 
 protected:          // AI stuff
-    
+
     float           m_retargetTimer;
     Vector3         m_pounceTarget;
     int             m_spiritId;
-    
+
 	bool	SearchForRandomPos();
     bool    SearchForEnemies();
     bool    SearchForSpirits();

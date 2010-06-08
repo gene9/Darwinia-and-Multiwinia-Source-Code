@@ -74,7 +74,7 @@ void TestHarness::PrintGlobalState(GlobalWorld *_world)
 //	for (int i = 0; i < _world->m_buildings.Size(); ++i)
 //	{
 //		GlobalBuilding *building = _world->m_buildings[i];
-//		fprintf(m_out, m_indent); 
+//		fprintf(m_out, m_indent);
 //		fprintf(m_out, "%-14s ", Building::GetTypeName(building->m_type));
 //		fprintf(m_out, "%-16s ", _world->GetLocationName(building->m_locationId));
 //		fprintf(m_out, "%4d ", building->m_id);
@@ -94,7 +94,7 @@ LList <int> *TestHarness::FindAvailableMissions(GlobalWorld *_world)
 	for (int i = 0; i < _world->m_locations.Size(); ++i)
 	{
 		GlobalLocation *loc = _world->m_locations[i];
-		if (loc->m_available && 
+		if (loc->m_available &&
 			stricmp(loc->m_missionFilename, "null") != 0)
 		{
 			if (strnicmp(loc->m_missionFilename, "cutscene", strlen("cutscene")) == 0)
@@ -111,7 +111,7 @@ LList <int> *TestHarness::FindAvailableMissions(GlobalWorld *_world)
 }
 
 
-void TestHarness::AchieveObjective(GlobalWorld *_world, GlobalEventCondition *_objective, 
+void TestHarness::AchieveObjective(GlobalWorld *_world, GlobalEventCondition *_objective,
 								   int _locId, LevelFile *_levelFile)
 {
 	switch (_objective->m_type)
@@ -130,13 +130,13 @@ void TestHarness::AchieveObjective(GlobalWorld *_world, GlobalEventCondition *_o
 						   _world->GetLocationName(_locId), _objective->m_id);
 				break;
 			}
-			
+
 			building->m_online = false;
-			
+
 			fprintf(m_out, "%sPlayer sets building OFFLINE: %s id:%d in location %s\n",
 					m_indent,
 					Building::GetTypeName(building->m_type),
-					_objective->m_id, 
+					_objective->m_id,
 					_world->GetLocationName(_locId));
 			break;
 		}
@@ -150,13 +150,13 @@ void TestHarness::AchieveObjective(GlobalWorld *_world, GlobalEventCondition *_o
 						   _world->GetLocationName(_locId), _objective->m_id);
 				break;
 			}
-			
+
 			building->m_online = true;
-			
+
 			fprintf(m_out, "%sPlayer sets building ONLINE: %s id:%d in location %s\n",
 					m_indent,
 					Building::GetTypeName(building->m_type),
-					_objective->m_id, 
+					_objective->m_id,
 					_world->GetLocationName(_locId));
 
 			if (building->m_type == Building::TypeTrunkPort)
@@ -176,7 +176,7 @@ void TestHarness::AchieveObjective(GlobalWorld *_world, GlobalEventCondition *_o
 
 			break;
 		}
-		
+
 		case GlobalEventCondition::ResearchOwned:
 			fprintf(m_out, "%sPlayer collects research %d\n", m_indent, _objective->m_id);
 			_world->m_research->AddResearch(_objective->m_id);
@@ -190,7 +190,7 @@ void TestHarness::DoMission(GlobalWorld *_world, int _locId)
 
 	GlobalLocation *loc = _world->GetLocation(_locId);
 
-	fprintf(m_out, "%sDoing mission in location %s: %s\n", m_indent, 
+	fprintf(m_out, "%sDoing mission in location %s: %s\n", m_indent,
 			_world->GetLocationName(_locId),
 			loc->m_missionFilename);
 
@@ -217,7 +217,7 @@ void TestHarness::DoMission(GlobalWorld *_world, int _locId)
 
 	// Set the mission file to "null"
 	strcpy(loc->m_missionFilename, "null");
-	
+
 	// Re-evaluate global events
 	fprintf(m_out, "\n%sEvaluating events\n", m_indent);
 	while (_world->EvaluateEvents()) ;
@@ -229,7 +229,7 @@ void TestHarness::DoMission(GlobalWorld *_world, int _locId)
 void TestHarness::ExploreStates(GlobalWorld *_world)
 {
 	PrintGlobalState(_world);
-	
+
 	LList <int> *missions = FindAvailableMissions(_world);
 
 	if (missions->Size() == 0)
@@ -247,7 +247,7 @@ void TestHarness::ExploreStates(GlobalWorld *_world)
 		}
 
 		m_completedGames.PutDataAtEnd(completedGame);
-		
+
 		m_indent += 3;
 	}
 	else
@@ -257,7 +257,7 @@ void TestHarness::ExploreStates(GlobalWorld *_world)
 		{
 			// Copy global state and place into stack
 			GlobalWorld *copyOfWorld = new GlobalWorld(*_world);
-			
+
 			// Big hack
 			GlobalWorld *oldGlobalWorld = g_app->m_globalWorld;
 			g_app->m_globalWorld = copyOfWorld;
@@ -267,16 +267,16 @@ void TestHarness::ExploreStates(GlobalWorld *_world)
 
 			// Recurse
 			ExploreStates(copyOfWorld);
-			
+
 			m_indent += 3;
 			char *missionName = m_missionsDone.GetData(m_missionsDone.Size() - 1);
 			m_missionsDone.RemoveData(m_missionsDone.Size() - 1);
 			free(missionName);
 
-			fprintf(m_out, "%sEnd of mission in %s\n", m_indent, 
+			fprintf(m_out, "%sEnd of mission in %s\n", m_indent,
 					_world->GetLocationName(missions->GetData(i)));
 
-			
+
 			// Remove global state from stack and delete
 			delete copyOfWorld;
 

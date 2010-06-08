@@ -54,19 +54,19 @@ Sepulveda::Sepulveda()
     for( int i = 0; i < 5; ++i )
     {
         char filename[256];
-        sprintf( filename, "sepulveda/sepulveda%d.bmp", i+1 );   
+        sprintf( filename, "sepulveda/sepulveda%d.bmp", i+1 );
         g_app->m_resource->GetTexture( filename, true, false );
     }
 
     m_caption[0] = '\x0';
-	
+
 	// Put some of the operating system specific definitions into the
 	// language hash
-	
-#ifdef TARGET_OS_MACOSX	
+
+#ifdef TARGET_OS_MACOSX
 	m_langDefines.PutData("part_leftclick", "Click");
 	m_langDefines.PutData("part_rightclick", "Right click");
-	m_langDefines.PutData("part_leftmousebutton", "Mouse button");    
+	m_langDefines.PutData("part_leftmousebutton", "Mouse button");
 	m_langDefines.PutData("part_leftclicking", "Clicking");
 #else
 	m_langDefines.PutData("part_leftclick", "Left click");
@@ -74,7 +74,7 @@ Sepulveda::Sepulveda()
 	m_langDefines.PutData("part_leftmousebutton", "Left mouse button");
 	m_langDefines.PutData("part_leftclicking", "Left clicking");
 #endif
-	
+
 
     //
     // Test english.txt
@@ -125,7 +125,7 @@ Sepulveda::Sepulveda()
 //////////////////////////////////////////////////////////////////////////////
 
 //bool buildCaption(char const *_baseString, char *_dest); // see sepulveda_strings.cpp
-			
+
 bool Sepulveda::BuildCaption(char const *_baseString, char *_dest) {
 //	return buildCaption( _baseString, _dest );
 	strncpy( _dest, _baseString, SEPULVEDA_MAX_PHRASE_LENGTH - 1 );
@@ -152,18 +152,18 @@ void Sepulveda::Advance()
 
         if( GetHighResTime() >= m_timeSync + textTime + pauseTime ||
             g_inputManager->controlEvent( ControlSkipMessage ) )
-        {            
+        {
             m_caption[0] = '\0';
 		    m_gestureDemo = NULL;
             m_timeSync = GetHighResTime();
-            captionGone = true;        
+            captionGone = true;
         }
         else
         {
             m_history[0]->m_timeSync = GetHighResTime();
         }
     }
-    
+
 
     //
     // Are there more messages waiting in the queue?
@@ -175,9 +175,9 @@ void Sepulveda::Advance()
 		std::auto_ptr<SepulvedaCaption> sepulvedaCaption = std::auto_ptr<SepulvedaCaption>( new SepulvedaCaption() );
         sepulvedaCaption->m_stringId = NewStr(stringId);
         sepulvedaCaption->m_timeSync = GetHighResTime();
-        
+
         DarwiniaDebugAssert( ISLANGUAGEPHRASE_ANY( stringId ) );
-        
+
         BuildCaption( LANGUAGEPHRASE( stringId ), m_caption );
 		if ( m_caption[0] != '\0' ) {
 			m_history.PutDataAtStart( sepulvedaCaption.release() );
@@ -195,8 +195,8 @@ void Sepulveda::Advance()
         // Sepulveda just finished talking
         g_app->m_soundSystem->TriggerOtherEvent( NULL, "Disappear", SoundSourceBlueprint::TypeSepulveda );
     }
-    
-    
+
+
     //
     // Advance our highlights
 
@@ -228,9 +228,9 @@ void Sepulveda::Advance()
 
 
     //
-    // If we are in a cutscene mode 
+    // If we are in a cutscene mode
     // Make sure all the message history is faded out
-    
+
     if( m_cutsceneMode )
     {
         for( int i = 0; i < m_history.Size(); ++i )
@@ -247,10 +247,10 @@ bool Sepulveda::PlayerSkipsMessage()
     if( m_caption[0] != '\0' )
     {
         m_caption[0] = '\0';
-		m_gestureDemo = NULL;	// No need to delete the gesture demo because it is owned by the resource system        
+		m_gestureDemo = NULL;	// No need to delete the gesture demo because it is owned by the resource system
         return true;
     }
- 
+
     return false;
 }
 
@@ -258,9 +258,9 @@ bool Sepulveda::PlayerSkipsMessage()
 void Sepulveda::Say( char *_stringId )
 {
     //
-    // If we are using a 1 button mouse, look out for an alternative stringID 
+    // If we are using a 1 button mouse, look out for an alternative stringID
     // Same if we are using the icon based control mechanism
-    
+
     char *actualStringId = NULL;
 
     int numMouseButtons = g_prefsManager->GetInt( "ControlMouseButtons" );
@@ -289,7 +289,7 @@ void Sepulveda::Say( char *_stringId )
     {
         actualStringId = NewStr( _stringId );
     }
-    
+
 	// Is thisi string empty?
 	if ( actualStringId[0] == '\0' )
 	{
@@ -351,7 +351,7 @@ void Sepulveda::HighlightPosition( Vector3 const &_pos, float _radius, char *_hi
 void Sepulveda::HighlightBuilding( int _buildingId, char *_highlightName )
 {
     if( !g_app->m_location ) return;
-    
+
     Building *building = g_app->m_location->GetBuilding( _buildingId );
     if( building )
     {
@@ -399,7 +399,7 @@ void Sepulveda::ShutUp()
     {
         m_caption[0] = '\0';
     }
-    
+
     ClearHighlights( NULL );
     m_gestureDemo = NULL;
 
@@ -443,7 +443,7 @@ bool Sepulveda::IsVisible()
 
 float Sepulveda::CalculateTextTime()
 {
-    if( m_caption[0] == '\0' ) 
+    if( m_caption[0] == '\0' )
     {
         return 0.0f;
     }
@@ -452,7 +452,7 @@ float Sepulveda::CalculateTextTime()
         int totalLen = strlen(m_caption);
         int narratorSpeed = g_prefsManager->GetInt( "TextSpeed", 15 );
         float timeToWait = 0.6f * (float) totalLen / (float) narratorSpeed;
-        
+
         return timeToWait;
     }
 }
@@ -467,12 +467,12 @@ float Sepulveda::CalculatePauseTime()
     else
     {
         int totalLen = strlen(m_caption);
-        int narratorSpeed = g_prefsManager->GetInt( "TextSpeed", 15 );        
+        int narratorSpeed = g_prefsManager->GetInt( "TextSpeed", 15 );
         float timeToWait = (float) totalLen / (float) narratorSpeed;
 
         if( !m_cutsceneMode ) timeToWait *= 0.5f;
-        
-        return timeToWait;    
+
+        return timeToWait;
     }
 }
 
@@ -561,7 +561,7 @@ void Sepulveda::RenderHighlights()
         //glEnable        ( GL_DEPTH_TEST );
         glDisable       ( GL_TEXTURE_2D );
         glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-        glDisable       ( GL_BLEND );        
+        glDisable       ( GL_BLEND );
     }
 
     END_PROFILE( g_app->m_profiler, "Highlights" );
@@ -573,7 +573,7 @@ float Sepulveda::GetCaptionAlpha( float _timeSync )
     float timePassed = GetHighResTime() - _timeSync;
     float alphaScale = 1.0f - timePassed / 20.0f;
     alphaScale = max( alphaScale, 0.0f );
-    alphaScale = min( alphaScale, 1.0f );        
+    alphaScale = min( alphaScale, 1.0f );
     return alphaScale;
 }
 
@@ -620,7 +620,7 @@ void Sepulveda::RenderTextBoxCutsceneMode()
     float sepulvedaW = sepulvedaH * 0.8f;
     float sepulvedaX = textBoxX - sepulvedaW - 10;
     float sepulvedaY = 430;     //590 - sepulvedaH;
-    
+
     if( m_caption[0] != '\0' )
     {
         //m_fade = m_fade * 0.95f + 0.05f;
@@ -642,19 +642,19 @@ void Sepulveda::RenderTextBoxCutsceneMode()
 
     //
     // Render sepulveda
-        
+
     RenderFace( sepulvedaX, sepulvedaY, sepulvedaW, sepulvedaH, m_fade );
 
-    
+
     //
     // Current text appearing on screen
 
     float yPos = 440.0f;
     float alpha = 1.0f;
     float textX = textBoxX+15;
-    
+
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-    
+
     if( m_caption[0] != '\0' )
     {
         float textTime = CalculateTextTime();
@@ -666,14 +666,14 @@ void Sepulveda::RenderTextBoxCutsceneMode()
         int totalChars = strlen(m_caption);
         int finishingChar = totalChars * fractionDone;
         int thisChar = 0;
-    
+
         if( finishingChar != m_previousNumChars )
         {
             g_app->m_soundSystem->TriggerOtherEvent( NULL, "TextAppear", SoundSourceBlueprint::TypeSepulveda );
             m_previousNumChars = finishingChar;
-        }        
+        }
 
-        glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
+        glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 
         LList<char *> *wrapped = WordWrapText( m_caption, textBoxW-15, g_editorFont.GetTextWidth(1,textH), true );
 
@@ -682,13 +682,13 @@ void Sepulveda::RenderTextBoxCutsceneMode()
             char *thisLine = wrapped->GetData(i);
 
             if( thisChar + strlen(thisLine) < finishingChar )
-            {                
+            {
                 g_gameFont.SetRenderOutline(true);
-                glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );        
-                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
-                glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
+                glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );
+                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
+                glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
                 g_gameFont.SetRenderOutline(false);
-                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
+                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
                 yPos += textH;
             }
             else if( thisChar < finishingChar )
@@ -698,21 +698,21 @@ void Sepulveda::RenderTextBoxCutsceneMode()
                 int finishingCharIndex = ( finishingChar - thisChar );
                 thisLineCopy[ finishingCharIndex ] = '\x0';
                 g_gameFont.SetRenderOutline(true);
-                glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );        
+                glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );
                 g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
-                glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
+                glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
                 g_gameFont.SetRenderOutline(false);
                 g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
                 yPos += textH;
             }
 
             thisChar += strlen(thisLine);
-        }       
+        }
         delete [] wrapped->GetData(0);
         delete wrapped;
     }
-       
-    
+
+
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     if( g_app->m_script->m_permitEscape )
     {
@@ -780,7 +780,7 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
     float textBoxH = 40;
 
     //
-    // Render background box 
+    // Render background box
 
     float startingAlpha = m_fade * 0.75f;
     glColor4f( 0.1f, 0.1f, 0.5f, startingAlpha );
@@ -795,21 +795,21 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
 
     //
     // Render sepulveda
-        
+
     RenderFace( sepulvedaX, sepulvedaY, sepulvedaW, sepulvedaH, m_fade );
 
-    
+
     //
     // Render border
 
-    glColor4ub( 199, 214, 220, 255*m_fade );    
+    glColor4ub( 199, 214, 220, 255*m_fade );
     glLineWidth( 1.0f );
     glBegin( GL_LINE_LOOP );
         glVertex2i( sepulvedaX, textBoxY );
         glVertex2i( textBoxX+textBoxW, textBoxY);
         glVertex2i( textBoxX+textBoxW, textBoxY+textBoxH );
         glVertex2i( sepulvedaX, textBoxY+textBoxH );
-    glEnd();    
+    glEnd();
     glLineWidth( 1.0f );
 
 
@@ -819,7 +819,7 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
     float yPos = m_screenH - 56;
     float alpha = 1.0f;
     float textX = textBoxX+15;
-        
+
     if( m_caption[0] != '\0' )
     {
         float textTime = CalculateTextTime();
@@ -831,27 +831,27 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
         int totalChars = strlen( m_caption );
         int finishingChar = totalChars * fractionDone;
         int thisChar = 0;
- 
+
         if( finishingChar != m_previousNumChars )
         {
             g_app->m_soundSystem->TriggerOtherEvent( NULL, "TextAppear", SoundSourceBlueprint::TypeSepulveda );
             m_previousNumChars = finishingChar;
-        }        
+        }
 
         LList<char *> *wrapped = WordWrapText( m_caption, textBoxW-15, g_editorFont.GetTextWidth(1,textH), true );
-        
+
         for( int i = 0; i < wrapped->Size(); i++ )
         {
             char *thisLine = wrapped->GetData(i);
 
             if( thisChar + strlen(thisLine) < finishingChar )
-            {                
+            {
                 g_gameFont.SetRenderOutline(true);
-                glColor4f( m_fade, m_fade, m_fade, 0.0f );        
-                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
-                glColor4f( 1.0f, 1.0f, 1.0f, m_fade );        
+                glColor4f( m_fade, m_fade, m_fade, 0.0f );
+                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
+                glColor4f( 1.0f, 1.0f, 1.0f, m_fade );
                 g_gameFont.SetRenderOutline(false);
-                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
+                g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
                 yPos += textH;
             }
             else if( thisChar < finishingChar )
@@ -861,16 +861,16 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
                 int finishingCharIndex = ( finishingChar - thisChar );
                 thisLineCopy[ finishingCharIndex ] = '\x0';
                 g_gameFont.SetRenderOutline(true);
-                glColor4f( m_fade, m_fade, m_fade, 0.0f );        
+                glColor4f( m_fade, m_fade, m_fade, 0.0f );
                 g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
-                glColor4f( 1.0f, 1.0f, 1.0f, m_fade );        
+                glColor4f( 1.0f, 1.0f, 1.0f, m_fade );
                 g_gameFont.SetRenderOutline(false);
                 g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
                 yPos += textH;
             }
 
             thisChar += strlen(thisLine);
-        }       
+        }
         delete [] wrapped->GetData(0);
         delete wrapped;
     }
@@ -886,7 +886,7 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
 void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha )
 {
     if( _alpha <= 0.0f ) return;
-    
+
     char filename[256];
     static int previousPicIndex = 1;
     static int picIndex = 1;
@@ -905,15 +905,15 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     if( timeNow > picTimer + frameTime && _alpha > 0.9f )
     {
         previousPicIndex = picIndex;
-        
-        if( frand(6.0f) < 1.0f )        zoomFactor = frand(0.1f);        
+
+        if( frand(6.0f) < 1.0f )        zoomFactor = frand(0.1f);
         if( frand(6.0f) < 1.0f )        offsetX = sfrand(0.1f);
-        
+
         if      ( frand(10.0f) < 1.0f ) picIndex = 5;           // mouth open
         else if ( frand(10.0f) < 1.0f ) picIndex = 4;           // eyes shut
-        else                            picIndex = 1 + ( darwiniaRandom() % 3 );       
-            
-        picTimer = timeNow;            
+        else                            picIndex = 1 + ( darwiniaRandom() % 3 );
+
+        picTimer = timeNow;
     }
 
     glEnable        ( GL_TEXTURE_2D );
@@ -935,19 +935,19 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     texY += currentZoomFactor;
     texW -= currentZoomFactor * 2;
     texH -= currentZoomFactor * 2;
-    
+
     //
     // Render current pic
 
-    sprintf( filename, "sepulveda/sepulveda%d.bmp", picIndex );   
+    sprintf( filename, "sepulveda/sepulveda%d.bmp", picIndex );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename, true, false ) );
-    
+
     glColor4f( 1.0f, 1.0f, 1.0f, _alpha );
-    glBegin( GL_QUADS );                
+    glBegin( GL_QUADS );
         glTexCoord2f( texX, texY+texH );        glVertex2f( _x, _y );
         glTexCoord2f( texX+texW, texY+texH );   glVertex2f( _x+_w, _y);
         glTexCoord2f( texX+texW, texY );        glVertex2f( _x+_w, _y+_h);
-        glTexCoord2f( texX, texY );             glVertex2f( _x, _y+_h);                    
+        glTexCoord2f( texX, texY );             glVertex2f( _x, _y+_h);
     glEnd();
 
 
@@ -957,25 +957,25 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     if( timeNow < picTimer + frameTime && _alpha > 0.75f )
     {
         float previousAlpha = _alpha;
-        previousAlpha *= ( 1.0f - ( timeNow - picTimer ) / frameTime );        
-        sprintf( filename, "sepulveda/sepulveda%d.bmp", previousPicIndex );   
+        previousAlpha *= ( 1.0f - ( timeNow - picTimer ) / frameTime );
+        sprintf( filename, "sepulveda/sepulveda%d.bmp", previousPicIndex );
         glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename ) );
 
         previousAlpha *= 0.75f;
-        
+
         glColor4f( 1.0f, 1.0f, 1.0f, previousAlpha );
-        glBegin( GL_QUADS );                
+        glBegin( GL_QUADS );
             glTexCoord2f( texX, texY+texH );        glVertex2f( _x, _y );
             glTexCoord2f( texX+texW, texY+texH );   glVertex2f( _x+_w, _y);
             glTexCoord2f( texX+texW, texY );        glVertex2f( _x+_w, _y+_h);
-            glTexCoord2f( texX, texY );             glVertex2f( _x, _y+_h);                    
+            glTexCoord2f( texX, texY );             glVertex2f( _x, _y+_h);
         glEnd();
     }
 
     glDepthMask     ( true );
     glDisable       ( GL_TEXTURE_2D );
 
-    
+
     //
     // Render white border
 
@@ -985,7 +985,7 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
         glVertex2f( _x, _y );
         glVertex2f( _x+_w, _y);
         glVertex2f( _x+_w, _y+_h);
-        glVertex2f( _x, _y+_h);                    
+        glVertex2f( _x, _y+_h);
     glEnd();
 }
 
@@ -1045,13 +1045,13 @@ void Sepulveda::RenderTextBox()
         glEnd();
         glShadeModel( GL_FLAT );
     }
-    
+
     s_highestY = m_screenH;
 
 
     //
     // Render sepulveda
-        
+
     float sepulvedaH = 100;
     float sepulvedaW = sepulvedaH * 0.8f;
     float sepulvedaX = textBoxX - sepulvedaW - 10;
@@ -1069,18 +1069,18 @@ void Sepulveda::RenderTextBox()
 
     RenderFace( sepulvedaX, sepulvedaY, sepulvedaW, sepulvedaH, m_fade );
 
-    
+
     //
     // Current text appearing on screen
 
     float yPos = 580.0f;
     float alpha = 1.0f;
     float textX = textBoxX+15;
-    
+
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 
     yPos += m_scrollbarOffset;
-    
+
     if( m_caption[0] != '\0' )
     {
         float textTime = CalculateTextTime();
@@ -1088,16 +1088,16 @@ void Sepulveda::RenderTextBox()
         float fractionDone = ( GetHighResTime() - m_timeSync ) / ( finishTime - m_timeSync );
         if( fractionDone < 0.0f ) fractionDone = 0.0f;
         if( fractionDone > 1.0f ) fractionDone = 1.0f;
-        
+
         int totalChars = strlen( m_caption );
         int finishingChar = totalChars * fractionDone;
         int thisChar = totalChars;
-    
+
         if( finishingChar != m_previousNumChars )
         {
             g_app->m_soundSystem->TriggerOtherEvent( NULL, "TextAppear", SoundSourceBlueprint::TypeSepulveda );
             m_previousNumChars = finishingChar;
-        }        
+        }
 
         LList<char *> *wrapped = WordWrapText( m_caption, textBoxW-15, g_editorFont.GetTextWidth(1,textH), true );
 
@@ -1110,18 +1110,18 @@ void Sepulveda::RenderTextBox()
             {
                 if( i == 0 )
                 {
-                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
+                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
                     g_gameFont.DrawText2D( textX-10, yPos, textH, ">" );
                 }
-            
+
                 if( thisChar + strlen(thisLine) < finishingChar )
-                {                
+                {
                     g_gameFont.SetRenderOutline(true);
-                    glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );        
-                    g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
+                    glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );
+                    g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
                     g_gameFont.SetRenderOutline(false);
-                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
-                    g_gameFont.DrawText2D( textX, yPos, textH, thisLine );                
+                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+                    g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
                     yPos -= textH;
                 }
                 else if( thisChar < finishingChar )
@@ -1130,21 +1130,21 @@ void Sepulveda::RenderTextBox()
                     strcpy( thisLineCopy, thisLine );
                     int finishingCharIndex = ( finishingChar - thisChar );
                     thisLineCopy[ finishingCharIndex ] = '\x0';
-                
+
                     g_gameFont.SetRenderOutline(true);
-                    glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );        
-                    g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );  
+                    glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );
+                    g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
                     g_gameFont.SetRenderOutline(false);
-                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );                        
+                    glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
                     g_gameFont.DrawText2D( textX, yPos, textH, thisLineCopy );
                     yPos -= textH;
                 }
             }
-        }       
-        
+        }
+
         delete [] wrapped->GetData(0);
         delete wrapped;
-        
+
         yPos -= textH/2.0f;
         alpha -= 0.1f;
     }
@@ -1160,7 +1160,7 @@ void Sepulveda::RenderTextBox()
     {
         SepulvedaCaption *caption = g_app->m_sepulveda->m_history[i];
         float alphaScale = GetCaptionAlpha( caption->m_timeSync );
-        
+
         if( alpha*alphaScale>0.0f)
         {
 			char buf[SEPULVEDA_MAX_PHRASE_LENGTH];
@@ -1173,7 +1173,7 @@ void Sepulveda::RenderTextBox()
                 char *thisLine = wrapped->GetData(j);
                 if( yPos > 450.0f && yPos < 570.0f+textH )
                 {
-                    if( j == 0 ) 
+                    if( j == 0 )
                     {
                         glColor4f( 1.0f, 1.0f, 1.0f, alpha*alphaScale );
                         g_gameFont.DrawText2D( textX-10, yPos, textH, ">" );
@@ -1188,23 +1188,23 @@ void Sepulveda::RenderTextBox()
                     g_gameFont.SetRenderOutline(false);
                     glColor4f( 1.0f, 1.0f, 1.0f, alpha*alphaScale );
                     g_gameFont.DrawText2D( textX, yPos, textH, thisLine );
-            
+
                     rendered = true;
                 }
                 yPos -= textH;
             }
-        
+
             if( rendered ) alpha -= 0.2f;
             yPos -= textH/2.0f;
-            
+
             delete [] wrapped->GetData(0);
-            delete wrapped;        
+            delete wrapped;
         }
     }
-       
+
     s_highestY = yPos;
     s_highestY = max( s_highestY, 440 );
-    
+
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     if( m_msgQueue.Size() > 0 )
     {
@@ -1229,7 +1229,7 @@ void Sepulveda::RenderTextBox()
 void Sepulveda::Render()
 {
     if( g_app->m_editing ) return;
-    
+
     START_PROFILE( g_app->m_profiler, "Render Sepulveda" );
 
 	if( m_gestureDemo )
@@ -1237,9 +1237,9 @@ void Sepulveda::Render()
 		RenderGestureDemo();
 	}
 
-    
+
     RenderHighlights();
-    
+
     if( !g_app->m_taskManagerInterface->m_visible )
     {
         bool cutsceneModeDesired = g_app->m_camera->IsInMode( Camera::ModeBuildingFocus ) ||
@@ -1248,12 +1248,12 @@ void Sepulveda::Render()
                                    g_app->m_camera->IsInMode( Camera::ModeSphereWorldScripted ) ||
                                    g_app->m_camera->IsInMode( Camera::ModeSphereWorldOutro ) ||
                                    g_app->m_camera->IsInMode( Camera::ModeSphereWorldFocus );
-                                   
+
                                    /*||g_app->m_tutorial*/
-                                   
-        
+
+
 //#ifdef DEMO2
-//        if( cutsceneModeDesired && 
+//        if( cutsceneModeDesired &&
 //            g_app->m_tutorial &&
 //            g_app->m_tutorial->IsRunning() )
 //        {
@@ -1266,7 +1266,7 @@ void Sepulveda::Render()
             RenderTextBoxCutsceneMode();
             m_cutsceneMode = true;
         }
-        else 
+        else
         {
             if( m_cutsceneMode && m_fade > 0.01f )
             {
@@ -1280,7 +1280,7 @@ void Sepulveda::Render()
                 bool chatLog = g_app->m_sepulveda->ChatLogVisible();
                 if( chatLog )
                 {
-                    RenderScrollBar();       
+                    RenderScrollBar();
                 }
                 else
                 {
@@ -1317,7 +1317,7 @@ void Sepulveda::RenderScrollBar()
     float textBoxX = m_screenW/2-textBoxW/2;
     float textBoxH = 100;
     textBoxX += 20.0f;
-    
+
     float scrollX = textBoxX + textBoxW;
     float scrollY = 580.0f - textBoxH;
     float scrollW = 20.0f;
@@ -1333,9 +1333,9 @@ void Sepulveda::RenderScrollBar()
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     glDisable( GL_CULL_FACE );
     glEnable( GL_BLEND );
-    
+
     //
-    // Scroll 
+    // Scroll
 
     glEnable( GL_TEXTURE_2D );
     glBindTexture( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "icons/scrollbar.bmp" ) );
@@ -1369,10 +1369,10 @@ void Sepulveda::RenderScrollBar()
         m_scrollbarOffset = max( m_scrollbarOffset, 0 );
     }
 
-    
+
 
     glEnable( GL_CULL_FACE );
-    
+
     g_app->m_renderer->SetupMatricesFor3D();
 }
 
@@ -1436,7 +1436,7 @@ void SepulvedaHighlight::Render()
     Vector3 camToTheirPos = g_app->m_camera->GetPos() - theirPos;
     Vector3 lineTheirPos = camToTheirPos ^ ( ourPos - theirPos );
     lineTheirPos.SetLength( m_radius * 0.5f );
-        
+
     for( int i = 0; i < 3; ++i )
     {
         Vector3 pos = theirPos;
@@ -1445,7 +1445,7 @@ void SepulvedaHighlight::Render()
 
         float blue = 0.5f + fabs( sinf(g_gameTime * i) ) * 0.5f;
 
-        glColor4f( 1.0f, 1.0f, blue, m_alpha*0.5f );                            
+        glColor4f( 1.0f, 1.0f, blue, m_alpha*0.5f );
 
         glBegin( GL_QUADS );
             glTexCoord2i(1,0);      glVertex3fv( (ourPos - lineTheirPos).GetData() );

@@ -34,7 +34,7 @@ public:
 class Tripod: public Entity
 {
 public:
-	enum 
+	enum
 	{
 		ModeWalking,
 		ModePreAttack,

@@ -72,9 +72,9 @@ void EntityBlueprint::Initialise()
 
     while( theFile->ReadLine() )
     {
-		if (!theFile->TokenAvailable()) continue;		
+		if (!theFile->TokenAvailable()) continue;
         DarwiniaReleaseAssert(entityIndex < Entity::NumEntityTypes, "Too many entity blueprints defined");
-		
+
         m_names[entityIndex] = strdup(theFile->GetNextToken());
 		m_stats[entityIndex][0] = atof(theFile->GetNextToken());
         m_stats[entityIndex][1] = atof(theFile->GetNextToken());
@@ -97,7 +97,7 @@ float EntityBlueprint::GetStat( unsigned char _type, int _stat )
     DarwiniaDebugAssert( _type < Entity::NumEntityTypes );
     DarwiniaDebugAssert( _stat < Entity::NumStats );
 
-	if (_stat == Entity::StatSpeed) 
+	if (_stat == Entity::StatSpeed)
 	{
 		if (_type != Entity::TypeSpaceInvader)
 			return m_stats[_type][_stat] * (1.0f + (float) g_app->m_difficultyLevel / 10.0f);
@@ -144,9 +144,9 @@ void Entity::SetType( unsigned char _type )
 
     for( int i = 0; i < NumStats; ++i )
     {
-        m_stats[i] = EntityBlueprint::GetStat( m_type, i );		
+        m_stats[i] = EntityBlueprint::GetStat( m_type, i );
     }
-	
+
 
     m_reloading = syncfrand( m_stats[StatRate] );
 }
@@ -174,7 +174,7 @@ void Entity::ChangeHealth( int amount )
         }
         else
         {
-            m_stats[StatHealth] += amount;    
+            m_stats[StatHealth] += amount;
         }
     }
 }
@@ -184,8 +184,8 @@ void Entity::Attack( Vector3 const &pos )
 {
     if( m_reloading == 0.0f )
     {
-		Vector3 toPos( pos.x + syncsfrand(15.0f), 
-					   pos.y, 
+		Vector3 toPos( pos.x + syncsfrand(15.0f),
+					   pos.y,
 					   pos.z + syncsfrand(15.0f) );
 		Vector3 fromPos = m_pos;
 		fromPos.y += 2.0f;
@@ -205,16 +205,16 @@ bool Entity::AdvanceDead( Unit *_unit )
     int newHealth = m_stats[StatHealth];
     if( m_onGround ) newHealth -= 40 * SERVER_ADVANCE_PERIOD;
     else             newHealth -= 20 * SERVER_ADVANCE_PERIOD;
-    
+
     if( newHealth <= 0 )
     {
-        m_stats[StatHealth] = 0;        
+        m_stats[StatHealth] = 0;
         return true;
     }
     else
     {
         m_stats[StatHealth] = newHealth;
-    }        
+    }
 
     return false;
 }
@@ -223,7 +223,7 @@ bool Entity::AdvanceDead( Unit *_unit )
 int Entity::EnterTeleports( int _requiredId )
 {
     LList<int> *buildings = g_app->m_location->m_obstructionGrid->GetBuildings( m_pos.x, m_pos.z );
-    
+
     for( int i = 0; i < buildings->Size(); ++i )
     {
         int buildingId = buildings->GetData(i);
@@ -235,14 +235,14 @@ int Entity::EnterTeleports( int _requiredId )
 
         Building *building = g_app->m_location->GetBuilding( buildingId );
         DarwiniaDebugAssert( building );
-        
+
         if( building->m_type == Building::TypeRadarDish  )
         {
             RadarDish *radarDish = (RadarDish *) building;
             Vector3 entrancePos, entranceFront;
             radarDish->GetEntrance( entrancePos, entranceFront );
             float range = ( m_pos - entrancePos ).Mag();
-            if( radarDish->ReadyToSend() &&                             
+            if( radarDish->ReadyToSend() &&
                 range < 15.0f &&
                 m_front * entranceFront < 0.0f )
             {
@@ -269,7 +269,7 @@ int Entity::EnterTeleports( int _requiredId )
                     return buildingId;
                 }
             }
-        }        
+        }
     }
 
     return -1;
@@ -280,7 +280,7 @@ void Entity::AdvanceInAir( Unit *_unit )
 {
     m_vel += Vector3(0,-15.0,0) * SERVER_ADVANCE_PERIOD;
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-    
+
     if( !m_dead )
     {
         float groundLevel = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z) + 0.1f;
@@ -326,7 +326,7 @@ void Entity::AdvanceInWater( Unit *_unit )
         m_vel *= m_stats[StatSpeed] * 0.3f;
 
         if (distance.Mag() < m_vel.Mag() * SERVER_ADVANCE_PERIOD)
-        {                    
+        {
             m_vel = distance / SERVER_ADVANCE_PERIOD;
         }
     }
@@ -356,21 +356,21 @@ void Entity::Begin()
 
 
 bool Entity::Advance(Unit *_unit)
-{    
+{
     if( !m_enabled ) return false;
 
-    if( m_dead ) 
+    if( m_dead )
     {
         bool amIDead = AdvanceDead( _unit );
-        if( amIDead ) 
+        if( amIDead )
 		{
 			return true;
 		}
     }
-    
+
     //m_pos = PushFromObstructions( m_pos );
     //m_pos = PushFromEachOther( m_pos );
-        
+
     if( m_reloading > 0.0f )
     {
         m_reloading -= SERVER_ADVANCE_PERIOD;
@@ -389,7 +389,7 @@ bool Entity::Advance(Unit *_unit)
     if( m_pos.z < 0.0f ) m_pos.z = 0.0f;
     if( m_pos.x >= worldSizeX ) m_pos.x = worldSizeX;
     if( m_pos.z >= worldSizeZ ) m_pos.z = worldSizeZ;
-    
+
     if (_unit && !m_dead )
 	{
 		_unit->UpdateEntityPosition( m_pos, m_radius );
@@ -399,13 +399,13 @@ bool Entity::Advance(Unit *_unit)
 	{
 		FollowRoute();
 	}
-	
+
     return false;
 }
 
 
 void Entity::Render(float predictionTime)
-{    
+{
 }
 
 
@@ -423,8 +423,8 @@ Vector3 Entity::PushFromEachOther( Vector3 const &_pos )
     WorldObjectId *neighbours = g_app->m_location->m_entityGrid->GetNeighbours( _pos.x, _pos.z, 2.0f, &numFound );
 
 
-    for( int i = 0; i < numFound; ++i )   
-    {        
+    for( int i = 0; i < numFound; ++i )
+    {
         WorldObjectId id = neighbours[i];
         if( !( id == m_id ) )
         {
@@ -434,17 +434,17 @@ Vector3 Entity::PushFromEachOther( Vector3 const &_pos )
 //            {
 //                Vector3 pushForce = (obj->m_pos - thisPos).Normalise() * 0.1f;
 //                if( obj->m_pos == thisPos ) pushForce = Vector3(0.0f,0.0f,1.0f);
-//                thisPos -= pushForce;                
+//                thisPos -= pushForce;
 //                distance = (obj->m_pos - thisPos).Mag();
 //            }
 
-            Vector3 diff = ( _pos - obj->m_pos );        
+            Vector3 diff = ( _pos - obj->m_pos );
             float force = 0.1f / diff.Mag();
-            diff.Normalise();        
+            diff.Normalise();
 
             Vector3 thisDiff = ( diff * force );
-            result += thisDiff;            
-            
+            result += thisDiff;
+
         }
     }
 
@@ -490,7 +490,7 @@ Vector3 Entity::PushFromCliffs( Vector3 const &pos, Vector3 const &oldPos )
 
 Vector3 Entity::PushFromObstructions( Vector3 const &pos, bool killem )
 {
-    Vector3 result = pos;    
+    Vector3 result = pos;
     if( m_onGround )
     {
         result.y = g_app->m_location->m_landscape.m_heightMap->GetValue( result.x, result.z );
@@ -502,7 +502,7 @@ Vector3 Entity::PushFromObstructions( Vector3 const &pos, bool killem )
     // Push from Water
 
     if( result.y <= 1.0f )
-    {        
+    {
         float pushAngle = syncsfrand(1.0f);
         float distance = 0.0f;
         while( distance < 50.0f )
@@ -520,7 +520,7 @@ Vector3 Entity::PushFromObstructions( Vector3 const &pos, bool killem )
             distance += 1.0f;
         }
     }
-    
+
 
     //
     // Push from buildings
@@ -532,13 +532,13 @@ Vector3 Entity::PushFromObstructions( Vector3 const &pos, bool killem )
         int buildingId = buildings->GetData(b);
         Building *building = g_app->m_location->GetBuilding( buildingId );
         if( building )
-        {        
+        {
             bool hit = false;
             if( m_shape && building->DoesShapeHit( m_shape, transform ) ) hit = true;
             if( !m_shape && building->DoesSphereHit( result, 1.0f ) ) hit = true;
 
             if( hit )
-            {            
+            {
                 if( building->m_type == Building::TypeLaserFence && killem &&
 					((LaserFence *) building)->IsEnabled() )
                 {
@@ -546,11 +546,11 @@ Vector3 Entity::PushFromObstructions( Vector3 const &pos, bool killem )
                     ((LaserFence *) building)->Electrocute( m_pos );
                 }
                 else
-                {               
+                {
                     Vector3 pushForce = (building->m_pos - result).SetLength(2.0f);
                     while( building->DoesSphereHit( result, 1.0f ) )
                     {
-                        result -= pushForce;                
+                        result -= pushForce;
                         //result.y = g_app->m_location->m_landscape.m_heightMap->GetValue( result.x, result.z );
                     }
                 }
@@ -590,7 +590,7 @@ void Entity::EndRenderShadow()
 
     glDepthMask     ( true );
     glEnable        ( GL_CULL_FACE );
-    glDisable       ( GL_TEXTURE_2D );   
+    glDisable       ( GL_TEXTURE_2D );
 
 	g_app->m_camera->SetupProjectionMatrix(s_nearPlaneStart,
 								 		   g_app->m_renderer->GetFarPlane());
@@ -602,7 +602,7 @@ void Entity::RenderShadow( Vector3 const &_pos, float _size )
     Vector3 shadowPos = _pos;
     Vector3 shadowR = Vector3(_size,0,0);
     Vector3 shadowU = Vector3(0,0,_size);
-        
+
     Vector3 posA = shadowPos - shadowR - shadowU;
     Vector3 posB = shadowPos + shadowR - shadowU;
     Vector3 posC = shadowPos + shadowR + shadowU;
@@ -612,7 +612,7 @@ void Entity::RenderShadow( Vector3 const &_pos, float _size )
     posB.y = g_app->m_location->m_landscape.m_heightMap->GetValue( posB.x, posB.z ) + 0.9f;
     posC.y = g_app->m_location->m_landscape.m_heightMap->GetValue( posC.x, posC.z ) + 0.9f;
     posD.y = g_app->m_location->m_landscape.m_heightMap->GetValue( posD.x, posD.z ) + 0.9f;
-    
+
     posA.y = max( posA.y, 1.0f );
     posB.y = max( posB.y, 1.0f );
     posC.y = max( posC.y, 1.0f );
@@ -641,7 +641,7 @@ Entity *Entity::NewEntity( int _troopType )
     {
         case Entity::TypeLaserTroop:            entity = new LaserTrooper();        break;
         case Entity::TypeInsertionSquadie:      entity = new Squadie();             break;
-        case Entity::TypeEngineer:              entity = new Engineer();            break;            
+        case Entity::TypeEngineer:              entity = new Engineer();            break;
         case Entity::TypeVirii:                 entity = new Virii();               break;
         case Entity::TypeEgg:                   entity = new Egg();                 break;
         case Entity::TypeSporeGenerator:        entity = new SporeGenerator();      break;
@@ -660,9 +660,9 @@ Entity *Entity::NewEntity( int _troopType )
 
         default:                                DarwiniaDebugAssert(false);
     }
-    
+
     entity->m_id.GenerateUniqueId();
-    
+
     return entity;
 }
 
@@ -702,7 +702,7 @@ char *Entity::GetTypeName( int _troopType )
                                                 "SoulDestroyer",
                                                 "TriffidEgg",
                                                 "AI"
-                                                };   
+                                                };
 
     DarwiniaDebugAssert( _troopType >= 0 && _troopType < NumEntityTypes );
     return typeNames[ _troopType ];

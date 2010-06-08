@@ -29,7 +29,7 @@ void FodderLoader::Run()
     float startTime = GetHighResTime();
 
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "LoaderFodder", SoundSourceBlueprint::TypeMusic );
-    
+
     while( !g_inputManager->controlEvent( ControlSkipMessage ) )
     {
         if( g_app->m_requestQuit ) break;

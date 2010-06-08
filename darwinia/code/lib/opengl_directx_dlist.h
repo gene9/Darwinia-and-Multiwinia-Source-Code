@@ -66,12 +66,12 @@ namespace OpenGLD3D {
 		void Draw();
 
 	private:
-		
+
 		IDirect3DVertexBuffer9 *m_pVertexBuffer;
 		Command **m_commands;
 	};
 
-	
+
 }
 
 #endif // OPENGL_DIRECTX_DLIST_H

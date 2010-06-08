@@ -54,7 +54,7 @@ void UserInput::AdvanceMenus()
 {
 //	if ( g_keyDeltas[KEY_F1] )
 //		DebugKeyBindings::DebugMenu();
-		
+
 	InputManager *im = g_inputManager;
 	int mouseX = g_target->X();
 	int mouseY = g_target->Y();
@@ -102,7 +102,7 @@ void UserInput::Advance()
 //    if (g_keyDeltas[KEY_F2]) DebugKeyBindings::DebugCameraButton();
 #ifdef LOCATION_EDITOR
     if( modsEnabled )
-    {   
+    {
         if ( g_inputManager->controlEvent( ControlToggleEditor ) ) DebugKeyBindings::EditorButton();
     }
 #endif
@@ -126,7 +126,7 @@ void UserInput::Advance()
 //        if (g_keyDeltas[KEY_F9]) DebugKeyBindings::SoundProfileButton();
     }
 #endif // SOUND_EDITOR
-    
+
     END_PROFILE(g_app->m_profiler, "Advance UserInput");
 }
 
@@ -151,7 +151,7 @@ void UserInput::Render()
     glDepthMask ( false );
 
     EclRender();
-    
+
     glDepthMask ( true );
     glEnable    ( GL_DEPTH_TEST );
     glEnable    ( GL_CULL_FACE );
@@ -160,16 +160,16 @@ void UserInput::Render()
 
     g_editorFont.EndText2D();
 
-	
+
     //
     // Render 3d mouse history
-    
+
 //    glEnable    ( GL_BLEND );
 //    glEnable    ( GL_LINE_SMOOTH );
 //    glDisable   ( GL_DEPTH_TEST );
 //    glLineWidth ( 5.0f );
-//    glBegin     ( GL_LINE_STRIP );   
-    
+//    glBegin     ( GL_LINE_STRIP );
+
 //    for( int i = 0; i < m_mousePosHistory.Size(); ++i )
 //    {
 //        float alpha = 1.0f - ((float) i / (float) m_mousePosHistory.Size());
@@ -178,7 +178,7 @@ void UserInput::Render()
 //        Vector3 *thisPos = m_mousePosHistory[i];
 //        glVertex3fv( thisPos->GetData() );
 //    }
-    
+
 //    glEnd       ();
 //    glEnable    ( GL_DEPTH_TEST );
 //    glDisable   ( GL_LINE_SMOOTH );
@@ -206,7 +206,7 @@ void UserInput::RecalcMousePos3d()
 	ASSERT_VECTOR3_IS_SANE(rayDir);
 	rayStart += rayDir * 0.0f;
 
-    
+
     bool landscapeHit = false;
 	if (g_app->m_location)
 	{
@@ -222,7 +222,7 @@ void UserInput::RecalcMousePos3d()
 
 		rayStart += rayDir * (sphereRadius * 4.0f);
 		rayDir = -rayDir;
-		landscapeHit = RaySphereIntersection(rayStart, rayDir, 
+		landscapeHit = RaySphereIntersection(rayStart, rayDir,
 			    							 sphereCentre, sphereRadius, 1e10,
 				    						 &m_mousePos3d);
         return;
@@ -231,7 +231,7 @@ void UserInput::RecalcMousePos3d()
 
 	if (!landscapeHit)
 	{
-		// OK, we didn't hit against the landscape mesh, so hit against a sphere that 
+		// OK, we didn't hit against the landscape mesh, so hit against a sphere that
 		// encloses the whole world
 		Vector3 sphereCentre;
 		sphereCentre.x = g_app->m_globalWorld->GetSize() * 0.5f;
@@ -245,7 +245,7 @@ void UserInput::RecalcMousePos3d()
 
 		rayStart += rayDir * (sphereRadius * 4.0f);
 		rayDir = -rayDir;
-		landscapeHit = RaySphereIntersection(rayStart, rayDir, 
+		landscapeHit = RaySphereIntersection(rayStart, rayDir,
 											 sphereCentre, sphereRadius, 1e10,
 											 &m_mousePos3d);
 		//DarwiniaDebugAssert(landscapeHit);

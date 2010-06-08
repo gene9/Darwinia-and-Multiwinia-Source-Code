@@ -11,9 +11,9 @@ class StartSequence
 protected:
     float m_startTime;
     LList<StartSequenceCaption *> m_captions;
-    
+
     void RegisterCaption( char *_caption, float _x, float _y, float _size,
-                          float _startTime, float _endTime );    
+                          float _startTime, float _endTime );
 
 public:
     StartSequence();

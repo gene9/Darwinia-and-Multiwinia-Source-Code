@@ -46,7 +46,7 @@ protected:
     int     *m_int;
 	bool	m_sortItems;
 	int		m_nextValue;	// Used by AddOption if a value isn't passed in as an argument
-    
+
 public:
     DropDownMenu(bool _sortItems = false);
     ~DropDownMenu();
@@ -57,7 +57,7 @@ public:
 	char const *	GetSelectionName	();
     virtual void    SelectOption        ( int _option );
 	bool			SelectOption2		( char const *_option );
-    
+
     void    CreateMenu();
     void    RemoveMenu();
     bool    IsMenuVisible();

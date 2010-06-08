@@ -37,9 +37,9 @@ public:
 
 	Vector3 GetWayPoint			();
 	virtual void SetWayPoint	(Vector3 const &_pos);
-    Vector3 GetFormationOffset  (int _formation, int _index);    
+    Vector3 GetFormationOffset  (int _formation, int _index);
     Vector3 GetOffset           (int _formation, int _index);  // Takes into account formation AND obstructions
-	
+
 protected:
     Vector3     m_accumulatedCentre;
     float       m_accumulatedRadiusSquared;
@@ -64,7 +64,7 @@ public:
     int     NumAliveEntities        ();                                 // Does not count entities still in the unit, but their m_dead=true
     void    UpdateEntityPosition    ( Vector3 pos, float _radius );
     void    RecalculateOffsets      ();
-    
+
 	void	FollowRoute();
 
     virtual void DirectControl( TeamControls const& _teamControls );

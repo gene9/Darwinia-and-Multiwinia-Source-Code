@@ -70,7 +70,7 @@ void Officer::Begin()
     Entity::Begin();
 
     m_wayPoint = m_pos;
-        
+
     m_flag.SetPosition( m_pos );
     m_flag.SetOrientation( m_front, g_upVector );
     m_flag.SetSize( 20.0f );
@@ -87,7 +87,7 @@ void Officer::Begin()
 void Officer::ChangeHealth( int amount )
 {
     bool dead = m_dead;
-    
+
     if( amount < 0 && m_shield > 0 )
     {
         int shieldLoss = min( m_shield*10, -amount );
@@ -106,7 +106,7 @@ void Officer::ChangeHealth( int amount )
     {
         // We just died
         Matrix34 transform( m_front, g_upVector, m_pos );
-        g_explosionManager.AddExplosion( m_shape, transform );         
+        g_explosionManager.AddExplosion( m_shape, transform );
     }
 }
 
@@ -130,32 +130,32 @@ void Officer::RenderSpirit( Vector3 const &_pos )
     int innerAlpha = 255;
     int outerAlpha = 40;
     int glowAlpha = 20;
-    
+
     float spiritInnerSize = 0.5f;
     float spiritOuterSize = 1.5f;
     float spiritGlowSize = 10;
- 
+
     float size = spiritInnerSize;
-    glColor4ub(100, 250, 100, innerAlpha );            
-    
+    glColor4ub(100, 250, 100, innerAlpha );
+
     glDisable( GL_TEXTURE_2D );
-    
+
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize;
-    glColor4ub(100, 250, 100, outerAlpha );            
-        
+    glColor4ub(100, 250, 100, outerAlpha );
+
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritGlowSize;
     glColor4ub(100,250,100, glowAlpha );
@@ -193,7 +193,7 @@ void Officer::RenderShield( float _predictionTime )
 
         RenderSpirit( spiritPos );
     }
-    
+
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDisable       ( GL_BLEND );
     glDepthMask     ( true );
@@ -210,7 +210,7 @@ void Officer::RenderFlag( float _predictionTime )
     Vector3 front = m_front * -1;
     front.y = 0;
     front.Normalise();
-    
+
     if( m_orders != OrderNone )
     {
         up.RotateAround( front * sinf(timeIndex*2) * 0.3f );
@@ -218,10 +218,10 @@ void Officer::RenderFlag( float _predictionTime )
 
     Vector3 entityUp = g_upVector;
     Vector3 entityRight(m_front ^ entityUp);
-    Vector3 entityFront = entityUp ^ entityRight;        
+    Vector3 entityFront = entityUp ^ entityRight;
     Matrix34 mat( entityFront, entityUp, m_pos + m_vel * _predictionTime );
     Vector3 flagPos = m_flagMarker->GetWorldMatrix(mat).pos;
-    
+
     int texId = -1;
     if      ( m_orders == OrderNone )                   texId = g_app->m_resource->GetTexture( "icons/banner_none.bmp" );
     else if ( m_orders == OrderGoto )                   texId = g_app->m_resource->GetTexture( "icons/banner_goto.bmp" );
@@ -237,9 +237,9 @@ void Officer::RenderFlag( float _predictionTime )
 
 
 bool Officer::RenderPixelEffect( float _predictionTime )
-{    
+{
     if( !m_enabled || m_dead ) return false;
-    
+
     //
     // Calculate where we are
 
@@ -251,7 +251,7 @@ bool Officer::RenderPixelEffect( float _predictionTime )
     Vector3 entityUp = g_upVector;
     Vector3 entityRight(m_front ^ entityUp);
     Vector3 entityFront = entityUp ^ entityRight;
-        
+
     Matrix34 mat( entityFront, entityUp, predictedPos );
 
     //
@@ -262,13 +262,13 @@ bool Officer::RenderPixelEffect( float _predictionTime )
         float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
         float thefrand = frand();
         if      ( thefrand > 0.7f ) mat.f *= ( 1.0f - sinf(timeIndex) * 0.5f );
-        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.2f );    
+        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.2f );
         else                        mat.r *= ( 1.0f - sinf(timeIndex) * 0.5f );
         glEnable( GL_BLEND );
         glBlendFunc( GL_ONE, GL_ONE );
     }
 
-    
+
     //
     // Render our shape
 
@@ -285,7 +285,7 @@ bool Officer::RenderPixelEffect( float _predictionTime )
 
 
     g_app->m_renderer->MarkUsedCells(m_shape, mat);
-    
+
     return true;
 }
 
@@ -297,9 +297,9 @@ bool Officer::AdvanceIdle()
         m_state = StateGivingOrders;
         return false;
     }
-    
+
     m_vel.Zero();
-    
+
     return false;
 }
 
@@ -322,7 +322,7 @@ bool Officer::AdvanceToTargetPosition()
     // Work out where we want to be next
 
     if( (m_wayPoint - m_pos).Mag() > 5.0f )
-    {    
+    {
         float speed = m_stats[StatSpeed];
         if( m_state == StateIdle ) speed *= 0.2f;
 
@@ -338,7 +338,7 @@ bool Officer::AdvanceToTargetPosition()
         //
         // Slow us down if we're going up hill
         // Speed up if going down hill
-    
+
         float currentHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( oldPos.x, oldPos.z );
         float nextHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( newPos.x, newPos.z );
         float factor = 1.0f - (currentHeight - nextHeight) / -3.0f;
@@ -346,8 +346,8 @@ bool Officer::AdvanceToTargetPosition()
         if( factor > 2.0f ) factor = 2.0f;
         newPos = m_pos + actualDir * speed * factor * SERVER_ADVANCE_PERIOD;
         newPos = PushFromObstructions( newPos );
-        
-        m_pos = newPos;       
+
+        m_pos = newPos;
         m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
         m_front = ( newPos - oldPos ).Normalise();
     }
@@ -355,9 +355,9 @@ bool Officer::AdvanceToTargetPosition()
     {
         m_vel.Zero();
         return true;
-    }    
+    }
 
-    return false;    
+    return false;
 }
 
 bool Officer::AdvanceGivingOrders()
@@ -380,8 +380,8 @@ bool Officer::SearchForRandomPosition()
                                    0.0f,
                                    cosf(angle) * distance );
 
-    m_wayPoint = PushFromObstructions( m_wayPoint );    
-    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+    m_wayPoint = PushFromObstructions( m_wayPoint );
+    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
 
     return true;
 }
@@ -413,7 +413,7 @@ void Officer::Absorb()
     if( nearestId.IsValid() )
     {
         m_absorbTimer -= SERVER_ADVANCE_PERIOD;
-        if( m_absorbTimer < 0.0f ) 
+        if( m_absorbTimer < 0.0f )
         {
             Entity *entity = g_app->m_location->GetEntity( nearestId );
 
@@ -428,13 +428,13 @@ void Officer::Absorb()
 
 bool Officer::Advance( Unit *_unit )
 {
-    if( !m_onGround ) AdvanceInAir(_unit);   
+    if( !m_onGround ) AdvanceInAir(_unit);
     bool amIDead = Entity::Advance(_unit);
     if( m_inWater != -1.0f ) AdvanceInWater(_unit);
 
-    if( m_onGround && !m_dead ) m_pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );    
+    if( m_onGround && !m_dead ) m_pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
 
-    
+
     //
     // Advance in whatever state we are in
 
@@ -448,12 +448,12 @@ bool Officer::Advance( Unit *_unit )
         }
     }
 
-    if( m_dead ) 
+    if( m_dead )
     {
         m_vel.y -= 20.0f;
         m_pos.y += m_vel.y * SERVER_ADVANCE_PERIOD;
     }
-    
+
 
     //
     // If we are giving orders, render them
@@ -479,7 +479,7 @@ bool Officer::Advance( Unit *_unit )
 
     //
     // Attack anything nearby with our "shield"
-    
+
     if( m_shield > 0 )
     {
         WorldObjectId id = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 0.0f, OFFICER_ATTACKRANGE, m_id.GetTeamId() );
@@ -521,8 +521,8 @@ bool Officer::Advance( Unit *_unit )
 void Officer::SetWaypoint( Vector3 const &_wayPoint )
 {
 		m_wayPoint = _wayPoint;
-		m_state = StateToWaypoint; 
-        
+		m_state = StateToWaypoint;
+
         //
         // If we clicked near a teleport, tell the officer to go into it
         m_wayPointTeleportId = -1;
@@ -583,12 +583,12 @@ void Officer::SetOrders( Vector3 const &_orders )
 
         if( distanceToOrders > 20.0f )
         {
-            m_orderPosition = _orders;        
+            m_orderPosition = _orders;
             m_orders = OrderGoto;
             m_absorb = false;
 
             //
-            // If there is a teleport nearby, 
+            // If there is a teleport nearby,
             // assume he wants us to go in it
 
             bool foundTeleport = false;
@@ -602,7 +602,7 @@ void Officer::SetOrders( Vector3 const &_orders )
                 if( building->m_type == Building::TypeRadarDish ||
                     building->m_type == Building::TypeBridge )
                 {
-                    float distance = ( building->m_pos - _orders ).Mag();                    
+                    float distance = ( building->m_pos - _orders ).Mag();
                     if( distance < 5.0f )
                     {
                         Teleport *teleport = (Teleport *) building;
@@ -620,10 +620,10 @@ void Officer::SetOrders( Vector3 const &_orders )
             {
                 m_orderPosition = PushFromObstructions( m_orderPosition );
             }
-        
+
 
             //
-            // Create the line using particles immediately, 
+            // Create the line using particles immediately,
             // so the player can see what he's just done
 
             float timeNow = GetHighResTime();
@@ -634,7 +634,7 @@ void Officer::SetOrders( Vector3 const &_orders )
                 orders.m_pos = m_pos;
                 orders.m_wayPoint = m_orderPosition;
                 while( true )
-                {   
+                {
                     if( orders.m_arrivedTimer < 0.0f )
                     {
                         g_app->m_particleSystem->CreateParticle( orders.m_pos, g_zeroVector, Particle::TypeMuzzleFlash, 50.0f );
@@ -672,12 +672,12 @@ void Officer::SetOrders( Vector3 const &_orders )
 
                     case 4 :
                         if      ( m_orders == OrderNone )                   m_orders = OrderFollow;
-                        else if ( m_orders == OrderFollow && !m_absorb ) 
+                        else if ( m_orders == OrderFollow && !m_absorb )
                         {
                             m_absorb = true;
                             m_absorbTimer = 2.0f;
                         }
-                        else if ( m_orders == OrderFollow && m_absorb ) 
+                        else if ( m_orders == OrderFollow && m_absorb )
                         {
                                                                             m_orders = OrderNone;
                                                                             m_absorb = false;
@@ -685,16 +685,16 @@ void Officer::SetOrders( Vector3 const &_orders )
                         else if ( m_orders == OrderGoto )                   m_orders = OrderNone;
                         break;
                 }
-               
+
                 CancelOrderSounds();
 
                 switch( m_orders )
                 {
                     case OrderNone:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderNone" );       break;
                     case OrderGoto:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderGoto" );       break;
-                    case OrderFollow:   
-                        if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );     
-                        else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );     
+                    case OrderFollow:
+                        if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );
+                        else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );
                         break;
                 }
 
@@ -731,12 +731,12 @@ void Officer::SetNextMode()
 
             case 4 :
                 if      ( m_orders == OrderNone )                   m_orders = OrderFollow;
-                else if ( m_orders == OrderFollow && !m_absorb ) 
+                else if ( m_orders == OrderFollow && !m_absorb )
                 {
                     m_absorb = true;
                     m_absorbTimer = 2.0f;
                 }
-                else if ( m_orders == OrderFollow && m_absorb ) 
+                else if ( m_orders == OrderFollow && m_absorb )
                 {
                                                                     m_orders = OrderNone;
                                                                     m_absorb = false;
@@ -744,16 +744,16 @@ void Officer::SetNextMode()
                 else if ( m_orders == OrderGoto )                   m_orders = OrderNone;
                 break;
         }
-       
+
         CancelOrderSounds();
 
         switch( m_orders )
         {
             case OrderNone:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderNone" );       break;
             case OrderGoto:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderGoto" );       break;
-            case OrderFollow:   
-                if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );     
-                else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );     
+            case OrderFollow:
+                if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );
+                else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );
                 break;
         }
 
@@ -787,13 +787,13 @@ void Officer::SetPreviousMode()
                 break;
 
             case 4 :
-                if      ( m_orders == OrderNone )                   
+                if      ( m_orders == OrderNone )
                 {
                     m_orders = OrderFollow;
                     m_absorb = true;
                 }
                 else if ( m_orders == OrderFollow && !m_absorb )    m_orders = OrderNone;
-                else if ( m_orders == OrderFollow && m_absorb ) 
+                else if ( m_orders == OrderFollow && m_absorb )
                 {
                                                                     m_orders = OrderFollow;
                                                                     m_absorb = false;
@@ -801,16 +801,16 @@ void Officer::SetPreviousMode()
                 else if ( m_orders == OrderGoto )                   m_orders = OrderNone;
                 break;
         }
-       
+
         CancelOrderSounds();
 
         switch( m_orders )
         {
             case OrderNone:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderNone" );       break;
             case OrderGoto:     g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderGoto" );       break;
-            case OrderFollow:   
-                if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );     
-                else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );     
+            case OrderFollow:
+                if( m_absorb )  g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderAbsorb" );
+                else            g_app->m_soundSystem->TriggerEntityEvent( this, "SetOrderFollow" );
                 break;
         }
 
@@ -822,7 +822,7 @@ char *Officer::GetOrderType( int _orderType )
 {
     static char *orders[] = {   "None",
                                 "Goto",
-                                "Follow"   
+                                "Follow"
                             };
 
     return orders[ _orderType ];
@@ -844,8 +844,8 @@ bool OfficerOrders::Advance()
     {
         // We are already here, so just fade out
         m_vel.Zero();
-        m_arrivedTimer += SERVER_ADVANCE_PERIOD;        
-        if( m_arrivedTimer > 1.0f ) return true;        
+        m_arrivedTimer += SERVER_ADVANCE_PERIOD;
+        if( m_arrivedTimer > 1.0f ) return true;
     }
     else
     {
@@ -873,7 +873,7 @@ bool OfficerOrders::Advance()
         if( m_vel.Mag() * SERVER_ADVANCE_PERIOD > distance ) m_arrivedTimer = 0.0f;
         if( distance < 3.0f ) m_arrivedTimer = 0.0f;
     }
-    
+
     return false;
 }
 

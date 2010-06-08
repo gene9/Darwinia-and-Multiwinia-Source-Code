@@ -17,10 +17,10 @@
 
 /*
 bool LaserTrooper::Advance(Unit *_unit)
-{    
+{
     Vector3 oldPos = m_pos;
     bool aiControlled = (g_app->m_location->m_teams[ m_teamId ].m_teamType == Team::TeamTypeAI);
-    
+
     if( aiControlled )
     {
         m_obeyUnit -= syncfrand(100.0f) * SERVER_ADVANCE_PERIOD;
@@ -31,7 +31,7 @@ bool LaserTrooper::Advance(Unit *_unit)
     }
 
     if( !m_dead && m_onGround && m_inWater < 0.0f )
-    {        
+    {
         Vector3 targetPos = _unit->GetWayPoint();
         targetPos.y = 0.0f;
         Vector3 offset = _unit->GetOffset(Unit::FormationRectangle, m_formationIndex );
@@ -39,18 +39,18 @@ bool LaserTrooper::Advance(Unit *_unit)
         targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( targetPos.x, targetPos.z );
         targetPos = PushFromObstructions( targetPos );
         //targetPos = PushFromEachOther( targetPos );
-            
+
         m_targetPos = targetPos;
 
 //		Vector3 targetPos = _unit->GetLeadVector(&m_wayPointId, 0.0f, m_pos);
         Vector3 targetVector = targetPos - m_pos;
         //targetVector = PushFromEachOther( targetVector );
         targetVector.y = 0.0f;
-        
+
         if( !aiControlled || m_obeyUnit != 0.0f )
         {
 			float distance = targetVector.Mag();
-			
+
 			// If moving towards way point...
 			if (distance > 0.01f)
 			{
@@ -61,7 +61,7 @@ bool LaserTrooper::Advance(Unit *_unit)
 				m_vel = PushFromEachOther( m_vel );
                 m_vel.Normalise();
                 m_vel *= m_stats[StatSpeed];
-                
+
                 //
                 // Slow us down if we're going up hill
                 // Speed up if going down hill
@@ -76,7 +76,7 @@ bool LaserTrooper::Advance(Unit *_unit)
                 m_vel *= factor;
 
 				if (distance < m_stats[StatSpeed] * SERVER_ADVANCE_PERIOD)
-				{                    
+				{
 					m_vel.SetLength(distance / SERVER_ADVANCE_PERIOD);
 				}
 				m_pos += m_vel * SERVER_ADVANCE_PERIOD;
@@ -87,10 +87,10 @@ bool LaserTrooper::Advance(Unit *_unit)
                     targetVector = _unit->GetWayPoint() - m_pos;
                 }
 
-				targetVector.HorizontalAndNormalise();                
+				targetVector.HorizontalAndNormalise();
 				m_angVel = (targetVector ^ m_front) * 8.0f;
 				float const maxTurnRate = 10.0f; // radians per second
-				if (m_angVel.Mag() > maxTurnRate) 
+				if (m_angVel.Mag() > maxTurnRate)
 				{
 					m_angVel.SetLength(maxTurnRate);
 				}
@@ -113,7 +113,7 @@ bool LaserTrooper::Advance(Unit *_unit)
 				}
 
 				float const maxTurnRate = 10.0f; // radians per second
-				if (m_angVel.Mag() > maxTurnRate) 
+				if (m_angVel.Mag() > maxTurnRate)
 				{
 					m_angVel.SetLength(maxTurnRate);
 				}
@@ -132,9 +132,9 @@ bool LaserTrooper::Advance(Unit *_unit)
             m_inWater = syncfrand(3.0f);
         }
     }
-    
+
 	if( !m_onGround ) AdvanceInAir(_unit);
-    
+
     bool enteredTeleport = EnterTeleports();
     if( enteredTeleport )
     {
@@ -167,8 +167,8 @@ bool LaserTrooper::Advance( Unit *_unit )
         m_pos += m_vel * SERVER_ADVANCE_PERIOD;
         m_front = m_vel;
         m_front.Normalise();
-    
-        if( EnterTeleports() )  return true;    
+
+        if( EnterTeleports() )  return true;
     }
 
 	if( !m_onGround )       AdvanceInAir(_unit);
@@ -180,7 +180,7 @@ bool LaserTrooper::Advance( Unit *_unit )
         if( m_reloading < 0.0f ) m_reloading = 0.0f;
     }
 
-    if( m_dead ) 
+    if( m_dead )
     {
         bool amIDead = AdvanceDead( _unit );
         if( amIDead ) return true;
@@ -191,7 +191,7 @@ bool LaserTrooper::Advance( Unit *_unit )
         AdvanceVictoryDance();
     }
 
-    _unit->UpdateEntityPosition( m_pos, m_radius );    
+    _unit->UpdateEntityPosition( m_pos, m_radius );
 
     return false;
 }
@@ -209,9 +209,9 @@ void LaserTrooper::AdvanceVictoryDance()
 
 
 void LaserTrooper::Render( float predictionTime, int teamId )
-{         
+{
     if( !m_enabled ) return;
-    
+
     //
     // Work out our predicted position and orientation
 
@@ -222,7 +222,7 @@ void LaserTrooper::Render( float predictionTime, int teamId )
     }
 
     float size = 2.0f;
-        
+
     Vector3 entityUp = g_app->m_location->m_landscape.m_normalMap->GetValue( predictedPos.x, predictedPos.z );
 //	float wobble = m_wobble;
 //    if( !m_onGround ) wobble = 0.0f;
@@ -253,11 +253,11 @@ void LaserTrooper::Render( float predictionTime, int teamId )
     //RenderSphere( m_targetPos, 1.0f, RGBAColour(255,255,255,100) );
     //RenderSphere( m_unitTargetPos, 1.1f, RGBAColour(255,155,155,200) );
     //glEnable( GL_TEXTURE_2D );
-    
+
     if( !m_dead )
     {
         RGBAColour colour = g_app->m_location->m_teams[ teamId ].m_colour;
-        
+
         if( m_reloading > 0.0f )
         {
             colour.r *= 0.7f;
@@ -326,7 +326,7 @@ void LaserTrooper::Render( float predictionTime, int teamId )
 			glEnd();
             glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
         }
-                   
+
     }
     else
     {
@@ -338,7 +338,7 @@ void LaserTrooper::Render( float predictionTime, int teamId )
         entityRight.Normalise();
 		entityRight *= size;
         unsigned char alpha = (float)m_stats[StatHealth] * 2.55f;
-       
+
         glColor4ub( 0, 0, 0, alpha );
 
         entityRight *= 0.5f;
@@ -353,10 +353,10 @@ void LaserTrooper::Render( float predictionTime, int teamId )
             Vector3 fragmentPos = predictedPos;
             if( i == 0 ) fragmentPos.x += 10.0f - predictedHealth / 10.0f;
             if( i == 1 ) fragmentPos.z += 10.0f - predictedHealth / 10.0f;
-            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;            
+            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;
             fragmentPos.y += ( fragmentPos.y - landHeight ) * i * 0.5f;
-            
-            
+
+
             float left = 0.0f;
             float right = 1.0f;
             float top = 1.0f;

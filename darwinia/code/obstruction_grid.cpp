@@ -25,7 +25,7 @@ ObstructionGrid::ObstructionGrid( float _cellSizeX, float _cellSizeZ )
 
 
 void ObstructionGrid::CalculateBuildingArea( int _buildingId )
-{    
+{
     Building *building = g_app->m_location->GetBuilding( _buildingId );
     if( building )
     {
@@ -44,7 +44,7 @@ void ObstructionGrid::CalculateBuildingArea( int _buildingId )
             {
                 ObstructionGridCell *cell = m_cells.GetPointer(x,z);
                 float cellCentreX = (float) x * m_cells.m_cellSizeX + m_cells.m_cellSizeX/2.0f;
-                float cellCentreZ = (float) z * m_cells.m_cellSizeY + m_cells.m_cellSizeY/2.0f;                
+                float cellCentreZ = (float) z * m_cells.m_cellSizeY + m_cells.m_cellSizeY/2.0f;
                 float cellRadius = m_cells.m_cellSizeX*0.5f;
 
                 Vector3 cellPos( cellCentreX, 0.0f, cellCentreZ );
@@ -52,7 +52,7 @@ void ObstructionGrid::CalculateBuildingArea( int _buildingId )
 
                 if( building->DoesSphereHit( cellPos, cellRadius ) )
                 {
-                    cell->m_buildings.PutData( _buildingId );    
+                    cell->m_buildings.PutData( _buildingId );
                 }
             }
         }
@@ -102,7 +102,7 @@ void ObstructionGrid::CalculateBuildingArea( int _buildingId )
 void ObstructionGrid::CalculateAll()
 {
     float startTime = GetHighResTime();
-    
+
     //
     // Clear the obstruction grid
 
@@ -114,7 +114,7 @@ void ObstructionGrid::CalculateAll()
             cell->m_buildings.Empty();
         }
     }
-    
+
     //
     // Add each building to the grid
 

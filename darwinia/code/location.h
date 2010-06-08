@@ -43,7 +43,7 @@ class Location
 protected:
     int	 m_lastSliceProcessed;
 	bool m_missionComplete;
-    
+
     void SetMyTeamId			( unsigned char _teamId );
     void LoadLevel				( char const *_missionFilename, char const *_mapFilename );
 
@@ -52,7 +52,7 @@ protected:
     void AdvanceTeams			( int _slice );
     void AdvanceSpirits			( int _slice );
     void AdvanceClouds			( int _slice );
-	
+
     void RenderLandscape		();
     void RenderWeapons			();
     void RenderBuildings		();
@@ -63,7 +63,7 @@ protected:
     void RenderSpirits			();
     void RenderClouds			();
     void RenderWater			();
-    
+
     void InitLandscape			();
     void InitLights				();
     void InitTeams				();
@@ -74,7 +74,7 @@ protected:
 
 public:
     Landscape       m_landscape;
-    EntityGrid      *m_entityGrid;  
+    EntityGrid      *m_entityGrid;
     ObstructionGrid *m_obstructionGrid;
 	LevelFile		*m_levelFile;
     Clouds          *m_clouds;
@@ -83,13 +83,13 @@ public:
     Team            *m_teams;
 
     float           m_christmasTimer;
-        
+
 	FastDArray		<Light *>		m_lights;
     SliceDArray     <Building *>    m_buildings;
-    SliceDArray     <Spirit>        m_spirits;    
+    SliceDArray     <Spirit>        m_spirits;
     SliceDArray     <Laser>         m_lasers;
     SliceDArray     <WorldObject *> m_effects;
-    
+
 public:
     Location();
     ~Location();
@@ -97,11 +97,11 @@ public:
     void Init               ( char const *_missionFilename, char const *_mapFilename );
     void InitBuildings			();
 	void Empty				();
-    
-    void Advance            ( int _slice );        
+
+    void Advance            ( int _slice );
     void Render             ( bool renderWaterAndClouds = true );
 
-    void InitialiseTeam     ( unsigned char _teamId, 
+    void InitialiseTeam     ( unsigned char _teamId,
                               unsigned char _teamType );
 
     void RemoveTeam         ( unsigned char _teamId );
@@ -110,11 +110,11 @@ public:
     int GetUnitId               ( Vector3 const &startRay, Vector3 const &direction, unsigned char teamId, float *_range=NULL );
     WorldObjectId GetEntityId   ( Vector3 const &startRay, Vector3 const &direction, unsigned char teamId, float *_range=NULL );
 
-    bool IsWalkable         ( Vector3 const &_from, Vector3 const &_to, bool _evaluateCliffs=false );    
+    bool IsWalkable         ( Vector3 const &_from, Vector3 const &_to, bool _evaluateCliffs=false );
     bool IsVisible          ( Vector3 const &_from, Vector3 const &_to );
-    
+
     void UpdateTeam         ( unsigned char teamId, TeamControls const& teamControls );
-    
+
     int  SpawnSpirit        ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, WorldObjectId _id );
     void ThrowWeapon        ( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId );
     void FireRocket         ( Vector3 const &_pos, Vector3 const &_target, unsigned char _fromTeamId );
@@ -129,14 +129,14 @@ public:
     static int ChristmasModEnabled();           // 0 = unavailable, 1 = enabled, 2 = disabled
 
     WorldObjectId SpawnEntities  ( Vector3 const &_pos, unsigned char _teamId, int _unitId,
-                              unsigned char _type, int _numEntities, Vector3 const &_vel, 
+                              unsigned char _type, int _numEntities, Vector3 const &_vel,
                               float _spread, float _range=-1.0f, int _routeId = -1, int _routeWaypointId = -1 );
-    
+
     int         GetSpirit   ( WorldObjectId _id );
 
     bool        IsFriend    ( unsigned char _teamId1, unsigned char _teamId2 );
 
-    Team        *GetMyTeam	();    
+    Team        *GetMyTeam	();
 	Entity		*GetEntity	( Vector3 const &_rayStart, Vector3 const &_rayDir );
 	Building	*GetBuilding( Vector3 const &_rayStart, Vector3 const &_rayDir );
 
@@ -149,7 +149,7 @@ public:
     Spirit      *GetSpirit      ( int _index );
 
     void SetupFog			();
-    void SetupLights		();    
+    void SetupLights		();
 
 	void WaterReflect       (); // inverts direction of all lights
 

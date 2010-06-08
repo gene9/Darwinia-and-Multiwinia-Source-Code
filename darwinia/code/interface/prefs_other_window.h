@@ -16,7 +16,7 @@ public:
 	int		m_difficulty;
 	int		m_largeMenus;
     int     m_automaticCamera;
-    
+
     LList   <char *> m_languages;
 
 public:
@@ -28,7 +28,7 @@ public:
     void ListAvailableLanguages();
 };
 
-// Defines useful to reference preferences from 
+// Defines useful to reference preferences from
 // other parts of the program.
 #define OTHER_HELPENABLED       "HelpEnabled"
 #define OTHER_CONTROLHELPENABLED "ControlHelpEnabled"

@@ -35,14 +35,14 @@ void DarwiniaReleaseAssert(bool _condition, char const *_fmt, ...)
 			LPVOID lpMsgBuf;
 
 			FormatMessage(
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
 				FORMAT_MESSAGE_FROM_SYSTEM,
 				NULL,
 				rc,
 				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 				(LPTSTR) &lpMsgBuf,
 				0, NULL );
- 
+
 			sprintf( buf + strlen(buf), "\nLast error: %s (%d)", lpMsgBuf, rc );
 		}
 		ShowCursor(true);
@@ -120,10 +120,10 @@ void PrintMemoryLeaks ()
     HFILE file = OpenFile ( filename,
                             &ofstruct,
                             OF_CREATE );
-                     
+
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
     _CrtSetReportFile(_CRT_WARN, (void *) file);
-  
+
     _CrtDumpMemoryLeaks ();
 
     _lclose ( file );
@@ -179,12 +179,12 @@ void GenerateBlackBox( char *_msg )
 	    {
 		    if (line[0] != '#' && line[0] != '\n' )				// Skip comment lines
 		    {
-                fprintf( _file, "%s", line );              
+                fprintf( _file, "%s", line );
 		    }
 	    }
 		fclose(prefsFile);
     }
-    
+
     //
     // Print stack trace
 	// Get our frame pointer, chain upwards
@@ -197,9 +197,9 @@ void GenerateBlackBox( char *_msg )
 	unsigned *framePtr;
     unsigned *previousFramePtr = NULL;
 
-    
+
 #ifdef WIN32
-	__asm { 
+	__asm {
 		mov [framePtr], ebp
 	}
 #else
@@ -209,19 +209,19 @@ void GenerateBlackBox( char *_msg )
 	    );
 #endif
 	while(framePtr) {
-		                
+
 		fprintf(_file, "retAddress = %p\n", getRetAddress(framePtr));
 		framePtr = *(unsigned **)framePtr;
 
 	    // Frame pointer must be aligned on a
 	    // DWORD boundary.  Bail if not so.
-	    if ( (unsigned long) framePtr & 3 )   
-		break;                    
+	    if ( (unsigned long) framePtr & 3 )
+		break;
 
         if ( framePtr <= previousFramePtr )
             break;
 
-        // Can two DWORDs be read from the supposed frame address?          
+        // Can two DWORDs be read from the supposed frame address?
 #ifdef WIN32
         if ( IsBadWritePtr(framePtr, sizeof(PVOID)*2) ||
              IsBadReadPtr(framePtr, sizeof(PVOID)*2) )
@@ -229,8 +229,8 @@ void GenerateBlackBox( char *_msg )
 #endif
 
         previousFramePtr = framePtr;
-    
+
     }
-	
+
     fclose( _file );
 }

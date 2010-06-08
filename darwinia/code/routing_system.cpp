@@ -52,7 +52,7 @@ Vector3 WayPoint::GetPos()
 		rv.y += 1.0f;
 	}
 	else if (m_type == TypeBuilding)
-	{        
+	{
 		Building *building = g_app->m_location->GetBuilding(m_buildingId);
         if( building )
         {
@@ -148,12 +148,12 @@ int	Route::GetIdOfNearestEdge(Vector3 const &_pos, float *_dist)
 {
 	int idOfNearest = 0;
 	float distToNearest = FLT_MAX;
-	
+
 	Vector2 pos(_pos.x, _pos.z);
 	WayPoint *wp = m_wayPoints.GetData(0);
 	Vector3 newPos = wp->GetPos();
 	Vector2 oldPos( newPos.x, newPos.z );
-	
+
 	int size = m_wayPoints.Size();
 	for (int i = 1; i < size; ++i)
 	{
@@ -178,7 +178,7 @@ void Route::Render()
 {
     if( !g_app->m_location ) return;
 
-#ifdef DEBUG_RENDER_ENABLED    
+#ifdef DEBUG_RENDER_ENABLED
     Vector3 lastPos;
 
     glDisable( GL_DEPTH_TEST );

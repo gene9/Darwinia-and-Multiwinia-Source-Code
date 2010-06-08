@@ -144,14 +144,14 @@ namespace OpenGLD3D {
 
 	public:
 
-		DisplayListDevice( unsigned  _id ) 
+		DisplayListDevice( unsigned  _id )
 			: m_id( _id )
 		{
 		}
 
 		DisplayList *Compile();
 
-		unsigned  GetId() const 
+		unsigned  GetId() const
 		{
 			return m_id;
 		}

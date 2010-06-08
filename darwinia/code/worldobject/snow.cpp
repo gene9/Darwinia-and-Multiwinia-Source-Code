@@ -15,10 +15,10 @@
 // ****************************************************************************
 // Class Snow
 // ****************************************************************************
-  
+
 Snow::Snow()
 :   WorldObject()
-{    
+{
     m_positionOffset = syncfrand(10.0f);
     m_xaxisRate = syncfrand(2.0f);
     m_yaxisRate = syncfrand(2.0f);
@@ -27,7 +27,7 @@ Snow::Snow()
     m_timeSync = GetHighResTime();
     m_type = EffectSnow;
 }
-    
+
 
 bool Snow::Advance()
 {
@@ -48,12 +48,12 @@ bool Snow::Advance()
     if( m_zaxisRate < 0.0f ) m_zaxisRate = 0.0f;
     m_hover.x = sinf( m_positionOffset ) * m_xaxisRate;
     m_hover.y = sinf( m_positionOffset ) * m_yaxisRate;
-    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;            
+    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;
 
     float heightAboveGround = m_pos.y - g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
     if( heightAboveGround > -10.0f )
     {
-        float fractionAboveGround = heightAboveGround / 100.0f;                    
+        float fractionAboveGround = heightAboveGround / 100.0f;
         fractionAboveGround = min( fractionAboveGround, 1.0f );
         fractionAboveGround = max( fractionAboveGround, 0.2f );
         m_hover.y = (-20.0f - syncfrand(20.0f)) * fractionAboveGround;
@@ -62,7 +62,7 @@ bool Snow::Advance()
     {
         return true;
     }
-    
+
     Vector3 oldPos = m_pos;
 
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
@@ -90,10 +90,10 @@ float Snow::GetLife()
 void Snow::Render( float _predictionTime )
 {
     _predictionTime -= SERVER_ADVANCE_PERIOD;
-    
+
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;
     predictedPos += m_hover * _predictionTime;
-    
+
     float size = 20.0f;
 
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0 );

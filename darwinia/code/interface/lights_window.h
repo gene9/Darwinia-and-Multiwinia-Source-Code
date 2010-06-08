@@ -16,7 +16,7 @@ public:
     LightsEditWindow( char *name );
 	~LightsEditWindow();
 
-	void Create();    
+	void Create();
 };
 
 #endif // LOCATION_EDITOR

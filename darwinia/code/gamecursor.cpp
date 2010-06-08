@@ -67,21 +67,21 @@ GameCursor::GameCursor()
 
     m_cursorSelection = new MouseCursor( "icons/mouse_selection.bmp" );
     m_cursorSelection->SetHotspot( 0.5f, 0.5f );
-    
+
 	m_cursorMissile = NULL;
 
     //
     // Load selection arrow graphic
-    
+
 	sprintf( m_selectionArrowFilename, "icons/selectionarrow.bmp" );
 
     BinaryReader *binReader = g_app->m_resource->GetBinaryReader( m_selectionArrowFilename );
-	DarwiniaReleaseAssert(binReader, "Failed to open mouse cursor resource %s", m_selectionArrowFilename ); 
+	DarwiniaReleaseAssert(binReader, "Failed to open mouse cursor resource %s", m_selectionArrowFilename );
     BitmapRGBA bmp( binReader, "bmp" );
 	SAFE_DELETE(binReader);
 
 	g_app->m_resource->AddBitmap(m_selectionArrowFilename, bmp);
-	
+
 	sprintf(m_selectionArrowShadowFilename, "shadow_%s", m_selectionArrowFilename);
     bmp.ApplyBlurFilter( 10.0f );
 	g_app->m_resource->AddBitmap(m_selectionArrowShadowFilename, bmp);
@@ -127,8 +127,8 @@ bool GameCursor::GetSelectedObject( WorldObjectId &_id, Vector3 &_pos )
         {
             Unit *selected = team->GetMyUnit();
             if( selected )
-            {       
-                _pos = selected->m_centrePos + selected->m_vel * g_predictionTime;                
+            {
+                _pos = selected->m_centrePos + selected->m_vel * g_predictionTime;
                 _id.Set( selected->m_teamId, selected->m_unitId, -1, -1 );
 
                 // Add the centre pos
@@ -152,7 +152,7 @@ bool GameCursor::GetSelectedObject( WorldObjectId &_id, Vector3 &_pos )
 
 
 bool GameCursor::GetHighlightedObject( WorldObjectId &_id, Vector3 &_pos, float &_radius )
-{    
+{
     WorldObjectId id;
     bool somethingHighlighted = false;
     bool found = false;
@@ -171,7 +171,7 @@ bool GameCursor::GetHighlightedObject( WorldObjectId &_id, Vector3 &_pos, float 
         }
     }
 
-    
+
     if( somethingHighlighted )
     {
         if( id.GetUnitId() == UNIT_BUILDINGS )
@@ -226,7 +226,7 @@ bool GameCursor::GetHighlightedObject( WorldObjectId &_id, Vector3 &_pos, float 
             if( entity->m_type == Entity::TypeDarwinian ) _radius = entity->m_radius*2.0f;
             found = true;
         }
-    }    
+    }
 
     return found;
 }
@@ -276,7 +276,7 @@ void GameCursor::RenderMarkers()
 
 
 void GameCursor::Render()
-{        
+{
     START_PROFILE( g_app->m_profiler, "Render GameCursor" );
 
 	float nearPlaneStart = g_app->m_renderer->GetNearPlane();
@@ -287,7 +287,7 @@ void GameCursor::Render()
 	int screenY = g_target->Y();
     Vector3 mousePos = g_app->m_userInput->GetMousePos3d();
     mousePos.y = max( 1.0f, mousePos.y );
-        
+
     bool cursorRendered = false;
 	bool chatLog = g_app->m_sepulveda->ChatLogVisible();
 
@@ -298,7 +298,7 @@ void GameCursor::Render()
 	// Set mip mapping for game cursor
 	glTexParameterf ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 	glTexParameterf ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    
+
     if( g_app->m_editing || EclGetWindows()->Size() > 0 )
     {
         // Editing
@@ -314,9 +314,9 @@ void GameCursor::Render()
     }
     else if( !g_app->m_location )
     {
-        // We are in the global world        
+        // We are in the global world
         GlobalLocation *highlightedLocation = g_app->m_globalWorld->GetHighlightedLocation();
-        bool locAvailable = highlightedLocation && 
+        bool locAvailable = highlightedLocation &&
                             strcmp(highlightedLocation->m_missionFilename, "null" ) != 0 &&
                             highlightedLocation->m_available;
         g_app->m_renderer->SetupMatricesFor2D();
@@ -338,8 +338,8 @@ void GameCursor::Render()
         WorldObjectId highlightedId;
         float highlightedRadius;
 
-        bool somethingSelected = GetSelectedObject( selectedId, selectedWorldPos );                        
-        bool somethingHighlighted = GetHighlightedObject( highlightedId, highlightedWorldPos, highlightedRadius ); 
+        bool somethingSelected = GetSelectedObject( selectedId, selectedWorldPos );
+        bool somethingHighlighted = GetHighlightedObject( highlightedId, highlightedWorldPos, highlightedRadius );
 
         if( g_app->m_taskManagerInterface->m_visible )
         {
@@ -348,7 +348,7 @@ void GameCursor::Render()
             {
                 RenderSelectionArrows( selectedId, selectedWorldPos );
             }
-            
+
             if( somethingHighlighted )
             {
                 float camDist = ( g_app->m_camera->GetPos() - highlightedWorldPos ).Mag();
@@ -363,10 +363,10 @@ void GameCursor::Render()
             }
 
         }
-        else if( task && 
-                task->m_state == Task::StateStarted && 
+        else if( task &&
+                task->m_state == Task::StateStarted &&
                 task->m_type != GlobalResearch::TypeOfficer &&
-                !somethingHighlighted )        
+                !somethingHighlighted )
         {
             // The player is placing a task
             bool validPlacement = g_app->m_taskManager->IsValidTargetArea(task->m_id, mousePos);
@@ -375,11 +375,11 @@ void GameCursor::Render()
             Vector3 landNormal = g_app->m_location->m_landscape.m_normalMap->GetValue(mousePos.x, mousePos.z);
             Vector3 front = (landNormal ^ g_upVector).Normalise();
             m_cursorPlacement->Render3D( mousePos, front, landNormal );
-            if( !validPlacement) 
+            if( !validPlacement)
 				m_cursorDisabled->Render3D(mousePos, front, landNormal);
 			else
 				m_validPlacementOpportunity = true;
-			
+
             cursorRendered = true;
         }
 		else if( g_app->m_camera->IsInMode( Camera::ModeEntityTrack ) )
@@ -409,7 +409,7 @@ void GameCursor::Render()
 		    cursorRendered = true;
 		}
         else
-        {            
+        {
             if( somethingHighlighted &&
                 !(somethingSelected && highlightedId.GetUnitId() == UNIT_BUILDINGS) )
             {
@@ -433,13 +433,13 @@ void GameCursor::Render()
             {
                 int entityType = Entity::TypeInvalid;
                 if( selectedId.GetIndex() == -1 )   entityType = g_app->m_location->GetUnit(selectedId)->m_troopType;
-                else                                entityType = g_app->m_location->GetEntity(selectedId)->m_type;             
+                else                                entityType = g_app->m_location->GetEntity(selectedId)->m_type;
 
                 RenderSelectionArrows( selectedId, selectedWorldPos );
 				m_moveableEntitySelected = true;
 
                 bool highlightedBuilding = ( somethingHighlighted && highlightedId.GetUnitId() == UNIT_BUILDINGS );
-                
+
                 if( (entityType == Entity::TypeInsertionSquadie ||
                      entityType == Entity::TypeOfficer)
                      && highlightedBuilding )
@@ -494,12 +494,12 @@ void GameCursor::Render()
                 Vector3 front = (landNormal ^ g_upVector).Normalise();
                 m_cursorHighlight->SetAnimation( false );
                 m_cursorHighlight->SetSize( 30.0f );
-                m_cursorHighlight->Render3D( mousePos, front, landNormal );                                
+                m_cursorHighlight->Render3D( mousePos, front, landNormal );
                 cursorRendered = true;
             }
         }
     }
-                    
+
     if( !cursorRendered &&
         g_inputManager->getInputMode() != INPUT_MODE_GAMEPAD )
     {
@@ -514,9 +514,9 @@ void GameCursor::Render()
     {
         //RenderSphere( g_app->m_location->GetMyTeam()->m_currentMousePos, 10 );
     }
-    
+
     RenderMarkers();
-    
+
 	g_app->m_camera->SetupProjectionMatrix(nearPlaneStart,
 								 		   g_app->m_renderer->GetFarPlane());
 
@@ -578,10 +578,10 @@ void GameCursor::FindScreenEdge( Vector2 const &_line, float *_posX, float *_pos
 
     int screenH = g_app->m_renderer->ScreenH();
     int screenW = g_app->m_renderer->ScreenW();
-    
+
     float m = _line.y / _line.x;
     float c = ( screenH / 2.0f ) - m * ( screenW / 2.0f );
-    
+
     if( _line.y < 0 )
     {
         // Intersect with top view plane
@@ -602,14 +602,14 @@ void GameCursor::FindScreenEdge( Vector2 const &_line, float *_posX, float *_pos
             *_posX = x;
             *_posY = screenH;
             return;
-        }        
+        }
     }
 
     if( _line.x < 0 )
     {
-        // Intersect with left view plane 
+        // Intersect with left view plane
         float y = m * 0 + c;
-        if( y >= 0 && y <= screenH ) 
+        if( y >= 0 && y <= screenH )
         {
             *_posX = 0;
             *_posY = y;
@@ -620,12 +620,12 @@ void GameCursor::FindScreenEdge( Vector2 const &_line, float *_posX, float *_pos
     {
         // Intersect with right view plane
         float y = m * screenW + c;
-        if( y >= 0 && y <= screenH ) 
+        if( y >= 0 && y <= screenH )
         {
             *_posX = screenW;
             *_posY = y;
             return;
-        }        
+        }
     }
 
     // We should never ever get here
@@ -660,7 +660,7 @@ void GameCursor::RenderSelectionArrow( float _screenX, float _screenY, float _sc
         glTexCoord2i( 1, 0 );       glVertex2fv( (pos + rightAngle * _size / 2.0f + gradient * _size).GetData() );
         glTexCoord2i( 1, 1 );       glVertex2fv( (pos + rightAngle * _size / 2.0f).GetData() );
     glEnd();
-    
+
     glColor4f       ( 1.0f, 1.0f, 0.3f, _alpha );
 	glBlendFunc		( GL_SRC_ALPHA, GL_ONE );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( m_selectionArrowFilename ) );
@@ -690,7 +690,7 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
     float triSize = 40.0f;
 
     static bool onScreen = true;
-    
+
     int screenH = g_app->m_renderer->ScreenH();
     int screenW = g_app->m_renderer->ScreenW();
 
@@ -721,12 +721,12 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
         {
             alpha = max( min( ( camDist - 200.0f ) / 200.0f, 0.9f ), alpha );
         }
-        g_app->m_renderer->SetupMatricesFor2D();  
+        g_app->m_renderer->SetupMatricesFor2D();
         RenderSelectionArrow( screenX, screenY - distanceOut, 0, -1, triSize, alpha );
         RenderSelectionArrow( screenX, screenY + distanceOut, 0, 1, triSize, alpha );
         RenderSelectionArrow( screenX - distanceOut, screenY, -1, 0, triSize, alpha );
         RenderSelectionArrow( screenX + distanceOut, screenY, 1, 0, triSize, alpha );
-        g_app->m_renderer->SetupMatricesFor3D();  
+        g_app->m_renderer->SetupMatricesFor3D();
 
         if( !onScreen ) BoostSelectionArrows(2.0f);
         onScreen = true;
@@ -744,15 +744,15 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 
         Vector2 lineNormal( posX - camX, posY - camY );
         lineNormal.Normalise();
-        
+
         float edgeX, edgeY;
         FindScreenEdge( lineNormal, &edgeX, &edgeY );
 
         lineNormal.x *= -1;
 
-        g_app->m_renderer->SetupMatricesFor2D();  
-        RenderSelectionArrow( edgeX, screenH - edgeY, lineNormal.x, lineNormal.y, triSize * 1.5f, 0.9f );       
-        g_app->m_renderer->SetupMatricesFor3D();  
+        g_app->m_renderer->SetupMatricesFor2D();
+        RenderSelectionArrow( edgeX, screenH - edgeY, lineNormal.x, lineNormal.y, triSize * 1.5f, 0.9f );
+        g_app->m_renderer->SetupMatricesFor3D();
 
         onScreen = false;
     }
@@ -767,7 +767,7 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 	float yOut = 24.0f;
 
     static bool onScreen = true;
-    
+
 	// Project worldTarget into screen co-ordinates
     int screenH = g_app->m_renderer->ScreenH();
     int screenW = g_app->m_renderer->ScreenW();
@@ -778,15 +778,15 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 	// Calculate alpha
 	Vector3 toCam = g_app->m_camera->GetPos() - _pos;
 	float distance = toCam.Mag();
-	
+
     if( distance < 400.0f )
     {
         xOut += ( 100.0f - distance/4.0f );
         yOut += ( 100.0f - distance/4.0f );
     }
-    
+
     float alpha = 0.0f;
-	if (distance > 350.0f) 
+	if (distance > 350.0f)
 	{
 		distance -= 350.0f;
 		alpha = distance / 300.0f;
@@ -808,7 +808,7 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 	if (angle > 0.0f)
 	{
 		// Unit is behind camera
-		
+
 		alpha = SELECTION_ARROWS_MAX_ALPHA;
 
 		if (rotationVector.y < 0.0f)
@@ -832,7 +832,7 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
         {
             BoostSelectionArrows( 2.0f );
         }
-        
+
 		if (screenX > screenW + xOut)
 		{
 			alpha = SELECTION_ARROWS_MAX_ALPHA;
@@ -887,32 +887,32 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 
         Vector2 lineNormal( posX - camX, posY - camY );
         lineNormal.Normalise();
-        
+
         float edgeX, edgeY;
         FindScreenEdge( lineNormal, &edgeX, &edgeY );
 
         lineNormal.x *= -1;
 
-        g_app->m_renderer->SetupMatricesFor2D();  
+        g_app->m_renderer->SetupMatricesFor2D();
 
         RenderSelectionArrow( edgeX, screenH - edgeY, lineNormal.x, lineNormal.y, triSize, 1.0f );
-        
-        g_app->m_renderer->SetupMatricesFor3D();  
+
+        g_app->m_renderer->SetupMatricesFor3D();
     }
     else
     {
 	    // Get ready to render
-        g_app->m_renderer->SetupMatricesFor2D();  
+        g_app->m_renderer->SetupMatricesFor2D();
         glEnable        ( GL_BLEND );
         glDisable       ( GL_CULL_FACE );
     //	glEnable		( GL_TEXTURE_2D );
     //	glBindTexture	( GL_TEXTURE_2D, g_app->m_resource->GetTexture("selection_arrow") );
 
-	    // Do subtractive pass 
+	    // Do subtractive pass
 	    {
 		    glColor4f       ( 0.9f, 0.9f, 0.1f, alpha/2.0f );
 		    glBlendFunc		( GL_ZERO, GL_ONE_MINUS_SRC_ALPHA );
-		    
+
 		    LeftArrow ( screenX - xOut, screenY, triSize );
 		    RightArrow( screenX + xOut, screenY, triSize );
 		    TopArrow  ( screenX, screenY - yOut, triSize );
@@ -922,7 +922,7 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
 	    // Do additive pass
 	    {
 		    float myTriSize = triSize - 8.0f;
-		    float myXOut = xOut + 5.0f;            
+		    float myXOut = xOut + 5.0f;
 		    float myYOut = yOut + 5.0f;
 
 		    glColor4f       ( 0.9f, 0.9f, 0.1f, alpha );
@@ -938,13 +938,13 @@ void GameCursor::RenderSelectionArrows( WorldObjectId _id, Vector3 const &_pos )
         glEnable        ( GL_CULL_FACE );
     //	glDisable		( GL_TEXTURE_2D );
 
-        g_app->m_renderer->SetupMatricesFor3D();  
+        g_app->m_renderer->SetupMatricesFor3D();
     }
 }*/
 
 void GameCursor::RenderWeaponMarker ( Vector3 _pos, Vector3 _front, Vector3 _up )
 {
-    m_cursorPlacement->SetSize(40.0f);    
+    m_cursorPlacement->SetSize(40.0f);
     m_cursorPlacement->SetShadowed( true );
     m_cursorPlacement->SetAnimation( true );
     m_cursorPlacement->Render3D( _pos, _front, _up );
@@ -968,12 +968,12 @@ MouseCursor::MouseCursor( char const *_filename )
 	m_mainFilename = strdup(fullFilename);
 
     BinaryReader *binReader = g_app->m_resource->GetBinaryReader( m_mainFilename );
-	DarwiniaReleaseAssert(binReader, "Failed to open mouse cursor resource %s", _filename); 
+	DarwiniaReleaseAssert(binReader, "Failed to open mouse cursor resource %s", _filename);
     BitmapRGBA bmp( binReader, "bmp" );
 	SAFE_DELETE(binReader);
 
 	g_app->m_resource->AddBitmap(m_mainFilename, bmp);
-	
+
 	sprintf(fullFilename, "shadow_%s", _filename);
 	m_shadowFilename = strdup(fullFilename);
     bmp.ApplyBlurFilter( 10.0f );
@@ -1034,7 +1034,7 @@ void MouseCursor::SetColour(RGBAColour &_col )
 
 void MouseCursor::Render(float _x, float _y)
 {
-	float s = GetSize();	
+	float s = GetSize();
 	float x = (float)_x - s * m_hotspotX;
 	float y = (float)_y - s * m_hotspotY;
 
@@ -1055,10 +1055,10 @@ void MouseCursor::Render(float _x, float _y)
 		    glTexCoord2i(0,0);			glVertex2f(x, y + s);
 	    glEnd();
     }
-    
+
     glColor4ubv     (m_colour.GetData() );
 	glBindTexture   (GL_TEXTURE_2D, g_app->m_resource->GetTexture(m_mainFilename));
-	glBlendFunc     (GL_SRC_ALPHA, GL_ONE);							
+	glBlendFunc     (GL_SRC_ALPHA, GL_ONE);
 	glBegin         (GL_QUADS);
 		glTexCoord2i(0,1);			glVertex2f(x, y);
 		glTexCoord2i(1,1);			glVertex2f(x + s, y);
@@ -1068,7 +1068,7 @@ void MouseCursor::Render(float _x, float _y)
 
     glDepthMask     (true);
     glDisable       (GL_BLEND);
-	glBlendFunc     (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);							
+	glBlendFunc     (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable       (GL_TEXTURE_2D);
     glEnable        (GL_CULL_FACE);
 }
@@ -1077,14 +1077,14 @@ void MouseCursor::Render(float _x, float _y)
 void MouseCursor::Render3D( Vector3 const &_pos, Vector3 const &_front, Vector3 const &_up, bool _cameraScale)
 {
     Vector3 rightAngle = (_front ^ _up).Normalise();
-    
+
 	glEnable        (GL_TEXTURE_2D);
-    
+
 	glEnable        (GL_BLEND);
     glDisable       (GL_CULL_FACE );
     //glDisable       (GL_DEPTH_TEST );
     glDepthMask     (false);
-    
+
     float scale = GetSize();
     if( _cameraScale )
     {
@@ -1112,7 +1112,7 @@ void MouseCursor::Render3D( Vector3 const &_pos, Vector3 const &_front, Vector3 
 
     glColor4ubv     (m_colour.GetData());
 	glBindTexture   (GL_TEXTURE_2D, g_app->m_resource->GetTexture(m_mainFilename));
-	glBlendFunc     (GL_SRC_ALPHA, GL_ONE);							
+	glBlendFunc     (GL_SRC_ALPHA, GL_ONE);
 
     glBegin( GL_QUADS );
         glTexCoord2i(0,1);      glVertex3fv( (pos).GetData() );
@@ -1122,9 +1122,9 @@ void MouseCursor::Render3D( Vector3 const &_pos, Vector3 const &_front, Vector3 
     glEnd();
 
     glDepthMask     (true);
-    glEnable        (GL_DEPTH_TEST );    
+    glEnable        (GL_DEPTH_TEST );
     glDisable       (GL_BLEND);
-	glBlendFunc     (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);							
+	glBlendFunc     (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable       (GL_TEXTURE_2D);
     glEnable        (GL_CULL_FACE);
 }

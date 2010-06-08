@@ -33,7 +33,7 @@ public:
         {
             DarwiniaButton::Render( realX, realY, highlighted, clicked );
         }
-    }   
+    }
 };
 
 
@@ -47,10 +47,10 @@ class NewLocationButton : public DarwiniaButton
         // for the end user (but allow it for us)
 
 #ifndef TARGET_DEBUG
-        if( !g_app->m_resource->IsModLoaded() ) 
+        if( !g_app->m_resource->IsModLoaded() )
         {
             EclRegisterWindow( new MessageDialog( LANGUAGEPHRASE( "dialog_newlocationfail1" ),
-                                                  LANGUAGEPHRASE( "dialog_newlocationfail2" ) ), 
+                                                  LANGUAGEPHRASE( "dialog_newlocationfail2" ) ),
                                                   m_parent );
             return;
         }
@@ -58,15 +58,15 @@ class NewLocationButton : public DarwiniaButton
 
         //
         // Create the map and mission files
-        
+
         LevelFile levelFile;
         sprintf( levelFile.m_mapFilename, "map_%s.txt", s_locationName );
         sprintf( levelFile.m_missionFilename, "mission_%s.txt", s_locationName );
         strlwr( levelFile.m_mapFilename );
         strlwr( levelFile.m_missionFilename );
 
-        levelFile.Save();       
-        
+        levelFile.Save();
+
         //
         // Create new global location
 
@@ -99,10 +99,10 @@ class SaveLocationsButton : public DarwiniaButton
         // for the end user (but allow it for us)
 
 #ifndef TARGET_DEBUG
-        if( !g_app->m_resource->IsModLoaded() ) 
+        if( !g_app->m_resource->IsModLoaded() )
         {
             EclRegisterWindow( new MessageDialog( LANGUAGEPHRASE( "dialog_savelocationsfail1" ),
-                                                  LANGUAGEPHRASE( "dialog_savelocationsfail2" ) ), 
+                                                  LANGUAGEPHRASE( "dialog_savelocationsfail2" ) ),
                                                   m_parent );
             return;
         }
@@ -150,7 +150,7 @@ void GlobalWorldEditorWindow::Create()
     CreateValueControl( LANGUAGEPHRASE("dialog_name"), InputField::TypeString, s_locationName, y +=h, 0, 0, 0, NULL, 10, m_w-20 );
 
     y += h;
-    
+
     SaveLocationsButton *save = new SaveLocationsButton();
     save->SetShortProperties( LANGUAGEPHRASE("editor_savelocations"), 10, y += h, m_w - 20 );
     RegisterButton( save );

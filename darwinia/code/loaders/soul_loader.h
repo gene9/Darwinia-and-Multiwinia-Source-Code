@@ -21,7 +21,7 @@ protected:
     void AdvanceAllSpirits( float _time );
     void RenderAllSpirits();
     void RenderMessage( float _time );
-    
+
 public:
     SoulLoader();
 

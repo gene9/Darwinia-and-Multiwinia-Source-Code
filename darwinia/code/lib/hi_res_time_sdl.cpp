@@ -32,7 +32,7 @@ inline double GetLowLevelTime()
 		gotFirst = true;
 		firstTime = t;
 	}
-	
+
 	return (t.tv_sec - firstTime.tv_sec) + t.tv_usec / 1000000.0;
 }
 

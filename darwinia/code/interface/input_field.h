@@ -35,15 +35,15 @@ public:
 	char	        *m_string;
 
 	int				m_inputBoxWidth;
-	
+
 	float			m_lowBound;
 	float			m_highBound;
 
     DarwiniaButton *m_callback;
-    
+
 public:
 	InputField();
-	
+
 	virtual void Render		( int realX, int realY, bool highlighted, bool clicked );
 	virtual void MouseUp    ();
 	virtual void Keypress	( int keyCode, bool shift, bool ctrl, bool alt );
@@ -75,9 +75,9 @@ public:
     InputField *m_inputField;
     float       m_change;
     float		m_mouseDownStartTime;
-    
+
 public:
-    
+
     InputScroller();
 
 	void Render     ( int realX, int realY, bool highlighted, bool clicked );
@@ -96,13 +96,13 @@ class ColourWidget : public DarwiniaButton
 public:
     DarwiniaButton *m_callback;
     int *m_value;
-    
+
 public:
     ColourWidget();
 
 	void Render     ( int realX, int realY, bool highlighted, bool clicked );
     void MouseUp    ();
-    
+
     void SetValue           (int *value);
     void SetCallback        (DarwiniaButton *button);              // This button will be clicked on Refresh
 };
@@ -118,7 +118,7 @@ class ColourWindow : public DarwiniaWindow
 public:
     DarwiniaButton *m_callback;
     int *m_value;
-   
+
 public:
     ColourWindow( char *_name );
 

@@ -34,7 +34,7 @@ DarwiniaButton::DarwiniaButton()
 {
 }
 
-void DarwiniaButton::SetShortProperties(char const *_name, int _x, int _y, 
+void DarwiniaButton::SetShortProperties(char const *_name, int _x, int _y,
 										 int _w, int _h, char *_caption, char *_tooltip)
 {
 	if ( _w == -1 )
@@ -47,7 +47,7 @@ void DarwiniaButton::SetShortProperties(char const *_name, int _x, int _y,
 		_h = 15;
 	}
 
-	SetProperties((char *)_name, _x, _y, _w, _h, _caption, _tooltip);    
+	SetProperties((char *)_name, _x, _y, _w, _h, _caption, _tooltip);
 }
 
 void DarwiniaButton::SetDisabled( bool _disabled )
@@ -59,10 +59,10 @@ void DarwiniaButton::SetDisabled( bool _disabled )
 
 void DarwiniaButton::Render( int realX, int realY, bool highlighted, bool clicked )
 {
-//    if      ( clicked )         glColor4f( 0.9f, 0.9f, 1.0f, 0.6f );    
-//    else if ( highlighted )     glColor4f( 0.9f, 0.9f, 0.9f, 0.3f );    
+//    if      ( clicked )         glColor4f( 0.9f, 0.9f, 1.0f, 0.6f );
+//    else if ( highlighted )     glColor4f( 0.9f, 0.9f, 0.9f, 0.3f );
 //    else                        glColor4f( 0.5f, 0.5f, 0.5f, 0.2f );
-    
+
 	float y = 7.5 + realY + (m_h - m_fontSize) / 2;
 
 	DarwiniaWindow *parent = (DarwiniaWindow *)m_parent;
@@ -91,17 +91,17 @@ void DarwiniaButton::Render( int realX, int realY, bool highlighted, bool clicke
             if( clicked ) glColor4ub( 162, 191, 208, 255 );
             glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
-        glEnd();    
+        glEnd();
 
         glShadeModel( GL_FLAT );
 
         g_editorFont.SetRenderShadow(true);
-		
-		if (m_disabled) 
+
+		if (m_disabled)
 			glColor4ub( 128, 128, 75, 30 );
 		else
 			glColor4ub( 255, 255, 150, 30 );
-			
+
         if( m_centered )
         {
             g_editorFont.DrawText2DCentre( realX + m_w/2, y, m_fontSize, m_caption );
@@ -116,18 +116,18 @@ void DarwiniaButton::Render( int realX, int realY, bool highlighted, bool clicke
     }
     else
     {
-        glColor4ub( 107, 37, 39, 64 );    
+        glColor4ub( 107, 37, 39, 64 );
         //glColor4ub( 82, 56, 102, 64 );
         glBegin( GL_QUADS );
             glVertex2f( realX, realY );
             glVertex2f( realX + m_w, realY );
             glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
-        glEnd();    
+        glEnd();
 
         glLineWidth(1.0f);
         glBegin( GL_LINES );
-            glColor4ub( 100, 34, 34, 200 );     
+            glColor4ub( 100, 34, 34, 200 );
             glVertex2f( realX, realY + m_h );
             glVertex2f( realX, realY );
 
@@ -136,17 +136,17 @@ void DarwiniaButton::Render( int realX, int realY, bool highlighted, bool clicke
 
             glColor4f( 0.1f, 0.0f, 0.0f, 1.0f );
             glVertex2f( realX + m_w, realY );
-            glVertex2f( realX + m_w, realY + m_h );        
+            glVertex2f( realX + m_w, realY + m_h );
 
-            glVertex2f( realX + m_w, realY + m_h );        
+            glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
         glEnd();
 
-		if (m_disabled) 
+		if (m_disabled)
 			glColor4f( 0.5f, 0.5f, 0.5f, 1.0f );
 		else
 			glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-			
+
         if( m_centered )
         {
             g_editorFont.DrawText2DCentre( realX + m_w/2, y, m_fontSize, m_caption );
@@ -158,7 +158,7 @@ void DarwiniaButton::Render( int realX, int realY, bool highlighted, bool clicke
     }
 
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-   
+
     EclButton::Render( realX, realY, highlighted, clicked );
 }
 
@@ -196,7 +196,7 @@ BorderlessButton::BorderlessButton()
 }
 
 
-void BorderlessButton::SetShortProperties(char const *_name, int _x, int _y, 
+void BorderlessButton::SetShortProperties(char const *_name, int _x, int _y,
 										 int _w, int _h, char *_caption, char *_tooltip)
 {
 	if ( _w == -1 )
@@ -209,7 +209,7 @@ void BorderlessButton::SetShortProperties(char const *_name, int _x, int _y,
 		_h = 15;
 	}
 
-	SetProperties((char *)_name, _x, _y, _w, _h, _caption, _tooltip);    
+	SetProperties((char *)_name, _x, _y, _w, _h, _caption, _tooltip);
 }
 
 
@@ -230,7 +230,7 @@ void BorderlessButton::Render( int realX, int realY, bool highlighted, bool clic
             glColor4ub( 112, 141, 168, 255 );
             glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
-        glEnd();    
+        glEnd();
         glShadeModel( GL_FLAT );
 
         g_editorFont.SetRenderShadow(true);
@@ -250,32 +250,32 @@ void BorderlessButton::Render( int realX, int realY, bool highlighted, bool clic
     else
     {
         glColor4ub( 107, 37, 39, 64 );
-        
+
         if( highlighted )
         {
 			parent->SetCurrentButton( this );
             glLineWidth(1.0f);
             glBegin( GL_LINES );
-                glColor4ub( 100, 34, 34, 250 );           
+                glColor4ub( 100, 34, 34, 250 );
                 glVertex2f( realX, realY + m_h );
                 glVertex2f( realX, realY );
 
                 glVertex2f( realX, realY );
                 glVertex2f( realX + m_w, realY );
 
-                glColor4f( 0.0f, 0.0f, 0.0f, 1.0f );    
+                glColor4f( 0.0f, 0.0f, 0.0f, 1.0f );
                 glVertex2f( realX + m_w, realY );
-                glVertex2f( realX + m_w, realY + m_h );        
+                glVertex2f( realX + m_w, realY + m_h );
 
-                glVertex2f( realX + m_w, realY + m_h );        
+                glVertex2f( realX + m_w, realY + m_h );
                 glVertex2f( realX, realY + m_h );
             glEnd();
-        }    
+        }
 
         glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
         if( m_centered )
         {
-            g_editorFont.DrawText2DCentre( realX + m_w/2, realY + 10, parent->GetMenuSize(m_fontSize), m_caption );    
+            g_editorFont.DrawText2DCentre( realX + m_w/2, realY + 10, parent->GetMenuSize(m_fontSize), m_caption );
         }
         else
         {
@@ -295,10 +295,10 @@ void BorderlessButton::Render( int realX, int realY, bool highlighted, bool clic
             }
         }
     }
-    
+
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 
-    EclButton::Render( realX, realY, highlighted, clicked );    
+    EclButton::Render( realX, realY, highlighted, clicked );
 }
 
 
@@ -329,7 +329,7 @@ DarwiniaWindow::~DarwiniaWindow()
 }
 
 
-void DarwiniaWindow::CreateValueControl( char const *name, int dataType, void *value, int y, 
+void DarwiniaWindow::CreateValueControl( char const *name, int dataType, void *value, int y,
 										  float change, float _lowBound, float _highBound,
                                           DarwiniaButton *callback, int x, int w )
 {
@@ -337,7 +337,7 @@ void DarwiniaWindow::CreateValueControl( char const *name, int dataType, void *v
     if( w == -1 ) w = m_w - x * 2;
 
     InputField *input = new InputField();
-    
+
     if( dataType == InputField::TypeString )
     {
         input->SetShortProperties( (char *)name, x, y, w, GetMenuSize(15) );
@@ -405,7 +405,7 @@ void DarwiniaWindow::CreateColourControl( char const *name, int *value, int y, D
 }
 
 void DarwiniaWindow::Create()
-{	
+{
 	CloseButton *close = new CloseButton();
     close->SetProperties( "Close", m_w - 12, 2, 10, 10, " ", "Close this window" );
     close->m_iconised = true;
@@ -485,7 +485,7 @@ void DarwiniaWindow::Render ( bool hasFocus )
         glVertex2f( m_x, m_y+titleBarHeight );
     glEnd();
     glShadeModel( GL_FLAT );
-    
+
     //glColor4ub( 112, 141, 168, 120 );
     //glBegin( GL_LINES );
     //    glVertex2f( m_x, m_y+1 );
@@ -528,7 +528,7 @@ void DarwiniaWindow::Render ( bool hasFocus )
         glVertex2f( m_x-2, m_y+m_h+1 );
     glEnd();
 
-    //glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );    
+    //glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     g_gameFont.SetRenderShadow(true);
     glColor4ub( 255, 255, 150, 30 );
 	int y = m_y+9;
@@ -541,7 +541,7 @@ void DarwiniaWindow::Render ( bool hasFocus )
     g_gameFont.DrawText2DCentre( m_x + m_w/2, y, fontSize, m_title );
     g_gameFont.SetRenderShadow(false);
 
-    
+
     EclWindow::Render( hasFocus );
 }
 
@@ -556,7 +556,7 @@ int DarwiniaWindow::GetMenuSize( int _value )
 
 		return _value * scale;
 	}
-	else 
+	else
 	{
 		return _value;
 	}
@@ -573,7 +573,7 @@ void DarwiniaWindow::SetMenuSize(int _w, int _h)
 		_h *= ratio;
 		_w *= ratio;
 	}
-	
+
 	SetSize( _w, _h );
 }
 
@@ -663,19 +663,19 @@ void CloseButton::Render( int realX, int realY, bool highlighted, bool clicked )
 {
     if( m_iconised )
     {
-        if( highlighted || clicked )    glColor4ub( 160, 137, 139, 64 );    
-        else                            glColor4ub( 60, 37, 39, 64 );    
+        if( highlighted || clicked )    glColor4ub( 160, 137, 139, 64 );
+        else                            glColor4ub( 60, 37, 39, 64 );
 
         glBegin( GL_QUADS );
             glVertex2f( realX, realY );
             glVertex2f( realX + m_w, realY );
             glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
-        glEnd();    
+        glEnd();
 
         glLineWidth(1.0f);
         glBegin( GL_LINES );
-            glColor4ub( 0, 0, 150, 100 );    
+            glColor4ub( 0, 0, 150, 100 );
             glVertex2f( realX, realY + m_h );
             glVertex2f( realX, realY );
 
@@ -684,9 +684,9 @@ void CloseButton::Render( int realX, int realY, bool highlighted, bool clicked )
 
             glColor4f( 0.1f, 0.0f, 0.0f, 1.0f );
             glVertex2f( realX + m_w, realY );
-            glVertex2f( realX + m_w, realY + m_h );        
+            glVertex2f( realX + m_w, realY + m_h );
 
-            glVertex2f( realX + m_w, realY + m_h );        
+            glVertex2f( realX + m_w, realY + m_h );
             glVertex2f( realX, realY + m_h );
         glEnd();
     }
@@ -732,7 +732,7 @@ void InvertedBox::Render( int realX, int realY, bool highlighted, bool clicked )
         glVertex2f( realX + m_w, realY );
         glVertex2f( realX + m_w, realY + m_h );
     glEnd();
-    
+
     glBegin( GL_LINES );                        // bottom
         glVertex2f( realX, realY+m_h );
         glVertex2f( realX + m_w, realY + m_h );
@@ -747,5 +747,5 @@ void LabelButton::Render( int realX, int realY, bool highlighted, bool clicked )
 		glColor4f( 0.5f, 0.5f, 0.5f, 1.0f );
 	else
 		glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-    g_editorFont.DrawText2D( realX + 5, realY + 10, 11.0f, m_caption );    
+    g_editorFont.DrawText2D( realX + 5, realY + 10, 11.0f, m_caption );
 }

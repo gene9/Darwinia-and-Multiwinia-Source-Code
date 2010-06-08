@@ -25,7 +25,7 @@
 
 /*
  * Feature Set
- * A set of calculated data that represents 
+ * A set of calculated data that represents
  * a complete gesture.
  *
     double   f1;                         // Cosine of angle between sample[0] and sample[2]
@@ -104,7 +104,7 @@ bool Gesture::CalculateFeatureSet()
     double startDX = double (m_mouseSamples[2].x - m_mouseSamples[0].x);
     double startDY = double (m_mouseSamples[2].y - m_mouseSamples[0].y);
     m_featureSet.f[1] = startDX / sqrt( startDX * startDX + startDY * startDY );
-    
+
 
     //
     // Compute f2 : sine of angle between sample[0] and sample[2]
@@ -113,7 +113,7 @@ bool Gesture::CalculateFeatureSet()
 
     //
     // Compute f3 : Length of bounding box diagonal
-    
+
     double boundL = (double) 999999;
     double boundR = 0.0f;
     double boundT = (double) 999999;
@@ -140,7 +140,7 @@ bool Gesture::CalculateFeatureSet()
     m_featureSet.f[5] = sqrt( firstToLastDX * firstToLastDX + firstToLastDY * firstToLastDY );
 
 
-    // 
+    //
     // Compute f6 : Cosine of the angle of the line between first and last point
     m_featureSet.f[6] = firstToLastDX / m_featureSet.f[5];
 
@@ -176,9 +176,9 @@ bool Gesture::CalculateFeatureSet()
         double b_dX = m_mouseSamples[k].x - m_mouseSamples[k-1].x;
         double b_dY = m_mouseSamples[k].y - m_mouseSamples[k-1].y;
 
-        double angle = atan( (a_dX * b_dY - b_dX * a_dY ) / 
+        double angle = atan( (a_dX * b_dY - b_dX * a_dY ) /
                             (a_dX * b_dX + a_dY * b_dY ) );
-        
+
         totalAngleTraversed += angle;
         sumAbsoluteAngles += fabs(angle);
         sumSquaredAngles += (angle * angle);
@@ -198,7 +198,7 @@ bool Gesture::CalculateFeatureSet()
         double dX = m_mouseSamples[l+1].x - m_mouseSamples[l].x;
         double dY = m_mouseSamples[l+1].y - m_mouseSamples[l].y;
         double dT = m_mouseSamples[l+1].time - m_mouseSamples[l].time;
-        double thisSpeed = ( dX * dX + dY * dY ) / 
+        double thisSpeed = ( dX * dX + dY * dY ) /
                           ( dT * dT );
         if( dT == 0.0 )
             continue;
@@ -236,7 +236,7 @@ void Gesture::TrainSystem()
     };
 
     coVarianceElement *coVarianceMatrix = new coVarianceElement[numSymbols];
-    memset( coVarianceMatrix, 0, numSymbols * sizeof(coVarianceElement) );    
+    memset( coVarianceMatrix, 0, numSymbols * sizeof(coVarianceElement) );
 
     double commonCovarianceMatrix[GESTURE_MAX_FEATURES+1][GESTURE_MAX_FEATURES+1];
     memset( commonCovarianceMatrix, 0, (GESTURE_MAX_FEATURES+1) * (GESTURE_MAX_FEATURES+1) * sizeof(double) );
@@ -273,8 +273,8 @@ void Gesture::TrainSystem()
             for( int j = 0; j <= GESTURE_MAX_FEATURES; ++j )
             {
                 double result = 0.0f;
-        
-                for( int e = 0; e < theClass->m_nextTrainer; ++e )            
+
+                for( int e = 0; e < theClass->m_nextTrainer; ++e )
                 {
                     result += ( (theClass->m_trainers[e].f[i] - m_symbols[c].m_averages.f[i]) *
                                 (theClass->m_trainers[e].f[j] - m_symbols[c].m_averages.f[j]) );
@@ -311,8 +311,8 @@ void Gesture::TrainSystem()
     //
     // Invert the common coVariance Matrix
 
-    InvertMatrix( (double *) commonCovarianceMatrix, 
-                  (double *) m_invertedCovarianceMatrix, 
+    InvertMatrix( (double *) commonCovarianceMatrix,
+                  (double *) m_invertedCovarianceMatrix,
                   GESTURE_MAX_FEATURES+1, GESTURE_MAX_FEATURES+1 );
 
     //
@@ -327,12 +327,12 @@ void Gesture::TrainSystem()
             {
                 total += ( m_invertedCovarianceMatrix[i][j] *
                            m_symbols[c].m_averages.f[i] );
-            }                
+            }
             m_symbols[c].m_classes.m_weights.f[j] = total;
         }
     }
 
-    
+
     for( int c = 0; c < numSymbols; ++c )
     {
         // Calculate weight 0
@@ -344,7 +344,7 @@ void Gesture::TrainSystem()
         }
         total *= -0.5f;
         m_symbols[c].m_classes.m_weights.f[0] = total;
-    }    
+    }
 
 	delete coVarianceMatrix;
 }
@@ -353,7 +353,7 @@ void Gesture::TrainSystem()
 void Gesture::AddTrainingSample( int symbolID )
 {
     Classification *newDataClass = &m_symbols[symbolID].m_classes;
-    
+
     //
     // Put the data into the Classification
 
@@ -382,9 +382,9 @@ void Gesture::RunComparison()
 
             for( int i = 1; i <= GESTURE_MAX_FEATURES; ++i )
             {
-                thisResult += theClass->m_weights.f[i] * m_featureSet.f[i];                
+                thisResult += theClass->m_weights.f[i] * m_featureSet.f[i];
             }
-            
+
             m_symbols[c].m_results = thisResult;
         }
         else
@@ -394,9 +394,9 @@ void Gesture::RunComparison()
     }
 
     for( int i = 0; i < numSymbols; ++i )
- 
 
-    
+
+
     //
     // Calculate confidence of results
 
@@ -405,15 +405,15 @@ void Gesture::RunComparison()
         double total = 0.0;
         for( int j = 0; j < numSymbols; ++j )
         {
-            double diff = m_symbols[j].m_results - m_symbols[i].m_results;                
+            double diff = m_symbols[j].m_results - m_symbols[i].m_results;
             double expResult = exp( diff / 500.0 );
-            total += expResult;  
+            total += expResult;
         }
 
         m_symbols[i].m_confidence = 1.0 / total;
     }
 
-    
+
     //
     // Calculate Mahalanobis distance of results
 
@@ -441,9 +441,9 @@ void Gesture::LoadTrainingData( char *filename )
 	reader->ReadLine();
     int numSymbols = atoi(reader->GetNextToken());
     m_symbols.SetSize( numSymbols );
-    
+
     for( int c = 0; c < numSymbols; ++c )
-    {        
+    {
         m_symbols.PutData( GestureSymbol(), c );
         Classification *theClass = &m_symbols[c].m_classes;
 
@@ -504,7 +504,7 @@ Gesture::Gesture( char *_filename )
 
     memset( m_mouseSamples, 0, GESTURE_MAX_MOUSE_SAMPLES * sizeof(MouseSample) );
     memset( &m_featureSet, 0, sizeof(FeatureSet) );
-        
+
     m_nextMouseSample = 0;
     m_recordingGesture = false;
 
@@ -625,7 +625,7 @@ double Gesture::GetCalculatedResult( int symbolID )
         return -1.0;
     }
 }
-    
+
 double Gesture::GetCalculatedConfidence( int symbolID )
 {
     if( symbolID >= 0 && symbolID < GetNumSymbols() )
@@ -649,14 +649,14 @@ double Gesture::GetMahalanobisDistance( int symbolID )
         return -1.0;
     }
 }
-    
+
 int Gesture::GetSymbolID()
 {
     int symbolMax = -1;
 
     for( int i = 0; i < GetNumSymbols(); ++i )
     {
-        if( symbolMax == -1 || 
+        if( symbolMax == -1 ||
             m_symbols[i].m_results > m_symbols[symbolMax].m_results )
         {
             symbolMax = i;

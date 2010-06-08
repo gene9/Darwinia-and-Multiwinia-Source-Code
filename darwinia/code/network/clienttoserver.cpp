@@ -109,7 +109,7 @@ void ClientToServer::AdvanceSender()
     {
         NetworkUpdate *letter = g_app->m_clientToServer->m_outbox[0];
         DarwiniaDebugAssert(letter);
-        
+
         if( g_app->m_bypassNetworking )
         {
             g_app->m_server->ReceiveLetter( letter, g_app->m_clientToServer->GetOurIP_String() );
@@ -127,7 +127,7 @@ void ClientToServer::AdvanceSender()
         g_app->m_clientToServer->m_outbox.RemoveData(0);
     }
     g_app->m_clientToServer->m_outboxMutex->Unlock();
-    
+
     if( bytesSentThisFrame > 0 )
     {
 //        SET_PROFILE(g_app->m_profiler,  "#Client Send", bytesSentThisFrame );
@@ -146,21 +146,21 @@ int ClientToServer::GetOurIP_Int()
 	// We're not doing networking for now
 	static int s_localIP = Server::ConvertIPToInt( "127.0.0.1" );
 	return s_localIP;
-	
+
 // Notes by John
 // =============
 //
 // The commented code below has the following problems
 //
-// - it doesn't always return the same IP (sometimes 127.0.0.1 
+// - it doesn't always return the same IP (sometimes 127.0.0.1
 //   and sometimes the real ip). This means that the remote packet
-//   detection code in ProcessServerLetters in main.cpp 
+//   detection code in ProcessServerLetters in main.cpp
 //   can incorrectly classify a TeamAssignment message as Remote
 //   when it should be local.
-//   
+//
 // - on many machines the hostname has nothing to do with IP address. I
 //   believe the correct thing to do is open a TCP connection to the
-//   server and ask the server what it thinks your IP address is 
+//   server and ask the server what it thinks your IP address is
 //   (see getpeername). This will work even if the client is behind a NAT.
 //
 // - h_addr_list[0] is in network byte order. Treating it directly
@@ -176,7 +176,7 @@ int ClientToServer::GetOurIP_Int()
 //   that IPs should be represented as a class, with various different constructors.
 //	 The private data should be 4 unsigned chars. With this strategy you could
 //   even support IPv6 (if that actually happens before the year 3000).
-	
+
 //	char hostName[256];
 //
 //	int errorCode = gethostname( hostName, sizeof(hostName) );
@@ -211,7 +211,7 @@ int ClientToServer::GetNextLetterSeqID()
     if( m_inbox.Size() > 0 )
     {
         result = m_inbox[0]->GetSequenceId();
-    }    
+    }
     m_inboxMutex->Unlock();
 
     return result;
@@ -228,7 +228,7 @@ ServerToClientLetter *ClientToServer::GetNextLetter()
         letter = m_inbox[0];
         if( letter->GetSequenceId() == g_lastProcessedSequenceId+1 )
         {
-            m_inbox.RemoveData(0);         
+            m_inbox.RemoveData(0);
         }
         else
         {
@@ -246,10 +246,10 @@ void ClientToServer::ReceiveLetter( ServerToClientLetter *letter )
 {
     //
     // Simulate network packet loss
- 
+
 #ifdef _DEBUG
     if( g_inputManager->controlEvent( ControlDebugDropPacket ) )
-    {    
+    {
         delete letter;
         return;
     }
@@ -257,7 +257,7 @@ void ClientToServer::ReceiveLetter( ServerToClientLetter *letter )
 
     //
     // Check for duplicates
-        
+
     if( letter->GetSequenceId() <= m_lastValidSequenceIdFromServer )
     {
         delete letter;
@@ -268,7 +268,7 @@ void ClientToServer::ReceiveLetter( ServerToClientLetter *letter )
     // Work out our start time
 
     double newStartTime = GetHighResTime() - (float) letter->GetSequenceId() * SERVER_ADVANCE_PERIOD;
-    if( newStartTime < g_startTime ) 
+    if( newStartTime < g_startTime )
     {
       g_startTime = newStartTime;
 #ifdef _DEBUG
@@ -331,7 +331,7 @@ void ClientToServer::ReceiveLetter( ServerToClientLetter *letter )
 
 void ClientToServer::SendLetter( NetworkUpdate *letter )
 {
-    letter->SetLastSequenceId( m_lastValidSequenceIdFromServer ); 
+    letter->SetLastSequenceId( m_lastValidSequenceIdFromServer );
 
     m_outboxMutex->Lock();
     m_outbox.PutDataAtEnd( letter );
@@ -475,7 +475,7 @@ void ClientToServer::RequestTargetProgram( unsigned char _teamId, unsigned char 
     letter->SetTeamId( _teamId );
     letter->SetProgram( _program );
     letter->SetWorldPos( _pos );
-    SendLetter( letter );    
+    SendLetter( letter );
 }
 
 
@@ -489,8 +489,8 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
         NetworkUpdate *update = letter->m_updates[i];
 
         switch( update->m_type )
-        {            
-            case NetworkUpdate::Alive:                    
+        {
+            case NetworkUpdate::Alive:
                 g_app->m_location->UpdateTeam( update->m_teamId, update->m_teamControls );
                 break;
 
@@ -498,7 +498,7 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
                 g_app->m_paused = !g_app->m_paused;
                 break;
 
-            case NetworkUpdate::SelectUnit:                
+            case NetworkUpdate::SelectUnit:
                 g_app->m_location->m_teams[ update->m_teamId ].SelectUnit( update->m_unitId, update->m_entityId, update->m_buildingId );
                 g_app->m_taskManager->SelectTask( WorldObjectId( update->m_teamId, update->m_unitId, update->m_entityId, -1 ) );
                 break;
@@ -506,8 +506,8 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
             case NetworkUpdate::CreateUnit:
             {
                 Building *building = g_app->m_location->GetBuilding( update->m_buildingId );
-                if( building && 
-                    building->m_type == Building::TypeFactory ) 
+                if( building &&
+                    building->m_type == Building::TypeFactory )
                 {
                     Factory *factory = (Factory *) building;
                     factory->RequestUnit( update->m_entityType, update->m_numTroops );
@@ -517,7 +517,7 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
                     DarwiniaDebugAssert( update->GetWorldPos() != g_zeroVector );
                     int unitId;
                     Unit *unit = g_app->m_location->m_teams[ update->m_teamId ].NewUnit( update->m_entityType, update->m_numTroops, &unitId, update->GetWorldPos() );
-                    g_app->m_location->SpawnEntities( update->GetWorldPos(), update->m_teamId, unitId, update->m_entityType, update->m_numTroops, g_zeroVector, update->m_numTroops*2 );                        
+                    g_app->m_location->SpawnEntities( update->GetWorldPos(), update->m_teamId, unitId, update->m_entityType, update->m_numTroops, g_zeroVector, update->m_numTroops*2 );
                 }
 				break;
             }
@@ -525,7 +525,7 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
             case NetworkUpdate::AimBuilding:
             {
                 Building *building = g_app->m_location->GetBuilding( update->m_buildingId );
-                if( building && 
+                if( building &&
                     building->m_id.GetTeamId() == update->m_teamId &&
                     building->m_type == Building::TypeRadarDish )
                 {
@@ -534,7 +534,7 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
                 }
                 break;
             }
-                
+
             case NetworkUpdate::ToggleLaserFence:
             {
 				Building *building = g_app->m_location->GetBuilding( update->m_buildingId );

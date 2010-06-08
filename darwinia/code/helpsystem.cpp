@@ -106,7 +106,7 @@ namespace {
 			if( !m_actionDone )
 			{
 				g_app->m_sepulveda->ShutUp();
-				g_app->m_sepulveda->Say( "help_taskmanager_2" );            
+				g_app->m_sepulveda->Say( "help_taskmanager_2" );
 				m_actionDone = true;
 			}
 		}
@@ -173,7 +173,7 @@ namespace {
 		{
 			bool spaceAvailable = g_app->m_taskManager->CapacityUsed() < g_app->m_taskManager->Capacity();
 			bool researchAVailable = g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeSquad );
-	        
+
 			return ( spaceAvailable && researchAVailable );
 		}
 
@@ -199,13 +199,13 @@ namespace {
 	{
 		bool IsActionAvailable()
 		{
-			if( g_app->m_location && 
+			if( g_app->m_location &&
 				g_app->m_location->GetMyTeam() )
 			{
 				Unit *unit = g_app->m_location->GetMyTeam()->GetMyUnit();
 				if( unit && unit->m_troopType == Entity::TypeInsertionSquadie )
 				{
-					return true;   
+					return true;
 				}
 			}
 			return false;
@@ -213,7 +213,7 @@ namespace {
 
 		void GiveActionHelp()
 		{
-			g_app->m_sepulveda->Say( "help_squad_use" );        
+			g_app->m_sepulveda->Say( "help_squad_use" );
 		}
 	};
 
@@ -221,7 +221,7 @@ namespace {
 	class SquadThrowGrenadeActionHelp : public ActionHelp
 	{
 		bool IsActionAvailable()
-		{     
+		{
 			bool researchAvailable = g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade );
 			if( researchAvailable )
 			{
@@ -231,11 +231,11 @@ namespace {
 					Unit *unit = g_app->m_location->GetMyTeam()->GetMyUnit();
 					if( unit && unit->m_troopType == Entity::TypeInsertionSquadie )
 					{
-						return true;   
+						return true;
 					}
 				}
 			}
-	        
+
 			return false;
 		}
 
@@ -252,12 +252,12 @@ namespace {
 		{
 			bool spaceAvailable = g_app->m_taskManager->CapacityUsed() < g_app->m_taskManager->Capacity();
 			bool researchAvailable = g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeEngineer );
-	        
+
 			if( spaceAvailable && researchAvailable )
 			{
 				bool spiritsFound = g_app->m_location->m_spirits.NumUsed() > 0;
 				if( spiritsFound ) return true;
-	            
+
 				for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
 				{
 					if( g_app->m_location->m_buildings.ValidIndex(i) )
@@ -341,7 +341,7 @@ namespace {
 
 		void GiveActionHelp()
 		{
-			g_app->m_sepulveda->Say( "help_officer_create" );        
+			g_app->m_sepulveda->Say( "help_officer_create" );
 			g_app->m_sepulveda->DemoGesture( "officer.txt", 2.0f );
 		}
 
@@ -351,10 +351,10 @@ namespace {
 			{
 				g_app->m_sepulveda->ShutUp();
 
-				g_app->m_sepulveda->Say( "help_officer_use" );            
+				g_app->m_sepulveda->Say( "help_officer_use" );
 				m_actionDone = true;
 			}
-		}       
+		}
 	};
 
 
@@ -367,7 +367,7 @@ namespace {
 				g_app->m_sepulveda->Say( "help_armour_use" );
 				m_actionDone = true;
 			}
-		}       
+		}
 	};
 
 
@@ -552,18 +552,18 @@ HelpSystem::HelpSystem()
     SeenRadarDishHelp *seenRadarDishHelp = new SeenRadarDishHelp();
     m_actionHelp.PutData    ( seenRadarDishHelp,                UseRadarDish );
     m_buildingHelp.PutData  ( seenRadarDishHelp,                Building::TypeRadarDish );
-    
+
     SeenGunTurretHelp *seenGunTurretHelp = new SeenGunTurretHelp();
     m_actionHelp.PutData    ( seenGunTurretHelp,                UseGunTurret );
     m_buildingHelp.PutData  ( seenGunTurretHelp,                Building::TypeGunTurret );
-    
+
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeIncubator );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeTrunkPort );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeRefinery );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeMine );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeAntHill );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeControlTower );
-    m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeResearchItem ); 
+    m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeResearchItem );
     m_buildingHelp.PutData  ( new SeenBuildingHelp(),           Building::TypeGunTurret );
 }
 
@@ -588,9 +588,9 @@ void HelpSystem::Advance()
         g_app->m_sepulveda->ClearHighlights( "HelpSystem" );
     }
 
-    
+
     m_helpEnabled = (bool) g_prefsManager->GetInt( "HelpEnabled", 1 );
-    
+
     bool cameraInteractive = g_app->m_camera->IsInteractive();
 
     bool tutorialRunning = g_app->m_tutorial;
@@ -599,7 +599,7 @@ void HelpSystem::Advance()
     //
     // Even if help isn't enabled, pressing H should bring something up
 
-    if( !m_helpEnabled ) 
+    if( !m_helpEnabled )
     {
         if( g_inputManager->controlEvent( ControlSepulvedaHelp ) && cameraInteractive )
         {
@@ -614,9 +614,9 @@ void HelpSystem::Advance()
 
     bool helpGiven = false;
     bool helpRequired = false;
-    
+
     if( g_app->m_location )
-    {        
+    {
         bool currentlyFiring = false;
         if( g_app->m_location->GetMyTeam() )
         {
@@ -630,15 +630,15 @@ void HelpSystem::Advance()
         }
 
         if( g_app->m_sepulveda->IsTalking() ||
-            currentlyFiring )                           
+            currentlyFiring )
         {
             m_actionHelpTimer = -1.0f;
         }
         else if( m_actionHelpTimer == -1.0f )
         {
-            m_actionHelpTimer = GetHighResTime();        
+            m_actionHelpTimer = GetHighResTime();
         }
-        
+
         if( g_inputManager->controlEvent( ControlSepulvedaHelp ) && cameraInteractive )
         {
             g_app->m_sepulveda->ShutUp();
@@ -646,7 +646,7 @@ void HelpSystem::Advance()
             helpRequired = true;
         }
 
-        if( m_actionHelpTimer != -1.0f &&          
+        if( m_actionHelpTimer != -1.0f &&
             GetHighResTime() > m_actionHelpTimer + HELPSYSTEM_ACTIONHELP_INTERVAL &&
 		    g_inputManager->getInputMode() == INPUT_MODE_KEYBOARD )
         {
@@ -673,7 +673,7 @@ void HelpSystem::Advance()
         if( !currentlyFiring && !g_app->m_sepulveda->IsTalking() && cameraInteractive )
         {
             if( RunHighlightedBuildingHelp() ) helpGiven = true;
-        }        
+        }
 
         if( helpRequired && !helpGiven )
         {
@@ -694,7 +694,7 @@ bool HelpSystem::RunHighlightedBuildingHelp()
         //
         // This building must be reprogrammed before it can be of use
         // Look for a nearby control tower to ensure this is possible
-        
+
         int controlTowerFound = -1;
         for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
         {
@@ -717,7 +717,7 @@ bool HelpSystem::RunHighlightedBuildingHelp()
             g_app->m_sepulveda->Say( "help_building_reprogram" );
             reprogramRequired = true;
             helpGiven = true;
-        }        
+        }
     }
 
     if( building && m_buildingHelp.ValidIndex( building->m_type ) && !reprogramRequired )
@@ -752,25 +752,25 @@ void HelpSystem::RunDefaultHelp()
         Unit *unit = team->GetMyUnit();
         if( unit )
         {
-            if( unit->m_troopType == Entity::TypeInsertionSquadie )            
+            if( unit->m_troopType == Entity::TypeInsertionSquadie )
             {
                 InsertionSquad *squad = (InsertionSquad *) unit;
                 helpGiven = true;
                 g_app->m_sepulveda->Say( "help_squad_use" );
                 g_app->m_sepulveda->Say( "help_deselect" );
-                
+
                 if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) &&
                     squad->m_weaponType == GlobalResearch::TypeGrenade )
                 {
                     g_app->m_sepulveda->Say( "help_squad_grenade" );
-                }             
-                
+                }
+
                 if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) &&
                     squad->m_weaponType != GlobalResearch::TypeGrenade )
                 {
                     g_app->m_sepulveda->Say( "help_squad_setgrenade" );
                 }
-                
+
                 if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket ) &&
                     squad->m_weaponType != GlobalResearch::TypeRocket )
                 {
@@ -795,7 +795,7 @@ void HelpSystem::RunDefaultHelp()
             {
                 helpGiven = true;
                 g_app->m_sepulveda->Say( "help_engineer_use" );
-                g_app->m_sepulveda->Say( "help_deselect" );                
+                g_app->m_sepulveda->Say( "help_deselect" );
             }
             else if( entity->m_type == Entity::TypeOfficer )
             {
@@ -829,7 +829,7 @@ void HelpSystem::RunDefaultHelp()
             else if( building->m_type == Building::TypeGunTurret )
             {
                 helpGiven = true;
-                g_app->m_sepulveda->Say( "help_gunturret_2" );                
+                g_app->m_sepulveda->Say( "help_gunturret_2" );
             }
         }
 
@@ -853,7 +853,7 @@ void HelpSystem::RunDefaultHelp()
             {
                 helpGiven = true;
                 g_app->m_sepulveda->Say( "help_squad_summon_2" );
-            }            
+            }
             else if( task->m_type == GlobalResearch::TypeEngineer )
             {
                 helpGiven = true;
@@ -867,7 +867,7 @@ void HelpSystem::RunDefaultHelp()
         }
 
 
-        // 
+        //
         // Basic taskmanager type stuff if we haven't been able to find any
         // help to give them
 
@@ -909,14 +909,14 @@ void HelpSystem::Render()
     //
     // Press h for help
 
-    if( !g_app->m_editing && 
-        g_app->m_location && 
+    if( !g_app->m_editing &&
+        g_app->m_location &&
         !g_app->m_renderer->m_renderingPoster &&
         ( (int) g_gameTime % 2 == 0 ) &&
 		g_inputManager->getInputMode() == INPUT_MODE_KEYBOARD )
     {
         g_gameFont.BeginText2D();
-        g_gameFont.SetRenderOutline(true);        
+        g_gameFont.SetRenderOutline(true);
         glColor4f(1.0f,1.0f,1.0f,0.0f);
         g_gameFont.DrawText2DCentre( g_app->m_renderer->ScreenW()/2.0f, 15, 15, LANGUAGEPHRASE("help_pressh") );
         g_gameFont.SetRenderOutline(false);
@@ -924,8 +924,8 @@ void HelpSystem::Render()
         g_gameFont.DrawText2DCentre( g_app->m_renderer->ScreenW()/2.0f, 15, 15, LANGUAGEPHRASE("help_pressh") );
         g_gameFont.EndText2D();
     }
-    
-    
+
+
     END_PROFILE(g_app->m_profiler, "Render Helpsys");
 }
 

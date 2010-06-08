@@ -132,7 +132,7 @@ void RenderSphereRings(Vector3 const &_centre, float _radius, RGBAColour const &
 			cx[i] = cosf(theta);
 		}
 	}
-	
+
 	glLineWidth(2.0f);
 	glBegin(GL_LINE_LOOP);
 		for (i = 0; i < _segs; i++)
@@ -173,7 +173,7 @@ void RenderSphere(Vector3 const &_centre, float _radius, RGBAColour const &_col)
 }
 
 
-void RenderVerticalCylinder(Vector3 const &_centreBase, Vector3 const &_verticalAxis, 
+void RenderVerticalCylinder(Vector3 const &_centreBase, Vector3 const &_verticalAxis,
 							float _height, float _radius, RGBAColour const &_col)
 {
 	Vector3 axis1 = _verticalAxis;
@@ -295,7 +295,7 @@ void PrintMatrix( const char *_name, GLenum _whichMatrix )
 	DebugOut( "\tMatrix: %s\n", _name );
 	for (int row = 0; row < 4; row++) {
 		DebugOut("\t\t");
-		for (int col = 0; col < 4; col++) 
+		for (int col = 0; col < 4; col++)
 			DebugOut("% 13.1f ", matrix[col * 4 + row]);
 		DebugOut("\n");
 	}

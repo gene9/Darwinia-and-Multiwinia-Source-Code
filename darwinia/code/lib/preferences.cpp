@@ -66,7 +66,7 @@ PrefsItem::PrefsItem(char *_line)
 	{
 		// Guess that number is an int
 		m_type = TypeInt;
-		
+
 		// Verify that guess
 		c = value;
         int numDots = 0;
@@ -133,7 +133,7 @@ PrefsItem::~PrefsItem()
 // ******************
 
 PrefsManager::PrefsManager(char const *_filename)
-{    
+{
     m_filename = strdup(_filename);
 
 	Load();
@@ -170,7 +170,7 @@ bool PrefsManager::IsLineEmpty(char const *_line)
 	}
 
 	return true;
-}	
+}
 
 int GetDefaultHelpEnabled()
 {
@@ -246,7 +246,7 @@ int GetDefaultGraphicsDetail()
 void PrefsManager::CreateDefaultValues()
 {
 	char line[1024];
-	
+
     AddLine( "ServerAddress = 127.0.0.1" );
     AddLine( "BypassNetwork = 1" );
     AddLine( "IAmAServer = 1" );
@@ -259,9 +259,9 @@ void PrefsManager::CreateDefaultValues()
 
 	sprintf( line, "HelpEnabled = %d", GetDefaultHelpEnabled() );
 	AddLine( line );
-	
+
     AddLine( "\n" );
- 
+
 	sprintf( line, "SoundLibrary = %s", GetDefaultSoundLibrary() );
 	AddLine( line );
 
@@ -275,7 +275,7 @@ void PrefsManager::CreateDefaultValues()
     AddLine( "SoundBufferSize = 512" ); // Must be a power of 2 for Linux
 	sprintf( line, "SoundDSP = %d", GetDefaultSoundDSP() );
 	AddLine( line );
-	
+
     AddLine( "\n" );
 
     //AddLine( "ScreenWidth = 1024" );
@@ -286,7 +286,7 @@ void PrefsManager::CreateDefaultValues()
     //AddLine( "ScreenRefresh = 60" );
 
     AddLine( "\n" );
-	
+
     sprintf( line, "RenderLandscapeDetail = %d", GetDefaultGraphicsDetail() );
 	AddLine( line );
     sprintf( line, "RenderWaterDetail = %d", GetDefaultGraphicsDetail() );
@@ -297,7 +297,7 @@ void PrefsManager::CreateDefaultValues()
 	AddLine( line );
     sprintf( line, "RenderCloudDetail = %d", GetDefaultGraphicsDetail() );
 	AddLine( line );
-		
+
 	sprintf( line, "RenderPixelShader = %d", GetDefaultPixelShader() );
     AddLine( line );
 
@@ -326,18 +326,18 @@ void PrefsManager::CreateDefaultValues()
     #endif
 #else
     AddLine( "BootLoader = firsttime" );
-    AddLine( "UserProfile = NewUser" ); 
+    AddLine( "UserProfile = NewUser" );
     AddLine( "RenderSpecialLighting = 0" );
 	AddLine( OTHER_DIFFICULTY " = 1" );
 #endif
 
 	// Override the defaults above with stuff from a default preferences file
-	if ( g_app && g_app->m_resource ) 
+	if ( g_app && g_app->m_resource )
 	{
 		TextReader *reader = g_app->m_resource->GetTextReader( "default_preferences.txt" );
-		if ( reader && reader->IsOpen() ) 
+		if ( reader && reader->IsOpen() )
 		{
-			while ( reader->ReadLine() ) 
+			while ( reader->ReadLine() )
 			{
 				AddLine( reader->GetRestOfLine(), true );
 			}
@@ -352,7 +352,7 @@ void PrefsManager::Load(char const *_filename)
 	if (!_filename) _filename = m_filename;
 
 	m_items.EmptyAndDelete();
-    
+
     // Try to read preferences if they exist
     FILE *in = fopen(_filename, "r");
 
@@ -370,7 +370,7 @@ void PrefsManager::Load(char const *_filename)
         }
     	fclose(in);
     }
-	
+
 #ifdef DEMOBUILD
 	AddLine( OTHER_DIFFICULTY " = 1", true );
 #endif
@@ -394,7 +394,7 @@ void PrefsManager::SaveItem(FILE *out, PrefsItem *_item)
 	_item->m_hasBeenWritten = true;
 }
 
-			
+
 void PrefsManager::Save()
 {
 	// We've got a copy of the plain text from the prefs file that we initially
@@ -406,7 +406,7 @@ void PrefsManager::Save()
 	// First clear the "has been written" flags on all the items
 	for (int i = 0; i < m_items.Size(); ++i)
 	{
-		if (m_items.ValidIndex(i)) 
+		if (m_items.ValidIndex(i))
 		{
 			m_items[i]->m_hasBeenWritten = false;
 		}
@@ -414,8 +414,8 @@ void PrefsManager::Save()
 
 	// Now use m_fileText as a template to write most of the items
 	FILE *out = fopen(m_filename, "w");
-	
-	// If we couldn't open the prefs file for writing then just silently fail - 
+
+	// If we couldn't open the prefs file for writing then just silently fail -
 	// it's better than crashing.
 	if (!out)
 	{
@@ -434,7 +434,7 @@ void PrefsManager::Save()
 			char const *c = line;
 			char const *keyStart = NULL;
 			char const *keyEnd;
-			while (*c != '=') 
+			while (*c != '=')
 			{
 				if (keyStart)
 				{
@@ -447,7 +447,7 @@ void PrefsManager::Save()
 				{
 					if (isalnum(c[0]))
 					{
-						keyStart = c; 
+						keyStart = c;
 					}
 				}
 				++c;
@@ -465,7 +465,7 @@ void PrefsManager::Save()
 	// Finally output any items that haven't already been written
 	for (int i = 0; i < m_items.Size(); ++i)
 	{
-		if (m_items.ValidIndex(i)) 
+		if (m_items.ValidIndex(i))
 		{
 			PrefsItem *item = m_items.GetData(i);
 			if (!item->m_hasBeenWritten)
@@ -595,11 +595,11 @@ void PrefsManager::SetInt(char const *_key, int _int)
 
 void PrefsManager::AddLine(char const*_line, bool _overwrite)
 {
-	if ( !_line ) 
+	if ( !_line )
 		return;
 
 	bool saveLine = true;
-    
+
 	if (!IsLineEmpty(_line))				// Skip comment lines and blank lines
 	{
 		char *localCopy = strdup( _line );

@@ -63,7 +63,7 @@ void WindowManager::SaveDesktop()
     ZeroMemory(&mode, sizeof(mode));
     mode.dmSize = sizeof(mode);
     bool success = EnumDisplaySettings ( NULL, ENUM_CURRENT_SETTINGS, &mode );
-            
+
     m_desktopScreenW = mode.dmPelsWidth;
     m_desktopScreenH = mode.dmPelsHeight;
     m_desktopColourDepth = mode.dmBitsPerPel;
@@ -111,10 +111,10 @@ bool WindowManager::EnableOpenGL(int _colourDepth, int _zDepth)
 {
 	PIXELFORMATDESCRIPTOR pfd;
 	int format;
-	
+
 	// Get the device context (DC)
 	m_win32Specific->m_hDC = GetDC( m_win32Specific->m_hWnd );
-	
+
 	// Set the pixel format for the DC
 	ZeroMemory( &pfd, sizeof( pfd ) );
 	pfd.nSize = sizeof( pfd );
@@ -126,7 +126,7 @@ bool WindowManager::EnableOpenGL(int _colourDepth, int _zDepth)
 	pfd.iLayerType = PFD_MAIN_PLANE;
 	format = ChoosePixelFormat( m_win32Specific->m_hDC, &pfd );
 	SetPixelFormat( m_win32Specific->m_hDC, format, &pfd );
-	
+
 	// Create and enable the render context (RC)
 	m_win32Specific->m_hRC = wglCreateContext( m_win32Specific->m_hDC );
 	wglMakeCurrent( m_win32Specific->m_hDC, m_win32Specific->m_hRC );
@@ -209,7 +209,7 @@ bool WindowManager::Windowed()
 }
 
 
-bool WindowManager::CreateWin(int _width, int _height, bool _windowed, 
+bool WindowManager::CreateWin(int _width, int _height, bool _windowed,
 	           				     int _colourDepth, int _refreshRate, int _zDepth, bool _waitVRT)
 {
 	m_screenW = _width;
@@ -272,8 +272,8 @@ bool WindowManager::CreateWin(int _width, int _height, bool _windowed,
 		devmode.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_DISPLAYFREQUENCY;
 		long result = ChangeDisplaySettings(&devmode, CDS_FULLSCREEN);
         if( result != DISP_CHANGE_SUCCESSFUL ) return false;
-        
-//		DarwiniaReleaseAssert(result == DISP_CHANGE_SUCCESSFUL, "Couldn't set full screen mode of %dx%d", 
+
+//		DarwiniaReleaseAssert(result == DISP_CHANGE_SUCCESSFUL, "Couldn't set full screen mode of %dx%d",
 //														_width, _height);
 //      This assert goes off on many systems, regardless of success
 
@@ -284,8 +284,8 @@ bool WindowManager::CreateWin(int _width, int _height, bool _windowed,
 	}
 
 	// Create main window
-	m_win32Specific->m_hWnd = CreateWindow( 
-		wc.lpszClassName, wc.lpszClassName, 
+	m_win32Specific->m_hWnd = CreateWindow(
+		wc.lpszClassName, wc.lpszClassName,
 		windowStyle,
 		posX, posY, _width, _height,
 		NULL, NULL, g_hInstance, NULL );
@@ -317,12 +317,12 @@ void WindowManager::Flip()
 void WindowManager::NastyPollForMessages()
 {
 	MSG msg;
-	while ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) ) 
+	while ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
 	{
 		// handle or dispatch messages
 		TranslateMessage( &msg );
 		DispatchMessage( &msg );
-	} 
+	}
 }
 
 
@@ -384,9 +384,9 @@ void WindowManager::EnsureMouseCaptured()
 	//
 	// Might not need to do anything, the intention is
 	// to have the mouse/keyboard captured whenever
-	// the mouse is being warped (i.e. not in 
+	// the mouse is being warped (i.e. not in
 	// menu mode)
-	// 
+	//
 	// Look carefully at input.cpp if implementing this
 	// code, since that calls CaptureMouse / UncaptureMouse
 	// on various input events
@@ -407,9 +407,9 @@ void WindowManager::EnsureMouseUncaptured()
 	//
 	// Might not need to do anything, the intention is
 	// to have the mouse/keyboard captured whenever
-	// the mouse is being warped (i.e. not in 
+	// the mouse is being warped (i.e. not in
 	// menu mode)
-	// 
+	//
 	// Look carefully at input.cpp if implementing this
 	// code, since that calls CaptureMouse / UncaptureMouse
 	// on various input events
@@ -447,11 +447,11 @@ void WindowManager::SuggestDefaultRes( int *_width, int *_height, int *_refresh,
 
 void WindowManager::OpenWebsite( char *_url )
 {
-    ShellExecute(NULL, "open", _url, NULL, NULL, SW_SHOWNORMAL); 
+    ShellExecute(NULL, "open", _url, NULL, NULL, SW_SHOWNORMAL);
 }
 
 
-int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, 
+int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 				   LPSTR _cmdLine, int _iCmdShow)
 {
 	g_hInstance = _hInstance;
@@ -459,7 +459,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 	g_windowManager	= new WindowManager();
 
 	AppMain();
-	
+
 	return WM_QUIT;
 }
 #endif // !defined USE_DIRECT3D

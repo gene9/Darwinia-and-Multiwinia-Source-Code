@@ -39,8 +39,8 @@ public:
             glVertex2i( realX + m_w, realY );
             glVertex2i( realX + m_w, realY + m_h );
             glVertex2i( realX, realY + m_h );
-        glEnd();        
-        
+        glEnd();
+
         glEnable    ( GL_CULL_FACE );
         glDisable   ( GL_BLEND );
     }
@@ -67,12 +67,12 @@ public:
         {
             int sampleX, sampleY;
             g_app->m_gesture->GetMouseSample( i, &sampleX, &sampleY );
-            glBegin ( GL_LINE_LOOP );        
+            glBegin ( GL_LINE_LOOP );
                 glVertex2i( realX + sampleX - rectSize, realY + sampleY - rectSize );
                 glVertex2i( realX + sampleX + rectSize, realY + sampleY - rectSize );
                 glVertex2i( realX + sampleX + rectSize, realY + sampleY + rectSize );
                 glVertex2i( realX + sampleX - rectSize, realY + sampleY + rectSize );
-            glEnd();        
+            glEnd();
         }
 
         glDisable   ( GL_BLEND );
@@ -91,7 +91,7 @@ public:
         {
             g_app->m_gesture->BeginGesture();
         }
-        
+
         int x = g_target->X();
         int y = g_target->Y();
         g_app->m_gesture->AddSample( x, y );
@@ -109,9 +109,9 @@ class GestureStatusButton : public DarwiniaButton
 public:
     int m_symbolIndex;
     void Render( int realX, int realY, bool highlighted, bool clicked )
-    {        
+    {
         int m_symbolId = g_app->m_taskManager->MapGestureToTask(m_symbolIndex);
-        
+
         DarwiniaButton::Render( realX, realY, highlighted, clicked );
 
         if( m_symbolId < GlobalResearch::NumResearchItems &&
@@ -162,9 +162,9 @@ public:
             int numSamples = g_app->m_gesture->GetNumTrainers( m_symbolIndex );
             g_editorFont.DrawText2D( realX + 5, realY + m_h - 30, 12, "%d", numSamples );
             g_editorFont.DrawText2DRight( realX + m_w - 3, realY + m_h - 30, 10, "samples" );
-        
+
             double conf = g_app->m_gesture->GetCalculatedConfidence( m_symbolIndex );
-            g_editorFont.DrawText2D( realX + 5, realY + m_h - 18, 12, "%d%%", int(conf*100) );        
+            g_editorFont.DrawText2D( realX + 5, realY + m_h - 18, 12, "%d%%", int(conf*100) );
             g_editorFont.DrawText2DRight( realX + m_w - 3, realY + m_h - 18, 10, "confidence" );
 
             double maha = g_app->m_gesture->GetMahalanobisDistance( m_symbolIndex );
@@ -223,7 +223,7 @@ void GestureWindow::Create()
 
     DrawGestureBox *dgb = new DrawGestureBox();
     int h = m_h - 180;
-    int w = h * 4 / 3;    
+    int w = h * 4 / 3;
     dgb->SetShortProperties( "DrawBox", 10, 30, w, h );
     RegisterButton( dgb );
 
@@ -246,7 +246,7 @@ void GestureWindow::Create()
     NewGestureButton *ng = new NewGestureButton();
     ng->SetShortProperties( "New Gesture", m_w - 100, m_h - 100, 90, 15 );
     RegisterButton( ng );
-    
+
     LoadDataButton *ld = new LoadDataButton();
     ld->SetShortProperties( "Load Data", m_w - 100, m_h - 50, 90, 15 );
     RegisterButton( ld );

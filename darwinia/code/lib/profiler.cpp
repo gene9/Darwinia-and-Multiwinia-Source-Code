@@ -58,7 +58,7 @@ void ProfiledElement::End()
 	m_currentNumCalls++;
 	double const duration = timeNow - m_callStartTime;
 	m_currentTotalTime += duration;
-	
+
 	if (duration > m_longest)
 	{
 		m_longest = duration;
@@ -149,7 +149,7 @@ static Uint32 s_profileThread;
 #define MAIN_THREAD_ONLY { if (SDL_ThreadID() != s_profileThread) return; }
 #else
 #define MAIN_THREAD_ONLY {}
-#endif 
+#endif
 
 // *** Constructor
 Profiler::Profiler()
@@ -223,7 +223,7 @@ void Profiler::StartProfile(char const *_name)
 	}
 
 	DarwiniaReleaseAssert(m_rootElement->m_isExpanded, "Profiler root element has been un-expanded");
-	
+
     bool wasExpanded = m_currentElement->m_isExpanded;
 
     if (m_currentElement->m_isExpanded)
@@ -253,7 +253,7 @@ void Profiler::EndProfile(char const *_name)
 		{
 			glFinish();
 		}
-    
+
 		DarwiniaDebugAssert(m_currentElement != m_rootElement);
 		DarwiniaDebugAssert(stricmp(_name, m_currentElement->m_name) == 0);
 

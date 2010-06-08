@@ -98,16 +98,16 @@ void SoulDestroyer::ChangeHealth( int _amount )
 
                 float scale = 1.0f - ( (float) i / (float) m_positionHistory.Size() );
                 scale *= 1.5f;
-                if( i == m_positionHistory.Size()-1 )   scale = 0.8f;            
+                if( i == m_positionHistory.Size()-1 )   scale = 0.8f;
                 scale = max( scale, 0.5f );
-        
-                Matrix34 tailMat( front, up, pos );            
+
+                Matrix34 tailMat( front, up, pos );
                 tailMat.u *= scale;
                 tailMat.r *= scale;
                 tailMat.f *= scale;
 
                 g_explosionManager.AddExplosion( m_shape, tailMat, 1.0f );
-            }            
+            }
         }
     }
 }
@@ -116,7 +116,7 @@ void SoulDestroyer::ChangeHealth( int _amount )
 bool SoulDestroyer::Advance( Unit *_unit )
 {
     if( m_dead ) return AdvanceDead( _unit );
-        
+
     if( m_panic > 0.0f )
     {
         m_targetEntity.SetInvalid();
@@ -125,14 +125,14 @@ bool SoulDestroyer::Advance( Unit *_unit )
             SearchForRetreatPosition();
         }
         m_panic -= SERVER_ADVANCE_PERIOD;
-    }    
+    }
     else if( m_targetEntity.IsValid() )
     {
         WorldObject *target = g_app->m_location->GetEntity( m_targetEntity );
         if( target )
         {
             float distance = (target->m_pos - m_pos).Mag();
-            m_targetPos = target->m_pos;            
+            m_targetPos = target->m_pos;
 
             if( distance > SOULDESTROYER_MAXSEARCHRANGE )
             {
@@ -172,23 +172,23 @@ void SoulDestroyer::Attack( Vector3 const &_pos )
     for( int i = 0; i < numFound; ++i )
     {
         WorldObjectId id = ids[i];
-        Entity *entity = (Entity *) g_app->m_location->GetEntity( id );        
+        Entity *entity = (Entity *) g_app->m_location->GetEntity( id );
         bool killed = false;
 
         Vector3 pushVector = ( entity->m_pos - _pos );
-        float distance = pushVector.Mag();       
+        float distance = pushVector.Mag();
         if( distance < SOULDESTROYER_DAMAGERANGE )
         {
             g_app->m_soundSystem->TriggerEntityEvent( this, "Attack" );
 
             pushVector.SetLength( SOULDESTROYER_DAMAGERANGE - distance );
-                                        
+
             g_app->m_location->m_entityGrid->RemoveObject( id, entity->m_pos.x, entity->m_pos.z, entity->m_radius );
             entity->m_pos += pushVector;
             g_app->m_location->m_entityGrid->AddObject( id, entity->m_pos.x, entity->m_pos.z, entity->m_radius );
-            
+
             bool dead = entity->m_dead;
-            entity->ChangeHealth( (SOULDESTROYER_DAMAGERANGE - distance) * -50.0f );            
+            entity->ChangeHealth( (SOULDESTROYER_DAMAGERANGE - distance) * -50.0f );
             if( !dead && entity->m_dead ) killed = true;
         }
 
@@ -209,7 +209,7 @@ void SoulDestroyer::Attack( Vector3 const &_pos )
                     m_spirits.PutData( (float) GetHighResTime(), index );
                 }
             }
-            
+
 
             // Create a zombie
             Zombie *zombie = new Zombie();
@@ -223,7 +223,7 @@ void SoulDestroyer::Attack( Vector3 const &_pos )
             zombie->m_id.Set( id.GetTeamId(), UNIT_EFFECTS, index, -1 );
             zombie->m_id.GenerateUniqueId();
         }
-    } 
+    }
 }
 
 
@@ -241,7 +241,7 @@ void SoulDestroyer::Panic( float _time )
 bool SoulDestroyer::SearchForRetreatPosition()
 {
     WorldObjectId targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 0.0f, SOULDESTROYER_MAXSEARCHRANGE, m_id.GetTeamId() );
-    
+
     if( targetId.IsValid() )
     {
         WorldObject *obj = g_app->m_location->GetEntity( targetId );
@@ -255,7 +255,7 @@ bool SoulDestroyer::SearchForRetreatPosition()
         m_targetPos.y = min( m_targetPos.y, 300.0f );
         return true;
     }
-     
+
     return false;
 }
 
@@ -269,7 +269,7 @@ bool SoulDestroyer::SearchForTargetEnemy()
 	}
     // If we are too close to the ground, we MUST take off
     float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
-    if( fabs( m_pos.y - landHeight ) < 50.0f ) 
+    if( fabs( m_pos.y - landHeight ) < 50.0f )
     {
         m_targetEntity.SetInvalid();
         return false;
@@ -290,7 +290,7 @@ bool SoulDestroyer::SearchForTargetEnemy()
 
     if( targetId.IsValid() )
     {
-        m_targetEntity = targetId;        
+        m_targetEntity = targetId;
         g_app->m_soundSystem->TriggerEntityEvent( this, "EnemySighted" );
         return true;
     }
@@ -311,11 +311,11 @@ bool SoulDestroyer::SearchForRandomPosition()
     if( chanceOfReturn >= 1.0f || syncfrand(1.0f) <= chanceOfReturn )
     {
         // We have strayed too far from our spawn point
-        // So head back there now       
+        // So head back there now
         Vector3 targetPos = m_spawnPoint;
         targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( targetPos.x, targetPos.z );
         targetPos.y += 100.0f + syncsfrand( 100.0f );
-        
+
         Vector3 returnVector = ( targetPos - m_pos );
         returnVector.SetLength( 160.0f );
         m_targetPos = m_pos + returnVector;
@@ -327,21 +327,21 @@ bool SoulDestroyer::SearchForRandomPosition()
 
         m_targetPos = m_pos + Vector3( sinf(angle) * distance,
                                        0.0f,
-                                       cosf(angle) * distance );  
+                                       cosf(angle) * distance );
         m_targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_targetPos.x, m_targetPos.z );
-        m_targetPos.y += (100.0f + syncsfrand( 100.0f ));        
+        m_targetPos.y += (100.0f + syncsfrand( 100.0f ));
     }
-    
+
     return true;
 }
 
 
 void SoulDestroyer::RecordHistoryPosition()
-{    
+{
     Matrix34 mat( m_front, m_up, m_pos );
     Vector3 tailPos = s_tailMarker->GetWorldMatrix(mat).pos;
     m_positionHistory.PutDataAtStart( tailPos );
-    
+
     //int maxHistorys = 11;
     int maxHistorys = m_roamRange / 30.0f;
     maxHistorys = max( 9, maxHistorys );
@@ -356,7 +356,7 @@ void SoulDestroyer::RecordHistoryPosition()
 
 bool SoulDestroyer::GetTrailPosition( Vector3 &_pos, Vector3 &_vel )
 {
-    if( m_positionHistory.Size() < 2 ) return false; 
+    if( m_positionHistory.Size() < 2 ) return false;
 
     Vector3 pos1 = *m_positionHistory.GetPointer(1);
     Vector3 pos2 = *m_positionHistory.GetPointer(0);
@@ -374,7 +374,7 @@ bool SoulDestroyer::AdvanceToTargetPosition()
     Vector3 targetDir = (m_targetPos - m_pos).Normalise();
     if( !m_targetEntity.IsValid() )
     {
-        Vector3 right1 = m_front ^ m_up;    
+        Vector3 right1 = m_front ^ m_up;
         targetDir.RotateAround( right1 * sinf(g_gameTime * 6.0f) * 1.5f );
     }
 
@@ -390,23 +390,23 @@ bool SoulDestroyer::AdvanceToTargetPosition()
     actualDir.Normalise();
     float speed = m_stats[StatSpeed];
     speed = 130.0f;
-    
+
     Vector3 oldPos = m_pos;
     Vector3 newPos = m_pos + actualDir * speed * SERVER_ADVANCE_PERIOD;
     landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( newPos.x, newPos.z );
     //newPos.y = max( newPos.y, landHeight );
-    
+
     Vector3 moved = newPos - oldPos;
     if( moved.Mag() > speed * SERVER_ADVANCE_PERIOD ) moved.SetLength( speed * SERVER_ADVANCE_PERIOD );
     newPos = m_pos + moved;
 
-    m_pos = newPos;       
+    m_pos = newPos;
     m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
     m_front = actualDir;
-                
+
     Vector3 right = m_front ^ g_upVector;
     m_up = right ^ m_front;
-    
+
     return ( m_pos - m_targetPos ).Mag() < 40.0f;
 }
 
@@ -421,8 +421,8 @@ void SoulDestroyer::ListSoundEvents( LList<char *> *_list )
 
 
 void SoulDestroyer::RenderShapes( float _predictionTime )
-{    
-    Vector3 predictedPos = m_pos + m_vel * _predictionTime;    
+{
+    Vector3 predictedPos = m_pos + m_vel * _predictionTime;
     Vector3 predictedFront = m_front;
     Vector3 predictedUp = m_up;
     Vector3 predictedRight = predictedUp ^ predictedFront;
@@ -435,10 +435,10 @@ void SoulDestroyer::RenderShapes( float _predictionTime )
     glDisable( GL_TEXTURE_2D );
 
     g_app->m_renderer->SetObjectLighting();
-    
-    s_shapeHead->Render(_predictionTime, mat);   
 
-    
+    s_shapeHead->Render(_predictionTime, mat);
+
+
     for( int i = 1; i < m_positionHistory.Size(); i+=1 )
     {
         Vector3 pos1 = *m_positionHistory.GetPointer(i);
@@ -453,14 +453,14 @@ void SoulDestroyer::RenderShapes( float _predictionTime )
 
         float scale = 1.0f - ( (float) i / (float) m_positionHistory.Size() );
         scale *= 1.5f;
-        if( i == m_positionHistory.Size()-1 )   scale = 0.8f;            
+        if( i == m_positionHistory.Size()-1 )   scale = 0.8f;
         scale = max( scale, 0.5f );
-        
-        Matrix34 tailMat( front, up, pos );            
+
+        Matrix34 tailMat( front, up, pos );
         tailMat.u *= scale;
         tailMat.r *= scale;
         tailMat.f *= scale;
-        
+
         s_shapeTail->Render(_predictionTime, tailMat );
     }
 
@@ -472,15 +472,15 @@ void SoulDestroyer::RenderShapes( float _predictionTime )
 
 void SoulDestroyer::RenderShapesForPixelEffect( float _predictionTime )
 {
-    Vector3 predictedPos = m_pos + m_vel * _predictionTime;    
+    Vector3 predictedPos = m_pos + m_vel * _predictionTime;
     Vector3 predictedFront = m_front;
     Vector3 predictedUp = m_up;
     Vector3 predictedRight = predictedUp ^ predictedFront;
     predictedFront = predictedRight ^ predictedUp;
 	Matrix34 mat(predictedFront, predictedUp, predictedPos);
 
-    g_app->m_renderer->MarkUsedCells(s_shapeHead, mat);   
-    
+    g_app->m_renderer->MarkUsedCells(s_shapeHead, mat);
+
     for( int i = 1; i < m_positionHistory.Size(); i+=1 )
     {
         Vector3 pos1 = *m_positionHistory.GetPointer(i);
@@ -495,34 +495,34 @@ void SoulDestroyer::RenderShapesForPixelEffect( float _predictionTime )
 
         float scale = 1.0f - ( (float) i / (float) m_positionHistory.Size() );
         scale *= 1.5f;
-        if( i == m_positionHistory.Size()-1 )   scale = 0.8f;            
+        if( i == m_positionHistory.Size()-1 )   scale = 0.8f;
         scale = max( scale, 0.5f );
-        
-        Matrix34 tailMat( front, up, pos );            
+
+        Matrix34 tailMat( front, up, pos );
         tailMat.u *= scale;
         tailMat.r *= scale;
         tailMat.f *= scale;
-        
+
         g_app->m_renderer->MarkUsedCells(s_shapeTail, tailMat);
     }
 }
 
 
 void SoulDestroyer::Render( float _predictionTime )
-{        
+{
     _predictionTime -= SERVER_ADVANCE_PERIOD;
 
     if( !m_dead )
     {
         glDisable( GL_TEXTURE_2D );
-        
+
         Vector3 predictedPos = m_pos + m_vel * _predictionTime;
         Vector3 predictedFront = m_front;
         Vector3 predictedUp = m_up;
         Vector3 predictedRight = predictedUp ^ predictedFront;
         predictedFront = predictedRight ^ predictedUp;
 	    Matrix34 mat(predictedFront, predictedUp, predictedPos);
-             
+
 //        RenderSphere( m_targetPos, 5.0f );
 //        RenderSphere( predictedPos, 300.0f );
 //        RenderArrow( m_pos, m_pos+predictedFront * 200.0f, 3.0f, RGBAColour(0,255,0) );
@@ -549,12 +549,12 @@ void SoulDestroyer::Render( float _predictionTime )
 
             float scale = 1.0f - ( (float) i / (float) m_positionHistory.Size() );
             scale *= 1.5f;
-            if( i == m_positionHistory.Size()-1 )   scale = 0.8f;            
+            if( i == m_positionHistory.Size()-1 )   scale = 0.8f;
             scale = max( scale, 0.5f );
 
             RenderShadow( pos, scale*20.0f );
         }
-        
+
         EndRenderShadow();
 
 
@@ -612,26 +612,26 @@ void SoulDestroyer::RenderSpirit( Vector3 const &_pos, float _alpha )
     int spiritOuterSize = 12 * _alpha;
 
     RGBAColour colour( 100, 50, 50 );
-    float distToParticle = (g_app->m_camera->GetPos() - pos).Mag();			
+    float distToParticle = (g_app->m_camera->GetPos() - pos).Mag();
 
     float size = spiritInnerSize / sqrtf(sqrtf(distToParticle));
-    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );            
+    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );
 
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize / sqrtf(sqrtf(distToParticle));
-    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );            
+    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 }
 
 
@@ -663,7 +663,7 @@ Zombie::Zombie()
     m_xaxisRate = syncfrand(2.0f);
     m_yaxisRate = syncfrand(2.0f);
     m_zaxisRate = syncfrand(2.0f);
-    
+
     m_type = EffectZombie;
 }
 
@@ -692,14 +692,14 @@ bool Zombie::Advance()
     if( m_yaxisRate < 0.0f ) m_yaxisRate = 0.0f;
     if( m_zaxisRate > 2.0f ) m_zaxisRate = 2.0f;
     if( m_zaxisRate < 0.0f ) m_zaxisRate = 0.0f;
-    
+
     m_hover.x = sinf( m_positionOffset ) * m_xaxisRate;
     m_hover.y = sinf( m_positionOffset ) * m_yaxisRate;
-    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;            
+    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;
 
     m_pos += m_hover * SERVER_ADVANCE_PERIOD;
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-        
+
     return false;
 }
 

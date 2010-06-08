@@ -103,6 +103,6 @@ void TargetCursor::Advance() {
 		m_velocity[AXIS_Z] = details.x;
 		m_screenCoords[AXIS_Z] += m_velocity[AXIS_Z];
 	}
-	else 
+	else
 		m_velocity[AXIS_Z] = 0;
 }

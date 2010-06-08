@@ -56,7 +56,7 @@ protected:
 	void ListAllDisplayModes();
 	bool EnableOpenGL(int _colourDepth, int _zDepth);
 	void DisableOpenGL();
-	
+
 public:
 	WindowManager();
 	~WindowManager();
@@ -64,9 +64,9 @@ public:
 	int GetResolutionId(int _width, int _height); // Returns -1 if resolution doesn't exist
     Resolution *GetResolution( int _id );
 
-	bool CreateWin(int _width, int _height,		                // Set _colourDepth, _refreshRate and/or 
+	bool CreateWin(int _width, int _height,		                // Set _colourDepth, _refreshRate and/or
 		           bool _windowed, int _colourDepth,		    // _zDepth to -1 to get default values
-		           int _refreshRate, int _zDepth, 
+		           int _refreshRate, int _zDepth,
 				   bool _waitVRT);
 
 	void DestroyWin();

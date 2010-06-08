@@ -21,7 +21,7 @@
 // ****************************************************************************
 
 LangPhrase::LangPhrase()
-:	m_key(NULL), 
+:	m_key(NULL),
 	m_string(NULL)
 {
 }
@@ -40,7 +40,7 @@ LangPhrase::~LangPhrase()
 
 LangTable::LangTable(char *_filename)
 {
-	// Create the "not found" Phrase that will be returned when 
+	// Create the "not found" Phrase that will be returned when
 	// the LookupPhrase is called with an unknown key
 	m_notFound.m_key = NULL;
 	m_notFound.m_string = (char*)malloc(256);
@@ -85,21 +85,21 @@ void LangTable::ParseLanguageFile(char const *_filename)
 	{
 		if (!in->TokenAvailable()) continue;
 
-		char *key = in->GetNextToken();	
+		char *key = in->GetNextToken();
 
 		LangPhrase *phrase = new LangPhrase;
 		phrase->m_key = strdup(key);
-	
+
 		// Make sure the this key isn't already used
 		if(m_phrasesRaw.LookupTree(key))
         {
             m_phrasesRaw.RemoveData( key );
         }
 
-		char *aString = in->GetRestOfLine(); 
-         
+		char *aString = in->GetRestOfLine();
+
 		// Make sure a language key always has a some text with it
-		DarwiniaDebugAssert(aString && aString[0] != '\0');	
+		DarwiniaDebugAssert(aString && aString[0] != '\0');
 
         for( unsigned int i = 0; i < strlen(aString)-1; ++i )
         {
@@ -109,11 +109,11 @@ void LangTable::ParseLanguageFile(char const *_filename)
                 aString[i+1] = '\n';
             }
         }
-        
+
         phrase->m_string = strdup( aString );
 
         int stringLength = strlen( phrase->m_string );
-        if( phrase->m_string[stringLength-1] == '\n' ) 
+        if( phrase->m_string[stringLength-1] == '\n' )
         {
             phrase->m_string[stringLength-1] = '\x0';
         }
@@ -256,8 +256,8 @@ void LangTable::RebuildTable( HashTable<int> *_phrases, std::ostrstream &stream,
 					if ( chomp_mode_suffix( key ) || !specific_key_exists( key, _mood ) ) {
 						int currPos = stream.tellp();
 						buildCaption( phrase->m_string, theString, _mood );
-						stream << theString << '\x0';						
-						
+						stream << theString << '\x0';
+
 						// DebugOut("%d Adding key %d: %s -> %s\n", _mood, i, key, theString );
 						_phrases->PutData( key, currPos );
 					}
@@ -265,7 +265,7 @@ void LangTable::RebuildTable( HashTable<int> *_phrases, std::ostrstream &stream,
 					// Make sure this is the most specific string, or ignore it
 					if ( chomp_mode_suffix( key ) && !RawDoesPhraseExist( key, _mood ) &&
 					     !specific_key_exists( key, _mood ) ) {
-						
+
 						// DebugOut("%d Adding key %d: %s -> 0\n", _mood, i, key );
 						_phrases->PutData( key, 0 ); // Give me an empty string
 					}
@@ -288,14 +288,14 @@ HashTable<int> *LangTable::GetCurrentTable()
 
 HashTable<int> *LangTable::GetCurrentTable( InputMode _mood )
 {
-	if ( !m_phrasesKbd || !m_phrasesXin ) 
+	if ( !m_phrasesKbd || !m_phrasesXin )
 		RebuildTables();
 
 	switch ( _mood ) {
-		case INPUT_MODE_KEYBOARD: 
+		case INPUT_MODE_KEYBOARD:
 			return m_phrasesKbd;
 
-		case INPUT_MODE_GAMEPAD:  
+		case INPUT_MODE_GAMEPAD:
 			return m_phrasesXin;
 	}
 	return NULL;
@@ -376,7 +376,7 @@ char *LangTable::LookupPhrase(char const *_key)
 			phrase = m_notFound.m_string;
 	    }
     }
-    
+
 	return phrase;
 }
 
@@ -446,13 +446,13 @@ void LangTable::TestAgainstEnglish()
 
     //
     // Open the English language file as a base
-    
+
     LangTable *english = new LangTable( "language/english.txt" );
-    
-    
+
+
     //
     // Look for strings in English that are not in this language
-    
+
     DArray<LangPhrase *> *englishPhrases = english->m_phrasesRaw.ConvertToDArray();
 
     for( int i = 0; i < englishPhrases->Size(); ++i )
@@ -492,7 +492,7 @@ void LangTable::TestAgainstEnglish()
 
             if( !english->DoesPhraseExist( phrase->m_key ) )
             {
-                fprintf( output, "ERROR : Found new string ID not present in original English : '%s'\n", phrase->m_key );               
+                fprintf( output, "ERROR : Found new string ID not present in original English : '%s'\n", phrase->m_key );
             }
         }
     }
@@ -516,17 +516,17 @@ DArray<LangPhrase *> *LangTable::GetPhraseList()
 
 
 
-// Goes through the string and divides it up into several 
+// Goes through the string and divides it up into several
 // smaller strings, taking into account newline characters,
 // and the width of the text area.
-LList <char *> *WordWrapText (const char *_string, float _lineWidth, float _fontWidth, bool _wrapToWindow) 
+LList <char *> *WordWrapText (const char *_string, float _lineWidth, float _fontWidth, bool _wrapToWindow)
 {
 	if ( !_string ) return NULL;
     if ( _lineWidth < 0 && _wrapToWindow ) return NULL;
 
 	// Calculate the maximum width in characters for 1 line
     int linewidth = int(_lineWidth / _fontWidth);
-	
+
 
 	// Create a copy of the string which we will use as our output strings
 	// (All connected together but seperated by 0)
@@ -543,12 +543,12 @@ LList <char *> *WordWrapText (const char *_string, float _lineWidth, float _font
 	char *currentpos = newstring;
 	llist->PutData( currentpos );
 
-	while ( true ) 
+	while ( true )
     {
 		char *nextnewline = strchr( currentpos, '\n' );
 		if ( !nextnewline ) break;
 
-		if ( _wrapToWindow && nextnewline - currentpos > linewidth ) 
+		if ( _wrapToWindow && nextnewline - currentpos > linewidth )
         {
 
 			// This line is too long and needs trimming down
@@ -559,23 +559,23 @@ LList <char *> *WordWrapText (const char *_string, float _lineWidth, float _font
 			char oldchar = *(currentpos - 1);
 			*(currentpos - 1) = 0;
 			char *space = strrchr( currentpos - linewidth, ' ' );
-			
-			if ( space ) 
+
+			if ( space )
             {
 				*(currentpos - 1) = oldchar;
 				currentpos = space + 1;
 				*space = 0;
 				llist->PutData( currentpos );
 			}
-			else 
+			else
             {
-				// We cannot wrap this line - the word is longer than the max line width                
+				// We cannot wrap this line - the word is longer than the max line width
 			}
 		}
-		else 
+		else
         {
 			// Found a newline char - replace with a terminator
-			// then add this position in as the next line	
+			// then add this position in as the next line
 			// then continue from this position
 			currentpos =  nextnewline + 1;
 			*nextnewline = 0;

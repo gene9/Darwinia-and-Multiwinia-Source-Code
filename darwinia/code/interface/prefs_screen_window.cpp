@@ -55,7 +55,7 @@ class ScreenResDropDownMenu : public DropDownMenu
 class FullscreenRequiredMenu : public DropDownMenu
 {
     void Render( int realX, int realY, bool highlighted, bool clicked )
-    {    
+    {
         DropDownMenu *windowed = (DropDownMenu *) m_parent->GetButton( LANGUAGEPHRASE("dialog_windowed") );
         bool available = (windowed->GetSelectionValue() == 0);
         if( available )
@@ -78,7 +78,7 @@ class FullscreenRequiredMenu : public DropDownMenu
         {
             DropDownMenu::MouseUp();
         }
-    }    
+    }
 };
 
 static void AdjustWindowPositions(int _newWidth, int _newHeight, int _oldWidth, int _oldHeight)
@@ -90,16 +90,16 @@ static void AdjustWindowPositions(int _newWidth, int _newHeight, int _oldWidth, 
 		LList<EclWindow *> *windows = EclGetWindows();
 		for (int i = 0; i < windows->Size(); i++) {
 			EclWindow *w = windows->GetData(i);
-			
+
 			// We attempt to keep the centre of the window in the same place
-			
+
 			double halfWidth = w->m_w / 2.0;
 			double halfHeight = w->m_h / 2.0;
 
-			double oldCentreX = w->m_x + halfWidth; 
-			double oldCentreY = w->m_y + halfHeight; 
-			
-			double newCentreX = oldCentreX * _newWidth / _oldWidth; 
+			double oldCentreX = w->m_x + halfWidth;
+			double oldCentreY = w->m_y + halfHeight;
+
+			double newCentreX = oldCentreX * _newWidth / _oldWidth;
 			double newCentreY = oldCentreY * _newHeight / _oldHeight;
 
 			w->SetPosition( int( newCentreX - halfWidth ), int( newCentreY - halfHeight ) );
@@ -115,14 +115,14 @@ void RestartWindowManagerAndRenderer()
 	// asking the user to restart to get the effect.
 
 	EclRegisterWindow(
-		new MessageDialog("Restart Required", 
+		new MessageDialog("Restart Required",
 			"Please restart Darwinia for the screen\n"
 			"settings to take affect")
 		);
-#else	
+#else
 	int oldWidth = g_app->m_renderer->ScreenW();
-	int oldHeight = g_app->m_renderer->ScreenH(); 
-	
+	int oldHeight = g_app->m_renderer->ScreenH();
+
 	bool hack = !g_windowManager->Windowed() && !g_prefsManager->GetInt( "ScreenWindowed" );
 
 	// shutdown old window
@@ -154,16 +154,16 @@ void RestartWindowManagerAndRenderer()
 	g_app->m_renderer->Initialise();
 	g_app->m_resource->FlushOpenGlState();
 	g_app->m_resource->RegenerateOpenGlState();
-	
+
 	int newWidth = g_app->m_renderer->ScreenW();
-	int newHeight = g_app->m_renderer->ScreenH(); 
-	
+	int newHeight = g_app->m_renderer->ScreenH();
+
 	AdjustWindowPositions(newWidth, newHeight, oldWidth, oldHeight);
 #endif
 }
 
 // SetWindowed - switch to windowed or fullscreen mode.
-// Used by lib/input_sdl.cpp 
+// Used by lib/input_sdl.cpp
 //         debugmenu.cpp
 //
 // sets _isSwitchingToWindowed true if we actually leave fullscreen mode and
@@ -179,18 +179,18 @@ void SetWindowed(bool _isWindowed, bool _isPermanent, bool &_isSwitchingToWindow
 	g_prefsManager->SetInt( SCREEN_WINDOWED_PREFS_NAME, _isWindowed );
 
 	if (oldIsWindowed != _isWindowed) {
-	
-		_isSwitchingToWindowed = _isWindowed; 
-		
+
+		_isSwitchingToWindowed = _isWindowed;
+
 		RestartWindowManagerAndRenderer();
 	}
 	else
 		_isSwitchingToWindowed = false;
 
-	if (!_isPermanent) 
+	if (!_isPermanent)
 		g_prefsManager->SetInt( SCREEN_WINDOWED_PREFS_NAME, oldIsWindowedPref );
 	else
-		g_prefsManager->Save(); 
+		g_prefsManager->Save();
 }
 
 
@@ -199,7 +199,7 @@ class SetScreenButton : public DarwiniaButton
     void MouseUp()
     {
         PrefsScreenWindow *parent = (PrefsScreenWindow *) m_parent;
-        
+
         Resolution *resolution = g_windowManager->GetResolution( parent->m_resId );
         g_prefsManager->SetInt( SCREEN_WIDTH_PREFS_NAME, resolution->m_width );
         g_prefsManager->SetInt( SCREEN_HEIGHT_PREFS_NAME, resolution->m_height );
@@ -211,17 +211,17 @@ class SetScreenButton : public DarwiniaButton
         g_prefsManager->SetInt( SCREEN_Z_DEPTH_PREFS_NAME, parent->m_zDepth );
 
 		RestartWindowManagerAndRenderer();
-		
-        g_prefsManager->Save();        
+
+        g_prefsManager->Save();
 
         parent->m_resId = g_windowManager->GetResolutionId( g_prefsManager->GetInt(SCREEN_WIDTH_PREFS_NAME),
                                                             g_prefsManager->GetInt(SCREEN_HEIGHT_PREFS_NAME) );
-        
+
         parent->m_windowed      = g_prefsManager->GetInt( SCREEN_WINDOWED_PREFS_NAME, 0 );
         parent->m_colourDepth   = g_prefsManager->GetInt( SCREEN_COLOUR_DEPTH_PREFS_NAME, 16 );
 #ifdef HAVE_REFRESH_RATES
         parent->m_refreshRate   = g_prefsManager->GetInt( SCREEN_REFRESH_PREFS_NAME, 60 );
-#endif		
+#endif
         parent->m_zDepth        = g_prefsManager->GetInt( SCREEN_Z_DEPTH_PREFS_NAME, 24 );
 
         parent->Remove();
@@ -234,7 +234,7 @@ PrefsScreenWindow::PrefsScreenWindow()
 :   DarwiniaWindow( LANGUAGEPHRASE("dialog_screenoptions") )
 {
 	int height = 240;
-	
+
     m_resId = g_windowManager->GetResolutionId( g_prefsManager->GetInt(SCREEN_WIDTH_PREFS_NAME),
                                                 g_prefsManager->GetInt(SCREEN_HEIGHT_PREFS_NAME) );
 
@@ -247,7 +247,7 @@ PrefsScreenWindow::PrefsScreenWindow()
     m_zDepth        = g_prefsManager->GetInt( SCREEN_Z_DEPTH_PREFS_NAME, 24 );
 
     SetMenuSize( 410, height );
-    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 }
 
@@ -272,7 +272,7 @@ void PrefsScreenWindow::Create()
 	int fontSize = GetMenuSize(13);
 
     InvertedBox *box = new InvertedBox();
-    box->SetShortProperties( "invert", 10, y += border, m_w - 20, GetClientRectY2() - h * 2 );        
+    box->SetShortProperties( "invert", 10, y += border, m_w - 20, GetClientRectY2() - h * 2 );
     RegisterButton( box );
 
     ScreenResDropDownMenu *screenRes = new ScreenResDropDownMenu();
@@ -304,7 +304,7 @@ void PrefsScreenWindow::Create()
 
     RegisterButton( windowed );
     RegisterButton( screenRes );
-    screenRes->RegisterInt( &m_resId );   
+    screenRes->RegisterInt( &m_resId );
 
     FullscreenRequiredMenu *colourDepth = new FullscreenRequiredMenu();
     colourDepth->SetShortProperties( LANGUAGEPHRASE("dialog_colourdepth"), x, y+=h, buttonW, buttonH );
@@ -322,7 +322,7 @@ void PrefsScreenWindow::Create()
         m_buttonOrder.PutData( refresh );
         m_buttonOrder.PutData( colourDepth );
     }
-    
+
     DropDownMenu *zDepth = new DropDownMenu();
     zDepth->SetShortProperties( LANGUAGEPHRASE("dialog_zbufferdepth"), x, y+=h, buttonW, buttonH );
     zDepth->AddOption( LANGUAGEPHRASE("dialog_colourdepth_16"), 16 );
@@ -362,7 +362,7 @@ void PrefsScreenWindow::Render( bool _hasFocus )
 
     g_editorFont.DrawText2D( x, y+=border, size, LANGUAGEPHRASE("dialog_resolution") );
     g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_windowed") );
-#ifdef HAVE_REFRESH_RATES	
+#ifdef HAVE_REFRESH_RATES
     g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_refreshrate") );
 #endif
     g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_colourdepth") );

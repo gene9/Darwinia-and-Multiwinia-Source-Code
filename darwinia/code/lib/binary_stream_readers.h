@@ -77,7 +77,7 @@ public:
 	unsigned char const *m_data;
 	unsigned int		m_dataSize;
 
-	BinaryDataReader			(unsigned char const *_data, unsigned int _dataSize, 
+	BinaryDataReader			(unsigned char const *_data, unsigned int _dataSize,
 								 char const *_filename);
 	~BinaryDataReader			();
 

@@ -4,13 +4,13 @@
 
 class FeedingTube : public Building
 {
-protected:	
+protected:
 	ShapeMarker	  *m_focusMarker;
 
     int         m_receiverId;
     float       m_range;
     float       m_signal;
-    
+
     Vector3     GetDishPos      ( float _predictionTime );      // Returns the position of the transmission point
     Vector3     GetDishFront    ( float _predictionTime );      // Returns the front vector of the dish
 	Vector3		GetForwardsClippingDir( float _predictionTime, FeedingTube *_sender );// Returns a good clipping direction for signal
@@ -32,7 +32,7 @@ public:
     Vector3 GetStartPoint   ();
     Vector3 GetEndPoint     ();
 
-    int  GetBuildingLink();                 
+    int  GetBuildingLink();
     void SetBuildingLink(int _buildingId);
 
     bool    DoesSphereHit   (Vector3 const &_pos, float _radius);

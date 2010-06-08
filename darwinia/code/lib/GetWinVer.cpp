@@ -2,13 +2,13 @@
 //
 // Copyright (C) 2001-2003 Hans Dietrich
 //
-// This software is released into the public domain.  
+// This software is released into the public domain.
 // You are free to use it in any way you like, except
 // that you may not sell this source code.
 //
-// This software is provided "as is" with no expressed 
-// or implied warranty.  I accept no liability for any 
-// damage or loss of business that this software may cause. 
+// This software is provided "as is" with no expressed
+// or implied warranty.  I accept no liability for any
+// damage or loss of business that this software may cause.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +88,7 @@ BOOL GetWinVer(LPTSTR pszVersion, int *nVersion, LPTSTR pszMajorMinorBuild)
 			lstrcpy(pszVersion, W95STR);
 			*nVersion = W95;
 		}
-		else if ((dwMinorVersion < 10) && 
+		else if ((dwMinorVersion < 10) &&
 				((dwBuildNumber > 950) && (dwBuildNumber <= 1080)))
 		{
 			lstrcpy(pszVersion, W95SP1STR);
@@ -104,7 +104,7 @@ BOOL GetWinVer(LPTSTR pszVersion, int *nVersion, LPTSTR pszMajorMinorBuild)
 			lstrcpy(pszVersion, W98STR);
 			*nVersion = W98;
 		}
-		else if ((dwMinorVersion == 10) && 
+		else if ((dwMinorVersion == 10) &&
 				((dwBuildNumber > 1998) && (dwBuildNumber < 2183)))
 		{
 			lstrcpy(pszVersion, W98SP1STR);

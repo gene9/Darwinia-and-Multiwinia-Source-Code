@@ -22,7 +22,7 @@ public:
 
     LandscapeTileEditWindow( char *name, int tileId );
     ~LandscapeTileEditWindow();
-	
+
 	void					Create();
 };
 
@@ -69,7 +69,7 @@ public:
     int						m_tileId;
     int                     m_guideGridPower;
     int                     m_pixelSizePerSample;
-    
+
     enum
     {
         GuideGridToolFreehand,
@@ -78,7 +78,7 @@ public:
     };
     int                     m_tool;
     float                   m_toolSize;
-        
+
     LandscapeGuideGridWindow( char *name, int tileId );
     ~LandscapeGuideGridWindow();
 

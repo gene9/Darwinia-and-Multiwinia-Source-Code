@@ -76,7 +76,7 @@ private:
 	HelpIconSet *m_sets[MaxSets];
 
 	typedef struct TextIndicator {
-		TextIndicator() 
+		TextIndicator()
 			: m_icon( 0 ),
 			  m_text( 0 ),
 			  m_minTime( 0.0f ),
@@ -87,7 +87,7 @@ private:
 		}
 
 		TextIndicator( int _icon, int _text, const char *_langPhrase, float _minTime = 0.0f, float _maxTime = 0.0f, float _maxUsage = 0.0f, float _decayRate = 1.0f )
-			:	m_icon( _icon ), 
+			:	m_icon( _icon ),
 				m_text( _text ),
 				m_langPhrase( _langPhrase ),
 				m_minTime( _minTime ),

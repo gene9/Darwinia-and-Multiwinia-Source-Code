@@ -36,12 +36,12 @@ public:
 
     RGBAColour               m_colour;
 
-    int             m_currentUnitId;                    // 
+    int             m_currentUnitId;                    //
     int             m_currentEntityId;                  // Do not set these directly
     int             m_currentBuildingId;                // They are updated by the network
                                                         //
-    Vector3         m_currentMousePos;                  // 
-    
+    Vector3         m_currentMousePos;                  //
+
 public:
     Team();
 
@@ -62,7 +62,7 @@ public:
     int  NumEntities    (int _troopType);               // Counts the total number
 
     void Advance        (int _slice);
-    
+
     void Render             ();
     void RenderVirii        (float _predictionTime);
     void RenderDarwinians   (float _predictionTime);
@@ -88,7 +88,7 @@ public:
 	void Clear();
 
 public:
-	
+
 	Vector3			m_mousePos;
 
 	// Be sure to update GetFlags, SetFlags, ZeroFlags if you change these flags

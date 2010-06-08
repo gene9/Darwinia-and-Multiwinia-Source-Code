@@ -3,7 +3,7 @@
 #include "lib/input/keynames.h"
 
 char const * const *getKeyNames() {
-	static const char *s_keyNames[] = 
+	static const char *s_keyNames[] =
 	{
 		"unknown 0",
 		"unknown 1",

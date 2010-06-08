@@ -48,7 +48,7 @@ class GotoMountButton: public DarwiniaButton
 {
 public:
 	char *m_mountName;
-		
+
 	GotoMountButton(char *_mountName) : m_mountName(_mountName) {}
 
 	void MouseUp()
@@ -73,7 +73,7 @@ class DeleteMountButton: public DarwiniaButton
 {
 public:
 	char *m_mountName;
-		
+
 	DeleteMountButton(char *_mountName) : m_mountName(_mountName) {}
 
 	void MouseUp()
@@ -89,7 +89,7 @@ public:
 				EclWindow *parent = m_parent;
 				parent->Remove();
 				parent->Create();
-				
+
 				return;
 			}
 		}
@@ -103,7 +103,7 @@ class UpdateMountButton: public DarwiniaButton
 {
 public:
 	char *m_mountName;
-		
+
 	UpdateMountButton(char *_mountName) : m_mountName(_mountName) {}
 
 	void MouseUp()
@@ -116,7 +116,7 @@ public:
 				mount->m_pos = g_app->m_camera->GetPos();
 				mount->m_front = g_app->m_camera->GetFront();
 				mount->m_up = g_app->m_camera->GetUp();
-					
+
 				return;
 			}
 		}
@@ -132,7 +132,7 @@ public:
 // ****************************************************************************
 
 CameraMountEditWindow::CameraMountEditWindow( char *name )
-:	DarwiniaWindow(name) 
+:	DarwiniaWindow(name)
 {
 }
 

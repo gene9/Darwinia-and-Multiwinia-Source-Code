@@ -12,7 +12,7 @@ class GlobalEventCondition;
 // class Task
 
 
-class Task 
+class Task
 {
 public:
     enum
@@ -27,9 +27,9 @@ public:
     int             m_type;
     int             m_state;
     WorldObjectId   m_objId;
-    
+
     Route           *m_route;                   // Only used when this is a Controller task
-    
+
 public:
     Task();
     ~Task();
@@ -44,7 +44,7 @@ public:
     void    TargetEngineer      ( Vector3 const &_pos );
     void    TargetOfficer       ( Vector3 const &_pos );
     void    TargetArmour        ( Vector3 const &_pos );
-   
+
     WorldObjectId        Promote         ( WorldObjectId _id );
     static WorldObjectId Demote          ( WorldObjectId _id );
     static WorldObjectId FindDarwinian   ( Vector3 const &_pos );
@@ -73,7 +73,7 @@ public:
 
 class TaskManager
 {
-public:   
+public:
     LList   <Task *> m_tasks;
 
     int     m_nextTaskId;
@@ -82,13 +82,13 @@ public:
 
 protected:
     void    AdvanceTasks                ();
-    
+
 public:
     TaskManager();
 
     int     Capacity();
     int     CapacityUsed();
-    
+
     bool    RunTask             ( Task *_task );                            // Starts the task, registers it
     bool    RunTask             ( int _type );
     bool    RegisterTask        ( Task *_task );                            // Assumes task is already started, just registers it
@@ -99,16 +99,16 @@ public:
     Task    *GetTask            ( int _id );
     Task    *GetTask            ( WorldObjectId _id );
     void    SelectTask          ( int _id );
-    void    SelectTask          ( WorldObjectId _id );                      // Selects the corrisponding task 
+    void    SelectTask          ( WorldObjectId _id );                      // Selects the corrisponding task
 	bool	IsValidTargetArea   ( int _id, Vector3 const &_pos );
     bool    TargetTask          ( int _id, Vector3 const &_pos );
     bool    TerminateTask       ( int _id );
 
     void    StopAllTasks        ();
-    
+
     LList   <TaskTargetArea>    *GetTargetArea( int _id );                  // Returns all valid placement areas
 
-    void    Advance             ();        
+    void    Advance             ();
 };
 
 

@@ -15,7 +15,7 @@ class InstantUnitEditWindow: public DarwiniaWindow
 public:
 	InstantUnitEditWindow(char *name);
 	~InstantUnitEditWindow();
-	
+
 	void Create();
 };
 

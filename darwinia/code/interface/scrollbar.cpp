@@ -28,9 +28,9 @@ ScrollBar::~ScrollBar()
 {
 }
 
-void ScrollBar::Create( char *name, 
+void ScrollBar::Create( char *name,
                         int x, int y, int w, int h,
-                        int numRows, int winSize, 
+                        int numRows, int winSize,
                         int stepSize )
 {
 
@@ -135,7 +135,7 @@ ScrollBarButton::ScrollBarButton( ScrollBar *scrollBar )
 
 void ScrollBarButton::Render( int realX, int realY, bool highlighted, bool clicked )
 {
-    
+
     DarwiniaDebugAssert( m_scrollBar );
 
     // Background
@@ -155,17 +155,17 @@ void ScrollBarButton::Render( int realX, int realY, bool highlighted, bool click
         glVertex2i( realX + m_w, realY + m_h );
         glVertex2i( realX, realY + m_h );
     glEnd();
-    
+
     // Bar
     int barTop = int( m_h * (float) m_scrollBar->m_currentValue / (float) m_scrollBar->m_numRows);
-    int barEnd = int( m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );    
+    int barEnd = int( m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );
     if( barEnd >= m_h ) barEnd = m_h-1;
 
 
     if( clicked )           glColor3ub(50,55,120);
     else if( highlighted )  glColor3ub(55,60,120);
     else                    glColor3ub(65,71,120);
-        
+
     glBegin( GL_QUADS );
         glVertex2i( realX+1, realY+barTop+1 );
         glVertex2i( realX+m_w, realY+barTop+1 );
@@ -175,7 +175,7 @@ void ScrollBarButton::Render( int realX, int realY, bool highlighted, bool click
 }
 
 void ScrollBarButton::MouseUp()
-{    
+{
     if( m_grabOffset == -1 )
     {
 
@@ -185,7 +185,7 @@ void ScrollBarButton::MouseUp()
         DarwiniaDebugAssert( parent );
 
         int barTop = int( parent->m_y + m_y + m_h * (float) m_scrollBar->m_currentValue / (float) m_scrollBar->m_numRows );
-        int barEnd = int( parent->m_y + m_y + m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );    
+        int barEnd = int( parent->m_y + m_y + m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );
         if( barEnd >= m_h ) barEnd = m_h-1;
 
 		int mouseY = g_target->Y();
@@ -225,7 +225,7 @@ void ScrollBarButton::MouseDown()
         DarwiniaDebugAssert( parent );
         int mouseY = g_target->Y();
         int barTop = int( m_parent->m_y + m_y + m_h * (float) m_scrollBar->m_currentValue / (float) m_scrollBar->m_numRows );
-        int barEnd = int( m_parent->m_y + m_y + m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );    
+        int barEnd = int( m_parent->m_y + m_y + m_h * (float) (m_scrollBar->m_currentValue + m_scrollBar->m_winSize) / (float) m_scrollBar->m_numRows );
         //if( barEnd >= m_h ) barEnd = m_h-1;
         if( mouseY >= barTop && mouseY <= barEnd )
         {

@@ -17,16 +17,16 @@ class LandscapeRenderer;
 // Class LandscapeTile
 // ****************************************************************************
 
-class LandscapeTile 
+class LandscapeTile
 {
 public:
     //          OUR DEFINITION DATA
-    float		m_fractalDimension;             
-	float		m_heightScale;		    
+    float		m_fractalDimension;
+	float		m_heightScale;
 	float		m_desiredHeight;
 	int			m_generationMethod;
 	int			m_randomSeed;
-	float		m_lowlandSmoothingFactor; 
+	float		m_lowlandSmoothingFactor;
 	int			m_posX;					// In world space
 	float		m_posY;
 	int			m_posZ;
@@ -34,7 +34,7 @@ public:
     int         m_guideGridPower;		// Log to the base 2 of the resolution of the guide grid
     int			m_size;		            // Size when copied into the main landscape,
 	                                    // (obviously in world space)
-    
+
     Array2D		<unsigned char> *m_guideGrid;
 
     //          OUR GENERATED DATA
@@ -74,7 +74,7 @@ friend class LocationEditor;
 public:
     SurfaceMap2D		<float>			*m_heightMap;
 	SurfaceMap2D		<Vector3>		*m_normalMap;
-    float				m_outsideHeight;    
+    float				m_outsideHeight;
 	LandscapeRenderer	*m_renderer;
 
 private:
@@ -95,12 +95,12 @@ public:
 	Landscape();
 	Landscape(float _cellSize, int universeSizeX, int universeSizeZ);
 	~Landscape();
-   
+
 	void		BuildOpenGlState	();
 
     void		Init				(LandscapeDef *_def, bool _justMakeTheHeightMap = false);
 	void		Empty				();
-    
+
 	void		Render				();
 
     void        DeleteTile			( int tileId );

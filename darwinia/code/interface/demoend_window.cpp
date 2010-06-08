@@ -29,7 +29,7 @@ class BuyOnlineButton : public DarwiniaButton
      //   delete g_windowManager;
 
         WindowManager::OpenWebsite( "http://store.introversion.co.uk" );
- 
+
 		g_app->m_requestQuit = true;
     }
 
@@ -43,7 +43,7 @@ class BuyOnlineButton : public DarwiniaButton
 
         //
         // Fill
-                
+
         glShadeModel( GL_SMOOTH );
         glBegin( GL_QUADS );
             glColor4f( 0.2f, 0.2f, 0.5f, buttonAlpha );        glVertex2i( realX, realY );
@@ -69,7 +69,7 @@ class BuyOnlineButton : public DarwiniaButton
         // Caption
 
         float textSize = m_h * 0.5f;
-        
+
         for( int i = 0; i < 2; ++i )
         {
             if( i == 0 )
@@ -82,7 +82,7 @@ class BuyOnlineButton : public DarwiniaButton
                 g_gameFont.SetRenderOutline(false);
                 glColor4f( 1.0f, 1.0f, 1.0f, alpha );
             }
-        
+
             g_gameFont.DrawText2DCentre( realX+m_w/2+13, realY+m_h/2-25, textSize, m_caption );
 			g_gameFont.DrawText2DCentre( realX+m_w/2, realY+m_h/2+30, 11, "http://store.introversion.co.uk" );
 
@@ -119,7 +119,7 @@ class ExitDemoButton : public DarwiniaButton
         float buttonAlpha = alpha;
         if( !highlighted && !clicked ) buttonAlpha *= 0.7f;
 
-        if( !window->ShowExitButton() ) 
+        if( !window->ShowExitButton() )
         {
             alpha = min( 0.1f, alpha );
             buttonAlpha = min( 0.1f, buttonAlpha );
@@ -127,7 +127,7 @@ class ExitDemoButton : public DarwiniaButton
 
         //
         // Fill
-            
+
         glShadeModel( GL_SMOOTH );
         glBegin( GL_QUADS );
             glColor4f( 0.2f, 0.2f, 0.5f, buttonAlpha );        glVertex2i( realX, realY );
@@ -153,14 +153,14 @@ class ExitDemoButton : public DarwiniaButton
         // Caption
 
         float textSize = m_h * 0.5f;
-    
+
         glColor4f( alpha, alpha, alpha, 0.0f );
         g_gameFont.SetRenderOutline(true);
         g_gameFont.DrawText2DCentre( realX+m_w/2+8, realY+m_h/2-3, textSize, m_caption );
-        
+
         g_gameFont.SetRenderOutline(false);
         glColor4f( 1.0f, 1.0f, 1.0f, alpha );
-        g_gameFont.DrawText2DCentre( realX+m_w/2+8, realY+m_h/2-3, textSize, m_caption );        
+        g_gameFont.DrawText2DCentre( realX+m_w/2+8, realY+m_h/2-3, textSize, m_caption );
     }
 };
 
@@ -184,7 +184,7 @@ DemoEndWindow::DemoEndWindow( float _fadeInTime, bool _saveGame )
     SetSize( 800, 600 );
     SetPosition(screenW/2-m_w/2,
                 screenH/2-m_h/2);
-    
+
     m_timer = GetHighResTime();
     m_fadeInTime = _fadeInTime;
 }
@@ -196,7 +196,7 @@ void DemoEndWindow::Create()
 	int buttonW = 210;
     exit->SetShortProperties( LANGUAGEPHRASE("launchpad_button_exitdemo"), m_w/2-buttonW/2, 520, buttonW, 40 );
     RegisterButton( exit );
-    
+
     BuyOnlineButton *buy = new BuyOnlineButton();
 	buttonW = 420;
     buy->SetShortProperties( LANGUAGEPHRASE("launchpad_button_buynow"), m_w/2-buttonW/2, 360, buttonW, 100 );
@@ -224,9 +224,9 @@ bool DemoEndWindow::ShowExitButton()
 
 
 void DemoEndWindow::Render( bool hasFocus )
-{    
+{
     float alpha = GetAlpha();
-    
+
     //
     // Main body fill
 
@@ -264,13 +264,13 @@ void DemoEndWindow::Render( bool hasFocus )
 
     for( int i = 0; i < 2; ++i )
     {
-        if( i == 0 ) 
+        if( i == 0 )
         {
             glColor4f( alpha, alpha, alpha, 0.0 );
             g_gameFont.SetRenderOutline(true);
         }
 
-        if( i == 1 ) 
+        if( i == 1 )
         {
             glColor4f( 1.0f, 1.0f, 1.0f, alpha );
             g_gameFont.SetRenderOutline(false);

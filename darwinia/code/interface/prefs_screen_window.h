@@ -13,7 +13,7 @@ public:
     int     m_colourDepth;
     int     m_refreshRate;
     int     m_zDepth;
-    
+
 public:
     PrefsScreenWindow();
 

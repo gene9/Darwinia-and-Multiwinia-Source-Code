@@ -29,7 +29,7 @@ class SoundEventBlueprint
 public:
     char            *m_eventName;
     SoundInstance   *m_instance;
-    
+
 public:
     SoundEventBlueprint();
 
@@ -58,7 +58,7 @@ public:
         TypeInterface,
         NumOtherSoundSources
     };
-    
+
 public:
     LList       <SoundEventBlueprint *> m_events;
 
@@ -121,7 +121,7 @@ public:
 
 class SoundSystem
 {
-public:    
+public:
 	enum
 	{
 		SoundSourceNoError,											// Remember to update g_soundSourceErrors in soundsystem.cpp
@@ -139,7 +139,7 @@ public:
 
     Vector3         m_editorPos;
     SoundInstanceId m_editorInstanceId;
-    
+
     FastDArray      <SoundInstance *> m_sounds;						// All the sounds that want to play
 	SoundInstance	*m_music;										// There can only be one piece of music at a time
 	SoundInstance	*m_requestedMusic;
@@ -149,11 +149,11 @@ public:
 
     DArray      <SoundSourceBlueprint *> m_entityBlueprints;        // Indexed on Entity::m_type
     DArray      <SoundSourceBlueprint *> m_buildingBlueprints;      // Indexed on Building::m_type
-    DArray      <SoundSourceBlueprint *> m_otherBlueprints;         // Indexed on SoundSourceBlueprint    
+    DArray      <SoundSourceBlueprint *> m_otherBlueprints;         // Indexed on SoundSourceBlueprint
     DArray      <DspBlueprint *> m_filterBlueprints;        // Indexed on SoundLibrary3d::FX types
-    
+
     DArray      <SampleGroup *> m_sampleGroups;
-    
+
 protected:
     void ParseSoundEvent		( TextReader *_in, SoundSourceBlueprint *_source, char const *_entityName );
     void ParseSoundEffect		( TextReader *_in, SoundEventBlueprint *_blueprint );
@@ -161,16 +161,16 @@ protected:
 
     void WriteSoundEvent		( FileWriter *_file, SoundEventBlueprint *_event );
     void WriteSampleGroup       ( FileWriter *_file, SampleGroup *_group );
-    
+
     void SaveBlueprints			( char const *_filename );
 
     int FindBestAvailableChannel();
-    
-    static bool SoundLibraryMainCallback( unsigned int _channel, 
-                                          signed short *_data, 
+
+    static bool SoundLibraryMainCallback( unsigned int _channel,
+                                          signed short *_data,
                                           unsigned int _numSamples,
                                           int *_silenceRemaining );
-    static bool SoundLibraryMusicCallback(signed short *_data, 
+    static bool SoundLibraryMusicCallback(signed short *_data,
                                           unsigned int _numSamples,
                                           int *_silenceRemaining );
 
@@ -185,7 +185,7 @@ public:
     void LoadBlueprints			();
     void SaveBlueprints			();
 	bool AreBlueprintsModified	();
-    
+
     void Advance();
 
     bool InitialiseSound        ( SoundInstance *_instance );                   // Sets up sound, adds to instance list
@@ -203,7 +203,7 @@ public:
     void TriggerBuildingEvent   ( Building *_building,  char *_eventName );
     void TriggerOtherEvent      ( WorldObject *_other,  char *_eventName, int _type );
 
-    void StopAllSounds          ( WorldObjectId _id, char *_eventName=NULL );        // Pass in NULL to stop every event. 
+    void StopAllSounds          ( WorldObjectId _id, char *_eventName=NULL );        // Pass in NULL to stop every event.
                                                                                      // Full event name required, eg "Darwinian SeenThreat"
 
     void StopAllDSPEffects      ();
@@ -214,7 +214,7 @@ public:
     void RuntimeVerify          ();												// Verifies that the sound system has screwed it's own datastructures
 	void LoadtimeVerify			();												// Verifies that the data load from sounds.txt is OK
 	char const *IsSoundSourceOK	(char const *_soundName);						// Tests that file names and file formats are OK, returns an error code from the SoundSource enum
-	bool IsSampleUsed           (char const *_soundName);                       // Looks to see if that sound name is used in any blueprints 
+	bool IsSampleUsed           (char const *_soundName);                       // Looks to see if that sound name is used in any blueprints
 
     SampleGroup *GetSampleGroup     ( char *_name );
     SampleGroup *NewSampleGroup     ( char *_name=NULL );

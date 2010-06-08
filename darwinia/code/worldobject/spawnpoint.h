@@ -29,7 +29,7 @@ class SpawnBuilding : public Building
 protected:
     LList       <SpawnBuildingLink *> m_links;
     ShapeMarker *m_spiritLink;
-        
+
     Vector3     m_visibilityMidpoint;
     float       m_visibilityRadius;
 
@@ -39,7 +39,7 @@ public:
 
     void            Initialise  ( Building *_template );
     bool            Advance     ();
-       
+
     virtual void    TriggerSpirit   ( SpawnBuildingSpirit *_spirit );
 
     bool            IsInView        ();
@@ -50,11 +50,11 @@ public:
     Vector3         GetSpiritLink   ();
     void            SetBuildingLink ( int _buildingId );
     void            ClearLinks      ();
-    
+
     LList<int>     *ExploreLinks    ();                     // Returns a list of all SpawnBuildings accessable
 
-    void Read   ( TextReader *_in, bool _dynamic ); 
-    void Write  ( FileWriter *_out );						
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 // ============================================================================
@@ -104,13 +104,13 @@ protected:
     int             m_populationLock;               // Building ID (if found), -1 = not yet searched, -2 = nothing found
     int             m_numFriendsNearby;
     ShapeMarker     *m_doorMarker;
-    
+
 public:
     SpawnPoint();
 
     bool            Advance();
 
-    bool PerformDepthSort( Vector3 &_centrePos );       
+    bool PerformDepthSort( Vector3 &_centrePos );
 
     void            TriggerSpirit( SpawnBuildingSpirit *_spirit );
 
@@ -145,8 +145,8 @@ public:
     void    Render          ( float _predictionTime );
     void    RenderAlphas    ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic ); 
-    void Write  ( FileWriter *_out );						
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 
     bool DoesSphereHit      (Vector3 const &_pos, float _radius);
     bool DoesShapeHit       (Shape *_shape, Matrix34 _transform);

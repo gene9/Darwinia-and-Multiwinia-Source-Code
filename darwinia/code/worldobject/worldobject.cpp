@@ -37,7 +37,7 @@ WorldObjectId::WorldObjectId()
 WorldObjectId::WorldObjectId( unsigned char _teamId,
                               int _unitId,
                               int _index,
-                              int _uniqueId )                              
+                              int _uniqueId )
 {
     Set( _teamId, _unitId, _index, _uniqueId );
 }
@@ -51,7 +51,7 @@ void WorldObjectId::Set( unsigned char _teamId,
     DarwiniaDebugAssert( _teamId < ID_MAXTEAMS );
     DarwiniaDebugAssert( _unitId < ID_MAXUNITS );
     DarwiniaDebugAssert( _index < ID_MAXTROOPS );
-    
+
     m_teamId = _teamId;
     m_unitId = _unitId;
     m_index = _index;
@@ -112,7 +112,7 @@ WorldObject::WorldObject()
 :   m_onGround(false),
     m_enabled(true),
     m_type(0)
-{    
+{
 }
 
 
@@ -133,10 +133,10 @@ void WorldObject::BounceOffLandscape()
 	Vector3 impactPos = (m_pos + lastPos) * 0.5f;
 	m_pos = impactPos;
 	m_pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z);
-    
+
     Vector3 normal = g_app->m_location->m_landscape.m_normalMap->GetValue(m_pos.x, m_pos.z);
     Vector3 incomingVel = m_vel * -1.0f;
-    float dotProd = normal * incomingVel;        
+    float dotProd = normal * incomingVel;
     m_vel = 2.0f * dotProd * normal - incomingVel;
     m_vel *= COEF_OF_RESTITUTION;
 }
@@ -166,7 +166,7 @@ bool WorldObject::RenderPixelEffect( float predictionTime )
 
 // *** Constructor
 Light::Light()
-{    
+{
     m_colour[0] = 1.3f;
     m_colour[1] = 1.3f;
     m_colour[2] = 1.3f;

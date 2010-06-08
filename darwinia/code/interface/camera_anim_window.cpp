@@ -35,7 +35,7 @@ public:
 		CameraAnimation *anim = new CameraAnimation;
 		sprintf(anim->m_name, "CamAnim%d", darwiniaRandom() & 0x3ff);
 		g_app->m_location->m_levelFile->m_cameraAnimations.PutData(anim);
-		
+
 		CameraAnimMainEditWindow *parent = (CameraAnimMainEditWindow *)m_parent;
 		parent->RemoveButtons();
 		parent->AddButtons();
@@ -91,7 +91,7 @@ public:
 // ****************************************************************************
 
 CameraAnimMainEditWindow::CameraAnimMainEditWindow( char *name )
-:	DarwiniaWindow(name) 
+:	DarwiniaWindow(name)
 {
 }
 
@@ -169,14 +169,14 @@ class NewNodeButton : public DarwiniaButton
 public:
 	void MouseUp()
 	{
-		CameraAnimSecondaryEditWindow *parent = 
+		CameraAnimSecondaryEditWindow *parent =
 			(CameraAnimSecondaryEditWindow *)m_parent;
 		parent->m_newNodeArmed = !parent->m_newNodeArmed;
 	}
 
 	void Render(int x, int y, bool _hasFocus, bool _clicked)
 	{
-		CameraAnimSecondaryEditWindow *parent = 
+		CameraAnimSecondaryEditWindow *parent =
 			(CameraAnimSecondaryEditWindow *)m_parent;
 		int halfSecond = (int)(g_gameTime * 2.0f) & 1;
 		if (parent->m_newNodeArmed && halfSecond)
@@ -196,13 +196,13 @@ class CamBeforeMountButton: public DarwiniaButton
 public:
 	void MouseUp()
 	{
-		CameraAnimSecondaryEditWindow *parent = 
+		CameraAnimSecondaryEditWindow *parent =
 			(CameraAnimSecondaryEditWindow *)m_parent;
 		if (parent->m_newNodeArmed)
 		{
 			CameraAnimation *anim = g_app->m_location->m_levelFile->m_cameraAnimations[parent->m_animId];
 			DarwiniaDebugAssert(anim);
-			
+
 			CamAnimNode *node = new CamAnimNode;
 			node->m_mountName = MAGIC_MOUNT_NAME_START_POS;
 
@@ -221,7 +221,7 @@ class StartPreviewButton : public DarwiniaButton
 public:
 	void MouseUp()
 	{
-		CameraAnimSecondaryEditWindow *parent = 
+		CameraAnimSecondaryEditWindow *parent =
 			(CameraAnimSecondaryEditWindow *)m_parent;
 		CameraAnimation *anim = g_app->m_location->m_levelFile->m_cameraAnimations.GetData(
 									parent->m_animId);
@@ -239,7 +239,7 @@ public:
 	}
 };
 
-		
+
 class SelectMountButton : public DarwiniaButton
 {
 public:
@@ -255,11 +255,11 @@ class DeleteNodeButton : public DarwiniaButton
 public:
 	void MouseUp()
 	{
-		CameraAnimSecondaryEditWindow *parent = 
+		CameraAnimSecondaryEditWindow *parent =
 									(CameraAnimSecondaryEditWindow*)m_parent;
 		CameraAnimation *anim = g_app->m_location->m_levelFile->
 									m_cameraAnimations.GetData(parent->m_animId);
-		
+
 		char *mountName = m_name + 7;
 		for (int i = 0; i < anim->m_nodes.Size(); ++i)
 		{
@@ -269,7 +269,7 @@ public:
 				break;
 			}
 		}
-		
+
 		parent->RemoveButtons();
 		parent->AddButtons();
 	}
@@ -359,18 +359,18 @@ void CameraAnimSecondaryEditWindow::AddButtons()
 		    x += 100;
 
 		    DarwiniaButton *but;
-		    
+
 		    but = new SelectMountButton();
 		    but->SetShortProperties(node->m_mountName, x, height, 80);
 		    x += 90;
 		    sprintf(but->m_name, "mount:%s", node->m_mountName);
 		    RegisterButton(but);
-		    
+
 		    but = new DeleteNodeButton();
 		    but->SetShortProperties("Del", x, height, 30);
 		    sprintf(but->m_name, "delete:%s", node->m_mountName);
 		    RegisterButton(but);
-		    
+
 		    height += pitch;
 	    }
     }

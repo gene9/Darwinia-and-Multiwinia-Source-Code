@@ -71,7 +71,7 @@ Sphere::Sphere()
 
 void Sphere::ConsiderTriangle(int level, Vector3 const &a, Vector3 const &b, Vector3 const &c)
 {
-	if (level > 0) 
+	if (level > 0)
 	{
 		glBegin(GL_TRIANGLES);
 			glVertex3f(a.x, a.y, a.z);
@@ -82,7 +82,7 @@ void Sphere::ConsiderTriangle(int level, Vector3 const &a, Vector3 const &b, Vec
 	else
 	{
 		level++;
-		
+
 		// Three new vertices (at the midpoints of each existing edge)
 		Vector3 p = (a + b).Normalise();
 		Vector3 q = (b + c).Normalise();
@@ -95,12 +95,12 @@ void Sphere::ConsiderTriangle(int level, Vector3 const &a, Vector3 const &b, Vec
 	}
 }
 
-void Sphere::RenderLong() 
+void Sphere::RenderLong()
 {
 	// Render each top level triangle
 	for(int i = 0; i < 20; i++) {
-		ConsiderTriangle(0, m_topLevelTriangle[i].m_corner[0], 
-						 m_topLevelTriangle[i].m_corner[1], 
+		ConsiderTriangle(0, m_topLevelTriangle[i].m_corner[0],
+						 m_topLevelTriangle[i].m_corner[1],
 						 m_topLevelTriangle[i].m_corner[2]);
 	}
 }

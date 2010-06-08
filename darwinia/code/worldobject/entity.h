@@ -18,7 +18,7 @@ class TeamControls;
 class Entity : public WorldObject
 {
 public:
-    enum 
+    enum
     {
         TypeInvalid=0,			// Remember to update Entity::GetTypeName and
 		TypeLaserTroop,			// Entity::NewEntity if you update this table
@@ -50,9 +50,9 @@ public:
         NumStats
     };
 
-    int                 m_formationIndex;           // Our offset within the unit (NOT our index in the array)    
+    int                 m_formationIndex;           // Our offset within the unit (NOT our index in the array)
     int                 m_buildingId;               // Which building created us
-        
+
     Vector3             m_spawnPoint;               // Where I was created
     float               m_roamRange;                // How far can I roam
 
@@ -68,41 +68,41 @@ public:
     Shape               *m_shape;                   // Might be NULL
     Vector3             m_centrePos;
     float               m_radius;                   // Can be Zero, which means its a sprite
-          
+
     bool                m_renderDamaged;
 
 	int					m_routeId;
 	int					m_routeWayPointId;
 	float   			m_routeTriggerDistance;		// distance the unit must be from the route node to move on to the next
-    
+
 public:
     Entity();
     virtual ~Entity();
 
     void SetType					( unsigned char _type );         // Loads default stats from blueprint
-   
+
     virtual void Render				( float predictionTime );
-    
+
     virtual void Begin              ();
     virtual bool Advance            ( Unit *_unit );
-    virtual bool AdvanceDead        ( Unit *_unit );        
+    virtual bool AdvanceDead        ( Unit *_unit );
     virtual void AdvanceInAir       ( Unit *_unit );
     virtual void AdvanceInWater     ( Unit *_unit );
 
     virtual void ChangeHealth       ( int amount );
-    virtual void Attack             ( Vector3 const &pos );          
-    
+    virtual void Attack             ( Vector3 const &pos );
+
     virtual bool IsInView ();
 
 	virtual void SetWaypoint( Vector3 const _waypoint );
 
-    virtual Vector3 PushFromObstructions( Vector3 const &pos, bool killem = true ); 
+    virtual Vector3 PushFromObstructions( Vector3 const &pos, bool killem = true );
     virtual Vector3 PushFromCliffs      ( Vector3 const &pos, Vector3 const &oldPos );
     virtual Vector3 PushFromEachOther   ( Vector3 const &_pos );
     virtual int     EnterTeleports      ( int _requiredId = -1 );        // Searches for valid nearby teleport entrances. Returns which one entered
 
     virtual void    DirectControl       ( TeamControls const& _teamControls );
-           
+
     virtual void    ListSoundEvents	( LList<char *> *_list );
 
     static void     BeginRenderShadow   ();

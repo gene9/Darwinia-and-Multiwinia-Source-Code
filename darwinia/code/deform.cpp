@@ -51,7 +51,7 @@ DeformEffect* DeformEffect::Create()
 	if(!d->m_deformFullscreenShader
 		|| !d->m_deformSphereShader
 		|| !d->m_deformDiamondShader
-		|| !d->m_screenTexture 
+		|| !d->m_screenTexture
 		|| !d->m_deformTexture
 		) SAFE_DELETE(d);
 	return d;
@@ -130,7 +130,7 @@ static float Get2DScreenPos(Vector3 const &_vector, float *_screenX, float *_scr
 	double projMatrix[16];
 	glGetDoublev(GL_MODELVIEW_MATRIX, viewMatrix);
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
-	gluProject(_vector.x, _vector.y, _vector.z, 
+	gluProject(_vector.x, _vector.y, _vector.z,
 		viewMatrix,
 		projMatrix,
 		viewport,

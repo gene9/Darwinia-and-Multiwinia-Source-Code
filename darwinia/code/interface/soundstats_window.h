@@ -15,7 +15,7 @@ class SoundStatsWindow : public DarwiniaWindow
 {
 protected:
     ScrollBar *m_scrollBar;
-        
+
 public:
     SoundStatsWindow( char *_name );
     ~SoundStatsWindow();

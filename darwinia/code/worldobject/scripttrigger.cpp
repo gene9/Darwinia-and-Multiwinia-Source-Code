@@ -72,7 +72,7 @@ bool ScriptTrigger::Advance()
         {
             if( !g_app->m_sepulveda->IsTalking() )
             {
-                if( m_triggered == 1 ) g_app->m_sepulveda->HighlightBuilding( m_linkId, m_scriptFilename );                
+                if( m_triggered == 1 ) g_app->m_sepulveda->HighlightBuilding( m_linkId, m_scriptFilename );
                 char nextPhrase[256];
                 sprintf( nextPhrase, "%s_%d", m_scriptFilename, m_triggered );
                 if( !ISLANGUAGEPHRASE_ANY(nextPhrase) )
@@ -120,11 +120,11 @@ bool ScriptTrigger::Advance()
                         Vector3 camVel = g_app->m_camera->GetVel();
                         bool camInteractive = g_app->m_camera->IsInteractive();
                         bool inView = RaySphereIntersection( g_app->m_camera->GetPos(), g_app->m_camera->GetFront(), m_pos, m_range );
-                            
+
                         if( camDistance <= (m_range+300.0f) && camVel.Mag() < 5.0f && camInteractive && inView )
                         {
                             Trigger();
-                        }                
+                        }
 
                         if( camDistance <= m_range && camVel.Mag() < 5.0f && camInteractive )
                         {
@@ -181,8 +181,8 @@ void ScriptTrigger::RenderAlphas( float predictionTime )
         RenderSphere( m_pos, m_range, colour );
         RenderSphere( m_pos, m_range, colour );
 
-        g_editorFont.DrawText3DCentre( m_pos+Vector3(0,30,0), 10, "%s", m_scriptFilename );    
-        g_editorFont.DrawText3DCentre( m_pos+Vector3(0,20,0), 10, "%d", m_triggered );    
+        g_editorFont.DrawText3DCentre( m_pos+Vector3(0,30,0), 10, "%s", m_scriptFilename );
+        g_editorFont.DrawText3DCentre( m_pos+Vector3(0,20,0), 10, "%d", m_triggered );
     }
 };
 
@@ -199,7 +199,7 @@ bool ScriptTrigger::DoesShapeHit(Shape *_shape, Matrix34 _transform)
 }
 
 
-bool ScriptTrigger::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool ScriptTrigger::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                                 float _rayLen, Vector3 *_pos, Vector3 *_norm)
 {
     if( g_app->m_editing )
@@ -239,7 +239,7 @@ void ScriptTrigger::Read( TextReader *_in, bool _dynamic )
     else if ( stricmp( entityType, "never" ) == 0 )     m_entityType = SCRIPTRIGGER_RUNNEVER;
     else if ( stricmp( entityType, "camenter" ) == 0 )  m_entityType = SCRIPTRIGGER_RUNCAMENTER;
     else if ( stricmp( entityType, "camview" ) == 0 )   m_entityType = SCRIPTRIGGER_RUNCAMVIEW;
-    else     m_entityType = Entity::GetTypeId( entityType );       
+    else     m_entityType = Entity::GetTypeId( entityType );
 }
 
 

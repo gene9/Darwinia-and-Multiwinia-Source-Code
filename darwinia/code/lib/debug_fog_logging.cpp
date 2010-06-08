@@ -33,7 +33,7 @@ static const char *GLFogParamToString(GLenum _pname)
 		case GL_FOG_END:		return "GL_FOG_END";
 		case GL_FOG_INDEX:		return "GL_FOG_INDEX";
 		case GL_FOG_COLOR:		return "GL_FOG_COLOR";
-		default: 
+		default:
 			sprintf(buf, "Unknown(%d)", (int) _pname);
 			return buf;
 	}
@@ -62,30 +62,30 @@ public:
 		  m_enable(_enable), m_cap(_cap)
 	{
 	}
-	
+
 protected:
 	void DisplayCall() {
 		printf("gl%sable(%s)", m_enable ? "En" : "Dis", GLCapToString(m_cap));
 	}
-	
+
 private:
 	bool m_enable;
 	GLenum m_cap;
 };
 
 
-template<class T, bool t_isFloat> 
+template<class T, bool t_isFloat>
 inline
-void DisplayFogValue(GLenum _param, T _value) 
+void DisplayFogValue(GLenum _param, T _value)
 {
-	if (_param != GL_FOG_MODE) 
-		printf(t_isFloat ? "%.1f" : "%d", _value);	
-	else 
+	if (_param != GL_FOG_MODE)
+		printf(t_isFloat ? "%.1f" : "%d", _value);
+	else
 		printf("%s", GLFogModeToString( (int) _value ) );
 }
 
 
-template<class T, bool t_isFloat> 
+template<class T, bool t_isFloat>
 class DarwiniaGLFogLogMsg : public DarwiniaLogMsg {
 public:
 	DarwiniaGLFogLogMsg(const char *_filename, int _line, const char *_function,
@@ -94,7 +94,7 @@ public:
 		  m_param(_param), m_value(_value)
 	{
 	}
-	
+
 protected:
 	void DisplayCall() {
 		printf("glFog%s(%s, ", t_isFloat ? "f" : "i", GLFogParamToString(m_param));
@@ -108,7 +108,7 @@ private:
 };
 
 
-template<class T, bool t_isFloat> 
+template<class T, bool t_isFloat>
 class DarwiniaGLFogvLogMsg : public DarwiniaLogMsg {
 public:
 	DarwiniaGLFogvLogMsg(const char *_filename, int _line, const char *_function,
@@ -116,10 +116,10 @@ public:
 		: DarwiniaLogMsg(_filename, _line, _function),
 		  m_param(_param)
 	{
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 4; i++)
 			m_value[i] = _value[i];
 	}
-	
+
 protected:
 	void DisplayCall() {
 		printf("glFog%sv(%s, [", t_isFloat ? "f" : "i", GLFogParamToString(m_param));
@@ -146,13 +146,13 @@ void glLogEnable(const char *_filename, int _line, const char *_function, GLenum
 	if (_cap == GL_FOG) {
 		if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-			if (g_fogLogging) 
+			if (g_fogLogging)
 				g_log.Add( new DarwiniaGLEnableLogMsg( _filename, _line, _function, true, _cap) );
 #endif
 			glEnable(_cap);
 		}
 	}
-	else 
+	else
 		glEnable(_cap);
 }
 
@@ -162,13 +162,13 @@ void glLogDisable(const char *_filename, int _line, const char *_function, GLenu
 	if (_cap == GL_FOG) {
 		if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-			if (g_fogLogging) 
+			if (g_fogLogging)
 				g_log.Add( new DarwiniaGLEnableLogMsg( _filename, _line, _function, false, _cap) );
 #endif
 			glDisable(_cap);
 		}
 	}
-	else 
+	else
 		glDisable(_cap);
 }
 
@@ -177,7 +177,7 @@ void glLogFogf(const char *_filename, int _line, const char *_function, GLenum _
 {
 	if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-		if (g_fogLogging) 
+		if (g_fogLogging)
 			g_log.Add( new DarwiniaGLFogLogMsg<float, true>( _filename, _line, _function, _pname, _param ) );
 #endif
 		glFogf(_pname, _param);
@@ -188,7 +188,7 @@ void glLogFogi(const char *_filename, int _line, const char *_function, GLenum _
 {
 	if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-		if (g_fogLogging) 
+		if (g_fogLogging)
 			g_log.Add( new DarwiniaGLFogLogMsg<int, false>( _filename, _line, _function, _pname, _param ) );
 #endif
 		glFogi(_pname, _param);
@@ -200,8 +200,8 @@ void glLogFogfv(const char *_filename, int _line, const char *_function, GLenum 
 {
 	if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-		if (g_fogLogging) 
-			g_log.Add( new DarwiniaGLFogvLogMsg<GLfloat, true>( _filename, _line, _function, _pname, _params ) );		
+		if (g_fogLogging)
+			g_log.Add( new DarwiniaGLFogvLogMsg<GLfloat, true>( _filename, _line, _function, _pname, _params ) );
 #endif
 		glFogfv(_pname, _params);
 	}
@@ -212,8 +212,8 @@ void glLogFogiv(const char *_filename, int _line, const char *_function, GLenum 
 {
 	if (g_fogEnabled) {
 #ifdef FOG_LOGGING
-		if (g_fogLogging) 
-			g_log.Add( new DarwiniaGLFogvLogMsg<GLint, false>( _filename, _line, _function, _pname, _params ) );		
+		if (g_fogLogging)
+			g_log.Add( new DarwiniaGLFogvLogMsg<GLint, false>( _filename, _line, _function, _pname, _params ) );
 #endif
 		glFogiv(_pname, _params);
 	}

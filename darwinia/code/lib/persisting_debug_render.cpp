@@ -44,7 +44,7 @@ void PersistingDebugRenderer::Square2d(float x, float y, float _size, unsigned i
 	buf[63] = '\0';
 
 	PersistRenderItem *item = FindItem(buf);
-	if (!item) 
+	if (!item)
 	{
 		item = m_items.GetPointer();
 	}
@@ -68,7 +68,7 @@ void PersistingDebugRenderer::PointMarker(Vector3 const &_point, unsigned int _l
 	buf[63] = '\0';
 
 	PersistRenderItem *item = FindItem(buf);
-	if (!item) 
+	if (!item)
 	{
 		item = m_items.GetPointer();
 	}
@@ -128,7 +128,7 @@ void PersistingDebugRenderer::Render()
 	for (unsigned int i = 0; i < m_items.Size(); ++i)
 	{
 		if (!m_items.ValidIndex(i)) continue;
-		
+
 		PersistRenderItem *item = &m_items[i];
 
 		switch (item->m_type)

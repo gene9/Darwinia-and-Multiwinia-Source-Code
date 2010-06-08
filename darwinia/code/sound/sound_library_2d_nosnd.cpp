@@ -146,7 +146,7 @@ SoundLibrary2d::SoundLibrary2d()
 	result = waveOutWrite(s_device, &s_buffer2Header, sizeof(WAVEHDR));
 	DarwiniaReleaseAssert(result == MMSYSERR_NOERROR, "Couldn't send sound data");
 	*/
-	
+
 	s_nextBuffer = 1;
 }
 

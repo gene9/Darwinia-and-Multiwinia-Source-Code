@@ -332,7 +332,7 @@ ShapeFragment::ShapeFragment(char const *_name, char const *_parentName)
 	c[0] = '\0';
 }
 
-    
+
 ShapeFragment::~ShapeFragment()
 {
 	SAFE_DELETE_ARRAY(m_positions);
@@ -414,7 +414,7 @@ void ShapeFragment::WriteToFile(FILE *_out) const
 		fprintf(_out, "\tTriangles: %d\n", m_numTriangles);
 		for (i = 0; i < m_numTriangles; ++i)
 		{
-			fprintf(_out, "\t\t%d,%d,%d\n", 
+			fprintf(_out, "\t\t%d,%d,%d\n",
 				m_triangles[i].v1,
 				m_triangles[i].v2,
 				m_triangles[i].v3);
@@ -458,7 +458,7 @@ void ShapeFragment::ParsePositionBlock(TextReader *_in, unsigned int _numPositio
 			{
 				return;
 			}
-			
+
 			Vector3 *vect = &positions[id];
 			c = _in->GetNextToken();
 			DarwiniaDebugAssert(c);
@@ -503,7 +503,7 @@ void ShapeFragment::ParseNormalBlock(TextReader *_in, unsigned int _numNorms)
 			{
 				DarwiniaDebugAssert(0);
 			}
-			
+
 			Vector3 *vect = &m_normals[id];
 			c = _in->GetNextToken();
 			DarwiniaDebugAssert(c);
@@ -543,7 +543,7 @@ void ShapeFragment::ParseColourBlock(TextReader *_in, unsigned int _numColours)
 			{
 				DarwiniaDebugAssert(0);
 			}
-			
+
 			RGBAColour *col = &m_colours[id];
 			c = _in->GetNextToken();
 			DarwiniaDebugAssert(c);
@@ -633,7 +633,7 @@ void ShapeFragment::ParseStripBlock(TextReader *_in)
 		{
 			DarwiniaDebugAssert(0);
 		}
-	
+
 		while (_in->TokenAvailable())
 		{
 			char *c = _in->GetNextToken();
@@ -692,9 +692,9 @@ void ShapeFragment::ParseAllStripBlocks(TextReader *_in, unsigned int _numStrips
 			DarwiniaDebugAssert(id == expectedId);
 
 			ParseStripBlock(_in);
-			
+
 			expectedId++;
-			
+
 			if (expectedId == _numStrips)
 			{
 				break;
@@ -743,7 +743,7 @@ void ShapeFragment::GenerateNormals()
 	m_numNormals = m_numTriangles;
 	m_normals = new Vector3[m_numNormals];
 	int normId = 0;
-	
+
 	for (int j = 0; j < m_numTriangles; ++j)
 	{
 		ShapeTriangle *tri = &m_triangles[j];
@@ -934,7 +934,7 @@ void ShapeFragment::RenderSlow()
 		VertexPosCol const *vertA = &m_vertices[m_triangles[i].v1];
 		VertexPosCol const *vertB = &m_vertices[m_triangles[i].v2];
 		VertexPosCol const *vertC = &m_vertices[m_triangles[i].v3];
-		
+
         unsigned char const alpha = 255;
 
 		/*/ calculate normal
@@ -965,13 +965,13 @@ void ShapeFragment::RenderSlow()
                     m_colours[vertB->m_colId].b,
                     alpha );
 		glVertex3fv (m_positions[vertB->m_posId].GetData());
-		
+
 		glNormal3fv(m_normals[norm].GetData());
 		glColor4ub (m_colours[vertC->m_colId].r,
                     m_colours[vertC->m_colId].g,
                     m_colours[vertC->m_colId].b,
                     alpha );
-		glVertex3fv (m_positions[vertC->m_posId].GetData());		
+		glVertex3fv (m_positions[vertC->m_posId].GetData());
 		norm++;
 	}
 	glEnd();
@@ -1073,14 +1073,14 @@ void ShapeFragment::RenderMarkers(Matrix34 const &_rootTransform)
 #ifndef EXPORTER_BUILD
 #ifdef DEBUG_RENDER_ENABLED
 	int i;
-	
+
 	glDisable(GL_DEPTH_TEST);
 
 	int numMarkers = m_childMarkers.Size();
 	for (i = 0; i < numMarkers; ++i)
 	{
 		ShapeMarker *marker = m_childMarkers.GetData(i);
-		Matrix34 mat = marker->GetWorldMatrix(_rootTransform);		
+		Matrix34 mat = marker->GetWorldMatrix(_rootTransform);
 		RenderArrow(mat.pos, mat.pos + mat.f * 20.0f, 2.0f);
 		RenderArrow(mat.pos, mat.pos + mat.u * 10.0f, 2.0f);
 //		glLineWidth(2.0f);
@@ -1188,7 +1188,7 @@ bool ShapeFragment::SphereHit(SpherePackage *_package, Matrix34 const &_transfor
 		{
 			return true;
 		}
-		
+
 		// Compute World Space versions of all the vertices
 		for (int i = 0; i < m_numPositions; ++i)
 		{
@@ -1229,11 +1229,11 @@ bool ShapeFragment::SphereHit(SpherePackage *_package, Matrix34 const &_transfor
 
 
 // *** ShapeHit
-bool ShapeFragment::ShapeHit(Shape *_shape, Matrix34 const &_theTransform, 
+bool ShapeFragment::ShapeHit(Shape *_shape, Matrix34 const &_theTransform,
 							 Matrix34 const &_ourTransform, bool _accurate)
 {
 #ifndef EXPORTER_BUILD
-    
+
 	Matrix34 totalMatrix = m_transform * _ourTransform;
 	Vector3 centre = totalMatrix * m_centre;
 
@@ -1257,7 +1257,7 @@ bool ShapeFragment::ShapeHit(Shape *_shape, Matrix34 const &_theTransform,
 		{
 			return true;
 		}
-	}    
+	}
 
 #endif
     return false;
@@ -1277,7 +1277,7 @@ void ShapeFragment::CalculateCentre( Matrix34 const &_transform, Vector3 &_centr
 	{
 		ShapeFragment *frag = m_childFragments.GetData(i);
         frag->CalculateCentre( totalMatrix, _centre, _numFragments );
-    } 
+    }
 }
 
 
@@ -1297,7 +1297,7 @@ void ShapeFragment::CalculateRadius( Matrix34 const &_transform, Vector3 const &
 	{
 		ShapeFragment *frag = m_childFragments.GetData(i);
         frag->CalculateRadius ( totalMatrix, _centre, _radius );
-    } 
+    }
 }
 
 
@@ -1375,7 +1375,7 @@ void Shape::Load(TextReader *_in)
 	while(_in->ReadLine())
 	{
 		if (!_in->TokenAvailable()) continue;
-		
+
 		char *c = _in->GetNextToken();
 
 		if (stricmp(c, "fragment") == 0)
@@ -1395,7 +1395,7 @@ void Shape::Load(TextReader *_in)
 	}
 
 	m_rootFragment = new ShapeFragment("SceneRoot", "");
-	
+
 	// We need to build the hierarchy of fragments from the flat array
 	for (int i = 0; i < currentFrag; ++i)
 	{
@@ -1453,7 +1453,7 @@ void Shape::Render(float _predictionTime, Matrix34 const &_transform)
 #ifndef EXPORTER_BUILD
 	glEnable        (GL_COLOR_MATERIAL);
 	glMatrixMode    (GL_MODELVIEW);
-	glPushMatrix    ();	
+	glPushMatrix    ();
 	glMultMatrixf   (_transform.ConvertToOpenGLFormat());
 
 #ifdef USE_DISPLAY_LISTS
@@ -1468,7 +1468,7 @@ void Shape::Render(float _predictionTime, Matrix34 const &_transform)
 	{
 		m_rootFragment->Render(_predictionTime);
 	}
- 
+
 	glDisable       (GL_COLOR_MATERIAL);
 	glMatrixMode    (GL_MODELVIEW);
 	glPopMatrix     ();
@@ -1535,7 +1535,7 @@ bool Shape::SphereHit(SpherePackage *_package, Matrix34 const &_transform, bool 
 }
 
 
-bool Shape::ShapeHit(Shape *_shape, Matrix34 const &_theTransform, 
+bool Shape::ShapeHit(Shape *_shape, Matrix34 const &_theTransform,
 					 Matrix34 const &_ourTransform, bool _accurate)
 {
 #ifndef _EXPORTER_BUILDING
@@ -1555,7 +1555,7 @@ Vector3 Shape::CalculateCentre( Matrix34 const &_transform )
     m_rootFragment->CalculateCentre( _transform, centre, numFragments );
 
     centre /= (float) numFragments;
-    
+
     return centre;
 }
 

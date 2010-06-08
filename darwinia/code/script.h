@@ -72,7 +72,7 @@ public:
     int         m_rocketData;
     bool        m_waitForRocket;
     bool        m_permitEscape;
-    
+
 protected:
 	void ReportError(LevelFile const *_levelFile, char *_fmt, ...);
 
@@ -85,7 +85,7 @@ protected:
     void RunCommand_CamGlobalWorldFocus ();
     void RunCommand_LocationFocus       (char const *_locationName, float _fov );
     void RunCommand_CamReset            ();
-    
+
     void RunCommand_EnterLocation   (char *_name);
     void RunCommand_ExitLocation    ();
     void RunCommand_SetMission      (char *_locName, char *_missionName );
@@ -98,7 +98,7 @@ protected:
 	void RunCommand_WaitFade		();
     void RunCommand_WaitRocket      (int _buildingId, char *_state, int _data);
     void RunCommand_WaitPlayerNotBusy();
-    
+
     void RunCommand_Highlight       (int _buildingId);
     void RunCommand_ClearHighlights ();
 
@@ -121,7 +121,7 @@ protected:
     void RunCommand_SpamTrigger();
 
     void RunCommand_PurityControl();
-    
+
     void RunCommand_ShowDarwinLogo();
     void RunCommand_ShowDemoEndSequence();
 
@@ -133,7 +133,7 @@ protected:
 public:
     Script();
 
-    void Advance            ();    
+    void Advance            ();
     void AdvanceScript      ();
     void RunScript          (char *_filename);
 	void TestScript			(char *_filename);

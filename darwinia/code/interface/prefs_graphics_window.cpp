@@ -37,13 +37,13 @@ public:
             g_prefsManager->SetInt( GRAPHICS_BUILDINGDETAIL, parent->m_buildingDetail );
             g_prefsManager->SetInt( GRAPHICS_ENTITYDETAIL, parent->m_entityDetail );
             g_prefsManager->SetInt( GRAPHICS_CLOUDDETAIL, parent->m_cloudDetail );
-            
+
         	LandscapeDef *def = &g_app->m_location->m_levelFile->m_landscape;
 			g_app->m_location->m_landscape.Init(def);
 
             delete g_app->m_location->m_water;
             g_app->m_location->m_water = new Water();
-                        
+
             for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
             {
                 if( g_app->m_location->m_buildings.ValidIndex(i) )
@@ -63,7 +63,7 @@ PrefsGraphicsWindow::PrefsGraphicsWindow()
 :   DarwiniaWindow(LANGUAGEPHRASE("dialog_graphicsoptions"))
 {
     SetMenuSize( 360, 300 );
-    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 
     m_landscapeDetail   = g_prefsManager->GetInt( GRAPHICS_LANDDETAIL, 1 );
@@ -97,7 +97,7 @@ void PrefsGraphicsWindow::Create()
 	int h = buttonH + border;
 
     InvertedBox *box = new InvertedBox();
-    box->SetShortProperties( "invert", 10, y+border/2, m_w - 20, GetMenuSize(190) );        
+    box->SetShortProperties( "invert", 10, y+border/2, m_w - 20, GetMenuSize(190) );
     RegisterButton( box );
 
     DropDownMenu *landDetail = new DropDownMenu();
@@ -165,7 +165,7 @@ void PrefsGraphicsWindow::Create()
     CloseButton *cancel = new CloseButton();
     cancel->SetShortProperties( LANGUAGEPHRASE("dialog_close"), border, m_h - h, buttonW2, buttonH );
     cancel->m_fontSize = GetMenuSize(13);
-    cancel->m_centered = true;    
+    cancel->m_centered = true;
     RegisterButton( cancel );
 	m_buttonOrder.PutData( cancel );
 
@@ -185,7 +185,7 @@ void RenderCPUUsage( LList<char *> *elements, int x, int y )
     float totalOccup = 0.0f;
     for( int i = 0; i < elements->Size(); ++i )
     {
-        ProfiledElement *element = g_app->m_profiler->m_rootElement->m_children.GetData( elements->GetData(i) );    
+        ProfiledElement *element = g_app->m_profiler->m_rootElement->m_children.GetData( elements->GetData(i) );
         if( element && element->m_lastNumCalls > 0 )
         {
             float occup = element->m_lastTotalTime * 100;
@@ -204,7 +204,7 @@ void RenderCPUUsage( LList<char *> *elements, int x, int y )
         g_editorFont.DrawText2DCentre( x, y, 15, "-" );
     }
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-#endif    
+#endif
 }
 
 void PrefsGraphicsWindow::Render( bool _hasFocus )

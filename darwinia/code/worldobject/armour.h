@@ -13,13 +13,13 @@ class Shape;
 
 class Armour: public Entity
 {
-protected:    
-    ShapeMarker     *m_markerEntrance;    
+protected:
+    ShapeMarker     *m_markerEntrance;
     ShapeMarker     *m_markerFlag;
     Vector3         m_up;
     Vector3         m_conversionPoint;
     float           m_speed;
-    
+
     enum
     {
         StateIdle,
@@ -34,7 +34,7 @@ protected:
     Flag            m_deployFlag;
 
 public:
-    Vector3         m_wayPoint;    
+    Vector3         m_wayPoint;
     int             m_state;
 
 public:
@@ -46,7 +46,7 @@ public:
     void Render             ( float _predictionTime );
 
     void ChangeHealth       ( int _amount );
-    
+
     void SetOrders          ( Vector3 const &_orders );
     void SetWayPoint        ( Vector3 const &_wayPoint );
     void SetConversionPoint ( Vector3 const &_conversionPoint );
@@ -60,13 +60,13 @@ public:
     bool IsUnloading        ();
     void ToggleLoading      ();
     void AddPassenger       ();
-    void RemovePassenger    ();    
+    void RemovePassenger    ();
 
     int Capacity();
 
     void ListSoundEvents    ( LList<char *> *_list );
 
-    void GetEntrance( Vector3 &_exitPos, Vector3 &_exitDir ); 
+    void GetEntrance( Vector3 &_exitPos, Vector3 &_exitDir );
 };
 
 

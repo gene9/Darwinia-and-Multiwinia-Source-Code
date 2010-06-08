@@ -8,8 +8,8 @@
 // ****************************************************************************
 // Class SurfaceMap2D
 // Builds on Array2D to provide continuous interpolating 2D map, rather than a
-// discrete sampled one. In addition this class performs a coordinate space 
-// transform so that data values can be looked up using world space co-ords 
+// discrete sampled one. In addition this class performs a coordinate space
+// transform so that data values can be looked up using world space co-ords
 // rather than direct indices into the 2D array.
 // ****************************************************************************
 
@@ -19,7 +19,7 @@ class SurfaceMap2D: public Array2D<T>
 public:
 	// These variables are used when converting from real co-ords into
 	// array indices
-	float			m_x0;					
+	float			m_x0;
 	float			m_y0;
 	float			m_cellSizeX;
 	float			m_cellSizeY;
@@ -28,14 +28,14 @@ public:
 
 public:
 	SurfaceMap2D();
-	SurfaceMap2D(float _width, float _height, 
-				 float _x0, float _y0, 
+	SurfaceMap2D(float _width, float _height,
+				 float _x0, float _y0,
 				 float _cellSizeX, float _cellSizeY,
 				 T _outsideValue);
 	~SurfaceMap2D();
 
-	void			Initialise(float _width, float _height, 
-							   float _x0, float _y0, 
+	void			Initialise(float _width, float _height,
+							   float _x0, float _y0,
 							   float _cellSizeX, float _cellSizeY,
 							   T _outsideValue);
 

@@ -125,9 +125,9 @@ void WaterReflectionEffect::Start()
 	int sampler = m_waterMeshWavesShader->SetSampler("water",m_waterReflectionTexture);
 	if(sampler>=0)
 	{
-		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);	
-		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);	
-		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MIPFILTER,D3DTEXF_NONE);	
+		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
+		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
+		OpenGLD3D::g_pd3dDevice->SetSamplerState(sampler,D3DSAMP_MIPFILTER,D3DTEXF_NONE);
 	}
 }
 

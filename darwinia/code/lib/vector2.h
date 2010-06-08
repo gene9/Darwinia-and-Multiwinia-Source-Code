@@ -39,7 +39,7 @@ public:
 
 	Vector2 const &Normalise();
 	void	SetLength		(float _len);
-	
+
     float	Mag				() const;
 	float	MagSquared		() const;
 

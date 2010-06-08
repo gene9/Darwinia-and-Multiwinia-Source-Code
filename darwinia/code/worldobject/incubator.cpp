@@ -39,8 +39,8 @@ Incubator::Incubator()
     m_spiritEntrance[0] = m_shape->m_rootFragment->LookupMarker( "MarkerSpiritIncoming0" );
     m_spiritEntrance[1] = m_shape->m_rootFragment->LookupMarker( "MarkerSpiritIncoming1" );
     m_spiritEntrance[2] = m_shape->m_rootFragment->LookupMarker( "MarkerSpiritIncoming2" );
-    
-    
+
+
     DarwiniaDebugAssert( m_spiritCentre );
     DarwiniaDebugAssert( m_exit );
     DarwiniaDebugAssert( m_dock );
@@ -59,17 +59,17 @@ Incubator::~Incubator()
 void Incubator::Initialise( Building *_template )
 {
     Building::Initialise( _template );
-    
+
     Matrix34 mat( m_front, g_upVector, m_pos );
     Vector3 spiritCentre = m_spiritCentre->GetWorldMatrix(mat).pos;
 
     m_numStartingSpirits = ((Incubator *) _template)->m_numStartingSpirits;
-    
+
     for( int i = 0; i < m_numStartingSpirits; ++i )
     {
         Spirit *s = m_spirits.GetPointer();
         s->m_pos = spiritCentre + Vector3(sfrand(20.0f), sfrand(20.0f), sfrand(20.0f) );
-        s->m_teamId = m_id.GetTeamId();        
+        s->m_teamId = m_id.GetTeamId();
         s->Begin();
         s->m_state = Spirit::StateInStore;
     }
@@ -115,7 +115,7 @@ bool Incubator::Advance()
 
     //
     // Reduce incoming and outgoing logs
-    
+
     for( int i = 0; i < m_incoming.Size(); ++i )
     {
         IncubatorIncoming *ii = m_incoming[i];
@@ -127,7 +127,7 @@ bool Incubator::Advance()
             --i;
         }
     }
-    
+
     return Building::Advance();
 }
 
@@ -136,7 +136,7 @@ void Incubator::SpawnEntity()
 {
     Matrix34 mat( m_front, g_upVector, m_pos );
     Matrix34 exit = m_exit->GetWorldMatrix(mat);
-    
+
     //
     // Spawn the entity
     int teamId = m_id.GetTeamId();
@@ -144,7 +144,7 @@ void Incubator::SpawnEntity()
 
     g_app->m_location->SpawnEntities( exit.pos, teamId, -1, m_troopType, 1, exit.f, 0.0f );
 
-    
+
     //
     // Remove a spirit
     Vector3 spiritPos;
@@ -161,7 +161,7 @@ void Incubator::SpawnEntity()
 
     //
     // Create Particle + outgoing affects
-    
+
     IncubatorIncoming *ii = new IncubatorIncoming();
     ii->m_pos = spiritPos;
     ii->m_entrance = 2;
@@ -176,7 +176,7 @@ void Incubator::SpawnEntity()
         //g_app->m_particleSystem->CreateParticle( spiritPos, vel, Particle::TypeControlFlash );
     }
 
-    
+
     //
     // Sound effect
 
@@ -191,9 +191,9 @@ void Incubator::AddSpirit( Spirit *_spirit )
 
     Spirit *s = m_spirits.GetPointer();
     s->m_pos = spiritCentre + Vector3(sfrand(20.0f), sfrand(20.0f), sfrand(20.0f) );
-    s->m_teamId = _spirit->m_teamId;        
-    s->m_state = Spirit::StateInStore;   
-    
+    s->m_teamId = _spirit->m_teamId;
+    s->m_state = Spirit::StateInStore;
+
     IncubatorIncoming *ii = new IncubatorIncoming();
     ii->m_pos = s->m_pos;
     ii->m_entrance = syncrand() % 2;
@@ -232,7 +232,7 @@ void Incubator::Read( TextReader *_in, bool _dynamic )
 
 
 void Incubator::Write( FileWriter *_out )
-{   
+{
     Building::Write( _out );
 
     _out->printf( "%6d", m_numStartingSpirits );
@@ -241,7 +241,7 @@ void Incubator::Write( FileWriter *_out )
 
 void Incubator::Render( float _predictionTime )
 {
-    Building::Render( _predictionTime );    
+    Building::Render( _predictionTime );
 
 //    Vector3 dockPos, dockFront;
 //    GetDockPoint( dockPos, dockFront );
@@ -252,7 +252,7 @@ void Incubator::Render( float _predictionTime )
 void Incubator::RenderAlphas( float _predictionTime )
 {
     Building::RenderAlphas( _predictionTime );
-    
+
     glDisable       ( GL_CULL_FACE );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_BLEND );
@@ -288,22 +288,22 @@ void Incubator::RenderAlphas( float _predictionTime )
         IncubatorIncoming *ii = m_incoming[i];
         Vector3 fromPos = ii->m_pos;
         Vector3 toPos = entrances[ii->m_entrance];
-    
+
         Vector3 midPoint        = fromPos + (toPos - fromPos)/2.0f;
         Vector3 camToMidPoint   = g_app->m_camera->GetPos() - midPoint;
         Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
-    
+
         rightAngle *= 1.5f;
-    
+
         glColor4f( 1.0f, 1.0f, 0.2f, ii->m_alpha );
 
         glBegin( GL_QUADS );
                 glTexCoord2i(0,0);      glVertex3fv( (fromPos - rightAngle).GetData() );
                 glTexCoord2i(0,1);      glVertex3fv( (fromPos + rightAngle).GetData() );
-                glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );                
-                glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );                     
+                glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );
+                glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );
         glEnd();
-    
+
     }
 
     glDisable       ( GL_TEXTURE_2D );

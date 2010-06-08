@@ -53,7 +53,7 @@ void DspHandle::Advance()
     // Build a parameter list
 
     float params[MAX_PARAMS];
-    
+
     for( int i = 0; i < MAX_PARAMS; ++i )
     {
         m_parent->UpdateParameter( m_params[i] );
@@ -67,7 +67,7 @@ void DspHandle::Advance()
                 DarwiniaReleaseAssert( false, "Unknown datatype" );
         }
     }
-   
+
 
     //
     // Update the DSP effect
@@ -145,12 +145,12 @@ SoundInstance::SoundInstance()
     m_freq.Recalculate();
 
     m_volume.m_outputLower = 7.0f;
-    m_volume.Recalculate();    
+    m_volume.Recalculate();
     m_attack.Recalculate();
     m_sustain.Recalculate();
     m_release.Recalculate();
     m_loopDelay.Recalculate();
-    
+
     m_adsrState = StateAttack;
     m_adsrTimer = GetHighResTime();
 }
@@ -191,17 +191,17 @@ void SoundInstance::SetEventName( char const *_entityName, char const *_eventNam
 
 char *SoundInstance::GetPositionTypeName( int _type )
 {
-    static char *types[] = {    "Type2D", 
+    static char *types[] = {    "Type2D",
                                 "Type3DStationary",
                                 "Type3DAttachedToObject",
-                                "TypeInEditor" 
+                                "TypeInEditor"
                                 };
 
     if( _type >= 0 && _type < NumPositionTypes )
     {
         return types[_type];
     }
-    
+
     return NULL;
 }
 
@@ -243,7 +243,7 @@ char *SoundInstance::GetSourceTypeName( int _type )
     static char *types[] = {    "Sample",
                                 "SampleGroupRandom"
                                 };
-    
+
     if( _type >= 0 && _type < NumSourceTypes )
     {
         return types[ _type ];
@@ -283,7 +283,7 @@ void SoundInstance::Copy( SoundInstance *_copyMe )
 
     m_loopDelay.Copy( &_copyMe->m_loopDelay );
     UpdateParameter( m_loopDelay );
-        
+
     bool dspEnabled = g_prefsManager->GetInt( "SoundDSP", 1 );
 
     if( dspEnabled )
@@ -303,7 +303,7 @@ void SoundInstance::Copy( SoundInstance *_copyMe )
 
 
 void SoundInstance::PropagateBlueprints()
-{    
+{
     //if( m_loopType && m_parent )
     {
         //
@@ -328,7 +328,7 @@ void SoundInstance::PropagateBlueprints()
                 }
             }
         }
-        
+
         if( strcmp( m_parent->m_soundName, m_soundName ) != 0 )
         {
             strcpy( m_soundName, m_parent->m_soundName );
@@ -350,13 +350,13 @@ void SoundInstance::PropagateBlueprints()
         if( m_minDistance != m_parent->m_minDistance )
         {
             m_minDistance = m_parent->m_minDistance;
-            if( IsPlaying() ) 
+            if( IsPlaying() )
             {
                 g_soundLibrary3d->SetChannelMinDistance( m_channelIndex, m_minDistance );
             }
         }
 
-        m_loopType = m_parent->m_loopType;                    
+        m_loopType = m_parent->m_loopType;
         m_sourceType = m_parent->m_sourceType;
         m_instanceType = m_parent->m_instanceType;
 
@@ -404,8 +404,8 @@ void SoundInstance::PropagateBlueprints()
             DarwiniaDebugAssert( m_dspFX.ValidIndex(i) );
             DspHandle *effect = m_parent->m_dspFX[i];
             DspHandle *copy = m_dspFX[i];
-            copy->Copy( effect );            
-        }        
+            copy->Copy( effect );
+        }
     }
 }
 
@@ -426,7 +426,7 @@ bool SoundInstance::UpdateChannelVolume()
         case StateAttack:
         {
             float fractionIntoAttack = 1.0f;
-            if( m_attack.GetOutput() > 0.0f )       fractionIntoAttack = timeSince / m_attack.GetOutput();            
+            if( m_attack.GetOutput() > 0.0f )       fractionIntoAttack = timeSince / m_attack.GetOutput();
             if( fractionIntoAttack > 1.0f )         fractionIntoAttack = 1.0f;
             volume = m_volume.GetOutput() * fractionIntoAttack;
             if( NearlyEquals(fractionIntoAttack, 1.0f) )
@@ -440,8 +440,8 @@ bool SoundInstance::UpdateChannelVolume()
         case StateSustain:
         {
             volume = m_volume.GetOutput();
-            
-            if( m_sustain.GetOutput() > 0.0f && 
+
+            if( m_sustain.GetOutput() > 0.0f &&
                 GetHighResTime() >= m_adsrTimer + m_sustain.GetOutput() )
             {
                 BeginRelease(false);
@@ -457,7 +457,7 @@ bool SoundInstance::UpdateChannelVolume()
 
             volume = m_volume.GetOutput() * ( 1.0f - fractionIntoRelease );
             if( NearlyEquals(fractionIntoRelease, 1.0f) &&
-                NearlyEquals(m_loopDelayTimer, 0.0f) )       finished = true;            
+                NearlyEquals(m_loopDelayTimer, 0.0f) )       finished = true;
             break;
         }
     }
@@ -483,7 +483,7 @@ void SoundInstance::BeginRelease( bool _final )
         {
             if( NearlyEquals(m_loopDelay.GetOutput(), 0.0f) )
             {
-                g_app->m_soundSystem->TriggerDuplicateSound( this );                
+                g_app->m_soundSystem->TriggerDuplicateSound( this );
             }
             else
             {
@@ -513,7 +513,7 @@ void SoundInstance::OpenStream( bool _keepCurrentStream )
     }
 
 	g_deletingCachedSampleHandle = true;
-	delete m_cachedSampleHandle; 	
+	delete m_cachedSampleHandle;
     m_cachedSampleHandle = NULL;
 	g_deletingCachedSampleHandle = false;
 
@@ -523,7 +523,7 @@ void SoundInstance::OpenStream( bool _keepCurrentStream )
 		SampleGroup *group = g_app->m_soundSystem->GetSampleGroup( m_soundName );
 		DarwiniaReleaseAssert( group, "Failed to find Sample Group %s", m_soundName );
 		int numSamples = group->m_samples.Size();
-        
+
         int memoryUsage = g_prefsManager->GetInt( "SoundMemoryUsage", 1 );
         if( memoryUsage == 2 ) numSamples *= 0.5f;
         if( memoryUsage == 3 ) numSamples *= 0.25f;
@@ -532,7 +532,7 @@ void SoundInstance::OpenStream( bool _keepCurrentStream )
         int sampleIndex = darwiniaRandom() % numSamples;
 		sampleName = group->m_samples[ sampleIndex ];
     }
-	
+
 	m_cachedSampleHandle = g_cachedSampleManager.GetSample(sampleName);
 }
 
@@ -551,9 +551,9 @@ bool SoundInstance::AdvanceLoop()
                 g_app->m_soundSystem->TriggerDuplicateSound( this );
                 m_loopDelayTimer = 0.0f;
             }
-        }        
+        }
         OpenStream( true );
-        return true;    
+        return true;
     }
     else if( m_loopType == Looped )
     {
@@ -570,7 +570,7 @@ bool SoundInstance::AdvanceLoop()
             {
                 m_loopDelayTimer = GetHighResTime();
                 return false;
-            }    
+            }
         }
         else
         {
@@ -602,7 +602,7 @@ bool SoundInstance::StartPlaying( int _channelIndex )
     }
 
 	START_PROFILE(g_app->m_profiler, "StartPlaying");
-		
+
     //
     // If we don't have our stream yet, load it now
 
@@ -617,14 +617,14 @@ bool SoundInstance::StartPlaying( int _channelIndex )
 	START_PROFILE(g_app->m_profiler, "Set Parameters");
     m_channelIndex = _channelIndex;
 
-    
+
     switch( m_positionType )
     {
         case Type2D:
         case TypeInEditor:
                             g_soundLibrary3d->SetChannel3DMode( m_channelIndex, 1 );       break;
-        
-        default:            
+
+        default:
                             g_soundLibrary3d->SetChannel3DMode( m_channelIndex, 0 );       break;
     }
 
@@ -648,15 +648,15 @@ bool SoundInstance::StartPlaying( int _channelIndex )
 	START_PROFILE(g_app->m_profiler, "Setup DSP Effects");
     int filterTypes[16];
     int numActiveFilters = 0;
-        
+
     for( int i = 0; i < m_dspFX.Size(); ++i )
     {
         DspHandle *effect = m_dspFX[i];
-        effect->Initialise( this );            
+        effect->Initialise( this );
         filterTypes[numActiveFilters] = effect->m_type;
         ++numActiveFilters;
-    }                 
-    
+    }
+
     if( numActiveFilters > 0 )
     {
         g_soundLibrary3d->EnableDspFX( m_channelIndex, numActiveFilters, filterTypes );
@@ -669,7 +669,7 @@ bool SoundInstance::StartPlaying( int _channelIndex )
 
 
 bool SoundInstance::Advance()
-{   
+{
     //
     // Update parameters
 
@@ -681,7 +681,7 @@ bool SoundInstance::Advance()
 
     //if( m_loopDelayTimer > 0.0f ) AdvanceLoop();
     // This line was causing severe stuttering on sounds with ADSR and loopDelay > 0
-    
+
     //
     // Update Filters
 
@@ -691,10 +691,10 @@ bool SoundInstance::Advance()
         effect->Advance();
     }
 
-    
+
 	//
     // Update 3d position
-    
+
 	bool rv = Update3DPosition();
     m_restartOccured = false;
 
@@ -705,11 +705,11 @@ bool SoundInstance::Advance()
 bool SoundInstance::Update3DPosition()
 {
     bool updateRequired = false;
-    
+
     //
     // Work out our new position
     // And determine if we need to be updated
-    
+
     switch( m_positionType )
     {
         case Type2D:
@@ -743,7 +743,7 @@ bool SoundInstance::Update3DPosition()
             {
                 m_pos = ((Building *) obj)->m_centrePos;
             }
-            
+
             g_soundLibrary3d->SetChannelPosition( m_channelIndex, m_pos, m_vel );
             return false;
         }
@@ -764,7 +764,7 @@ bool SoundInstance::Update3DPosition()
     return false;
 }
 
- 
+
 void SoundInstance::ForceParameter( SoundParameter &_param, float value )
 {
     switch( _param.m_link )
@@ -775,7 +775,7 @@ void SoundInstance::ForceParameter( SoundParameter &_param, float value )
             if( g_app->m_location ) landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z);
             m_pos.y = landHeight + value;
             break;
-        }       
+        }
 
         case SoundParameter::LinkedToXpos:
             m_pos.x = value;
@@ -788,16 +788,16 @@ void SoundInstance::ForceParameter( SoundParameter &_param, float value )
         case SoundParameter::LinkedToZpos:
             m_pos.z = value;
             break;
-            
+
         case SoundParameter::LinkedToVelocity:
             m_vel.Set( 0.0f, 0.0f, value );
             break;
-    
+
         case SoundParameter::LinkedToCameraDistance:
         {
             if( g_app->m_camera )
             {
-                m_pos = g_app->m_camera->GetPos() + 
+                m_pos = g_app->m_camera->GetPos() +
                         g_app->m_camera->GetFront() * value;
             }
             break;
@@ -832,7 +832,7 @@ bool SoundInstance::UpdateParameter ( SoundParameter &_param )
                 if( g_app->m_location ) landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(pos.x, pos.z);
                 _param.Recalculate( pos.y - landHeight );
                 break;
-            }       
+            }
 
             case SoundParameter::LinkedToXpos:
                 _param.Recalculate( pos.x );
@@ -845,7 +845,7 @@ bool SoundInstance::UpdateParameter ( SoundParameter &_param )
             case SoundParameter::LinkedToZpos:
                 _param.Recalculate( pos.z );
                 break;
-        
+
             case SoundParameter::LinkedToVelocity:
                 _param.Recalculate( vel.Mag() );
                 break;
@@ -875,15 +875,15 @@ void SoundInstance::StopPlaying()
     if( IsPlaying() )
     {
         if( m_dspFX.Size() > 0 )
-        {            
+        {
             g_soundLibrary3d->DisableDspFX( m_channelIndex );
         }
-       
+
         m_channelIndex = -1;
     }
-    
+
     //
-    // Make sure there aren't any channels that think they are 
+    // Make sure there aren't any channels that think they are
     // playing our sound
 
     for( int i = 0; i < g_app->m_soundSystem->m_numChannels; ++i )
@@ -909,14 +909,14 @@ int SoundInstance::GetChannelIndex()
     {
         return -1;
     }
-        
-    if( m_channelIndex >= 0 && 
+
+    if( m_channelIndex >= 0 &&
         m_channelIndex < g_app->m_soundSystem->m_numChannels &&
         g_app->m_soundSystem->m_channels[ m_channelIndex ] == m_id )
     {
         return m_channelIndex;
     }
-    
+
     return -1;
 }
 
@@ -929,13 +929,13 @@ void SoundInstance::CalculatePerceivedVolume()
         m_perceivedVolume = 10.0f;
     }
     else
-    {        
+    {
         float distance = ( m_pos - g_app->m_camera->GetPos() ).Mag();
         float distanceFactor = 1.0f;
         if( distance > m_minDistance )
         {
-            distanceFactor = m_minDistance / distance;    
-        }        
+            distanceFactor = m_minDistance / distance;
+        }
 
         // NOTE : We could base this on m_channelVolume instead of m_volume,
         // in order to take into account ADSR automatically. However m_channelVolume
@@ -947,7 +947,7 @@ void SoundInstance::CalculatePerceivedVolume()
         // if he has any effects on it, eg Echo, to allow the full Echo to continue
         // even after the sound has finished.  This results in our sound channels
         // being filled up with high priority sounds that have mostly faded out.
-        
+
         if( IsPlaying() )   m_perceivedVolume = m_channelVolume;
         else                m_perceivedVolume = m_volume.GetOutput();
         m_perceivedVolume *= distanceFactor;
@@ -958,7 +958,7 @@ void SoundInstance::CalculatePerceivedVolume()
 WorldObject *SoundInstance::GetAttachedObject()
 {
     if( m_positionType != Type3DAttachedToObject ) return NULL;
-        
+
     WorldObject *obj = NULL;
 
     if( g_app->m_locationId != -1 )
@@ -989,7 +989,7 @@ WorldObject *SoundInstance::GetAttachedObject()
                 }
             }
 
-    
+
             //
             // Now select an object from our list depending on our instance type
 
@@ -1012,7 +1012,7 @@ WorldObject *SoundInstance::GetAttachedObject()
 
                     case MonophonicNearest:
                     {
-                        float nearest = 99999.9f;                            
+                        float nearest = 99999.9f;
                         for( int i = 0; i < m_objIds.Size(); ++i )
                         {
                             WorldObjectId *id = m_objIds[i];
@@ -1030,9 +1030,9 @@ WorldObject *SoundInstance::GetAttachedObject()
             }
         }
 
-        obj = g_app->m_location->GetWorldObject( m_objId );        
+        obj = g_app->m_location->GetWorldObject( m_objId );
     }
-    
+
     return obj;
 }
 
@@ -1043,13 +1043,13 @@ char *SoundInstance::GetDescriptor()
 
     char *looping = GetLoopTypeName( m_loopType );
     char const *inEditor = m_positionType == TypeInEditor ? " editor" : "       ";
-    
+
     char priority[32];
     sprintf( priority, "%2.2f", m_calculatedPriority );
 
     char volume[32];
     sprintf( volume, "%2.1f", m_channelVolume );
-    
+
     char fx[32];
     if( m_dspFX.Size() )
     {

@@ -22,7 +22,7 @@ public:
 
 protected:
     // Generic rendering code
-    
+
     int  SetupFor2D     ( int _screenW );               // screenH is returned
     virtual void FlipBuffers    ();
 

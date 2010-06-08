@@ -16,7 +16,7 @@ static void GetCPUInfo()
 {
 	long cpuType, cpuSpeed, cpuCount;
 	int error;
-	
+
 	error = Gestalt(gestaltNativeCPUtype, &cpuType);
 	error = Gestalt(gestaltProcClkSpeed, &cpuSpeed);
 	cpuCount = MPProcessors();
@@ -33,8 +33,8 @@ static void GetGraphicsInfo()
 	io_service_t displayPort = CGDisplayIOServicePort(CGMainDisplayID());
 	CFTypeRef typeCode = IORegistryEntryCreateCFProperty(
 		displayPort,
-		CFSTR(kIOFBMemorySizeKey), 
-		kCFAllocatorDefault, 
+		CFSTR(kIOFBMemorySizeKey),
+		kCFAllocatorDefault,
 		kNilOptions);
 
 	if (typeCode && (CFGetTypeID(typeCode) == CFNumberGetTypeID()))	{
@@ -53,7 +53,7 @@ static void GetHardwareInfo()
 
 	GetCPUInfo();
 	GetGraphicsInfo();
-	
+
 	isInitialised = true;
 }
 

@@ -102,7 +102,7 @@ void Factory::RequestUnit( unsigned char _troopType, int _numToCreate )
     m_timeToCreate      = m_numToCreate * 0.1f;
     m_timeSoFar         = 0.0f;
 
-	if( _troopType < Entity::TypeEngineer || 
+	if( _troopType < Entity::TypeEngineer ||
         _troopType == Entity::TypeInsertionSquadie)
     {
         Team *team          = &g_app->m_location->m_teams[m_id.GetTeamId()];
@@ -127,9 +127,9 @@ bool Factory::Advance()
         case StateRecharging:       AdvanceStateRecharging();       break;
     };
 
-    
+
     m_spiritStore.Advance();
-    
+
     return Building::Advance();
 }
 
@@ -153,13 +153,13 @@ void Factory::AdvanceStateCreating()
             Vector3 pos( m_pos + Vector3( syncsfrand(5.0f),
                                           20.0f + syncsfrand(5.0f),
                                           20.0f ) );
-            Vector3 vel( syncsfrand(1.0f), 
-                         syncsfrand(1.0f), 
+            Vector3 vel( syncsfrand(1.0f),
+                         syncsfrand(1.0f),
                          5.0f + syncsfrand(1.0f) );
 
             m_spiritStore.RemoveSpirits( 1 );
             g_app->m_location->SpawnEntities( pos, m_id.GetTeamId(), m_unitId, m_troopType, 1, vel, 0.0f );
-            
+
             ++numActuallyCreated;
         }
     }
@@ -194,15 +194,15 @@ void Factory::SetTeamId( int _teamId )
 {
     Building::SetTeamId( _teamId );
 
-    m_state = StateUnused;    
+    m_state = StateUnused;
 }
 
 void Factory::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
 
-    char *word = _in->GetNextToken();  
-    m_initialCapacity = atoi(word);    
+    char *word = _in->GetNextToken();
+    m_initialCapacity = atoi(word);
 }
 
 void Factory::Write( FileWriter *_out )

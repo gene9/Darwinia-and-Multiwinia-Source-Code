@@ -22,17 +22,17 @@ public:
 	Array2D();
 	Array2D(unsigned short _numColumns, unsigned short _numRows, T _outsideValue);
 	~Array2D();
-	
+
 	// Only need to call Initialise if you used the default constructor
 	void					Initialise		(unsigned short _numCols, unsigned short _numRows, T _outsideValue);
 
 	inline T const			&GetData		(unsigned short _x, unsigned short _y) const;
 	inline T				*GetPointer		(unsigned short _x, unsigned short _y);
 	inline T const			*GetConstPointer(unsigned short _x, unsigned short _y) const;
-	
+
 	inline void				PutData			(unsigned short _x, unsigned short _y, T const &_value);
 	inline void				AddToData		(unsigned short _x, unsigned short _y, T const &_value);
-	
+
 	inline unsigned short	GetNumRows		() const;
 	inline unsigned short	GetNumColumns	() const;
 

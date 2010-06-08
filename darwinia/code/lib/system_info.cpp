@@ -36,7 +36,7 @@ void SystemInfo::GetLocaleDetails()
 	    DarwiniaReleaseAssert(GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SENGLANGUAGE, m_localeInfo.m_language, size),
 				      "Couldn't get locale details");
     }
-    
+
 
 	size = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SENGCOUNTRY, NULL, 0);
 	m_localeInfo.m_country = new char[size + 1];
@@ -58,7 +58,7 @@ void SystemInfo::GetAudioDetails()
 		WAVEOUTCAPS caps;
 		waveOutGetDevCaps(i, &caps, sizeof(WAVEOUTCAPS));
 		m_audioInfo.m_deviceNames[i] = strdup(caps.szPname);
-		
+
 		int score = 0;
 		if (caps.dwFormats & WAVE_FORMAT_1M08) score++;
 		if (caps.dwFormats & WAVE_FORMAT_1M16) score++;
@@ -93,7 +93,7 @@ void SystemInfo::GetDirectXVersion()
 {
 	HKEY hkey;
 	long errCode;
-	unsigned long bufLen = 256; 
+	unsigned long bufLen = 256;
 	unsigned char buf[256];
 
 	m_directXVersion = -1;
@@ -124,8 +124,8 @@ void SystemInfo::GetDirectXVersion()
 //		long hr;
 //		bool bCleanupCOM = false;
 //		bool bSuccessGettingMajor = false;
-//    
-//		// Init COM.  COM may fail if its already been inited with a different 
+//
+//		// Init COM.  COM may fail if its already been inited with a different
 //		// concurrency model.  And if it fails you shouldn't release it.
 //		hr = CoInitialize(NULL);
 //		bCleanupCOM = SUCCEEDED(hr);
@@ -149,7 +149,7 @@ void SystemInfo::GetDirectXVersion()
 //			dxDiagInitParam.pReserved               = NULL;
 //
 //			// Init the m_pDxDiagProvider
-//			hr = pDxDiagProvider->Initialize( &dxDiagInitParam ); 
+//			hr = pDxDiagProvider->Initialize( &dxDiagInitParam );
 //			if( SUCCEEDED(hr) )
 //			{
 //				IDxDiagContainer* pDxDiagRoot = NULL;
@@ -157,7 +157,7 @@ void SystemInfo::GetDirectXVersion()
 //
 //				// Get the DxDiag root container
 //				hr = pDxDiagProvider->GetRootContainer( &pDxDiagRoot );
-//				if( SUCCEEDED(hr) ) 
+//				if( SUCCEEDED(hr) )
 //				{
 //					// Get the object called DxDiag_SystemInfo
 //					hr = pDxDiagRoot->GetChildContainer( L"DxDiag_SystemInfo", &pDxDiagSystemInfo );
@@ -170,7 +170,7 @@ void SystemInfo::GetDirectXVersion()
 //						hr = pDxDiagSystemInfo->GetProp( L"dwDirectXVersionMajor", &var );
 //						if( SUCCEEDED(hr) && var.vt == VT_UI4 )
 //						{
-//							m_directXVersion = var.ulVal; 
+//							m_directXVersion = var.ulVal;
 //							bSuccessGettingMajor = true;
 //						}
 //						VariantClear( &var );
@@ -190,6 +190,6 @@ void SystemInfo::GetDirectXVersion()
 //		}
 //
 //		if( bCleanupCOM )
-//			CoUninitialize();		
+//			CoUninitialize();
 //	}
 }

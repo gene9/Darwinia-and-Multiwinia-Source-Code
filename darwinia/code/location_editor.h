@@ -18,9 +18,9 @@ public:
     int             m_newLandscapeX;                            // Used for landscape dragging
     int             m_newLandscapeZ;
 	int				m_mode;
-        
+
     int             m_moveBuildingsWithLandscape;
-    
+
 	enum
 	{
 		ToolNone,
@@ -28,7 +28,7 @@ public:
         ToolRotate,
         ToolLink,
 		ToolCreate,
-		ToolNumTypes			
+		ToolNumTypes
 	};
 
 	enum
@@ -63,7 +63,7 @@ private:
 	void			AdvanceModeCameraMount();
 
 	void			RenderUnit(InstantUnit *_iu);
-	
+
 	void			RenderModeLandTile();
 	void			RenderModeLandFlat();
 	void			RenderModeBuilding();
@@ -81,7 +81,7 @@ public:
 
 	LocationEditor();
 	~LocationEditor();
-       
+
 	void RequestMode(int _mode);
 	int GetMode();
 

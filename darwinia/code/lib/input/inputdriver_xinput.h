@@ -31,7 +31,7 @@ private:
 	OptionalTokenState m_optTokenState;
 
 	bool acceptDriver( std::string const &name );
-	
+
 	control_id_t getControlID( std::string const &name );
 
 	inputtype_t getControlType( control_id_t control_id );

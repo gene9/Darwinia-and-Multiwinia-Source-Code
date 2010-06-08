@@ -64,7 +64,7 @@ char *BinaryFileReader::GetFileType()
 	{
 		return extension + 1;
 	}
-	
+
 	return &m_filename[strlen(m_filename)];
 }
 
@@ -95,7 +95,7 @@ short BinaryFileReader::ReadS16()
 {
 	int b1 = fgetc(m_file);
 	int b2 = fgetc(m_file);
-	
+
 	if (b1 == EOF || b2 == EOF)
 	{
 		m_eof = true;
@@ -149,7 +149,7 @@ int BinaryFileReader::Tell()
 // BinaryDataReader
 // ****************************************************************************
 
-BinaryDataReader::BinaryDataReader(unsigned char const *_data, unsigned int _dataSize, 
+BinaryDataReader::BinaryDataReader(unsigned char const *_data, unsigned int _dataSize,
 								   char const *_filename)
 :	BinaryReader(),
 	m_data(_data),
@@ -178,7 +178,7 @@ char *BinaryDataReader::GetFileType()
 	{
 		return extension + 1;
 	}
-	
+
 	return &m_filename[strlen(m_filename)];
 }
 
@@ -217,7 +217,7 @@ short BinaryDataReader::ReadS16()
 
 	int b1 = m_data[m_offset++];
 	int b2 = m_data[m_offset++];
-	
+
 	return ((b2 << 8) | b1);
 }
 
@@ -246,7 +246,7 @@ int BinaryDataReader::ReadS32()
 
 unsigned int BinaryDataReader::ReadBytes(unsigned int _count, unsigned char *_buffer)
 {
-	if (m_eof) 
+	if (m_eof)
 	{
 		return 0;
 	}

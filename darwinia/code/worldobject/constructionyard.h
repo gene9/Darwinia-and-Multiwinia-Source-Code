@@ -14,7 +14,7 @@
 
 class ConstructionYard : public Building
 {
-protected:   
+protected:
     Shape           *m_rung;
     Shape           *m_primitive;
     ShapeMarker     *m_primitives[YARD_NUMPRIMITIVES];
@@ -25,16 +25,16 @@ protected:
     int     m_numTanksProduced;
     float   m_fractionPopulated;
     float   m_timer;
-    
+
     float   m_alpha;
 
     bool    IsPopulationLocked();                       // Are there too many tanks already
-    
+
 public:
     ConstructionYard();
 
     bool Advance();
-    
+
     void Render         ( float _predictionTime );
     void RenderAlphas   ( float _predictionTime );
 
@@ -55,14 +55,14 @@ public:
 
 class DisplayScreen : public Building
 {
-protected:    
+protected:
     Shape       *m_armour;
-    ShapeMarker *m_rays[DISPLAYSCREEN_NUMRAYS];    
+    ShapeMarker *m_rays[DISPLAYSCREEN_NUMRAYS];
 
 public:
     DisplayScreen();
 
-    void RenderAlphas       ( float _predictionTime );	
+    void RenderAlphas       ( float _predictionTime );
 
 };
 

@@ -61,7 +61,7 @@ void AntHill::Damage ( float _damage )
         int healthBandBefore = int(m_health / 20.0f);
         m_health += _damage;
         int healthBandAfter = int(m_health / 20.0f);
-        
+
         if( healthBandAfter != healthBandBefore )
         {
             Matrix34 mat( m_front, g_upVector, m_pos );
@@ -70,10 +70,10 @@ void AntHill::Damage ( float _damage )
         }
 
         if( m_health <= 0 )
-        {            
+        {
             Matrix34 mat( m_front, g_upVector, m_pos );
-            g_explosionManager.AddExplosion( m_shape, mat );       
-        
+            g_explosionManager.AddExplosion( m_shape, mat );
+
             int numSpirits = m_numAntsInside + m_numSpiritsInside;
             for( int i = 0; i < numSpirits; ++i )
             {
@@ -88,7 +88,7 @@ void AntHill::Damage ( float _damage )
 
                 g_app->m_location->SpawnSpirit( pos, vel, m_id.GetTeamId(), WorldObjectId() );
             }
-        
+
             g_app->m_soundSystem->TriggerBuildingEvent( this, "Explode" );
             m_health = 0;
         }
@@ -127,7 +127,7 @@ bool AntHill::TargettedEntity( WorldObjectId _id )
 
 
 bool AntHill::SearchForSpirits( Vector3 &_pos )
-{   
+{
     for( int i = 0; i < g_app->m_location->m_spirits.Size(); ++i )
     {
         if( g_app->m_location->m_spirits.ValidIndex(i) )
@@ -139,12 +139,12 @@ bool AntHill::SearchForSpirits( Vector3 &_pos )
                 !SearchingArea( s->m_pos ) &&
                 ( s->m_state == Spirit::StateBirth ||
                   s->m_state == Spirit::StateFloating ) )
-            {                
+            {
                 _pos = s->m_pos;
                 return true;
             }
         }
-    }            
+    }
 
     return false;
 }
@@ -210,7 +210,7 @@ bool AntHill::SearchForScoutArea ( Vector3 &_pos )
 	float radius = ANTHILL_SEARCHRANGE/2.0f + syncfrand(ANTHILL_SEARCHRANGE/2.0f);
 	float theta = syncfrand(M_PI * 2);
     scoutPos.x += radius * sinf(theta);
-	scoutPos.z += radius * cosf(theta);    
+	scoutPos.z += radius * cosf(theta);
     scoutPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( scoutPos.x, scoutPos.z );
 
     if( scoutPos.y > 0 )
@@ -293,10 +293,10 @@ bool AntHill::Advance()
         Vector3 targetPos;
         WorldObjectId targetId;
         bool targetFound = false;
-        
+
         if( !targetFound )      targetFound = SearchForDarwinians   ( targetPos, targetId );
         if( !targetFound )      targetFound = SearchForEnemies      ( targetPos, targetId );
-        if( !targetFound )      targetFound = SearchForSpirits      ( targetPos );        
+        if( !targetFound )      targetFound = SearchForSpirits      ( targetPos );
         if( !targetFound )      targetFound = SearchForScoutArea    ( targetPos );
 
         if( targetFound )
@@ -304,7 +304,7 @@ bool AntHill::Advance()
             AntObjective *objective = new AntObjective();
             objective->m_pos = targetPos;
             objective->m_targetId = targetId;
-        
+
             objective->m_numToSend = 5 + 5 * (g_app->m_difficultyLevel / 10.0);
             m_objectives.PutData( objective );
         }
@@ -312,12 +312,12 @@ bool AntHill::Advance()
         m_objectiveTimer = GetHighResTime() + syncrand() % 5;
     }
 
-    
+
     //
     // Send out ants to our existing objectives
 
     if( !popLocked &&
-        m_objectives.Size() > 0 && 
+        m_objectives.Size() > 0 &&
         GetHighResTime() > m_spawnTimer &&
         m_numAntsInside > 0 )
     {
@@ -325,7 +325,7 @@ bool AntHill::Advance()
         Unit *unit = g_app->m_location->GetUnit( WorldObjectId( m_id.GetTeamId(), m_unitId, -1, -1 ) );
         if( !unit )
         {
-            unit = g_app->m_location->m_teams[m_id.GetTeamId()].NewUnit( Entity::TypeArmyAnt, m_numAntsInside, &m_unitId, m_pos );        
+            unit = g_app->m_location->m_teams[m_id.GetTeamId()].NewUnit( Entity::TypeArmyAnt, m_numAntsInside, &m_unitId, m_pos );
         }
 
         int chosenIndex = syncrand() % m_objectives.Size();
@@ -339,7 +339,7 @@ bool AntHill::Advance()
         ant->m_buildingId = m_id.GetUniqueId();
         ant->m_front = ( ant->m_pos - m_pos ).Normalise();
         ant->m_orders = ArmyAnt::ScoutArea;
-        ant->m_wayPoint = objective->m_pos;   
+        ant->m_wayPoint = objective->m_pos;
         ant->m_targetId = objective->m_targetId;
 	    float radius = syncfrand(30.0f);
 	    float theta = syncfrand(M_PI * 2);
@@ -347,7 +347,7 @@ bool AntHill::Advance()
 	    ant->m_wayPoint.z += radius * cosf(theta);
         ant->m_wayPoint = ant->PushFromObstructions( ant->m_wayPoint );
         ant->m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( ant->m_wayPoint.x, ant->m_wayPoint.z );
-        
+
         m_numAntsInside--;
 
         objective->m_numToSend--;
@@ -371,7 +371,7 @@ bool AntHill::Advance()
 
         m_eggConvertTimer = GetHighResTime() + 5.0f;
     }
-    
+
 
     //
     // Flicker if we are damaged
@@ -380,7 +380,7 @@ bool AntHill::Advance()
     float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
     m_renderDamaged = ( frand(0.75f) * (1.0f - fabs(sinf(timeIndex))*1.2f) > healthFraction );
 
-    
+
     return ( m_health <= 0 );
 }
 
@@ -397,12 +397,12 @@ void AntHill::Render( float _predictionTime )
         float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
         float thefrand = frand();
         if      ( thefrand > 0.7f ) mat.f *= ( 1.0f - sinf(timeIndex) * 0.7f );
-        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.5f );    
+        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.5f );
         else                        mat.r *= ( 1.0f - sinf(timeIndex) * 0.7f );
         glEnable( GL_BLEND );
         glBlendFunc( GL_ONE, GL_ONE );
     }
-    
+
     m_shape->Render(_predictionTime, mat);
 
     glDisable( GL_BLEND );
@@ -447,6 +447,6 @@ void AntHill::Read( TextReader *_in, bool _dynamic )
 void AntHill::Write ( FileWriter *_out )
 {
     Building::Write( _out );
-    
+
     _out->printf( "%d", m_numAntsInside );
 }

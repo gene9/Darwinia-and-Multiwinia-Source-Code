@@ -15,8 +15,8 @@
 
 AVIGenerator::AVIGenerator()
 :	m_frameRate(60),
-	m_AVIFile(NULL), 
-	m_stream(NULL), 
+	m_AVIFile(NULL),
+	m_stream(NULL),
 	m_streamCompressed(NULL),
 	m_pixels(NULL),
 	m_accumBuffer(NULL)
@@ -25,7 +25,7 @@ AVIGenerator::AVIGenerator()
 
 	m_frameRate = g_prefsManager->GetInt("DemoFrameRate", 25);
 	m_frameRate /= m_motionBlurFactor;
-	
+
 	m_bih.biSize = sizeof(BITMAPINFOHEADER);
 	m_bih.biWidth = g_app->m_renderer->ScreenW();
 	m_bih.biHeight = g_app->m_renderer->ScreenH();
@@ -37,12 +37,12 @@ AVIGenerator::AVIGenerator()
 	m_bih.biYPelsPerMeter = 1000;
 	m_bih.biClrUsed = 0;
 	m_bih.biClrImportant = 0;
-    m_outputFilename = "Untitled.avi"; 
+    m_outputFilename = "Untitled.avi";
 }
 
 
 AVIGenerator::~AVIGenerator()
-{   
+{
 	if ( g_prefsManager->GetInt( "RecordDemo" ) == 2 )
     {
 	    ReleaseEngine();
@@ -62,7 +62,7 @@ void AVIGenerator::Setup()
 	AVICOMPRESSOPTIONS FAR * aopts[1] = {&m_opts};
 
 	memset(&m_opts, 0, sizeof(m_opts));
-	
+
     if (!AVISaveOptions(NULL, 0, 1, &m_stream, (LPAVICOMPRESSOPTIONS FAR *) &aopts))
 	{
 		AVISaveOptionsFree(1,(LPAVICOMPRESSOPTIONS FAR *) &aopts);
@@ -74,17 +74,17 @@ void AVIGenerator::Setup()
 
 int AVIGenerator::InitEngine()
 {
-	AVISTREAMINFO strHdr; // information for a single stream 
+	AVISTREAMINFO strHdr; // information for a single stream
 
 	int hr;
 
 	m_error = "OK";
 
-	// Step 0 : Let's make sure we are running on 1.1 
+	// Step 0 : Let's make sure we are running on 1.1
 	DWORD wVer = HIWORD(VideoForWindowsVersion());
 	if (wVer < 0x010a)
 	{
-		 // oops, we are too old, blow out of here 
+		 // oops, we are too old, blow out of here
 		m_error="Version of Video for Windows too old. Come on, join the 21th century!";
 		return S_FALSE;
 	}
@@ -95,26 +95,26 @@ int AVIGenerator::InitEngine()
 	// Step 2 : Open the movie file for writing....
 	hr = AVIFileOpen(&m_AVIFile,			// Address to contain the new file interface pointer
 					 m_outputFilename,		// Name your file .avi -> very important
-					 OF_WRITE | OF_CREATE,	// Access mode to use when opening the file. 
+					 OF_WRITE | OF_CREATE,	// Access mode to use when opening the file.
 					 NULL);					// use handler determined from file extension.
 
 	if (hr != AVIERR_OK)
 	{
 		switch(hr)
 		{
-		case AVIERR_BADFORMAT: 
+		case AVIERR_BADFORMAT:
 			m_error = "The file couldn't be read, indicating a corrupt file or an unrecognized format.";
 			break;
-		case AVIERR_MEMORY:		
-			m_error = "The file could not be opened because of insufficient memory."; 
+		case AVIERR_MEMORY:
+			m_error = "The file could not be opened because of insufficient memory.";
 			break;
 		case AVIERR_FILEREAD:
-			m_error = "A disk error occurred while reading the file."; 
+			m_error = "A disk error occurred while reading the file.";
 			break;
-		case AVIERR_FILEOPEN:		
+		case AVIERR_FILEOPEN:
 			m_error = "A disk error occurred while opening the file.";
 			break;
-		case REGDB_E_CLASSNOTREG:		
+		case REGDB_E_CLASSNOTREG:
 			m_error = "According to the registry, the type of file specified in AVIFileOpen does not have a handler to process it";
 			break;
 		}
@@ -164,7 +164,7 @@ int AVIGenerator::InitEngine()
 	if (hr != AVIERR_OK)
 	{
 		m_error = "AVI Compressed Stream creation failed.";
-		
+
 		switch(hr)
 		{
 		case AVIERR_NOCOMPRESSOR:
@@ -172,7 +172,7 @@ int AVIGenerator::InitEngine()
 			break;
 		case AVIERR_MEMORY:
 			m_error = "There is not enough memory to complete the operation.";
-			break; 
+			break;
 		case AVIERR_UNSUPPORTED:
 			m_error = "Compression is not supported for this type of data. "
 					  "This error might be returned if you try to compress data that is not audio or video.";
@@ -191,7 +191,7 @@ int AVIGenerator::InitEngine()
 //	}
 
 	// Step 6 : sets the format of a stream at the specified position
-	hr = AVIStreamSetFormat(m_streamCompressed, 
+	hr = AVIStreamSetFormat(m_streamCompressed,
 					0,			// position
 					&m_bih,	    // stream format
 					m_bih.biSize +   // format size
@@ -210,7 +210,7 @@ int AVIGenerator::InitEngine()
     // Make room for our image buffer
     m_pixels = new unsigned char[ m_bih.biWidth * m_bih.biHeight * (m_bih.biBitCount / sizeof(unsigned char)) ];
     m_accumBuffer = new unsigned char[ m_bih.biWidth * m_bih.biHeight * (m_bih.biBitCount / sizeof(unsigned char)) ];
-    
+
 	return hr;
 }
 
@@ -249,7 +249,7 @@ void AVIGenerator::AddFrame()
     DarwiniaDebugAssert( m_pixels );
     DarwiniaDebugAssert( m_accumBuffer );
 
-    glReadPixels(0, 0, m_bih.biWidth, m_bih.biHeight, GL_RGB, GL_UNSIGNED_BYTE, m_pixels );            
+    glReadPixels(0, 0, m_bih.biWidth, m_bih.biHeight, GL_RGB, GL_UNSIGNED_BYTE, m_pixels );
 
     unsigned char *inPixel = m_pixels;
     unsigned char *outPixel = m_accumBuffer;
@@ -260,7 +260,7 @@ void AVIGenerator::AddFrame()
 		for( int y = 0; y < m_bih.biHeight; ++y )
 		{
 			for( int x = 0; x < m_bih.biWidth; ++x )
-			{        
+			{
 				outPixel[0] = inPixel[2] * multiplier;
 				outPixel[1] = inPixel[1] * multiplier;
 				outPixel[2] = inPixel[0] * multiplier;
@@ -275,7 +275,7 @@ void AVIGenerator::AddFrame()
 		for( int y = 0; y < m_bih.biHeight; ++y )
 		{
 			for( int x = 0; x < m_bih.biWidth; ++x )
-			{        
+			{
 				outPixel[0] += inPixel[2] * multiplier;
 				outPixel[1] += inPixel[1] * multiplier;
 				outPixel[2] += inPixel[0] * multiplier;
@@ -290,7 +290,7 @@ void AVIGenerator::AddFrame()
 	{
 		AddFrame(m_accumBuffer);
 	}
-	
+
 	m_inFrameCount++;
 }
 

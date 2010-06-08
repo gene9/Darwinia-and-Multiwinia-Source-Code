@@ -48,7 +48,7 @@ Particle::Particle()
 
 
 // *** Initialise
-void Particle::Initialise(Vector3 const &_pos, Vector3 const &_vel, 
+void Particle::Initialise(Vector3 const &_pos, Vector3 const &_vel,
                           int _typeId, float _size)
 {
 	DarwiniaDebugAssert(_typeId < Particle::TypeNumTypes);
@@ -60,7 +60,7 @@ void Particle::Initialise(Vector3 const &_pos, Vector3 const &_vel,
 	ParticleType const &type = m_types[_typeId];
 	float amount = frand();
 	m_colour = type.m_colour1 * amount + type.m_colour2 * (1.0f - amount);
-    
+
     if( _size == -1 )
     {
         m_size = type.m_size;
@@ -77,7 +77,7 @@ void Particle::Initialise(Vector3 const &_pos, Vector3 const &_vel,
 // *** Advance
 // Returns true if this particle should be removed from the particle list
 bool Particle::Advance()
-{   
+{
 	ParticleType const &type = m_types[m_typeId];
 	double timeToDie = m_birthTime + m_types[m_typeId].m_life;
 	if (g_gameTime > timeToDie)
@@ -86,7 +86,7 @@ bool Particle::Advance()
 	}
 
 	m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-	
+
 	float amount = SERVER_ADVANCE_PERIOD * type.m_friction;
 	m_vel *= (1.0f - amount);
 
@@ -114,16 +114,16 @@ bool Particle::Advance()
 			Vector3 vel = m_vel / 5.0f;
             g_app->m_particleSystem->CreateParticle( pos, vel, Particle::TypeRocketTrail, m_size/2.0f );
             particleCreated = true;
-        }       
+        }
     }
 
 
     //
     // Particles that bounce
-    
+
     if( !particleCreated )
     {
-        if( m_typeId == TypeSpark || 
+        if( m_typeId == TypeSpark ||
             m_typeId == TypeBrass ||
             m_typeId == TypeBlueSpark ||
 			m_typeId == TypeLeaf )
@@ -135,14 +135,14 @@ bool Particle::Advance()
 	            Vector3 impactPos = (m_pos + lastPos) * 0.5f;
 	            m_pos = impactPos;
 	            m_pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z);
-                
+
                 Vector3 normal = g_app->m_location->m_landscape.m_normalMap->GetValue(m_pos.x, m_pos.z);
                 float dotProd = normal * m_vel;
                 m_vel -= normal * 2.0f * dotProd * 0.7f;
-            }        
+            }
         }
     }
-    
+
     return false;
 }
 
@@ -159,12 +159,12 @@ void Particle::Render(float _predictionTime)
         alpha = 90;
     }
     else
-    {                
+    {
         float fractionFade = (g_gameTime - startFade) / (deathTime - startFade);
         alpha = 90 - 90 * fractionFade;
         if( alpha < 0 ) alpha = 0;
     }
-                  
+
     Vector3 predictedPos = m_pos + _predictionTime * m_vel;
     float size = m_size/16.0f;
 	Vector3 up(g_app->m_camera->GetUp() * size);
@@ -174,12 +174,12 @@ void Particle::Render(float _predictionTime)
     {
         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
         float fraction = (float) alpha / 100.0f;
-        glColor4ub(m_colour.r*fraction, m_colour.g*fraction, m_colour.b*fraction, 0.0f );            
+        glColor4ub(m_colour.r*fraction, m_colour.g*fraction, m_colour.b*fraction, 0.0f );
     }
     else
     {
         glBlendFunc ( GL_SRC_ALPHA, GL_ONE );
-        glColor4ub(m_colour.r, m_colour.g, m_colour.b, alpha );            
+        glColor4ub(m_colour.r, m_colour.g, m_colour.b, alpha );
     }
 
     glBegin( GL_QUADS );
@@ -188,10 +188,10 @@ void Particle::Render(float _predictionTime)
 
 		glTexCoord2i(0, 1);
         glVertex3fv( (predictedPos + right).GetData() );
-        
+
 		glTexCoord2i(1, 1);
 		glVertex3fv( (predictedPos + up).GetData() );
-        
+
 		glTexCoord2i(1, 0);
 		glVertex3fv( (predictedPos - right).GetData() );
     glEnd();
@@ -211,17 +211,17 @@ void Particle::SetupParticles()
 	m_types[TypeExplosionCore].m_life = 2.0f;
 	m_types[TypeExplosionCore].m_size = 150.0f;
 	m_types[TypeExplosionCore].m_gravity = 10.0f;
-	m_types[TypeExplosionCore].m_friction = 0.2f;    
+	m_types[TypeExplosionCore].m_friction = 0.2f;
     m_types[TypeExplosionCore].m_colour1.Set( 200, 100, 100 );
     m_types[TypeExplosionCore].m_colour2.Set( 255, 120, 120 );
-	
+
     m_types[TypeExplosionDebris].m_life = 6.0f;
 	m_types[TypeExplosionDebris].m_size = 40.0f;
 	m_types[TypeExplosionDebris].m_gravity = 20.0f;
 	m_types[TypeExplosionDebris].m_friction = 0.2f;
     m_types[TypeExplosionDebris].m_colour1.Set( 200, 128, 128 );
     m_types[TypeExplosionDebris].m_colour2.Set( 250, 200, 200 );
-    
+
     m_types[TypeMuzzleFlash].m_life = 1.0f;
 	m_types[TypeMuzzleFlash].m_size = 10.0f;
 	m_types[TypeMuzzleFlash].m_gravity = 0.0f;
@@ -311,7 +311,7 @@ ParticleSystem::ParticleSystem()
 
 
 // *** CreateParticle
-void ParticleSystem::CreateParticle(Vector3 const &_pos, Vector3 const &_vel, 
+void ParticleSystem::CreateParticle(Vector3 const &_pos, Vector3 const &_vel,
                                     int _typeId, float _size, RGBAColour col)
 {
 	Particle *aParticle = m_particles.GetPointer();
@@ -325,7 +325,7 @@ void ParticleSystem::CreateParticle(Vector3 const &_pos, Vector3 const &_vel,
 
 // *** Advance
 void ParticleSystem::Advance(int _slice)
-{   
+{
     START_PROFILE(g_app->m_profiler, "Advance Particles");
 
     int lower, upper;
@@ -359,7 +359,7 @@ void ParticleSystem::Render()
 	glBindTexture(GL_TEXTURE_2D, g_app->m_resource->GetTexture("textures/particle.bmp"));
 	glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     glDepthMask ( false );
-    
+
 
 	// Render all the particles that are up-to-date with server advances
     int lastUpdated = m_particles.GetLastUpdated();

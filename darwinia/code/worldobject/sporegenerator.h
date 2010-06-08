@@ -9,24 +9,24 @@
 
 class SporeGenerator : public Entity
 {
-public:    
+public:
     float       m_retargetTimer;
     float       m_eggTimer;
     Vector3     m_targetPos;
     int         m_spiritId;
-    
-protected:    
+
+protected:
     bool    SearchForRandomPos      ();
     bool    SearchForSpirits        ();
 
-    bool    AdvanceToTargetPosition ();                
+    bool    AdvanceToTargetPosition ();
     bool    AdvanceIdle             ();
     bool    AdvanceEggLaying        ();
     bool    AdvancePanic            ();
-    
+
     void    RenderTail( Vector3 const &_from, Vector3 const &_to, float _size );
 
-protected:    
+protected:
     ShapeMarker     *m_eggMarker;
     ShapeMarker     *m_tail[SPOREGENERATOR_NUMTAILS];
 

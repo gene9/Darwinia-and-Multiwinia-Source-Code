@@ -22,17 +22,17 @@ public:
 
 class RayTraceLoader : public Loader
 {
-protected:   
+protected:
     void        SetupMatrices       ( Vector3 &_left, Vector3 &_up, Vector3 &_horizDiff, Vector3 &_vertDiff );
 
     void        CastAllRays         ();
-    int         CastRay             ( int _x, int _y, 
-                                      Vector3 const &_startRay, Vector3 const &_rayDir, 
+    int         CastRay             ( int _x, int _y,
+                                      Vector3 const &_startRay, Vector3 const &_rayDir,
                                       int _numStepsRemaining, float _intensity );
-    
+
     void        RenderRays          ();
     void        RenderBackground    ();
-    void        RenderMessage       ();    
+    void        RenderMessage       ();
     void        RenderHelp          ();
 
     int         GetFloorColour      ( Vector3 const &pos );             // Returns 0 or 1
@@ -45,8 +45,8 @@ protected:
     RayTraceObject  m_objects[RAYTRACELOADER_MAXOBJECTS];
     Vector3         m_light;
     Vector3         m_floor;
-    int             m_numObjects;   
-    
+    int             m_numObjects;
+
     int             m_resolution;
     float           m_reflectiveness;
     float           m_pixelWave;
@@ -58,10 +58,10 @@ protected:
     Vector3         m_cameraFront;
     Vector3         m_cameraUp;
     int             m_cameraMode;               // 0 = fixed.  1 = controllable.  2 = rotating
-    
+
     float           m_startTime;
     float           m_time;
-    
+
 public:
     RayTraceLoader();
 

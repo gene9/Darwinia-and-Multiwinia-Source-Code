@@ -19,7 +19,7 @@ DisplayList::DisplayList( std::vector<Command *> const &_commands, std::vector<C
 	if (_vertices.size() > 0) {
 		// Set up the vertex buffer
 		unsigned vbSize = _vertices.size() * sizeof(CustomVertex);
-		
+
 		HRESULT hr = g_pd3dDeviceActual->CreateVertexBuffer(
 			vbSize, D3DUSAGE_WRITEONLY|(g_supportsHwVertexProcessing?0:D3DUSAGE_SOFTWAREPROCESSING), 0, D3DPOOL_MANAGED, &m_pVertexBuffer, NULL );
 
@@ -29,7 +29,7 @@ DisplayList::DisplayList( std::vector<Command *> const &_commands, std::vector<C
 		DarwiniaDebugAssert( hr == D3D_OK );
 
 		void *vbData = NULL;
-		
+
 		hr = m_pVertexBuffer->Lock(0, 0, &vbData, 0/*D3DLOCK_DISCARD*/ );
 		DarwiniaDebugAssert( hr == D3D_OK );
 
@@ -41,7 +41,7 @@ DisplayList::DisplayList( std::vector<Command *> const &_commands, std::vector<C
 DisplayList::~DisplayList()
 {
 	if (m_pVertexBuffer)
-		m_pVertexBuffer->Release();	
+		m_pVertexBuffer->Release();
 
 	for (Command **c = m_commands; *c; c++)
 		delete *c;
@@ -60,14 +60,14 @@ void DisplayList::Draw()
 // --- CommandSetPrimitive ---
 
 CommandDrawPrimitive::CommandDrawPrimitive(D3DPRIMITIVETYPE _primitiveType, unsigned _startVertex, unsigned _primitiveCount)
-:	m_primitiveType( _primitiveType ), 
+:	m_primitiveType( _primitiveType ),
 	m_startVertex( _startVertex),
 	m_primitiveCount( _primitiveCount )
 {
 }
 
 void CommandDrawPrimitive::Execute()
-{	
+{
 	g_pd3dDevice->DrawPrimitive( m_primitiveType, m_startVertex, m_primitiveCount );
 }
 

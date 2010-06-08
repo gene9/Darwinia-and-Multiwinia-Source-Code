@@ -20,7 +20,7 @@ protected:
     float           m_size;
     WorldObjectId   m_next;                         // Guy infront of me
     WorldObjectId   m_prev;                         // Guy behind me
-    
+
     Vector3         m_targetPos;
     WorldObjectId   m_targetEntity;
 
@@ -29,21 +29,21 @@ protected:
     float           m_panic;
     int             m_numSpiritsEaten;
     float           m_lastAdvance;
-    
+
     static Shape    *s_shapeBody;
     static Shape    *s_shapeHead;
 
-protected:    
+protected:
     bool        SearchForRandomPosition();
     bool        SearchForTargetEnemy();
     bool        SearchForSpirits();
     bool        SearchForRetreatPosition();
 
-    bool        AdvanceToTargetPosition();        
-    void        RecordHistoryPosition();          
+    bool        AdvanceToTargetPosition();
+    void        RecordHistoryPosition();
     bool        GetTrailPosition( Vector3 &_pos, Vector3 &_vel, int _numSteps );
-           
-    void        Panic( float _time );      
+
+    void        Panic( float _time );
     void        EatSpirits();
 
 public:

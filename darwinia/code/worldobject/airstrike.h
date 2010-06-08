@@ -8,7 +8,7 @@ class AirstrikeUnit : public Unit
 {
 public:
     Vector3     m_enterPosition;
-    Vector3     m_attackPosition;                   
+    Vector3     m_attackPosition;
     Vector3     m_exitPosition;
 
     Vector3     m_front;                            // Current direction
@@ -17,7 +17,7 @@ public:
 
     int         m_effectId;
     int         m_numInvaders;
-    
+
     enum
     {
         StateApproaching,
@@ -29,7 +29,7 @@ public:
 
 public:
     AirstrikeUnit(int teamId, int unitId, int numEntities, Vector3 const &_pos);
-    
+
     void Begin      ();
     bool Advance    ( int _slice );
     void Render     ( float _predictionTime );

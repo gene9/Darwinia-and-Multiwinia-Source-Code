@@ -46,7 +46,7 @@ static ControlName s_controls[] = {
 	ControlSkipMessage,             true,  "control_event_skipmessage",
 
 	ControlGesturesChatLog,         true,  "control_event_chatlog",
-	
+
 	ControlIconsChatLog,            true,  "control_event_iconschatlog",
 	ControlIconsTaskManagerDisplay, true,  "control_event_iconstaskmanagerdisplay",
 	ControlIconsTaskManagerEndTask, true,  "control_event_iconstaskmanagerendtask",
@@ -106,10 +106,10 @@ class ApplyKeybindingsButton : public DarwiniaButton
 				}
 			}
 		}
-        
+
 		g_prefsManager->SetInt( CONTROL_MOUSEBUTTONS, parent->m_numMouseButtons );
         g_prefsManager->SetInt( CONTROL_METHOD, parent->m_controlMethod );
-        
+
         delete g_app->m_taskManagerInterface;
         if( g_prefsManager->GetInt( "ControlMethod" ) == 0 )
         {
@@ -119,7 +119,7 @@ class ApplyKeybindingsButton : public DarwiniaButton
         {
             g_app->m_taskManagerInterface = new TaskManagerInterfaceIcons();
         }
-        
+
 
 		/*W32EventHandler *w = getW32EventHandler();
 		if ( w ) {
@@ -188,7 +188,7 @@ public:
 class ControlMethodDropDownMenu : public DropDownMenu
 {
     void SelectOption( int _option )
-    {        
+    {
         PrefsKeybindingsWindow *parent = (PrefsKeybindingsWindow *) m_parent;
         if( parent && _option != parent->m_controlMethod )
         {
@@ -196,7 +196,7 @@ class ControlMethodDropDownMenu : public DropDownMenu
             // This button now deleted
             parent->m_controlMethod = _option;
             parent->Create();
-            
+
             DropDownMenu *newMenu = (DropDownMenu *) parent->GetButton( LANGUAGEPHRASE("newcontrols_prefsoption") );
             if( newMenu ) newMenu->SelectOption( _option );
         }
@@ -220,7 +220,7 @@ PrefsKeybindingsWindow::PrefsKeybindingsWindow()
 	}
 
 	SetMenuSize( 460, 125 + 25*i );
-    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 
     m_numMouseButtons = g_prefsManager->GetInt( CONTROL_MOUSEBUTTONS, 3 );
@@ -238,7 +238,7 @@ void PrefsKeybindingsWindow::Create()
 	int x = m_w * 2 / 3;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w - border * 2 - x;
-	int h = buttonH + border;	
+	int h = buttonH + border;
 
 	if ( 0 == m_controlMethod )
 		s_indices = s_gesture_controls;
@@ -253,15 +253,15 @@ void PrefsKeybindingsWindow::Create()
 	controlMethod->m_fontSize = GetMenuSize(11);
     RegisterButton( controlMethod );
 	m_buttonOrder.PutData( controlMethod );
-    
+
     InvertedBox *box = new InvertedBox();
 	unsigned num_controls = 0;
 	while ( s_indices[num_controls] >= 0 ) { num_controls++; }
-    box->SetShortProperties( "invert", 10, y+h, m_w - 20, (num_controls * h) + border);        
+    box->SetShortProperties( "invert", 10, y+h, m_w - 20, (num_controls * h) + border);
     RegisterButton( box );
 
     y += border;
-    
+
     for (unsigned j = 0; j < num_controls; ++j)
 	{
 		int i = s_indices[ j ];
@@ -300,7 +300,7 @@ void PrefsKeybindingsWindow::Create()
     CloseButton *cancel = new CloseButton();
     cancel->SetShortProperties( LANGUAGEPHRASE("dialog_close"), border, y, buttonW2, buttonH );
     cancel->m_fontSize = fontSize;
-    cancel->m_centered = true;    
+    cancel->m_centered = true;
     RegisterButton( cancel );
 	m_buttonOrder.PutData( cancel );
 
@@ -329,7 +329,7 @@ void PrefsKeybindingsWindow::Remove()
 void PrefsKeybindingsWindow::Render( bool _hasFocus )
 {
     DarwiniaWindow::Render( _hasFocus );
-        
+
     int x = m_x + 32;
 	int border = GetClientRectX1() + GetMenuSize(5);
 	int y = m_y + GetClientRectY1();
@@ -338,7 +338,7 @@ void PrefsKeybindingsWindow::Render( bool _hasFocus )
     int size = GetMenuSize(13);
 
     g_editorFont.DrawText2D(x, y+=3*border, size, LANGUAGEPHRASE("newcontrols_prefsoption" ) );
-    
+
 	for (unsigned j = 0; s_indices[ j ] >= 0; ++j)
 	{
 		int i = s_indices[ j ];

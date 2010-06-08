@@ -22,7 +22,7 @@ public:
     void MouseUp()
     {
         g_app->m_resource->LoadMod( m_modName );
-        
+
         g_app->SetProfileName( m_modName );
         g_app->LoadProfile();
         EclRemoveWindow( m_parent->m_name );
@@ -60,7 +60,7 @@ void ModsWindow::Render( bool hasFocus )
     DarwiniaWindow::Render( hasFocus );
 
     g_editorFont.DrawText2DCentre( m_x+m_w/2, m_y+GetMenuSize(30), GetMenuSize(12), LANGUAGEPHRASE("dialog_currentmod"));
-	g_editorFont.DrawText2DCentre( m_x+m_w/2, m_y+GetMenuSize(45), GetMenuSize(16), "%s", 
+	g_editorFont.DrawText2DCentre( m_x+m_w/2, m_y+GetMenuSize(45), GetMenuSize(16), "%s",
 		g_app->m_resource->IsModLoaded() ? g_app->m_resource->GetModName() : "none" );
 }
 
@@ -81,16 +81,16 @@ void ModsWindow::Create()
 #endif
     int numMods = modList->Size();
 
-    int windowH = 210 + numMods * 30;    
+    int windowH = 210 + numMods * 30;
     SetMenuSize( 300, windowH );
-	SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+	SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 
     DarwiniaWindow::Create();
 
     int y = GetMenuSize(50);
     int h = GetMenuSize(30);
-    
+
     int invertY = y+GetMenuSize(20);
 
 	int fontSize = GetMenuSize(13);
@@ -105,7 +105,7 @@ void ModsWindow::Create()
         RegisterButton( box );
     }
 
-    
+
     for( int i = 0; i < modList->Size(); ++i )
     {
         char *thisMod = modList->GetData(i);
@@ -119,7 +119,7 @@ void ModsWindow::Create()
         RegisterButton( button );
 		m_buttonOrder.PutData( button );
     }
-    
+
     LoadModButton *loadNone = new LoadModButton();
     loadNone->SetShortProperties( LANGUAGEPHRASE("dialog_unloadmod"), 10, m_h-GetMenuSize(105), m_w-20, GetMenuSize(20) );
     loadNone->m_modName = strdup( "none" );
@@ -172,12 +172,12 @@ class NewModButton : public DarwiniaButton
             delete g_app->m_globalWorld;
             g_app->m_globalWorld = NULL;
         }
-    
+
         g_app->m_globalWorld = new GlobalWorld();
         for( int i = 0; i < GlobalResearch::NumResearchItems; ++i )
         {
             g_app->m_globalWorld->m_research->m_researchLevel[i] = 2;
-        }        
+        }
         g_app->m_globalWorld->SaveGame( "game.txt" );
 
         EclRemoveWindow( m_parent->m_name );
@@ -197,11 +197,11 @@ NewModWindow::NewModWindow()
 
 }
 
- 
+
 void NewModWindow::Create()
 {
     SetMenuSize( 300, 110 );
-	SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+	SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 
     DarwiniaWindow::Create();
@@ -209,7 +209,7 @@ void NewModWindow::Create()
     InvertedBox *box = new InvertedBox();
     box->SetShortProperties( "box", 10, GetMenuSize(30), m_w-20, GetMenuSize(40) );
     RegisterButton( box );
-    
+
     CreateValueControl( LANGUAGEPHRASE("dialog_name"), InputField::TypeString, s_modName, GetMenuSize(40), 0, 0, 0, NULL, 20, m_w-40 );
 
 	int y = m_h - 30;
@@ -218,7 +218,7 @@ void NewModWindow::Create()
     close->SetShortProperties( LANGUAGEPHRASE("dialog_cancel"), 10, y, m_w/2-15, GetMenuSize(20) );
 	close->m_fontSize = GetMenuSize(11);
     RegisterButton( close );
-    
+
     NewModButton *newProfile = new NewModButton();
     newProfile->SetShortProperties( LANGUAGEPHRASE("dialog_create"), close->m_x+close->m_w+10, y, m_w/2-15, GetMenuSize(20) );
 	newProfile->m_fontSize = GetMenuSize(11);

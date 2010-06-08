@@ -11,7 +11,7 @@ public:
     UserProfileWindow();
 
     void Render ( bool hasFocus );
-    void Create();    
+    void Create();
 };
 
 

@@ -32,7 +32,7 @@ public:
 	int		m_startJ;
 	int		m_nextLine;		// Used by renderer
 
-public:    
+public:
 	SpeccyLoader();
     ~SpeccyLoader();
 

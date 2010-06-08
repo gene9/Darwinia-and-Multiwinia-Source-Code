@@ -28,7 +28,7 @@ public:
 	int 	m_renderingPoster;
 
     float   m_renderDarwinLogo;
-    
+
 private:
     float   m_nearPlane;
     float   m_farPlane;
@@ -45,7 +45,7 @@ private:
 	unsigned int m_pixelEffectTexId;
 	float	m_pixelEffectGrid[PIXEL_EFFECT_GRID_RES][PIXEL_EFFECT_GRID_RES];	// -1.0 means cell not used
     int     m_pixelSize;
-	
+
 private:
 	int		GetGLStateInt	(int pname) const;
 	float	GetGLStateFloat	(int pname) const;
@@ -61,13 +61,13 @@ private:
 	void	RenderFadeOut	();
 	void	RenderFrame		(bool withFlip = true);
     void	RenderPaused	();
-	
+
 public:
 	Renderer				();
 
     void    Initialise      ();
 	void	Restart			();
-    
+
 	void	Render			();
     void	FPSMeterAdvance	();
 

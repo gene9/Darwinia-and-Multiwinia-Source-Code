@@ -19,14 +19,14 @@ protected:
         ScreenResearch
     };
     int     m_screenId;
-    
+
     float   m_screenY;
     float   m_desiredScreenY;
     float   m_screenW;
     float   m_screenH;
 
     float   m_chatLogY;
-	
+
     LList   <ScreenZone *>          m_screenZones;               // All clickable areas on-screen
     LList   <ScreenZone *>          m_newScreenZones;            // New zones generated this frame
 	LList   <KeyboardShortcut *>    m_keyboardShortcuts;         // Keyboard shortcuts to screenzones
@@ -44,13 +44,13 @@ public:
 protected:
     void    AdvanceScrolling            ();
     void    AdvanceScreenEdges          ();
-    void    AdvanceScreenZones          ();    
+    void    AdvanceScreenZones          ();
     void    AdvanceKeyboardShortcuts    ();
     void    AdvanceTerminate            ();
     void    AdvanceQuickUnit            ();
-    
+
     void    HideTaskManager             ();
-    
+
     bool    ScreenZoneHighlighted   ( ScreenZone *_zone );
     void    RunScreenZone           ( const char *_name, int _data );          // Occurs during click or keypress
 
@@ -66,13 +66,13 @@ protected:
     void    RenderTaskManager   ();
     void    RenderObjectives    ();
     void    RenderResearch      ();
-    void    RenderTitleBar      ();    
+    void    RenderTitleBar      ();
     void    RenderScreenZones   ();
     void    RenderTooltip       ();
     void    RenderCreateTaskMenu();
     void    RenderQuickUnit     ();
-    
-    void    RenderCompass       ( float _screenX, float _screenY, 
+
+    void    RenderCompass       ( float _screenX, float _screenY,
                                   Vector3 const &_worldPos, bool selected, float _size );
 
     int     GetQuickUnitTask    ( int _position = 2);
@@ -81,11 +81,11 @@ protected:
 
 	bool	ButtonHeld();
 	bool	ButtonHeldAndReleased();
-        
+
 public:
     TaskManagerInterfaceIcons();
 
-    virtual void Advance();        
+    virtual void Advance();
     virtual void Render();
 
 	bool ControlEvent( TMControl _type );

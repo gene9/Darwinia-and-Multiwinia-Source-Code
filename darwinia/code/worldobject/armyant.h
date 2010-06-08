@@ -10,31 +10,31 @@
 class ArmyAnt : public Entity
 {
 protected:
-    float       m_scale;    
+    float       m_scale;
     Shape       *m_shapes[3];
     ShapeMarker *m_carryMarker;
-           
-    bool    AdvanceScoutArea();       
+
+    bool    AdvanceScoutArea();
     bool    AdvanceCollectSpirit();
-    bool    AdvanceCollectEntity();           
+    bool    AdvanceCollectEntity();
     bool    AdvanceAttackEnemy();
     bool    AdvanceReturnToBase();
     bool    AdvanceToTargetPosition();
     bool    AdvanceBaseDestroyed();
-    
+
     bool    SearchForTargets();
     bool    SearchForSpirits();
     bool    SearchForEnemies();
     bool    SearchForAntHill();
     bool    SearchForRandomPosition();
-    
+
 public:
     Vector3     m_wayPoint;
     int         m_orders;
     bool        m_targetFound;
     int         m_spiritId;
     WorldObjectId    m_targetId;
-    
+
     enum
     {
         NoOrders,
@@ -45,7 +45,7 @@ public:
         ReturnToBase,
         BaseDestroyed
     };
-    
+
 public:
     ArmyAnt();
 
@@ -53,7 +53,7 @@ public:
     bool Advance        ( Unit *_unit );
     void ChangeHealth   ( int _amount );
     void Render         ( float _predictionTime );
-   
+
     void OrderReturnToBase();
 
     void GetCarryMarker( Vector3 &_pos, Vector3 &_vel );

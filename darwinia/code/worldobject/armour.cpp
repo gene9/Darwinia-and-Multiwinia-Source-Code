@@ -39,7 +39,7 @@ Armour::Armour()
 {
     SetType( TypeArmour );
 
-    m_shape             = g_app->m_resource->GetShape( "armour.shp" );    
+    m_shape             = g_app->m_resource->GetShape( "armour.shp" );
     m_markerEntrance    = m_shape->m_rootFragment->LookupMarker( "MarkerEntrance" );
     m_markerFlag        = m_shape->m_rootFragment->LookupMarker( "MarkerFlag" );
 
@@ -80,7 +80,7 @@ void Armour::Begin()
 void Armour::ChangeHealth( int _amount )
 {
     bool dead = m_dead;
-    
+
     if( _amount < 0 && _amount > -1000 ) _amount = -1;
 
     if( !m_dead )
@@ -104,7 +104,7 @@ void Armour::ChangeHealth( int _amount )
         {
             float fractionDead = 1.0f - (float) newHealth / (float) EntityBlueprint::GetStat( TypeArmour, StatHealth );
             Matrix34 bodyMat( m_front, m_up, m_pos );
-            g_explosionManager.AddExplosion( m_shape, bodyMat, fractionDead ); 
+            g_explosionManager.AddExplosion( m_shape, bodyMat, fractionDead );
         }
 
         if( newHealth == 0 )
@@ -122,7 +122,7 @@ void Armour::ConvertToGunTurret()
     turretTemplate.m_pos = m_pos;
     turretTemplate.m_front = m_front;
     turretTemplate.m_dynamic = true;
-    
+
     GunTurret *turret = (GunTurret *) Building::CreateBuilding( Building::TypeGunTurret );
     g_app->m_location->m_buildings.PutData( turret );
     turret->Initialise((Building *)&turretTemplate);
@@ -134,7 +134,7 @@ void Armour::ConvertToGunTurret()
     //
     // Explode some polys, to cover the ropey change
     Matrix34 bodyMat( m_front, m_up, m_pos );
-    g_explosionManager.AddExplosion( m_shape, bodyMat ); 
+    g_explosionManager.AddExplosion( m_shape, bodyMat );
     turret->ExplodeBody();
 }
 
@@ -151,7 +151,7 @@ void Armour::AdvanceToTargetPos()
 	if ( (m_wayPoint - m_pos).Mag() > 10.0f )
     {
 	    Vector3 rotation = m_front ^ toTarget;
-        float rotateSpeed = angle*0.05f;            
+        float rotateSpeed = angle*0.05f;
 	    rotation.SetLength(rotateSpeed);
 	    m_front.RotateAround(rotation);
 		m_front.Normalise();
@@ -159,7 +159,7 @@ void Armour::AdvanceToTargetPos()
 
     //
     // Move towards waypoint
-    
+
     toTarget = m_wayPoint - m_pos;
     toTarget.y = 0.0f;
     float distance = toTarget.Mag();
@@ -184,7 +184,7 @@ void Armour::AdvanceToTargetPos()
 
     //
     // Hover above the ground
-    
+
     Vector3 oldPos = m_pos;
     m_pos += m_front * m_speed * SERVER_ADVANCE_PERIOD;
     PushFromObstructions( m_pos );
@@ -193,7 +193,7 @@ void Armour::AdvanceToTargetPos()
     {
         float factor = SERVER_ADVANCE_PERIOD * 5.0f;
         m_pos.y = m_pos.y * (1.0f-factor) + landHeight * factor;
-        
+
         factor = SERVER_ADVANCE_PERIOD * 5.0f;
         Vector3 landUp = g_app->m_location->m_landscape.m_normalMap->GetValue( m_pos.x, m_pos.z );
         m_up = m_up * (1.0f-factor) + landUp * factor;
@@ -213,7 +213,7 @@ void Armour::AdvanceToTargetPos()
 
         float factor = SERVER_ADVANCE_PERIOD * 0.5f;
         Vector3 landUp = g_app->m_location->m_landscape.m_normalMap->GetValue( m_pos.x, m_pos.z );
-        m_up = m_up * (1.0f-factor) + landUp * factor;   
+        m_up = m_up * (1.0f-factor) + landUp * factor;
     }
 
     m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
@@ -243,7 +243,7 @@ void Armour::DetectCollisions()
 		    Vector3 toNeighbour = m_pos - entity->m_pos;
 		    toNeighbour.y = 0.0f;
 		    toNeighbour.Normalise();
-		    escapeVector += toNeighbour;			
+		    escapeVector += toNeighbour;
             collisionDetected = true;
 		}
 	}
@@ -280,7 +280,7 @@ bool Armour::Advance( Unit *_unit )
         float size = 50.0f + (syncrand() % 50);
         g_app->m_particleSystem->CreateParticle( pos, vel, Particle::TypeMissileTrail, size );
     }
-    
+
     //
     // Are we supposed to be converting here?
 
@@ -300,7 +300,7 @@ bool Armour::Advance( Unit *_unit )
             return true;
         }
     }
-    
+
     return Entity::Advance( _unit );
 }
 
@@ -345,7 +345,7 @@ void Armour::SetDirectOrders()
 void Armour::SetWayPoint( Vector3 const &_wayPoint )
 {
     m_conversionPoint.Zero();
-    
+
     m_wayPoint = _wayPoint;
     m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
 }
@@ -354,7 +354,7 @@ void Armour::SetWayPoint( Vector3 const &_wayPoint )
 void Armour::SetConversionPoint ( Vector3 const &_conversionPoint )
 {
     m_conversionPoint.Zero();
-    
+
     Vector3 landNormal = g_app->m_location->m_landscape.m_normalMap->GetValue( _conversionPoint.x, _conversionPoint.z );
     if( landNormal.y > 0.95f )
     {
@@ -372,7 +372,7 @@ void Armour::SetConversionPoint ( Vector3 const &_conversionPoint )
 
 bool Armour::IsLoading()
 {
-    return( m_state == StateLoading && 
+    return( m_state == StateLoading &&
             m_numPassengers < Capacity() &&
             m_newOrdersTimer > 1.0f );
 }
@@ -380,7 +380,7 @@ bool Armour::IsLoading()
 
 bool Armour::IsUnloading()
 {
-    return( m_state == StateUnloading && 
+    return( m_state == StateUnloading &&
             m_numPassengers > 0 &&
             m_newOrdersTimer > 1.0f &&
             GetHighResTime() >= m_previousUnloadTimer + ARMOUR_UNLOADPERIOD );
@@ -493,8 +493,8 @@ Vector3 Armour::GetMissileTarget()
 void Armour::LaunchMissile()
 {
     Missile *missile = new Missile();
-    missile->m_pos = m_pos + Vector3(0,30,0);    
-    
+    missile->m_pos = m_pos + Vector3(0,30,0);
+
     Vector3 front = (m_front + m_up).Normalise();
     Vector3 right = front ^ g_upVector;
     Vector3 up = (right ^ front).Normalise();
@@ -510,7 +510,7 @@ void Armour::LaunchMissile()
 
 
 void Armour::Render( float _predictionTime )
-{       
+{
     if( m_dead ) return;
 
 //#ifdef DEBUG_RENDER_ENABLED
@@ -522,7 +522,7 @@ void Armour::Render( float _predictionTime )
 //    }
 //    glEnable( GL_DEPTH_TEST );
 //#endif
-    
+
 
     //
     // Work out our predicted position
@@ -534,13 +534,13 @@ void Armour::Render( float _predictionTime )
     Vector3 predictedUp = m_up;         //g_app->m_location->m_landscape.m_normalMap->GetValue( predictedPos.x, predictedPos.z );
     predictedUp.x += sinf( (g_gameTime + m_id.GetUniqueId() ) * 2 ) * 0.05f;
     predictedUp.z += cosf( g_gameTime + m_id.GetUniqueId() ) * 0.05f;
-    
+
     Vector3 predictedFront = m_front;
     Vector3 right = predictedUp ^ predictedFront;
     predictedUp.Normalise();
     predictedFront = right ^ predictedUp;
     predictedFront.Normalise();
-    
+
 
     //
     // Render the tank body
@@ -562,20 +562,20 @@ void Armour::Render( float _predictionTime )
         }
     }
 
-    g_app->m_renderer->SetObjectLighting();    
+    g_app->m_renderer->SetObjectLighting();
     m_shape->Render( _predictionTime, bodyMat );
     g_app->m_renderer->UnsetObjectLighting();
 
     glDisable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    
-    
+
+
     //
     // Render the flag
 
     float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
     Matrix34 flagMat = m_markerFlag->GetWorldMatrix(bodyMat);
-    m_flag.SetPosition( flagMat.pos );    
+    m_flag.SetPosition( flagMat.pos );
     m_flag.SetOrientation( predictedFront * -1, predictedUp );
     m_flag.SetSize( 20.0f );
 
@@ -587,7 +587,7 @@ void Armour::Render( float _predictionTime )
     }
 
     m_flag.Render();
-    
+
     if( m_numPassengers > 0 )
     {
         char caption[16];
@@ -605,7 +605,7 @@ void Armour::Render( float _predictionTime )
         front.RotateAroundY( g_gameTime * 0.5f );
         Vector3 up = g_upVector;
         up.RotateAround( front * sinf(timeIndex*3) * 0.3f );
-        
+
         m_deployFlag.SetPosition( m_conversionPoint );
         m_deployFlag.SetOrientation( front, up );
         m_deployFlag.SetSize( 30.0f );

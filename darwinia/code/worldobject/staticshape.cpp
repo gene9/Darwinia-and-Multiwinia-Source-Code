@@ -16,7 +16,7 @@
 
 
 StaticShape::StaticShape()
-:   Building(),    
+:   Building(),
     m_scale(1.0f)
 {
     m_type = TypeStaticShape;
@@ -47,10 +47,10 @@ void StaticShape::SetDetail( int _detail )
         mat.r *= m_scale;
         mat.f *= m_scale;
 
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
         m_radius = m_shape->CalculateRadius( mat, m_centrePos );
     }
-}   
+}
 
 
 void StaticShape::SetShapeName( char *_shapeName )
@@ -66,13 +66,13 @@ void StaticShape::SetShapeName( char *_shapeName )
         mat.r *= m_scale;
         mat.f *= m_scale;
 
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
         m_radius = m_shape->CalculateRadius( mat, m_centrePos );
     }
 }
 
 
-bool StaticShape::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool StaticShape::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                           float _rayLen, Vector3 *_pos, Vector3 *norm )
 {
 	if (m_shape)
@@ -87,7 +87,7 @@ bool StaticShape::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
 	else
 	{
 		return RaySphereIntersection(_rayStart, _rayDir, m_pos, m_radius, _rayLen);
-	}	
+	}
 }
 
 bool StaticShape::DoesSphereHit(Vector3 const &_pos, float _radius)
@@ -136,11 +136,11 @@ void StaticShape::Render( float _predictionTime )
         mat.u *= m_scale;
         mat.r *= m_scale;
         mat.f *= m_scale;
-    
+
         glEnable( GL_NORMALIZE );
         m_shape->Render( _predictionTime, mat );
         glDisable( GL_NORMALIZE );
-    }        
+    }
     else
     {
         RenderSphere( m_pos, 40.0f );

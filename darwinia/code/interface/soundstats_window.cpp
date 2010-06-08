@@ -68,26 +68,26 @@ void SoundStatsWindow::Render( bool hasFocus )
     int yPos = m_y + 30;
     int yDif = 11;
     int textSize = 10;
-      
+
 
     int cpuUsage                = g_soundLibrary3d->GetCPUOverhead();
     int maxChannels             = g_soundLibrary3d->GetMaxChannels();
     int currentSoundInstances   = g_app->m_soundSystem->NumSoundInstances();
     int currentChannelsUsed     = g_app->m_soundSystem->NumChannelsUsed();
     int numSoundsDiscarded      = g_app->m_soundSystem->NumSoundsDiscarded();
-    
+
     char const *hw3d = ( g_soundLibrary3d->Hardware3DSupport() && g_soundLibrary3d->m_hw3dDesired ? "Enabled" :
-                 ( g_soundLibrary3d->Hardware3DSupport() && !g_soundLibrary3d->m_hw3dDesired ? "Disabled" : 
+                 ( g_soundLibrary3d->Hardware3DSupport() && !g_soundLibrary3d->m_hw3dDesired ? "Disabled" :
                                                                                          "Unavailable" ) );
-    
+
     g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "CPU Usage               : %d", cpuUsage );
     g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Channels Max            : %d", maxChannels );
-    g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Channels Used           : %d", currentChannelsUsed );       
+    g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Channels Used           : %d", currentChannelsUsed );
     g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Sounds Total            : %d", currentSoundInstances );
     g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Sounds Discarded        : %d", numSoundsDiscarded );
 
     yPos += yDif;
-    
+
     g_editorFont.DrawText2D( m_x + 10, yPos += yDif, textSize, "Hardware 3D Sound : %s", hw3d );
 
     yPos = m_y + 180;
@@ -115,7 +115,7 @@ void SoundStatsWindow::Render( bool hasFocus )
     {
         int x = m_x + 20;
         int y = yPos + i * 10;
-        
+
         int channelIndex = i + firstChannel;
         if( channelIndex < g_app->m_soundSystem->m_numChannels )
         {
@@ -130,7 +130,7 @@ void SoundStatsWindow::Render( bool hasFocus )
                 glVertex2i( x-13, y+1 );
             glEnd();
 
-            glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );        
+            glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
             g_editorFont.DrawText2D( x, y, 9, "%2d.", channelIndex );
 
             SoundInstanceId soundId = g_app->m_soundSystem->m_channels[channelIndex];
@@ -142,10 +142,10 @@ void SoundStatsWindow::Render( bool hasFocus )
                 if( colour > 1.0f ) colour = 1.0f;
                 glColor4f( colour, colour, colour, 1.0f );
 
-                g_editorFont.DrawText2D( x + 20, y, 9, "%s", instance->GetDescriptor() );                
+                g_editorFont.DrawText2D( x + 20, y, 9, "%s", instance->GetDescriptor() );
             }
         }
-    }    
+    }
 
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 

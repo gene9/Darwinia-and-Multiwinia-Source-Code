@@ -29,8 +29,8 @@ public:
 };
 
 
-// Used for both OS/2 and Windows BMP. 
-// Contains only the parameters needed to load the image 
+// Used for both OS/2 and Windows BMP.
+// Contains only the parameters needed to load the image
 class BitmapInfoHeader
 {
 public:
@@ -127,7 +127,7 @@ void BitmapRGBA::ReadOS2BMPInfoHeader(BinaryReader *f, BitmapInfoHeader *infohea
 
 void BitmapRGBA::ReadBMPPalette(int ncols, RGBAColour pal[256], BinaryReader *f, int win_flag)
 {
-	for (int i = 0; i < ncols; i++) 
+	for (int i = 0; i < ncols; i++)
 	{
 	    pal[i].b = f->ReadU8();
 	    pal[i].g = f->ReadU8();
@@ -141,7 +141,7 @@ void BitmapRGBA::ReadBMPPalette(int ncols, RGBAColour pal[256], BinaryReader *f,
 // Support function for reading the 4 bit bitmap file format.
 void BitmapRGBA::Read4BitLine(int length, BinaryReader *f, RGBAColour pal[256], int y)
 {
-	for (int x = 0; x < length; x += 2) 
+	for (int x = 0; x < length; x += 2)
 	{
 		unsigned char i = f->ReadU8();
 		unsigned idx1 = i & 15;
@@ -156,7 +156,7 @@ void BitmapRGBA::Read4BitLine(int length, BinaryReader *f, RGBAColour pal[256], 
 void BitmapRGBA::Read8BitLine(int length, BinaryReader *f, RGBAColour pal[256], int y)
 {
 //	y = m_height - line - 1;
-	for (int x = 0; x < length; ++x) 
+	for (int x = 0; x < length; ++x)
 	{
 		unsigned char i = f->ReadU8();
 		PutPixel(x, y, pal[i]);
@@ -172,7 +172,7 @@ void BitmapRGBA::Read24BitLine(int length, BinaryReader *f, int y)
 //	y = m_height - y - 1;
 	c.a = 255;
 
-	for (int i=0; i<length; i++) 
+	for (int i=0; i<length; i++)
 	{
 		c.b = f->ReadU8();
 		c.g = f->ReadU8();
@@ -181,7 +181,7 @@ void BitmapRGBA::Read24BitLine(int length, BinaryReader *f, int y)
 		nbytes += 3;
 	}
 
-	for (int padding = (4 - nbytes) & 3; padding; --padding) 
+	for (int padding = (4 - nbytes) & 3; padding; --padding)
 	{
 		f->ReadU8();
 	}
@@ -198,31 +198,31 @@ void BitmapRGBA::LoadBmp(BinaryReader *_in)
 
 	unsigned long biSize = _in->ReadS32();
 
-	if (biSize == WININFOHEADERSIZE) 
+	if (biSize == WININFOHEADERSIZE)
 	{
 		ReadWinBMPInfoHeader(_in, &infoheader);
-		
+
 		int ncol = (fileheader.bfOffBits - 54) / 4; // compute number of colors recorded
 		ReadBMPPalette(ncol, palette, _in, 1);
 	}
-	else if (biSize == OS2INFOHEADERSIZE) 
+	else if (biSize == OS2INFOHEADERSIZE)
 	{
 	    ReadOS2BMPInfoHeader(_in, &infoheader);
-    
+
 	    int ncol = (fileheader.bfOffBits - 26) / 3; // compute number of colors recorded
 	    ReadBMPPalette(ncol, palette, _in, 0);
 	}
-	else 
+	else
 	{
 	    DarwiniaDebugAssert(0);
 	}
 
 	Initialise(infoheader.biWidth, infoheader.biHeight);
-	DarwiniaDebugAssert(infoheader.biCompression == BMP_RGB); 
+	DarwiniaDebugAssert(infoheader.biCompression == BMP_RGB);
 	DarwiniaDebugAssert(!_in->m_eof);
 
 	// Read the image
-	for (int i = 0; i < (int)infoheader.biHeight; ++i) 
+	for (int i = 0; i < (int)infoheader.biHeight; ++i)
 	{
 		switch (infoheader.biBitCount)
 		{
@@ -310,7 +310,7 @@ void BitmapRGBA::Write24BitLine(FILE *_out, int _y)
 {
 	int nbytes=0;
 
-	for (int x = 0; x < m_width; ++x) 
+	for (int x = 0; x < m_width; ++x)
 	{
 		RGBAColour const &c = GetPixel(x, _y);
 		fputc(c.b, _out);
@@ -319,7 +319,7 @@ void BitmapRGBA::Write24BitLine(FILE *_out, int _y)
 		nbytes += 3;
 	}
 
-	for (int padding = (4 - nbytes) & 3; padding; --padding) 
+	for (int padding = (4 - nbytes) & 3; padding; --padding)
 	{
 		fputc(0, _out);
 	}
@@ -348,9 +348,9 @@ void BitmapRGBA::WritePng(FILE *_out, bool _saveAlpha)
 	png_structp png_ptr = png_create_write_struct
        (PNG_LIBPNG_VER_STRING, (png_voidp) NULL /*user_error_ptr*/,
         NULL /*user_error_fn*/, NULL /*user_warning_fn*/);
-    
+
 	if( !png_ptr )
-       return; // failed 
+       return; // failed
 
 	png_infop info_ptr = png_create_info_struct( png_ptr );
 	if( !info_ptr )
@@ -358,7 +358,7 @@ void BitmapRGBA::WritePng(FILE *_out, bool _saveAlpha)
 		png_destroy_write_struct( &png_ptr, (png_infopp) NULL );
 		return; // failed
 	}
-	
+
     if( setjmp( png_jmpbuf(png_ptr) ) )
     {
        png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -373,7 +373,7 @@ void BitmapRGBA::WritePng(FILE *_out, bool _saveAlpha)
     png_set_compression_method( png_ptr, 8 );
     png_set_compression_buffer_size( png_ptr, 8192 );
 
-	png_set_IHDR( png_ptr, info_ptr, m_width, m_height, 8, 
+	png_set_IHDR( png_ptr, info_ptr, m_width, m_height, 8,
 		(_saveAlpha ? PNG_COLOR_TYPE_RGB_ALPHA : PNG_COLOR_TYPE_RGB),
 		PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
@@ -506,7 +506,7 @@ void BitmapRGBA::Initialise(int width, int height)
 		m_lines[y] = &m_pixels[y * width];
 	}
 }
-	
+
 
 void BitmapRGBA::Initialise(char const *_filename)
 {
@@ -561,7 +561,7 @@ RGBAColour const &BitmapRGBA::GetPixelClipped(int x, int y) const
 		return g_colourBlack;
 	}
 
-	return m_lines[y][x]; 
+	return m_lines[y][x];
 }
 
 
@@ -592,7 +592,7 @@ RGBAColour BitmapRGBA::GetInterpolatedPixel(float _x, float _y) const
 	int x2 = ceilf(_x);
 	int y2 = ceilf(_y);
 
-	if (x2 == m_width) 
+	if (x2 == m_width)
 		x2 = m_width - 1;
 
 	if (y2 == m_height)
@@ -606,10 +606,10 @@ RGBAColour BitmapRGBA::GetInterpolatedPixel(float _x, float _y) const
 	float weight21 = (fractionalX) * (1.0f - fractionalY);
 	float weight22 = (fractionalX) * (fractionalY);
 
-    RGBAColour const &c11 = GetPixelClipped(x1, y1); 
-    RGBAColour const &c12 = GetPixelClipped(x1, y2); 
-    RGBAColour const &c21 = GetPixelClipped(x2, y1); 
-    RGBAColour const &c22 = GetPixelClipped(x2, y2); 
+    RGBAColour const &c11 = GetPixelClipped(x1, y1);
+    RGBAColour const &c12 = GetPixelClipped(x1, y2);
+    RGBAColour const &c21 = GetPixelClipped(x2, y1);
+    RGBAColour const &c22 = GetPixelClipped(x2, y2);
 
 	RGBAColour returnVal((float)c11.r * weight11 + (float)c12.r * weight12 + (float)c21.r * weight21 + (float)c22.r * weight22,
 						 (float)c11.g * weight11 + (float)c12.g * weight12 + (float)c21.g * weight21 + (float)c22.g * weight22,
@@ -635,7 +635,7 @@ void BitmapRGBA::ConvertToGreyScale()
 }
 
 // *** Blit
-void BitmapRGBA::Blit(int _srcX, int _srcY, int _srcW, int _srcH, const BitmapRGBA *_srcBmp, 
+void BitmapRGBA::Blit(int _srcX, int _srcY, int _srcW, int _srcH, const BitmapRGBA *_srcBmp,
 					  int _destX, int _destY, int _destW, int _destH, bool _bilinear)
 {
 	DarwiniaDebugAssert(_srcX + _srcW <= _srcBmp->m_width);
@@ -731,7 +731,7 @@ void BitmapRGBA::ApplyBlurFilter(float _scale)
 
 	//
 	// Horizontal blur
-	
+
 	for (int y = 0; y < m_height; ++y)
 	{
 		for (int x = 0; x < m_width; ++x)
@@ -767,7 +767,7 @@ void BitmapRGBA::ApplyBlurFilter(float _scale)
 
 	//
 	// Vertical blur
-	
+
 	Clear(RGBAColour(0,0,0,0));
 	for (int y = 0; y < m_height; ++y)
 	{
@@ -817,15 +817,15 @@ void BitmapRGBA::ConvertColourToAlpha()
     }
 }
 
-		
-void BitmapRGBA::ConvertPinkToTransparent() 
+
+void BitmapRGBA::ConvertPinkToTransparent()
 {
 	const RGBAColour pink(255, 0, 255);
 	const RGBAColour trans(128,128,128,0);
 
-	for (int y = 0; y < m_height; ++y) 
+	for (int y = 0; y < m_height; ++y)
 	{
-		for (int x = 0; x < m_width; ++x) 
+		for (int x = 0; x < m_width; ++x)
 		{
 			RGBAColour const c(GetPixel(x, y));
 			if (c == pink)
@@ -839,13 +839,13 @@ void BitmapRGBA::ConvertPinkToTransparent()
 
 void BitmapRGBA::Clear( RGBAColour const &colour )
 {
-	for (int x = 0; x < m_width; ++x) 
+	for (int x = 0; x < m_width; ++x)
 	{
         PutPixel( x, 0, colour );
     }
 
 	int const size = sizeof(RGBAColour) * m_width;
- 	for (int y = 0; y < m_height; ++y) 
+ 	for (int y = 0; y < m_height; ++y)
 	{
 		memcpy(m_lines[y], m_lines[0], size);
     }
@@ -861,12 +861,12 @@ int BitmapRGBA::ConvertToTexture(bool _mipmapping) const
 	glBindTexture	(GL_TEXTURE_2D, texId);
     glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
     glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-	
+
 //    bool texturingWasEnabled = glIsEnabled(GL_TEXTURE_2D);
 
 	glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-	
+
     if (_mipmapping)
 	{
 		int newWidth = 1 << (int) ceil(log((float) m_width)/log(2.0f));
@@ -885,26 +885,26 @@ int BitmapRGBA::ConvertToTexture(bool _mipmapping) const
 		bool scale = (bool) g_prefsManager->GetInt("ManuallyScaleTextures", 0);
 
 		if (sameDimensions || !scale)
-			result = gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, 
-					                   m_width, m_height, 
-						               GL_RGBA, GL_UNSIGNED_BYTE, 
+			result = gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,
+					                   m_width, m_height,
+						               GL_RGBA, GL_UNSIGNED_BYTE,
 						               m_pixels);
-		else 
-#endif // USE_DIRECT3D		
+		else
+#endif // USE_DIRECT3D
 		{
 			// Scale the bitmap ourselves
 
 			BitmapRGBA scaled(newWidth, newHeight);
-			scaled.Blit(0, 0, m_width, m_height, this, 
+			scaled.Blit(0, 0, m_width, m_height, this,
 						0, 0, newWidth, newHeight, true);
-			
-			result = gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, 
-					                   scaled.m_width, scaled.m_height, 
-						               GL_RGBA, GL_UNSIGNED_BYTE, 
+
+			result = gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,
+					                   scaled.m_width, scaled.m_height,
+						               GL_RGBA, GL_UNSIGNED_BYTE,
 						               scaled.m_pixels);
 		}
 
-        DarwiniaReleaseAssert( result == 0, 
+        DarwiniaReleaseAssert( result == 0,
 					   "ConvertToTexture failed with error : %s", gluErrorString(result) );
 	}
 	else

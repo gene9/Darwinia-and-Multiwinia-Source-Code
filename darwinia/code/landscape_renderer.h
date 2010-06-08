@@ -66,7 +66,7 @@ protected:
 	void BuildVertArrayAndTriStrip(SurfaceMap2D <float> *_heightMap);
 	void BuildNormArray();
 	void BuildUVArray(SurfaceMap2D <float> *_heightMap);
-	void GetLandscapeColour(float _height, float _gradient, 
+	void GetLandscapeColour(float _height, float _gradient,
 							unsigned int _x, unsigned int _y, RGBAColour *_colour);
 	void BuildColourArray();
 

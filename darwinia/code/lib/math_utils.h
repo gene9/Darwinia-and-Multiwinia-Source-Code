@@ -30,8 +30,8 @@ inline float syncsfrand( float range = 1.0f ) { return (syncfrand() - 0.5f) * ra
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-#define sign(a)				((a) < 0 ? -1 : 1) 
-#define signf(a)			((a) < 0.0f ? -1.0f : 1.0f) 
+#define sign(a)				((a) < 0 ? -1 : 1)
+#define signf(a)			((a) < 0.0f ? -1.0f : 1.0f)
 
 
 // Performs fast float to int conversion. It may round up or down, depending on
@@ -40,7 +40,7 @@ inline float syncsfrand( float range = 1.0f ) { return (syncfrand() - 0.5f) * ra
 	#define Round(a) (int)(a)
 //#else
 //	#define Round(a) RoundFunc(a)
-//	inline int RoundFunc(float a) 
+//	inline int RoundFunc(float a)
 //	{
 //		int retval;
 //
@@ -121,7 +121,7 @@ int RayPlaneIntersection(Vector3 const &pOnLine, Vector3 const &lineDir,
 //                                  Vector3 const &planePos, Vector3 const &planeNormal,
 //						         float _rayLen=1e10, Vector3 *pos=NULL );
 
-bool RaySphereIntersection      ( Vector3 const &rayStart, Vector3 const &rayDir, 
+bool RaySphereIntersection      ( Vector3 const &rayStart, Vector3 const &rayDir,
 	                              Vector3 const &spherePos, float sphereRadius,
 			                      float _rayLen=1e10, Vector3 *pos=NULL, Vector3 *normal=NULL );
 

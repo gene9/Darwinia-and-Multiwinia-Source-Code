@@ -18,14 +18,14 @@ protected:
         ScreenResearch
     };
     int     m_screenId;
-    
+
     float   m_screenX;
     float   m_desiredScreenX;
     float   m_screenW;
     float   m_screenH;
 
     float   m_chatLogY;
-	
+
     LList   <ScreenZone *>          m_screenZones;               // All clickable areas on-screen
     LList   <ScreenZone *>          m_newScreenZones;            // New zones generated this frame
 	LList   <KeyboardShortcut *>    m_keyboardShortcuts;         // Keyboard shortcuts to screenzones
@@ -37,11 +37,11 @@ protected:
     void    AdvanceScreenEdges          ();
     void    AdvanceGestures             ();
     void    AdvanceTerminate            ();
-    void    AdvanceScreenZones          ();    
+    void    AdvanceScreenZones          ();
     void    AdvanceKeyboardShortcuts    ();
-    
+
     void    HideTaskManager             ();
-    
+
     bool    ScreenZoneHighlighted   ( ScreenZone *_zone );
     void    RunScreenZone           ( const char *_name, int _data );          // Occurs during click or keypress
 
@@ -57,16 +57,16 @@ protected:
     void    RenderTaskManager   ();
     void    RenderObjectives    ();
     void    RenderResearch      ();
-    void    RenderTitleBar      ();    
+    void    RenderTitleBar      ();
     void    RenderScreenZones   ();
     void    RenderTooltip       ();
-    
+
     void    RenderCompass       ( float _screenX, float _screenY, Vector3 const &_worldPos, bool selected );
-        
+
 public:
     TaskManagerInterfaceGestures();
 
-    virtual void Advance();        
+    virtual void Advance();
     virtual void Render();
 
 	bool ControlEvent( TMControl _type );

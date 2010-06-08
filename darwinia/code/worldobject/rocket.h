@@ -10,11 +10,11 @@ class FuelBuilding : public Building
 protected:
     ShapeMarker     *m_fuelMarker;
     static Shape    *s_fuelPipe;
-    
+
 public:
     int             m_fuelLink;
     float           m_currentLevel;
-    
+
 public:
     FuelBuilding();
 
@@ -32,10 +32,10 @@ public:
     void Render         ( float _predictionTime );
     void RenderAlphas   ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
+    int  GetBuildingLink();
     void SetBuildingLink( int _buildingId );
 
 	void Destroy( float _intensity );
@@ -52,15 +52,15 @@ protected:
     ShapeMarker     *m_pumpTip;
     float           m_pumpMovement;
     float           m_previousPumpPos;
-    
+
     Vector3         GetPumpPos();
-    
+
 public:
     float   m_surges;
 
 public:
     FuelGenerator();
-    
+
     void ProvideSurge   ();
 
     bool Advance        ();
@@ -77,7 +77,7 @@ public:
 
 
 class FuelPipe : public FuelBuilding
-{    
+{
 public:
     FuelPipe();
 
@@ -109,7 +109,7 @@ public:
 
     void ListSoundEvents( LList<char *> *_list );
 
-    bool PerformDepthSort( Vector3 &_centrePos ); 
+    bool PerformDepthSort( Vector3 &_centrePos );
 };
 
 
@@ -119,7 +119,7 @@ public:
 class EscapeRocket : public FuelBuilding
 {
 protected:
-    ShapeMarker     *m_booster;   
+    ShapeMarker     *m_booster;
     ShapeMarker     *m_window[3];
     Shape           *m_rocketLowRes;
     float           m_shadowTimer;
@@ -139,7 +139,7 @@ public:
         StateFlight,
         NumStates
     };
-    
+
     int             m_state;
     float           m_fuel;
     int             m_pipeCount;
@@ -148,9 +148,9 @@ public:
     float           m_damage;
     int             m_spawnBuildingId;
     bool            m_spawnCompleted;
-    
+
 protected:
-    void Refuel();    
+    void Refuel();
     void SetupSpectacle();
     void SetupAttackers();
 
@@ -169,10 +169,10 @@ public:
 
     void Initialise     ( Building *_template );
     bool Advance        ();
-    
+
     void ProvideFuel    ( float _level );
     bool SafeToLaunch   ();
-    bool BoardRocket    ( WorldObjectId _id );   
+    bool BoardRocket    ( WorldObjectId _id );
     void Damage         ( float _damage );
 
     bool IsSpectacle    ();
@@ -181,13 +181,13 @@ public:
     void Render         ( float _predictionTime );
     void RenderAlphas   ( float _predictionTime );
 
-    void Read           ( TextReader *_in, bool _dynamic );     
-    void Write          ( FileWriter *_out );	
-        
+    void Read           ( TextReader *_in, bool _dynamic );
+    void Write          ( FileWriter *_out );
+
     char *GetObjectiveCounter();
-    
+
     void ListSoundEvents( LList<char *> *_list );
-    
+
     static int GetStateId( char *_state );
 };
 

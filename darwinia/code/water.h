@@ -3,13 +3,13 @@
 
 // This module renders the sea. Conceptually the sea is a finite plane twice the
 // size of the land rectangle. The land rectangle has one corner at 0,0 and the
-// opposite corner at landSizeX,landSizeZ. The sea plane is from 
+// opposite corner at landSizeX,landSizeZ. The sea plane is from
 // -landSizeX/2, -landSizeZ/2 to 1.5*landSizeX,1.5*landSizeZ.
 
 // The dynamic sea is made from triangle strips. Strips are only made in places
 // where the sea is visible. Rather than the sea looking the same everywhere,
-// the water depth is used to add some character. 1, it is used to modulate 
-// the brightness of the polys - darker in deeper water. 2, it is used to 
+// the water depth is used to add some character. 1, it is used to modulate
+// the brightness of the polys - darker in deeper water. 2, it is used to
 // alter the wave amplitude - smaller waves near the shore. 3, it is used to
 // change the colouring - whiter waves near the shore.
 
@@ -49,7 +49,7 @@ struct IDirect3DVertexBuffer9;
 
 class Water
 {
-protected:   
+protected:
 	// Render data - referenced directly by OpenGL
 	FastDArray		<WaterVertex> m_renderVerts;
 	FastDArray		<WaterTriangleStrip *> m_strips;
@@ -89,7 +89,7 @@ protected:
     void			UpdateDynamicWater      ();
 	void			RenderDynamicWater      ();
 
-public:    
+public:
     Water();
 	~Water();
 #ifdef USE_DIRECT3D
@@ -109,11 +109,11 @@ public:
 
 inline RGBAColour const &Water::GetColour(int _brightness)
 {
-	if (_brightness >= m_numColours) 
+	if (_brightness >= m_numColours)
 	{
 		return m_colourTable[m_numColours - 1];
 	}
-	else if (_brightness < 0) 
+	else if (_brightness < 0)
 	{
 		return m_colourTable[0];
 	}

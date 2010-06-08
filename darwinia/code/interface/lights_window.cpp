@@ -26,7 +26,7 @@ public:
 	int m_lightNum;
 
 	LightButton(int num): m_lightNum(num) {}
-	
+
 	void MouseUp()
 	{
 		if (m_lightNum == -1)
@@ -42,7 +42,7 @@ public:
 
 	void Render(int realX, int realY, bool highlighted, bool clicked)
 	{
-		if (g_app->m_locationEditor->m_selectionId == m_lightNum) 
+		if (g_app->m_locationEditor->m_selectionId == m_lightNum)
 		{
 			DarwiniaButton::Render(realX, realY, highlighted, true);
 		}
@@ -91,7 +91,7 @@ class NewLightButton : public DarwiniaButton
 // ****************************************************************************
 
 LightsEditWindow::LightsEditWindow( char *name )
-:	DarwiniaWindow(name) 
+:	DarwiniaWindow(name)
 {
 }
 
@@ -119,13 +119,13 @@ void LightsEditWindow::Create()
 	sprintf(buttonName, LANGUAGEPHRASE("editor_deselectlights") );
 	button->SetShortProperties(buttonName, 10, height += pitch, m_w - 20);
 	RegisterButton(button);
-	
+
     height += 6;
 
     for (int i = 0; i < g_app->m_location->m_lights.Size(); i++)
 	{
 		button = new LightButton(i);
-        
+
         Light *light = g_app->m_location->m_lights.GetData(i);
 		sprintf(buttonName, "%s %d", LANGUAGEPHRASE("editor_selectlight"), i);
 		button->SetShortProperties(buttonName, 10, height += pitch, m_w - 20);
@@ -136,7 +136,7 @@ void LightsEditWindow::Create()
         LabelButton *label = new LabelButton();
         label->SetShortProperties( LANGUAGEPHRASE("editor_adjustbrightness"), 10, height, m_w - 50 );
         RegisterButton( label );
-        
+
         LightGammaButton *gammaDown = new LightGammaButton(i);
         sprintf(buttonName, "down %d", i);
         gammaDown->SetShortProperties( buttonName, m_w - 42, height, 15 );

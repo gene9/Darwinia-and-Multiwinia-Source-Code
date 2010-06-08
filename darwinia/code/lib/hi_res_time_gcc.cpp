@@ -33,14 +33,14 @@ inline double GetLowLevelTime()
 	static double wraps = 0.0;		// Each time the counter wraps, we increment this value by the wrap period
 	static unsigned int lastCount = 0;
 	unsigned int newCount = GetPentiumCounter();
-	
+
 	// Has the counter wrapped?
 	if (newCount < lastCount)
 	{
 		wraps += g_tickInterval * pow(2, 32);
 	}
 	lastCount = newCount;
-	
+
 	return (double)newCount * g_tickInterval + wraps;
 #else
     LARGE_INTEGER count;

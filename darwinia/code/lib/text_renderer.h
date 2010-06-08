@@ -22,12 +22,12 @@ protected:
 	unsigned int    m_textureID;
 	unsigned int	m_bitmapWidth;
 	unsigned int	m_bitmapHeight;
-    bool            m_renderShadow;    
+    bool            m_renderShadow;
     bool            m_renderOutline;
 
     float GetTexCoordX  ( unsigned char theChar );
     float GetTexCoordY  ( unsigned char theChar );
-    
+
 public:
 	void Initialise(char const *_filename);
 
@@ -35,7 +35,7 @@ public:
 
     void BeginText2D	 ();
     void EndText2D		 ();
-    
+
     void SetRenderShadow ( bool _renderShadow );
     void SetRenderOutline( bool _renderOutline );
 
@@ -46,13 +46,13 @@ public:
 	void DrawText2DJustified( float _x, float _y, float _size, int _xJustification, char const *_text, ... );	// Like above but with variable justification
     void DrawText2DUp    ( float _x, float _y, float _size, char const *_text, ... );   // Like above but rotated 90 ccw
     void DrawText2DDown  ( float _x, float _y, float _size, char const *_text, ... );   // Like above but rotated 90 cw
-	
-	
+
+
 	void DrawText3DSimple( Vector3 const &_pos, float _size, char const *_text );
 	void DrawText3D		 ( Vector3 const &_pos, float _size, char const *_text, ... );
 	void DrawText3DCentre( Vector3 const &_pos, float _size, char const *_text, ... );
 	void DrawText3DRight ( Vector3 const &_pos, float _size, char const *_text, ... );
-    
+
     void DrawText3D      ( Vector3 const &_pos, Vector3 const &_front, Vector3 const &_up,
                            float _size, char const *_text, ... );
 

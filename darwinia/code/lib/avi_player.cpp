@@ -34,10 +34,10 @@ int AviPlayer::OpenAvi( char *_filename )
     //
     // Open the avi file
 
-	int result = AVIFileOpen(&m_aviFile,			    
-					         _filename,		
-					         OF_READ,	
-					         NULL);					
+	int result = AVIFileOpen(&m_aviFile,
+					         _filename,
+					         OF_READ,
+					         NULL);
 
     HandleAviError(result);
 
@@ -45,7 +45,7 @@ int AviPlayer::OpenAvi( char *_filename )
 
     HandleAviError(result);
 
-    
+
     //
     // Open a video stream from the file
 
@@ -61,34 +61,34 @@ int AviPlayer::OpenAvi( char *_filename )
     //
     // Read the specs of our avi video stream
     // Allocate space for one video frame
-    
+
     long sizeOfStreamVideoInfo = sizeof(m_streamVideoInfo);
-    result = AVIStreamReadFormat( m_streamVideo, 
+    result = AVIStreamReadFormat( m_streamVideo,
                                   0,
-                                  &m_streamVideoInfo, 
+                                  &m_streamVideoInfo,
                                   &sizeOfStreamVideoInfo );
 
     HandleAviError(result);
 
     if( m_streamVideoInfo.biSizeImage <= 0 ) return -1;
 
-    m_currentFrame = new unsigned char[512 * 256 * 3];  
+    m_currentFrame = new unsigned char[512 * 256 * 3];
     memset( m_currentFrame, 0, 512*256*3 );
 
-    
+
     //
     // Begin video streaming
 
     int firstFrame = AVIStreamStart( m_streamVideo );
     int lastFrame = AVIStreamEnd( m_streamVideo );
-    result = AVIStreamBeginStreaming( m_streamVideo, 
+    result = AVIStreamBeginStreaming( m_streamVideo,
                                       firstFrame,                                       // start frame
                                       lastFrame,                                        // end frame
                                       2000 );                                           // speed (1000=normal)
 
     HandleAviError(result);
 
-    
+
     m_streamVideoFrame = AVIStreamGetFrameOpen( m_streamVideo, NULL );
 
     if( !m_streamVideoFrame ) return -1;
@@ -97,7 +97,7 @@ int AviPlayer::OpenAvi( char *_filename )
     //
     // Open an audio stream from the file
 
-    result = AVIFileGetStream( m_aviFile, 
+    result = AVIFileGetStream( m_aviFile,
                               &m_streamAudio,
                               streamtypeAUDIO,
                               0 );
@@ -126,11 +126,11 @@ int AviPlayer::OpenAvi( char *_filename )
 int AviPlayer::GetAudioData( int _numSamples, signed short *_buffer )
 {
     long numBytesWritten, numSamplesWritten;
-    int result = AVIStreamRead( m_streamAudio, 
-                                m_nextAudioSample, 
-                                _numSamples, 
-                                _buffer, 
-                                _numSamples*sizeof(signed short), 
+    int result = AVIStreamRead( m_streamAudio,
+                                m_nextAudioSample,
+                                _numSamples,
+                                _buffer,
+                                _numSamples*sizeof(signed short),
                                 &numBytesWritten, &numSamplesWritten );
 
     m_nextAudioSample += numSamplesWritten;
@@ -154,7 +154,7 @@ int AviPlayer::CloseAvi()
 
     result = AVIStreamEndStreaming( m_streamAudio );
     result = AVIStreamRelease( m_streamAudio );
-    
+
     result = AVIFileRelease( m_aviFile );
 
     return 0;
@@ -182,7 +182,7 @@ unsigned char *AviPlayer::GetFrameData()
 int AviPlayer::DecodeVideoFrame( float _timeIndex )
 {
     int frameIndex = AVIStreamTimeToSample( m_streamVideo, _timeIndex*1000 );
-        
+
     return DecodeVideoFrame( frameIndex );
 }
 
@@ -199,31 +199,31 @@ int AviPlayer::DecodeVideoFrame( int _frameIndex )
     }
 
     int lastFrame = AVIStreamEnd( m_streamVideo );
-    
+
     if( _frameIndex == m_previousFrameIndex )
-    {        
+    {
         return 0;
     }
     else if( _frameIndex >= lastFrame )
     {
-        DebugOut( "Displayed %d, Missed %d, out of %d  (%2.2f%%)\n", 
-                     numDisplayed, numMissed, _frameIndex+1, 
+        DebugOut( "Displayed %d, Missed %d, out of %d  (%2.2f%%)\n",
+                     numDisplayed, numMissed, _frameIndex+1,
                      100*(float)numDisplayed/(float)(_frameIndex+1));
         return 1;
     }
     else
     {
-        unsigned char *pDib = (unsigned char *) AVIStreamGetFrame( m_streamVideoFrame, 
-                                                                   _frameIndex );    
-        if( !pDib ) return 1;  
+        unsigned char *pDib = (unsigned char *) AVIStreamGetFrame( m_streamVideoFrame,
+                                                                   _frameIndex );
+        if( !pDib ) return 1;
 
         unsigned char *imgDataStart = pDib + sizeof(BITMAPINFOHEADER);
-        
+
         //
         // We need to get the data into a usable form
         // Firstly the colour ordering is wrong : DIBS are BGR and openGL requires RGB
         // Secondly the size must be a power of 2 for openGL, ie 512x256 instead of 320x240
-        
+
         for( int y = 0; y < m_streamVideoInfo.biHeight; ++y )
         {
             unsigned char *fromRow = imgDataStart + y * m_streamVideoInfo.biWidth * 3;
@@ -241,7 +241,7 @@ int AviPlayer::DecodeVideoFrame( int _frameIndex )
         }
 
         m_previousFrameIndex = _frameIndex;
-        
+
     }
 
     return 0;

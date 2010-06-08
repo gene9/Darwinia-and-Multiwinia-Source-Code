@@ -14,7 +14,7 @@ protected:
 	int			m_screenHeight;
 	BitmapRGBA	*m_bitmap;
 	unsigned char *m_screenPixels;
-    
+
 public:
 	PosterMaker(int _screenWidth, int _screenHeight);
 	~PosterMaker();

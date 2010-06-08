@@ -5,11 +5,11 @@
 
 
 class FodderLoader : public Loader
-{        
+{
 public:
     FodderLoader();
     ~FodderLoader();
-    
+
     void Run();
 };
 

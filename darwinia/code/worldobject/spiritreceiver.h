@@ -22,8 +22,8 @@ protected:
 
 public:
     ReceiverBuilding();
-    
-    void Initialise     ( Building *_template );    
+
+    void Initialise     ( Building *_template );
     bool Advance        ();
     void Render         ( float _predictionTime );
     void RenderAlphas   ( float _predictionTime );
@@ -35,18 +35,18 @@ public:
     void ListSoundEvents( LList<char *> *_list );
 
     static SpiritProcessor *GetSpiritProcessor();
-    
+
     static void BeginRenderUnprocessedSpirits();
     static void RenderUnprocessedSpirit( Vector3 const &_pos, float _life=1.0f ); // gl friendly
 	static void RenderUnprocessedSpirit_basic( Vector3 const &_pos, float _life=1.0f ); // dx friendly
 	static void RenderUnprocessedSpirit_detail( Vector3 const &_pos, float _life=1.0f ); // dx friendly
     static void EndRenderUnprocessedSpirits();
-    
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
-    void SetBuildingLink( int _buildingId );            
+
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
+    int  GetBuildingLink();
+    void SetBuildingLink( int _buildingId );
 };
 
 
@@ -113,7 +113,7 @@ public:
 #define SPIRITRECEIVER_NUMSTATUSMARKERS 5
 
 class SpiritReceiver : public ReceiverBuilding
-{    
+{
 protected:
     ShapeMarker *m_headMarker;
     Shape       *m_headShape;
@@ -156,7 +156,7 @@ public:
         StateUnprocessedDeath
     };
     int         m_state;
-    
+
 public:
     UnprocessedSpirit();
 

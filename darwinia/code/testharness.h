@@ -31,8 +31,8 @@ protected:
     void		PrintGlobalState		(GlobalWorld *_world);
 	LList<int> *FindAvailableMissions	(GlobalWorld *_world);
 	void		DoMission				(GlobalWorld *_world, int _locId);
-	void		AchieveObjective		(GlobalWorld *_world, 
-										 GlobalEventCondition *_objective, 
+	void		AchieveObjective		(GlobalWorld *_world,
+										 GlobalEventCondition *_objective,
 										 int _locId, LevelFile *_levelFile);
     void		ExploreStates			(GlobalWorld *_world);		// Recursive
 

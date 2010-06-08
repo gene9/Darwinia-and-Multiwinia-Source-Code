@@ -96,9 +96,9 @@ inline unsigned short Array2D<T>::GetNumColumns() const
 template <class T>
 void Array2D<T>::SetAll(T const &_value)
 {
-	for (unsigned short z = 0; z < m_numRows; z++)	
+	for (unsigned short z = 0; z < m_numRows; z++)
 	{
-		for (unsigned short x = 0; x < m_numColumns; x++)	
+		for (unsigned short x = 0; x < m_numColumns; x++)
 		{
 			PutData(x, z, _value);
 		}

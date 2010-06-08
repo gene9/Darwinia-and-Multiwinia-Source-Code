@@ -10,7 +10,7 @@
 
 //*****************************************************************************
 // Class HistoricWayPoint
-// 
+//
 // Stores positions where the user clicked.
 //*****************************************************************************
 
@@ -38,7 +38,7 @@ class InsertionSquad: public Unit
 {
 protected:
     LList <HistoricWayPoint *>	m_positionHistory;          	// A list of all the places the user has clicked. Most recent first
-   
+
 public:
     int     m_weaponType;                                       // Indexes into GlobalResearch
     int     m_controllerId;                                     // Task ID of controller if this squad is running one
@@ -63,10 +63,10 @@ public:
 //*****************************************************************************
 
 class Squadie: public Entity
-{    
+{
 public:
     bool        m_justFired;
-    float       m_secondaryTimer;    
+    float       m_secondaryTimer;
 
 protected:
     ShapeMarker *m_laser;
@@ -74,16 +74,16 @@ protected:
     ShapeMarker *m_eye1;
     ShapeMarker *m_eye2;
 
-protected:    
+protected:
     WorldObjectId   m_enemyId;
     float           m_retargetTimer;
     void            RunAI();               // Call this if the player isnt' controlling us
-    
+
 public:
-    Squadie();        
-            
+    Squadie();
+
     void Begin                  ();
-    bool Advance                ( Unit *_unit );    
+    bool Advance                ( Unit *_unit );
     void ChangeHealth           ( int _amount );
     void Attack                 ( Vector3 const &_pos );
 

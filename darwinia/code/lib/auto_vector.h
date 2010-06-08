@@ -14,11 +14,11 @@
 #include <algorithm>
 
 //---------------------------------
-// Dynamic array of owned pointers. 
+// Dynamic array of owned pointers.
 // Ownership transfer semantics.
 //---------------------------------
 
-template <class T> 
+template <class T>
 class auto_vector
 {
 public:
@@ -56,9 +56,9 @@ public:
 	}
 	// array access
     T const * operator [] (size_t i) const { return _arr [i]; }
-	auto_lvalue operator [] (size_t i) 
-	{ 
-		return auto_lvalue (_arr [i]); 
+	auto_lvalue operator [] (size_t i)
+	{
+		return auto_lvalue (_arr [i]);
 	}
 	void assign (size_t i, std::auto_ptr<T> p);
 	void assign_direct (size_t i, T * p);
@@ -90,7 +90,7 @@ public:
 
 	// iterator/index conversion
 	size_t ToIndex (iterator const & it);
-	size_t ToIndex (reverse_iterator const & rit); 
+	size_t ToIndex (reverse_iterator const & rit);
 	iterator ToIter (size_t idx);
 	reverse_iterator ToRIter (size_t idx);
 private:
@@ -120,7 +120,7 @@ void auto_vector<T>::push_back (std::auto_ptr<T> ptr)
 }
 
 template <class T>
-inline std::auto_ptr<T> auto_vector<T>::pop_back () 
+inline std::auto_ptr<T> auto_vector<T>::pop_back ()
 {
 	assert (size () != 0);
 	T * p = _arr.back ();
@@ -191,14 +191,14 @@ void auto_vector<T>::compact ()
 }
 
 template <class T>
-size_t auto_vector<T>::ToIndex (iterator const & it)  
+size_t auto_vector<T>::ToIndex (iterator const & it)
 {
 	assert (it - begin () >= 0);
 	return static_cast<size_t> (it - begin ());
 }
 
 template <class T>
-size_t auto_vector<T>::ToIndex (reverse_iterator const & rit)  
+size_t auto_vector<T>::ToIndex (reverse_iterator const & rit)
 {
 	iterator it = rit.base ();
 	--it;
@@ -207,13 +207,13 @@ size_t auto_vector<T>::ToIndex (reverse_iterator const & rit)
 }
 
 template <class T>
-typename auto_vector<T>::iterator auto_vector<T>::ToIter (size_t idx) 
-{ 
+typename auto_vector<T>::iterator auto_vector<T>::ToIter (size_t idx)
+{
 	return begin () + idx;
 }
 
 template <class T>
-typename auto_vector<T>::reverse_iterator auto_vector<T>::ToRIter (size_t idx) 
+typename auto_vector<T>::reverse_iterator auto_vector<T>::ToRIter (size_t idx)
 {
 	++idx;
 	return reverse_iterator (ToIter (idx));

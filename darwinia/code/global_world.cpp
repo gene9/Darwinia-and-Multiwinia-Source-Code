@@ -71,7 +71,7 @@ void GlobalLocation::AddSpirits( int _count )
     m_numSpirits += _count;
 }
 
- 
+
 
 // ****************************************************************************
 // Class GlobalBuilding
@@ -134,7 +134,7 @@ void GlobalEventCondition::SetCutScene ( char *_cutScene )
 
 char *GlobalEventCondition::GetTypeName( int _type )
 {
-    static char *names[] = {  
+    static char *names[] = {
                                 "AlwaysTrue",
                                 "BuildingOnline",
                                 "BuildingOffline",
@@ -170,23 +170,23 @@ bool GlobalEventCondition::Evaluate()
     {
         case AlwaysTrue:
             return true;
-        
+
         case BuildingOnline:
         {
             GlobalBuilding *building = g_app->m_globalWorld->GetBuilding( m_id, m_locationId );
             if( building ) return building->m_online;
             break;
         }
-        
+
         case BuildingOffline:
         {
             GlobalBuilding *building = g_app->m_globalWorld->GetBuilding( m_id, m_locationId );
             if( building ) return !building->m_online;
             break;
         }
-     
+
         case ResearchOwned:
-            return( g_app->m_globalWorld->m_research->HasResearch( m_id ) );            
+            return( g_app->m_globalWorld->m_research->HasResearch( m_id ) );
 
         case NotInLocation:
             return( g_app->m_location == NULL );
@@ -242,16 +242,16 @@ char *GlobalEventAction::GetTypeName(int _type)
     static char *names[] = {
                                 "SetMission",
                                 "RunScript",
-                                "MakeAvailable" 
+                                "MakeAvailable"
                             };
-    
+
     DarwiniaDebugAssert( _type >= 0 && _type < NumActionTypes );
 
     return names[_type];
 }
 
 
-GlobalEventAction::GlobalEventAction()    
+GlobalEventAction::GlobalEventAction()
 {
     strcpy( m_filename, "null" );
 }
@@ -297,7 +297,7 @@ void GlobalEventAction::Write(FileWriter *_out)
         case SetMission:        _out->printf( "%s %s", locationName, m_filename);       break;
         case RunScript:         _out->printf( "%s", m_filename );                       break;
         case MakeAvailable:     _out->printf( "%s", locationName);                      break;
-    
+
         default:
             DarwiniaDebugAssert(false);
     }
@@ -315,7 +315,7 @@ void GlobalEventAction::Execute()
         {
             if (g_app->m_testHarness)
 			{
-				fprintf(g_app->m_testHarness->m_out, "%sSetting Mission: %s in location %s\n", 
+				fprintf(g_app->m_testHarness->m_out, "%sSetting Mission: %s in location %s\n",
 						g_app->m_testHarness->m_indent,
 						m_filename,
 						g_app->m_globalWorld->GetLocationName(m_locationId));
@@ -325,7 +325,7 @@ void GlobalEventAction::Execute()
         case RunScript:
 			if (g_app->m_testHarness)
 			{
-				fprintf(g_app->m_testHarness->m_out, "%sRunning script: %s\n", 
+				fprintf(g_app->m_testHarness->m_out, "%sRunning script: %s\n",
 						g_app->m_testHarness->m_indent,
 						m_filename);
 			}
@@ -333,7 +333,7 @@ void GlobalEventAction::Execute()
         case MakeAvailable:
 			if (g_app->m_testHarness)
 			{
-				fprintf(g_app->m_testHarness->m_out, "%sMaking location available: %s\n", 
+				fprintf(g_app->m_testHarness->m_out, "%sMaking location available: %s\n",
 						g_app->m_testHarness->m_indent,
 						g_app->m_globalWorld->GetLocationName(m_locationId));
 			}
@@ -422,10 +422,10 @@ bool GlobalEvent::Execute()
     GlobalEventAction *action = m_actions[0];
     m_actions.RemoveData(0);
     action->Execute();
-    delete action;    
+    delete action;
 
     if( m_actions.Size() == 0 ) return true;
-	
+
     return false;
 }
 
@@ -439,7 +439,7 @@ void GlobalEvent::MakeAlwaysTrue()
     }
 
     m_conditions.EmptyAndDelete();
-    
+
     GlobalEventCondition *cond = new GlobalEventCondition();
     cond->m_type = GlobalEventCondition::AlwaysTrue;
     m_conditions.PutData( cond );
@@ -450,7 +450,7 @@ void GlobalEvent::Read( TextReader *_in )
 {
     //
     // Parse conditions line
-    
+
     while( _in->TokenAvailable() )
     {
 		char *conditionTypeName = _in->GetNextToken();
@@ -464,7 +464,7 @@ void GlobalEvent::Read( TextReader *_in )
             case GlobalEventCondition::AlwaysTrue:
             case GlobalEventCondition::NotInLocation:
                 break;
-            
+
 			case GlobalEventCondition::BuildingOffline:
 			case GlobalEventCondition::BuildingOnline:
 				condition->m_locationId = g_app->m_globalWorld->GetLocationId( _in->GetNextToken() );
@@ -476,7 +476,7 @@ void GlobalEvent::Read( TextReader *_in )
                 condition->m_id = GlobalResearch::GetType( _in->GetNextToken() );
                 DarwiniaDebugAssert( condition->m_id != -1 );
                 break;
-                
+
             case GlobalEventCondition::DebugKey:
                 condition->m_id = atoi( _in->GetNextToken() );
 				break;
@@ -484,7 +484,7 @@ void GlobalEvent::Read( TextReader *_in )
 
         m_conditions.PutData( condition );
     }
-   
+
 
 	//
 	// Parse actions
@@ -548,12 +548,12 @@ GlobalResearch::GlobalResearch()
 void GlobalResearch::AddResearch( int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
-    
+
     if( m_researchLevel[_type] < 1 )
     {
         m_researchProgress[_type] = RequiredProgress(0);
         EvaluateLevel( _type );
-    }    
+    }
 }
 
 
@@ -623,7 +623,7 @@ void GlobalResearch::EvaluateLevel( int _type )
 void GlobalResearch::SetCurrentResearch( int _type )
 {
     int currentLevel = m_researchLevel[_type];
-    
+
     if( currentLevel == 4 )
     {
         // Fully researched already
@@ -686,7 +686,7 @@ void GlobalResearch::IncreaseProgress  ( int _amount )
 
 
 void GlobalResearch::DecreaseProgress( int _amount )
-{   
+{
     m_researchProgress[m_currentResearch] -= _amount;
     EvaluateLevel( m_currentResearch );
 }
@@ -703,7 +703,7 @@ int GlobalResearch::CurrentLevel( int _type )
 void GlobalResearch::Write(FileWriter *_out)
 {
     _out->printf( "Research_StartDefinition\n" );
-        
+
     for( int i = 0; i < NumResearchItems; ++i )
     {
         _out->printf( "\tResearch %s %d %d\n", GetTypeName(i), CurrentProgress(i), CurrentLevel(i) );
@@ -756,7 +756,7 @@ void GlobalResearch::Read( TextReader *_in )
 
 char *GlobalResearch::GetTypeName( int _type )
 {
-    char *names[] = {   
+    char *names[] = {
                         "Darwinian",
                         "Officer",
                         "Squad",
@@ -790,7 +790,7 @@ char *GlobalResearch::GetTypeNameTranslated ( int _type )
     {
         return typeName;
     }
-} 
+}
 
 
 int GlobalResearch::GetType( char *_name )
@@ -849,18 +849,18 @@ SphereWorld::SphereWorld()
 
 void SphereWorld::AddLocation( int _locationId )
 {
-	// Initialise the sphere world to 
+	// Initialise the sphere world to
 	if (_locationId < m_numLocations)
 		return;
 
 	int oldNumLocations = m_numLocations;
 	m_numLocations = _locationId + 1;
 	LList<float> *newSpirits = new LList<float>[m_numLocations];
-    
+
 	// Initialise the spirits for the new worlds.
     for( int locationId = 0; locationId < m_numLocations; ++locationId )
     {
-		if (locationId < oldNumLocations) 
+		if (locationId < oldNumLocations)
 		{
 			// Copy across the old spirits
 			newSpirits[locationId] = m_spirits[locationId];
@@ -897,16 +897,16 @@ void SphereWorld::AddLocation( int _locationId )
 
 void SphereWorld::Render()
 {
-	// For some reason this fixes a slight glitch in the first few frames of the 
+	// For some reason this fixes a slight glitch in the first few frames of the
 	// start sequence on my machine. God knows why, but it won't cause any harm.
 	static int frameCount = 0;
-	if (frameCount < 10) 
+	if (frameCount < 10)
 	{
 		frameCount++;
 		return;
 	}
 
-    RenderWorldShape();    
+    RenderWorldShape();
     RenderIslands();
     RenderTrunkLinks();
 
@@ -929,7 +929,7 @@ void SphereWorld::RenderSpirits()
     // Advance all spirits
 
     for( int locationId = 0; locationId < m_numLocations; ++locationId )
-    {        
+    {
         GlobalLocation *location = g_app->m_globalWorld->GetLocation(locationId);
         if( location )
         {
@@ -941,12 +941,12 @@ void SphereWorld::RenderSpirits()
             }
             else if( !isReceiver && frand(300) < 1.0f )
             {
-                m_spirits[locationId].PutDataAtStart( 1.0f );        
+                m_spirits[locationId].PutDataAtStart( 1.0f );
             }
-    
+
             if( location->m_numSpirits > 0 && frand(20) < 1.0f)
             {
-                m_spirits[locationId].PutDataAtStart( 1.0f );        
+                m_spirits[locationId].PutDataAtStart( 1.0f );
                 location->m_numSpirits--;
             }
 
@@ -954,13 +954,13 @@ void SphereWorld::RenderSpirits()
             {
                 float *thisSpirit = m_spirits[locationId].GetPointer(i);
 
-                if( isReceiver )        *thisSpirit += g_advanceTime * 0.02f;            
+                if( isReceiver )        *thisSpirit += g_advanceTime * 0.02f;
                 else                    *thisSpirit -= g_advanceTime * 0.02f;
-            
+
                 if( *thisSpirit >= 1.0f || *thisSpirit <= 0.0f )
                 {
                     m_spirits[locationId].RemoveData(i);
-                    --i;                
+                    --i;
                 }
             }
         }
@@ -991,7 +991,7 @@ void SphereWorld::RenderSpirits()
             {
                 float *thisSpirit = m_spirits[locationId].GetPointer(i);
 
-                Vector3 fromPos = g_app->m_globalWorld->GetLocationPosition(locationId);        
+                Vector3 fromPos = g_app->m_globalWorld->GetLocationPosition(locationId);
 
                 float alphaValue = *thisSpirit * 3.0f;
                 if( alphaValue > 1.0f ) alphaValue = 1.0f;
@@ -1005,7 +1005,7 @@ void SphereWorld::RenderSpirits()
                 position.z += sinf(*thisSpirit * 16 + timeOffset) * posOffset;
 
                 float scale = 0.4f;
-        
+
                 glColor4f( 0.6f, 0.2f, 0.1f, alphaValue);
                 glBegin( GL_QUADS );
                     glTexCoord2f(0.5f, 0.5f);      glVertex3fv( (position + camUp * 300 * scale).GetData() );
@@ -1013,7 +1013,7 @@ void SphereWorld::RenderSpirits()
                     glTexCoord2f(0.5f, 0.5f);      glVertex3fv( (position - camUp * 300 * scale).GetData() );
                     glTexCoord2f(0.5f, 0.5f);      glVertex3fv( (position - camRight * 300 * scale).GetData() );
                 glEnd();
-    
+
                 glColor4f( 0.6f, 0.2f, 0.1f, alphaValue);
                 glBegin( GL_QUADS );
                     glTexCoord2f(0.5f, 0.5f);      glVertex3fv( (position + camUp * 100 * scale).GetData() );
@@ -1050,10 +1050,10 @@ void SphereWorld::RenderSpirits()
 
 void SphereWorld::RenderWorldShape()
 {
-    START_PROFILE(g_app->m_profiler, "Shape");   
+    START_PROFILE(g_app->m_profiler, "Shape");
 
 	g_app->m_globalWorld->SetupLights();
-	
+
     glEnable        (GL_LIGHTING);
     glEnable        (GL_LIGHT0);
 
@@ -1064,7 +1064,7 @@ void SphereWorld::RenderWorldShape()
 	GLfloat materialSpecular[] = { spec, spec, spec, 1.0f };
    	GLfloat materialDiffuse[] = { diffuse, diffuse, diffuse, 1.0f };
 	GLfloat ambCol[] = { amb, amb, amb, 1.0f };
-   
+
 	glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, materialShininess);
@@ -1078,15 +1078,15 @@ void SphereWorld::RenderWorldShape()
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
     glDisable( GL_CULL_FACE );
-    
+
     //
     // Render outer
 
     m_shapeOuter->Render(0.0f, g_identityMatrix34);
     m_shapeMiddle->Render(0.0f, g_identityMatrix34);
     m_shapeInner->Render(0.0f, g_identityMatrix34);
-    
-    
+
+
     glDisable       (GL_NORMALIZE);
     glPopMatrix     ();
 
@@ -1095,7 +1095,7 @@ void SphereWorld::RenderWorldShape()
     glDisable       (GL_LIGHTING);
     glDisable       (GL_LIGHT0);
     glDisable       (GL_LIGHT1);
-        
+
     END_PROFILE(g_app->m_profiler, "Shape");
 }
 
@@ -1106,13 +1106,13 @@ void SphereWorld::RenderTrunkLinks()
     //if( g_app->m_editing ) return;
 
     Matrix34    rootMat(0);
-    
+
     glEnable    ( GL_BLEND );
     glBlendFunc ( GL_SRC_ALPHA, GL_ONE );
     glDepthMask ( false );
 
     glBegin     ( GL_QUADS );
-    
+
     for( int i = 0; i < g_app->m_globalWorld->m_buildings.Size(); ++i )
     {
         GlobalBuilding *building = g_app->m_globalWorld->m_buildings[i];
@@ -1126,25 +1126,25 @@ void SphereWorld::RenderTrunkLinks()
                 (fromLoc->m_available && toLoc->m_available) ||
                 g_app->m_editing )
             {
-                Vector3 fromPos = g_app->m_globalWorld->GetLocationPosition(building->m_locationId);        
-                Vector3 toPos = g_app->m_globalWorld->GetLocationPosition(building->m_link);        
+                Vector3 fromPos = g_app->m_globalWorld->GetLocationPosition(building->m_locationId);
+                Vector3 toPos = g_app->m_globalWorld->GetLocationPosition(building->m_link);
 
                 if( building->m_online )    glColor4f( 0.4f, 0.3f, 1.0f, 1.0f );
-                else                        glColor4f( 0.4f, 0.3f, 1.0f, 0.4f );                
-                            
+                else                        glColor4f( 0.4f, 0.3f, 1.0f, 0.4f );
+
                 //fromPos *= 120.0f;
                 //toPos *= 120.0f;
-            
+
                 Vector3 midPoint        = fromPos + (toPos - fromPos)/2.0f;
                 Vector3 camToMidPoint   = g_app->m_camera->GetPos() - midPoint;
                 Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
-            
+
                 rightAngle *= 200.0f;
-            
+
                 glVertex3fv( (fromPos - rightAngle).GetData() );
                 glVertex3fv( (fromPos + rightAngle).GetData() );
-                glVertex3fv( (toPos + rightAngle).GetData() );                
-                glVertex3fv( (toPos - rightAngle).GetData() );                     
+                glVertex3fv( (toPos + rightAngle).GetData() );
+                glVertex3fv( (toPos - rightAngle).GetData() );
             }
         }
     }
@@ -1177,17 +1177,17 @@ void SphereWorld::RenderHeaven()
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/glow.bmp" ) );
-    
+
     for( int i = 0; i < 50; ++i )
     {
-        Vector3 pos( sinf(i/g_gameTime+i) * 20, 
-                     sinf(g_gameTime+i) * i, 
+        Vector3 pos( sinf(i/g_gameTime+i) * 20,
+                     sinf(g_gameTime+i) * i,
                      cosf(i/g_gameTime+i) * 20 );
-        
+
         float size = i;
 
         glColor4f( 0.6f, 0.2f, 0.1f, 0.9f);
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
@@ -1195,18 +1195,18 @@ void SphereWorld::RenderHeaven()
             glTexCoord2i(0,1);      glVertex3fv( (pos - camRight * size - camUp * size).GetData() );
         glEnd();
     }
-    
-       
+
+
     glPopMatrix     ();
- 
+
     //
-    // Render god rays going down 
+    // Render god rays going down
 
 /*
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/godray.bmp" ) );
-    
+
 	for (int i = 0; i < g_app->m_globalWorld->m_locations.Size(); ++i)
-	{        
+	{
 		GlobalLocation *loc = g_app->m_globalWorld->m_locations.GetData(i);
         Vector3 islandPos = g_app->m_globalWorld->GetLocationPosition(loc->m_id );
         Vector3 centrePos = g_zeroVector;
@@ -1224,7 +1224,7 @@ void SphereWorld::RenderHeaven()
             lineToCentre.Normalise();
 
             glColor4f( 0.6f, 0.2f, 0.1f, 0.8f);
-            
+
             glBegin( GL_QUADS );
                 glTexCoord2f(0.75f,0);      glVertex3fv( (centrePos - lineToCentre * 1000).GetData() );
                 glTexCoord2f(0.75f,1);      glVertex3fv( (centrePos + lineToCentre * 1000).GetData() );
@@ -1241,7 +1241,7 @@ void SphereWorld::RenderHeaven()
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDisable       ( GL_BLEND );
     glDepthMask     ( true );
-    
+
     END_PROFILE( g_app->m_profiler, "Heaven" );
 }
 
@@ -1287,14 +1287,14 @@ void SphereWorld::RenderIslands()
             if( !loc->m_missionCompleted &&
                 stricmp( loc->m_missionFilename, "null" ) != 0 &&
                 fmodf( g_gameTime, 1.0f ) < 0.7f ) numRedraws = 10;
-            
+
             glBegin( GL_QUADS );
             for( int j = 0; j <= numRedraws; ++j )
             {
                 glTexCoord2i(0,0);      glVertex3fv( (islandPos + camUp * 1000 * j).GetData() );
                 glTexCoord2i(1,0);      glVertex3fv( (islandPos + camRight * 1000 * j).GetData() );
                 glTexCoord2i(1,1);      glVertex3fv( (islandPos - camUp * 1000 * j).GetData() );
-                glTexCoord2i(0,1);      glVertex3fv( (islandPos - camRight * 1000 * j).GetData() );            
+                glTexCoord2i(0,1);      glVertex3fv( (islandPos - camRight * 1000 * j).GetData() );
             }
             glEnd();
         }
@@ -1305,13 +1305,13 @@ void SphereWorld::RenderIslands()
     glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDepthMask ( true );
     glEnable    ( GL_DEPTH_TEST );
-    
+
 
 	//
     // Render the islands names
 
     glColor4f(1.0f,1.0f,1.0f,1.0f);
-    
+
 	for (int i = 0; i < g_app->m_globalWorld->m_locations.Size(); ++i)
 	{
 		GlobalLocation *loc = g_app->m_globalWorld->m_locations.GetData(i);
@@ -1320,7 +1320,7 @@ void SphereWorld::RenderIslands()
 		    Vector3 islandPos = g_app->m_globalWorld->GetLocationPosition(loc->m_id );
             char *islandName = strdup( g_app->m_globalWorld->GetLocationNameTranslated( loc->m_id ) );
             strupr(islandName);
-        
+
             float size = 5.0f * sqrtf(( g_app->m_camera->GetPos() - islandPos ).Mag());
             size = 1000.0f;
 
@@ -1336,13 +1336,13 @@ void SphereWorld::RenderIslands()
 
             islandPos += camUp * size * 0.3f;
             islandPos += camRight * size * 0.1f;
-            
+
             g_gameFont.SetRenderShadow( false );
             glColor4f(1.0f,1.0f,1.0f,1.0f);
             if( stricmp(loc->m_missionFilename, "null" ) == 0 ) glColor4f(0.5f,0.5f,0.5f,1.0f);
-            
+
             g_gameFont.DrawText3DCentre(islandPos + camUp * size*1.5f, size*3.0f, islandName );
-            
+
             if( g_app->m_editing )
             {
                 g_gameFont.DrawText3DCentre(islandPos, size, loc->m_mapFilename );
@@ -1385,7 +1385,7 @@ GlobalWorld::GlobalWorld(GlobalWorld &_other)
 	m_locationRequested(-1)
 {
     m_research = new GlobalResearch();
-    
+
     for (int i = 0; i < _other.m_locations.Size(); ++i)
 	{
 		GlobalLocation *newLoc = new GlobalLocation(*(_other.m_locations[i]));
@@ -1444,7 +1444,7 @@ void GlobalWorld::Advance()
             {
 			    Vector3 rayStart, rayDir;
 			    g_app->m_camera->GetClickRay( g_target->X(), g_target->Y(), &rayStart, &rayDir );
-			    m_editorSelectionId = LocationHit(rayStart, rayDir);                
+			    m_editorSelectionId = LocationHit(rayStart, rayDir);
             }
             else if( g_inputManager->controlEvent( ControlLocationDragActive ) )
             {
@@ -1452,7 +1452,7 @@ void GlobalWorld::Advance()
                 if( loc )
                 {
                 	Vector3 mousePos3D = g_app->m_userInput->GetMousePos3d();
-                    loc->m_pos = mousePos3D / 120.0f;    
+                    loc->m_pos = mousePos3D / 120.0f;
                 }
             }
             else if( g_inputManager->controlEvent( ControlDeselectLocation ) )
@@ -1462,13 +1462,13 @@ void GlobalWorld::Advance()
         }
 	}
 	else
-	{   
+	{
 		bool chatLog = g_app->m_sepulveda->ChatLogVisible();
 
 		// Has the user clicked on a location?
 		if ( g_inputManager->controlEvent( ControlSelectLocation ) &&
 		     m_locationRequested == -1 &&
-		     EclGetWindows()->Size() == 0 
+		     EclGetWindows()->Size() == 0
 			 && !chatLog )
 		{
 			Vector3 rayStart, rayDir;
@@ -1482,17 +1482,17 @@ void GlobalWorld::Advance()
 				{
 					if (!g_app->m_script->IsRunningScript()) {
 						if ( !g_app->HasBoughtGame() ) {
-							// We're not registered, we should run a script to end 
+							// We're not registered, we should run a script to end
 							if (!(strcmp(loc->m_mapFilename, "map_garden.txt") == 0 ||
 								  strcmp(loc->m_mapFilename, "map_containment.txt") == 0)) {
-								  								
+
 								// Buy me URL
 								EclRegisterWindow( new BuyNowWindow );
-								
+
 								// Bar Location
 								return;
 							}
-						} 
+						}
 					}
 
 					// Default behaviour is to go the location
@@ -1539,7 +1539,7 @@ void GlobalWorld::Advance()
 void GlobalWorld::Render()
 {
     START_PROFILE(g_app->m_profiler, "Render Global World");
-    
+
 	if( !g_app->m_editing ) m_globalInternet->Render();
 	CHECK_OPENGL_STATE();
     m_sphereWorld->Render();
@@ -1558,8 +1558,8 @@ int	GlobalWorld::LocationHit(Vector3 const &_pos, Vector3 const &_dir, float loc
     for( int i = 0; i < m_locations.Size(); ++i )
     {
         GlobalLocation *gl = m_locations[i];
-        Vector3 locPos = GetLocationPosition( gl->m_id );               
-        
+        Vector3 locPos = GetLocationPosition( gl->m_id );
+
 		bool hit = RaySphereIntersection(_pos, _dir, locPos, locationRadius);
 		if (hit)
 		{
@@ -1594,7 +1594,7 @@ GlobalLocation *GlobalWorld::GetHighlightedLocation()
     Vector3 rayStart, rayDir;
 	g_app->m_camera->GetClickRay(screenX, screenY, &rayStart, &rayDir);
 	int locId = g_app->m_globalWorld->LocationHit(rayStart, rayDir);
-    
+
     GlobalLocation *loc = GetLocation( locId );
 
     if( loc && loc->m_available ) return loc;
@@ -1627,7 +1627,7 @@ int GlobalWorld::GetLocationId( char const *_name )
         }
     }
 
-    return -1;    
+    return -1;
 }
 
 
@@ -1680,7 +1680,7 @@ Vector3 GlobalWorld::GetLocationPosition(int _id)
 GlobalBuilding *GlobalWorld::GetBuilding( int _id, int _locationId )
 {
     if( _id == -1 || _locationId == -1 ) return NULL;
-    
+
     for( int i = 0; i < m_buildings.Size(); ++i )
     {
         GlobalBuilding *buil = m_buildings[i];
@@ -1689,7 +1689,7 @@ GlobalBuilding *GlobalWorld::GetBuilding( int _id, int _locationId )
             return buil;
         }
     }
-    
+
     return NULL;
 }
 
@@ -1722,7 +1722,7 @@ void GlobalWorld::AddBuilding( GlobalBuilding *building )
     {
         m_nextBuildingId = building->m_id + 1;
     }
-    
+
     m_buildings.PutData( building );
 }
 
@@ -1731,7 +1731,7 @@ void GlobalWorld::WriteLocations( FileWriter *_out )
 {
     _out->printf( "Locations_StartDefinition\n" );
     _out->printf( "\t# Id  Avail                   mapFile                    missionFile\n" );
-    _out->printf( "\t# ==================================================================\n" );                    
+    _out->printf( "\t# ==================================================================\n" );
 
     for( int i = 0; i < m_locations.Size(); ++i )
     {
@@ -1739,7 +1739,7 @@ void GlobalWorld::WriteLocations( FileWriter *_out )
         _out->printf( "\t%4d %4d %30s %40s\n",
                          location->m_id, int(location->m_available), location->m_mapFilename, location->m_missionFilename );
     }
-    
+
     _out->printf( "Locations_EndDefinition\n\n" );
 }
 
@@ -1789,13 +1789,13 @@ void GlobalWorld::ParseLocations( TextReader *_in )
 		}
 
         GlobalLocation *location = new GlobalLocation();
-        
+
 		location->m_id          = atoi(word);
         location->m_available   = bool( atoi(_in->GetNextToken() ) );
 
         strcpy( location->m_mapFilename, _in->GetNextToken());
-        strcpy( location->m_missionFilename, _in->GetNextToken());        
-        
+        strcpy( location->m_missionFilename, _in->GetNextToken());
+
         strcpy( location->m_name, (location->m_mapFilename+4) );
         location->m_name[ strlen(location->m_name)-4 ] = '\x0';
 
@@ -1818,7 +1818,7 @@ void GlobalWorld::ParseBuildings( TextReader *_in )
 		}
 
         GlobalBuilding *building = new GlobalBuilding();
-        
+
         building->m_id          = atoi(word);
         building->m_teamId      = atoi(_in->GetNextToken());
         building->m_locationId  = atoi(_in->GetNextToken());
@@ -1862,7 +1862,7 @@ void GlobalWorld::AddLevelBuildingToGlobalBuildings(Building *_building, int _lo
 			gb = new GlobalBuilding();
 			gb->m_type = _building->m_type;
 			gb->m_locationId = _locId;
-			gb->m_id = _building->m_id.GetUniqueId(); 
+			gb->m_id = _building->m_id.GetUniqueId();
             gb->m_teamId = _building->m_id.GetTeamId();
 			m_buildings.PutData(gb);
 
@@ -1872,22 +1872,22 @@ void GlobalWorld::AddLevelBuildingToGlobalBuildings(Building *_building, int _lo
 			}
 		}
 		gb->m_pos = _building->m_pos;
-	}            
+	}
 }
 
 void GlobalWorld::LoadGame( char *_filename )
 {
     TextReader *in = NULL;
     char fullFilename[256];
-    
+
     if( !g_app->m_editing )
-    {   
+    {
         sprintf( fullFilename, "%susers/%s/%s", g_app->GetProfileDirectory(), g_app->m_userProfileName, _filename );
-        if( DoesFileExist( fullFilename ) ) in = new TextFileReader( fullFilename ); 
+        if( DoesFileExist( fullFilename ) ) in = new TextFileReader( fullFilename );
     }
 
     if( !in )
-    {        
+    {
         in = g_app->m_resource->GetTextReader(_filename);
     }
 
@@ -1928,7 +1928,7 @@ void GlobalWorld::LoadGame( char *_filename )
     // Load locations
 
     LoadLocations( "locations.txt" );
-    
+
 
     //
     // Load all map files into memory
@@ -1947,15 +1947,15 @@ void GlobalWorld::LoadGame( char *_filename )
 			Building *building = levFile.m_buildings[b];
 			AddLevelBuildingToGlobalBuildings(building, loc->m_id);
 		}
-        
-        
+
+
         char filter[256];
 		sprintf(filter, "mission_%s*.txt", GetLocationName(loc->m_id));
 		LList<char *> *missionFileNames = g_app->m_resource->ListResources("levels/", filter, false);
 		for (int j = 0; j < missionFileNames->Size(); ++j)
 		{
 			LevelFile levFile(missionFileNames->GetData(j), loc->m_mapFilename);
-			
+
 			for( int b = 0; b < levFile.m_buildings.Size(); ++b )
 			{
 				Building *building = levFile.m_buildings[b];
@@ -1967,10 +1967,10 @@ void GlobalWorld::LoadGame( char *_filename )
                 {
                     if( !building->m_dynamic )
                     {
-                        DebugOut( "%s found on level %s should be dynamic (otherwise save games wont work)\n", 
+                        DebugOut( "%s found on level %s should be dynamic (otherwise save games wont work)\n",
                                     Building::GetTypeName(building->m_type),
                                     GetLocationName(loc->m_id) );
-                    }                    
+                    }
                 }
 			}
 
@@ -2017,12 +2017,12 @@ void GlobalWorld::SaveGame( char *_filename )
     {
         out = g_app->m_resource->GetFileWriter( _filename, false );
     }
-    
+
     WriteLocations(out);
     WriteBuildings(out);
     m_research->Write(out);
     WriteTutorial(out);
-    WriteEvents(out);    
+    WriteEvents(out);
 
     delete out;
 }
@@ -2082,12 +2082,12 @@ void GlobalWorld::LoadLocations(char *_filename)
 	while(in->ReadLine())
     {
 		if (!in->TokenAvailable()) continue;
-		
+
         int locIndex    = atoi( in->GetNextToken() );
         float posX      = atof( in->GetNextToken() );
         float posY      = atof( in->GetNextToken() );
         float posZ      = atof( in->GetNextToken() );
-        
+
         GlobalLocation *location = GetLocation( locIndex );
         if( location ) location->m_pos.Set( posX, posY, posZ );
     }
@@ -2103,7 +2103,7 @@ void GlobalWorld::SaveLocations(char *_filename)
     out->printf( "# ================================\n" );
     out->printf( "# id   x        y        z\n" );
     out->printf( "# ================================\n\n" );
-    
+
     for( int i = 0; i < m_locations.Size(); ++i )
     {
         GlobalLocation *loc = m_locations[i];
@@ -2119,7 +2119,7 @@ int GlobalWorld::GenerateBuildingId()
 {
     int id = 0;
     while( true )
-    {   
+    {
         if( !g_app->m_location->GetBuilding(id) )
         {
             break;
@@ -2138,7 +2138,7 @@ bool GlobalWorld::EvaluateEvents()
 {
     if( g_app->m_script &&
         g_app->m_script->IsRunningScript() ) return true;
-    
+
     for( int i = 0; i < m_events.Size(); ++i )
     {
         GlobalEvent *event = m_events[i];
@@ -2165,7 +2165,7 @@ void GlobalWorld::TransferSpirits(int _locationId)
 {
     //
     // Count how many spirits remain on the location
-    
+
     DarwiniaDebugAssert( g_app->m_location );
     int remainingSpirits = g_app->m_location->m_spirits.NumUsed();
 
@@ -2174,7 +2174,7 @@ void GlobalWorld::TransferSpirits(int _locationId)
 
     int spiritCount = location->m_numSpirits + remainingSpirits/2;
     location->m_numSpirits = remainingSpirits/2;
-    
+
 	float position = 1.0f;
 	for( int i = 0; i < spiritCount; ++i )
 	{
@@ -2192,7 +2192,7 @@ void GlobalWorld::SetupLights()
 	Vector3 light0(0, 1, 0);
 	light0.Normalise();
 	GLfloat light0AsFourFloats[] = { light0.x, light0.y, light0.z, 0.0f };
-    
+
 	glLightfv(GL_LIGHT0, GL_POSITION, light0AsFourFloats);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, colour1);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, colour1);

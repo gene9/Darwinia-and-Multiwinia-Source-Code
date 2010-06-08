@@ -47,15 +47,15 @@ void SystemInfo::GetAudioDetails()
 	m_audioInfo.m_numDevices = 1;
 	m_audioInfo.m_preferredDevice = 0;
 	m_audioInfo.m_deviceNames = new char *[m_audioInfo.m_numDevices];
-		
+
 	for (int i = 0; i < m_audioInfo.m_numDevices; i++) {
 		m_audioInfo.m_deviceNames[i] = NewStr("Mac OS X Audio");
 	}
-	
-	DarwiniaReleaseAssert(m_audioInfo.m_numDevices > 0, "No Audio Hardware Found");	
+
+	DarwiniaReleaseAssert(m_audioInfo.m_numDevices > 0, "No Audio Hardware Found");
 }
 
 void SystemInfo::GetDirectXVersion()
 {
-	m_directXVersion = 0; 
+	m_directXVersion = 0;
 }

@@ -21,31 +21,31 @@ public:
         StateToIncubator,                   // Travelling to factory with spirit
         StateToControlTower,                // Travelling to control tower
         StateReprogramming,                 // Reprogramming control tower
-        StateToBridge,                      // Travelling to bridge        
+        StateToBridge,                      // Travelling to bridge
         StateOperatingBridge,               // Holding a bridge open
         StateToResearchItem,                // Travelling to research item
         StateResearching                    // Reprogramming a research item
     };
-       
+
     int         m_state;
     Vector3     m_wayPoint;                             // User specified waypoint
 
 protected:
     float       m_hoverHeight;
     float       m_idleRotateRate;
-        
+
     Vector3     m_targetPos;                            // Our internal target position
     Vector3     m_targetFront;                          // and orientation
-    
-    float       m_retargetTimer;                        
+
+    float       m_retargetTimer;
     LList       <int> m_spirits;                        // Collector only, Spirits already collected
     int         m_spiritId;                             // Collector only, current target spirit
-    
+
     int         m_positionId;                           // Position on the building we are working on
     int         m_bridgeId;                             // Building ID of a bridge we own
-    
-    LList       <Vector3 *> m_positionHistory;          
-    
+
+    LList       <Vector3 *> m_positionHistory;
+
 protected:
     bool SearchForRandomPosition();
     bool SearchForSpirits();
@@ -70,7 +70,7 @@ public:
     Engineer();
 
     void Begin                  ();
-    bool Advance                ( Unit *_unit );    
+    bool Advance                ( Unit *_unit );
 
     void BeginBridge            ( Vector3 _to );
     void EndBridge              ();

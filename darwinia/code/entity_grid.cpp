@@ -143,7 +143,7 @@ void EntityGridCell::AddObjectId(WorldObjectId _objectId)
 	}
 
 	int target = m_firstFree;
-	
+
     DarwiniaDebugAssert( target >= 0 );
     DarwiniaDebugAssert( target < m_arraySize);
 
@@ -188,7 +188,7 @@ void LogEntityGridError( WorldObjectId _id, Vector3 const &_pos, int _error )
     for( int i = 0; i < s_entityGridErrors.Size(); ++i )
     {
         EntityGridError *theError = s_entityGridErrors[i];
-        if( theError->m_id == _id ) 
+        if( theError->m_id == _id )
         {
             // The error already exists
             return;
@@ -200,7 +200,7 @@ void LogEntityGridError( WorldObjectId _id, Vector3 const &_pos, int _error )
     theError->m_errorCode = _error;
     s_entityGridErrors.PutData( theError );
 #else
-    DarwiniaDebugAssert( false );            
+    DarwiniaDebugAssert( false );
 #endif
 }
 
@@ -225,7 +225,7 @@ EntityGrid::EntityGrid(float _cellSizeX, float _cellSizeZ)
     {
         m_cells[t] = new EntityGridCell[m_numCellsX * m_numCellsZ];
     }
-    
+
 //	SetNewReportingThreshold(-1);
 }
 
@@ -238,7 +238,7 @@ void EntityGrid::EnsureMaxNeighbours( int _maxNeighbours )
 
         int newMaxNeighbours = m_maxNeighbours + 100;
         WorldObjectId *newNeighbours = new WorldObjectId[ newMaxNeighbours ];
-        
+
         if( m_neighbours )
         {
             memcpy( newNeighbours, m_neighbours, m_maxNeighbours * sizeof(WorldObjectId) );
@@ -301,7 +301,7 @@ EntityGridCell *EntityGrid::GetCell(int _indexX, int _indexZ, int _team)
 // WorldX and WorldY MUST BE VALID
 // ObjectID MUST NOT already exist within the grid cell
 void EntityGrid::AddObject (WorldObjectId _objectID, float _worldX, float _worldZ, float _radius )
-{    
+{
     int teamId = _objectID.GetTeamId();
     if( teamId == 255 ) return;
 
@@ -321,7 +321,7 @@ void EntityGrid::AddObject (WorldObjectId _objectID, float _worldX, float _world
         rightMostCell   = min(m_numCellsX - 1, rightMostCell);
         upMostCell      = max(0, upMostCell);
         downMostCell    = min(m_numCellsZ - 1, downMostCell);
-        
+
         for( int x = leftMostCell; x <= rightMostCell; ++x )
         {
             for( int z = upMostCell; z <= downMostCell; ++z )
@@ -359,7 +359,7 @@ void EntityGrid::RemoveObject (WorldObjectId _objectID, float _worldX, float _wo
         rightMostCell   = min(m_numCellsX - 1, rightMostCell);
         upMostCell      = max(0, upMostCell);
         downMostCell    = min(m_numCellsZ - 1, downMostCell);
-        
+
         for( int x = leftMostCell; x <= rightMostCell; ++x )
         {
             for( int z = upMostCell; z <= downMostCell; ++z )
@@ -384,7 +384,7 @@ void EntityGrid::UpdateObject (WorldObjectId _objectId, float _oldWorldX, float 
     int newIndexX = GetGridIndexX(_newWorldX);
     int newIndexZ = GetGridIndexZ(_newWorldZ);
 
-    if ( oldIndexX != newIndexX || 
+    if ( oldIndexX != newIndexX ||
          oldIndexZ != newIndexZ ||
          _radius > 0.0f )
     {
@@ -412,7 +412,7 @@ WorldObjectId *EntityGrid::GetEnemies(float _worldX, float _worldZ, float _range
 // *** GetBestEnemy
 // Returns the nearest enemy with between the _minRange and _maxRange.
 // Returns an "invalid" WorldObjectId if no enemy is within that range.
-WorldObjectId EntityGrid::GetBestEnemy(float _worldX, float _worldZ, 
+WorldObjectId EntityGrid::GetBestEnemy(float _worldX, float _worldZ,
 								   float _minRange, float _maxRange, unsigned char _myTeam)
 {
     int numFound;
@@ -458,7 +458,7 @@ WorldObjectId *EntityGrid::GetFriends(float _worldX, float _worldZ, float _range
 
 
 // *** GetNeighbours
-WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _range, 
+WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _range,
 										 int *_numNeighbours)
 {
     bool include[NUM_TEAMS];
@@ -469,11 +469,11 @@ WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _ra
 
 
 // *** GetNeighbours
-WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _range, 
+WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _range,
             							 int *_numFound, bool _includeTeam[NUM_TEAMS] )
 {
     int numFoundSoFar = 0;
-    
+
     // Find out which cells to look it
     int leftMostCell = GetGridIndexX(_worldX - _range);
     int rightMostCell = GetGridIndexX(_worldX + _range);
@@ -497,14 +497,14 @@ WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _ra
                 if( _includeTeam[t] )
                 {
                     EntityGridCell *ogc = GetCell(x, z, t);
-            
+
                     for (int i = 0; i < ogc->m_arraySize; i++)
                     {
                         WorldObjectId const &objId = ogc->m_objectIds[i];
 
                         if (!objId.IsValid()) continue;
 
-                        // Is this ID already added?  
+                        // Is this ID already added?
                         // (some entities occupy more than one entity grid square)
                         bool added = false;
                         for( int j = 0; j < numFoundSoFar; ++j )
@@ -518,9 +518,9 @@ WorldObjectId *EntityGrid::GetNeighbours(float _worldX, float _worldZ, float _ra
                         if( added ) continue;
 
                         Entity *obj = g_app->m_location->GetEntity( objId );
-                        if( !obj ) 
+                        if( !obj )
                         {
-                            LogEntityGridError( objId, Vector3(x*m_cellSizeX, 0.0f, z*m_cellSizeZ), 1 );                
+                            LogEntityGridError( objId, Vector3(x*m_cellSizeX, 0.0f, z*m_cellSizeZ), 1 );
                             continue;
                         }
 
@@ -573,14 +573,14 @@ int EntityGrid::GetNumNeighbours(float _worldX, float _worldZ, float _range, boo
                 if( _includeTeam[t] )
                 {
                     EntityGridCell *ogc = GetCell(x, z, t);
-            
+
                     for (int i = 0; i < ogc->m_arraySize; i++)
                     {
                         WorldObjectId const &objId = ogc->m_objectIds[i];
-                
+
                         if (!objId.IsValid()) continue;
 
-                        // Is this ID already added?  
+                        // Is this ID already added?
                         // (some entities occupy more than one entity grid square)
                         bool added = false;
                         for( int j = 0; j < numFoundSoFar; ++j )
@@ -611,7 +611,7 @@ int EntityGrid::GetNumFriends(float _worldX, float _worldZ, float _range, unsign
     bool includeTeam[NUM_TEAMS];
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        includeTeam[i] = g_app->m_location->IsFriend( i, _myTeam );        
+        includeTeam[i] = g_app->m_location->IsFriend( i, _myTeam );
     }
 
     return GetNumNeighbours( _worldX, _worldZ, _range, includeTeam );
@@ -623,7 +623,7 @@ int EntityGrid::GetNumEnemies(float _worldX, float _worldZ, float _range, unsign
     bool includeTeam[NUM_TEAMS];
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        includeTeam[i] = !g_app->m_location->IsFriend( i, _myTeam );        
+        includeTeam[i] = !g_app->m_location->IsFriend( i, _myTeam );
     }
 
     return GetNumNeighbours( _worldX, _worldZ, _range, includeTeam );
@@ -672,7 +672,7 @@ bool EntityGrid::AreEnemiesPresent(float _worldX, float _worldZ, float _range, u
     bool includeTeam[NUM_TEAMS];
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        includeTeam[i] = !g_app->m_location->IsFriend( i, _myTeam );        
+        includeTeam[i] = !g_app->m_location->IsFriend( i, _myTeam );
     }
 
     return AreNeighboursPresent( _worldX, _worldZ, _range, includeTeam );
@@ -684,7 +684,7 @@ bool EntityGrid::AreFriendsPresent(float _worldX, float _worldZ, float _range, u
     bool includeTeam[NUM_TEAMS];
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        includeTeam[i] = g_app->m_location->IsFriend( i, _myTeam );        
+        includeTeam[i] = g_app->m_location->IsFriend( i, _myTeam );
     }
 
     return AreNeighboursPresent( _worldX, _worldZ, _range, includeTeam );
@@ -700,11 +700,11 @@ void EntityGrid::Render ()
 
     float cellSizeX = g_app->m_location->m_landscape.GetWorldSizeX() / (float) m_numCellsX;
     float cellSizeZ = g_app->m_location->m_landscape.GetWorldSizeZ() / (float) m_numCellsZ;
- 
+
     glDisable( GL_CULL_FACE );
     glEnable( GL_BLEND );
 
-    for ( x = 0; x < m_numCellsX; ++x ) 
+    for ( x = 0; x < m_numCellsX; ++x )
     {
         float worldX = ((float) x / (float) m_numCellsX) * g_app->m_location->m_landscape.GetWorldSizeX();
         for ( z = 0; z < m_numCellsZ; ++z )
@@ -719,7 +719,7 @@ void EntityGrid::Render ()
                      float worldZ = ((float) z / (float) m_numCellsZ) * g_app->m_location->m_landscape.GetWorldSizeZ();
                      float worldY = g_app->m_location->m_landscape.m_heightMap->GetValue( worldX, worldZ ) + 10.0f;
                      worldY = 100.0f + t * 30.0f;
-                
+
                      float alpha = 128;
                      RGBAColour col = g_app->m_location->m_teams[t].m_colour;
                      glColor4ub(col.r, col.g, col.b, alpha);
@@ -776,16 +776,16 @@ void EntityGrid::Render ()
             for( int z = 0; z < m_numCellsZ; ++z )
             {
                 EntityGridCell *ogc = GetCell(x, z);
-            
+
                 for (int i = 0; i < ogc->m_arraySize; i++)
                 {
-                    WorldObjectId const &objId = ogc->m_objectIds[i];				    
+                    WorldObjectId const &objId = ogc->m_objectIds[i];
                     if (!objId.IsValid()) continue;
 
                     Entity *obj = g_app->m_location->GetEntity( objId );
-                    if( !obj ) 
+                    if( !obj )
                     {
-                        LogEntityGridError( objId, Vector3(x*m_cellSizeX, 0.0f, z*m_cellSizeZ), 1 );                                        
+                        LogEntityGridError( objId, Vector3(x*m_cellSizeX, 0.0f, z*m_cellSizeZ), 1 );
                     }
                 }
             }

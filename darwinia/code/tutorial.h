@@ -39,16 +39,16 @@ class Demo1Tutorial : public Tutorial
 protected:
     void HandleSquadDeath();                // Before first incubator
     void HandleSquadDeath2();               // After first incubator
-    
+
     void HandleEngineerDeath();             // first incubator
     void HandleEngineerDeath2();            // second incubator
-    
+
     void TriggerChapter( int _chapter );
     bool AdvanceCurrentChapter();
 
 public:
     Demo1Tutorial();
-    
+
 };
 
 
@@ -66,12 +66,12 @@ protected:
 
 protected:
     static float s_playerBusyTimer;
-    
+
 public:
     Demo2Tutorial();
-        
+
     static void BeginPlayerBusyCheck();
-    static bool IsPlayerBusy();   
+    static bool IsPlayerBusy();
 };
 
 

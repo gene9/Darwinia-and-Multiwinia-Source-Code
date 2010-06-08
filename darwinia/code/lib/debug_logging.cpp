@@ -3,7 +3,7 @@
 
 DarwiniaLogBuffer g_log;
 
-DarwiniaLogBuffer::DarwiniaLogBuffer(int _size) 
+DarwiniaLogBuffer::DarwiniaLogBuffer(int _size)
 	: m_size(_size), m_head(0), m_used(0), m_msgs(new DarwiniaLogMsg *[_size])
 {
 	for (int i = 0; i < m_size; i++)
@@ -32,10 +32,10 @@ void DisplayLog()
 const char *SkipRelativePathPrefix(const char *_filename)
 {
 	const char *filename = _filename;
-	
+
 	while (*filename == '.' || *filename == '/')
 		filename++;
-		
+
 	return filename;
 }
 

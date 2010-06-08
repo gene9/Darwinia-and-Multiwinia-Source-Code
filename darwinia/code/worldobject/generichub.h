@@ -22,17 +22,17 @@ public:
 
 public:
     DynamicBase();
-    
+
     void Initialise     ( Building *_template );
     bool Advance        ();
     void Render         ( float _predictionTime );
 
     void ListSoundEvents( LList<char *> *_list );
 
-    void Read           ( TextReader *_in, bool _dynamic );     
-    void Write          ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
+    void Read           ( TextReader *_in, bool _dynamic );
+    void Write          ( FileWriter *_out );
+
+    int  GetBuildingLink();
     void SetBuildingLink( int _buildingId );
 
     Vector3 GetPowerLocation();
@@ -78,7 +78,7 @@ public:
 
     bool ChangeScore        ( int _points );
 
-    void Read           ( TextReader *_in, bool _dynamic );     
+    void Read           ( TextReader *_in, bool _dynamic );
     void Write          ( FileWriter *_out );
 
     int  PointsPerHub    ();     // the number of points each node supplies if there is a minimum active node limit
@@ -91,21 +91,21 @@ public:
 
 class DynamicNode : public DynamicBase
 {
-protected:    
+protected:
     bool m_operating;
 
 public:
     int m_scoreValue;       // the number of points that will be added to the connected hubs score every second, if this Node is active
     float m_scoreTimer;
     int m_scoreSupplied;     // the number of points this node has already given the hub
-    
+
 public:
     DynamicNode();
 
 
     void Initialise     ( Building *_template );
     bool Advance        ();
-        
+
     void Render         ( float _predictionTime );
     void RenderPorts    ();
     void RenderAlphas   ( float _predictionTime );
@@ -114,7 +114,7 @@ public:
 
     void ReprogramComplete();
 
-    void Read           ( TextReader *_in, bool _dynamic );     
+    void Read           ( TextReader *_in, bool _dynamic );
     void Write          ( FileWriter *_out );
 };
 

@@ -44,7 +44,7 @@ bool Cave::Advance()
     m_spawnTimer -= SERVER_ADVANCE_PERIOD;
 
     if( m_spawnTimer <= 0.0f )
-    {        
+    {
         //
         // Only spawn if the area is sufficiently empty
 
@@ -60,7 +60,7 @@ bool Cave::Advance()
             //int numToCreate = int( syncfrand(5.0f) + 3.0f );
             Team *team = &g_app->m_location->m_teams[m_id.GetTeamId()];
 
-            //Unit *unit = team->NewUnit( m_troopType, numToCreate, &m_unitId );                        
+            //Unit *unit = team->NewUnit( m_troopType, numToCreate, &m_unitId );
             //unit->m_wayPoint = spawnPoint + worldMat.f * 25.0f;
             //unit->m_wayPoint += Vector3( syncsfrand(25.0f), 0.0f, syncsfrand(25.0f) );
             //unit->m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( unit->m_wayPoint.x, unit->m_wayPoint.z );

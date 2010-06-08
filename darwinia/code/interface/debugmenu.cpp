@@ -229,7 +229,7 @@ void DebugMenu::Create()
     button->SetShortProperties( "Profile (F6)", 10, y += pitch, m_w - 20 );
     RegisterButton( button );
 #endif // PROFILER_ENABLED
-    
+
     button = new NetworkButton();
     button->SetShortProperties( "Network Stats", 10, y += pitch, m_w - 20 );
     RegisterButton( button );
@@ -239,7 +239,7 @@ void DebugMenu::Create()
 	RegisterButton( button );
 
 	y += pitch / 2.0f;
-    
+
 	y += pitch / 2.0f;
 
 	button = new DebugCameraButton();
@@ -249,7 +249,7 @@ void DebugMenu::Create()
 	y += pitch / 2.0f;
 
     bool modsEnabled = g_prefsManager->GetInt( "ModSystemEnabled", 0 ) != 0;
-	
+
 #ifdef LOCATION_EDITOR
     if( modsEnabled )
     {
@@ -326,14 +326,14 @@ void DebugMenu::Render(bool hasFocus)
 
 	switch (g_app->m_camera->GetDebugMode())
 	{
-		case Camera::DebugModeAlways:	
-			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Always"); 
+		case Camera::DebugModeAlways:
+			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Always");
 			break;
-		case Camera::DebugModeAuto:		
-			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Auto"); 
+		case Camera::DebugModeAuto:
+			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Auto");
 			break;
-		case Camera::DebugModeNever:	
-			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Never"); 
+		case Camera::DebugModeNever:
+			g_editorFont.DrawText2D(m_x + m_w - 47, y, 10, "Never");
 			break;
 	}
 }
@@ -430,7 +430,7 @@ void DebugKeyBindings::PokeyButton()
 	    pokeyWin->m_h = 480;
 	    pokeyWin->m_x = 10;
 	    pokeyWin->m_y = 40;
-	    EclRegisterWindow(pokeyWin);                
+	    EclRegisterWindow(pokeyWin);
     }
 }
 #endif // SOUND_EDITOR
@@ -521,7 +521,7 @@ void DebugKeyBindings::SoundEditorButton()
 void DebugKeyBindings::ReallyQuitButton()
 {
 	// Bring up a really quit window
-	if (!EclGetWindow(REALLYQUIT_WINDOWNAME)) 
+	if (!EclGetWindow(REALLYQUIT_WINDOWNAME))
 		EclRegisterWindow( new ReallyQuitWindow() );
 }
 

@@ -80,7 +80,7 @@ extern ActiveTextureARB gglActiveTextureARB;
 #define GL_BUFFER_MAPPED_ARB                            0x88BC
 
 #define GL_BUFFER_MAP_POINTER_ARB                       0x88BD
-			
+
 typedef ptrdiff_t GLintptrARB;
 typedef ptrdiff_t GLsizeiptrARB;
 

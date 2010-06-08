@@ -8,7 +8,7 @@ static ControlAction s_actions[] = {
 	#define DEF_CONTROL_TYPE(x,y) "x", y,
 	#include "lib/input/control_types.inc"
 	#undef DEF_CONTROL_TYPE
-	
+
 	"",                                  INPUT_TYPE_ANY,
 
 	NULL,                                NULL

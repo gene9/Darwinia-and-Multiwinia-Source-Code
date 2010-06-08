@@ -84,7 +84,7 @@
 #define KEY_F10               121
 #define KEY_F11               122
 #define KEY_F12               123
-#define KEY_NUMLOCK           144  
+#define KEY_NUMLOCK           144
 #define KEY_SCRLOCK           145
 #define KEY_COLON             186
 #define KEY_EQUALS            187

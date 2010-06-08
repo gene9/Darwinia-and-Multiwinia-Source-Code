@@ -36,12 +36,12 @@ protected:
 	float		m_selectionArrowBoost;
 
 	bool		m_highlightingSomething;
-	bool		m_validPlacementOpportunity; 
+	bool		m_validPlacementOpportunity;
 	bool		m_moveableEntitySelected;
 
     bool GetSelectedObject      ( WorldObjectId &_id, Vector3 &_pos );
-    bool GetHighlightedObject   ( WorldObjectId &_id, Vector3 &_pos, float &_radius );        
-    
+    bool GetHighlightedObject   ( WorldObjectId &_id, Vector3 &_pos, float &_radius );
+
     void RenderSelectionArrows  ( WorldObjectId _id, Vector3 const &_pos );
     void RenderSelectionArrow   ( float _screenX, float _screenY, float _screenDX, float _screenDY, float _size, float _alpha );
 
@@ -49,7 +49,7 @@ protected:
     void FindScreenEdge         ( Vector2 const &_line, float *_posX, float *_posY );
 
     LList<MouseCursorMarker *>  m_markers;
-	
+
 public:
 
 
@@ -99,7 +99,7 @@ protected:
 
 	float	GetSize();
 
-public:    
+public:
     MouseCursor         (char const *_filename);
 	~MouseCursor        ();
 
@@ -108,7 +108,7 @@ public:
     void SetShadowed    (bool _onOrOff);
 	void SetHotspot     (float x, float y);
     void SetColour      (RGBAColour &_col );
-	
+
 	void Render         (float _x, float _y);
     void Render3D       (Vector3 const &_pos, Vector3 const &_front, Vector3 const &_up, bool _cameraScale=true);
 };

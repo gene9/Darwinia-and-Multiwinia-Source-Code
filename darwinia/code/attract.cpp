@@ -18,7 +18,7 @@ AttractMode::AttractMode()
 void AttractMode::Advance()
 {
 	if( !m_running )
-	{		
+	{
 		if( g_inputManager->controlEvent( ControlStartAttractMode ) ) // change to a timer for user idleness
 		{
 			StartAttractMode();
@@ -52,7 +52,7 @@ void AttractMode::StartAttractMode()
         EclRemoveWindow(w->m_name);
     }
 
-    
+
 }
 
 void AttractMode::EndAttractMode()

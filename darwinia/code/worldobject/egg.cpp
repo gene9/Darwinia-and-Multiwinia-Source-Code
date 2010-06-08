@@ -19,7 +19,7 @@ Egg::Egg()
     m_state(StateDormant),
     m_spiritId(-1),
     m_timer(0.0f)
-{    
+{
 }
 
 
@@ -38,22 +38,22 @@ void Egg::ChangeHealth( int amount )
         }
         else
         {
-            m_stats[StatHealth] += amount;    
+            m_stats[StatHealth] += amount;
         }
     }
 }
 
 void Egg::Render( float predictionTime )
-{    
+{
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "sprites/egg.bmp" ) );
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
  	glEnable		( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
-    glDepthMask     ( false );    
+    glDepthMask     ( false );
     glDisable       ( GL_CULL_FACE );
-    
+
     RGBAColour colour;
     if( m_id.GetTeamId() >= 0 ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
     float alpha = m_stats[StatHealth] / EntityBlueprint::GetStat( Entity::TypeEgg, StatHealth );
@@ -65,10 +65,10 @@ void Egg::Render( float predictionTime )
     Vector3 up = g_app->m_camera->GetUp();
     Vector3 right = g_app->m_camera->GetRight();
     float size = 4.0f;
- 
+
     //
     // Render main egg shape
-    
+
     if( !m_dead )
     {
 
@@ -76,7 +76,7 @@ void Egg::Render( float predictionTime )
             glTexCoord2i( 0, 0 );       glVertex3fv( (pos - right * size - up * size).GetData() );
             glTexCoord2i( 0, 1 );       glVertex3fv( (pos - right * size + up * size).GetData() );
             glTexCoord2i( 1, 1 );       glVertex3fv( (pos + right * size + up * size).GetData() );
-            glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );    
+            glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );
         glEnd();
 
 
@@ -92,12 +92,12 @@ void Egg::Render( float predictionTime )
             if( throb < 0 ) throb = 0;
             size *= 1.3f;
             glColor4ub  ( 255, 255, 255, throb );
-    
+
             glBegin( GL_QUADS );
                 glTexCoord2i( 0, 0 );       glVertex3fv( (pos - right * size - up * size).GetData() );
                 glTexCoord2i( 0, 1 );       glVertex3fv( (pos - right * size + up * size).GetData() );
                 glTexCoord2i( 1, 1 );       glVertex3fv( (pos + right * size + up * size).GetData() );
-                glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );    
+                glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );
             glEnd();
 
 
@@ -108,12 +108,12 @@ void Egg::Render( float predictionTime )
             size *= 0.5f;
             pos.y += 2.0f;
             glColor4ub  ( 255, 255, 255, throb );
-    
+
             glBegin( GL_QUADS );
                 glTexCoord2i( 0, 0 );       glVertex3fv( (pos - right * size - up * size).GetData() );
                 glTexCoord2i( 0, 1 );       glVertex3fv( (pos - right * size + up * size).GetData() );
                 glTexCoord2i( 1, 1 );       glVertex3fv( (pos + right * size + up * size).GetData() );
-                glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );    
+                glTexCoord2i( 1, 0 );       glVertex3fv( (pos + right * size - up * size).GetData() );
             glEnd();
         }
     }
@@ -125,7 +125,7 @@ void Egg::Render( float predictionTime )
         float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( pos.x, pos.z );
 
         size *= 0.5f;
-        
+
         glColor4ub  ( 255, 255, 255, predictedHealth * 2.0f );
 
         for( int i = 0; i < 3; ++i )
@@ -133,9 +133,9 @@ void Egg::Render( float predictionTime )
             Vector3 fragmentPos = pos;
             if( i == 0 ) fragmentPos.x += 10.0f - predictedHealth / 10.0f;
             if( i == 1 ) fragmentPos.z += 10.0f - predictedHealth / 10.0f;
-            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;            
-            fragmentPos.y += ( fragmentPos.y - landHeight ) * i * 0.5f;            
-            
+            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;
+            fragmentPos.y += ( fragmentPos.y - landHeight ) * i * 0.5f;
+
             float tleft = 0.0f;
             float tright = 1.0f;
             float ttop = 0.0f;
@@ -171,7 +171,7 @@ void Egg::Render( float predictionTime )
     RenderShadow( pos, size );
     EndRenderShadow();
 
-    
+
     glEnable        ( GL_CULL_FACE );
 	glDisable       ( GL_BLEND );
     glDisable       ( GL_TEXTURE_2D );
@@ -202,9 +202,9 @@ bool Egg::Advance( Unit *_unit )
         }
         else if( m_state == StateDormant )
         {
-            m_timer += SERVER_ADVANCE_PERIOD;            
-            float maxLife = EntityBlueprint::GetStat( TypeEgg, StatHealth ); 
-            maxLife *= (1.0f - ( m_timer / EGG_DORMANTLIFE ));            
+            m_timer += SERVER_ADVANCE_PERIOD;
+            float maxLife = EntityBlueprint::GetStat( TypeEgg, StatHealth );
+            maxLife *= (1.0f - ( m_timer / EGG_DORMANTLIFE ));
             if( m_stats[StatHealth] > maxLife )
             {
                 int change = m_stats[StatHealth] - maxLife;
@@ -241,10 +241,10 @@ bool Egg::Advance( Unit *_unit )
         AdvanceInAir(_unit);
     }
     else
-    {        
+    {
         m_pos += m_vel * SERVER_ADVANCE_PERIOD;
     }
-    
+
     if( m_pos.y <= 0.0f )
     {
         ChangeHealth(-500);

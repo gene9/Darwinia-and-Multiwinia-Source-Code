@@ -39,17 +39,17 @@ public:
 
     inline int PutData	( const T &newdata );				// FAST Returns index used
     void PutData		( const T &newdata, int index );	// SLOW
-    
+
 	void MarkUsed		( int index );						// SLOW
 	inline void MarkNotUsed	( int index );					// FAST
-    
+
     inline T *GetPointer();                                 // FAST Returns next free element, sets to 'used'
     inline T *GetPointer(int index);                        // FAST Returns next free element, sets to 'used'
     inline int GetNextFree();								// FAST Sets the returned index to 'used'
 
-    inline int NumUsed() const;								// FAST Returns the number of used entries 
-       
-    void Empty();											// FAST Resets the array to empty    
+    inline int NumUsed() const;								// FAST Returns the number of used entries
+
+    void Empty();											// FAST Resets the array to empty
     void EmptyAndDelete();                                  // FAST
 };
 

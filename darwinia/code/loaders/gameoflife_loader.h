@@ -19,7 +19,7 @@ protected:
     float   m_allDead;
     bool    m_glow;
     int     m_totalAge;
-    
+
     enum
     {
         CellStateEmpty=0,

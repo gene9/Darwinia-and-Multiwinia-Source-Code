@@ -353,7 +353,7 @@ Matrix33 const &Matrix33::Invert()
 	r.x = (b2*c3-c2*b3);
 	u.x =-(b1*c3-c1*b3);
 	f.x = (b1*c2-c1*b2);
-	
+
 	r.y =-(a2*c3-c2*a3);
 	u.y = (a1*c3-c1*a3);
 	f.y =-(a1*c2-c1*a2);
@@ -438,9 +438,9 @@ Vector3	Matrix33::InverseMultiplyVector(Vector3 const &s) const
 
 void Matrix33::OutputToDebugStream()
 {
-	DebugOut("%4.1f %4.1f %4.1f\n", r.x, r.y, r.z );	
-	DebugOut("%4.1f %4.1f %4.1f\n", f.x, f.y, f.z );	
-	DebugOut("%4.1f %4.1f %4.1f\n", u.x, u.y, u.z );	
+	DebugOut("%4.1f %4.1f %4.1f\n", r.x, r.y, r.z );
+	DebugOut("%4.1f %4.1f %4.1f\n", f.x, f.y, f.z );
+	DebugOut("%4.1f %4.1f %4.1f\n", u.x, u.y, u.z );
 }
 
 float *Matrix33::ConvertToOpenGLFormat(Vector3 const *_pos)

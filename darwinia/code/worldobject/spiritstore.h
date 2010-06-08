@@ -7,21 +7,21 @@
 #include "worldobject/spirit.h"
 
 
-class SpiritStore 
+class SpiritStore
 {
 public:
     Vector3     m_pos;
     float       m_sizeX;
     float       m_sizeY;
     float       m_sizeZ;
-    
+
 protected:
     FastDArray  <Spirit> m_spirits;
 
 public:
-    SpiritStore     ();                  
+    SpiritStore     ();
 
-    void Initialise ( int _initialCapacity, int _maxCapacity, Vector3 _pos, 
+    void Initialise ( int _initialCapacity, int _maxCapacity, Vector3 _pos,
                       float _sizeX, float _sizeY, float _sizeZ );            // Capacity isn't enforced, just provide a "best guess"
 
     void Advance    ();

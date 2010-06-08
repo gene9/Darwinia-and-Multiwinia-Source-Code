@@ -23,7 +23,7 @@ public:
 protected:
     Shape       *m_shapes[NumBridgeTypes];
     ShapeMarker *m_signal;
-    
+
     bool    m_beingOperated;
 
 public:
@@ -32,7 +32,7 @@ public:
     void Initialise     ( Building *_template );
     void SetBridgeType  ( int _type );
 
-    void Render         ( float predictionTime );    
+    void Render         ( float predictionTime );
     void RenderAlphas   ( float predictionTime );
     bool Advance        ();
 
@@ -47,11 +47,11 @@ public:
 
     bool        UpdateEntityInTransit( Entity *_entity );
 
-    int  GetBuildingLink();                 
+    int  GetBuildingLink();
     void SetBuildingLink( int _buildingId );
 
     void Read           ( TextReader *_in, bool _dynamic );
-    void Write          ( FileWriter *_out );     
+    void Write          ( FileWriter *_out );
 };
 
 

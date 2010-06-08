@@ -108,7 +108,7 @@ void DynamicBase::SetShapeName( char *_shapeName )
 
         Matrix34 mat( m_front, m_up, m_pos );
 
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
         m_radius = m_shape->CalculateRadius( mat, m_centrePos );
     }
 }
@@ -167,7 +167,7 @@ bool DynamicHub::Advance()
         // This can happen if a user captures the control tower, exits the level and saves,
         // then returns to the level.  The tower is captured and cannot be changed, but
         // the m_enabled state of this building has been lost.
-        
+
         bool towerFound = false;
         for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
         {
@@ -181,7 +181,7 @@ bool DynamicHub::Advance()
                     {
                         towerFound = true;
                         if( tower->m_id.GetTeamId() == m_id.GetTeamId() )
-                        {                        
+                        {
                             m_reprogrammed = true;
                             break;
                         }
@@ -222,7 +222,7 @@ bool DynamicHub::Advance()
                 {
                     gb->m_online = true;
                     g_app->m_globalWorld->EvaluateEvents();
-                } 
+                }
             }
             else if( !g_app->m_location->MissionComplete() )
             {
@@ -266,7 +266,7 @@ void DynamicHub::DeactivateLink()
 
 bool DynamicHub::ChangeScore( int _points )
 {
-    if( m_reprogrammed && 
+    if( m_reprogrammed &&
         m_currentScore < m_requiredScore )
     {
         m_currentScore += _points;
@@ -369,7 +369,7 @@ bool DynamicNode::Advance()
         }
     }
     else
-    {     
+    {
         if( GetNumPortsOccupied() < GetNumPorts() )
         {
             DynamicHub *hub = (DynamicHub *)g_app->m_location->GetBuilding( m_buildingLink );

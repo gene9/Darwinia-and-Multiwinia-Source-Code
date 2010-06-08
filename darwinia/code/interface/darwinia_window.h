@@ -34,7 +34,7 @@ public:
     void Render ( bool hasFocus );
 	void Update();
 
-    void CreateValueControl( char const *name, int dataType, void *value, int y, float change, 
+    void CreateValueControl( char const *name, int dataType, void *value, int y, float change,
 							 float _lowBound, float _highBound,
                              DarwiniaButton *callback=NULL, int x=-1, int w=-1 );
 
@@ -61,7 +61,7 @@ public:
 	bool	m_disabled;
 	bool	m_highlightedThisFrame;
 	bool	m_mouseHighlightMode;
-	
+
 public:
     DarwiniaButton();
 

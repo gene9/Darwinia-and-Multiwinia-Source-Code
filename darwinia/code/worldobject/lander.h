@@ -13,7 +13,7 @@ protected:
         StateSailing,
         StateLanded
     };
-    
+
     int     m_state;
     float   m_spawnTimer;
 

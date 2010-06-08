@@ -5,7 +5,7 @@
 #include "hash_table.h"
 
 
-// Extends HashTable to provide a mechanism to iterating over all the 
+// Extends HashTable to provide a mechanism to iterating over all the
 // table elements in alphabetical order.
 //
 // - PutData and RemoveData are now O(n) rather than O(1)

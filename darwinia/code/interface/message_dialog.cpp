@@ -87,7 +87,7 @@ void MessageDialog::Create()
 {
 	int const buttonWidth = GetMenuSize(40);
 	int const buttonHeight = GetMenuSize(18);
-	OKButton *button = new OKButton(this);																					
+	OKButton *button = new OKButton(this);
 
     char *caption = "Close";
     if( g_app->m_langTable ) caption = LANGUAGEPHRASE("dialog_close");
@@ -101,7 +101,7 @@ void MessageDialog::Create()
 void MessageDialog::Render(bool _hasFocus)
 {
 	DarwiniaWindow::Render(_hasFocus);
-	
+
 	for (int i = 0; i < m_numLines; ++i)
 	{
 		g_editorFont.DrawText2D(m_x + 10, m_y + GetMenuSize(32) + i * GetMenuSize(DEF_FONT_SIZE), GetMenuSize(DEF_FONT_SIZE), m_messageLines[i]);

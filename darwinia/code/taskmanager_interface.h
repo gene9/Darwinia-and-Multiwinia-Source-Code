@@ -30,7 +30,7 @@ public:
 	bool	m_subZones;		// does the zone have sub icons? (ie, weapons)
 
 public:
-    ScreenZone( char *_name, char *_tooltip, 
+    ScreenZone( char *_name, char *_tooltip,
                 float _x, float _y, float _w, float _h,
                 int _data );
 };
@@ -60,7 +60,7 @@ public:
 
 class TaskManagerInterface
 {
-public:   
+public:
     bool    m_visible;
     int     m_highlightedTaskId;
     bool    m_verifyTargetting;                                     // True means you will only be able to create things in valid areas
@@ -70,7 +70,7 @@ public:
     bool    m_viewingDefaultObjective;
     bool    m_lockTaskManager;
     bool    m_quickUnitVisible;                                     // the quickunit creation is visible
-    
+
     enum
     {
         MessageSuccess,
@@ -87,7 +87,7 @@ public:
 		TMTerminate,
 		TMDisplay
 	};
-    
+
 public:
     TaskManagerInterface();
 
@@ -95,7 +95,7 @@ public:
 
     void    RunDefaultObjective ( GlobalEventCondition *_cond );            // Runs basic cut-scene for trunk ports + research items
 
-    virtual void Advance() = 0;        
+    virtual void Advance() = 0;
     virtual void Render() = 0;
 
     void AdvanceTab ();

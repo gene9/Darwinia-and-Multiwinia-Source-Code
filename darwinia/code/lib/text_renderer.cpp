@@ -49,7 +49,7 @@ void TextRenderer::BuildOpenGlState()
 	char const *extension = GetExtensionPart(m_filename);
 	BitmapRGBA bmp(reader, extension);
 	delete reader;
-	
+
 	m_bitmapWidth = bmp.m_width * 2;
 	m_bitmapHeight = bmp.m_height * 2;
 
@@ -63,7 +63,7 @@ void TextRenderer::BeginText2D()
 {
 	GLint matrixMode;
 	GLint v[4];
-	
+
 	/* Setup OpenGL matrices */
 	glGetIntegerv(GL_MATRIX_MODE, &matrixMode);
 	glGetIntegerv(GL_VIEWPORT, &v[0]);
@@ -124,19 +124,19 @@ void TextRenderer::DrawText2DUp( float _x, float _y, float _size, char const *_t
 {
 	float horiSize = _size * HORIZONTAL_SIZE;
 
-	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );    
-    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
     glEnable        ( GL_TEXTURE_2D );
     glEnable        ( GL_BLEND );
     glBindTexture   ( GL_TEXTURE_2D, m_textureID );
-    
+
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
+
 	unsigned numChars = strlen(_text);
     for( unsigned int i = 0; i < numChars; ++i )
-    {       
+    {
         unsigned char thisChar = _text[i];
 
 		if (thisChar > 32)
@@ -152,7 +152,7 @@ void TextRenderer::DrawText2DUp( float _x, float _y, float _size, char const *_t
 			glEnd();
 		}
 
-        _y -= horiSize;    
+        _y -= horiSize;
     }
 
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -166,19 +166,19 @@ void TextRenderer::DrawText2DDown( float _x, float _y, float _size, char const *
 	float horiSize = _size * HORIZONTAL_SIZE;
 
 	if( m_renderShadow ||
-        m_renderOutline )   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );    
-    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+        m_renderOutline )   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
     glEnable        ( GL_TEXTURE_2D );
     glEnable        ( GL_BLEND );
     glBindTexture   ( GL_TEXTURE_2D, m_textureID );
-    
+
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
+
 	unsigned numChars = strlen(_text);
     for( unsigned int i = 0; i < numChars; ++i )
-    {       
+    {
         unsigned char thisChar = _text[i];
 
 		if (thisChar > 32)
@@ -215,7 +215,7 @@ void TextRenderer::DrawText2DDown( float _x, float _y, float _size, char const *
             }
 		}
 
-        _y += horiSize;    
+        _y += horiSize;
     }
 
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -245,19 +245,19 @@ void TextRenderer::DrawText2DSimple(float _x, float _y, float _size, char const 
 	float horiSize = _size * HORIZONTAL_SIZE;
 
 	if( m_renderShadow ||
-        m_renderOutline )   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );    
-    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+        m_renderOutline )   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
     glEnable        ( GL_TEXTURE_2D );
     glEnable        ( GL_BLEND );
     glBindTexture   ( GL_TEXTURE_2D, m_textureID );
-    
+
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
+
 	unsigned numChars = strlen(_text);
     for( unsigned int i = 0; i < numChars; ++i )
-    {       
+    {
         unsigned char thisChar = _text[i];
 
 		if (thisChar > 32)
@@ -294,7 +294,7 @@ void TextRenderer::DrawText2DSimple(float _x, float _y, float _size, char const 
 			}
 		}
 
-		_x += horiSize;    
+		_x += horiSize;
     }
 
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -302,7 +302,7 @@ void TextRenderer::DrawText2DSimple(float _x, float _y, float _size, char const 
     glDisable       ( GL_TEXTURE_2D );
 }
 
-// Draw the text, justified depending on the _xJustification parameter. 
+// Draw the text, justified depending on the _xJustification parameter.
 //		_xJustification < 0		Right justified text
 //	    _xJustification == 0	Centred text
 //		_xJustification > 0		Left justified text
@@ -317,7 +317,7 @@ void TextRenderer::DrawText2DJustified( float _x, float _y, float _size, int _xJ
 		DrawText2DSimple( _x, _y, _size, buf );			// Left Justification
 	else {
 		float width = GetTextWidth( strlen(buf), _size );
-		
+
 		if (_xJustification < 0)
 			DrawText2DSimple( _x - width, _y, _size, buf );	// Right Justification
 		else
@@ -367,7 +367,7 @@ namespace {
 			  m_value( glIsEnabled( _what ) )
 		{
 		}
-		
+
 		~SaveGLEnabled()
 		{
 			if (m_value)
@@ -401,7 +401,7 @@ namespace {
 
 	class SaveGLBlendFunc {
 	public:
-		SaveGLBlendFunc() 
+		SaveGLBlendFunc()
 		{
 			glGetIntegerv( GL_BLEND_SRC, &m_srcFactor );
 			glGetIntegerv( GL_BLEND_DST, &m_dstFactor );
@@ -437,9 +437,9 @@ namespace {
 		SaveGLFontDrawAttributes()
 			:	m_textureMagFilter( GL_TEXTURE_MAG_FILTER ),
 				m_textureMinFilter( GL_TEXTURE_MIN_FILTER ),
-				m_textureEnabled( GL_TEXTURE_2D ), 
-				m_depthTestEnabled( GL_DEPTH_TEST ), 
-				m_cullFaceEnabled( GL_CULL_FACE ), 
+				m_textureEnabled( GL_TEXTURE_2D ),
+				m_depthTestEnabled( GL_DEPTH_TEST ),
+				m_cullFaceEnabled( GL_CULL_FACE ),
 				m_lightingEnabled( GL_LIGHTING ),
 				m_blendEnabled( GL_BLEND )
 		{
@@ -450,19 +450,19 @@ namespace {
 		SaveGLColour m_colour;
 		SaveGLTex2DParamI m_textureMagFilter, m_textureMinFilter;
 		SaveGLBlendFunc m_blendFunc;
-		SaveGLEnabled 
-			m_textureEnabled, 
-			m_depthTestEnabled, 
-			m_cullFaceEnabled, 
+		SaveGLEnabled
+			m_textureEnabled,
+			m_depthTestEnabled,
+			m_cullFaceEnabled,
 			m_lightingEnabled,
 			m_blendEnabled;
 	};
 }
 
 void TextRenderer::DrawText3DSimple( Vector3 const &_pos, float _size, char const *_text )
-{  
+{
 	// Store the GL state
-	SaveGLFontDrawAttributes saveAttribs;		
+	SaveGLFontDrawAttributes saveAttribs;
 
 	Camera *cam = g_app->m_camera;
     Vector3 pos(_pos);
@@ -472,7 +472,7 @@ void TextRenderer::DrawText3DSimple( Vector3 const &_pos, float _size, char cons
 	pos += vertSize * 0.5f;
 
 
-	// 
+	//
 	// Render the text
 
     glEnable        (GL_BLEND);
@@ -484,14 +484,14 @@ void TextRenderer::DrawText3DSimple( Vector3 const &_pos, float _size, char cons
 	glBindTexture   (GL_TEXTURE_2D, m_textureID);
     glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
-	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );    
-    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+
+	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
     for( unsigned int i = 0; i < numChars; ++i )
-    {       
+    {
         unsigned char thisChar = _text[i];
-		
+
 		if (thisChar > 32)
 		{
 			float texX = GetTexCoordX( thisChar );
@@ -511,7 +511,7 @@ void TextRenderer::DrawText3DSimple( Vector3 const &_pos, float _size, char cons
 
 
 void TextRenderer::DrawText3D( Vector3 const &_pos, float _size, char const *_text, ... )
-{  
+{
 	// Convert the variable argument list into a single string
     char buf[512];
     va_list ap;
@@ -560,7 +560,7 @@ void TextRenderer::DrawText3D( Vector3 const &_pos, Vector3 const &_front, Vecto
     va_start (ap, _text);
     vsprintf(buf, _text, ap);
 
-	SaveGLFontDrawAttributes saveAttribs;	
+	SaveGLFontDrawAttributes saveAttribs;
 
 	Camera *cam = g_app->m_camera;
 
@@ -572,7 +572,7 @@ void TextRenderer::DrawText3D( Vector3 const &_pos, Vector3 const &_front, Vecto
     pos += vertSize * 0.5f;
 
 
-	// 
+	//
 	// Render the text
 
     glEnable        (GL_BLEND);
@@ -584,12 +584,12 @@ void TextRenderer::DrawText3D( Vector3 const &_pos, Vector3 const &_front, Vecto
 	glBindTexture   (GL_TEXTURE_2D, m_textureID);
     glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
-	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );    
-    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+
+	if( m_renderShadow )    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    else                    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
     for( unsigned int i = 0; i < numChars; ++i )
-    {       
+    {
         unsigned char thisChar = buf[i];
 
 		if (thisChar > 32)

@@ -10,7 +10,7 @@ class Wall : public Building
 protected:
     float m_damage;
     float m_fallSpeed;
-    
+
 public:
     Wall();
 

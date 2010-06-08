@@ -21,7 +21,7 @@ glGetBufferParameterivARB	gglGetBufferParameterivARB = NULL;
 glGetBufferPointervARB		gglGetBufferPointervARB = NULL;
 
 ChoosePixelFormatARB gglChoosePixelFormatARB = NULL;
-	
+
 void InitialiseOGLExtensions()
 {
 //	char const *extensions = (char const *)glGetString(GL_EXTENSIONS);
@@ -32,7 +32,7 @@ void InitialiseOGLExtensions()
 //
 //	while(*c)
 //	{
-//		if (*c == ' ') *c = '\n'; 
+//		if (*c == ' ') *c = '\n';
 //		++c;
 //	}
 //

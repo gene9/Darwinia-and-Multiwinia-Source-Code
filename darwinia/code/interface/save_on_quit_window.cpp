@@ -58,7 +58,7 @@ void SaveOnQuitWindow::Create()
 	int pitch = width + 8;
 	int x = 1 - width;
 	int y = m_h - 25;
-	
+
 	button = new YesButton();
     button->SetShortProperties( "Yes", x += pitch, y, width);
     RegisterButton( button );

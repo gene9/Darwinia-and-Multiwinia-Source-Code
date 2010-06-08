@@ -44,13 +44,13 @@ public:
 // Class SystemInfo
 //*****************************************************************************
 
-class SystemInfo 
+class SystemInfo
 {
 private:
 	void GetLocaleDetails();
 	void GetAudioDetails();
 	void GetDirectXVersion();
-	
+
 public:
 	LocaleInfo	m_localeInfo;
 	AudioInfo	m_audioInfo;

@@ -19,7 +19,7 @@ private:
     int                 m_maxNeighbours;
 
 	EntityGridCell      *m_cells[NUM_TEAMS];
-	
+
     int                 m_numCellsX;
 	int                 m_numCellsZ;
     float               m_cellSizeX;
@@ -31,7 +31,7 @@ private:
 	EntityGridCell      *GetCell(int _indexX, int _indexZ, int _team);
 
     void                EnsureMaxNeighbours( int _maxNeighbours );
-    
+
 public:
 	EntityGrid(float _cellSizeX, float _cellSizeZ);
 	~EntityGrid();
@@ -45,16 +45,16 @@ public:
                                              float _newWorldX, float _newWorldZ,
                                              float _radius );
 
-    WorldObjectId *GetNeighbours(float _worldX, float _worldZ, float _range, 
+    WorldObjectId *GetNeighbours(float _worldX, float _worldZ, float _range,
 								 int *_numFound, bool _includeTeam[NUM_TEAMS] );
 
-    WorldObjectId *GetNeighbours(float _worldX, float _worldZ, float _range, 
+    WorldObjectId *GetNeighbours(float _worldX, float _worldZ, float _range,
                                  int *_numFound);
 
     WorldObjectId *GetEnemies   (float _worldX, float _worldZ, float _range,
                                  int *_numFound, unsigned char _myTeam);
 
-	WorldObjectId GetBestEnemy  (float _worldX, float _worldZ, 
+	WorldObjectId GetBestEnemy  (float _worldX, float _worldZ,
 								 float _minRange, float _maxRange, unsigned char _myTeam);
 
     WorldObjectId *GetFriends   (float _worldX, float _worldZ, float _range,
@@ -63,7 +63,7 @@ public:
     int GetNumNeighbours        (float _worldX, float _worldZ, float _range, bool _includeTeam[NUM_TEAMS] );    // fast
     int GetNumEnemies           (float _worldX, float _worldZ, float _range, unsigned char _myTeam );           // fast
     int GetNumFriends           (float _worldX, float _worldZ, float _range, unsigned char _myTeam );           // fast
-    
+
     bool AreNeighboursPresent   (float _worldX, float _worldZ, float _range, bool _includeTeam[NUM_TEAMS] );    // very fast
     bool AreEnemiesPresent      (float _worldX, float _worldZ, float _range, unsigned char _myTeam );           // very fast
     bool AreFriendsPresent      (float _worldX, float _worldZ, float _range, unsigned char _myTeam );           // very fast

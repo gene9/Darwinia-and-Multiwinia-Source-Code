@@ -54,7 +54,7 @@ public:
     void			(*m_callback) (StereoSample *buf, unsigned int numSamples);
 
 	void			Stop();
-	
+
 public:
 	SoundLibrary2d();
 	~SoundLibrary2d();

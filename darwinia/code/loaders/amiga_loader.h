@@ -18,7 +18,7 @@ protected:
 	void RenderScrollText(float _frameTime);
 	void RenderLogo(float _frameTime);
 	void RenderFracTri(float _frameTime);
-	
+
 	enum
 	{
 		ModeSilence,
@@ -28,7 +28,7 @@ protected:
 	};
 
 	Sierpinski3D	*m_sierpinski;
-	
+
 	float			m_scrollPhase;
 	double			m_scrollOffsetX;	// Which pixel of the scroll message we are up to
 
@@ -40,7 +40,7 @@ protected:
 	float			m_fracTriPhase;
 	float			m_fracTriSpinRate;
 
-public:    
+public:
 	AmigaLoader();
     ~AmigaLoader();
 

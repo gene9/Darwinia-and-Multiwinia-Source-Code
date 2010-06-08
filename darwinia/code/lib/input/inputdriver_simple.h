@@ -15,7 +15,7 @@ protected:
 	                          InputSpec &spec );
 
 	virtual bool acceptDriver( std::string const &name ) = 0;
-	
+
 	virtual control_id_t getControlID( std::string const &name ) = 0;
 
 	virtual inputtype_t getControlType( control_id_t control_id ) = 0;
@@ -23,7 +23,7 @@ protected:
 	virtual InputParserState writeExtraSpecInfo( InputSpec &spec );
 
 	virtual InputParserState parseExtraToken( std::string const &token, InputSpec &spec );
-	
+
 	virtual condition_t getConditionID( std::string const &name, inputtype_t &type );
 
 public:

@@ -22,8 +22,8 @@ protected:
 
 public:
     PowerBuilding();
-    
-    void Initialise     ( Building *_template );    
+
+    void Initialise     ( Building *_template );
     bool Advance        ();
     void Render         ( float _predictionTime );
     void RenderAlphas   ( float _predictionTime );
@@ -34,11 +34,11 @@ public:
 
     void ListSoundEvents( LList<char *> *_list );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
-    void SetBuildingLink( int _buildingId );            
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
+    int  GetBuildingLink();
+    void SetBuildingLink( int _buildingId );
 };
 
 
@@ -96,16 +96,16 @@ class PylonStart : public PowerBuilding
 {
 public:
     int m_reqBuildingId;
-    
+
 public:
     PylonStart();
-    
-    void Initialise     ( Building *_template );    
+
+    void Initialise     ( Building *_template );
     bool Advance        ();
     void RenderAlphas   ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 
@@ -114,10 +114,10 @@ public:
 // ****************************************************************************
 
 class PylonEnd : public PowerBuilding
-{    
+{
 public:
     PylonEnd();
-        
+
     void TriggerSurge   ( float _initValue );
     void RenderAlphas   ( float _predictionTime );
 };
@@ -135,15 +135,15 @@ class SolarPanel : public PowerBuilding
 protected:
     ShapeMarker *m_glowMarker   [SOLARPANEL_NUMGLOWS];
     ShapeMarker *m_statusMarkers[SOLARPANEL_NUMSTATUSMARKERS];
-    
+
     bool m_operating;
-    
+
 public:
     SolarPanel();
 
     void Initialise     ( Building *_template );
     bool Advance        ();
-        
+
     void Render         ( float _predictionTime );
     void RenderPorts    ();
     void RenderAlphas   ( float _predictionTime );

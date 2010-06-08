@@ -104,7 +104,7 @@ void ProfileWindow::RenderElementProfile(ProfiledElement *_pe, unsigned int _ind
 			totalTime += time;
 
 			char icon[] = " ";
-			if (child->m_children.NumUsed() > 0) 
+			if (child->m_children.NumUsed() > 0)
 			{
 				icon[0] = child->m_isExpanded ? '-' : '+';
 			}
@@ -115,13 +115,13 @@ void ProfileWindow::RenderElementProfile(ProfiledElement *_pe, unsigned int _ind
 			else if (minAvgMax == 2)	lastColumn = child->m_longest;
 			lastColumn *= 1000.0f;
 
-			sprintf(caption, 
-					"%*s%-*s:%5d x%4.2f = %4.0f %4.2f", 
+			sprintf(caption,
+					"%*s%-*s:%5d x%4.2f = %4.0f %4.2f",
 					_indent + 1,
 					icon,
 					24 - _indent,
-					child->m_name, 
-					child->m_lastNumCalls, 
+					child->m_name,
+					child->m_lastNumCalls,
 					time/(float)child->m_lastNumCalls,
 					time,
 					lastColumn);
@@ -226,7 +226,7 @@ void ProfileWindow::Create()
 void ProfileWindow::Remove()
 {
     DarwiniaWindow::Remove();
-    
+
     RemoveButton( "Toggle glFinish" );
     RemoveButton( "Min" );
     RemoveButton( "Reset History" );

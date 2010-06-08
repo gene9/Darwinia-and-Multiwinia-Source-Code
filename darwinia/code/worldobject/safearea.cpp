@@ -54,19 +54,19 @@ bool SafeArea::Advance()
     if( !g_app->m_location->m_teams ) return false;
     if( g_app->m_location->m_teams[ m_id.GetTeamId() ].m_teamType == Team::TeamTypeUnused ) return false;
 
-    
+
     if( GetHighResTime() > m_recountTimer )
     {
         int numFound;
         WorldObjectId *ids = g_app->m_location->m_entityGrid->GetFriends( m_pos.x, m_pos.z, m_size, &numFound, m_id.GetTeamId() );
         m_entitiesCounted = 0;
-        
+
         for( int i = 0; i < numFound; ++i )
         {
             WorldObjectId id = ids[i];
             Entity *entity = g_app->m_location->GetEntity( id );
-            if( entity && 
-                entity->m_type == m_entityTypeRequired && 
+            if( entity &&
+                entity->m_type == m_entityTypeRequired &&
                 !entity->m_dead )
             {
                 ++m_entitiesCounted;
@@ -74,7 +74,7 @@ bool SafeArea::Advance()
         }
 
         m_recountTimer = GetHighResTime() + 2.0f;
-    
+
         if( (m_id.GetTeamId() == 1 && m_entitiesCounted <= m_entitiesRequired) ||
             (m_id.GetTeamId() != 1 && m_entitiesCounted >= m_entitiesRequired) )
         {
@@ -83,7 +83,7 @@ bool SafeArea::Advance()
             {
                 gb->m_online = true;
                 g_app->m_globalWorld->EvaluateEvents();
-            }        
+            }
         }
 
     }
@@ -91,7 +91,7 @@ bool SafeArea::Advance()
     return false;
 }
 
- 
+
 void SafeArea::Render( float predictionTime )
 {
     if( g_app->m_editing )
@@ -100,7 +100,7 @@ void SafeArea::Render( float predictionTime )
 
         if( m_id.GetTeamId() != 255 )
         {
-            colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;    
+            colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
         }
         colour.a = 255;
 
@@ -130,7 +130,7 @@ void SafeArea::Render( float predictionTime )
 /*
         float angle = g_gameTime * 2.0f;
         Vector3 dif( m_size * sinf(angle), 0.0f, m_size * cosf(angle) );
-        
+
         Vector3 pos = m_pos + dif;
         pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( pos.x, pos.z ) + 5.0f;
         g_app->m_particleSystem->CreateParticle( pos, g_upVector*2 + dif/30, Particle::TypeMuzzleFlash, 100.0f );
@@ -140,7 +140,7 @@ void SafeArea::Render( float predictionTime )
         g_app->m_particleSystem->CreateParticle( pos, g_upVector*2 - dif/30, Particle::TypeMuzzleFlash, 100.0f );
 */
     }
-    
+
 
     //char *entityTypeRequired = Entity::GetTypeName( m_entityTypeRequired );
     //g_editorFont.DrawText3DCentre( m_pos + Vector3(0,m_size/2,0), 10.0f, "%d / %d %ss", m_entitiesCounted, m_entitiesRequired, entityTypeRequired );
@@ -159,7 +159,7 @@ bool SafeArea::DoesShapeHit(Shape *_shape, Matrix34 _transform)
 }
 
 
-bool SafeArea::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool SafeArea::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                           float _rayLen, Vector3 *_pos, Vector3 *_norm)
 {
     if( g_app->m_editing )

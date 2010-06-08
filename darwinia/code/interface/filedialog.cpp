@@ -27,13 +27,13 @@ public:
     void MouseUp()
     {
         FileDialog *fd = (FileDialog *) m_parent;
-        
+
         for( int i = 0; i < fd->m_selected.Size(); ++i )
         {
             int index = fd->m_selected[i];
             DarwiniaDebugAssert( fd->m_files->ValidIndex(index) );
             char *filename = fd->m_files->GetData( index );
-            fd->FileSelected( filename );        
+            fd->FileSelected( filename );
         }
 
         EclRemoveWindow( m_parent->m_name );
@@ -60,7 +60,7 @@ public:
 
     void MouseUp()
 	{
-		FileDialog *fd = (FileDialog *) m_parent;    
+		FileDialog *fd = (FileDialog *) m_parent;
 		int index = m_index + fd->m_scrollBar->m_currentValue;
 
 		if( fd->m_files && fd->m_files->ValidIndex( index ) )
@@ -85,7 +85,7 @@ public:
 		int index = m_index + fd->m_scrollBar->m_currentValue;
 
 		if( fd->m_files && fd->m_files->ValidIndex( index ) )
-		{        
+		{
             if( fd->IsFileSelected(index) != -1 )
             {
 				glColor4f( 0.3f, 0.3f, 1.0f, 0.5f );
@@ -148,7 +148,7 @@ class SelectedButton : public DarwiniaButton
         {
             SetCaption( " " );
         }
-        
+
         DarwiniaButton::Render( realX, realY, highlighted, clicked );
     }
 };
@@ -158,7 +158,7 @@ class SelectedButton : public DarwiniaButton
 // Class FileDialog
 //*****************************************************************************
 
-FileDialog::FileDialog( char const *name, char const *parent, 
+FileDialog::FileDialog( char const *name, char const *parent,
                         char const *path, char const *filter,
                         bool allowMultiSelect )
 :   DarwiniaWindow( name ),
@@ -191,7 +191,7 @@ FileDialog::~FileDialog()
     }
 
     m_selected.Empty();
-    
+
     delete m_scrollBar;
 }
 
@@ -214,7 +214,7 @@ void FileDialog::Create()
     SelectedButton *selected = new SelectedButton();
     selected->SetProperties( "Selected", 10, m_h - 30, m_w - 140, 20, "", " " );
     RegisterButton( selected );
-    
+
     FileCancelButton *cancel = new FileCancelButton();
     cancel->SetProperties( LANGUAGEPHRASE("dialog_cancel"), m_w - 60, m_h - 30, 55, 20, LANGUAGEPHRASE("dialog_cancel") );
     RegisterButton( cancel );
@@ -271,9 +271,9 @@ void FileDialog::RefreshFileList()
         delete m_files;
         m_files = NULL;
     }
- 
+
     m_selected.Empty();
-        
+
     m_files = g_app->m_resource->ListResources( m_path, m_filter, false );
 
     EclDirtyWindow( m_name );

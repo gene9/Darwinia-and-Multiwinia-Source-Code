@@ -28,7 +28,7 @@ bool Library::Advance()
             g_app->m_globalWorld->m_research->HasResearch(i) )
         {
             char markerName[256];
-            sprintf( markerName, "MarkerResearch%02d", i+1 );                
+            sprintf( markerName, "MarkerResearch%02d", i+1 );
             ShapeMarker *scrollMarker = m_shape->m_rootFragment->LookupMarker( markerName );
             DarwiniaDebugAssert( scrollMarker );
 

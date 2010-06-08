@@ -96,7 +96,7 @@ int Engineer::GetMaxSpirits()
 
 
 bool Engineer::SearchForSpirits()
-{   
+{
     if( m_spirits.Size() < GetMaxSpirits() )
     {
         Spirit *found = NULL;
@@ -120,7 +120,7 @@ bool Engineer::SearchForSpirits()
                     closest = theDist;
                 }
             }
-        }            
+        }
 
         if( found )
         {
@@ -129,7 +129,7 @@ bool Engineer::SearchForSpirits()
             return true;
         }
     }
-        
+
     return false;
 }
 
@@ -245,11 +245,11 @@ bool Engineer::SearchForResearchItems()
         m_buildingId = building->m_id.GetUniqueId();
         Vector3 usToThem = ( building->m_pos - m_pos ).SetLength( 35.0f );
         m_targetPos = building->m_pos - usToThem;
-        m_targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_targetPos.x, m_targetPos.z );        
+        m_targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_targetPos.x, m_targetPos.z );
         m_targetPos.y += m_hoverHeight;
         m_state = StateToResearchItem;
         return true;
-    }     
+    }
 
     return false;
 }
@@ -269,7 +269,7 @@ void Engineer::ChangeHealth( int amount )
         if( m_stats[StatHealth] + amount < 0 )
         {
             m_stats[StatHealth] = 0;
-            m_dead = true;            
+            m_dead = true;
             g_app->m_soundSystem->TriggerEntityEvent( this, "Die" );
         }
         else if( m_stats[StatHealth] + amount > 255 )
@@ -278,7 +278,7 @@ void Engineer::ChangeHealth( int amount )
         }
         else
         {
-            m_stats[StatHealth] += amount;    
+            m_stats[StatHealth] += amount;
             g_app->m_particleSystem->CreateParticle( m_pos, g_zeroVector, Particle::TypeMuzzleFlash );
         }
 
@@ -287,20 +287,20 @@ void Engineer::ChangeHealth( int amount )
         float fractionDead = 1.0f - m_stats[StatHealth] / (float) EntityBlueprint::GetStat( TypeEngineer, StatHealth );
         fractionDead = max( fractionDead, 0.0f );
         fractionDead = min( fractionDead, 1.0f );
-        
+
         if( fractionDead == 1.0f || healthBandAfter < healthBandBefore )
         {
             Matrix34 transform( m_front, g_upVector, m_pos );
-            g_explosionManager.AddExplosion( m_shape, transform, fractionDead ); 
+            g_explosionManager.AddExplosion( m_shape, transform, fractionDead );
         }
     }
 }
 
 
 bool Engineer::Advance( Unit *_unit )
-{   
+{
     bool amIDead = false;
-    
+
     switch( m_state )
     {
         case StateIdle:                 amIDead = AdvanceIdle();             break;
@@ -317,9 +317,9 @@ bool Engineer::Advance( Unit *_unit )
 
     //
     // If I am now dead, handle it accordingly
-    
+
     amIDead = Entity::Advance(_unit);
-    if( amIDead ) 
+    if( amIDead )
     {
         // Drop all my spirits
         while( m_spirits.Size() > 0 )
@@ -338,9 +338,9 @@ bool Engineer::Advance( Unit *_unit )
         {
             Building *building = g_app->m_location->GetBuilding( m_buildingId );
             ControlTower *ct = (ControlTower *) building;
-            if( ct ) 
+            if( ct )
             {
-                ct->EndReprogram( m_positionId );            
+                ct->EndReprogram( m_positionId );
                 g_app->m_soundSystem->StopAllSounds( m_id, "Engineer BeginReprogramming" );
                 g_app->m_soundSystem->TriggerEntityEvent( this, "EndReprogramming" );
             }
@@ -352,17 +352,17 @@ bool Engineer::Advance( Unit *_unit )
             g_app->m_soundSystem->StopAllSounds( m_id, "Engineer BeginReprogramming" );
             g_app->m_soundSystem->TriggerEntityEvent( this, "EndReprogramming" );
         }
-        
+
         // If I was operating a bridge, stop now
         if( m_state == StateOperatingBridge )
         {
             Bridge *bridge = (Bridge *) g_app->m_location->GetBuilding( m_buildingId );
             if( bridge && bridge->m_type == Building::TypeBridge )
             {
-                bridge->EndOperation();  
+                bridge->EndOperation();
                 if( m_bridgeId == m_buildingId ) EndBridge();
-            }            
-        }    
+            }
+        }
     }
 
     //
@@ -380,7 +380,7 @@ bool Engineer::Advance( Unit *_unit )
 
     //
     // Update spirits
-    
+
     for( int i = 0; i < m_spirits.Size(); ++i )
     {
         int spiritId = m_spirits[i];
@@ -388,16 +388,16 @@ bool Engineer::Advance( Unit *_unit )
         {
             Spirit *s = g_app->m_location->m_spirits.GetPointer(spiritId);
             if( s && s->m_state == Spirit::StateAttached )
-            {            
+            {
                 if( m_positionHistory.ValidIndex(i+1) )
                 {
                     s->m_pos = *m_positionHistory[i+1];
-                    s->m_vel = (*m_positionHistory[i] - *m_positionHistory[i+1]) / SERVER_ADVANCE_PERIOD;            
+                    s->m_vel = (*m_positionHistory[i] - *m_positionHistory[i+1]) / SERVER_ADVANCE_PERIOD;
                 }
             }
         }
     }
-    
+
 
     //
     // Look to see if we've been pulled away by the player
@@ -415,15 +415,15 @@ bool Engineer::Advance( Unit *_unit )
         g_app->m_soundSystem->TriggerEntityEvent( this, "EndReprogramming" );
     }
 
-    if( building && building->m_type == Building::TypeBridge 
+    if( building && building->m_type == Building::TypeBridge
         && m_state != StateOperatingBridge )
     {
         // We've been moved away from building bridges
         Bridge *bridge = (Bridge *) building;
-        bridge->EndOperation(); 
+        bridge->EndOperation();
     }
 
-    if( building && building->m_type == Building::TypeResearchItem 
+    if( building && building->m_type == Building::TypeResearchItem
         && m_state != StateResearching )
     {
         // We've been moved away from researching a research item
@@ -431,7 +431,7 @@ bool Engineer::Advance( Unit *_unit )
         //g_app->m_soundSystem->TriggerEntityEvent( this, "EndReprogramming" );
     }
 
-    
+
     //
     // If we own a bridge, check to make sure we are still in range of it
 
@@ -466,7 +466,7 @@ bool Engineer::AdvanceToTargetPos()
         float desiredSpeed = distance.Mag();
         desiredSpeed = min( desiredSpeed, m_stats[StatSpeed] );
         if( m_state == StateIdle ) desiredSpeed *= 0.25f;
-        
+
         Vector3 newPos = m_pos + actualDir * desiredSpeed * SERVER_ADVANCE_PERIOD;
         newPos = PushFromObstructions(newPos);
 
@@ -489,7 +489,7 @@ bool Engineer::AdvanceToTargetPos()
         m_vel.Zero();
         //if( m_targetFront != g_zeroVector ) m_front = m_targetFront;
         return true;
-    }   
+    }
 }
 
 
@@ -515,9 +515,9 @@ bool Engineer::AdvanceIdle()
 
         if( !foundNewTarget )   foundNewTarget = SearchForResearchItems();
         if( !foundNewTarget )   foundNewTarget = SearchForControlTowers();
-        if( !foundNewTarget )   foundNewTarget = SearchForBridges();      
-        if( !foundNewTarget )   foundNewTarget = SearchForSpirits();      
-       
+        if( !foundNewTarget )   foundNewTarget = SearchForBridges();
+        if( !foundNewTarget )   foundNewTarget = SearchForSpirits();
+
         if( foundNewTarget ) return false;
         m_retargetTimer = ENGINEER_RETARGETTIMER;
     }
@@ -531,15 +531,15 @@ bool Engineer::AdvanceIdle()
         bool incubatorFound = SearchForIncubator();
         if( incubatorFound )
         {
-            m_state = StateToIncubator;        
+            m_state = StateToIncubator;
             return false;
         }
     }
 
-    
+
     //
     // Just go into a holding pattern
-    
+
     bool arrived = AdvanceToTargetPos();
     if( arrived )
     {
@@ -556,7 +556,7 @@ bool Engineer::AdvanceToWaypoint()
     m_targetFront.Zero();
 
     bool arrived = AdvanceToTargetPos();
-    if( arrived ) m_state = StateIdle;    
+    if( arrived ) m_state = StateIdle;
     return false;
 }
 
@@ -568,10 +568,10 @@ bool Engineer::AdvanceToSpirit()
     {
         s = g_app->m_location->m_spirits.GetPointer(m_spiritId);
     }
-    
-    if( !s || 
+
+    if( !s ||
          s->m_state == Spirit::StateDeath ||
-         s->m_state == Spirit::StateAttached ) 
+         s->m_state == Spirit::StateAttached )
     {
         // Our spirit died while we were going for it, return to waypoint and continue looking
         m_spiritId = -1;
@@ -585,10 +585,10 @@ bool Engineer::AdvanceToSpirit()
     if( arrived )
     {
         CollectSpirit( m_spiritId );
-        m_spiritId = -1;        
+        m_spiritId = -1;
         m_state = StateIdle;
     }
-    
+
     return false;
 }
 
@@ -627,10 +627,10 @@ bool Engineer::SearchForIncubator()
 
                 if( distance < nearest )
                 {
-                    m_buildingId = building->m_id.GetUniqueId();                    
+                    m_buildingId = building->m_id.GetUniqueId();
                     nearest = distance;
                     found = true;
-                }                    
+                }
             }
         }
     }
@@ -645,7 +645,7 @@ bool Engineer::AdvanceToIncubator()
 
     if( !incubator )
     {
-        bool found = SearchForIncubator();    
+        bool found = SearchForIncubator();
         incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
         if( !incubator )
         {
@@ -655,13 +655,13 @@ bool Engineer::AdvanceToIncubator()
         }
     }
 
-        
+
     incubator->GetDockPoint( m_targetPos, m_targetFront );
     bool arrived = AdvanceToTargetPos();
     if( arrived )
     {
         m_front = m_targetFront;
-        
+
         // Arrived at our incubator, drop spirit off here one at a time
         int spiritId = m_spirits[0];
         if( g_app->m_location->m_spirits.ValidIndex(spiritId) )
@@ -674,7 +674,7 @@ bool Engineer::AdvanceToIncubator()
 
         if( m_spirits.Size() == 0 )
         {
-            // Return to spirit field        
+            // Return to spirit field
             m_state = StateToWaypoint;
         }
     }
@@ -695,7 +695,7 @@ bool Engineer::AdvanceToControlTower ()
     DarwiniaDebugAssert( building->m_type == Building::TypeControlTower );
 
     ControlTower *ct = (ControlTower *) building;
-    int positionId = ct->GetAvailablePosition( m_targetPos, m_targetFront );    
+    int positionId = ct->GetAvailablePosition( m_targetPos, m_targetFront );
 
     if( (ct->m_id.GetTeamId() == m_id.GetTeamId() && ct->m_ownership >= 100.0f) ||
         positionId == -1)
@@ -722,7 +722,7 @@ bool Engineer::AdvanceToControlTower ()
     {
         m_state = StateIdle;
     }
-    
+
     return false;
 }
 
@@ -733,8 +733,8 @@ bool Engineer::AdvanceResearching()
     // Make sure our research item is still available
 
     ResearchItem *item = (ResearchItem *) g_app->m_location->GetBuilding( m_buildingId );
-    if( !item || 
-        item->m_type != Building::TypeResearchItem || 
+    if( !item ||
+        item->m_type != Building::TypeResearchItem ||
         !item->NeedsReprogram() )
     {
         g_app->m_soundSystem->StopAllSounds( m_id, "Engineer BeginReprogramming" );
@@ -758,7 +758,7 @@ bool Engineer::AdvanceResearching()
         m_state = StateIdle;
         return false;
     }
-    
+
 
     //
     // Spark
@@ -771,7 +771,7 @@ bool Engineer::AdvanceResearching()
     toPos += ( end2 - end1 ) * sinf(time) * 0.5f;
 
     for( int i = 0; i < 2; ++i )
-    {        
+    {
         Vector3 particleVel = m_pos - toPos;
         particleVel += Vector3( sfrand() * 15.0f, frand() * 10.0f, sfrand() * 15.0f );
         g_app->m_particleSystem->CreateParticle( toPos, particleVel, Particle::TypeBlueSpark );
@@ -780,10 +780,10 @@ bool Engineer::AdvanceResearching()
 
     //
     // Make us float around a bit while we work
-    
+
     m_targetFront = (toPos - m_pos).Normalise();
     Vector3 targetFront = m_targetFront;
-    m_front = (targetFront * SERVER_ADVANCE_PERIOD) + 
+    m_front = (targetFront * SERVER_ADVANCE_PERIOD) +
               (m_front * (1.0f - SERVER_ADVANCE_PERIOD) );
 
     Vector3 oldPos = m_pos;
@@ -792,11 +792,11 @@ bool Engineer::AdvanceResearching()
     float scale = 2.0f;
     targetPos += m_targetFront * sinf(g_gameTime+m_id.GetUniqueId()*10.0f) * scale;
     targetPos += rightAngle * cosf(g_gameTime+m_id.GetUniqueId()*10.0f) * scale * 1.5f;
-    
+
     m_pos = (targetPos * SERVER_ADVANCE_PERIOD) +
             (m_pos * (1.0f - SERVER_ADVANCE_PERIOD) );
     m_vel = (m_pos - oldPos) / SERVER_ADVANCE_PERIOD;
-       
+
     return false;
 }
 
@@ -804,7 +804,7 @@ bool Engineer::AdvanceResearching()
 bool Engineer::AdvanceReprogramming()
 {
     Building *building = g_app->m_location->GetBuilding( m_buildingId );
-    
+
     if( !building )
     {
         m_state = StateIdle;
@@ -818,7 +818,7 @@ bool Engineer::AdvanceReprogramming()
     {
         bool finished = ct->Reprogram( m_id.GetTeamId() );
         if( finished )
-        {                                              
+        {
             g_app->m_soundSystem->StopAllSounds( m_id, "Engineer BeginReprogramming" );
             g_app->m_soundSystem->TriggerEntityEvent( this, "ReprogrammingComplete" );
             ct->EndReprogram( m_positionId );
@@ -837,7 +837,7 @@ bool Engineer::AdvanceReprogramming()
     ct->GetConsolePosition( m_positionId, consolePos );
 
     Vector3 targetFront = (consolePos - m_pos).Normalise();
-    m_front = (targetFront * SERVER_ADVANCE_PERIOD) + 
+    m_front = (targetFront * SERVER_ADVANCE_PERIOD) +
               (m_front * (1.0f - SERVER_ADVANCE_PERIOD) );
 
     Vector3 oldPos = m_pos;
@@ -850,16 +850,16 @@ bool Engineer::AdvanceReprogramming()
     m_pos = (targetPos * SERVER_ADVANCE_PERIOD) +
             (m_pos * (1.0f - SERVER_ADVANCE_PERIOD) );
     m_vel = (m_pos - oldPos) / SERVER_ADVANCE_PERIOD;
-    
+
     return false;
 }
 
 
 void Engineer::BeginBridge( Vector3 _to )
 {
-    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeEngineer );    
+    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeEngineer );
     if( engineerLevel < 5 ) return;
-    
+
     //
     // Shut down any existing bridges
 
@@ -872,7 +872,7 @@ void Engineer::BeginBridge( Vector3 _to )
     Vector3 bridgeSpan( _to - m_wayPoint );
     int numComponents = int(bridgeSpan.Mag() / 80.0f);
     Vector3 componentSpan = bridgeSpan / (float) numComponents;
-      
+
     //
     // Create bridge towers
 
@@ -890,7 +890,7 @@ void Engineer::BeginBridge( Vector3 _to )
         component->m_front = ( _to - m_wayPoint ).Normalise();
         if( i < numComponents && i > 0 )
         {
-            component->m_front.RotateAroundY( 0.5f * M_PI );        
+            component->m_front.RotateAroundY( 0.5f * M_PI );
         }
         else if( i == numComponents )
         {
@@ -901,7 +901,7 @@ void Engineer::BeginBridge( Vector3 _to )
 
         Vector3 right = component->m_front ^ g_upVector;
         component->m_front = right ^ g_upVector;
-        
+
         if( i == numComponents || i == 0 )
         {
             component->SetBridgeType( Bridge::BridgeTypeEnd );
@@ -927,7 +927,7 @@ void Engineer::EndBridge()
         bridge->m_status = -1.0f;
         int nextBuildingId = bridge->m_nextBridgeId;
         bridge = (Bridge *) g_app->m_location->GetBuilding( nextBuildingId );
-    }            
+    }
 
     m_bridgeId = -1;
 }
@@ -943,7 +943,7 @@ bool Engineer::AdvanceToBridge()
         if( !positionAvailable )
         {
             m_state = StateIdle;
-            m_buildingId = -1;            
+            m_buildingId = -1;
         }
         else
         {
@@ -1001,7 +1001,7 @@ bool Engineer::AdvanceToResearchItem()
     bool arrived = AdvanceToTargetPos();
     if( arrived )
     {
-        g_app->m_soundSystem->TriggerEntityEvent( this, "BeginReprogramming" );        
+        g_app->m_soundSystem->TriggerEntityEvent( this, "BeginReprogramming" );
         m_state = StateResearching;
     }
 
@@ -1017,7 +1017,7 @@ void Engineer::RenderShape( float predictionTime )
         predictedPos.y = max(g_app->m_location->m_landscape.m_heightMap->GetValue( predictedPos.x, predictedPos.z ),
                              0.0f /*sea level*/) + m_hoverHeight;
     }
- 
+
     Vector3 entityUp = g_upVector;
     Vector3 entityFront = m_front;
     entityFront.y *= 0.5f;
@@ -1061,17 +1061,17 @@ void Engineer::Render( float predictionTime )
         predictedPos.y = max(g_app->m_location->m_landscape.m_heightMap->GetValue( predictedPos.x, predictedPos.z ),
                              0.0f /*sea level*/) + m_hoverHeight;
     }
-        
+
 
     if( !m_dead )
-    {        
+    {
 		RenderShape( predictionTime );
 
         BeginRenderShadow();
         RenderShadow( predictedPos, 10.0f );
         EndRenderShadow();
     }
-    
+
     //
     // If we are reprogramming, draw some control lasers
 
@@ -1107,15 +1107,15 @@ void Engineer::Render( float predictionTime )
                 toPos += ( end2 - end1 ) * sinf(time) * 0.5f;
             }
 
-        
+
             Vector3 midPoint        = fromPos + (toPos - fromPos)/2.0f;
             Vector3 camToMidPoint   = g_app->m_camera->GetPos() - midPoint;
             Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
-    
+
             rightAngle *= 0.5f;
 
             glColor4f( 0.2f, 0.4f, 1.0f, fabs(sinf(g_gameTime * 3.0f)) );
-    
+
             glEnable        ( GL_BLEND );
             glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
             glDepthMask     ( false );
@@ -1125,8 +1125,8 @@ void Engineer::Render( float predictionTime )
             glBegin( GL_QUADS );
                 glTexCoord2i(0,0);      glVertex3fv( (fromPos - rightAngle).GetData() );
                 glTexCoord2i(0,1);      glVertex3fv( (fromPos + rightAngle).GetData() );
-                glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );                
-                glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );                     
+                glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );
+                glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );
             glEnd();
 
             glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -1151,15 +1151,15 @@ char *Engineer::GetCurrentAction()
     switch( m_state )
     {
         case StateIdle:                     return LANGUAGEPHRASE( "engineer_idle" );
-        case StateToWaypoint:               return LANGUAGEPHRASE( "engineer_towaypoint" );        
+        case StateToWaypoint:               return LANGUAGEPHRASE( "engineer_towaypoint" );
         case StateToSpirit:                 return LANGUAGEPHRASE( "engineer_tospirit" );
         case StateToIncubator:              return LANGUAGEPHRASE( "engineer_toincubator" );
-        
-        case StateToControlTower:   
+
+        case StateToControlTower:
         case StateReprogramming:            return LANGUAGEPHRASE( "engineer_reprogramming" );
 
         case StateToResearchItem:
-        case StateResearching:              return LANGUAGEPHRASE( "engineer_researching" );           
+        case StateResearching:              return LANGUAGEPHRASE( "engineer_researching" );
 
         case StateToBridge:
         case StateOperatingBridge:          return LANGUAGEPHRASE( "engineer_bridge" );

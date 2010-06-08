@@ -83,7 +83,7 @@ char const *CamAnimNode::GetTransitModeName(int _modeId)
 
 void LevelFile::ParseMissionFile(char const *_filename)
 {
-	TextReader *in = NULL;              
+	TextReader *in = NULL;
     char fullFilename[256];
 
     if( !g_app->m_editing )
@@ -105,7 +105,7 @@ void LevelFile::ParseMissionFile(char const *_filename)
     {
 		if (!in->TokenAvailable()) continue;
 		char *word = in->GetNextToken();
-    
+
 		if (stricmp("Landscape_StartDefinition", word) == 0 ||
 		    stricmp("LandscapeTiles_StartDefinition", word) == 0 ||
 			stricmp("LandFlattenAreas_StartDefinition", word) == 0 ||
@@ -129,7 +129,7 @@ void LevelFile::ParseMissionFile(char const *_filename)
 		{
 			ParseInstantUnits(in);
 		}
-		else if (stricmp("Routes_StartDefinition", word) == 0) 
+		else if (stricmp("Routes_StartDefinition", word) == 0)
 		{
 			ParseRoutes(in);
 		}
@@ -151,7 +151,7 @@ void LevelFile::ParseMissionFile(char const *_filename)
 			DarwiniaDebugAssert(0);
 		}
     }
-	
+
 	delete in;
 }
 
@@ -166,7 +166,7 @@ void LevelFile::ParseMapFile(char const *_levelFilename)
     {
 		if (!in->TokenAvailable()) continue;
 		char *word = in->GetNextToken();
-    
+
 		if (stricmp("landscape_startDefinition", word) == 0)
 		{
 			ParseLandscapeData(in);
@@ -205,12 +205,12 @@ void LevelFile::ParseCameraMounts(TextReader *_in)
 		char *word = _in->GetNextToken();
 
 		if (stricmp("CameraMounts_EndDefinition", word) == 0) return;
-		
+
 		CameraMount *cmnt = new CameraMount();
-	
+
 		// Read name
 		strncpy(cmnt->m_name, word, CAMERA_MOUNT_MAX_NAME_LEN);
-		
+
 		// Read pos
 		word = _in->GetNextToken();
 		cmnt->m_pos.x = atof(word);
@@ -270,7 +270,7 @@ void LevelFile::ParseCameraAnims(TextReader *_in)
 			DarwiniaReleaseAssert(node->m_transitionMode >= 0 &&
 						  node->m_transitionMode < Camera::ModeNumModes,
 						  "Bad camera animation camera mode in level file %s", m_missionFilename);
-			
+
 			// Read mount name
 			word = _in->GetNextToken();
 			node->m_mountName = strdup(word);
@@ -309,7 +309,7 @@ void LevelFile::ParseBuildings(TextReader *_in, bool _dynamic)
         if (stricmp("Buildings_EndDefinition", word) == 0)
         {
             return;
-        }		
+        }
 
 		Building *building = Building::CreateBuilding( word );
         if( building )
@@ -322,7 +322,7 @@ void LevelFile::ParseBuildings(TextReader *_in, bool _dynamic)
 			if (existingBuilding)
 			{
 				DarwiniaReleaseAssert(0,
-					"%s UniqueId was not unique in %s", 
+					"%s UniqueId was not unique in %s",
 					Building::GetTypeName(existingBuilding->m_type),
 					_in->GetFilename());
 			}
@@ -334,10 +334,10 @@ void LevelFile::ParseBuildings(TextReader *_in, bool _dynamic)
                 building->m_type == Building::TypeIncubator ||
                 building->m_type == Building::TypeFenceSwitch )
 			{
-                DarwiniaReleaseAssert(building->m_isGlobal, "Non-global %s found in %s", 
+                DarwiniaReleaseAssert(building->m_isGlobal, "Non-global %s found in %s",
                                 Building::GetTypeName(building->m_type), _in->GetFilename());
 			}
-            
+
 			// Increase the difficulty by raising the population limits for the opposing forces
 			if (building->m_id.GetTeamId() == 1) {
 				switch (building->m_type) {
@@ -346,19 +346,19 @@ void LevelFile::ParseBuildings(TextReader *_in, bool _dynamic)
 						spl->m_maxPopulation = int(spl->m_maxPopulation * loadDifficultyFactor);
 					}
 					break;
-					
+
 					case Building::TypeAntHill: {
 						AntHill *ah = (AntHill *) building;
 						ah->m_numAntsInside = int(ah->m_numAntsInside * loadDifficultyFactor);
 					}
 					break;
-					
+
 					case Building::TypeAISpawnPoint: {
 						AISpawnPoint *aisp = (AISpawnPoint *) building;
 						aisp->m_period = int(aisp->m_period / loadDifficultyFactor);
 					}
 					break;
-					
+
 					case Building::TypeTriffid: {
 						Triffid *t = (Triffid *) building;
 						t->m_reloadTime = int(t->m_reloadTime / loadDifficultyFactor);
@@ -366,7 +366,7 @@ void LevelFile::ParseBuildings(TextReader *_in, bool _dynamic)
 					break;
 				}
 			}
-			
+
 			m_buildings.PutData(building);
         }
 	}
@@ -378,16 +378,16 @@ void LevelFile::ParseInstantUnits(TextReader *_in)
 	float loadDifficultyFactor = 1.0;
 	if (m_levelDifficulty < 0)
 		loadDifficultyFactor = 1.0f + (float) g_app->m_difficultyLevel / 5.0f;
-		
+
 	while(_in->ReadLine())
 	{
 		if (!_in->TokenAvailable()) continue;
 		char *word = _in->GetNextToken();
-		
+
         if (stricmp("InstantUnits_EndDefinition", word) == 0)
         {
             return;
-        }		
+        }
 
         int entityType = Entity::GetTypeId( word );
 		if (entityType == -1)
@@ -397,16 +397,16 @@ void LevelFile::ParseInstantUnits(TextReader *_in)
 
 		InstantUnit *iu = new InstantUnit();
 		int numCopies = 0;
-		iu->m_type = entityType;		
+		iu->m_type = entityType;
 
         iu->m_teamId    = atoi(_in->GetNextToken());
 		iu->m_posX      = atof(_in->GetNextToken());
 		iu->m_posZ      = atof(_in->GetNextToken());
 		iu->m_number    = atoi(_in->GetNextToken());
-        iu->m_inAUnit   = atoi(_in->GetNextToken()) ? true : false;        
-    	iu->m_state     = atoi(_in->GetNextToken());	   
+        iu->m_inAUnit   = atoi(_in->GetNextToken()) ? true : false;
+    	iu->m_state     = atoi(_in->GetNextToken());
         iu->m_spread    = atof(_in->GetNextToken());
-        
+
         if( _in->TokenAvailable() )
         {
             iu->m_waypointX = atof(_in->GetNextToken());
@@ -421,16 +421,16 @@ void LevelFile::ParseInstantUnits(TextReader *_in)
                 iu->m_routeWaypointId = atoi( _in->GetNextToken() );
             }
 		}
-		
+
 		// Stop InstantSquaddies bug from crashing Darwinia (for existing bad save files)
 		if (iu->m_type == Entity::TypeInsertionSquadie && iu->m_inAUnit == 0)
 			continue;
-			
+
 		// If the unit is on the red team then make it more of them
 		if (iu->m_teamId == 1) {
 			iu->m_number = int(iu->m_number * loadDifficultyFactor);
-			
-			// It doesn't make sense to make overly 
+
+			// It doesn't make sense to make overly
 			if (iu->m_type == Entity::TypeCentipede && loadDifficultyFactor > 1) {
 				int maxCentipedeLength = 10 + int(2.0 * loadDifficultyFactor);
 				int segmentUtilisation = maxCentipedeLength + 7;
@@ -439,16 +439,16 @@ void LevelFile::ParseInstantUnits(TextReader *_in)
 					iu->m_number = maxCentipedeLength;
 				}
 			}
-			else 
+			else
 			{
 				if( loadDifficultyFactor > 1.0f )
 					iu->m_spread *= pow(1.2, g_app->m_difficultyLevel / 5.0);
 			}
 
 		}
-			
+
 		m_instantUnits.PutData(iu);
-		
+
 		// Create some additional centipedes if necessary
 		for (int i = 0; i < numCopies; i++) {
 			InstantUnit *copy = new InstantUnit;
@@ -468,7 +468,7 @@ void LevelFile::ParseLandscapeData(TextReader *_in)
 	{
 		char *word = _in->GetNextToken();
 		char *secondWord = NULL;
-		
+
 		if (_in->TokenAvailable()) secondWord = _in->GetNextToken();
 
         if (stricmp("cellSize", word) == 0 )
@@ -502,7 +502,7 @@ void LevelFile::ParseLandscapeData(TextReader *_in)
         else if (stricmp("landscape_endDefinition", word) == 0)
         {
             return;
-        }		
+        }
 	}
 }
 
@@ -523,16 +523,16 @@ void LevelFile::ParseLandscapeTiles(TextReader *_in)
 		m_landscape.m_tiles.PutDataAtEnd(def);
 
 		def->m_posX = atoi(word);
-		
+
 		word = _in->GetNextToken();
 		def->m_posY = (float)atof(word);
-		
+
 		word = _in->GetNextToken();
 		def->m_posZ = atoi(word);
 
 		word = _in->GetNextToken();
 		def->m_size = atoi(word);
-		
+
 		word = _in->GetNextToken();
         def->m_fractalDimension = (float)atof(word);
 
@@ -547,7 +547,7 @@ void LevelFile::ParseLandscapeTiles(TextReader *_in)
 
 		word = _in->GetNextToken();
         def->m_randomSeed = atoi(word);
-		
+
 		word = _in->GetNextToken();
 		def->m_lowlandSmoothingFactor = (float)atof(word);
 
@@ -560,7 +560,7 @@ void LevelFile::ParseLandscapeTiles(TextReader *_in)
             word = _in->GetNextToken();
             def->GuideGridFromString( word );
         }
-            
+
 	}
 }
 
@@ -575,11 +575,11 @@ void LevelFile::ParseLandFlattenAreas(TextReader *_in)
         if (stricmp("landFlattenAreas_endDefinition", word) == 0)
         {
             return;
-        }		
-		
+        }
+
 		LandscapeFlattenArea *def = new LandscapeFlattenArea();
 		m_landscape.m_flattenAreas.PutDataAtEnd(def);
-		
+
         def->m_centre.x = (float)atof(word);
 
         word = _in->GetNextToken();
@@ -587,7 +587,7 @@ void LevelFile::ParseLandFlattenAreas(TextReader *_in)
 
         word = _in->GetNextToken();
         def->m_centre.z = (float)atof(word);
-        
+
 		word = _in->GetNextToken();
         def->m_size = (float)atof(word);
 	}
@@ -600,7 +600,7 @@ void LevelFile::ParseLights(TextReader *_in)
 
 	if (m_lights.Size() > 0)
 	{
-		// This function is called first when parsing the level file and 
+		// This function is called first when parsing the level file and
 		// secondly when parsing the map file. We only get here if the
 		// level file specified some lights. In which case, these lights
 		// are to be used in preference to the map lights. So we need
@@ -616,8 +616,8 @@ void LevelFile::ParseLights(TextReader *_in)
         if (stricmp("Lights_EndDefinition", word) == 0)
         {
             return;
-        }		
-		
+        }
+
 		if (ignoreLights) continue;
 
 		Light *light = new Light;
@@ -653,7 +653,7 @@ void LevelFile::ParseRoute(TextReader *_in, int _id)
 	while(_in->ReadLine())
 	{
 		if (!_in->TokenAvailable()) continue;
-		char *word = _in->GetNextToken(); 
+		char *word = _in->GetNextToken();
 
 		if (stricmp("end", word) == 0) break;
 		DarwiniaDebugAssert(isdigit(word[0]));
@@ -704,7 +704,7 @@ void LevelFile::ParseRoutes(TextReader *_in)
 
 		if (stricmp("Route", word) == 0)
 		{
-			word = _in->GetNextToken(); 
+			word = _in->GetNextToken();
 			int id = atoi(word);
 			DarwiniaDebugAssert(id >= 0 && id < 10000);
 			ParseRoute(_in, id);
@@ -734,7 +734,7 @@ void LevelFile::ParsePrimaryObjectives(TextReader *_in)
             case GlobalEventCondition::NotInLocation:
 				DarwiniaDebugAssert(false);
                 break;
-            
+
 			case GlobalEventCondition::BuildingOffline:
 			case GlobalEventCondition::BuildingOnline:
 			{
@@ -749,7 +749,7 @@ void LevelFile::ParsePrimaryObjectives(TextReader *_in)
                 condition->m_id = GlobalResearch::GetType( _in->GetNextToken() );
                 DarwiniaDebugAssert( condition->m_id != -1 );
                 break;
-                
+
             case GlobalEventCondition::DebugKey:
                 condition->m_id = atoi( _in->GetNextToken() );
 				break;
@@ -774,7 +774,7 @@ void LevelFile::ParsePrimaryObjectives(TextReader *_in)
 
 void LevelFile::GenerateAutomaticObjectives()
 {
-	// 
+	//
 	// Create a NeverTrue objective for cutscene mission files
 
 	if (m_primaryObjectives.Size() == 0)
@@ -794,7 +794,7 @@ void LevelFile::GenerateAutomaticObjectives()
 		if (building->m_type != Building::TypeResearchItem &&
 			building->m_type != Building::TypeTrunkPort)
 		{
-			continue;	
+			continue;
 		}
 
 		// Make sure this building isn't already in the primary objectives list
@@ -816,7 +816,7 @@ void LevelFile::GenerateAutomaticObjectives()
                 break;
             }
 		}
-			
+
 		if (!found)
 		{
             int locationId = g_app->m_globalWorld->GetLocationIdFromMapFilename(m_mapFilename);
@@ -835,7 +835,7 @@ void LevelFile::GenerateAutomaticObjectives()
 				    condition->m_locationId = locationId;
                     condition->m_type = GlobalEventCondition::ResearchOwned;
 				    condition->m_id = item->m_researchType;
-                    condition->SetStringId( "objective_research" );                                                            
+                    condition->SetStringId( "objective_research" );
 				    m_secondaryObjectives.PutData(condition);
                 }
 			}
@@ -884,8 +884,8 @@ void LevelFile::WriteInstantUnits(FileWriter *_out)
 	{
 		InstantUnit *iu = m_instantUnits.GetData(i);
 		_out->printf( "\t%-15s %2d %7.1f %7.1f %6d %4d %7d %7.1f %7.1f %7.1f %4d %4d\n",
-			Entity::GetTypeName(iu->m_type), iu->m_teamId, iu->m_posX, iu->m_posZ, 
-            iu->m_number, iu->m_inAUnit, iu->m_state, iu->m_spread, iu->m_waypointX, iu->m_waypointZ, iu->m_routeId, iu->m_routeWaypointId );        
+			Entity::GetTypeName(iu->m_type), iu->m_teamId, iu->m_posX, iu->m_posZ,
+            iu->m_number, iu->m_inAUnit, iu->m_state, iu->m_spread, iu->m_waypointX, iu->m_waypointZ, iu->m_routeId, iu->m_routeWaypointId );
 	}
 	_out->printf( "InstantUnits_EndDefinition\n\n");
 }
@@ -907,7 +907,7 @@ void LevelFile::WriteLights(FileWriter *_out)
 				    light->m_colour[0], light->m_colour[1], light->m_colour[2]);
         }
     }
-    
+
 	_out->printf( "Lights_EndDefinition\n\n");
 }
 
@@ -940,7 +940,7 @@ void LevelFile::WriteCameraAnims(FileWriter *_out)
 	{
 		CameraAnimation *anim = m_cameraAnimations.GetData(i);
 		_out->printf( "\t%s\n", anim->m_name);
-		
+
 		for (int j = 0; j < anim->m_nodes.Size(); ++j)
 		{
 			CamAnimNode *node = anim->m_nodes[j];
@@ -993,7 +993,7 @@ void LevelFile::WriteLandscapeTiles(FileWriter *_out)
 	_out->printf( "\t#                            frac  height desired gen         lowland\n");
 	_out->printf( "\t# x       y       z    size   dim  scale  height  method seed smooth  guideGrid\n");
 	_out->printf( "\t# =============================================================================\n");
-	    
+
     for (int i = 0; i < m_landscape.m_tiles.Size(); ++i)
 	{
 		LandscapeTile *_def = m_landscape.m_tiles.GetData(i);
@@ -1007,8 +1007,8 @@ void LevelFile::WriteLandscapeTiles(FileWriter *_out)
 		_out->printf( "%6.2f", _def->m_lowlandSmoothingFactor);
         _out->printf( "%6d", _def->m_guideGridPower);
 
-        if( _def->m_guideGridPower > 0 ) _out->printf( "   %s", _def->GuideGridToString() );        
-        
+        if( _def->m_guideGridPower > 0 ) _out->printf( "   %s", _def->GuideGridToString() );
+
         _out->printf( "\n");
 	}
 	_out->printf( "LandscapeTiles_EndDefinition\n\n");
@@ -1023,7 +1023,7 @@ void LevelFile::WriteLandFlattenAreas(FileWriter *_out)
 	for (int i = 0; i < m_landscape.m_flattenAreas.Size(); ++i)
 	{
 		LandscapeFlattenArea *area = m_landscape.m_flattenAreas.GetData(i);
-		_out->printf( "\t%6.1f %6.1f %6.1f %6.1f\n", area->m_centre.x, 
+		_out->printf( "\t%6.1f %6.1f %6.1f %6.1f\n", area->m_centre.x,
 				area->m_centre.y, area->m_centre.z, area->m_size);
 	}
 	_out->printf( "LandFlattenAreas_EndDefinition\n\n");
@@ -1037,11 +1037,11 @@ void LevelFile::WriteRoutes(FileWriter *_out)
 	for (int i = 0; i < m_routes.Size(); ++i)
 	{
 		if (!m_routes.ValidIndex(i)) continue;
-		
+
 		Route *r = m_routes.GetData(i);
 
 		_out->printf("\tRoute %d\n", r->m_id);
-		
+
 		for (int j = 0; j < r->m_wayPoints.Size(); ++j)
 		{
 			WayPoint *wp = r->m_wayPoints.GetData(j);
@@ -1108,13 +1108,13 @@ LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
     sprintf(m_wavesColourFilename,      "waves_default.bmp" );
     sprintf(m_waterColourFilename,      "water_default.bmp" );
 	m_levelDifficulty = -1;
-	
+
 	// Make sure that the current game difficulty setting
 	// is consistent with the preferences (it can become inconsistent
 	// when a level is loaded that was saved with a different difficulty
-	// level to what the preferences say).	
+	// level to what the preferences say).
 	g_app->UpdateDifficultyFromPreferences();
-	
+
 	if (stricmp(_missionFilename, "null") != 0)
     {
         ParseMissionFile(m_missionFilename);
@@ -1177,7 +1177,7 @@ void LevelFile::SaveMissionFile(char const *_filename)
 
     if( !g_app->m_editing )
     {
-        sprintf( fullFilename, "%susers/%s/%s", g_app->GetProfileDirectory(), g_app->m_userProfileName, _filename );        
+        sprintf( fullFilename, "%susers/%s/%s", g_app->GetProfileDirectory(), g_app->m_userProfileName, _filename );
 #ifdef TARGET_DEBUG
         out = new FileWriter( fullFilename, false );
 #else
@@ -1340,13 +1340,13 @@ void LevelFile::GenerateInstantUnits()
                     centrePos /= (float) numFound;
                     roamRange /= (float) numFound;
 
-                    InstantUnit *instant = new InstantUnit();                    
+                    InstantUnit *instant = new InstantUnit();
                     instant->m_type = unit->m_troopType;
                     instant->m_teamId = unit->m_teamId;
                     instant->m_posX = centrePos.x;
                     instant->m_posZ = centrePos.z;
                     instant->m_number = numFound;
-                    instant->m_inAUnit = true;     
+                    instant->m_inAUnit = true;
                     instant->m_spread = roamRange;
                     instant->m_routeId = unit->m_routeId;
                     instant->m_routeWaypointId = unit->m_routeWayPointId;
@@ -1356,7 +1356,7 @@ void LevelFile::GenerateInstantUnits()
         }
     }
 
-    
+
     //
     // Record all other entities that exist
     // If they are in transit in a teleport, ignore them
@@ -1393,7 +1393,7 @@ void LevelFile::GenerateInstantUnits()
                             unit->m_posX = darwinian->m_pos.x;
                             unit->m_posZ = darwinian->m_pos.z;
                             unit->m_waypointX = darwinian->m_wayPoint.x;
-                            unit->m_waypointZ = darwinian->m_wayPoint.z; 
+                            unit->m_waypointZ = darwinian->m_wayPoint.z;
                             unit->m_spread = 0.0f; // Darwinians should be placed exactly where they were when the game was saved
                             if( darwinian->m_state == Darwinian::StateFollowingOrders )
                             {
@@ -1415,7 +1415,7 @@ void LevelFile::GenerateInstantUnits()
                     Entity *entity = team->m_others[i];
                     if( entity->m_type == Entity::TypeOfficer &&
                         entity->m_enabled )
-                    {                      
+                    {
                         Officer *officer = (Officer *) entity;
                         InstantUnit *unit = new InstantUnit();
                         unit->m_type = entity->m_type;
@@ -1488,11 +1488,11 @@ void LevelFile::GenerateInstantUnits()
                 {
                     WorldObjectId id = *dish->m_inTransit.GetPointer(e);
                     Entity *entity = g_app->m_location->GetEntity( id );
-					
+
 					if( entity == NULL )
 						continue;
-						
-					if( entity->m_type == Entity::TypeInsertionSquadie ) 
+
+					if( entity->m_type == Entity::TypeInsertionSquadie )
 					{
 						// InsertionSquaddies are running programs and will be saved there, so no
 						// need to create an InstantUnit for them. However, we do need to adjust the
@@ -1501,7 +1501,7 @@ void LevelFile::GenerateInstantUnits()
 						entity->m_pos.z = exitPos.z;
 						entity->m_pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(entity->m_pos.x, entity->m_pos.z) + 0.1f;
 					}
-                    else 
+                    else
                     {
                         InstantUnit *unit = new InstantUnit();
                         unit->m_type = entity->m_type;
@@ -1522,7 +1522,7 @@ void LevelFile::GenerateInstantUnits()
             }
         }
     }
-        
+
 }
 
 
@@ -1540,7 +1540,7 @@ void LevelFile::GenerateDynamicBuildings()
         {
             Building *locBuilding = g_app->m_location->GetBuilding( building->m_id.GetUniqueId() );
             if( !locBuilding )
-            {                
+            {
                 m_buildings.RemoveData(i);
                 delete building;
                 --i;
@@ -1661,7 +1661,7 @@ void LevelFile::WriteRunningPrograms(FileWriter *_out)
         //
         // Engineer     count   state   numSpirits  waypointX waypointZ    (positionX positionZ health)
         // Squaddie     count   state   weaponType  waypointX waypointZ    (positionX positionZ health)
-        
+
         for( int t = 0; t < g_app->m_taskManager->m_tasks.Size(); ++t )
         {
             Task *task = g_app->m_taskManager->m_tasks[t];
@@ -1672,17 +1672,17 @@ void LevelFile::WriteRunningPrograms(FileWriter *_out)
                     Engineer *engineer = (Engineer *) g_app->m_location->GetEntitySafe( task->m_objId, Entity::TypeEngineer );
                     if( engineer )
                     {
-                        _out->printf( "\t%-15s %6d %6d %6d %8.2f %8.2f %8.2f %8.2f %d\n", 
+                        _out->printf( "\t%-15s %6d %6d %6d %8.2f %8.2f %8.2f %8.2f %d\n",
                                             Entity::GetTypeName(Entity::TypeEngineer),
                                             1,
                                             engineer->m_state,
                                             engineer->GetNumSpirits(),
                                             engineer->m_wayPoint.x, engineer->m_wayPoint.z,
-                                            engineer->m_pos.x, engineer->m_pos.z, 
+                                            engineer->m_pos.x, engineer->m_pos.z,
                                             engineer->m_stats[Entity::StatHealth] );
-                    }       
+                    }
                 }
-                                
+
                 if( task->m_type == GlobalResearch::TypeSquad )
                 {
                     InsertionSquad *squad = (InsertionSquad *) g_app->m_location->GetUnit( task->m_objId );
@@ -1691,7 +1691,7 @@ void LevelFile::WriteRunningPrograms(FileWriter *_out)
                         _out->printf( "\t%-15s %6d %6d %6d %8.2f %8.2f",
                                             Entity::GetTypeName(Entity::TypeInsertionSquadie),
                                             squad->m_entities.NumUsed(),
-                                            0, 
+                                            0,
                                             squad->m_weaponType,
                                             squad->GetWayPoint().x, squad->GetWayPoint().z );
 
@@ -1700,10 +1700,10 @@ void LevelFile::WriteRunningPrograms(FileWriter *_out)
                             if( squad->m_entities.ValidIndex(e) )
                             {
                                 Entity *entity = squad->m_entities[e];
-								
-                                _out->printf( " %8.2f %8.2f %6d", 
-                                                    entity->m_pos.x, 
-                                                    entity->m_pos.z, 
+
+                                _out->printf( " %8.2f %8.2f %6d",
+                                                    entity->m_pos.x,
+                                                    entity->m_pos.z,
                                                     entity->m_stats[Entity::StatHealth] );
                             }
                         }
@@ -1727,7 +1727,7 @@ void LevelFile::ParseDifficulty(TextReader *_in)
 		char *word = _in->GetNextToken();
 
 		if (stricmp("Difficulty_EndDefinition", word) == 0) return;
-		else if (stricmp(word, "CreatedAsDifficulty") == 0) 
+		else if (stricmp(word, "CreatedAsDifficulty") == 0)
 		{
 			// The difficulty setting is 1-based in the file, but 0-based internally
 			m_levelDifficulty = atoi( _in->GetNextToken() ) - 1;
@@ -1738,9 +1738,9 @@ void LevelFile::ParseDifficulty(TextReader *_in)
 
 void LevelFile::WriteDifficulty(FileWriter *_out)
 {
-	// When we write the difficulty setting to a file it should be 1-based 
+	// When we write the difficulty setting to a file it should be 1-based
 	// (internally it is 0 based).
 	_out->printf("Difficulty_StartDefinition\n");
-	_out->printf("\tCreatedAsDifficulty %d\n", m_levelDifficulty + 1);	
+	_out->printf("\tCreatedAsDifficulty %d\n", m_levelDifficulty + 1);
 	_out->printf("Difficulty_EndDefinition\n\n");
 }

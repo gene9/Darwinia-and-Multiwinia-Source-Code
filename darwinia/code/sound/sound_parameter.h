@@ -63,7 +63,7 @@ public:
     void        Copy( SoundParameter *_copyMe );
 
     void        Recalculate( float _input=0.0f );
-    float       GetOutput();    
+    float       GetOutput();
 
     void        Read    ( TextReader *_in );
     void        Write   ( FileWriter *_file, char *_paramName, int _tabs );
@@ -74,7 +74,7 @@ public:
 
     static char *GetParameterTypeName   ( int _type );
     static int   GetParameterType       ( char *_name );
-    
+
     static char *GetLinkName            ( int _type );
     static int   GetLinkType            ( char *_name );
 

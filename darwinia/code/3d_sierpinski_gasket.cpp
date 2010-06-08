@@ -14,7 +14,7 @@ Sierpinski3D::Sierpinski3D(unsigned int _numPoints)
 :	m_numPoints(_numPoints)
 {
 	m_points = new Vector3[_numPoints];
- 
+
 	float size = 20;
 	float x1=    0, y1=    0, z1= size;
 	float x2= size, y2= size, z2=-size;
@@ -22,7 +22,7 @@ Sierpinski3D::Sierpinski3D(unsigned int _numPoints)
 	float x4=-size, y4= size, z4=-size;
 	float x5=-size, y5=-size, z5=-size;
 	float x = x1, y = y1, z = z1;
-	
+
 	for(unsigned int i = 0; i < m_numPoints; ++i)
 	{
 		switch( darwiniaRandom()%5 )

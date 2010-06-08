@@ -20,10 +20,10 @@ void Flag::Initialise()
     {
         for( int z = 0; z < FLAG_RESOLUTION; ++z )
         {
-            Vector3 targetPos = m_pos + 
+            Vector3 targetPos = m_pos +
                                 (float) x / (float) FLAG_RESOLUTION * m_front +
                                 (float) z / (float) FLAG_RESOLUTION * m_up;
-            
+
             m_flag[x][z] = targetPos;
         }
     }
@@ -61,7 +61,7 @@ void Flag::Render()
 
     //
     // Advance the flag
-    
+
     for( int x = 0; x < FLAG_RESOLUTION; ++x )
     {
         for( int z = 0; z < FLAG_RESOLUTION; ++z )
@@ -70,19 +70,19 @@ void Flag::Render()
             if( x == 0 ) factor1 = 1.0f;
             float factor2 = 1.0f - factor1;
             Vector3 targetPos;
-            
+
             if( x == 0 )
             {
-                targetPos = m_pos + m_up * m_size / 2.0f + 
+                targetPos = m_pos + m_up * m_size / 2.0f +
                                 (float) x / (float) (FLAG_RESOLUTION-1) * m_front * m_size +
                                 (float) z / (float) (FLAG_RESOLUTION-1) * m_up * m_size;
             }
             else
             {
-                targetPos = m_flag[x-1][z] + 
+                targetPos = m_flag[x-1][z] +
                                 1.0f/(float) (FLAG_RESOLUTION-1) * m_front * m_size;
             }
-            
+
             targetPos.x += 1 * cosf( g_gameTime + x * 1.5f ) * (float) x / (float) FLAG_RESOLUTION;
             targetPos.y += 3 * sinf( g_gameTime + x * 1.1f ) * (float) x / (float) FLAG_RESOLUTION;
             targetPos.z += 1 * cosf( g_gameTime + x * 1.3f ) * (float) x / (float) FLAG_RESOLUTION;
@@ -106,7 +106,7 @@ void Flag::Render()
     // Render the flag pole
 
     glColor4ub( 255, 255, 100, 255 );
-    
+
     glDisable       ( GL_CULL_FACE );
     glDisable       ( GL_TEXTURE_2D );
 
@@ -122,15 +122,15 @@ void Flag::Render()
 
     //
     // Render the flag
-        
+
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glEnable        ( GL_BLEND );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, m_texId );
     glTexParameterf ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameterf ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-    
-    glColor4f( 1.0f, 1.0f, 1.0f, 0.8f );    
+
+    glColor4f( 1.0f, 1.0f, 1.0f, 0.8f );
     for( int x = 0; x < FLAG_RESOLUTION-1; ++x )
     {
         for( int y = 0; y < FLAG_RESOLUTION-1; ++y )
@@ -138,7 +138,7 @@ void Flag::Render()
             float texX = (float) x / (float) (FLAG_RESOLUTION-1);
             float texY = (float) y / (float) (FLAG_RESOLUTION-1);
             float texW = 1.0f / (FLAG_RESOLUTION-1);
-            
+
             glBegin( GL_QUADS );
                 glTexCoord2f(texX,texY);            glVertex3fv( m_flag[x][y].GetData() );
                 glTexCoord2f(texX+texW,texY);       glVertex3fv( m_flag[x+1][y].GetData() );
@@ -147,7 +147,7 @@ void Flag::Render()
             glEnd();
         }
     }
-    
+
     glDepthMask     ( true );
     glDisable       ( GL_BLEND );
     glDisable       ( GL_TEXTURE_2D );
@@ -165,17 +165,17 @@ void Flag::RenderText( int _posX, int _posY, char *_caption )
     {
         return;
     }
-    
+
     Vector3 pos = m_flag[_posX][_posY];
     Vector3 up = (m_flag[_posX][_posY+1] - pos);
     Vector3 right = (m_flag[_posX+1][_posY] - pos);
-    
+
     pos += right * 0.5f;
-    pos += up * 0.5f;    
+    pos += up * 0.5f;
 
     Vector3 front = (right ^ up).Normalise();
     up = (front ^ right).Normalise();
-    
+
     g_gameFont.DrawText3D( pos + front * 0.1f, front, up, 4.0f, _caption );
     g_gameFont.DrawText3D( pos - front * 0.1f, -front, up, 4.0f, _caption );
 }

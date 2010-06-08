@@ -46,7 +46,7 @@ void SortingHashTable<T>::Grow()
 		short nextNewI = (nextOldI != -1) ? GetInsertPos(oldKeys[nextOldI]) : -1;
 
 		m_orderedIndices[newI] = nextNewI;
-		
+
 		oldI = nextOldI;
 		newI = nextNewI;
 	}
@@ -65,7 +65,7 @@ short SortingHashTable<T>::FindPrevKey(char const *_key) const
 {
 	short prevI = -1;
 	short i = m_firstOrderedIndex;
-	
+
 	while (1)
 	{
 		if (i == -1) return prevI;
@@ -103,7 +103,7 @@ SortingHashTable<T>::~SortingHashTable()
 template <class T>
 int SortingHashTable<T>::PutData(char const *_key, T const &_data)
 {
-	// 
+	//
 	// Make sure the table is big enough
 
 	if (m_slotsFree * 2 <= m_size)
@@ -124,7 +124,7 @@ int SortingHashTable<T>::PutData(char const *_key, T const &_data)
 
 	//
 	// Insert us into the alphabetically order index list
-	
+
 	short i = FindPrevKey(_key);
 	if (i == -1)
 	{

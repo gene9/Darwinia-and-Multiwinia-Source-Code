@@ -28,11 +28,11 @@ DemoEndSequence::DemoEndSequence()
 
     char *missionFilename = g_app->m_location->m_levelFile->m_missionFilename;
     char saveFilename[256];
-    sprintf( saveFilename, "%susers/%s/%s", g_app->GetProfileDirectory(), g_app->m_userProfileName, missionFilename );    
+    sprintf( saveFilename, "%susers/%s/%s", g_app->GetProfileDirectory(), g_app->m_userProfileName, missionFilename );
     DeleteThisFile( saveFilename );
 
     //
-    // Delete the game file 
+    // Delete the game file
 
     sprintf( saveFilename, "%susers/%s/game_demo2.txt", g_app->GetProfileDirectory(), g_app->m_userProfileName );
     DeleteThisFile( saveFilename );
@@ -42,7 +42,7 @@ DemoEndSequence::DemoEndSequence()
     g_prefsManager->SetInt("PrologueComplete", 1 );
 	g_prefsManager->SetInt("CurrentGameMode", 1 );
     g_prefsManager->Save();
-    
+
 }
 
 DemoEndSequence::~DemoEndSequence()
@@ -75,7 +75,7 @@ void DemoEndSequence::Render()
 
     //
     // White out the background
-    
+
     glBegin( GL_QUADS );
         glVertex2i( 0, 0 );
         glVertex2i( 800, 0 );
@@ -98,7 +98,7 @@ void DemoEndSequence::Render()
         if( sfrand() > 0.0f ) darwinian->m_turnRate *= -1.0f;
         darwinian->m_size = 50 + sfrand(25);
         m_darwinians.PutData( darwinian );
-        
+
         m_newDarwinianTimer = 3.0f;
     }
 
@@ -107,7 +107,7 @@ void DemoEndSequence::Render()
     // Advance and Render Darwinians
 
     glEnable( GL_TEXTURE_2D );
-        
+
     for( int i = 0; i < m_darwinians.Size(); ++i )
     {
         DemoEndDarwinian *darwinian = m_darwinians[i];
@@ -119,20 +119,20 @@ void DemoEndSequence::Render()
             --i;
             continue;
         }
-        
+
         darwinian->m_up.RotateAroundY( darwinian->m_turnRate * g_advanceTime );
-        
+
         float size = darwinian->m_size;
         Vector3 right = darwinian->m_up ^ Vector3(0,1,0);
         Vector3 topLeft = darwinian->m_pos - darwinian->m_up * size/2 - right * size/2;
         Vector3 topRight = darwinian->m_pos - darwinian->m_up * size/2 + right * size/2;
         Vector3 bottomRight = darwinian->m_pos + darwinian->m_up * size/2 + right * size/2;
         Vector3 bottomLeft = darwinian->m_pos + darwinian->m_up * size/2 - right * size/2;
-       
+
         glBindTexture( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "sprites/ghost.bmp" ) );
-        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );  
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
         glColor4f( 0.8f, 0.3f, 0.8f, 0.0f );
-       
+
         glBegin( GL_QUADS );
             glTexCoord2i(0,1);      glVertex2f( topLeft.x, topLeft.z );
             glTexCoord2i(1,1);      glVertex2f( topRight.x, topRight.z );
@@ -146,7 +146,7 @@ void DemoEndSequence::Render()
         glBindTexture( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "sprites/darwinian.bmp" ) );
         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
         glColor4f( 0.3f, 1.0f, 0.3f, 0.1f );
-       
+
         size *= 0.7f;
         topLeft = darwinian->m_pos - darwinian->m_up * size/2 - right * size/2;
         topRight = darwinian->m_pos - darwinian->m_up * size/2 + right * size/2;
@@ -168,7 +168,7 @@ void DemoEndSequence::Render()
     //
     // Bring up end dialog
 
-	if (g_app->HasBoughtGame()) 
+	if (g_app->HasBoughtGame())
 	{
 		if( timeSinceStart > 30 )
 		{
@@ -179,7 +179,7 @@ void DemoEndSequence::Render()
 		if( timeSinceStart > 40 && !m_endDialogCreated )
 		{
 			EclRegisterWindow( new DemoEndWindow(15.0f, false) );
-			m_endDialogCreated = true;        
+			m_endDialogCreated = true;
 		}
 	}
 

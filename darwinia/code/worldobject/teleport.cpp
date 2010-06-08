@@ -33,7 +33,7 @@ Teleport::Teleport()
     m_timeSync(0.0f),
     m_sendPeriod(1.0f),
     m_entrance(NULL)
-{   
+{
 }
 
 
@@ -41,17 +41,17 @@ Teleport::Teleport()
 void Teleport::SetShape( Shape *_shape )
 {
     Building::SetShape( _shape );
-    
+
     m_entrance = m_shape->m_rootFragment->LookupMarker( "MarkerTeleportEntrance" );
 }
 
 
 // *** Advance
 bool Teleport::Advance ()
-{    
+{
     m_timeSync -= SERVER_ADVANCE_PERIOD;
     if( m_timeSync < 0.0f ) m_timeSync = 0.0f;
-    
+
     //
     // Advance people who are in transit
 
@@ -121,9 +121,9 @@ void Teleport::RenderAlphas ( float predictionTime )
 //    GetEntrance( pos, front );
 //    RenderSphere( pos, 3.0f, RGBAColour(255,0,0) );
 //    RenderSphere( pos, 15.0f, RGBAColour(255,0,0) );
-    
+
     //RenderHitCheck();
-    
+
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glDisable       ( GL_CULL_FACE );
@@ -160,26 +160,26 @@ void Teleport::RenderSpirit( Vector3 const &_pos, int _teamId )
     int spiritOuterSize = 6;
 
     RGBAColour colour;
-    if( _teamId >= 0 ) colour = g_app->m_location->m_teams[ _teamId ].m_colour;      
+    if( _teamId >= 0 ) colour = g_app->m_location->m_teams[ _teamId ].m_colour;
 
     float size = spiritInnerSize;
-    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );            
+    glColor4ub(colour.r, colour.g, colour.b, innerAlpha );
 
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize;
-    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );            
+    glColor4ub(colour.r, colour.g, colour.b, outerAlpha );
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 }
 
 
@@ -202,15 +202,15 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
     if( entity )
     {
         Vector3 oldPos = entity->m_pos;
-        
+
         if( !_relay )
         {
-            Unit *oldUnit = g_app->m_location->GetUnit( _id ); 
+            Unit *oldUnit = g_app->m_location->GetUnit( _id );
             if( oldUnit )
             {
                 //
                 // Look for the new unit that i'm going to
-    
+
                 int newUnitId = -1;
                 for( int i = 0; i < m_teleportMap.Size(); ++i )
                 {
@@ -218,12 +218,12 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
                     if( map->m_teamId == _id.GetTeamId() &&
                         map->m_fromUnitId == _id.GetUnitId() )
                     {
-                        newUnitId = map->m_toUnitId;                
+                        newUnitId = map->m_toUnitId;
                     }
                 }
 
                 DarwiniaDebugAssert( oldUnit );
-        
+
                 Unit *newUnit = NULL;
 
                 if( newUnitId != -1 )
@@ -237,19 +237,19 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
                         newUnitId = -1;
                     }
                 }
-            
+
                 if( newUnitId == -1 )
                 {
                     //
                     // Oh well, i'm the first, so create a new unit
-                    newUnit = g_app->m_location->m_teams[ _id.GetTeamId() ].NewUnit( oldUnit->m_troopType, 
-                                                                                  oldUnit->m_entities.NumUsed(), 
+                    newUnit = g_app->m_location->m_teams[ _id.GetTeamId() ].NewUnit( oldUnit->m_troopType,
+                                                                                  oldUnit->m_entities.NumUsed(),
                                                                                   &newUnitId,
 																			      m_pos);
 
                     //
                     // Special case :
-                    // If this was an insertion squad we just broke up, 
+                    // If this was an insertion squad we just broke up,
                     // then we must create a Task to represent the new squad
 
                     if( oldUnit->m_troopType == Entity::TypeInsertionSquadie )
@@ -266,11 +266,11 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
                                 break;
                             }
                         }
-                        
+
                         Task *task = new Task();
                         task->m_type = GlobalResearch::TypeSquad;
                         task->m_state = Task::StateRunning;
-                        task->m_objId.Set( newUnit->m_teamId, newUnit->m_unitId, -1, -1 );                    
+                        task->m_objId.Set( newUnit->m_teamId, newUnit->m_unitId, -1, -1 );
                         bool success = g_app->m_taskManager->RegisterTask( task );
                         if( success ) g_app->m_taskManager->SelectTask( task->m_id );
 
@@ -285,22 +285,22 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
                         }
                     }
 
-                    
+
                     if( oldUnit->m_routeId != -1 )
                     {
                         newUnit->m_routeId = oldUnit->m_routeId;
-                        newUnit->m_routeWayPointId = oldUnit->m_routeWayPointId+1;                    
+                        newUnit->m_routeWayPointId = oldUnit->m_routeWayPointId+1;
                     }
                     else
                     {
                         Vector3 exitPos, exitFront;
-                        GetExit( exitPos, exitFront );                    
+                        GetExit( exitPos, exitFront );
                         Vector3 newWayPoint(exitPos + exitFront * 50.0f);
                         newWayPoint += Vector3( syncsfrand(35.0f), 0.0f, syncsfrand(35.0f) );
                         newWayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( newWayPoint.x, newWayPoint.z );
 				        newUnit->SetWayPoint(newWayPoint);
                     }
-                
+
                     TeleportMap map;
                     map.m_teamId = entity->m_id.GetTeamId();
                     map.m_fromUnitId = oldUnit->m_unitId;
@@ -317,7 +317,7 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
                 Entity *newEntity = newUnit->NewEntity( &newUnitIndex );
                 int newUniqueId = newEntity->m_id.GetUniqueId();
                 *newEntity = *entity;
-                entity = newEntity;                                      
+                entity = newEntity;
                 entity->m_id.SetUnitId(newUnitId);
                 entity->m_id.SetIndex(newUnitIndex);
                 entity->m_id.SetUniqueId(newUniqueId);
@@ -329,8 +329,8 @@ void Teleport::EnterTeleport( WorldObjectId _id, bool _relay )
             }
         }
 
-        entity->m_pos = GetStartPoint();   
-        UpdateEntityInTransit( entity );                
+        entity->m_pos = GetStartPoint();
+        UpdateEntityInTransit( entity );
 
         WorldObjectId newId( entity->m_id );
         m_inTransit.PutData(newId);

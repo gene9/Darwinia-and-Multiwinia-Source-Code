@@ -18,13 +18,13 @@ class NetworkUpdate;
 
 class ClientToServer
 {
-private:    
+private:
 	NetLib				*m_netLib;
 
 	void AdvanceSender	();
 
 public:
-    NetSocket           *m_sendSocket; 
+    NetSocket           *m_sendSocket;
     NetSocketListener   *m_receiveSocket;
 
     NetMutex            *m_inboxMutex;
@@ -43,7 +43,7 @@ public:
 
     ServerToClientLetter    *GetNextLetter();
     int                      GetNextLetterSeqID();
-    
+
 	void Advance				();
 
     void ReceiveLetter          ( ServerToClientLetter *letter );

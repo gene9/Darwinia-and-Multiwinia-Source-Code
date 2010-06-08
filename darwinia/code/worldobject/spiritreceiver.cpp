@@ -37,7 +37,7 @@ ReceiverBuilding::ReceiverBuilding()
 :   Building(),
     m_spiritLink(-1),
     m_spiritLocation(NULL)
-{    
+{
 }
 
 void ReceiverBuilding::Initialise( Building *_template )
@@ -104,21 +104,21 @@ void ReceiverBuilding::RenderAlphas ( float _predictionTime )
 	Building::RenderAlphas( _predictionTime );
 
     _predictionTime -= 0.1f;
-    
+
     Building *spiritLink = g_app->m_location->GetBuilding( m_spiritLink );
-            
+
     int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
 
     if( spiritLink )
     {
         //
-        // Render the spirit line itself 
-        
+        // Render the spirit line itself
+
         ReceiverBuilding *receiverBuilding = (ReceiverBuilding *) spiritLink;
 
         Vector3 ourPos = GetSpiritLocation();
         Vector3 theirPos = receiverBuilding->GetSpiritLocation();
-        
+
         Vector3 camToOurPos = g_app->m_camera->GetPos() - ourPos;
         Vector3 ourPosRight = camToOurPos ^ ( theirPos - ourPos );
 
@@ -152,11 +152,11 @@ void ReceiverBuilding::RenderAlphas ( float _predictionTime )
             glTexCoord2f(0.1f, 1);      glVertex3fv( (ourPos + ourPosRight).GetData() );
             glTexCoord2f(0.9f, 1);      glVertex3fv( (theirPos + theirPosRight).GetData() );
             glTexCoord2f(0.9f, 0);      glVertex3fv( (theirPos - theirPosRight).GetData() );
-        glEnd();           
-        
+        glEnd();
+
         glDisable       ( GL_TEXTURE_2D );
 
-        
+
         //
         // Render any surges
 
@@ -170,7 +170,7 @@ void ReceiverBuilding::RenderAlphas ( float _predictionTime )
 			if( thisSpirit > 1.0f ) thisSpirit = 1.0f;
 			Vector3 thisSpiritPos = ourPos + (theirPos-ourPos) * thisSpirit;
 			RenderUnprocessedSpirit( thisSpiritPos, 1.0f );
-		}        
+		}
 #else
 		glBegin( GL_QUADS );
 			for( int i = 0; i < m_spirits.Size(); ++i )
@@ -181,7 +181,7 @@ void ReceiverBuilding::RenderAlphas ( float _predictionTime )
 				if( thisSpirit > 1.0f ) thisSpirit = 1.0f;
 				Vector3 thisSpiritPos = ourPos + (theirPos-ourPos) * thisSpirit;
 				RenderUnprocessedSpirit_basic( thisSpiritPos, 1.0f );
-			}        
+			}
 		glEnd();
 		int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
 		if( buildingDetail == 1 )
@@ -196,7 +196,7 @@ void ReceiverBuilding::RenderAlphas ( float _predictionTime )
 					if( thisSpirit > 1.0f ) thisSpirit = 1.0f;
 					Vector3 thisSpiritPos = ourPos + (theirPos-ourPos) * thisSpirit;
 					RenderUnprocessedSpirit_detail( thisSpiritPos, 1.0f );
-				}        
+				}
 			glEnd();
 			glDisable( GL_TEXTURE_2D );
 		}
@@ -215,7 +215,7 @@ bool ReceiverBuilding::Advance()
         {
             m_spirits.RemoveData(i);
             --i;
-            
+
             Building *spiritLink = g_app->m_location->GetBuilding( m_spiritLink );
             if( spiritLink )
             {
@@ -502,7 +502,7 @@ bool SpiritProcessor::Advance()
 
     //
     // Advance all unprocessed spirits
-    
+
     for( int i = 0; i < m_floatingSpirits.Size(); ++i )
     {
         UnprocessedSpirit *spirit = m_floatingSpirits[i];
@@ -515,7 +515,7 @@ bool SpiritProcessor::Advance()
         }
     }
 
-    
+
     //
     // Spawn more unprocessed spirits
 
@@ -532,7 +532,7 @@ bool SpiritProcessor::Advance()
         spirit->m_pos = spawnPos;
         m_floatingSpirits.PutData( spirit );
     }
-    
+
     return ReceiverBuilding::Advance();
 }
 
@@ -541,8 +541,8 @@ void SpiritProcessor::Render( float _predictionTime )
 {
     ReceiverBuilding::Render( _predictionTime );
 
-    //g_gameFont.DrawText3DCentre( m_pos + Vector3(0,215,0), 10.0f, "NumThisSecond : %d", m_numThisSecond );    
-    //g_gameFont.DrawText3DCentre( m_pos + Vector3(0,200,0), 10.0f, "Throughput    : %2.2f", m_throughput );    
+    //g_gameFont.DrawText3DCentre( m_pos + Vector3(0,215,0), 10.0f, "NumThisSecond : %d", m_numThisSecond );
+    //g_gameFont.DrawText3DCentre( m_pos + Vector3(0,200,0), 10.0f, "Throughput    : %2.2f", m_throughput );
 }
 
 
@@ -554,14 +554,14 @@ void SpiritProcessor::RenderAlphas( float _predictionTime )
 #endif
 
     ReceiverBuilding::RenderAlphas( _predictionTime );
-    
+
     //
     // Render all floating spirits
 
     BeginRenderUnprocessedSpirits();
-    
+
     _predictionTime -= SERVER_ADVANCE_PERIOD;
-    
+
 #ifndef USE_DIRECT3D
     for( int i = 0; i < m_floatingSpirits.Size(); ++i )
     {
@@ -614,12 +614,12 @@ ReceiverLink::ReceiverLink()
 :   ReceiverBuilding()
 {
     m_type = TypeReceiverLink;
-    SetShape( g_app->m_resource->GetShape( "receiverlink.shp" ) );    
+    SetShape( g_app->m_resource->GetShape( "receiverlink.shp" ) );
 }
 
 
 bool ReceiverLink::Advance()
-{    
+{
     return ReceiverBuilding::Advance();
 }
 
@@ -686,7 +686,7 @@ void SpiritReceiver::Initialise( Building *_template )
 bool SpiritReceiver::Advance()
 {
     float fractionOccupied = (float) GetNumPortsOccupied() / (float) GetNumPorts();
-        
+
     //
     // Search for spirits nearby
 
@@ -739,7 +739,7 @@ void SpiritReceiver::Render( float _predictionTime )
         Vector3 right( 1, 0, 0 );
         m_front = right ^ m_up;
     }
-        
+
     ReceiverBuilding::Render( _predictionTime );
 
     Matrix34 mat( m_front, m_up, m_pos );
@@ -753,7 +753,7 @@ void SpiritReceiver::Render( float _predictionTime )
 
 
 Vector3 SpiritReceiver::GetSpiritLocation()
-{    
+{
     Matrix34 mat( m_front, m_up, m_pos );
     Vector3 headPos = m_headMarker->GetWorldMatrix(mat).pos;
     Vector3 up = g_upVector;
@@ -775,10 +775,10 @@ void SpiritReceiver::RenderPorts()
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
 
     for( int i = 0; i < GetNumPorts(); ++i )
-    {        
+    {
         Matrix34 rootMat(m_front, m_up, m_pos);
         Matrix34 worldMat = m_statusMarkers[i]->GetWorldMatrix(rootMat);
-        
+
         //
         // Render the status light
 
@@ -788,9 +788,9 @@ void SpiritReceiver::RenderPorts()
 
         Vector3 statusPos = worldMat.pos;
 
-        if( GetPortOccupant(i).IsValid() )      glColor4f( 0.3f, 1.0f, 0.3f, 1.0f );        
+        if( GetPortOccupant(i).IsValid() )      glColor4f( 0.3f, 1.0f, 0.3f, 1.0f );
         else                                    glColor4f( 1.0f, 0.3f, 0.3f, 1.0f );
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i( 0, 0 );           glVertex3fv( (statusPos - camR - camU).GetData() );
             glTexCoord2i( 1, 0 );           glVertex3fv( (statusPos + camR - camU).GetData() );
@@ -812,7 +812,7 @@ void SpiritReceiver::RenderAlphas( float _predictionTime )
     ReceiverBuilding::RenderAlphas( _predictionTime );
 
     //RenderHitCheck();
-    
+
     float fractionOccupied = (float) GetNumPortsOccupied() / (float) GetNumPorts();
 }
 
@@ -820,12 +820,12 @@ void SpiritReceiver::RenderAlphas( float _predictionTime )
 // ****************************************************************************
 // Class UnprocessedSpirit
 // ****************************************************************************
-  
+
 UnprocessedSpirit::UnprocessedSpirit()
 :   WorldObject()
 {
     m_state = StateUnprocessedFalling;
-    
+
     m_positionOffset = syncfrand(10.0f);
     m_xaxisRate = syncfrand(2.0f);
     m_yaxisRate = syncfrand(2.0f);
@@ -833,7 +833,7 @@ UnprocessedSpirit::UnprocessedSpirit()
 
     m_timeSync = GetHighResTime();
 }
-    
+
 
 bool UnprocessedSpirit::Advance()
 {
@@ -854,7 +854,7 @@ bool UnprocessedSpirit::Advance()
     if( m_zaxisRate < 0.0f ) m_zaxisRate = 0.0f;
     m_hover.x = sinf( m_positionOffset ) * m_xaxisRate;
     m_hover.y = sinf( m_positionOffset ) * m_yaxisRate;
-    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;            
+    m_hover.z = sinf( m_positionOffset ) * m_zaxisRate;
 
     switch( m_state )
     {
@@ -863,16 +863,16 @@ bool UnprocessedSpirit::Advance()
             float heightAboveGround = m_pos.y - g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
             if( heightAboveGround > 15.0f )
             {
-                float fractionAboveGround = heightAboveGround / 100.0f;                    
+                float fractionAboveGround = heightAboveGround / 100.0f;
                 fractionAboveGround = min( fractionAboveGround, 1.0f );
                 m_hover.y = (-10.0f - syncfrand(10.0f)) * fractionAboveGround;
             }
             else
             {
                 m_state = StateUnprocessedFloating;
-                m_timeSync = 30.0f + syncsfrand(30.0f);                                                            
+                m_timeSync = 30.0f + syncsfrand(30.0f);
             }
-            break;        
+            break;
         }
 
         case StateUnprocessedFloating:
@@ -887,9 +887,9 @@ bool UnprocessedSpirit::Advance()
         case StateUnprocessedDeath:
             m_timeSync -= SERVER_ADVANCE_PERIOD;
             if( m_timeSync <= 0.0f ) return true;
-            break;            
+            break;
     }
-    
+
     Vector3 oldPos = m_pos;
 
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;

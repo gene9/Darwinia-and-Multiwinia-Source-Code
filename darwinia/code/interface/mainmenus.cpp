@@ -62,7 +62,7 @@ class PlayPrologueButton : public DarwiniaButton
 		}
 
         g_app->m_script->Skip();
-		g_app->LoadPrologue();		
+		g_app->LoadPrologue();
 	}
 };
 
@@ -91,7 +91,7 @@ class AboutDarwiniaButton : public DarwiniaButton
 class MainMenuUserProfileButton : public DarwiniaButton
 {
     void MouseUp()
-    {   
+    {
 		if (!EclGetWindow(LANGUAGEPHRASE("dialog_profile")))
 		{
 			EclRegisterWindow( new UserProfileWindow(), m_parent );
@@ -193,7 +193,7 @@ MainMenuWindow::MainMenuWindow()
 {
     int screenW = g_app->m_renderer->ScreenW();
     int screenH = g_app->m_renderer->ScreenH();
-    
+
 	SetMenuSize( 220, 260 );
     SetPosition( screenW/2.0f - m_w/2.0f,
                  screenH/2.0f - m_h/2.0f );
@@ -231,7 +231,7 @@ void OptionsMenuWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w - border * 2;
-	int h = buttonH + border;	
+	int h = buttonH + border;
 
     ScreenOptionsButton *screen = new ScreenOptionsButton();
     screen->SetShortProperties( LANGUAGEPHRASE("dialog_screenoptions"), border, y+=border, buttonW, buttonH );
@@ -294,8 +294,8 @@ class ExitLevelButton : public DarwiniaButton
     void MouseUp()
     {
         EclRemoveWindow( m_parent->m_name );
-        
-		if (!g_app->HasBoughtGame()) 
+
+		if (!g_app->HasBoughtGame())
 		{
 			EclRegisterWindow( new DemoEndWindow(1.0f, true) );
 		}
@@ -329,7 +329,7 @@ public:
             g_prefsManager->SetInt( "ScreenWindowed", 1 );
             g_prefsManager->SetInt( "ScreenWidth", 800 );
             g_prefsManager->SetInt( "ScreenHeight", 600 );
-            
+
 		    g_windowManager->DestroyWin();
             delete g_app->m_renderer;
             g_app->m_renderer = new Renderer();
@@ -337,12 +337,12 @@ public:
 			getW32EventHandler()->ResetWindowHandle();
 		    g_app->m_resource->FlushOpenGlState();
 		    g_app->m_resource->RegenerateOpenGlState();
-		    
-            g_prefsManager->Save();        
+
+            g_prefsManager->Save();
 
             EclInitialise( 800, 600 );
 
-            m_parent->SetPosition( g_app->m_renderer->ScreenW()/2 - m_parent->m_w/2, 
+            m_parent->SetPosition( g_app->m_renderer->ScreenW()/2 - m_parent->m_w/2,
                                    g_app->m_renderer->ScreenH()/2 - m_parent->m_h/2 );
 
         }
@@ -374,13 +374,13 @@ void LocationWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w - border * 2;
-	int h = buttonH + border;	
-	
+	int h = buttonH + border;
+
 	int gap = border;
 
     GlobalLocation *loc = g_app->m_globalWorld->GetLocation( g_app->m_locationId );
 
-	if (g_app->HasBoughtGame()) 
+	if (g_app->HasBoughtGame())
 	{
 		// Full game menu
 
@@ -416,7 +416,7 @@ void LocationWindow::Create()
 	}
 	else {
 		// Demo mode
-		
+
 		ResetLevelButton *reset = new ResetLevelButton();
 		reset->SetShortProperties( LANGUAGEPHRASE("dialog_resetlocation"), border, y+=gap, buttonW, buttonH );
 		reset->m_fontSize = fontSize;
@@ -430,7 +430,7 @@ void LocationWindow::Create()
 		buy->m_centered = true;
 
 		strcpy( buy->m_website, "http://store.introversion.co.uk" );
-	    
+
 		RegisterButton( buy );
 		m_buttonOrder.PutData( buy );
 
@@ -458,7 +458,7 @@ void LocationWindow::Create()
 		RegisterButton( skip );
 		m_buttonOrder.PutData( skip );
 	}
-    
+
     CloseButton *close = new CloseButton();
     close->SetShortProperties( LANGUAGEPHRASE("dialog_close"), border, m_h-h, buttonW, buttonH );
     close->m_fontSize = fontSize;
@@ -503,7 +503,7 @@ void ResetLocationWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w/2 - border * 2;
-	int h = buttonH + border;	
+	int h = buttonH + border;
 
 	//int y = m_h - 30;
 
@@ -545,7 +545,7 @@ void ResetLocationWindow::Render( bool _hasFocus )
     g_gameFont.DrawText2DCentre( m_x+m_w/2, y+=h, fontSize, LANGUAGEPHRASE("dialog_reset3") );
     g_gameFont.DrawText2DCentre( m_x+m_w/2, y+=h, fontSize, LANGUAGEPHRASE("dialog_reset4") );
     g_gameFont.DrawText2DCentre( m_x+m_w/2, y+=h, fontSize, LANGUAGEPHRASE("dialog_reset5") );
-    
+
 }
 
 
@@ -560,8 +560,8 @@ void MainMenuWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w - border * 2;
-	int h = buttonH + border;	
-    
+	int h = buttonH + border;
+
 	int fontSize = GetMenuSize(13);
 
     MainMenuUserProfileButton *profile = new MainMenuUserProfileButton();
@@ -580,7 +580,7 @@ void MainMenuWindow::Create()
         RegisterButton( mods );
 		m_buttonOrder.PutData(mods);
     }
-    
+
     OptionsButton *options = new OptionsButton();
     options->SetShortProperties( LANGUAGEPHRASE("dialog_options"), border, y+=h, buttonW, buttonH );
     options->m_fontSize = fontSize;
@@ -630,7 +630,7 @@ void AboutDarwiniaWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w - border * 2;
-	int h = buttonH + border;	
+	int h = buttonH + border;
     int fontSize = GetMenuSize(13);
 
     CloseButton *close = new CloseButton();
@@ -690,7 +690,7 @@ void SkipPrologueWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w / 2 - border * 2;
-	int h = buttonH + border;	
+	int h = buttonH + border;
     int fontSize = GetMenuSize(13);
 
 	SkipPrologueButton *skip = new SkipPrologueButton();
@@ -759,7 +759,7 @@ void PlayPrologueWindow::Create()
 	int border = GetClientRectX1() + 10;
 	int buttonH = GetMenuSize(20);
 	int buttonW = m_w / 2 - border * 2;
-	int h = buttonH + border;	
+	int h = buttonH + border;
     int fontSize = GetMenuSize(13);
 
 	PlayPrologueButton *play = new PlayPrologueButton();

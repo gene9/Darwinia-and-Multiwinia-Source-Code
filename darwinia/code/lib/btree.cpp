@@ -43,17 +43,17 @@ void BTree<T>::Copy( const BTree<T> &copy )
 {
     if(copy.ltree)	ltree = new BTree( *copy.ltree );
     else ltree = NULL;
-    
+
     if(copy.rtree)	rtree = new BTree( *copy.rtree );
     else rtree = NULL;
-    
+
     if(copy.id) {
 		id = new char[ strlen(copy.id) + 1 ];
 		strcpy( id, copy.id );
     }
-    else 
+    else
 		id = NULL;
-    
+
     data = copy.data;
 }
 
@@ -71,7 +71,7 @@ void BTree<T>::Empty()
     delete ltree;
     delete rtree;
     delete[] id;
-    
+
     ltree = rtree = NULL;
     id = NULL;
 }
@@ -80,23 +80,23 @@ void BTree<T>::Empty()
 template <class T>
 void BTree<T>::PutData( const char *newid, const T &newdata )
 {
-    if( !id ) 
+    if( !id )
 	{
         id = new char[ strlen( newid ) + 1 ];
         strcpy( id, newid );
         data = newdata;
-	 	 
+
 		return;
     }
 
-    if( stricmp( newid, id ) <= 0 ) 
+    if( stricmp( newid, id ) <= 0 )
 	{
         if(ltree)
             ltree->PutData( newid, newdata );
         else
             ltree = new BTree( newid, newdata );
     }
-    else if( stricmp( newid, id ) > 0 ) 
+    else if( stricmp( newid, id ) > 0 )
 	{
         if(rtree)
             rtree->PutData( newid, newdata );
@@ -114,44 +114,44 @@ void BTree<T>::RemoveData( const char *newid )
       By replacing the element with it's own left node, then appending
       its own right node onto the extreme right of itself.
       */
-    
+
     DarwiniaDebugAssert(newid);
-    
-    if( stricmp( newid, id ) == 0 ) 
+
+    if( stricmp( newid, id ) == 0 )
 	{
 		//var tempright : pointer to node := data->right
-		BTree<T> *tempright = Right();       
-			
+		BTree<T> *tempright = Right();
+
 			//data := data->left
-		if( Left() ) 
+		if( Left() )
 		{
 			id = new char[strlen(Left()->id) + 1];
 			strcpy( id, Left()->id );
 			data = Left()->data;                  // This bit requires a good copy constructor
 			rtree = Left()->Right();
-			ltree = Left()->Left();	
-			
+			ltree = Left()->Left();
+
 			AppendRight( tempright );
 		}
-		else 
+		else
 		{
 			//append_right( data, tempright )
-			
-			if( Right() ) 
+
+			if( Right() )
 			{
 				id = new char[strlen(Right()->id) + 1];
 				strcpy( id, Right()->id );
 				data = Right()->data;                  // This bit requires a good copy constructor
-				ltree = Right()->Left();	
+				ltree = Right()->Left();
 				rtree = Right()->Right();
 			}
-			else 
+			else
 			{
 				id = NULL;                              // Hopefully this is the root node
-			}	    
+			}
 		}
     }                                                   //elsif Name < data->name then
-    else if( stricmp( newid, id ) < 0 ) 
+    else if( stricmp( newid, id ) < 0 )
     {
         if( Left() )
         {
@@ -160,7 +160,7 @@ void BTree<T>::RemoveData( const char *newid )
             else
 		        Left()->RemoveData( newid );
         }
-    }                    
+    }
     else                                                //elsif Name > data->name then
     {
 	    if( Right() )
@@ -171,7 +171,7 @@ void BTree<T>::RemoveData( const char *newid )
 		        Right()->RemoveData( newid );
         }
     }
-                             
+
 }
 
 
@@ -190,9 +190,9 @@ void BTree<T>::AppendRight( BTree<T> *tempright )
 {
     if( !Right() )
 		rtree = tempright;
-    
+
     else
-		Right()->AppendRight( tempright );	
+		Right()->AppendRight( tempright );
 }
 
 
@@ -201,7 +201,7 @@ BTree<T> *BTree<T>::LookupTree( const char *searchid )
 {
     if(!id)
 		return NULL;
-    
+
     if( stricmp( searchid, id ) == 0 )
         return this;
 
@@ -210,7 +210,7 @@ BTree<T> *BTree<T>::LookupTree( const char *searchid )
 
     else if( rtree && stricmp( searchid, id ) > 0 )
         return rtree->LookupTree( searchid );
-    
+
     else return NULL;
 }
 
@@ -219,7 +219,7 @@ template <class T>
 int BTree<T>::Size() const
 {
     unsigned int subsize =(id) ? 1 : 0;
-    
+
     if(ltree) subsize += ltree->Size();
     if(rtree) subsize += rtree->Size();
 
@@ -231,11 +231,11 @@ template <class T>
 void BTree<T>::Print()
 {
     if(ltree) ltree->Print();
-    if(id) cout << id << " : " << data << "\n";       
+    if(id) cout << id << " : " << data << "\n";
     if(rtree) rtree->Print();
 }
 
-    
+
 template <class T>
 BTree<T> *BTree<T>::Left() const
 {
@@ -255,7 +255,7 @@ DArray <T> *BTree<T>::ConvertToDArray()
 {
     DArray <T> *darray = new DArray <T>;
     RecursiveConvertToDArray( darray, this );
-    
+
     return darray;
 }
 
@@ -265,7 +265,7 @@ DArray <char *> *BTree<T>::ConvertIndexToDArray()
 {
     DArray <char *> *darray = new DArray <char *>;
     RecursiveConvertIndexToDArray( darray, this );
-    
+
     return darray;
 }
 
@@ -274,11 +274,11 @@ template <class T>
 void BTree<T>::RecursiveConvertToDArray( DArray <T> *darray, BTree<T> *btree )
 {
     DarwiniaDebugAssert(darray);
-    
+
     if( !btree ) return;            // Base case
-    
+
     if( btree->id ) darray->PutData( btree->data );
-    
+
     RecursiveConvertToDArray( darray, btree->Left () );
     RecursiveConvertToDArray( darray, btree->Right() );
 }
@@ -288,11 +288,11 @@ template <class T>
 void BTree<T>::RecursiveConvertIndexToDArray( DArray <char *> *darray, BTree<T> *btree )
 {
     DarwiniaDebugAssert(darray);
-    
+
     if( !btree ) return;            // Base case
-    
+
     if( btree->id ) darray->PutData( btree->id );
-    
+
     RecursiveConvertIndexToDArray( darray, btree->Left () );
     RecursiveConvertIndexToDArray( darray, btree->Right() );
 }

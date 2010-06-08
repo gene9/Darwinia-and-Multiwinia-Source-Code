@@ -24,7 +24,7 @@ protected:
     float   m_timer;
     float   m_newDarwinianTimer;
     bool    m_endDialogCreated;
-    
+
     LList<DemoEndDarwinian *> m_darwinians;
 
 public:
@@ -32,7 +32,7 @@ public:
     ~DemoEndSequence();
 
     void Render();
-    
+
 };
 
 

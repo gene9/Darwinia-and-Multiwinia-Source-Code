@@ -6,7 +6,7 @@
 #define STR_DARWINIA_EXE_VERSION "1, 5, 11, 0\0"
 
 // === PICK ONE OF THESE TARGETS ===
-	
+
 #define TARGET_FULLGAME
 //#define TARGET_DEMOGAME
 //#define TARGET_PURITYCONTROL
@@ -57,7 +57,7 @@
 #ifdef TARGET_VISTA_DEMO2
     #define DARWINIA_GAMETYPE "vista-demo2"
     #define DEMOBUILD
-    #define DEMO2   
+    #define DEMO2
     #define TARGET_OS_VISTA
 #endif
 
@@ -101,17 +101,17 @@
 
 #include <stdio.h>
 #include <math.h>
- 
+
 #ifdef TARGET_MSVC
 	#pragma warning( disable : 4244 4305 4800 4018 )
 	#define for if (0) ; else for
-	
+
 	// Defines that will enable you to double click on a #pragma message
 	// in the Visual Studio output window.
 	#define MESSAGE_LINENUMBERTOSTRING(linenumber)	#linenumber
 	#define MESSAGE_LINENUMBER(linenumber)			MESSAGE_LINENUMBERTOSTRING(linenumber)
-	#define MESSAGE(x) message (__FILE__ "(" MESSAGE_LINENUMBER(__LINE__) "): "x) 
-	
+	#define MESSAGE(x) message (__FILE__ "(" MESSAGE_LINENUMBER(__LINE__) "): "x)
+
 	#include <crtdbg.h>
 	#define snprintf _snprintf
 
@@ -131,7 +131,7 @@
 	#define WIN32_LEAN_AND_MEAN
 	#define _WIN32_WINDOWS 0x0500	// for IsDebuggerPresent
 	#include "windows.h"
-	
+
 	#define HAVE_DSOUND
 #endif
 
@@ -142,29 +142,29 @@
 	#define HAVE_DSOUND
 #endif
 
-#ifdef TARGET_OS_LINUX                                                
-	#include <ctype.h>                                                    
-	#include <string.h>  
+#ifdef TARGET_OS_LINUX
+	#include <ctype.h>
+	#include <string.h>
 
-	#define stricmp strcasecmp                                            
-	#define strnicmp strncasecmp                                          
-	#define __stdcall                                                     
+	#define stricmp strcasecmp
+	#define strnicmp strncasecmp
+	#define __stdcall
 	template<class T> inline T min (T a, T b) { return (a < b) ? a : b; };
 	template<class T> inline T max (T a, T b) { return (a > b) ? a : b; };
-	inline char * strlwr(char *s) {                                       
-	  char *p = s;                                                        
-	  for (char *p = s; *p; p++)                                          
-		*p = tolower(*p);                                                 
-	  return s;                                                           
-	}                                                                     
-	inline char * strupr(char *s) {                                       
-	  char *p = s;                                                        
-	  for (char *p = s; *p; p++)                                          
-		*p = toupper(*p);                                                 
-	  return s;                                                           
-	}                                                                     
-	#include <unistd.h>                                                   
-	#define Sleep sleep                                                   
+	inline char * strlwr(char *s) {
+	  char *p = s;
+	  for (char *p = s; *p; p++)
+		*p = tolower(*p);
+	  return s;
+	}
+	inline char * strupr(char *s) {
+	  char *p = s;
+	  for (char *p = s; *p; p++)
+		*p = toupper(*p);
+	  return s;
+	}
+	#include <unistd.h>
+	#define Sleep sleep
 
     #define DARWINIA_PLATFORM "linux"
 	#define _snprintf snprintf
@@ -176,27 +176,27 @@
 #ifdef TARGET_OS_MACOSX
     #define DARWINIA_PLATFORM "macosx"
 
-	#include <unistd.h>                                                   
-	#define Sleep sleep                                                   
+	#include <unistd.h>
+	#define Sleep sleep
 
-	#include <ctype.h>                                                    
-	#define stricmp strcasecmp                                            
-	#define strnicmp strncasecmp    
-	
+	#include <ctype.h>
+	#define stricmp strcasecmp
+	#define strnicmp strncasecmp
+
 	template<class T> inline T min (T a, T b) { return (a < b) ? a : b; };
 	template<class T> inline T max (T a, T b) { return (a > b) ? a : b; };
 
-	inline char * strlwr(char *s) {                                       
-	  for (char *p = s; *p; p++)                                          
-		*p = tolower(*p);                                                 
-	  return s;                                                           
-	}                                                                     
-	inline char * strupr(char *s) {                                       
-	  for (char *p = s; *p; p++)                                          
-		*p = toupper(*p);                                                 
-	  return s;                                                           
-	}       
-	
+	inline char * strlwr(char *s) {
+	  for (char *p = s; *p; p++)
+		*p = tolower(*p);
+	  return s;
+	}
+	inline char * strupr(char *s) {
+	  for (char *p = s; *p; p++)
+		*p = toupper(*p);
+	  return s;
+	}
+
 	#define __stdcall
 	#define HAVE_INET_NTOA
 	#define _snprintf snprintf
@@ -205,7 +205,7 @@
 	/* acosf and asinf don't link for some reason */
 	#define acosf acos
 	#define asinf asin
-	
+
 	#undef AVI_GENERATOR
 	#undef SOUND_EDITOR
 #endif // TARGET_OS_MACOSX

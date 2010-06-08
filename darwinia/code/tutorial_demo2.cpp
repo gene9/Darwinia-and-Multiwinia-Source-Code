@@ -39,11 +39,11 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
     {
         case 1:         g_app->m_sepulveda->Say( "launchpad_tutorial_1" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_2" );
-                        RepeatMessage( "launchpad_tutorial_2" );                                              
+                        RepeatMessage( "launchpad_tutorial_2" );
                         break;
 
-        case 2:         g_app->m_sepulveda->Say( "launchpad_tutorial_3" );                                        
-                        RepeatMessage( "launchpad_tutorial_3" );                                              
+        case 2:         g_app->m_sepulveda->Say( "launchpad_tutorial_3" );
+                        RepeatMessage( "launchpad_tutorial_3" );
                         break;
 
         case 3:         g_app->m_sepulveda->Say( "launchpad_tutorial_4" );
@@ -58,8 +58,8 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
         {
                         Building *building = g_app->m_location->GetBuilding(85);
                         DarwiniaReleaseAssert(building, "Tutorial building not found" );
-                        g_app->m_camera->SetTarget( building->m_pos, 400, 300 );  
-		                g_app->m_camera->SetMoveDuration(2);		                
+                        g_app->m_camera->SetTarget( building->m_pos, 400, 300 );
+		                g_app->m_camera->SetMoveDuration(2);
                         g_app->m_camera->RequestMode(Camera::ModeMoveToTarget);
                         break;
         }
@@ -95,7 +95,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         RepeatMessage( "launchpad_tutorial_12" );
                         break;
 
-        case 14:    
+        case 14:
         {
                         g_app->m_camera->RecordCameraPosition();
                         Building *research = g_app->m_location->GetBuilding(129);
@@ -109,14 +109,14 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
 
         case 141:
         {
-                        g_app->m_camera->RequestMode(Camera::ModeFreeMovement); 
+                        g_app->m_camera->RequestMode(Camera::ModeFreeMovement);
                         g_app->m_sepulveda->Say( "launchpad_tutorial_12e" );
                         break;
         }
 
-        case 15:        g_app->m_camera->RequestMode(Camera::ModeFreeMovement);                                                
-                        g_app->m_sepulveda->Say( "launchpad_tutorial_13" );       
-                        g_app->m_sepulveda->Say( "launchpad_tutorial_13b" );       
+        case 15:        g_app->m_camera->RequestMode(Camera::ModeFreeMovement);
+                        g_app->m_sepulveda->Say( "launchpad_tutorial_13" );
+                        g_app->m_sepulveda->Say( "launchpad_tutorial_13b" );
                         RepeatMessage( "launchpad_tutorial_13b" );
                         break;
 
@@ -130,7 +130,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         g_app->m_sepulveda->Say( "launchpad_tutorial_16" );
                         break;
 
-        case 19:        
+        case 19:
         {
                         g_app->m_camera->RecordCameraPosition();
                         Building *building = g_app->m_location->GetBuilding(66);
@@ -174,7 +174,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
 
         case 26:        break;
 
-        case 40:        
+        case 40:
         {
                         Building *building = g_app->m_location->GetBuilding(86);
                         DarwiniaReleaseAssert( building, "Tutorial building not found" );
@@ -189,14 +189,14 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         g_app->m_sepulveda->Say( "launchpad_tutorial_43" );
                         RepeatMessage( "launchpad_tutorial_43", 60 );
                         break;
-        
+
         case 42:        g_app->m_sepulveda->Say( "launchpad_tutorial_44" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_45" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_46" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_47" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_48" );
                         break;
-       
+
         case 43:        BeginPlayerBusyCheck();
                         break;
 
@@ -210,7 +210,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         g_app->m_sepulveda->Say( "launchpad_tutorial_50" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_51" );
                         break;
-            
+
         case 45:        g_app->m_camera->SetTarget( "incubator3" );
                         g_app->m_camera->SetMoveDuration( 15 );
                         g_app->m_camera->RequestMode( Camera::ModeMoveToTarget );
@@ -224,8 +224,8 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
 
         case 461:       BeginPlayerBusyCheck();
                         break;
-                        
-        case 47:        
+
+        case 47:
         {
                         Building *building = g_app->m_location->GetBuilding( 0 );
                         g_app->m_camera->RequestBuildingFocusMode( building, 600, 100 );
@@ -235,7 +235,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         break;
         }
 
-        case 48:    
+        case 48:
         {
                         Building *building = g_app->m_location->GetBuilding( 1 );
                         g_app->m_camera->RequestBuildingFocusMode( building, 400, 300 );
@@ -310,7 +310,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         g_app->m_camera->RequestMode( Camera::ModeMoveToTarget );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_74" );
                         break;
-              
+
         case 59:        g_app->m_camera->SetTarget( "wherenext1" );
                         g_app->m_camera->SetMoveDuration( 8 );
                         g_app->m_camera->RequestMode( Camera::ModeMoveToTarget );
@@ -318,7 +318,7 @@ void Demo2Tutorial::TriggerChapter( int _chapter )
                         g_app->m_sepulveda->Say( "launchpad_tutorial_76" );
                         g_app->m_sepulveda->Say( "launchpad_tutorial_77" );
                         break;
-                        
+
         case 60:        g_app->m_camera->RequestMode( Camera::ModeFreeMovement );
                         break;
 
@@ -336,17 +336,17 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
 
     switch( m_chapter )
     {
-        case 0:                                                                                                 
+        case 0:
             break;
 
-        case 1:                     // Camera Movement        
+        case 1:                     // Camera Movement
         {
             CameraMount *mount = g_app->m_location->m_levelFile->GetCameraMount( "start" );
             float distance = ( mount->m_pos - g_app->m_camera->GetPos() ).Mag();
             if( distance > 200.0f ) m_nextChapterTimer = GetHighResTime() + 5.0f;
-            break;        
+            break;
         }
-        
+
         case 2:                     // Camera Height
         {
             CameraMount *mount = g_app->m_location->m_levelFile->GetCameraMount( "start" );
@@ -390,7 +390,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
         {
             HandleSquadDeath();
             Task *currentTask = g_app->m_taskManager->GetCurrentTask();
-            if( currentTask && 
+            if( currentTask &&
                 currentTask->m_type == GlobalResearch::TypeSquad &&
                 currentTask->m_state == Task::StateRunning )
             {
@@ -426,24 +426,24 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
                     }
                 }
             }
-            break;    
+            break;
 
         case 9:                         // UNUSED   Move the camera
             TriggerChapter(m_chapter+1);
             break;
 
-        case 10:                        // Kill all virii 
+        case 10:                        // Kill all virii
         {
             HandleSquadDeath();
-            Building *building = g_app->m_location->GetBuilding(129);            
+            Building *building = g_app->m_location->GetBuilding(129);
             int numEnemies = 0;
             if( building )
             {
                 numEnemies = g_app->m_location->m_entityGrid->GetNumEnemies( building->m_pos.x, building->m_pos.z, 200.0f, 2 );
             }
-            if( numEnemies == 0 ) m_nextChapterTimer = GetHighResTime() + 5.0f;          
+            if( numEnemies == 0 ) m_nextChapterTimer = GetHighResTime() + 5.0f;
             break;
-        }         
+        }
 
         case 11:                        // Summon Engineer
         {
@@ -452,12 +452,12 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
             {
                 TriggerChapter(13);
             }
-            break;            
+            break;
         }
 
         case 13:                        // Place Engineer
         {
-            Building *building = g_app->m_location->GetBuilding(129);            
+            Building *building = g_app->m_location->GetBuilding(129);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             bool engineerFound = false;
             if( building )
@@ -480,7 +480,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
             {
                 TriggerChapter(m_chapter+1);
             }
-            break;            
+            break;
         }
 
         case 14:                        // Finish talking
@@ -489,7 +489,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
                 TriggerChapter(141);
             }
             break;
-            
+
         case 141:                        // Has grenade research
             if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) )
             {
@@ -500,7 +500,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
         case 15:                        // Reselected the SQUAD
         {
             Task *currentTask = g_app->m_taskManager->GetCurrentTask();
-            if( currentTask && 
+            if( currentTask &&
                 currentTask->m_type == GlobalResearch::TypeSquad &&
                 currentTask->m_state == Task::StateRunning )
             {
@@ -527,14 +527,14 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
             break;
         }
 
-        case 17:   TriggerChapter(m_chapter+1);            
-            
+        case 17:   TriggerChapter(m_chapter+1);
+
         case 18:                        // Wipe out virii
         {
-            Building *building = g_app->m_location->GetBuilding(75);            
+            Building *building = g_app->m_location->GetBuilding(75);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             int numEnemies = g_app->m_location->m_entityGrid->GetNumEnemies( building->m_pos.x, building->m_pos.z, 200.0f, 2 );
-            if( numEnemies == 0 ) m_nextChapterTimer = GetHighResTime() + 5.0f; 
+            if( numEnemies == 0 ) m_nextChapterTimer = GetHighResTime() + 5.0f;
             break;
         }
 
@@ -554,7 +554,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
 
         case 20:                        // Engineer near radar dish
         {
-            Building *building = g_app->m_location->GetBuilding(66);            
+            Building *building = g_app->m_location->GetBuilding(66);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             int numFound;
             WorldObjectId *ids = g_app->m_location->m_entityGrid->GetFriends( building->m_pos.x, building->m_pos.z, 150.0f, &numFound, 2 );
@@ -573,12 +573,12 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
             {
                 TriggerChapter(m_chapter+1);
             }
-            break;            
+            break;
         }
 
         case 21:                        // Radar dish reprogrammed
         {
-            Building *building = g_app->m_location->GetBuilding(66);            
+            Building *building = g_app->m_location->GetBuilding(66);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             if( building->m_id.GetTeamId() == 2 )
             {
@@ -615,7 +615,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
         {
             HandleDishMisalignment();
             Task *currentTask = g_app->m_taskManager->GetCurrentTask();
-            if( currentTask && 
+            if( currentTask &&
                 currentTask->m_type == GlobalResearch::TypeSquad &&
                 currentTask->m_state == Task::StateRunning )
             {
@@ -652,13 +652,13 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
 
         case 26:                        // Wipe out virii + centipede on island 2
         {
-            Building *building = g_app->m_location->GetBuilding(86);            
+            Building *building = g_app->m_location->GetBuilding(86);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             int numEnemies = g_app->m_location->m_entityGrid->GetNumEnemies( building->m_pos.x, building->m_pos.z, 250.0f, 2 );
-            if( numEnemies == 0 ) 
+            if( numEnemies == 0 )
             {
                 m_chapter = 39;
-                m_nextChapterTimer = GetHighResTime() + 2.0f; 
+                m_nextChapterTimer = GetHighResTime() + 2.0f;
             }
             break;
         }
@@ -672,7 +672,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
 
         case 41:                            // Reprogrammed Incubator
         {
-            Building *building = g_app->m_location->GetBuilding(86);            
+            Building *building = g_app->m_location->GetBuilding(86);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             if( building->m_id.GetTeamId() == 2 )
             {
@@ -683,15 +683,15 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
 
         case 42:                        // First Darwinians born
         {
-            Building *building = g_app->m_location->GetBuilding(86);            
+            Building *building = g_app->m_location->GetBuilding(86);
             DarwiniaReleaseAssert( building, "Tutorial building not found" );
             bool includeTeam[NUM_TEAMS];
             memset( includeTeam, 0, sizeof(bool) * NUM_TEAMS );
             includeTeam[0] = true;
             int numDarwinians = g_app->m_location->m_entityGrid->GetNumNeighbours( building->m_pos.x, building->m_pos.z, 300.0f, includeTeam  );
-            if( numDarwinians > 0 ) 
+            if( numDarwinians > 0 )
             {
-                m_nextChapterTimer = GetHighResTime() + 1.0f; 
+                m_nextChapterTimer = GetHighResTime() + 1.0f;
             }
             break;
         }
@@ -740,7 +740,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
                 TriggerChapter(m_chapter+1);
             }
             break;
-            
+
         case 51:                        // Running officer
         {
             Task *currentTask = g_app->m_taskManager->GetCurrentTask();
@@ -808,7 +808,7 @@ bool Demo2Tutorial::AdvanceCurrentChapter()
                 TriggerChapter(m_chapter+1);
             }
             break;
-            
+
         case 60:
             return true;
             break;
@@ -845,14 +845,14 @@ void Demo2Tutorial::HandleSquadDeath()
     // Ensure the currently running task is a fully functioning squad
 
     Task *currentTask = g_app->m_taskManager->GetCurrentTask();
-    
+
     if( !currentTask || currentTask->m_type != GlobalResearch::TypeSquad )
     {
         // If the player deselected by accident, reselect now
         for( int i = 0; i < g_app->m_taskManager->m_tasks.Size(); ++i )
         {
             Task *task = g_app->m_taskManager->m_tasks[i];
-            if( task && 
+            if( task &&
                 task->m_type == GlobalResearch::TypeSquad )
             {
                 g_app->m_taskManager->SelectTask( task->m_id );
@@ -881,7 +881,7 @@ void Demo2Tutorial::BeginPlayerBusyCheck()
 bool Demo2Tutorial::IsPlayerBusy()
 {
     float timeNow = GetHighResTime();
-   
+
     //
     // See if we are doing squaddie things
 
@@ -889,7 +889,7 @@ bool Demo2Tutorial::IsPlayerBusy()
     {
         Unit *currentUnit = g_app->m_location->GetMyTeam()->GetMyUnit();
         if( currentUnit && currentUnit->m_troopType == Entity::TypeInsertionSquadie )
-        {         
+        {
             if( g_inputManager->controlEvent( ControlUnitPrimaryFireTarget ) )
             {
                 // We are firing lasers
@@ -897,7 +897,7 @@ bool Demo2Tutorial::IsPlayerBusy()
                 return true;
             }
 
-            Vector3 wayPoint = currentUnit->GetWayPoint();            
+            Vector3 wayPoint = currentUnit->GetWayPoint();
             if( g_app->m_location->m_entityGrid->AreEnemiesPresent( wayPoint.x, wayPoint.z, 100, 2 ) )
             {
                 // Enemies near our squaddie waypoint

@@ -38,40 +38,40 @@ DArray<T>::~DArray()
 template <class T>
 void DArray<T>::SetSize( int newsize )
 {
-	if ( newsize > m_arraySize ) 
+	if ( newsize > m_arraySize )
 	{
 		int oldarraysize = m_arraySize;
 
 		m_arraySize = newsize;
 		T *temparray = new T[ m_arraySize ];
 		char *tempshadow = new char[ m_arraySize ];
-		
+
 		int a;
 
-		for ( a = 0; a < oldarraysize; ++a ) 
+		for ( a = 0; a < oldarraysize; ++a )
 		{
 			temparray[a] = array[a];
 			tempshadow[a] = shadow[a];
 		}
-		
-		for ( a = oldarraysize; a < m_arraySize; ++a ) 
+
+		for ( a = oldarraysize; a < m_arraySize; ++a )
 		{
 			tempshadow[a] = 0;
 		}
-		
+
 		delete [] array;
 		delete [] shadow;
-		
+
 		array = temparray;
 		shadow = tempshadow;
 	}
-	else if ( newsize < m_arraySize ) 
+	else if ( newsize < m_arraySize )
 	{
 		m_arraySize = newsize;
 		T *temparray = new T[m_arraySize];
 		char *tempshadow = new char[m_arraySize];
 
-		for ( int a = 0; a < m_arraySize; ++a ) 
+		for ( int a = 0; a < m_arraySize; ++a )
 		{
 			temparray[a] = array[a];
 			tempshadow[a] = shadow[a];
@@ -79,11 +79,11 @@ void DArray<T>::SetSize( int newsize )
 
 		delete [] array;
 		delete [] shadow;
-		
+
 		array = temparray;
 		shadow = tempshadow;
 	}
-	else if ( newsize == m_arraySize ) 
+	else if ( newsize == m_arraySize )
 	{
 		// Do nothing
 	}
@@ -131,25 +131,25 @@ template <class T>
 int DArray<T>::PutData( const T &newdata )
 {
     int freeslot = -1;				 // Find a free space
-    
-    for ( int a = 0; a < m_arraySize; ++a ) 
+
+    for ( int a = 0; a < m_arraySize; ++a )
 	{
-		if ( shadow[a] == 0 ) 
+		if ( shadow[a] == 0 )
 		{
 			freeslot = a;
 			break;
 		}
     }
-    
+
     if ( freeslot == -1 )			// Must resize the array
-	{			 
+	{
 		freeslot = m_arraySize;
 		Grow();
     }
-	    
+
     array[freeslot] = newdata;
     shadow[freeslot] = 1;
-    
+
     return freeslot;
 }
 
@@ -157,7 +157,7 @@ int DArray<T>::PutData( const T &newdata )
 template <class T>
 void DArray<T>::PutData( const T &newdata, int index )
 {
-    DarwiniaDebugAssert( index < m_arraySize && index >= 0 );       
+    DarwiniaDebugAssert( index < m_arraySize && index >= 0 );
 
     array[index] = newdata;
     shadow[index] = 1;
@@ -169,10 +169,10 @@ void DArray<T>::Empty()
 {
     delete [] array;
     delete [] shadow;
-    
+
     array = NULL;
     shadow = NULL;
-    
+
     m_arraySize = 0;
 }
 
@@ -197,7 +197,7 @@ T DArray<T>::GetData( int index ) const
 {
 	DarwiniaDebugAssert(index < m_arraySize && index >= 0);
 	DarwiniaDebugAssert(shadow[index] != 0);
-	
+
 	return array[index];
 }
 
@@ -205,7 +205,7 @@ T DArray<T>::GetData( int index ) const
 template <class T>
 T *DArray<T>::GetPointer( int index ) const
 {
-    DarwiniaDebugAssert( index < m_arraySize && index >= 0 );       
+    DarwiniaDebugAssert( index < m_arraySize && index >= 0 );
     DarwiniaDebugAssert( shadow[index] != 0 );
 
     return &( array[index] );
@@ -217,8 +217,8 @@ inline T& DArray<T>::operator [] (int index)
 {
     DarwiniaDebugAssert( index < m_arraySize && index >= 0 );
     DarwiniaDebugAssert( shadow[index] != 0 );
-    
-    return array[index];    
+
+    return array[index];
 }
 
 
@@ -227,8 +227,8 @@ inline const T& DArray<T>::operator [] (int _index) const
 {
     DarwiniaDebugAssert( _index < m_arraySize && _index >= 0 );
     DarwiniaDebugAssert( shadow[index] != 0 );
-    
-    return array[index];    
+
+    return array[index];
 }
 
 
@@ -237,7 +237,7 @@ void DArray<T>::MarkUsed( int _index )
 {
     DarwiniaDebugAssert( _index < m_arraySize && _index >= 0 );
     DarwiniaDebugAssert( shadow[_index] == 0 );
-    
+
     shadow[_index] = 1;
 }
 
@@ -247,7 +247,7 @@ void DArray<T>::MarkNotUsed( int index )
 {
     DarwiniaDebugAssert( index < m_arraySize && index >= 0 );
     DarwiniaDebugAssert( shadow[index] != 0 );
-    
+
     shadow[index] = 0;
 }
 
@@ -256,12 +256,12 @@ template <class T>
 int DArray<T>::NumUsed() const
 {
     int count = 0;
-    
+
     for ( int a = 0; a < m_arraySize; ++a )
 	{
 		if ( shadow[a] == 1 )	++count;
 	}
-		
+
     return count;
 }
 
@@ -280,12 +280,12 @@ bool DArray<T>::ValidIndex( int index ) const
 	{
 		return false;
 	}
-    
+
     if (!shadow [index])
 	{
 		return false;
 	}
-    
+
     return true;
 }
 
@@ -300,6 +300,6 @@ int DArray<T>::FindData( const T &newdata ) const
 		    if ( array [a] == newdata )	return a;
 		}
 	}
-    
-    return -1;    
+
+    return -1;
 }

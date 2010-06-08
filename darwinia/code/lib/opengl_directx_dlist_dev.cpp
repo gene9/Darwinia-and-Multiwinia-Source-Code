@@ -34,12 +34,12 @@ STDMETHODI(DrawPrimitiveUP)(D3DPRIMITIVETYPE PrimitiveType,UINT PrimitiveCount,C
 	if (PrimitiveCount == 0)
 		return 0;
 
-	int numVerts = calculateNumVertices(PrimitiveType, PrimitiveCount); 
+	int numVerts = calculateNumVertices(PrimitiveType, PrimitiveCount);
 	CustomVertex *vertices = (CustomVertex *) pVertexStreamZeroData;
 
 	int startVertex = m_vertices.size();
 
-	for (int i = 0; i < numVerts; i++) 
+	for (int i = 0; i < numVerts; i++)
 		m_vertices.push_back( vertices[i] );
 
 	m_commands.push_back( new CommandDrawPrimitive( PrimitiveType, startVertex, PrimitiveCount ) );
@@ -63,7 +63,7 @@ void DisplayListDevice::RecordPopMatrix( MatrixStack *_matrixStack  )
 
 void DisplayListDevice::RecordMultMatrix( MatrixStack *_matrixStack, D3DXMATRIX const &_mat )
 {
-	m_commands.push_back( new CommandMultiplyTransform( _matrixStack, _mat ) ); 
+	m_commands.push_back( new CommandMultiplyTransform( _matrixStack, _mat ) );
 }
 
 // Other methods

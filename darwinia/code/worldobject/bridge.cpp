@@ -32,7 +32,7 @@ Bridge::Bridge()
 
     DarwiniaDebugAssert( m_shapes[0] );
     DarwiniaDebugAssert( m_shapes[1] );
-    
+
     SetBridgeType( BridgeTypeTower );
 }
 
@@ -40,7 +40,7 @@ void Bridge::Initialise( Building *_template )
 {
     Teleport::Initialise( _template );
 
-    m_nextBridgeId = ((Bridge *)_template)->m_nextBridgeId;    
+    m_nextBridgeId = ((Bridge *)_template)->m_nextBridgeId;
     m_status = ((Bridge *)_template)->m_status;
     SetBridgeType( ((Bridge *)_template)->m_bridgeType );
 }
@@ -49,7 +49,7 @@ void Bridge::SetBridgeType ( int _type )
 {
     m_bridgeType = _type;
     SetShape( m_shapes[m_bridgeType] );
-    
+
     m_signal = m_shape->m_rootFragment->LookupMarker("MarkerSignal");
     DarwiniaDebugAssert( m_signal );
 }
@@ -79,8 +79,8 @@ void Bridge::RenderAlphas ( float predictionTime )
             if( m_status > 0.0f && bridge->m_status > 0.0f )
             {
                 Vector3 ourPos = GetStartPoint();
-                Vector3 theirPos = bridge->GetStartPoint();                
-            
+                Vector3 theirPos = bridge->GetStartPoint();
+
 		        if( m_id.GetTeamId() == 255 )
 		        {
 			        glColor4f( 0.5f, 0.5f, 0.5f, m_status / 100.0f );
@@ -120,14 +120,14 @@ bool Bridge::Advance()
     {
         m_status = 0.0f;
     }
-    
+
     return Teleport::Advance();
 }
 
 bool Bridge::GetAvailablePosition( Vector3 &_pos, Vector3 &_front )
-{           
+{
     Matrix34 ourMat(m_front, g_upVector, m_pos);
-    Matrix34 ourEngineer = m_signal->GetWorldMatrix(ourMat);             
+    Matrix34 ourEngineer = m_signal->GetWorldMatrix(ourMat);
     _pos = ourEngineer.pos;
     _front = ourEngineer.f;
 
@@ -160,9 +160,9 @@ void Bridge::SetBuildingLink( int _buildingId )
 void Bridge::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
-    
-    char *word = _in->GetNextToken();  
-    m_nextBridgeId = atoi(word);    
+
+    char *word = _in->GetNextToken();
+    m_nextBridgeId = atoi(word);
 
     word = _in->GetNextToken();
     m_bridgeType = atoi(word);
@@ -173,7 +173,7 @@ void Bridge::Write( FileWriter *_out )
 {
     Building::Write( _out );
 
-    _out->printf( "%-8d", m_nextBridgeId);    
+    _out->printf( "%-8d", m_nextBridgeId);
     _out->printf( "%-8d", m_bridgeType);
 }
 
@@ -181,16 +181,16 @@ bool Bridge::ReadyToSend ()
 {
     Building *nextBridge = g_app->m_location->GetBuilding( m_nextBridgeId );
     return( m_status > 0.0f &&
-            nextBridge && 
+            nextBridge &&
             m_bridgeType == Bridge::BridgeTypeEnd &&
-            nextBridge->m_type == Building::TypeBridge &&             
+            nextBridge->m_type == Building::TypeBridge &&
             Teleport::ReadyToSend() );
 }
 
 Vector3 Bridge::GetStartPoint()
 {
     Matrix34 ourMat(m_front, g_upVector, m_pos);
-    Matrix34 ourSignal = m_signal->GetWorldMatrix(ourMat);             
+    Matrix34 ourSignal = m_signal->GetWorldMatrix(ourMat);
     return ourSignal.pos;
 }
 
@@ -200,10 +200,10 @@ Vector3 Bridge::GetEndPoint()
     while( nextBridge->m_nextBridgeId != -1 )
     {
         nextBridge = (Bridge *) g_app->m_location->GetBuilding( nextBridge->m_nextBridgeId );
-    }  
+    }
 
     if( !nextBridge ) return g_zeroVector;
-    
+
     Vector3 theirPos = nextBridge->GetStartPoint();
 
     return theirPos;
@@ -215,7 +215,7 @@ bool Bridge::GetExit( Vector3 &_pos, Vector3 &_front )
     while( nextBridge->m_nextBridgeId != -1 )
     {
         nextBridge = (Bridge *) g_app->m_location->GetBuilding( nextBridge->m_nextBridgeId );
-    }  
+    }
 
     if( !nextBridge ) return false;
 
@@ -230,13 +230,13 @@ bool Bridge::GetExit( Vector3 &_pos, Vector3 &_front )
 
 bool Bridge::UpdateEntityInTransit( Entity *_entity )
 {
-    Building *building = g_app->m_location->GetBuilding( m_nextBridgeId );    
+    Building *building = g_app->m_location->GetBuilding( m_nextBridgeId );
     Bridge *nextBridge = (Bridge *) building;
 
     WorldObjectId id( _entity->m_id );
-    
+
     if( m_status > 0.0f &&
-        nextBridge && 
+        nextBridge &&
         nextBridge->m_type == Building::TypeBridge &&
         nextBridge->m_status > 0.0f )
     {
@@ -257,7 +257,7 @@ bool Bridge::UpdateEntityInTransit( Entity *_entity )
         _entity->m_onGround = false;
         _entity->m_enabled = false;
 
-        
+
         if( arrived )
         {
             // We are there
@@ -272,7 +272,7 @@ bool Bridge::UpdateEntityInTransit( Entity *_entity )
                 _entity->m_vel.Zero();
 
                 g_app->m_location->m_entityGrid->AddObject( id, _entity->m_pos.x, _entity->m_pos.z, _entity->m_radius );
-                return true;                
+                return true;
             }
             else if( nextBridge->m_bridgeType == Bridge::BridgeTypeTower )
             {
@@ -280,14 +280,14 @@ bool Bridge::UpdateEntityInTransit( Entity *_entity )
                 return true;
             }
         }
-                
+
         return false;
     }
     else
     {
         // Shit - we lost the carrier signal, so we die
         _entity->ChangeHealth( -500 );
-        _entity->m_enabled = true;        
+        _entity->m_enabled = true;
         _entity->m_vel = Vector3(syncsfrand(10.0f), syncfrand(10.0f), syncsfrand(10.0f) );
 
         g_app->m_location->m_entityGrid->AddObject( id, _entity->m_pos.x, _entity->m_pos.z, _entity->m_radius );

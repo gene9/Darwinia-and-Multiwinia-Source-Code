@@ -29,7 +29,7 @@ public:
     char    m_mapFilename[256];
     char    m_missionFilename[256];
     bool    m_missionCompleted;
-    
+
     int     m_numSpirits;           // Number of spirits that have died
 
 public:
@@ -47,7 +47,7 @@ public:
 class GlobalBuilding
 {
 public:
-    int     m_id; 
+    int     m_id;
     int     m_teamId;
     int     m_locationId;
     Vector3 m_pos;
@@ -55,7 +55,7 @@ public:
     bool    m_online;
     int     m_link;
     Shape   *m_shape;
-    
+
 public:
     GlobalBuilding();
 };
@@ -122,12 +122,12 @@ public:
 
     void    Read        ( TextReader *_in );
     void    Write       ( FileWriter *_file );
-    void    Execute     ();                                     
+    void    Execute     ();
 
     static char *GetTypeName( int _type );
 };
 
-    
+
 class GlobalEvent
 {
 public:
@@ -162,12 +162,12 @@ public:
     {
         TypeDarwinian,
         TypeOfficer,
-        TypeSquad,		    
+        TypeSquad,
         TypeLaser,
-        TypeGrenade,	    
+        TypeGrenade,
         TypeRocket,
-        TypeController,                             
-        TypeAirStrike,      
+        TypeController,
+        TypeAirStrike,
         TypeArmour,
         TypeTaskManager,
         TypeEngineer,
@@ -175,21 +175,21 @@ public:
     };
 
     int     m_researchLevel     [NumResearchItems];
-    int     m_researchProgress  [NumResearchItems];        
+    int     m_researchProgress  [NumResearchItems];
     int     m_currentResearch;
     int     m_researchPoints;
     float   m_researchTimer;
-        
+
 public:
     GlobalResearch();
 
     bool    HasResearch         ( int _type );
     int     CurrentProgress     ( int _type );
     int     CurrentLevel        ( int _type );
-    
+
     void    AddResearch         ( int _type );
     void    SetCurrentProgress  ( int _type, int _progress );
-    
+
     void    IncreaseProgress    ( int _amount );
     void    DecreaseProgress    ( int _amount );
     int     RequiredProgress    ( int _level );             // Progress required to reach this level
@@ -202,7 +202,7 @@ public:
 
     void    Write               ( FileWriter *_out );
     void    Read                ( TextReader *_in );
-    
+
     static char *GetTypeName    ( int _type );
     static int   GetType        ( char *_name );
 
@@ -245,13 +245,13 @@ public:
 
 class GlobalWorld
 {
-public:   
+public:
     GlobalInternet                          *m_globalInternet;
     SphereWorld                             *m_sphereWorld;
     GlobalResearch                          *m_research;
-    
+
     LList			<GlobalLocation *>		m_locations;
-    LList			<GlobalBuilding *>		m_buildings;   
+    LList			<GlobalBuilding *>		m_buildings;
     LList           <GlobalEvent *>         m_events;
     int										m_myTeamId;
 
@@ -263,7 +263,7 @@ protected:
     void			WriteBuildings			(FileWriter *_out);
     void            WriteEvents             (FileWriter *_out);
     void            WriteTutorial           (FileWriter *_out);
-    
+
     void			ParseLocations			(TextReader *_in);
     void			ParseBuildings			(TextReader *_in);
     void            ParseEvents             (TextReader *_in);
@@ -275,7 +275,7 @@ protected:
     int				m_nextBuildingId;
 
 	int				m_locationRequested;	// Stores the location a user has clicked on while we fade out. -1 means no request yet.
-    
+
 public:
     GlobalWorld();
 	GlobalWorld(GlobalWorld &); // Copy constructor only used in TestHarness
@@ -300,7 +300,7 @@ public:
 
     GlobalBuilding *GetBuilding				(int _id, int _locationId);
     int				GenerateBuildingId		();
-    
+
     bool            EvaluateEvents          ();	                        // Returns true if an event was triggered
     void            TransferSpirits         (int _locationId);
 

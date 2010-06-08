@@ -66,7 +66,7 @@ Task::~Task()
 
 void Task::Start()
 {
-    m_state = StateStarted;    
+    m_state = StateStarted;
 
     switch( m_type )
     {
@@ -77,11 +77,11 @@ void Task::Start()
 
 
 void Task::Target( Vector3 const &_pos )
-{    
+{
     switch( m_type )
     {
-        case GlobalResearch::TypeSquad:         TargetSquad( _pos );        break;                
-        case GlobalResearch::TypeEngineer:      TargetEngineer( _pos );     break;        
+        case GlobalResearch::TypeSquad:         TargetSquad( _pos );        break;
+        case GlobalResearch::TypeEngineer:      TargetEngineer( _pos );     break;
         case GlobalResearch::TypeOfficer:       TargetOfficer( _pos );      break;
         case GlobalResearch::TypeArmour:        TargetArmour( _pos );       break;
     }
@@ -96,15 +96,15 @@ void Task::TargetSquad( Vector3 const &_pos )
 
     int unitId;
     g_app->m_location->m_teams[teamId].NewUnit( Entity::TypeInsertionSquadie, numEntities, &unitId, _pos );
-    g_app->m_location->SpawnEntities( _pos, teamId, unitId,                      
-                                      Entity::TypeInsertionSquadie, numEntities, g_zeroVector, 10 );                        
+    g_app->m_location->SpawnEntities( _pos, teamId, unitId,
+                                      Entity::TypeInsertionSquadie, numEntities, g_zeroVector, 10 );
 
     g_app->m_location->m_teams[teamId].SelectUnit( unitId, -1, -1 );
     m_objId.Set( teamId, unitId, -1, -1 );
 
     g_app->m_helpSystem->PlayerDoneAction( HelpSystem::SquadSummon );
-    m_state = StateRunning;    
-    
+    m_state = StateRunning;
+
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureSuccess", SoundSourceBlueprint::TypeGesture );
 
     int trackEntity = g_prefsManager->GetInt( OTHER_AUTOMATICCAM, 0 );
@@ -131,7 +131,7 @@ void Task::TargetEngineer( Vector3 const &_pos )
     m_objId = g_app->m_location->SpawnEntities( pos, teamId, -1, Entity::TypeEngineer, 1, g_zeroVector, 0 );
     g_app->m_location->m_teams[teamId].SelectUnit( -1, m_objId.GetIndex(), -1 );
 
-    m_state = StateRunning;    
+    m_state = StateRunning;
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureSuccess", SoundSourceBlueprint::TypeGesture );
 }
 
@@ -154,14 +154,14 @@ void Task::TargetArmour( Vector3 const &_pos )
 WorldObjectId Task::Promote( WorldObjectId _id )
 {
     int teamId = g_app->m_globalWorld->m_myTeamId;
-    
+
     Entity *entity = g_app->m_location->GetEntity( _id );
     DarwiniaDebugAssert( entity );
 
-    
+
     //
     // Spawn an Officer
-    
+
     WorldObjectId spawnedId = g_app->m_location->SpawnEntities( entity->m_pos, teamId, -1, Entity::TypeOfficer, 1, entity->m_vel, 0 );
     Officer *officer = (Officer *) g_app->m_location->GetEntity( spawnedId );
     DarwiniaDebugAssert( officer );
@@ -182,7 +182,7 @@ WorldObjectId Task::Promote( WorldObjectId _id )
     darwinian->m_promoted = true;
 
     g_app->m_helpSystem->PlayerDoneAction( HelpSystem::OfficerCreate );
-    
+
     return spawnedId;
 }
 
@@ -192,14 +192,14 @@ WorldObjectId Task::Demote( WorldObjectId _id )
     // Make demoted officers return to green
     //int teamId = g_app->m_globalWorld->m_myTeamId;
     int teamId = 0;
-    
+
     Entity *entity = g_app->m_location->GetEntity( _id );
     DarwiniaDebugAssert( entity );
-    
+
 
     //
     // Spawn a Darwinian
-    
+
     WorldObjectId spawnedId = g_app->m_location->SpawnEntities( entity->m_pos, teamId, -1, Entity::TypeDarwinian, 1, entity->m_vel, 0 );
 
 
@@ -231,7 +231,7 @@ WorldObjectId Task::FindDarwinian( Vector3 const &_pos )
     {
         WorldObjectId id = ids[i];
         Entity *entity = g_app->m_location->GetEntity( id );
-        if( entity && 
+        if( entity &&
             entity->m_type == Entity::TypeDarwinian )
         {
             float distance = ( entity->m_pos - _pos ).MagSquared();
@@ -253,7 +253,7 @@ void Task::TargetOfficer( Vector3 const &_pos )
 
     //
     // We will not upgrade people if we're controlling something right now
-    
+
     Team *myTeam = g_app->m_location->GetMyTeam();
     if( myTeam->m_currentUnitId != -1 ||
         myTeam->m_currentEntityId != -1 ||
@@ -271,7 +271,7 @@ void Task::TargetOfficer( Vector3 const &_pos )
 
     WorldObjectId nearestId = FindDarwinian( _pos );
 
-    if( nearestId.IsValid() ) 
+    if( nearestId.IsValid() )
     {
         WorldObjectId id = Promote( nearestId );
         g_app->m_taskManager->TerminateTask( m_id );
@@ -284,7 +284,7 @@ void Task::TargetOfficer( Vector3 const &_pos )
 
 
 bool Task::Advance()
-{    
+{
     if( m_state == StateRunning )
     {
         switch( m_type )
@@ -303,12 +303,12 @@ bool Task::Advance()
                 }
                 break;
             }
-         
+
             case GlobalResearch::TypeEngineer:
             case GlobalResearch::TypeArmour:
             {
                 Entity *entity = g_app->m_location->GetEntity( m_objId );
-                if( !entity || entity->m_dead ) 
+                if( !entity || entity->m_dead )
                 {
                     if( g_app->m_taskManager->m_currentTaskId == m_id )
                     {
@@ -326,7 +326,7 @@ bool Task::Advance()
             }
         }
     }
-	
+
     return( m_state == StateStopping );
 }
 
@@ -343,7 +343,7 @@ void Task::SwitchTo()
 
     switch( m_type )
     {
-        case GlobalResearch::TypeSquad:            
+        case GlobalResearch::TypeSquad:
         {
             g_app->m_location->m_teams[teamId].SelectUnit( m_objId.GetUnitId(), -1, -1 );
             break;
@@ -374,7 +374,7 @@ void Task::SwitchTo()
         case GlobalResearch::TypeOfficer:
         {
             g_app->m_location->m_teams[teamId].SelectUnit( -1, -1, -1 );
-            break;            
+            break;
         }
     }
 }
@@ -385,7 +385,7 @@ void Task::Stop()
     switch( m_type )
     {
         case GlobalResearch::TypeSquad:
-        {    
+        {
             Unit *unit = g_app->m_location->GetUnit( m_objId );
             if( unit )
             {
@@ -452,7 +452,7 @@ bool TaskManager::RunTask( Task *_task )
         m_tasks.PutDataAtEnd( _task );
         _task->Start();
         m_currentTaskId = _task->m_id;
-        
+
         return true;
     }
     else
@@ -461,7 +461,7 @@ bool TaskManager::RunTask( Task *_task )
         g_app->m_sepulveda->Say( "task_manager_full" );
     }
 
-    return false;   
+    return false;
 }
 
 
@@ -557,9 +557,9 @@ bool TaskManager::RegisterTask( Task *_task )
     {
         _task->m_id = m_nextTaskId;
         ++m_nextTaskId;
-        m_tasks.PutDataAtEnd( _task );        
+        m_tasks.PutDataAtEnd( _task );
         return true;
-    }    
+    }
 
     return false;
 }
@@ -575,7 +575,7 @@ bool TaskManager::TerminateTask( int _id )
             g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageShutdown, task->m_type, 3.0f );
             m_tasks.RemoveData(i);
             task->Stop();
-            delete task;            
+            delete task;
             g_app->m_helpSystem->PlayerDoneAction( HelpSystem::TaskShutdown );
 
             if( m_currentTaskId == _id )
@@ -595,13 +595,13 @@ int TaskManager::Capacity()
 {
     int taskManagerResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeTaskManager );
     int capacity = 1 + taskManagerResearch;
-    return capacity;    
+    return capacity;
 }
 
 
 int TaskManager::CapacityUsed()
 {
-    return m_tasks.Size();    
+    return m_tasks.Size();
 }
 
 
@@ -609,7 +609,7 @@ int TaskManager::MapGestureToTask( int _gestureId )
 {
     switch( _gestureId )
     {
-        case 0 :        return GlobalResearch::TypeSquad;   
+        case 0 :        return GlobalResearch::TypeSquad;
         case 1 :        return GlobalResearch::TypeEngineer;
         case 2 :        return GlobalResearch::TypeGrenade;
         case 3 :        return GlobalResearch::TypeRocket;
@@ -650,7 +650,7 @@ void TaskManager::AdvanceTasks()
                 int teamId = g_app->m_globalWorld->m_myTeamId;
                 g_app->m_location->m_teams[teamId].SelectUnit( -1, -1, -1 );
             }
-    
+
             m_tasks.RemoveData(i);
             --i;
             delete task;
@@ -689,7 +689,7 @@ void TaskManager::SelectTask( int _id )
                 break;
             }
         }
- 
+
         DarwiniaReleaseAssert( currentIndex != -1, "Error in TaskManager::SelectTask. Tried to select a task that doesn't exist." );
 
         Task *task = m_tasks[ currentIndex ];
@@ -733,7 +733,7 @@ Task *TaskManager::GetTask( int _id )
         {
             return task;
         }
-    }    
+    }
 
     return NULL;
 }
@@ -748,9 +748,9 @@ Task *TaskManager::GetTask( WorldObjectId _id )
         {
             return task;
         }
-    }    
+    }
 
-    return NULL;    
+    return NULL;
 }
 
 
@@ -773,7 +773,7 @@ bool TaskManager::IsValidTargetArea( int _id, Vector3 const &_pos )
     if( !task ) return false;
 
     if( !g_app->m_location || !g_app->m_location->m_landscape.IsInLandscape( _pos ) ) return false;
-    
+
     if( m_verifyTargetting )
     {
         if( task->m_type == GlobalResearch::TypeOfficer )
@@ -807,7 +807,7 @@ bool TaskManager::IsValidTargetArea( int _id, Vector3 const &_pos )
                     break;
                 }
             }
-        
+
             delete targetAreas;
             return success;
         }
@@ -816,7 +816,7 @@ bool TaskManager::IsValidTargetArea( int _id, Vector3 const &_pos )
     {
         return true;
     }
-    
+
     return false;
 }
 
@@ -846,7 +846,7 @@ LList <TaskTargetArea> *TaskManager::GetTargetArea( int _id )
                             tta.m_radius = 120.0f;
                             tta.m_stationary = true;
                             result->PutData( tta );
-                        }                            
+                        }
                     }
                 }
                 break;
@@ -888,7 +888,7 @@ LList <TaskTargetArea> *TaskManager::GetTargetArea( int _id )
                             tta.m_radius = 75.0f;
                             tta.m_stationary = true;
                             result->PutData( tta );
-                        }                            
+                        }
                     }
                 }
                 break;

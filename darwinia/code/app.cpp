@@ -73,7 +73,7 @@ App *g_app = NULL;
 
 
 App::App()
-:   m_camera(NULL), 
+:   m_camera(NULL),
     m_location(NULL),
 	m_locationId(-1),
     m_server(NULL),
@@ -136,7 +136,7 @@ App::App()
     m_negativeRenderer  = g_prefsManager->GetInt("RenderNegative", 0) ? true : false;
     if( m_negativeRenderer )    m_backgroundColour.Set(255,255,255,255);
     else                        m_backgroundColour.Set(0,0,0,0);
-    	
+
 	UpdateDifficultyFromPreferences();
 
 
@@ -189,7 +189,7 @@ App::App()
         else
         {
             g_prefsManager->SetString( "TextLanguage", "english" );
-        }        
+        }
     }
     language = g_prefsManager->GetString("TextLanguage");
 
@@ -262,10 +262,10 @@ App::App()
         g_app->m_resource->LoadMod( modName );
     }
 
-    
+
     //
     // Load save games
-    
+
     bool profileLoaded = LoadProfile();
 }
 
@@ -306,12 +306,12 @@ App::~App()
 void App::UpdateDifficultyFromPreferences()
 {
 	// This method is called to make sure that the difficulty setting
-	// used to control the game play (g_app->m_difficultyLevel) is 
-	// consistent with the user preferences. 
-	
+	// used to control the game play (g_app->m_difficultyLevel) is
+	// consistent with the user preferences.
+
 	// Preferences value is 1-based, m_difficultyLevel is 0-based.
 	m_difficultyLevel = g_prefsManager->GetInt(OTHER_DIFFICULTY, 1) - 1;
-	if( m_difficultyLevel < 0 )	
+	if( m_difficultyLevel < 0 )
 	{
 		m_difficultyLevel = 0;
 	}
@@ -341,7 +341,7 @@ void App::SetLanguage( char *_language, bool _test )
 #endif
 
 	m_langTable = new LangTable(langFilename);
-    
+
     if( _test )
     {
         m_langTable->TestAgainstEnglish();
@@ -366,7 +366,7 @@ void App::SetLanguage( char *_language, bool _test )
 
     //
     // Load localised fonts if they exist
-	
+
     char fontFilename[256];
     sprintf( fontFilename, "textures/speccy_font_%s.bmp", _language );
     if( !g_app->m_resource->DoesTextureExist( fontFilename ) )
@@ -403,12 +403,12 @@ void App::SetProfileName( char *_profileName )
 #if defined(TARGET_OS_LINUX) || defined(TARGET_OS_MACOSX)
 #include <sys/types.h>
 #include <sys/stat.h>
-#endif 
+#endif
 
 const char *App::GetProfileDirectory()
 {
 #if defined(TARGET_OS_LINUX)
-	
+
 	static char userdir[256];
 	const char *home = getenv("HOME");
 	if (home != NULL) {
@@ -421,22 +421,22 @@ const char *App::GetProfileDirectory()
 	}
 	else // Current directory if no home
 		return "";
-		
-#elif defined(TARGET_OS_MACOSX) 
-	
+
+#elif defined(TARGET_OS_MACOSX)
+
 	static char userdir[256];
 	const char *home = getenv("HOME");
 	if (home != NULL) {
 		sprintf(userdir, "%s/Library", home);
 		mkdir(userdir, 0777);
-		
+
 		sprintf(userdir, "%s/Library/Application Support", home);
 		mkdir(userdir, 0777);
 
 		sprintf(userdir, "%s/Library/Application Support/Darwinia", home);
 		mkdir(userdir, 0777);
 
-		sprintf(userdir, "%s/Library/Application Support/Darwinia/%s/", 
+		sprintf(userdir, "%s/Library/Application Support/Darwinia/%s/",
 				home, DARWINIA_GAMETYPE);
 		mkdir(userdir, 0777);
 
@@ -449,11 +449,11 @@ const char *App::GetProfileDirectory()
 #ifdef TARGET_OS_VISTA
     if( IsRunningVista() )
     {
-        static char userdir[256];    
+        static char userdir[256];
 
 		PWSTR path;
 		SHGetKnownFolderPath( FOLDERID_SavedGames, 0, NULL, &path );
-		wcstombs( userdir, path, sizeof(userdir) );		
+		wcstombs( userdir, path, sizeof(userdir) );
 		CoTaskMemFree( path );
 
 #ifdef TARGET_VISTA_DEMO2
@@ -470,7 +470,7 @@ const char *App::GetProfileDirectory()
 #endif // TARGET_OS_VISTA
 	{
         return "";
-    }	
+    }
 #endif
 }
 
@@ -501,11 +501,11 @@ const char *App::GetScreenshotDirectory()
 }
 
 bool App::LoadProfile()
-{    
+{
     DebugOut( "Loading profile %s\n", m_userProfileName );
 
     if( (stricmp( m_userProfileName, "AccessAllAreas" ) == 0 ||
-		stricmp( m_userProfileName, "AttractMode" ) == 0 ) && 
+		stricmp( m_userProfileName, "AttractMode" ) == 0 ) &&
         g_app->m_gameMode != GameModePrologue )
     {
         // Cheat username that opens all locations
@@ -516,7 +516,7 @@ bool App::LoadProfile()
             delete m_globalWorld;
             m_globalWorld = NULL;
         }
-    
+
         m_globalWorld = new GlobalWorld();
         m_globalWorld->LoadGame( "game_unlockall.txt" );
         for( int i = 0; i < m_globalWorld->m_buildings.Size(); ++i )
@@ -531,7 +531,7 @@ bool App::LoadProfile()
         {
             GlobalLocation *loc = m_globalWorld->m_locations[i];
             loc->m_available = true;
-        }        
+        }
     }
     else
     {
@@ -540,9 +540,9 @@ bool App::LoadProfile()
             delete m_globalWorld;
             m_globalWorld = NULL;
         }
-    
+
         m_globalWorld = new GlobalWorld();
-        m_globalWorld->LoadGame( m_gameDataFile );    
+        m_globalWorld->LoadGame( m_gameDataFile );
     }
 
     return true;
@@ -558,8 +558,8 @@ bool App::SaveProfile( bool _global, bool _local )
 
     char folderName[512];
     sprintf( folderName, "%susers/", GetProfileDirectory() );
-    bool success = CreateDirectory( folderName );        
-    if( !success ) 
+    bool success = CreateDirectory( folderName );
+    if( !success )
     {
         DebugOut( "failed to create folder %s\n", folderName );
         return false;
@@ -567,7 +567,7 @@ bool App::SaveProfile( bool _global, bool _local )
 
     sprintf( folderName, "%susers/%s", GetProfileDirectory(), m_userProfileName );
     success = CreateDirectory( folderName );
-    if( !success ) 
+    if( !success )
     {
         DebugOut( "failed to create folder %s\n", folderName );
         return false;
@@ -593,7 +593,7 @@ bool App::SaveProfile( bool _global, bool _local )
             m_levelReset = false;
             return false;
         }
-        
+
         g_app->m_location->m_levelFile->GenerateInstantUnits();
         g_app->m_location->m_levelFile->GenerateDynamicBuildings();
         char *missionFilename = m_location->m_levelFile->m_missionFilename;
@@ -613,7 +613,7 @@ void App::ResetLevel( bool _global )
 	    m_requestedMap[0] = '\0';
 
         if( g_app->m_tutorial ) g_app->m_tutorial->Restart();
-        
+
 
         //
         // Delete the saved mission file
@@ -621,7 +621,7 @@ void App::ResetLevel( bool _global )
         char *missionFilename = m_location->m_levelFile->m_missionFilename;
         char saveFilename[256];
         sprintf( saveFilename, "%susers/%s/%s", GetProfileDirectory(), m_userProfileName, missionFilename );
-    
+
         DeleteThisFile( saveFilename );
 
         m_levelReset = true;
@@ -641,11 +641,11 @@ void App::ResetLevel( bool _global )
                 delete m_globalWorld;
                 m_globalWorld = NULL;
             }
-    
+
             m_globalWorld = new GlobalWorld();
-            m_globalWorld->LoadGame( m_gameDataFile );     
+            m_globalWorld->LoadGame( m_gameDataFile );
         }
-    }    
+    }
 }
 
 bool App::HasBoughtGame()
@@ -695,7 +695,7 @@ void App::LoadCampaign()
     strcpy( m_gameDataFile, "game.txt" );
     LoadProfile();
     m_gameMode = App::GameModeCampaign;
-    m_requestedLocationId = -1;  
+    m_requestedLocationId = -1;
     g_prefsManager->SetInt( "RenderSpecialLighting", 0 );
     g_prefsManager->SetInt( "CurrentGameMode", 1 );
     g_prefsManager->Save();
@@ -711,7 +711,7 @@ void App::SaveRichHeader()
 	sprintf( _filename, "%s.dsg", m_userProfileName );
 
 	char fullFilename[256];
-    sprintf( fullFilename, "%susers/%s", g_app->GetProfileDirectory(), _filename );        
+    sprintf( fullFilename, "%susers/%s", g_app->GetProfileDirectory(), _filename );
 
 	RICH_GAME_MEDIA_HEADER header;
 	ZeroMemory( &header, sizeof(RICH_GAME_MEDIA_HEADER) );
@@ -775,7 +775,7 @@ void App::SaveThumbnailScreenshot()
 
 	BitmapRGBA scaled(newWidth, newHeight );
 
-	scaled.Blit(0, 0, pm.GetBitmap()->m_width, pm.GetBitmap()->m_height, pm.GetBitmap(), 
+	scaled.Blit(0, 0, pm.GetBitmap()->m_width, pm.GetBitmap()->m_height, pm.GetBitmap(),
 							   0, 0, newWidth, newHeight, true);
 
 	m_thumbnailScreenshot = new BitmapRGBA( scaled );

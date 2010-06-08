@@ -52,13 +52,13 @@ void SoundParameter::Copy( SoundParameter *_copyMe )
     m_inputUpper    = _copyMe->m_inputUpper;
     m_outputLower   = _copyMe->m_outputLower;
     m_outputUpper   = _copyMe->m_outputUpper;
-    m_smooth     = _copyMe->m_smooth;    
+    m_smooth     = _copyMe->m_smooth;
 }
 
 void SoundParameter::Recalculate( float _input )
 {
     m_input = _input;
-    
+
     switch( m_type )
     {
         case TypeFixedValue:
@@ -80,7 +80,7 @@ void SoundParameter::Recalculate( float _input )
         case TypeLinked:
         {
             if( _input <= m_inputLower &&
-                _input <= m_inputUpper ) 
+                _input <= m_inputUpper )
             {
                 m_desiredOutput = m_inputLower < m_inputUpper ? m_outputLower : m_outputUpper;
             }
@@ -119,7 +119,7 @@ void SoundParameter::Read( TextReader *_in )
     switch( m_type )
     {
         case TypeFixedValue:
-            m_outputLower       = atof( _in->GetNextToken() );    
+            m_outputLower       = atof( _in->GetNextToken() );
             break;
 
         case TypeRangedRandom:
@@ -128,7 +128,7 @@ void SoundParameter::Read( TextReader *_in )
             m_smooth            = atof( _in->GetNextToken() );
             break;
 
-        case TypeLinked:            
+        case TypeLinked:
             m_inputLower        = atof( _in->GetNextToken() );
             m_outputLower       = atof( _in->GetNextToken() );
             m_inputUpper        = atof( _in->GetNextToken() );
@@ -139,7 +139,7 @@ void SoundParameter::Read( TextReader *_in )
             break;
     }
 
-    // TODO : This check is required for compatability with the version 
+    // TODO : This check is required for compatability with the version
     // dated 22nd March 2004.  After that it can be removed
     if( _in->TokenAvailable() )
     {
@@ -161,7 +161,7 @@ void SoundParameter::Write( FileWriter *_file, char *_paramName, int _tabs )
     _file->printf( "%-18s PARAMETER %-18s",
                             _paramName,
                             GetParameterTypeName( m_type ) );
-    
+
     switch( m_type )
     {
         case TypeFixedValue:
@@ -173,7 +173,7 @@ void SoundParameter::Write( FileWriter *_file, char *_paramName, int _tabs )
             break;
 
         case TypeLinked:
-            _file->printf( "%8.2f %8.2f %8.2f %8.2f %8.2f  %s", 
+            _file->printf( "%8.2f %8.2f %8.2f %8.2f %8.2f  %s",
                             m_inputLower, m_outputLower,
                             m_inputUpper, m_outputUpper,
                             m_smooth,
@@ -200,7 +200,7 @@ float SoundParameter::GetSmooth()
 
 char *SoundParameter::GetParameterTypeName( int _type )
 {
-    char *names[] = {   
+    char *names[] = {
                         "TypeFixedValue",
                         "TypeRangedRandom",
                         "TypeLinked"
@@ -225,7 +225,7 @@ int SoundParameter::GetParameterType( char *_name )
 
 char *SoundParameter::GetLinkName( int _type )
 {
-    char *names[] = { 
+    char *names[] = {
                         "Nothing",
                         "HeightAboveGround",
                         "Xpos",
@@ -255,7 +255,7 @@ int SoundParameter::GetLinkType( char *_name )
 
 char *SoundParameter::GetUpdateTypeName( int _type )
 {
-    char *names[] = { 
+    char *names[] = {
                         "UpdateConstantly",
                         "UpdateOncePerLoop"
                     };

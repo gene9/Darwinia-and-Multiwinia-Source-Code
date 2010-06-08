@@ -36,10 +36,10 @@ static unsigned s_lastVertexBufferId = 0;
 
 void __stdcall glGenBuffersD3D (GLsizei _howmany, GLuint *_buffers)
 {
-	for (unsigned i = 0; i < _howmany; i++) 
+	for (unsigned i = 0; i < _howmany; i++)
 		_buffers[i] = ++s_lastVertexBufferId;
 }
-	
+
 void __stdcall glDeleteBuffersD3D (GLsizei _howmany, const GLuint *_buffers)
 {
 	for (unsigned i = 0; i < _howmany; i++) {
@@ -58,7 +58,7 @@ void __stdcall glBindBufferD3D (GLenum _target, GLuint _bufferId)
 	// Index buffers not supported for now
 	DarwiniaDebugAssert( _target == GL_ARRAY_BUFFER_ARB );
 
-	if (_bufferId > 0) 
+	if (_bufferId > 0)
 		g_currentVertexBuffer = &s_vertexBuffers[_bufferId];
 	else
 		g_currentVertexBuffer = NULL;
@@ -75,7 +75,7 @@ void __stdcall glBufferDataD3D (GLenum _target, GLsizeiptrARB _size, const GLvoi
 	IDirect3DVertexBuffer9	*& buffer = *g_currentVertexBuffer;
 
 	// Discard the old buffer if necessary
-	if (buffer) 
+	if (buffer)
 		buffer->Release();
 
 	// Create a buffer
@@ -88,7 +88,7 @@ void __stdcall glBufferDataD3D (GLenum _target, GLsizeiptrARB _size, const GLvoi
 	DarwiniaDebugAssert( hr == D3D_OK );
 
 	// Copy the data in
-	void *vbData = NULL;	
+	void *vbData = NULL;
 	hr = buffer->Lock(0, 0, &vbData, 0/*D3DLOCK_DISCARD*/ );
 	DarwiniaDebugAssert( hr == D3D_OK );
 

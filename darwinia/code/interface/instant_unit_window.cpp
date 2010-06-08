@@ -31,7 +31,7 @@ class EditButton: public DarwiniaButton
 {
 public:
 	EditButton() {}
-	
+
 	void MouseUp()
 	{
 		if (stricmp(m_name, LANGUAGEPHRASE("editor_move")) == 0)
@@ -60,7 +60,7 @@ public:
     {
 		InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(g_app->m_locationEditor->m_selectionId);
         if( iu )
-        {            
+        {
             iu->m_teamId = m_teamId;
         }
     }
@@ -69,7 +69,7 @@ public:
     {
 		InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(g_app->m_locationEditor->m_selectionId);
         if( iu )
-        {            
+        {
             if( iu->m_teamId == m_teamId )
             {
                 DarwiniaButton::Render( realX, realY, true, clicked );
@@ -110,7 +110,7 @@ public:
     bool m_safetyCatch;
     DeleteInstantUnitButton()
         : m_safetyCatch(true){}
-    
+
     void MouseUp()
     {
         if( m_safetyCatch )
@@ -196,7 +196,7 @@ class CreateButton: public DarwiniaButton
 {
 public:
 	CreateButton() {}
-	
+
 	void MouseUp()
 	{
 		for (int i = 0; i < Entity::NumEntityTypes; ++i)
@@ -207,11 +207,11 @@ public:
 
 				// Where did we click?
 				Vector3 rayStart, rayDir, hitPos;
-	            g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
-                                             g_app->m_renderer->ScreenH()/2, 
+	            g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
+                                             g_app->m_renderer->ScreenH()/2,
                                              &rayStart, &rayDir);
                 g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &hitPos );
-				
+
 				// Make sure that any old edit window is removed
 				EclWindow *ew = EclGetWindow(LANGUAGEPHRASE("editor_instantuniteditor"));
 				if (ew)
@@ -226,7 +226,7 @@ public:
 				iu->m_posZ = hitPos.z;
 				iu->m_teamId = 0;
 				iu->m_type = i;
-                iu->m_inAUnit = false;				
+                iu->m_inAUnit = false;
 				g_app->m_locationEditor->m_selectionId = g_app->m_location->m_levelFile->m_instantUnits.Size();
 				g_app->m_location->m_levelFile->m_instantUnits.PutData(iu);
 
@@ -250,7 +250,7 @@ public:
 // ****************************************************************************
 
 InstantUnitCreateWindow::InstantUnitCreateWindow( char *name )
-:	DarwiniaWindow(name) 
+:	DarwiniaWindow(name)
 {
 }
 
@@ -269,7 +269,7 @@ void InstantUnitCreateWindow::Create()
 	int y = 3;
 	int const buttonYPitch = 18;
 	char *lowerLimit = " ";
-	char *best; 
+	char *best;
 
 	for (int i = 0; i < Entity::NumEntityTypes; ++i)
 	{

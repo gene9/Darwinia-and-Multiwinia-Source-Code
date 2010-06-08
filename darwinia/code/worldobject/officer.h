@@ -30,30 +30,30 @@ public:
     int         m_state;
     Vector3     m_wayPoint;
     int         m_wayPointTeleportId;           // Id of teleport we wish to walk into
-    
+
     int         m_shield;
     bool        m_demoted;
     bool        m_absorb;
     float       m_absorbTimer;
-    
+
     int         m_orders;
     Vector3     m_orderPosition;                // Position in the world
     int         m_ordersBuildingId;             // Id of target building eg Teleport
 
     ShapeMarker *m_flagMarker;
     Flag        m_flag;
-    
+
 protected:
     bool AdvanceIdle                ();
     bool AdvanceToWaypoint          ();
     bool AdvanceGivingOrders        ();
-    bool AdvanceToTargetPosition    ();        
+    bool AdvanceToTargetPosition    ();
 
     bool SearchForRandomPosition    ();
-    
+
     void Absorb();
 
-    void RenderFlag         ( float _predictionTime );    
+    void RenderFlag         ( float _predictionTime );
     void RenderShield       ( float _predictionTime );
     void RenderSpirit       ( Vector3 const &_pos );
 
@@ -64,7 +64,7 @@ public:
     void Begin              ();
     void Render		        ( float _predictionTime );
     bool RenderPixelEffect  ( float _predictionTime );
-    
+
     bool Advance            ( Unit *_unit );
 
     void ChangeHealth   ( int amount );
@@ -88,12 +88,12 @@ class OfficerOrders : public WorldObject
 public:
     Vector3     m_wayPoint;
     float       m_arrivedTimer;
-    
+
 public:
     OfficerOrders();
 
     bool Advance();
-    void Render( float _time );    
+    void Render( float _time );
 };
 
 

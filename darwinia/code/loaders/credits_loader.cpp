@@ -63,12 +63,12 @@ int CreditsLoader::AddString( float _x, float _y, float _size, char *_string )
     // Create new item if required
 
     if( !item )
-    {        
+    {
         item = new CreditsItem();
         item->SetString( _string );
         item->m_size = _size;
         item->m_used = true;
-        item->m_pos = GenerateOffscreenPosition( 1000.0f + (darwiniaRandom() % 200) );        
+        item->m_pos = GenerateOffscreenPosition( 1000.0f + (darwiniaRandom() % 200) );
         itemId = m_items.PutData( item );
     }
 
@@ -83,7 +83,7 @@ void CreditsLoader::GenerateWords( float _x, float _y, float _size, char *_strin
 {
     char stringCopy[256];
     strcpy( stringCopy, _string );
-    
+
     char *copyPos = stringCopy;
     float x = _x;
 
@@ -96,7 +96,7 @@ void CreditsLoader::GenerateWords( float _x, float _y, float _size, char *_strin
         CreditsItem *item = m_items[itemId];
 
         CreditsDarwinian *darwinian = new CreditsDarwinian();
-        
+
         if( IsOffscreen(item->m_pos) )
         {
             darwinian->m_pos = item->m_pos;
@@ -110,7 +110,7 @@ void CreditsLoader::GenerateWords( float _x, float _y, float _size, char *_strin
         m_darwinians.PutData( darwinian );
 
         if( !space ) break;
-        
+
         x += g_gameFont.GetTextWidth( strlen(copyPos)+1, _size );
         copyPos = (space+1);
     }
@@ -128,7 +128,7 @@ void CreditsLoader::GenerateChars( float _x, float _y, float _size, char *_strin
 {
     float x = _x;
 
-    for( int i = 0; i < strlen(_string); ++i )    
+    for( int i = 0; i < strlen(_string); ++i )
     {
         char thisChar = _string[i];
         if( thisChar != ' ' )
@@ -139,7 +139,7 @@ void CreditsLoader::GenerateChars( float _x, float _y, float _size, char *_strin
             int itemId = AddString( x, _y, _size, buffer );
             CreditsItem *item = m_items[itemId];
             CreditsDarwinian *darwinian = new CreditsDarwinian();
-            
+
             if( IsOffscreen(item->m_pos) )
             {
                 darwinian->m_pos = item->m_pos;
@@ -183,7 +183,7 @@ void CreditsLoader::RemoveUnusedStrings()
 Vector2 CreditsLoader::GenerateOffscreenPosition( float _distanceOut )
 {
     Vector2 result;
-    
+
     switch( darwiniaRandom() % 4 )
     {
         case 0 :    result.Set( -1 * _distanceOut, darwiniaRandom() % 600 );         break;
@@ -255,7 +255,7 @@ void CreditsLoader::Render()
             RenderDarwinian( darwinian->m_pos.x, darwinian->m_pos.y );
         }
     }
-    
+
     for( int i = 0; i < m_items.Size(); ++i )
     {
         if( m_items.ValidIndex(i) )
@@ -263,24 +263,24 @@ void CreditsLoader::Render()
             CreditsItem *item = m_items[i];
 
             glColor4f( 1.0f, 1.0f, 1.0f, 0.05f );
-            //g_gameFont.DrawText2D( item->m_targetPos.x, item->m_targetPos.y, item->m_size, item->m_string );            
+            //g_gameFont.DrawText2D( item->m_targetPos.x, item->m_targetPos.y, item->m_size, item->m_string );
 
             glColor4f( 1.0f, 1.0f, 1.0f, 0.0f );
             g_gameFont.SetRenderOutline(true);
-            g_gameFont.DrawText2DCentre( item->m_pos.x, item->m_pos.y, item->m_size, item->m_string );            
-            
+            g_gameFont.DrawText2DCentre( item->m_pos.x, item->m_pos.y, item->m_size, item->m_string );
+
             glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
             g_gameFont.SetRenderOutline(false);
-            g_gameFont.DrawText2DCentre( item->m_pos.x, item->m_pos.y, item->m_size, item->m_string );            
+            g_gameFont.DrawText2DCentre( item->m_pos.x, item->m_pos.y, item->m_size, item->m_string );
         }
-    }    
+    }
 }
 
 
 bool CreditsLoader::CreateNextScene()
 {
     DeleteUnusedStrings();
-    
+
     switch( m_sceneIndex )
     {
         case 0:
@@ -303,7 +303,7 @@ bool CreditsLoader::CreateNextScene()
             GenerateCharsCentre( 400, 200, 40, LANGUAGEPHRASE("bootloader_credits_42") );
             GenerateCharsCentre( 400, 250, 40, LANGUAGEPHRASE("bootloader_credits_43") );
             GenerateCharsCentre( 400, 300, 40, LANGUAGEPHRASE("bootloader_credits_44") );
-            break;            
+            break;
 
         case 3:
             GenerateWordsCentre( 400, 150, 30, LANGUAGEPHRASE("bootloader_credits_10") );
@@ -352,7 +352,7 @@ bool CreditsLoader::CreateNextScene()
             GenerateWordsCentre( 400, 350, 30, LANGUAGEPHRASE("bootloader_credits_35") );
             GenerateCharsCentre( 400, 400, 40, LANGUAGEPHRASE("bootloader_credits_36") );
             break;
-            
+
         case 10:
             GenerateWordsCentre( 400, 50, 30, LANGUAGEPHRASE("bootloader_credits_37") );
             GenerateBetaTesterList();
@@ -363,15 +363,15 @@ bool CreditsLoader::CreateNextScene()
             GenerateWordsCentre( 400, 300, 20, LANGUAGEPHRASE("bootloader_credits_39") );
             GenerateWordsCentre( 400, 330, 20, LANGUAGEPHRASE("bootloader_credits_40") );
             break;
-            
+
         case 12:
             break;
 
-        case 13: 
+        case 13:
             return true;
 
     }
-    
+
     RemoveUnusedStrings();
     ++m_sceneIndex;
     return false;
@@ -420,7 +420,7 @@ void CreditsLoader::GenerateBetaTesterList()
         char *thisName = reader->GetRestOfLine();
         if( strlen(thisName) > 1 )
         {
-            char *nameDup = strdup( thisName );        
+            char *nameDup = strdup( thisName );
             names.PutData( nameDup );
         }
     }
@@ -439,14 +439,14 @@ void CreditsLoader::GenerateBetaTesterList()
     int numColumns = 2;
     int numWordsPerColumn = names.Size() / (float) numColumns;
     numWordsPerColumn --;
-    
+
     float gapSize = ( screenH - (y+40) ) / numWordsPerColumn;
     float textSize = gapSize * 2.0f/3.0f;
-    
+
     for( int i = 0; i < names.Size(); ++i )
     {
         GenerateWordsCentre( x, y+=gapSize, textSize, names[i] );
-        
+
         if( i == numWordsPerColumn )
         {
             x += 400;
@@ -475,7 +475,7 @@ void CreditsLoader::DeleteUnusedStrings()
 
 void CreditsLoader::FlipBuffers( float _alpha )
 {
-	g_inputManager->PollForEvents(); 
+	g_inputManager->PollForEvents();
 	g_inputManager->Advance();
 	glFinish();
 	g_windowManager->Flip();
@@ -491,14 +491,14 @@ void CreditsLoader::FlipBuffers( float _alpha )
         glVertex2i(800,screenH);
         glVertex2i(0,screenH);
     glEnd();
-    
+
     //g_app->m_soundSystem->Advance();
-    //g_soundLibrary2d->TopupBuffer();    
+    //g_soundLibrary2d->TopupBuffer();
 
 	Sleep(1);
 }
 
- 
+
 void CreditsLoader::Run()
 {
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "Credits", SoundSourceBlueprint::TypeMusic );
@@ -572,7 +572,7 @@ bool CreditsDarwinian::AdvanceToTargetPos( float _time )
 
 
 bool CreditsDarwinian::Advance( float _time )
-{           
+{
     switch( m_state )
     {
         case StateWalkingToItem:

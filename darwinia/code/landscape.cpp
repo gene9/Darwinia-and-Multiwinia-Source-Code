@@ -82,7 +82,7 @@ void LandscapeTile::GuideGridSetPower(int _power)
             m_guideGrid = new Array2D <unsigned char> (resolution, resolution, 0);
             m_guideGrid->SetAll(0);
         }
-    }    
+    }
 }
 
 
@@ -114,7 +114,7 @@ char *LandscapeTile::GuideGridToString()
             for( int x = 0; x < res; ++x )
             {
                 unsigned char actualVal = m_guideGrid->GetData(x,z);
-               
+
                 *target = 'A' + int( actualVal / 16 );
                 *(target+1) = 'A' + actualVal - int( actualVal / 16 ) * 16;
 
@@ -168,25 +168,25 @@ float LandscapeTile::GenerateNoise(float _halfSize, float _height)
 void LandscapeTile::GenerateDiamondMidpoint(int _x, int _z, int _halfSize)
 {
 	float newHeight;
-	
+
 	switch (m_generationMethod)
 	{
 		case 0:
-			newHeight = m_heightMap->GetData(_x - _halfSize, _z) + 
+			newHeight = m_heightMap->GetData(_x - _halfSize, _z) +
 						m_heightMap->GetData(_x + _halfSize, _z) +
-						m_heightMap->GetData(_x, _z - _halfSize) + 
+						m_heightMap->GetData(_x, _z - _halfSize) +
 						m_heightMap->GetData(_x, _z + _halfSize);
 			newHeight *= 0.25f;
 			break;
 		case 1:
 			if (darwiniaRandom() & 1)
 			{
-				newHeight = m_heightMap->GetData(_x - _halfSize, _z) + 
+				newHeight = m_heightMap->GetData(_x - _halfSize, _z) +
 							m_heightMap->GetData(_x + _halfSize, _z);
 			}
 			else
 			{
-				newHeight = m_heightMap->GetData(_x, _z + _halfSize) + 
+				newHeight = m_heightMap->GetData(_x, _z + _halfSize) +
 							m_heightMap->GetData(_x, _z - _halfSize);
 			}
 			newHeight *= 0.5f;
@@ -211,25 +211,25 @@ void LandscapeTile::GenerateDiamondMidpoint(int _x, int _z, int _halfSize)
 void LandscapeTile::GenerateSquareMidpoint(int _x, int _z, int _halfSize)
 {
 	float newHeight;
-	
+
 	switch (m_generationMethod)
 	{
 		case 0:
-			newHeight = m_heightMap->GetData(_x - _halfSize, _z - _halfSize) + 
+			newHeight = m_heightMap->GetData(_x - _halfSize, _z - _halfSize) +
 						m_heightMap->GetData(_x - _halfSize, _z + _halfSize) +
-						m_heightMap->GetData(_x + _halfSize, _z - _halfSize) + 
+						m_heightMap->GetData(_x + _halfSize, _z - _halfSize) +
 						m_heightMap->GetData(_x + _halfSize, _z + _halfSize);
 			newHeight *= 0.25f;
 			break;
 		case 1:
 			if (darwiniaRandom() & 1)
 			{
-				newHeight = m_heightMap->GetData(_x - _halfSize, _z - _halfSize) + 
+				newHeight = m_heightMap->GetData(_x - _halfSize, _z - _halfSize) +
 							m_heightMap->GetData(_x + _halfSize, _z + _halfSize);
 			}
 			else
 			{
-				newHeight = m_heightMap->GetData(_x - _halfSize, _z + _halfSize) + 
+				newHeight = m_heightMap->GetData(_x - _halfSize, _z + _halfSize) +
 							m_heightMap->GetData(_x + _halfSize, _z - _halfSize);
 			}
 			newHeight *= 0.5f;
@@ -256,12 +256,12 @@ void LandscapeTile::GenerateMidpoints(int _x1, int _z1, int _x2, int _z2)
 	int halfSize = (_x2 - _x1) >> 1;
 	int midX = _x1 + halfSize;
 	int midZ = _z1 + halfSize;
-	
+
 	// Create a new point in the centre of the parent square
 	GenerateSquareMidpoint(midX, midZ, halfSize);
 
 	// Create a new point at the mid point of the top edge of the parent square
-	if (_z1 != 0) 
+	if (_z1 != 0)
 	{
 		GenerateDiamondMidpoint(midX, _z1, halfSize);
 	}
@@ -287,7 +287,7 @@ void LandscapeTile::Generate(LandscapeDef *_def)
 			reqCells != m_heightMap->GetNumRows() )
 		{
 			delete m_heightMap;
-			m_heightMap = new SurfaceMap2D <float>(reqCells, reqCells, 
+			m_heightMap = new SurfaceMap2D <float>(reqCells, reqCells,
 										   0.0f, 0.0f, 1.0f, 1.0f, // Cell size of 1.0 is correct here
 										   m_outsideHeight);
 		}
@@ -322,7 +322,7 @@ void LandscapeTile::Generate(LandscapeDef *_def)
 		int numIterationsToSkip = m_guideGridPower;
 		int numIterations = GetPowerOfTwo(m_heightMap->GetNumColumns()) - numIterationsToSkip;
 		int stepSize = ((m_heightMap->GetNumColumns()) - 1 ) >> numIterationsToSkip;
-		
+
 		darwiniaSeedRandom(m_randomSeed);
 
 		for (int i = 0; i < numIterations; ++i)
@@ -333,7 +333,7 @@ void LandscapeTile::Generate(LandscapeDef *_def)
 				{
 					GenerateMidpoints(x, z, x + stepSize, z + stepSize);
 				}
-			} 
+			}
 			stepSize >>= 1;
 		}
 	}
@@ -378,10 +378,10 @@ void Landscape::MergeTileIntoLandscape(LandscapeTile const *_tile)
 
     // Calculate num cells that this tile will occupy in the main landscape
 	int numCells = (float)_tile->m_size / m_heightMap->m_cellSizeX;
-    
+
     // Calculate how much to increment in "tile space" for one unit in "main landscape space"
     float factor = (float)(_tile->m_heightMap->GetNumColumns() - 1) / (float)(numCells - 1);
-	
+
 	float heightRange = _tile->m_heightMap->GetHighestValue() - _tile->m_outsideHeight;
 	heightRange += 0.001f; // Prevent divide by zero below
 	float heightFactor = (_tile->m_desiredHeight - _tile->m_outsideHeight) / heightRange;
@@ -460,7 +460,7 @@ void Landscape::DeleteTile( int tileId )
 void Landscape::GenerateNormals()
 {
 	// Generate the normals from the height samples
-    
+
     for (unsigned short z = 0; z < m_heightMap->GetNumRows(); ++z)
     {
 		int zTimesNumCells = z * m_heightMap->GetNumColumns();
@@ -470,7 +470,7 @@ void Landscape::GenerateNormals()
             float heightW = m_heightMap->GetData(x + 1, z);
             float heightE = m_heightMap->GetData(x - 1, z);
             float heightS = m_heightMap->GetData(x, z + 1);
-	
+
 			if (heightN == heightW &&
 				heightE == heightS &&
 				heightN == heightE)
@@ -478,7 +478,7 @@ void Landscape::GenerateNormals()
 				m_normalMap->PutData(x, z, g_upVector);
 				continue;
 			}
-            
+
 			float heightCentre = m_heightMap->GetData(x, z);
 
             Vector3 vectN ( 0.0f, heightCentre - heightN, m_heightMap->m_cellSizeY );
@@ -554,9 +554,9 @@ void Landscape::Init(LandscapeDef *_def, bool _justMakeTheHeightMap)
 
     int detailScaleFactor = g_prefsManager->GetInt( "RenderLandscapeDetail", 1 );
     float oldCellSize = _def->m_cellSize;
-    
+
     _def->m_cellSize *= ( 1.0f + (detailScaleFactor-1) * 0.5f );
-    
+
 	if (!m_heightMap ||
 		m_heightMap->m_cellSizeX != _def->m_cellSize ||
 		m_heightMap->m_cellSizeY != _def->m_cellSize ||
@@ -565,7 +565,7 @@ void Landscape::Init(LandscapeDef *_def, bool _justMakeTheHeightMap)
 	{
 		delete m_heightMap;
 		delete m_normalMap;
-		m_heightMap = new SurfaceMap2D <float>(_def->m_worldSizeX, _def->m_worldSizeZ, 
+		m_heightMap = new SurfaceMap2D <float>(_def->m_worldSizeX, _def->m_worldSizeZ,
 											   0.0f, 0.0f, _def->m_cellSize, _def->m_cellSize,
 											   m_outsideHeight);
 		m_normalMap = new SurfaceMap2D <Vector3>(_def->m_worldSizeX, _def->m_worldSizeZ,
@@ -573,7 +573,7 @@ void Landscape::Init(LandscapeDef *_def, bool _justMakeTheHeightMap)
 												 g_upVector);
 	}
 
-		
+
 	//
     // Generate our landscape from those tiles
 
@@ -607,7 +607,7 @@ void Landscape::Empty()
 
 // *** Render
 void Landscape::Render()
-{   
+{
 	m_renderer->Render();
 }
 
@@ -649,7 +649,7 @@ bool Landscape::IsInLandscape( Vector3 const &_pos )
 bool Landscape::RayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, Vector3 *_result) const
 {
 	if (!m_heightMap) return false;
-	
+
 	Vector3 rayDirNormalised = _rayDir;
 	rayDirNormalised.Normalise();
 
@@ -679,7 +679,7 @@ bool Landscape::RayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, Vector3
             Vector2 segStart(0.0f, 0.0f);
             Vector2 segEnd(GetWorldSizeX(), 0.0f);
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, rayDirNormalised, &segIntersectResult);
-            if (!intersects) 
+            if (!intersects)
             {
                 Vector2 segStart(0.0f, 0.0f);
                 Vector2 segEnd(0.0f, GetWorldSizeZ());
@@ -697,7 +697,7 @@ bool Landscape::RayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, Vector3
             Vector2 segStart(0.0f, GetWorldSizeZ());
             Vector2 segEnd(GetWorldSizeX(), GetWorldSizeZ());
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, rayDirNormalised, &segIntersectResult);
-            if (!intersects) 
+            if (!intersects)
             {
                 Vector2 segStart(0.0f, 0.0f);
                 Vector2 segEnd(0.0f, GetWorldSizeZ());
@@ -718,7 +718,7 @@ bool Landscape::RayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, Vector3
             Vector2 segStart(0.0f, 0.0f);
             Vector2 segEnd(GetWorldSizeX(), 0.0f);
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, rayDirNormalised, &segIntersectResult);
-            if (!intersects) 
+            if (!intersects)
             {
                 Vector2 segStart(GetWorldSizeX(), 0.0f);
                 Vector2 segEnd(GetWorldSizeX(), GetWorldSizeZ());
@@ -736,7 +736,7 @@ bool Landscape::RayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, Vector3
             Vector2 segStart(0.0f, GetWorldSizeZ());
             Vector2 segEnd(GetWorldSizeX(), GetWorldSizeZ());
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, rayDirNormalised, &segIntersectResult);
-            if (!intersects) 
+            if (!intersects)
             {
                 Vector2 segStart(GetWorldSizeX(), 0.0f);
                 Vector2 segEnd(GetWorldSizeX(), GetWorldSizeZ());
@@ -787,7 +787,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
             Vector3 segStart(m_heightMap->GetRealX(gridX), 0.0f, m_heightMap->GetRealY(gridZ+1));
             Vector3 segEnd(m_heightMap->GetRealX(gridX+1), 0.0f, m_heightMap->GetRealY(gridZ+1));
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, _rayDir);
-            if (intersects) 
+            if (intersects)
             {
                 gridZ++;
             }
@@ -813,7 +813,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
             Vector3 segStart(m_heightMap->GetRealX(gridX), 0.0f, m_heightMap->GetRealY(gridZ+1));
             Vector3 segEnd(m_heightMap->GetRealX(gridX+1), 0.0f, m_heightMap->GetRealY(gridZ+1));
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, _rayDir);
-            if (intersects) 
+            if (intersects)
             {
                 gridZ++;
             }
@@ -826,7 +826,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
 	else if (_rayDir.x < 0.0f && _rayDir.z < 0.0f)
 	{
 		// Ray goes in South-West quadrant
-		
+
 		// Now step along the line, going either south or west each step, until
 		// we step out of the landscape grid, or we find a hit.
 		while (gridX >= 0 && gridZ >= 0)
@@ -839,7 +839,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
             Vector3 segStart(m_heightMap->GetRealX(gridX), 0.0f, m_heightMap->GetRealY(gridZ));
             Vector3 segEnd(m_heightMap->GetRealX(gridX+1), 0.0f, m_heightMap->GetRealY(gridZ));
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, _rayDir);
-            if (intersects) 
+            if (intersects)
             {
                 gridZ--;
             }
@@ -852,7 +852,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
 	else
 	{
 		// Ray goes in South-East quadrant
-		
+
 		// Now step along the line, going either south or east each step, until
 		// we step out of the landscape grid, or we find a hit.
 		while (gridX < m_heightMap->GetNumColumns() && gridZ >= 0)
@@ -865,7 +865,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
             Vector3 segStart(m_heightMap->GetRealX(gridX), 0.0f, m_heightMap->GetRealY(gridZ));
             Vector3 segEnd(m_heightMap->GetRealX(gridX+1), 0.0f, m_heightMap->GetRealY(gridZ));
             bool intersects = SegRayIntersection2D(segStart, segEnd, _rayStart, _rayDir);
-            if (intersects) 
+            if (intersects)
             {
                 gridZ--;
             }
@@ -884,7 +884,7 @@ bool Landscape::UnsafeRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, V
 // Determines if the specified ray hits the specified landscape cell (this can be thought
 // of as a cube with the top left corner being at the heightMap point x0,z0).
 // Assumes that _rayDir is normalised and that ray intersects cell in the 2D projection
-bool Landscape::RayHitCell(int x0, int z0, 
+bool Landscape::RayHitCell(int x0, int z0,
                            Vector3 const &_rayStart, Vector3 const &_rayDir,
                            Vector3 *_result) const
 {
@@ -945,7 +945,7 @@ bool Landscape::RayHitCell(int x0, int z0,
 	{
 		return false;
 	}
-	
+
 	if (heightAtMinLambda < minHeightOfCube && heightAtMaxLambda < minHeightOfCube)
 	{
 		return false;
@@ -982,7 +982,7 @@ float Landscape::SphereHit(Vector3 const &_centre, float _radius) const
 	for (int y = y1; y < y2; ++y)
 	{
 		pos.z = m_heightMap->GetRealY(y);
-		
+
 		for (int x = x1; x < x2; ++x)
 		{
 			pos.x = m_heightMap->GetRealX(x);
@@ -998,7 +998,7 @@ float Landscape::SphereHit(Vector3 const &_centre, float _radius) const
 	float dist = sqrtf(nearestSqrd);
 	if (dist > _radius)
 	{
-		dist = -1.0f; 
+		dist = -1.0f;
 	}
 
 	return dist;

@@ -15,8 +15,8 @@ SurfaceMap2D<T>::SurfaceMap2D()
 
 
 template <class T>
-SurfaceMap2D<T>::SurfaceMap2D(float _width, float _height, 
-							  float _x0, float _y0, 
+SurfaceMap2D<T>::SurfaceMap2D(float _width, float _height,
+							  float _x0, float _y0,
 							  float _cellSizeX, float _cellSizeY,
 							  T _outsideValue)
 :	Array2D<T>(ceilf(_width / _cellSizeX), ceilf(_height / _cellSizeY), _outsideValue),
@@ -43,8 +43,8 @@ SurfaceMap2D<T>::~SurfaceMap2D()
 
 
 template <class T>
-void SurfaceMap2D<T>::Initialise(float _width, float _height, 
-								 float _x0, float _y0, 
+void SurfaceMap2D<T>::Initialise(float _width, float _height,
+								 float _x0, float _y0,
 								 float _cellSizeX, float _cellSizeY,
 								 T _outsideValue)
 {
@@ -66,7 +66,7 @@ T SurfaceMap2D<T>::GetValue(float _x, float _y) const
 
 	float fractionalX = _x * m_invCellSizeX;
 	float fractionalY = _y * m_invCellSizeY;
-	
+
 	unsigned short x1 = fractionalX;
 	unsigned short y1 = fractionalY;
 	unsigned short x2 = x1 + 1;
@@ -75,15 +75,15 @@ T SurfaceMap2D<T>::GetValue(float _x, float _y) const
 	fractionalX = fractionalX - floorf(fractionalX);
 	fractionalY = fractionalY - floorf(fractionalY);
 
-	if (x1 >= m_numColumns) x1 = 0; 
+	if (x1 >= m_numColumns) x1 = 0;
 	if (x2 >= m_numColumns) x2 = 0;
-	if (y1 >= m_numRows) y1 = 0; 
+	if (y1 >= m_numRows) y1 = 0;
 	if (y2 >= m_numRows) y2 = 0;
 
-	T value11 = GetData(x1, y1); 
-	T value12 = GetData(x1, y2); 
-	T value21 = GetData(x2, y1); 
-	T value22 = GetData(x2, y2); 
+	T value11 = GetData(x1, y1);
+	T value12 = GetData(x1, y2);
+	T value21 = GetData(x2, y1);
+	T value22 = GetData(x2, y2);
 
 	float weight11 = (1.0f - fractionalX) * (1.0f - fractionalY);
 	float weight12 = (1.0f - fractionalX) * (fractionalY);

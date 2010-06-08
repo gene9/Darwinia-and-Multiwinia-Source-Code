@@ -42,7 +42,7 @@ SoulLoader::SoulLoader()
 	gluLookAt(pos.x, pos.y, pos.z,
               forwards.x, forwards.y, forwards.z,
               up.x, up.y, up.z);
-    
+
     glDisable( GL_CULL_FACE );
     glDisable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
@@ -51,7 +51,7 @@ SoulLoader::SoulLoader()
     glDisable( GL_DEPTH_TEST );
 
     float fogCol[] = {  0, 0, 0, 0 };
-    
+
     glFogf      ( GL_FOG_DENSITY, 1.0f );
     glFogf      ( GL_FOG_START, 50.0f );
     glFogf      ( GL_FOG_END, 1500.0f );
@@ -73,9 +73,9 @@ void SoulLoader::AdvanceAllSpirits( float _time )
     m_spawnTimer -= _time;
     if( m_spawnTimer <= 0.0f )
     {
-        SoulLoaderSpirit *spirit = new SoulLoaderSpirit();        
+        SoulLoaderSpirit *spirit = new SoulLoaderSpirit();
         spirit->m_pos = Vector3( sfrand(200.0f), -170.0f, -frand(1000.0f) );
-       
+
         m_spirits.PutData( spirit );
 
         m_spawnTimer = 0.6f;
@@ -115,7 +115,7 @@ void SoulLoader::RenderAllSpirits()
 
 
 void SoulLoader::RenderMessage( float _time )
-{    
+{
     float timePassed = m_time - m_startTime;
 
     #define NUMMESSAGES 10
@@ -175,7 +175,7 @@ void SoulLoader::RenderMessage( float _time )
             float alpha = 1.0f;
             if( timePassed < fadeUp ) alpha = 1.0f - ( fadeUp - timePassed ) / fadeDuration;
             if( timePassed > fadeOut ) alpha = 1.0f - ( timePassed - fadeOut ) / fadeDuration;
-            
+
             if( i < 8 )
             {
                 spirits[i]->Advance(_time);
@@ -204,19 +204,19 @@ void SoulLoader::Run()
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "LoaderSoul", SoundSourceBlueprint::TypeMusic );
 
     while( !g_inputManager->controlEvent( ControlSkipMessage ) )
-    {       
+    {
         if( g_app->m_requestQuit ) break;
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         float oldTime = m_time;
         m_time = GetHighResTime();
         float timeThisFrame = m_time - oldTime;
-       
+
         AdvanceAllSpirits( timeThisFrame );
         RenderAllSpirits();
         RenderMessage( timeThisFrame );
 
-        g_windowManager->Flip();        
+        g_windowManager->Flip();
 		g_inputManager->Advance();
         g_inputManager->PollForEvents();
         Sleep(1);
@@ -229,7 +229,7 @@ void SoulLoader::Run()
 
 
 SoulLoaderSpirit::SoulLoaderSpirit()
-{    
+{
     m_positionOffset = frand(10.0f);
     m_xaxisRate = frand(2.0f);
     m_yaxisRate = frand(2.0f);
@@ -261,7 +261,7 @@ void SoulLoaderSpirit::Advance( float _time )
     Vector3 vel;
 
     vel.x = sinf( m_positionOffset ) * m_xaxisRate;
-    vel.z = sinf( m_positionOffset ) * m_zaxisRate;            
+    vel.z = sinf( m_positionOffset ) * m_zaxisRate;
 
     vel.y = 3.0f + frand(3.0f);
 
@@ -270,12 +270,12 @@ void SoulLoaderSpirit::Advance( float _time )
 
 
 void SoulLoaderSpirit::Render()
-{    
+{
     int innerAlpha = 255;
     int outerAlpha = 150;
     float spiritInnerSize = 1.0;
     float spiritOuterSize = 3.0;
-       
+
     if( m_life < 10.0f )
     {
         innerAlpha *= ( m_life / 10.0f );
@@ -286,21 +286,21 @@ void SoulLoaderSpirit::Render()
     Vector3 camRight(1,0,0);
 
     float size = spiritInnerSize;
-    glColor4ub(m_colour.r, m_colour.g, m_colour.b, innerAlpha );                
+    glColor4ub(m_colour.r, m_colour.g, m_colour.b, innerAlpha );
     glBegin( GL_QUADS );
         glVertex3fv( (m_pos - camUp*size).GetData() );
         glVertex3fv( (m_pos + camRight*size).GetData() );
         glVertex3fv( (m_pos + camUp*size).GetData() );
         glVertex3fv( (m_pos - camRight*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize;
-    glColor4ub(m_colour.r, m_colour.g, m_colour.b, outerAlpha );            
+    glColor4ub(m_colour.r, m_colour.g, m_colour.b, outerAlpha );
     glBegin( GL_QUADS );
         glVertex3fv( (m_pos - camUp*size).GetData() );
         glVertex3fv( (m_pos + camRight*size).GetData() );
         glVertex3fv( (m_pos + camUp*size).GetData() );
         glVertex3fv( (m_pos - camRight*size).GetData() );
-    glEnd();        
+    glEnd();
 }
 

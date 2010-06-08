@@ -54,12 +54,12 @@ public:
 
     DArray<LangPhrase *> *GetPhraseList();
 
-    void TestAgainstEnglish();     
+    void TestAgainstEnglish();
 };
 
 
-LList <char *> *WordWrapText(const char *_string, 
-                             float _linewidth, 
+LList <char *> *WordWrapText(const char *_string,
+                             float _linewidth,
                              float _fontWidth,
                              bool _wrapToWindow=true);
 

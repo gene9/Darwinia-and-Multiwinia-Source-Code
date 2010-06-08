@@ -25,8 +25,8 @@
 
 
 inline int RayTraceLoader::GetFloorColour( Vector3 const &pos )
-{    
-    int x = pos.x; 
+{
+    int x = pos.x;
     int z = pos.z + m_time * 100.0f;
     bool result = (x ^ z) & 32;
     return result;
@@ -36,35 +36,35 @@ inline int RayTraceLoader::GetFloorColour( Vector3 const &pos )
 inline bool RayIntersectPlane(  Vector3 const &rayStart, Vector3 const &rayDir,
                                 Vector3 const &planePos, Vector3 const &planeNormal,
                                 Vector3 *pos )
-{        
+{
     float d = -planePos.y;
     float t = -( rayStart * planeNormal + d ) / ( rayDir * planeNormal );
     if( t < 0.0f ) return false;
-    
-    *pos = rayStart + rayDir * t;    
-    
-    return true;    
+
+    *pos = rayStart + rayDir * t;
+
+    return true;
 }
 
 
-inline bool RayIntersectSphere( Vector3 const &rayStart, Vector3 const &rayDir, 
+inline bool RayIntersectSphere( Vector3 const &rayStart, Vector3 const &rayDir,
                                 Vector3 const &spherePos, float sphereRadius,
                                 Vector3 *pos, Vector3 *normal )
-{       
+{
     Vector3 l = spherePos - rayStart;
     float tca = l * rayDir;
     if( tca < 0.0f ) return false;
-    
+
     float r2 = sphereRadius * sphereRadius;
-    
+
     float d2 = (l * l) - (tca * tca);
     if( d2 > r2 ) return false;
-       
+
     float thc = sqrtf( r2 - d2 );
     float t = tca - thc;
 
     *pos = rayStart + rayDir * t;
-    *normal = *pos - spherePos;    
+    *normal = *pos - spherePos;
     *normal /= sphereRadius;
 
     return true;
@@ -81,7 +81,7 @@ struct Intersection
 
 inline Vector3 CalculateReflectionVector( Vector3 const &_incomingDir, Vector3 const &_normal )
 {
-    float dotProd = _normal * (_incomingDir * -1);        
+    float dotProd = _normal * (_incomingDir * -1);
     Vector3 reflectionVector = 2.0f * dotProd * _normal + _incomingDir;
     return reflectionVector;
 }
@@ -114,24 +114,24 @@ inline void CalculateSphereRefraction( Vector3 const &_incomingDir, Vector3 cons
     Vector3 innerRay = incomingRay;
     innerRay.RotateAroundZ( thetaPrime - theta );
     float innerDistance = 2.0f * _sphereRadius * cosf(thetaPrime);
-    Vector3 exitPoint = innerRay * innerDistance;    
-    Vector3 exitVector = incomingRay; 
+    Vector3 exitPoint = innerRay * innerDistance;
+    Vector3 exitVector = incomingRay;
     exitVector.RotateAroundZ( thetaPrime - theta );
 
-    _outgoingDir = exitVector.x * X + exitVector.y * Y;    
+    _outgoingDir = exitVector.x * X + exitVector.y * Y;
     _outgoingPoint = exitPoint.x * X + exitPoint.y * Y + _hitPoint;
 }
 
 
 int RayTraceLoader::CastRay( int _x, int _y,
-                               Vector3 const &_startRay, Vector3 const &_rayDir, 
+                               Vector3 const &_startRay, Vector3 const &_rayDir,
                                int _numStepsRemaining, float _intensity )
 {
     if( _numStepsRemaining < 0 ) return 0;
-    
+
     //
     // Find the nearest intersecting object
-    
+
     float nearest = FLT_MAX;
     Vector3 intersectPoint, intersectNormal;
     RGBAColour colour;
@@ -141,7 +141,7 @@ int RayTraceLoader::CastRay( int _x, int _y,
 
     for( int i = 0; i < m_numObjects; ++i )
 	{
-        Vector3 thisIntersectPoint, thisIntersectNormal;        
+        Vector3 thisIntersectPoint, thisIntersectNormal;
         bool hit = RayIntersectSphere( _startRay, _rayDir, m_objects[i].m_pos, m_objects[i].m_radius, &thisIntersectPoint, &thisIntersectNormal );
         if( hit )
         {
@@ -154,21 +154,21 @@ int RayTraceLoader::CastRay( int _x, int _y,
                 colour = m_objects[i].m_colour;
                 spherePos = m_objects[i].m_pos;
                 radius = m_objects[i].m_radius;
-                hitSomething = true; 
+                hitSomething = true;
             }
         }
     }
-    
+
     if( hitSomething )
-    {        
+    {
         //
         // Render that part of the sphere
-                
+
 //        Vector3 outgoingDir, outgoingPoint;
 //        CalculateSphereRefraction( _rayDir, intersectPoint, intersectNormal, spherePos, radius, outgoingDir, outgoingPoint );
 //        RenderRay( _x, _y, _dx, _dy, outgoingPoint, outgoingDir, _numStepsRemaining-1, _intensity*0.9f );
 
-        float intensity = intersectNormal * m_light * -1.0f;        
+        float intensity = intersectNormal * m_light * -1.0f;
         intensity = max( intensity, 0.0f );
         intensity = min( intensity, 1.0f );
         intensity *= _intensity;
@@ -183,17 +183,17 @@ int RayTraceLoader::CastRay( int _x, int _y,
     }
     else
     {
-        bool hitFloor = RayIntersectPlane( _startRay, _rayDir, m_floor, g_upVector, &intersectPoint );        
+        bool hitFloor = RayIntersectPlane( _startRay, _rayDir, m_floor, g_upVector, &intersectPoint );
         if( hitFloor )
-        {                        
+        {
             //Vector3 reflectionVector = CalculateReflectionVector( _rayDir, g_upVector );
             //RenderRay( _x, _y, _dx, _dy, intersectPoint, reflectionVector, _numStepsRemaining-1, _intensity*0.5f );
-        
+
             int hitFloorWhite = GetFloorColour( intersectPoint );
             if( hitFloorWhite )
             {
                 float intensity = 100000.0f / ( intersectPoint ).MagSquared();
-                intensity = min( intensity, 1.0f );                
+                intensity = min( intensity, 1.0f );
                 intensity *= _intensity;
                 RGBAColour floorColour( 200, 200, 200, 200 );
                 floorColour *= intensity;
@@ -220,10 +220,10 @@ RayTraceLoader::RayTraceLoader()
     // Set up our objects
 
     m_numObjects = 6;
-        
+
     m_objects[0].m_radius = 10.0f;
     m_objects[0].m_colour.Set( 200, 130, 100, 255 );
-    
+
     for( int i = 1; i < m_numObjects; ++i )
     {
         m_objects[i].m_radius = 5.0f;
@@ -256,10 +256,10 @@ RayTraceLoader::RayTraceLoader()
 void RayTraceLoader::AdvanceObjects(float _advanceTime)
 {
     static Vector3 angle1( 0, 0, 1 );
-    
+
     angle1.RotateAroundY( _advanceTime*0.75f );        // 0.75
     angle1.RotateAroundX( _advanceTime*0.75f );        // 0.75
-            
+
     float zPos = 700.0f - sqrtf( m_time - m_startTime ) * 150.0f;
     zPos = max( zPos, 0.0f );
 
@@ -275,24 +275,24 @@ void RayTraceLoader::AdvanceObjects(float _advanceTime)
     }
 
     float yPos = -7.0f + sinf(m_time/6.0f) * 10.0f;
-    m_objects[0].m_pos.Set( 0.0f, 
-                            yPos, 
+    m_objects[0].m_pos.Set( 0.0f,
+                            yPos,
                             zPos );
-    
-    Vector3 angle( 0, 1, 0 );    
+
+    Vector3 angle( 0, 1, 0 );
     angle.RotateAround( angle1 * (m_time+20.0f) * 0.1f );
-    
+
     for( int i = 1; i < m_numObjects; ++i )
     {
         m_objects[i].m_pos = m_objects[0].m_pos + angle * (10.0f+i*5.0f);
         angle.RotateAround( angle1 * 1.0f * M_PI * 1.0f/(m_numObjects-1) );
         angle.RotateAroundZ( (m_time+20.0f) * 0.05f );     // 0.05
-    }    
+    }
 
 
     if( m_cameraMode == 2 )
     {
-        m_cameraPos.RotateAroundY( _advanceTime * 0.3f );        
+        m_cameraPos.RotateAroundY( _advanceTime * 0.3f );
         m_cameraPos.y = 10.0f + sinf(m_time * 0.8f) * 10.0f;
         m_cameraPos.SetLength( 100.0f + sinf(m_time*0.5f) * 40.0f );
         m_cameraFront = -m_cameraPos;
@@ -351,7 +351,7 @@ void RayTraceLoader::AdvanceControls( float _advanceTime )
         m_pixelBlur = max( m_pixelBlur, 1.0f );
     }
 
-    if( g_inputManager->controlEvent( ControlRTLoaderBrightnessIncrease ) ) 
+    if( g_inputManager->controlEvent( ControlRTLoaderBrightnessIncrease ) )
     {
         m_brightness += _advanceTime * 0.1f;
     }
@@ -380,7 +380,7 @@ void RayTraceLoader::AdvanceControls( float _advanceTime )
     if( m_cameraMode == 1 )
     {
         Vector3 camRight = m_cameraUp ^ m_cameraFront;
-        if( g_inputManager->controlEvent( ControlCameraForwards ) ) m_cameraPos += m_cameraFront * _advanceTime * 20;    
+        if( g_inputManager->controlEvent( ControlCameraForwards ) ) m_cameraPos += m_cameraFront * _advanceTime * 20;
         if( g_inputManager->controlEvent( ControlCameraBackwards ) ) m_cameraPos -= m_cameraFront * _advanceTime * 20;
         if( g_inputManager->controlEvent( ControlCameraLeft ) ) m_cameraPos -= camRight * _advanceTime * 20;
         if( g_inputManager->controlEvent( ControlCameraRight ) ) m_cameraPos += camRight * _advanceTime * 20;
@@ -401,12 +401,12 @@ void RayTraceLoader::AdvanceControls( float _advanceTime )
 		    m_cameraFront = m_cameraFront * mat;
         }
     }
-    
+
     if( g_inputManager->controlEvent( ControlRTLoaderLMB ) )
     {
         Vector3 right = m_light ^ g_upVector;
         Vector3 up = right ^ m_light;
-        m_light.RotateAround( up * (float)g_target->dX() * 0.01f );        
+        m_light.RotateAround( up * (float)g_target->dX() * 0.01f );
         m_light.Normalise();
     }
 }
@@ -433,7 +433,7 @@ void RayTraceLoader::RenderMessage()
 
         for( int i = 0; i < 2; ++i )
         {
-            float yPos = 20;                                    
+            float yPos = 20;
             yPos += sinf(m_time*3.0f) * 0.5f;
 
             if( i == 0 )
@@ -444,14 +444,14 @@ void RayTraceLoader::RenderMessage()
             else
             {
                 g_gameFont.SetRenderShadow(false);
-                glColor4f( 0.8f, 0.8f, 1.0f, alpha );                
+                glColor4f( 0.8f, 0.8f, 1.0f, alpha );
                 yPos++;
             }
 
             float texH = 9;
-            g_gameFont.DrawText2DCentre( screenX, yPos, texH,              "================================" );            
+            g_gameFont.DrawText2DCentre( screenX, yPos, texH,              "================================" );
             g_gameFont.DrawText2DCentre( screenX, yPos+=texH,       texH*4,"DARWINIA" );
-            g_gameFont.DrawText2DCentre( screenX, yPos+=texH*3.5,   texH,  "================================" );            
+            g_gameFont.DrawText2DCentre( screenX, yPos+=texH*3.5,   texH,  "================================" );
             g_gameFont.DrawText2DCentre( screenX, yPos+=texH*2,     texH,  LANGUAGEPHRASE("bootloader_raytrace_1") );
             g_gameFont.DrawText2DCentre( screenX, yPos+=texH,       texH,  LANGUAGEPHRASE("bootloader_raytrace_2") );
             g_gameFont.DrawText2DCentre( screenX, yPos+=texH,       texH,  LANGUAGEPHRASE("bootloader_raytrace_3") );
@@ -473,10 +473,10 @@ void RayTraceLoader::RenderHelp()
 
     float screenX = screenW * 0.2f;
     screenX += sinf(m_time*2.0f) * 0.5f;
-    
+
     for( int i = 0; i < 2; ++i )
     {
-        float yPos = screenH * 0.2f;                                    
+        float yPos = screenH * 0.2f;
         yPos += sinf(m_time*3.0f) * 0.5f;
 
         if( i == 0 )
@@ -487,7 +487,7 @@ void RayTraceLoader::RenderHelp()
         else
         {
             g_gameFont.SetRenderShadow(false);
-            glColor4f( 0.8f, 0.8f, 1.0f, 1.0f );                
+            glColor4f( 0.8f, 0.8f, 1.0f, 1.0f );
             yPos++;
         }
 
@@ -516,11 +516,11 @@ void RayTraceLoader::RenderHelp()
 void RayTraceLoader::RenderBackground()
 {
     glShadeModel( GL_SMOOTH );
-    
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     float blur = 1.0f - m_motionBlur;
-    
+
     int screenW = m_resolution * 160;
     int screenH = m_resolution * 120;
 
@@ -532,12 +532,12 @@ void RayTraceLoader::RenderBackground()
         glColor4f( 0.0f, 0.0f, 0.0f, blur );
         glVertex2i( 0, screenW/2.0f );
         glVertex2i( screenW, screenH/2.0f );
-        
+
         glColor4f( 0.0f, 0.1f, 0.1f, blur );
         glVertex2i( 0, screenH );
         glVertex2i( screenW, screenH );
     glEnd();
-    
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
     glShadeModel( GL_FLAT );
@@ -557,7 +557,7 @@ void RayTraceLoader::SetupMatrices( Vector3 &_left, Vector3 &_up, Vector3 &_hori
 	glMatrixMode        (GL_PROJECTION);
 	glLoadIdentity      ();
     gluOrtho2D(0, screenW, screenH, 0);
-    glMatrixMode        (GL_MODELVIEW);        
+    glMatrixMode        (GL_MODELVIEW);
 
 
     //
@@ -565,9 +565,9 @@ void RayTraceLoader::SetupMatrices( Vector3 &_left, Vector3 &_up, Vector3 &_hori
 
     float fov = 90.0f;
     float ratio = (float) g_app->m_renderer->ScreenH() / (float) g_app->m_renderer->ScreenW();
-    float vfov = fov * ratio;        
-    
-    Vector3 camRight = m_cameraUp ^ m_cameraFront;       
+    float vfov = fov * ratio;
+
+    Vector3 camRight = m_cameraUp ^ m_cameraFront;
     Vector3 leftMost = m_cameraFront;
     Vector3 rightMost = m_cameraFront;
     Vector3 upMost = m_cameraFront;
@@ -577,7 +577,7 @@ void RayTraceLoader::SetupMatrices( Vector3 &_left, Vector3 &_up, Vector3 &_hori
     rightMost.FastRotateAround( m_cameraUp, 2.0f * M_PI * (fov/2.0f)/360.0f );
     upMost.FastRotateAround( camRight, -2.0f * M_PI * (vfov/2.0f)/360.0f );
     downMost.FastRotateAround( camRight, 2.0f * M_PI * (vfov/2.0f)/360.0f );
-    
+
     Vector3 horizDif = rightMost - leftMost;
     Vector3 vertDif = downMost - upMost;
 
@@ -602,14 +602,14 @@ void RayTraceLoader::CastAllRays()
 	#pragma omp parallel for
     for( int x = 0; x < screenW; ++x )
     {
-		Vector3 horiz = leftMost + horizDif * (x / (float) screenW );          
+		Vector3 horiz = leftMost + horizDif * (x / (float) screenW );
         for( int y = 0; y < screenH; ++y )
         {
             Vector3 vert = upMost + vertDif * (y / (float) screenH );
             Vector3 clickRay = (horiz + vert).Normalise();
-    
-            int numHits = CastRay( x, y, m_cameraPos, clickRay, 
-                                   RAYTRACELOADER_RENDERDEPTH, m_brightness/m_pixelBlur );                
+
+            int numHits = CastRay( x, y, m_cameraPos, clickRay,
+                                   RAYTRACELOADER_RENDERDEPTH, m_brightness/m_pixelBlur );
         }
     }
 
@@ -637,14 +637,14 @@ void RayTraceLoader::RenderRays()
                 dy = sinf(m_time * 5.0f + x * 0.1f) * m_pixelWave;
             }
 
-            RGBAColour col1 = m_buffer[x][y];                
+            RGBAColour col1 = m_buffer[x][y];
             RGBAColour col2 = m_buffer[x][y+1];
             col1.a = 255;
             col2.a = 255;
             glColor4ubv( col1.GetData() );
-            glVertex2f( x+dx, y+dy );           
+            glVertex2f( x+dx, y+dy );
             glColor4ubv( col2.GetData() );
-            glVertex2f( x+dx, y+m_pixelBlur+dy );                
+            glVertex2f( x+dx, y+m_pixelBlur+dy );
         }
         glEnd();
     }
@@ -687,14 +687,14 @@ void RayTraceLoader::Run()
 #endif
         RenderBackground();
         RenderRays();
-        
+
         glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
         //g_gameFont.DrawText2D(5, 10, 5, "%d", lastFps);
-        
+
         if( g_inputManager->controlEvent( ControlLoaderHelp ) ) RenderHelp();
 		else RenderMessage();
-        
-        g_windowManager->Flip();        
+
+        g_windowManager->Flip();
 		g_inputManager->Advance();
         g_inputManager->PollForEvents();
         AdvanceSound();

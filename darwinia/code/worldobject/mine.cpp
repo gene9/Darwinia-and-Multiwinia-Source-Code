@@ -61,7 +61,7 @@ MineBuilding::MineBuilding()
     m_trackMarker2(NULL),
     m_previousMineSpeed(0.0f),
     m_wheelRotate(0.0f)
-{    
+{
     if( !s_cartShape )
     {
         s_wheelShape = g_app->m_resource->GetShape( "wheel.shp" );
@@ -90,27 +90,27 @@ void MineBuilding::Initialise( Building *_template )
         cart += 0.2f;
         cart += syncfrand(1.5f);
         if( cart >= 1.0f ) break;
-        
+
         MineCart *mineCart = new MineCart();
         mineCart->m_progress = cart;
-        m_carts.PutData( mineCart );               
+        m_carts.PutData( mineCart );
     }
 }
 
 
 bool MineBuilding::IsInView()
-{   
+{
     Building *trackLink = g_app->m_location->GetBuilding( m_trackLink );
     if( trackLink )
     {
         Vector3 midPoint = (trackLink->m_centrePos + m_centrePos) / 2.0f;
         float radius = (trackLink->m_centrePos - m_centrePos).Mag() / 2.0f;
-        radius += m_radius;        
-        
+        radius += m_radius;
+
         if( g_app->m_camera->SphereInViewFrustum( midPoint, radius ) )
         {
             return true;
-        }                
+        }
     }
 
     return Building::IsInView();
@@ -120,11 +120,11 @@ bool MineBuilding::IsInView()
 void MineBuilding::RenderAlphas( float _predictionTime )
 {
     Building::RenderAlphas( _predictionTime );
-        
+
     Vector3 camPos = g_app->m_camera->GetPos();
     Vector3 camFront = g_app->m_camera->GetFront();
     Vector3 camUp = g_app->m_camera->GetUp();
-    
+
     if( m_trackLink != -1 )
     {
         Building *trackLink = g_app->m_location->GetBuilding( m_trackLink );
@@ -135,13 +135,13 @@ void MineBuilding::RenderAlphas( float _predictionTime )
             MineBuilding *mineBuilding = (MineBuilding *) trackLink;
 
             Vector3 ourPos1 = GetTrackMarker1();
-            Vector3 theirPos1 = mineBuilding->GetTrackMarker1();        
+            Vector3 theirPos1 = mineBuilding->GetTrackMarker1();
 
             Vector3 ourPos2 = GetTrackMarker2();
-            Vector3 theirPos2 = mineBuilding->GetTrackMarker2();        
+            Vector3 theirPos2 = mineBuilding->GetTrackMarker2();
 
             glColor4f( 0.85f, 0.4f, 0.4f, 1.0f );
-        
+
             float size = 2.0f;
             if( buildingDetail > 1 ) size = 1.0f;
 
@@ -152,16 +152,16 @@ void MineBuilding::RenderAlphas( float _predictionTime )
             Vector3 camToTheirPos1 = g_app->m_camera->GetPos() - theirPos1;
             Vector3 lineTheirPos1 = camToTheirPos1 ^ ( ourPos1 - theirPos1 );
             lineTheirPos1.SetLength( size );
-            
+
             glDisable       ( GL_CULL_FACE );
-            
+
             if( buildingDetail == 1 )
             {
                 glEnable        ( GL_TEXTURE_2D );
                 glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/laser.bmp" ) );
                 glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
                 glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-        
+
                 glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
                 glEnable        ( GL_BLEND );
             }
@@ -181,10 +181,10 @@ void MineBuilding::RenderAlphas( float _predictionTime )
                 glTexCoord2f(0.9,1);      glVertex3fv( (theirPos2 + lineTheirPos1).GetData() );
                 glTexCoord2f(0.9,0);      glVertex3fv( (theirPos2 - lineTheirPos1).GetData() );
             glEnd();
-            
+
             glDepthMask ( true );
             glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-            
+
             glDisable   ( GL_TEXTURE_2D );
             glEnable    ( GL_CULL_FACE );
         }
@@ -193,16 +193,16 @@ void MineBuilding::RenderAlphas( float _predictionTime )
 
 
 void MineBuilding::Render( float _predictionTime )
-{            
+{
     _predictionTime -= 0.1f;
-    
+
     for( int i = 0; i < m_carts.Size(); ++i )
     {
         MineCart *thisCart = m_carts[i];
         RenderCart( thisCart, _predictionTime );
     }
 
-    Building::Render( _predictionTime );    
+    Building::Render( _predictionTime );
 }
 
 
@@ -246,12 +246,12 @@ void MineBuilding::RenderCart( MineCart *_cart, float _predictionTime )
             Matrix34 transform( cartFront, g_upVector, cartPos );
             s_cartShape->Render( 0.0f, transform );
             //END_PROFILE(g_app->m_profiler, "RenderCartShape" );
-        
+
             Vector3 cartLinkLeft = s_cartMarker1->GetWorldMatrix( transform ).pos;
             Vector3 cartLinkRight = s_cartMarker2->GetWorldMatrix( transform ).pos;
 
             //START_PROFILE(g_app->m_profiler, "RenderLines" );
-            Vector3 camRight = g_app->m_camera->GetRight() * 0.5f;            
+            Vector3 camRight = g_app->m_camera->GetRight() * 0.5f;
             glBegin( GL_QUADS );
                 glVertex3fv( (trackLeft - camRight).GetData() );
                 glVertex3fv( (trackLeft + camRight).GetData() );
@@ -264,19 +264,19 @@ void MineBuilding::RenderCart( MineCart *_cart, float _predictionTime )
                 glVertex3fv( (cartLinkRight - camRight).GetData() );
             glEnd();
             //END_PROFILE(g_app->m_profiler, "RenderLines" );
-        
+
             //START_PROFILE(g_app->m_profiler, "RenderPolygons" );
             for( int i = 0; i < 3; ++i )
-            {            
+            {
                 if( _cart->m_polygons[i] )
                 {
-                    Matrix34 polyMat = s_cartContents[i]->GetWorldMatrix( transform );            
+                    Matrix34 polyMat = s_cartContents[i]->GetWorldMatrix( transform );
                     s_polygon1->Render( 0.0f, polyMat );
                 }
 
                 if( _cart->m_primitives[i] )
                 {
-                    Matrix34 polyMat = s_cartContents[i]->GetWorldMatrix( transform );            
+                    Matrix34 polyMat = s_cartContents[i]->GetWorldMatrix( transform );
                     s_primitive1->Render( 0.0f, polyMat );
 
                     if( buildingDetail < 3 )
@@ -288,23 +288,23 @@ void MineBuilding::RenderCart( MineCart *_cart, float _predictionTime )
                         glDisable( GL_LIGHTING );
 
                         glColor4f( 1.0f, 0.7f, 0.0f, 0.75f );
-                      
+
 	                    float nearPlaneStart = g_app->m_renderer->GetNearPlane();
 	                    g_app->m_camera->SetupProjectionMatrix(nearPlaneStart * 1.1f,
-							 			                       g_app->m_renderer->GetFarPlane());                    
-                    
-                        Render3DSprite( polyMat.pos - Vector3(0,25,0), 50.0f, 50.0f, g_app->m_resource->GetTexture( "textures/glow.bmp" ) );                                                           
+							 			                       g_app->m_renderer->GetFarPlane());
+
+                        Render3DSprite( polyMat.pos - Vector3(0,25,0), 50.0f, 50.0f, g_app->m_resource->GetTexture( "textures/glow.bmp" ) );
 
                         g_app->m_camera->SetupProjectionMatrix(nearPlaneStart,
 								 		                       g_app->m_renderer->GetFarPlane());
-                    
+
                         glEnable( GL_LIGHTING );
                         glEnable( GL_DEPTH_TEST );
                         glDepthMask( true );
                         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
                         glDisable( GL_BLEND );
                     }
-                }        
+                }
             }
             //END_PROFILE(g_app->m_profiler, "RenderPolygons" );
         }
@@ -335,7 +335,7 @@ bool MineBuilding::Advance()
                 float remainder = thisCart->m_progress - 1.0f;
                 m_carts.RemoveData(i);
                 --i;
-            
+
                 Building *trackLink = g_app->m_location->GetBuilding( m_trackLink );
                 if( trackLink )
                 {
@@ -348,7 +348,7 @@ bool MineBuilding::Advance()
 
     //
     // Rotate our wheels
-    
+
     m_wheelRotate -= 3.0f * mineSpeed * SERVER_ADVANCE_PERIOD;
 
     return Building::Advance();
@@ -379,7 +379,7 @@ Vector3 MineBuilding::GetTrackMarker1()
         Matrix34 rootMat( m_front, g_upVector, m_pos );
         m_trackMatrix1 = m_trackMarker1->GetWorldMatrix( rootMat );
     }
-    
+
     return m_trackMatrix1.pos;
 }
 
@@ -393,7 +393,7 @@ Vector3 MineBuilding::GetTrackMarker2()
         Matrix34 rootMat( m_front, g_upVector, m_pos );
         m_trackMatrix2 = m_trackMarker2->GetWorldMatrix( rootMat );
     }
-    
+
     return m_trackMatrix2.pos;
 }
 
@@ -434,7 +434,7 @@ float MineBuilding::RefinerySpeed()
         // If not, look for a fuel generator
 
         Building *driver = NULL;
-        
+
         int numFuelGenerators = 0;
         float fuelGeneratorFactor = 0.0f;
 
@@ -457,7 +457,7 @@ float MineBuilding::RefinerySpeed()
         // If not, there may be a construction yard driving us
         // If not, there may be a Fuel Generator driving us
         // Otherwise assume the refinery is on a different level, and use global state data
-         
+
         if( driver )
         {
             int numPorts = driver->GetNumPorts();
@@ -479,7 +479,7 @@ float MineBuilding::RefinerySpeed()
                 if( g_app->m_globalWorld->m_buildings.ValidIndex(i) )
                 {
                     GlobalBuilding *gb = g_app->m_globalWorld->m_buildings[i];
-                    if( gb && gb->m_locationId == mineLocationId && 
+                    if( gb && gb->m_locationId == mineLocationId &&
                         gb->m_type == TypeRefinery && gb->m_online )
                     {
                         s_refineryPopulation = 1.0f;
@@ -492,8 +492,8 @@ float MineBuilding::RefinerySpeed()
         s_refineryRecalculateTimer = GetHighResTime() + 0.1f;
     }
 
-    float speed = s_refineryPopulation * fabs(sinf( g_gameTime * 2.0f )) * 0.5f;   
-    
+    float speed = s_refineryPopulation * fabs(sinf( g_gameTime * 2.0f )) * 0.5f;
+
 #ifdef CHEATMENU_ENABLED
     if( g_inputManager->controlEvent( ControlScrollSpeedup ) )
     {
@@ -664,13 +664,13 @@ bool TrackStart::Advance()
     // Fill carts with primitives when they reach 50%
 
     GlobalBuilding *globalBuilding = g_app->m_globalWorld->GetBuilding( m_reqBuildingId, g_app->m_locationId );
-    
+
     if( globalBuilding && globalBuilding->m_online )
     {
         for( int i = 0; i < m_carts.Size(); ++i )
         {
-            MineCart *cart = m_carts[i];    
-        
+            MineCart *cart = m_carts[i];
+
             if( cart->m_progress > 0.5f )
             {
                 bool primitiveFound = false;
@@ -686,12 +686,12 @@ bool TrackStart::Advance()
                 if( !primitiveFound )
                 {
                     int primIndex = syncrand() % 3;
-                    cart->m_primitives[primIndex] = true;                   
+                    cart->m_primitives[primIndex] = true;
                 }
             }
         }
     }
-    
+
     return MineBuilding::Advance();
 }
 
@@ -706,8 +706,8 @@ void TrackStart::RenderAlphas( float _predictionTime )
         Building *req = g_app->m_location->GetBuilding( m_reqBuildingId );
         if( req )
         {
-            RenderArrow( m_pos+Vector3(0,50,0), 
-                         req->m_pos+Vector3(0,50,0), 
+            RenderArrow( m_pos+Vector3(0,50,0),
+                         req->m_pos+Vector3(0,50,0),
                          2.0f, RGBAColour(255,0,0) );
         }
     }
@@ -719,7 +719,7 @@ void TrackStart::Read( TextReader *_in, bool _dynamic )
 {
     MineBuilding::Read( _in, _dynamic );
 
-    m_reqBuildingId = atoi( _in->GetNextToken() );    
+    m_reqBuildingId = atoi( _in->GetNextToken() );
 }
 
 
@@ -760,7 +760,7 @@ bool TrackEnd::Advance()
 
     //GlobalBuilding *globalBuilding = g_app->m_globalWorld->GetBuilding( m_reqBuildingId, g_app->m_locationId );
     Building *building = g_app->m_location->GetBuilding( m_reqBuildingId );
-    
+
     bool online = false;
     if( building->m_type == TypeTrunkPort && ((TrunkPort *)building)->m_openTimer > 0.0f ) online = true;
     if( building->m_type == TypeYard ) online = true;
@@ -770,7 +770,7 @@ bool TrackEnd::Advance()
     {
         for( int i = 0; i < m_carts.Size(); ++i )
         {
-            MineCart *cart = m_carts[i];    
+            MineCart *cart = m_carts[i];
 
             if( cart->m_progress > 0.5f )
             {
@@ -813,8 +813,8 @@ void TrackEnd::RenderAlphas( float _predictionTime )
         Building *req = g_app->m_location->GetBuilding( m_reqBuildingId );
         if( req )
         {
-            RenderArrow( m_pos+Vector3(0,50,0), 
-                         req->m_pos+Vector3(0,50,0), 
+            RenderArrow( m_pos+Vector3(0,50,0),
+                         req->m_pos+Vector3(0,50,0),
                          2.0f, RGBAColour(255,0,0) );
         }
     }
@@ -826,7 +826,7 @@ void TrackEnd::Read( TextReader *_in, bool _dynamic )
 {
     MineBuilding::Read( _in, _dynamic );
 
-    m_reqBuildingId = atoi( _in->GetNextToken() );    
+    m_reqBuildingId = atoi( _in->GetNextToken() );
 }
 
 
@@ -865,7 +865,7 @@ char *Refinery::GetObjectiveCounter()
     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
     int numRefined = 0;
     if( gb ) numRefined = gb->m_link;
-    
+
     static char result[256];
     sprintf( result, "%s : %d", LANGUAGEPHRASE("objective_refined"), numRefined );
     return result;
@@ -875,7 +875,7 @@ char *Refinery::GetObjectiveCounter()
 bool Refinery::Advance()
 {
     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
-    
+
     if(gb && gb->m_link == -1 )
     {
         // This occurs the first time
@@ -888,9 +888,9 @@ bool Refinery::Advance()
         {
             gb->m_online = true;
             g_app->m_globalWorld->EvaluateEvents();
-        }        
+        }
     }
-    
+
     return MineBuilding::Advance();
 }
 
@@ -899,7 +899,7 @@ void Refinery::TriggerCart( MineCart *_cart, float _initValue )
 {
     // The refinery MUST be online at this point,
     // otherwise the carts would never have reached us
-    
+
     bool polygonsFound = false;
     bool primitivesFound = false;
 
@@ -918,7 +918,7 @@ void Refinery::TriggerCart( MineCart *_cart, float _initValue )
 
         int primIndex = syncrand() % 3;
         _cart->m_primitives[primIndex] = true;
-        
+
         GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
 
         if( gb ) gb->m_link++;
@@ -931,7 +931,7 @@ void Refinery::TriggerCart( MineCart *_cart, float _initValue )
 void Refinery::Render( float _predictionTime )
 {
     MineBuilding::Render( _predictionTime );
-    
+
     //
     // Render wheels
 
@@ -953,11 +953,11 @@ void Refinery::Render( float _predictionTime )
 
     wheel2Mat.r *= 0.8f;
     wheel2Mat.u *= 0.8f;
-    
+
     wheel3Mat.r *= 1.6f;
     wheel3Mat.u *= 1.6f;
     wheel3Mat.f *= 1.6f;
-    
+
     s_wheelShape->Render( _predictionTime, wheel1Mat );
     s_wheelShape->Render( _predictionTime, wheel2Mat );
     s_wheelShape->Render( _predictionTime, wheel3Mat );
@@ -971,7 +971,7 @@ void Refinery::Render( float _predictionTime )
     g_gameFont.DrawText3D( counterMat.pos, counterMat.f, counterMat.u, 10.0f, "%d", numRefined );
     counterMat.pos += counterMat.f * 0.1f;
     counterMat.pos += ( counterMat.f ^ counterMat.u ) * 0.2f;
-    counterMat.pos += counterMat.u * 0.2f;    
+    counterMat.pos += counterMat.u * 0.2f;
     g_gameFont.SetRenderShadow(true);
     glColor4f( 0.6f, 0.8f, 0.9f, 0.0f );
     g_gameFont.DrawText3D( counterMat.pos, counterMat.f, counterMat.u, 10.0f, "%d", numRefined );
@@ -1002,7 +1002,7 @@ void Mine::Render( float _predictionTime )
 
     //
     // Render wheels
-    
+
     Matrix34 mineMat( m_front, g_upVector, m_pos );
     Matrix34 wheel1Mat = m_wheel1->GetWorldMatrix( mineMat );
     Matrix34 wheel2Mat = m_wheel2->GetWorldMatrix( mineMat );
@@ -1015,10 +1015,10 @@ void Mine::Render( float _predictionTime )
 
     wheel1Mat.r *= 0.5f;
     wheel1Mat.u *= 0.5f;
-    
+
     wheel2Mat.r *= 0.9f;
     wheel2Mat.u *= 0.9f;
-        
+
     s_wheelShape->Render( _predictionTime, wheel1Mat );
     s_wheelShape->Render( _predictionTime, wheel2Mat );
 }

@@ -33,7 +33,7 @@ void RenderSplitUpQuadTextured(
 
 				glTexCoord2f(tx + texStepX, tz + texStepZ);
 				glVertex3f(px + posStepX, height, pz + posStepZ);
-				
+
 				glTexCoord2f(tx, tz + texStepZ);
 				glVertex3f(px, height, pz + posStepZ);
 
@@ -54,7 +54,7 @@ void RenderSplitUpQuadMultiTextured(
     float sizeZ = posSouth - posNorth;
 	float posStepX = sizeX / (float)steps;
 	float posStepZ = sizeZ / (float)steps;
-	
+
 	float texSizeX1 = texWest1 - texEast1;
 	float texSizeZ1 = texSouth1 - texNorth1;
 	float texStepX1 = texSizeX1 / (float)steps;
@@ -85,7 +85,7 @@ void RenderSplitUpQuadMultiTextured(
 				gglMultiTexCoord2fARB(GL_TEXTURE0_ARB, tx1 + texStepX1, tz1 + texStepZ1);
 				gglMultiTexCoord2fARB(GL_TEXTURE1_ARB, tx2 + texStepX2, tz2 + texStepZ2);
 				glVertex3f(px + posStepX, height, pz + posStepZ);
-				
+
 				gglMultiTexCoord2fARB(GL_TEXTURE0_ARB, tx1, tz1 + texStepZ1);
 				gglMultiTexCoord2fARB(GL_TEXTURE1_ARB, tx2, tz2 + texStepZ2);
 				glVertex3f(px, height, pz + posStepZ);

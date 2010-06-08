@@ -21,7 +21,7 @@ public:
 
 	// Destructor
 	~BoundedArray();
-	
+
 	// Only need to call Initialise if you used the default constructor
 	void Initialise(unsigned int _numElements);
 
@@ -30,7 +30,7 @@ public:
     inline const T &operator [] (unsigned int _index) const;
 
     inline unsigned int Size() const;
-	
+
 	void SetAll(T const &_value);
 };
 

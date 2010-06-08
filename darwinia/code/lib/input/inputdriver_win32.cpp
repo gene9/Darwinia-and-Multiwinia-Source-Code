@@ -57,7 +57,7 @@ W32InputDriver::W32InputDriver()
 	memset(m_mb, 0, sizeof(bool) * NUM_MB);
 	memset(m_mbOld, 0, sizeof(bool) * NUM_MB);
 	memset(m_mbDeltas, 0, sizeof(int) * NUM_MB);
-	
+
 	memset(m_mousePos, 0, sizeof(int) * NUM_AXES);
 	memset(m_mousePosOld, 0, sizeof(int) * NUM_AXES);
 	memset(m_mouseVel, 0, sizeof(int) * NUM_AXES);
@@ -219,7 +219,7 @@ bool W32InputDriver::getFirstActiveInput( InputSpec &spec, bool instant )
 
 	// We found no active inputs
 	return false;
-	
+
 } // End of getFirstActiveInput
 
 
@@ -252,7 +252,7 @@ LRESULT CALLBACK W32InputDriver::WndProc( HWND hWnd, UINT message,
                                           WPARAM wParam, LPARAM lParam )
 {
 
-	switch (message) 
+	switch (message)
 	{
 
 		case WM_LBUTTONDOWN:
@@ -286,7 +286,7 @@ LRESULT CALLBACK W32InputDriver::WndProc( HWND hWnd, UINT message,
 			m_mousePos[Z] += move;
 			break;
 		}
-        
+
 		case WM_MOUSEMOVE:
 		{
 			short newPosX = lParam & 0xFFFF;
@@ -303,7 +303,7 @@ LRESULT CALLBACK W32InputDriver::WndProc( HWND hWnd, UINT message,
 				m_keyNewDeltas[KEY_TAB] = 1;
 			}
 			break;
-			
+
 		case WM_SYSKEYUP:
 			if (wParam == KEY_ALT)
 			{
@@ -315,7 +315,7 @@ LRESULT CALLBACK W32InputDriver::WndProc( HWND hWnd, UINT message,
 				g_keys[wParam] = 0;
 			}
 			break;
-			
+
 		case WM_SYSKEYDOWN:
 		{
 			int flags = (short)HIWORD(lParam);
@@ -354,7 +354,7 @@ LRESULT CALLBACK W32InputDriver::WndProc( HWND hWnd, UINT message,
 			{
 				m_keyNewDeltas[wParam] = 1;
 				g_keys[wParam] = 1;
-			}                
+			}
 			EclUpdateKeyboard( wParam, g_keys[KEY_SHIFT] == 1, g_keys[KEY_CONTROL] == 1, g_keys[KEY_ALT] == 1 );
 			break;
 		}
@@ -379,7 +379,7 @@ bool W32InputDriver::acceptDriver( string const &name )
 
 control_id_t W32InputDriver::getControlID( string const &name )
 {
-	
+
 	switch ( lastAcceptedDriver ) {
 
 		case KEY_DRIVER:
@@ -429,7 +429,7 @@ inputtype_t W32InputDriver::getControlType( control_id_t control_id )
 
 inputtype_t W32InputDriver::getMouseControlType( control_id_t control_id )
 {
-	
+
 	switch ( control_id ) {
 		case MOUSE_MOVEMENT:    return INPUT_TYPE_2D;
 		case MOUSE_LEFTBUTTON:  return INPUT_TYPE_BOOL;
@@ -482,9 +482,9 @@ bool W32InputDriver::getInputDescription( InputSpec const &spec, InputDescriptio
 			return false;
 		}
 
-	
+
 	} else if ( MOUSE_DRIVER == spec.handler_id ) {
-	
+
 		bool ret = true;
 		inputtype_t type = INPUT_TYPE_BOOL;
 		desc.pref = "mouse ";

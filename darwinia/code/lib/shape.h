@@ -71,7 +71,7 @@ public:
 	ShapeMarker(char const *_name, char *_parentName, int _depth, Matrix34 const &_transform);
   	ShapeMarker(TextReader *_in, char const *_name);
 	~ShapeMarker();
-	
+
 	Matrix34 GetWorldMatrix(Matrix34 const &_rootTransform);
 
     void WriteToFile(FILE *_out) const;

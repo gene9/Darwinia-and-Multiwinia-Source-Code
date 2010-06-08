@@ -13,7 +13,7 @@
 // Dynamic array template class
 // Use : A dynamically sized list of data
 // Which can be indexed into - an entry's index never changes
-// A record is kept of which elements are in use. Accesses to 
+// A record is kept of which elements are in use. Accesses to
 // elements that are not in use will cause an assert.
 
 template <class T>
@@ -25,7 +25,7 @@ protected:
 
     T *array;
     char *shadow;								// 0=not used, 1=used
-    
+
 	void Grow			();
 
 public:
@@ -45,17 +45,17 @@ public:
 
 	void MarkUsed		( int index );
     void MarkNotUsed	( int index );
-    
+
 	int FindData		( const T &data ) const;// -1 means 'not found'
-    
+
     int NumUsed			() const;				// Returns the number of used entries
     inline int Size		() const;				// Returns the total size of the array
-    
+
     inline bool ValidIndex ( int index ) const;	// Returns true if the index contains used data
-    
-    void Empty			();						// Resets the array to empty    
+
+    void Empty			();						// Resets the array to empty
 	void EmptyAndDelete ();						// Same as Empty() but deletes the elements that are pointed to as well
-    
+
     inline T& operator [] (int index);
 	inline const T& operator [] (int index) const;
 };

@@ -13,13 +13,13 @@ class ServerToClient
 private:
     char		m_ip[16];
     NetSocket	*m_socket;
-    
+
 public:
     ServerToClient( char *_ip );
-    
+
     char        *GetIP ();
     NetSocket   *GetSocket ();
-    
+
     int         m_lastKnownSequenceId;
 };
 

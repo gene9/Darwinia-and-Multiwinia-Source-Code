@@ -43,7 +43,7 @@ void DarwiniaReleaseAssert(bool _condition, char const *_fmt, ...)
 		register unsigned *framePtr asm("ebp");
         GenerateBlackBox( buf, framePtr );
 
-#ifndef NO_WINDOW_MANAGER		
+#ifndef NO_WINDOW_MANAGER
 		g_windowManager->UncaptureMouse();
 		g_windowManager->UnhideMousePointer();
 		SDL_Quit();
@@ -85,12 +85,12 @@ static void gdbStackTrace(FILE *_output)
 		fprintf(_output, "\n\nCouldn't write to %s: %s\n\n", commandfile, strerror(errno));
 		return;
 	}
-	
+
 	fprintf(scriptfp,
 			"file %s\nattach %d\ninfo threads\nthread apply all bt\nquit\n",
 			s_pathToProgram, getpid());
 	fclose(scriptfp);
-	
+
 	char line[1024];
 	sprintf(line, "gdb < %s > %s", commandfile, stacktracefile);
 
@@ -126,24 +126,24 @@ static void PrintStackTrace(FILE *_file, unsigned *startStackPtr)
     fprintf( _file, "=========================\n" );
     fprintf( _file, "====== STACKTRACE =======\n" );
     fprintf( _file, "=========================\n\n" );
-	
+
 	unsigned *stackPtr = startStackPtr;
 	unsigned *previousStackPtr;
 
 	// There is no useful information in this frame, so skip it.
-	// stackPtr = *(unsigned **)stackPtr;		
+	// stackPtr = *(unsigned **)stackPtr;
 
 	while(stackPtr) {
-		unsigned *retAddress = ((unsigned **) stackPtr)[1];		
+		unsigned *retAddress = ((unsigned **) stackPtr)[1];
 		fprintf(_file, "retAddress = %p\n", retAddress);
 
 		previousStackPtr = stackPtr;
-		stackPtr = *(unsigned **)stackPtr;		
+		stackPtr = *(unsigned **)stackPtr;
 
 		// Frame pointer must be aligned on a
 		// DWORD boundary.  Bail if not so.
-		if ( (unsigned long) stackPtr & 3 )   
-			break;                    
+		if ( (unsigned long) stackPtr & 3 )
+			break;
 
 		if ( stackPtr <= previousStackPtr )
 			break;
@@ -160,12 +160,12 @@ static void fatalSignal(int signum, siginfo_t *siginfo, void *arg)
 
 	GenerateBlackBox(msg, (unsigned *) u->uc_mcontext.gregs[REG_EBP]);
 
-	fprintf(stderr, 
+	fprintf(stderr,
 			"\n\nDarwinia has unexpectedly encountered a fatal error.\n"
 			"A full description of the error can be found in the file\n"
 			"blackbox.txt in the current working directory\n\n");
 
-#ifndef NO_WINDOW_MANAGER		
+#ifndef NO_WINDOW_MANAGER
 	g_windowManager->UncaptureMouse();
 	g_windowManager->UnhideMousePointer();
 	SDL_Quit();
@@ -180,7 +180,7 @@ void SetupMemoryAccessHandlers()
 	sa.sa_sigaction = fatalSignal;
 	sa.sa_flags = SA_SIGINFO | SA_RESETHAND;
 	sigemptyset(&sa.sa_mask);
-	
+
 	sigaction(SIGSEGV, &sa, 0);
 	sigaction(SIGBUS, &sa, 0);
 }
@@ -191,11 +191,11 @@ static void GenerateBlackBox(char *_msg, unsigned *_framePtr)
 
 	const char *blackboxBasename = "blackbox.txt";
 	char *blackboxFilename = new char [
-		strlen(blackboxBasename) 
-		+ (g_origWorkingDir ? strlen(g_origWorkingDir) + 1 : 0) 
+		strlen(blackboxBasename)
+		+ (g_origWorkingDir ? strlen(g_origWorkingDir) + 1 : 0)
 		+ 1];
 
-	sprintf(blackboxFilename, "%s%s%s", 
+	sprintf(blackboxFilename, "%s%s%s",
 			(g_origWorkingDir ? g_origWorkingDir : ""),
 			(g_origWorkingDir ? "/" : ""),
 			blackboxBasename);
@@ -225,7 +225,7 @@ static void GenerateBlackBox(char *_msg, unsigned *_framePtr)
 	    {
 		    if (line[0] != '#' && line[0] != '\n' )				// Skip comment lines
 		    {
-                fprintf( _file, "%s", line );              
+                fprintf( _file, "%s", line );
 		    }
 	    }
 		fclose(prefsFile);

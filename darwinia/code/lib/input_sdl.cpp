@@ -114,7 +114,7 @@ int ConvertSDLKeyIdToWin32KeyId(SDLKey _keyCode)
 	return keyCode;
 }
 
-static inline int SignOf(int x) 
+static inline int SignOf(int x)
 {
 	if (x >= 0)
 		return 1;
@@ -150,10 +150,10 @@ static void AdjustForBuggyXinerama(int &_xrel, int &_yrel)
 		// As we can get some funny behaviour after a resolution change
 		frameCount = 3;
 	}
-	
+
 	if (frameCount >= 0)
 		frameCount--;
-	
+
 	if (frameCount == 0) {
 		// Guess Xinerama offset
 		int hypot = sqrt(_xrel*_xrel + _yrel*_yrel);
@@ -195,7 +195,7 @@ static void SetMouseVisible(bool _visible)
 		g_windowManager->EnsureMouseUncaptured();
 		SDL_ShowCursor(SDL_ENABLE);
 	}
-	else 
+	else
 		SDL_ShowCursor(g_windowManager->MouseVisible() ? SDL_ENABLE : SDL_DISABLE);
 }
 
@@ -208,50 +208,50 @@ int InputManager::EventHandler(unsigned int message, unsigned int wParam, int lP
 	{
 		case SDL_MOUSEBUTTONUP:
 		{
-			if (sdlEvent->button.button == SDL_BUTTON_LEFT)	
+			if (sdlEvent->button.button == SDL_BUTTON_LEFT)
 				m_lmb = false;
-			else if (sdlEvent->button.button == SDL_BUTTON_MIDDLE)	
+			else if (sdlEvent->button.button == SDL_BUTTON_MIDDLE)
 				m_mmb = false;
-			else if (sdlEvent->button.button == SDL_BUTTON_RIGHT)	
+			else if (sdlEvent->button.button == SDL_BUTTON_RIGHT)
 				m_rmb = false;
 			break;
 		}
 
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			if (sdlEvent->button.button == SDL_BUTTON_LEFT)	
+			if (sdlEvent->button.button == SDL_BUTTON_LEFT)
 				m_lmb = true;
-			else if (sdlEvent->button.button == SDL_BUTTON_MIDDLE)	
+			else if (sdlEvent->button.button == SDL_BUTTON_MIDDLE)
 				m_mmb = true;
-			else if (sdlEvent->button.button == SDL_BUTTON_RIGHT)	
+			else if (sdlEvent->button.button == SDL_BUTTON_RIGHT)
 				m_rmb = true;
-			else if (sdlEvent->button.button == SDL_BUTTON_WHEELUP) 
+			else if (sdlEvent->button.button == SDL_BUTTON_WHEELUP)
 				m_mouseZ += 3;
-			else if (sdlEvent->button.button == SDL_BUTTON_WHEELDOWN) 
+			else if (sdlEvent->button.button == SDL_BUTTON_WHEELDOWN)
 				m_mouseZ -= 3;
 			break;
 		}
 
 		case SDL_MOUSEMOTION:
-		{		
+		{
 			if (g_windowManager->Captured()) {
 
 				int xrel = sdlEvent->motion.xrel;
 				int yrel = sdlEvent->motion.yrel;
 
-				if (m_xineramaOffsetHack) 
+				if (m_xineramaOffsetHack)
 					AdjustForBuggyXinerama(xrel, yrel);
 
 				m_mouseX += xrel;
 				m_mouseY += yrel;
 
-#ifdef _DEBUG				
-				printf("Mouse (%d,%d) - Rel (%d, %d) - Adjusted (%d, %d)\n", 
+#ifdef _DEBUG
+				printf("Mouse (%d,%d) - Rel (%d, %d) - Adjusted (%d, %d)\n",
 					   sdlEvent->motion.x, sdlEvent->motion.y,
 					   sdlEvent->motion.xrel, sdlEvent->motion.yrel,
 					   xrel, yrel);
 #endif // _DEBUG
-					   
+
 				BoundMouseXY(m_mouseX, m_mouseY);
 			}
 			else {
@@ -270,14 +270,14 @@ int InputManager::EventHandler(unsigned int message, unsigned int wParam, int lP
 				m_numKeysPressed--;
 				g_keys[keyCode] = 0;
 			}
-			
+
 #ifdef TARGET_OS_MACOSX
 			// Caps lock (Key down = Caps Lock is off)
 			// Sometimes we get an event for caps lock even though we are not focused
 			// (fullscreen or windowed and focused). We must discard it as we will get
 			// another one when the app is properly focused.
 			bool hasFocus = !g_windowManager->Windowed() || (SDL_GetAppState() & SDL_APPINPUTFOCUS);
-			if (keyCode == KEY_CAPSLOCK && hasFocus) 
+			if (keyCode == KEY_CAPSLOCK && hasFocus)
 				ChangeWindowHasFocus(true);
 #endif
 			break;
@@ -300,10 +300,10 @@ int InputManager::EventHandler(unsigned int message, unsigned int wParam, int lP
 			if (m_keyNewDeltas[KEY_Z] && g_keys[KEY_CONTROL]) {
 				SDL_WM_IconifyWindow();
 			}
-			
+
 #ifdef TARGET_OS_MACOSX
 			// Switch to windowed (temporarily) for Command-TAB
-			if (!g_windowManager->Windowed() && keyCode == KEY_TAB && g_keys[KEY_META]) 
+			if (!g_windowManager->Windowed() && keyCode == KEY_TAB && g_keys[KEY_META])
 					SetWindowed(true, false, s_switchingFromFullscreenMode);
 
 			// Toggle full screen on Command-F
@@ -311,16 +311,16 @@ int InputManager::EventHandler(unsigned int message, unsigned int wParam, int lP
 				DebugKeyBindings::ToggleFullscreenButton();
 
 			// Pause on caps lock down
-			else if (keyCode == KEY_CAPSLOCK) 
+			else if (keyCode == KEY_CAPSLOCK)
 				ChangeWindowHasFocus(false);
 #endif
 			break;
 		}
-		
+
 		case SDL_QUIT:
 			exit(0);
 			break;
-		
+
 		case SDL_ACTIVEEVENT: {
 #ifdef _DEBUG
 				printf("SDL_ACTIVEEVENT: SDL_APPMOUSEFOCUS:%d SDL_APPINPUTFOCUS:%d SDL_APPACTIVE:%d\n",
@@ -354,14 +354,14 @@ int InputManager::EventHandler(unsigned int message, unsigned int wParam, int lP
 				if (!g_windowManager->Windowed())
 					newWindowHasFocus = true;
 #endif
-			
-				if (!s_switchingFromFullscreenMode) 
+
+				if (!s_switchingFromFullscreenMode)
 				  ChangeWindowHasFocus(newWindowHasFocus);
 				s_switchingFromFullscreenMode = false;
 
 				return 0;
 			}
-			
+
 		default:
 			return -1;
 	}
@@ -373,11 +373,11 @@ void InputManager::ChangeWindowHasFocus(bool _newWindowHasFocus)
 {
 	if (m_windowHasFocus == _newWindowHasFocus)
 		return;
-		
+
 	m_windowHasFocus = _newWindowHasFocus;
-	
+
 	// Pause time when paused.
-	if (m_windowHasFocus) 
+	if (m_windowHasFocus)
 		SetRealTimeMode();
 	else
 		SetFakeTimeMode();
@@ -386,12 +386,12 @@ void InputManager::ChangeWindowHasFocus(bool _newWindowHasFocus)
 	// check to see if we need to return to full screen mode
 	if (m_windowHasFocus && g_windowManager->Windowed() && !g_prefsManager->GetInt( SCREEN_WINDOWED_PREFS_NAME ))
 		RestartWindowManagerAndRenderer();
-	
+
 	SetMouseVisible(!m_windowHasFocus);
-		
+
 	bool audioPlaying = SDL_GetAudioStatus() == SDL_AUDIO_PLAYING;
-	
-	if (audioPlaying != m_windowHasFocus) 
+
+	if (audioPlaying != m_windowHasFocus)
 		SDL_PauseAudio(!m_windowHasFocus);
 }
 
@@ -464,11 +464,11 @@ void InputManager::Advance()
 		item->m_front = g_app->m_camera->GetFront();
 		item->m_up = g_app->m_camera->GetUp();
 		item->m_pos = g_app->m_camera->GetPos();
-		
+
 		m_numCameraItems++;
 	}
 #endif // AVI_GENERATOR
-	
+
 	memcpy(g_keyDeltas, m_keyNewDeltas, KEY_MAX);
 	memset(m_keyNewDeltas, 0, KEY_MAX);
 
@@ -506,8 +506,8 @@ void InputManager::PollForMessages()
 			// We need to make sure that we get all the events for the
 			// mouse buttons and keys, so if there are multiple such events
 			// defer them until the next cycle.
-			bool isKeyboardEdge = 
-				sdlEvent.type == SDL_KEYDOWN || 
+			bool isKeyboardEdge =
+				sdlEvent.type == SDL_KEYDOWN ||
 				sdlEvent.type == SDL_KEYUP;
 
 			if (isKeyboardEdge) {
@@ -517,9 +517,9 @@ void InputManager::PollForMessages()
 				}
 				hadKeyboardEdge = true;
 			}
-			
-			bool isMouseEdge = 
-				sdlEvent.type == SDL_MOUSEBUTTONDOWN || 
+
+			bool isMouseEdge =
+				sdlEvent.type == SDL_MOUSEBUTTONDOWN ||
 				sdlEvent.type == SDL_MOUSEBUTTONUP;
 
 			if (isMouseEdge) {
@@ -529,7 +529,7 @@ void InputManager::PollForMessages()
 				}
 				hadMouseEdge = true;
 			}
-		
+
 			EventHandler(sdlEvent.type, (unsigned int)&sdlEvent, 0);
 		}
 	}
@@ -582,7 +582,7 @@ void InputManager::StopLogging(char const *_filename)
 	//
 	// Write the event log
 
-	// We miss out the last three events because they are the events that click the stop 
+	// We miss out the last three events because they are the events that click the stop
 	// button on the logging window
 	m_numEvents -= 3;
 
@@ -590,10 +590,10 @@ void InputManager::StopLogging(char const *_filename)
 
 	for (int i = 0; i < m_numEvents; ++i)
 	{
-		fprintf(out, "%05d %04x %08x", 
+		fprintf(out, "%05d %04x %08x",
 				m_inputLog[i].m_frameNumber,
 				m_inputLog[i].m_messageId,
-				m_inputLog[i].m_lParam);	
+				m_inputLog[i].m_lParam);
 
 		if (m_inputLog[i].m_wParam != 0x0000000)
 		{
@@ -604,7 +604,7 @@ void InputManager::StopLogging(char const *_filename)
 			fprintf(out, "\n");
 		}
 	}
-	
+
 
 	//
 	// Write the camera log
@@ -626,7 +626,7 @@ void InputManager::StopLogging(char const *_filename)
 	m_inputLog = NULL;
 	m_numEvents = 0;
 	m_maxNumEvents = 0;
-	
+
 	m_logging = false;
 }
 
@@ -651,7 +651,7 @@ void InputManager::StartReplay(char const *_filename)
 	{
 		char *c = in.GetNextToken();
 		if (!c) continue;
-		
+
 		if (stricmp("CamPos", c) == 0)
 		{
 			m_initialCamPos.x = atof(in.GetNextToken());
@@ -689,24 +689,24 @@ void InputManager::StartReplay(char const *_filename)
 
 			// Read frame number
 			m_inputLog[m_numEvents].m_frameNumber = atoi(c);
-			
+
 			// Read message ID
 			c = in.GetNextToken();
-			m_inputLog[m_numEvents].m_messageId = strtoul(c, NULL, 16); 
-			
+			m_inputLog[m_numEvents].m_messageId = strtoul(c, NULL, 16);
+
 			// Read lParam
 			c = in.GetNextToken();
-			m_inputLog[m_numEvents].m_lParam = strtoul(c, NULL, 16); 
-			
+			m_inputLog[m_numEvents].m_lParam = strtoul(c, NULL, 16);
+
 			// Read wParam
 			if (in.TokenAvailable())
 			{
 				c = in.GetNextToken();
-				m_inputLog[m_numEvents].m_wParam = strtoul(c, NULL, 16); 
+				m_inputLog[m_numEvents].m_wParam = strtoul(c, NULL, 16);
 			}
 			else
 			{
-				m_inputLog[m_numEvents].m_wParam = 0; 
+				m_inputLog[m_numEvents].m_wParam = 0;
 			}
 
 			m_numEvents++;
@@ -783,10 +783,10 @@ float InputManager::ReplayTimeRemaining ()
 #ifdef TARGET_OS_MACOSX
 #define META_KEY_NAME "COMMAND"
 #else
-#define META_KEY_NAME "META" 
+#define META_KEY_NAME "META"
 #endif
 
-static char *s_keyNames[] = 
+static char *s_keyNames[] =
 {
 	"unknown 0",
 	"unknown 1",
@@ -1012,18 +1012,18 @@ static char *s_keyNames[] =
 	"CLOSEBRACE",
 	"unknown 222",
 	"TILDE",
-	META_KEY_NAME 
+	META_KEY_NAME
 };
 
 
 char const *InputManager::GetKeyName(int _keyId)
 {
 	DarwiniaDebugAssert(_keyId >= 0 && _keyId <= KEY_META);
-	
-	if (_keyId < 0 || _keyId > KEY_META)	
+
+	if (_keyId < 0 || _keyId > KEY_META)
 		return "Range";
-	
-	if (s_keyNames[_keyId][0] == 'u') 
+
+	if (s_keyNames[_keyId][0] == 'u')
 		return s_keyNames[_keyId] + 8;
 	return s_keyNames[_keyId];
 }

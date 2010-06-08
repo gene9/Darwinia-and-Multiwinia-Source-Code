@@ -78,9 +78,9 @@ public:
 	Matrix34 const &RotateAround( Vector3 const & _rotationAxis );
 	Matrix34 const &RotateAround( Vector3 const & _norm, float _angle );
 	Matrix34 const &FastRotateAround( Vector3 const & _norm, float _angle );
-	
+
 	Matrix34 const &Transpose();
-	
+
 	Vector3			DecomposeToYDR	() const;	//x = dive, y = yaw, z = roll
 	void			DecomposeToYDR	( float *_y, float *_d, float *_r ) const;
 	void			SetToIdentity	();

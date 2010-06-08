@@ -16,5 +16,5 @@ void IpToString(struct in_addr in, char *newip)
 strcpy( newip, inet_ntoa( in ) );
 #else
 #error Need inet_ntoa or similar
-#endif 
+#endif
 }

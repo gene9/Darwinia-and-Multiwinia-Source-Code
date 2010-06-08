@@ -203,7 +203,7 @@ int HashTable<T>::GetIndex(char const *_key) const
 template <class T>
 int HashTable<T>::PutData(char const *_key, T const &_data)
 {
-	// 
+	//
 	// Make sure the table is big enough
 
 	if (m_slotsFree * 2 <= m_size)

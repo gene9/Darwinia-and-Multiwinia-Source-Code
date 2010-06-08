@@ -53,7 +53,7 @@ void LocationInput::AdvanceRadarDishControl(Building *_building)
 
         int buildId = g_app->m_location->GetBuildingId(rayStart, rayDir, 255);
         Building *building = g_app->m_location->GetBuilding( buildId );
-        if( building && 
+        if( building &&
             building->m_type == Building::TypeRadarDish &&
             building != _building )
         {
@@ -64,8 +64,8 @@ void LocationInput::AdvanceRadarDishControl(Building *_building)
         }
         else
         {
-            g_app->m_clientToServer->RequestAimBuilding( g_app->m_globalWorld->m_myTeamId, 
-													     _building->m_id.GetUniqueId(), 
+            g_app->m_clientToServer->RequestAimBuilding( g_app->m_globalWorld->m_myTeamId,
+													     _building->m_id.GetUniqueId(),
 													     g_app->m_userInput->GetMousePos3d() );
         }
     }
@@ -84,19 +84,19 @@ bool LocationInput::GetObjectUnderMouse( WorldObjectId &_id, int _teamId )
  	float buildDist = FLT_MAX;
 	float unitDist = FLT_MAX;
 	float entDist = FLT_MAX;
-   
+
     int buildId = g_app->m_location->GetBuildingId(rayStart, rayDir, _teamId, FLT_MAX, &buildDist );
 	int unitId = g_app->m_location->GetUnitId( rayStart, rayDir, _teamId, &unitDist );
     WorldObjectId entId = g_app->m_location->GetEntityId( rayStart, rayDir, _teamId, &entDist );
-        
+
     //
     // Look for Darwinians if we are running an officer program
     if( !entId.IsValid() )
     {
 	    Task *task = g_app->m_taskManager->GetCurrentTask();
-        if( task && 
-            task->m_state == Task::StateStarted && 
-            task->m_type == GlobalResearch::TypeOfficer )        
+        if( task &&
+            task->m_state == Task::StateStarted &&
+            task->m_type == GlobalResearch::TypeOfficer )
         {
             Vector3 mousePos = g_app->m_userInput->GetMousePos3d();
             entId = Task::FindDarwinian( mousePos );
@@ -106,7 +106,7 @@ bool LocationInput::GetObjectUnderMouse( WorldObjectId &_id, int _teamId )
 
     //
     // Now find which object is nearest
-	
+
     if( entId.IsValid() && entDist < unitDist && entDist < buildDist )
     {
         // Entity is nearest
@@ -146,11 +146,11 @@ void LocationInput::AdvanceNoSelection()
             if( id.GetUnitId() == UNIT_BUILDINGS )
             {
                 Task *currentTask = g_app->m_taskManager->GetCurrentTask();
-        
+
                 if( !currentTask )
                 {
         		    Building *building = g_app->m_location->GetBuilding(id.GetUniqueId());
-                
+
                     if( building->m_type == Building::TypeRadarDish )
                     {
                         g_app->m_clientToServer->RequestSelectUnit( id.GetTeamId(), -1, -1, id.GetUniqueId() );
@@ -205,14 +205,14 @@ void LocationInput::AdvanceNoSelection()
 		{
 			g_inputManager->m_lmbClicked = false;
 		}
-		
+
         if( buildDist < unitDist )
         {
 			if (buildDist < entDist)
 			{
 				// Building is nearest
 				Building *building = g_app->m_location->GetBuilding(buildId);
-                
+
                 if( building->m_type == Building::TypeFactory )
                 {
                     g_app->m_camera->RequestBuildingFocusMode( building );
@@ -314,7 +314,7 @@ void LocationInput::AdvanceTeamControl()
             }
         }
     }
-    
+
     if( taskStarted && !g_app->m_taskManagerInterface->m_visible )
     {
         if( g_inputManager->controlEvent( ControlUnitCreate ) )
@@ -409,23 +409,23 @@ void LocationInput::AdvanceTeamControl()
                     InsertionSquad *squad = (InsertionSquad *)unit;
                     int currentWeapon = -1;
                     LList<int> weaponList;
-                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) ) 
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) )
                     {
                         if( squad->m_weaponType == GlobalResearch::TypeGrenade ) currentWeapon = weaponList.Size();
                         weaponList.PutData( GlobalResearch::TypeGrenade );
                     }
-                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket ) ) 
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket ) )
                     {
                         if( squad->m_weaponType == GlobalResearch::TypeRocket ) currentWeapon = weaponList.Size();
                         weaponList.PutData( GlobalResearch::TypeRocket );
                     }
 
-                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeAirStrike ) ) 
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeAirStrike ) )
                     {
                         if( squad->m_weaponType == GlobalResearch::TypeAirStrike ) currentWeapon = weaponList.Size();
                         weaponList.PutData( GlobalResearch::TypeAirStrike );
                     }
-                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeController ) ) 
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeController ) )
                     {
                         if( squad->m_weaponType == GlobalResearch::TypeController ) currentWeapon = weaponList.Size();
                         weaponList.PutData( GlobalResearch::TypeController );
@@ -437,7 +437,7 @@ void LocationInput::AdvanceTeamControl()
                         if( g_inputManager->controlEvent( ControlWeaponCycleLeft ) )
                         {
                             currentWeapon--;
-                            if( currentWeapon < 0 ) 
+                            if( currentWeapon < 0 )
                             {
                                 currentWeapon = weaponList.Size() - 1;
                             }
@@ -452,7 +452,7 @@ void LocationInput::AdvanceTeamControl()
                             }
                         }
 
-                        if( oldWeapon != currentWeapon ) 
+                        if( oldWeapon != currentWeapon )
                         {
                             g_app->m_clientToServer->RequestRunProgram( squad->m_teamId, weaponList[currentWeapon] );
                             g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureBegin", SoundSourceBlueprint::TypeGesture );
@@ -491,7 +491,7 @@ void LocationInput::Render()
 	{
         glColor4ubv(g_app->m_location->GetMyTeam()->m_colour.GetData());
 //		glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-		g_editorFont.DrawText2D( 12, 19, DEF_FONT_SIZE, 
+		g_editorFont.DrawText2D( 12, 19, DEF_FONT_SIZE,
 			"You are TEAM %d", (int)g_app->m_globalWorld->m_myTeamId );
 	}
 

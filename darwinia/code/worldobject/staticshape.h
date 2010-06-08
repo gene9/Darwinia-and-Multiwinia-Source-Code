@@ -25,7 +25,7 @@ public:
 
     bool DoesSphereHit          (Vector3 const &_pos, float _radius);
     bool DoesShapeHit           (Shape *_shape, Matrix34 _transform);
-    bool DoesRayHit             (Vector3 const &_rayStart, Vector3 const &_rayDir, 
+    bool DoesRayHit             (Vector3 const &_rayStart, Vector3 const &_rayDir,
                                  float _rayLen=1e10, Vector3 *_pos=NULL, Vector3 *_norm=NULL);        // pos/norm will not always be available
 
     void Read( TextReader *_in, bool _dynamic );

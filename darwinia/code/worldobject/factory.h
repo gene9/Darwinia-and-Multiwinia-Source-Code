@@ -20,7 +20,7 @@ public:
     int             m_unitId;
     int             m_numToCreate;
     int             m_numCreated;
-    
+
     float           m_timeToCreate;         // Total Time to create ALL troops
     float           m_timeSoFar;
 

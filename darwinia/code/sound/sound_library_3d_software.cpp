@@ -20,14 +20,14 @@
 class SoundLibFilterSoftware
 {
 public:
-	int					m_chainIndex;	// Each channel has an 'effects chain'. 
+	int					m_chainIndex;	// Each channel has an 'effects chain'.
 										// This val is the index for this filter in that chain
 										// A value of -1 means the filter is NOT active
 	DspEffect			*m_userFilter;
 
 	SoundLibFilterSoftware()
-	:	m_chainIndex(-1), 
-		m_userFilter(NULL) 
+	:	m_chainIndex(-1),
+		m_userFilter(NULL)
 	{
 	}
 };
@@ -52,7 +52,7 @@ public:
 	Vector3				m_pos;					// Value recorded on previous call of SetChannelPosition
 	int					m_3DMode;				// Value recorded on previous call of SetChannel3DMode
 
-	float				m_oldVolLeft;			// Volumes used last time this channel was mixed into 
+	float				m_oldVolLeft;			// Volumes used last time this channel was mixed into
 	float				m_oldVolRight;			// the output buffer
 	bool				m_forceVolumeJump;		// True when a channel has just had a new sound effect assigned to it - this prevents the volume ramping code from being used when a new sound first starts
 
@@ -72,7 +72,7 @@ SoftwareChannel::SoftwareChannel()
 	m_pos(0,0,0),
 	m_3DMode(0)
 {
-	// The 3 on the next line is there because we limit the frequency of a 
+	// The 3 on the next line is there because we limit the frequency of a
 	// channel to 3 times that of the mix frequency
 	m_samplesInBuffer = g_soundLibrary2d->m_samplesPerBuffer * 3;
 	m_buffer = new signed short[m_samplesInBuffer];
@@ -106,7 +106,7 @@ SoundLibrary3dSoftware::SoundLibrary3dSoftware()
 	m_listenerUp(0,1,0)
 {
 	DarwiniaReleaseAssert(g_soundLibrary2d, "SoundLibrary2d must be initialised before SoundLibrary3d");
-	
+
 	g_soundLibrary2d->SetCallback(SoundLib3dSoftwareCallbackWrapper);
 
 	m_left = new float[g_soundLibrary2d->m_samplesPerBuffer];
@@ -125,7 +125,7 @@ SoundLibrary3dSoftware::~SoundLibrary3dSoftware()
 }
 
 
-void SoundLibrary3dSoftware::Initialise(int _mixFreq, int _numChannels, bool _hw3d, 
+void SoundLibrary3dSoftware::Initialise(int _mixFreq, int _numChannels, bool _hw3d,
 										int _mainBufNumSamples, int _musicBufNumSamples )
 {
 	m_sampleRate = _mixFreq;
@@ -157,7 +157,7 @@ void SoundLibrary3dSoftware::GetChannelData(float _duration)
 
 		for (int i = 0; i < m_numChannels; ++i)
 		{
-			int silenceRemaining = -1;	
+			int silenceRemaining = -1;
 			unsigned int samplesNeeded;
 			if (m_channels[i].m_freq < m_sampleRate)
 			{
@@ -167,12 +167,12 @@ void SoundLibrary3dSoftware::GetChannelData(float _duration)
 			{
 				samplesNeeded = ceil((double)m_channels[i].m_freq * _duration - 0.5f);
 			}
-			
+
 			if (i == m_musicChannelId)
 			{
 				if (m_musicCallback)
 				{
-					m_channels[i].m_containsSilence = 
+					m_channels[i].m_containsSilence =
 						!m_musicCallback(m_channels[i].m_buffer, samplesNeeded, &silenceRemaining);
 				}
 				else
@@ -184,7 +184,7 @@ void SoundLibrary3dSoftware::GetChannelData(float _duration)
 			{
 				if (m_mainCallback)
 				{
-					m_channels[i].m_containsSilence = 
+					m_channels[i].m_containsSilence =
 						!m_mainCallback(i, m_channels[i].m_buffer, samplesNeeded, &silenceRemaining);
 				}
 				else
@@ -192,7 +192,7 @@ void SoundLibrary3dSoftware::GetChannelData(float _duration)
 					m_channels[i].m_containsSilence = true;
 				}
 			}
-				
+
 			if (!m_channels[i].m_containsSilence)
 			{
 				numActiveChannels++;
@@ -222,7 +222,7 @@ void SoundLibrary3dSoftware::ApplyDspFX(float _duration)
 				{
 					samplesNeeded = ceil((double)m_channels[i].m_freq * _duration - 0.5f);
 				}
-				m_channels[i].m_dspFX[j].m_userFilter->Process(m_channels[i].m_buffer, 
+				m_channels[i].m_dspFX[j].m_userFilter->Process(m_channels[i].m_buffer,
 																 samplesNeeded);
 			}
 		}
@@ -231,7 +231,7 @@ void SoundLibrary3dSoftware::ApplyDspFX(float _duration)
 }
 
 
-void SoundLibrary3dSoftware::CalcChannelVolumes(int _channelIndex, 
+void SoundLibrary3dSoftware::CalcChannelVolumes(int _channelIndex,
 												float *_left, float *_right)
 {
 	SoftwareChannel *channel = &m_channels[_channelIndex];
@@ -252,7 +252,7 @@ void SoundLibrary3dSoftware::CalcChannelVolumes(int _channelIndex,
 		*_right = (dotRight + 1.0f) * 0.5f;
 		*_left = 1.0f - *_right;
 
-		if (dist > channel->m_minDist) 
+		if (dist > channel->m_minDist)
 		{
 			float dropOff = channel->m_minDist / dist;
 			*_left *= dropOff;
@@ -265,8 +265,8 @@ void SoundLibrary3dSoftware::CalcChannelVolumes(int _channelIndex,
 		*_right = 1.0f;
 	}
 
-	*_left *= calculatedVolume; 
-	*_right *= calculatedVolume; 
+	*_left *= calculatedVolume;
+	*_right *= calculatedVolume;
 }
 
 
@@ -285,7 +285,7 @@ void SoundLibrary3dSoftware::MixSameFreqFixedVol(signed short *_inBuf, unsigned 
 }
 
 
-void SoundLibrary3dSoftware::MixDiffFreqFixedVol(signed short *_inBuf, unsigned int _numSamples, 
+void SoundLibrary3dSoftware::MixDiffFreqFixedVol(signed short *_inBuf, unsigned int _numSamples,
 												 float _volLeft, float _volRight, float _relativeFreq)
 {
 	float *left = m_left;
@@ -302,7 +302,7 @@ void SoundLibrary3dSoftware::MixDiffFreqFixedVol(signed short *_inBuf, unsigned 
 }
 
 
-void SoundLibrary3dSoftware::MixSameFreqRampVol(signed short *_inBuf, unsigned int _numSamples, 
+void SoundLibrary3dSoftware::MixSameFreqRampVol(signed short *_inBuf, unsigned int _numSamples,
 												float _volL1, float _volR1, float _volL2, float _volR2)
 {
 	float volLeft = _volL1;
@@ -324,7 +324,7 @@ void SoundLibrary3dSoftware::MixSameFreqRampVol(signed short *_inBuf, unsigned i
 
 
 void SoundLibrary3dSoftware::MixDiffFreqRampVol(signed short *_inBuf, unsigned int _numSamples,
-												float _volL1, float _volR1, float _volL2, float _volR2, 
+												float _volL1, float _volR1, float _volL2, float _volR2,
 												float _relativeFreq)
 {
 	float volLeft = _volL1;
@@ -377,7 +377,7 @@ void SoundLibrary3dSoftware::Callback(StereoSample *_buf, unsigned int _numSampl
 		float const maxDelta = 0.003f;
 
 		// Skip this channel if it contains silence
-		if (!m_channels[i].m_containsSilence) 
+		if (!m_channels[i].m_containsSilence)
 		{
 			float relativeFreq = (float)m_channels[i].m_freq / (float)g_soundLibrary2d->m_freq;
 			signed short *inBuf = m_channels[i].m_buffer;
@@ -398,13 +398,13 @@ void SoundLibrary3dSoftware::Callback(StereoSample *_buf, unsigned int _numSampl
 			{
 				if (NearlyEquals(relativeFreq, 1.0f))
 				{
-					MixSameFreqRampVol(inBuf, _numSamples, 
+					MixSameFreqRampVol(inBuf, _numSamples,
 									   m_channels[i].m_oldVolLeft, m_channels[i].m_oldVolRight,
 									   volLeft, volRight);
 				}
 				else
 				{
-					MixDiffFreqRampVol(inBuf, _numSamples, 
+					MixDiffFreqRampVol(inBuf, _numSamples,
 									   m_channels[i].m_oldVolLeft, m_channels[i].m_oldVolRight,
 									   volLeft, volRight, relativeFreq);
 				}
@@ -452,7 +452,7 @@ bool SoundLibrary3dSoftware::Hardware3DSupport()
 
 
 int SoundLibrary3dSoftware::GetMaxChannels()
-{           
+{
     return 64;
 }
 
@@ -505,11 +505,11 @@ void SoundLibrary3dSoftware::SetChannelVolume( int _channel, float _volume )
 }
 
 
-void SoundLibrary3dSoftware::SetListenerPosition( Vector3 const &_pos, 
+void SoundLibrary3dSoftware::SetListenerPosition( Vector3 const &_pos,
                                         Vector3 const &_front,
                                         Vector3 const &_up,
                                         Vector3 const &_vel )
-{   
+{
 	m_listenerPos = _pos;
 	m_listenerFront = _front;
 	m_listenerUp = _up;
@@ -531,7 +531,7 @@ void SoundLibrary3dSoftware::EnableDspFX(int _channel, int _numFilters, int cons
     for( int i = 0; i < _numFilters; ++i )
     {
 		DarwiniaDebugAssert(_filterTypes[i] >= 0 && _filterTypes[i] < NUM_FILTERS);
-		
+
 		channel->m_dspFX[_filterTypes[i]].m_chainIndex = i;
 
 		switch (_filterTypes[i])

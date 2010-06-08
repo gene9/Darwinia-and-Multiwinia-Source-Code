@@ -21,9 +21,9 @@ SoundLibrary2d *g_soundLibrary2d = NULL;
 
 static void sdlAudioCallback(void *userdata, Uint8 *stream, int len)
 {
-	if (!s_audioStarted || !g_soundLibrary2d || !g_app || !g_app->m_soundSystem) 
+	if (!s_audioStarted || !g_soundLibrary2d || !g_app || !g_app->m_soundSystem)
 		return;
-		
+
 	g_soundLibrary2d->AudioCallback( (StereoSample *) stream, len / sizeof(StereoSample) );
 }
 
@@ -31,7 +31,7 @@ void SoundLibrary2d::AudioCallback(StereoSample *stream, unsigned numSamples)
 {
 	if (!m_callback)
 		return;
-			
+
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 	m_callback(stream, numSamples);
 #else
@@ -39,10 +39,10 @@ void SoundLibrary2d::AudioCallback(StereoSample *stream, unsigned numSamples)
 	m_buffer[0].stream = stream;
 	m_buffer[0].len = numSamples;
 	m_bufferIsThirsty++;
-	
+
 	if (m_bufferIsThirsty > 2)
 		m_bufferIsThirsty = 2;
-#endif		
+#endif
 }
 
 void SoundLibrary2d::TopupBuffer()
@@ -51,7 +51,7 @@ if (m_wavOutput)
 	{
 		static double nextOutputTime = -1.0;
 		if (nextOutputTime < 0.0) nextOutputTime = GetHighResTime();
-		
+
 		if (GetHighResTime() > nextOutputTime)
 		{
 			StereoSample buf[5000];
@@ -75,7 +75,7 @@ if (m_wavOutput)
 }
 
 SoundLibrary2d::SoundLibrary2d()
-:	m_bufferIsThirsty(0), 
+:	m_bufferIsThirsty(0),
 	m_callback(NULL),
 	m_wavOutput(NULL)
 {
@@ -87,14 +87,14 @@ SoundLibrary2d::SoundLibrary2d()
 	// Initialise the output device
 
 	SDL_AudioSpec desired;
-	
+
 	desired.freq = m_freq;
 	desired.format = AUDIO_S16SYS;
 	desired.samples = m_samplesPerBuffer;
 	desired.channels = 2;
 	desired.userdata = 0;
 	desired.callback = sdlAudioCallback;
-	
+
 	printf("Initialising SDL Audio\n");
 	if (SDL_OpenAudio(&desired, &s_audioSpec) < 0) {
 		const char *errString = SDL_GetError();
@@ -104,13 +104,13 @@ SoundLibrary2d::SoundLibrary2d()
 		printf("Frequency: %d\nFormat: %d\nChannels: %d\nSamples: %d\n", s_audioSpec.freq, s_audioSpec.format, s_audioSpec.channels, s_audioSpec.samples);
 		printf("Size of Stereo Sample: %u\n", sizeof(StereoSample));
 	}
-	
+
 	s_audioStarted = 1;
-	
+
 	m_samplesPerBuffer = s_audioSpec.samples;
-	
+
 	// Start the callback function
-	if (g_prefsManager->GetInt("Sound", 1)) 
+	if (g_prefsManager->GetInt("Sound", 1))
 		SDL_PauseAudio(0);
 }
 

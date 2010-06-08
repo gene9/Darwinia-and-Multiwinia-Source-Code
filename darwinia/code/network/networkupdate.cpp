@@ -30,7 +30,7 @@ int NetworkUpdate::ReadByteStream(char *_byteStream)
 {
     char *byteStreamCopy = _byteStream;
 
-	m_type = (UpdateType) READ_INT(_byteStream);            
+	m_type = (UpdateType) READ_INT(_byteStream);
     m_lastSequenceId = READ_INT(_byteStream);
 
     switch(m_type)
@@ -56,12 +56,12 @@ int NetworkUpdate::ReadByteStream(char *_byteStream)
 			}
             m_sync = READ_UNSIGNED_CHAR(_byteStream);
             break;
-           
+
         case Syncronise:
             m_lastProcessedSeqId = READ_INT(_byteStream);
             m_sync = READ_UNSIGNED_CHAR(_byteStream);
             break;
-            
+
         case SelectUnit:
             m_teamId = READ_UNSIGNED_CHAR(_byteStream);
             m_unitId = READ_INT(_byteStream);
@@ -76,9 +76,9 @@ int NetworkUpdate::ReadByteStream(char *_byteStream)
             m_buildingId = READ_INT(_byteStream);
             GetWorldPos().x = READ_FLOAT(_byteStream);
             GetWorldPos().y = READ_FLOAT(_byteStream);
-            GetWorldPos().z = READ_FLOAT(_byteStream);            
+            GetWorldPos().z = READ_FLOAT(_byteStream);
             break;
-            
+
         case AimBuilding:
             m_teamId = READ_UNSIGNED_CHAR(_byteStream);
             m_buildingId = READ_INT(_byteStream);
@@ -90,7 +90,7 @@ int NetworkUpdate::ReadByteStream(char *_byteStream)
         case ToggleLaserFence:
             m_buildingId = READ_INT(_byteStream);
             break;
-            
+
         case RunProgram:
             m_teamId = READ_UNSIGNED_CHAR(_byteStream);
             m_program = READ_UNSIGNED_CHAR(_byteStream);
@@ -224,7 +224,7 @@ char *NetworkUpdate::GetByteStream(int *_linearSize)
 
     WRITE_INT(byteStream, m_type);
     WRITE_INT(byteStream, m_lastSequenceId);
-    
+
     switch( m_type )
     {
         case ClientJoin:
@@ -250,9 +250,9 @@ char *NetworkUpdate::GetByteStream(int *_linearSize)
             WRITE_INT(byteStream, m_lastProcessedSeqId );
             WRITE_UNSIGNED_CHAR(byteStream, m_sync );
             break;
-            
+
         case SelectUnit:
-            WRITE_UNSIGNED_CHAR(byteStream, m_teamId );            
+            WRITE_UNSIGNED_CHAR(byteStream, m_teamId );
             WRITE_INT(byteStream, m_unitId );
             WRITE_INT(byteStream, m_entityId );
             WRITE_INT(byteStream, m_buildingId);
@@ -267,7 +267,7 @@ char *NetworkUpdate::GetByteStream(int *_linearSize)
             WRITE_FLOAT( byteStream, GetWorldPos().y );
             WRITE_FLOAT( byteStream, GetWorldPos().z );
             break;
-            
+
         case AimBuilding:
             WRITE_UNSIGNED_CHAR(byteStream, m_teamId );
             WRITE_INT(byteStream, m_buildingId );
@@ -279,7 +279,7 @@ char *NetworkUpdate::GetByteStream(int *_linearSize)
         case ToggleLaserFence:
             WRITE_INT(byteStream, m_buildingId);
             break;
-            
+
         case RunProgram:
             WRITE_UNSIGNED_CHAR(byteStream, m_teamId );
             WRITE_UNSIGNED_CHAR(byteStream, m_program );
@@ -297,11 +297,11 @@ char *NetworkUpdate::GetByteStream(int *_linearSize)
             DarwiniaDebugAssert(false);
 
     }
-    
+
     *_linearSize = byteStream - m_byteStream;
 	DarwiniaDebugAssert( *_linearSize < NETWORKUPDATE_BYTESTREAMSIZE );
 	return m_byteStream;
- 
+
 }
 
 

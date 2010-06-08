@@ -15,13 +15,13 @@ class TextReader;
 
 class LaserFence : public Building
 {
-protected:    
-    float           m_status;                       // 0=down, 1=up    
+protected:
+    float           m_status;                       // 0=down, 1=up
     int             m_nextLaserFenceId;
     float           m_sparkTimer;
-    
+
     bool            m_radiusSet;
-    
+
     ShapeMarker     *m_marker1;
     ShapeMarker     *m_marker2;
 
@@ -36,9 +36,9 @@ public:
         ModeDisabling,
 		ModeNeverOn
     };
-    int             m_mode;    
+    int             m_mode;
     float           m_scale;
-        
+
 public:
     LaserFence();
 
@@ -55,7 +55,7 @@ public:
 
     void Read   ( TextReader *_in, bool _dynamic );
     void Write  ( FileWriter *_out );
-    
+
     void Enable     ();
     void Disable    ();
     void Toggle     ();
@@ -64,13 +64,13 @@ public:
     void Spark      ();
     void Electrocute( Vector3 const &_pos );
 
-    int  GetBuildingLink();                 
+    int  GetBuildingLink();
     void SetBuildingLink( int _buildingId );
 
     float GetFenceFullHeight    ();
 
     bool DoesSphereHit          (Vector3 const &_pos, float _radius);
-    bool DoesRayHit             (Vector3 const &_rayStart, Vector3 const &_rayDir, 
+    bool DoesRayHit             (Vector3 const &_rayStart, Vector3 const &_rayDir,
                                  float _rayLen=1e10, Vector3 *_pos=NULL, Vector3 *_norm=NULL);
     bool DoesShapeHit           (Shape *_shape, Matrix34 _transform);
 

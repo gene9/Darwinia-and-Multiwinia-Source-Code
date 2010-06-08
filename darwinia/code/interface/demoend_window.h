@@ -9,7 +9,7 @@ class DemoEndWindow : public DarwiniaWindow
 protected:
     float m_timer;
     float m_fadeInTime;
-    
+
 public:
     bool m_saveGame;
 

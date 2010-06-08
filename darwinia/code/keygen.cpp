@@ -11,7 +11,7 @@ static char *ReadFileToBuf(char const *_filename, int *_len)
 {
 	FILE *in = fopen(_filename, "r");
 	if (!in) return NULL;
-	
+
 	char temp[64];
 	int fileLen = 0;
 	while (!feof(in))
@@ -30,7 +30,7 @@ static char *ReadFileToBuf(char const *_filename, int *_len)
 
 static int GetNextNewline(char const *_text, int i, int len)
 {
-	while (_text[i] != '\n') 
+	while (_text[i] != '\n')
 	{
 		i++;
 		if (i >= len) return -1;
@@ -42,17 +42,17 @@ static int GetNextNewline(char const *_text, int i, int len)
 }
 
 
-// Returns NULL if the specified data is valid system info. 
+// Returns NULL if the specified data is valid system info.
 // Otherwise, returns a string containing a description of the error
 static char const *ValidateSysInfo(char const *_sysInfoData, int _sysInfoLen)
 {
 	if (_sysInfoLen < 184) return "system info file too short";
 	if (_sysInfoLen > 500) return "system info file too long";
-	
+
 	char const *c = _sysInfoData;
 	int i = 0;
 
-	if (strncmp(&c[0], "SysInfoGenVersion", 17) != 0)				return "sys info gen version missing"; 
+	if (strncmp(&c[0], "SysInfoGenVersion", 17) != 0)				return "sys info gen version missing";
 	if (atoi(&c[18]) != 2)											return "wrong sys info gen version";
 
 	i = GetNextNewline(c, i, _sysInfoLen);
@@ -93,11 +93,11 @@ static char const *ValidateUserInfo(char const *_userInfoData, int _userInfoLen)
 {
 	if (_userInfoLen < 28) return "user info file too short";
 	if (_userInfoLen > 200) return "user info file too long";
-	
+
 	char const *c = _userInfoData;
 	int i = 0;
 	if (strncmp(&c[0], "Username:", 9) != 0)				return "Username missing";
-	
+
 	i = GetNextNewline(c, i, _userInfoLen);
 	if (i == -1 || strncmp(&c[i], "Email:", 6) != 0)		return "Email missing";
 
@@ -113,7 +113,7 @@ static unsigned int GenerateKey(char const *_data, int _len)
 	// the key by XORing it with a randomly chosen element from the array
 	// of unsigned ints. This last step is repeated a magic number of times.
 	// This second magic number is chosen to be large enough to give a high
-	// probablity that every byte in the initial data has been used in 
+	// probablity that every byte in the initial data has been used in
 	// generating the key.
 	unsigned int *data = (unsigned int *)_data;
 	_len = _len / 4;
@@ -123,7 +123,7 @@ static unsigned int GenerateKey(char const *_data, int _len)
 	{
 		int j = (rv + i) % _len;	// pseudo randomly chose an array index
 #ifdef _BIG_ENDIAN
-		int offset = j * 4 + 3;		
+		int offset = j * 4 + 3;
 		unsigned int partner = 0;
 		partner |= (unsigned char) _data[offset--];
 		partner <<= 8;
@@ -162,7 +162,7 @@ int Keygen(char const *_sysInfoFilename, char const *_userInfoFilename, char con
 		*_password = "Couldn't open sys info file";
 		return -1;
 	}
-	
+
 	return Keygen(sysInfoData, fileLen, _userInfoFilename, _password);
 }
 

@@ -3,17 +3,17 @@
 
 
 // Implements a simple hash table with null terminated char arrays for keys.
-// - You can initialise it to any size greater than 1. 
-// - PutData() checks if the table is more than half full. If it is the table 
-//	 size is doubled and the data is re-indexed. 
-// - The table never shrinks. 
+// - You can initialise it to any size greater than 1.
+// - PutData() checks if the table is more than half full. If it is the table
+//	 size is doubled and the data is re-indexed.
+// - The table never shrinks.
 // - The hash collision rule is just to increment through the table until
 //   a free slot is found
 // - Looking up a key is O(1) even when key does not exist
 
 // *** Note on memory usage ***
 // This class is optimised for speed not memory usage. The RAM used by m_data
-// will always be between (2 x num slots used x sizeof(T)) and 
+// will always be between (2 x num slots used x sizeof(T)) and
 // (4 x num slots used x sizeof(T))
 
 

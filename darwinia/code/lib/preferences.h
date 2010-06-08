@@ -15,14 +15,14 @@ class PrefsItem
 {
 public:
 	char		*m_key;
-	
+
 	enum
 	{
 		TypeString,
 		TypeFloat,
 		TypeInt
 	};
-	
+
 	int			m_type;
 	char		*m_str;
 	union {
@@ -75,7 +75,7 @@ public:
 	void SetString  (char const *_key, char const *_string);
 	void SetFloat	(char const *_key, float _val);
 	void SetInt		(char const *_key, int _val);
-    
+
     void AddLine    (char const*_line, bool _overwrite = false);
 
 //    void GetData    (char const *_key, void *_data, int _length) const;

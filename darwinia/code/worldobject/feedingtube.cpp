@@ -29,9 +29,9 @@ FeedingTube::FeedingTube()
 	m_signal(0.0f)
 {
     m_type = Building::TypeFeedingTube;
-    //m_front.Set(0,0,1);    
+    //m_front.Set(0,0,1);
 
-    SetShape( g_app->m_resource->GetShape( "feedingtube.shp" ) );  
+    SetShape( g_app->m_resource->GetShape( "feedingtube.shp" ) );
 	m_focusMarker = m_shape->m_rootFragment->LookupMarker("MarkerFocus");
 }
 
@@ -52,7 +52,7 @@ bool FeedingTube::Advance ()
     FeedingTube *ft = (FeedingTube *)g_app->m_location->GetBuilding( m_receiverId );
     if( ft &&
         ft->m_type == Building::TypeFeedingTube )
-    {		
+    {
         m_range = (ft->GetDishPos(0.0f) - dishPos).Mag();
     }
     else
@@ -84,7 +84,7 @@ Vector3 FeedingTube::GetDishFront( float _predictionTime )
             return ( receiverDishPos - ourDishPos ).Normalise();
         }
     }
-    
+
 	Matrix34 rootMat(m_front, g_upVector, m_pos);
     Matrix34 worldMat = m_focusMarker->GetWorldMatrix(rootMat);
     return worldMat.f;
@@ -97,7 +97,7 @@ Vector3 FeedingTube::GetForwardsClippingDir( float _predictionTime, FeedingTube 
 	}
 
 	Vector3 senderDishFront = _sender->GetDishFront( _predictionTime );
-	
+
 	Vector3 dishFront = GetDishFront( _predictionTime );
 
 	// Make the two dishFronts point at each other.
@@ -107,11 +107,11 @@ Vector3 FeedingTube::GetForwardsClippingDir( float _predictionTime, FeedingTube 
 
 	if (SR * senderDishFront < 0)
 		senderDishFront *= -1;
-	
-	if (SR * dishFront > 0)
-		dishFront *= -1;	
 
-	Vector3 combinedDirection = 
+	if (SR * dishFront > 0)
+		dishFront *= -1;
+
+	Vector3 combinedDirection =
 		-senderDishFront +
 		dishFront;
 
@@ -123,7 +123,7 @@ Vector3 FeedingTube::GetForwardsClippingDir( float _predictionTime, FeedingTube 
 
 void FeedingTube::Render( float _predictionTime )
 {
-	Building::Render(_predictionTime);   
+	Building::Render(_predictionTime);
 }
 
 
@@ -133,10 +133,10 @@ void FeedingTube::RenderAlphas ( float _predictionTime )
 
     if( m_receiverId != -1 )
     {
-        RenderSignal( _predictionTime, 10.0f, 0.4f );              
-        RenderSignal( _predictionTime, 9.0f, 0.2f );   
-        RenderSignal( _predictionTime, 8.0f, 0.2f );   
-        RenderSignal( _predictionTime, 4.0f, 0.5f );   
+        RenderSignal( _predictionTime, 10.0f, 0.4f );
+        RenderSignal( _predictionTime, 9.0f, 0.2f );
+        RenderSignal( _predictionTime, 8.0f, 0.2f );
+        RenderSignal( _predictionTime, 4.0f, 0.5f );
     }
 }
 
@@ -168,7 +168,7 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
     glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
     glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
     glTexEnvf           (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
-    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_REPLACE);        
+    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_REPLACE);
     glEnable            (GL_TEXTURE_2D);
 
     gglActiveTextureARB  (GL_TEXTURE1_ARB);
@@ -178,15 +178,15 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
     glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
     glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
     glTexEnvf           (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
-    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_MODULATE); 
+    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_MODULATE);
     glEnable            (GL_TEXTURE_2D);
 
     glDisable           (GL_CULL_FACE);
     glBlendFunc         (GL_SRC_ALPHA, GL_ONE);
     glEnable            (GL_BLEND);
     glDepthMask         (false);
-    glColor4f           (1.0f,1.0f,1.0f,_alpha);            
-    
+    glColor4f           (1.0f,1.0f,1.0f,_alpha);
+
     glMatrixMode        (GL_MODELVIEW);
 #ifdef USE_DIRECT3D
 	void SwapToViewMatrix();
@@ -194,7 +194,7 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
 
 	SwapToViewMatrix();
 #endif
-    glTranslatef        ( startPos.x, startPos.y, startPos.z );    
+    glTranslatef        ( startPos.x, startPos.y, startPos.z );
 	Vector3 dishFront   = GetForwardsClippingDir(_predictionTime, receiver);
     double eqn1[4]      = { dishFront.x, dishFront.y, dishFront.z, -1.0f };
     glClipPlane         (GL_CLIP_PLANE0, eqn1 );
@@ -204,7 +204,7 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
     Vector3 receiverFront = receiver->GetForwardsClippingDir( _predictionTime, this );
     glTranslatef        ( -startPos.x, -startPos.y, -startPos.z );
     glTranslatef        ( receiverPos.x, receiverPos.y, receiverPos.z );
-    
+
     Vector3 diff = receiverPos - startPos;
     float thisDistance = -(receiverFront * diff);
 
@@ -221,7 +221,7 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
 	//RenderArrow(endPos, endPos + receiverFront * 100, 2.0f, RGBAColour( 255, 0, 0, 255 ) );
 	//RenderArrow(startPos, endPos, 2.0f );
 
-    glTranslatef        ( startPos.x, startPos.y, startPos.z );    
+    glTranslatef        ( startPos.x, startPos.y, startPos.z );
 
     glEnable            (GL_CLIP_PLANE0);
     glEnable            (GL_CLIP_PLANE1);
@@ -238,19 +238,19 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
     {
         Vector3 deltaFrom = 1.2f * delta * (float) s / (float) numSteps;
         Vector3 deltaTo = 1.2f * delta * (float) (s+1) / (float) numSteps;
-        
+
         Vector3 currentPos = (-delta*0.1f) + Vector3(0,_radius,0);
-        
+
         for( int r = 0; r <= numRadii; ++r )
-        {   
+        {
             gglMultiTexCoord2fARB    ( GL_TEXTURE0_ARB, texXInner, r/numRadii );
-            gglMultiTexCoord2fARB    ( GL_TEXTURE1_ARB, texXOuter, r/numRadii );        
+            gglMultiTexCoord2fARB    ( GL_TEXTURE1_ARB, texXOuter, r/numRadii );
             glVertex3fv             ( (currentPos + deltaFrom).GetData() );
-    
+
             gglMultiTexCoord2fARB    ( GL_TEXTURE0_ARB, texXInner+10.0f/(float)numSteps, (r)/numRadii );
             gglMultiTexCoord2fARB    ( GL_TEXTURE1_ARB, texXOuter+distance/(200.0f *(float)numSteps), (r)/numRadii );
             glVertex3fv             ( (currentPos + deltaTo).GetData() );
-    
+
             currentPos.RotateAround( deltaNorm * ( 2.0f * M_PI / (float) numRadii ) );
         }
 
@@ -265,7 +265,7 @@ void FeedingTube::RenderSignal( float _predictionTime, float _radius, float _alp
 #ifdef USE_DIRECT3D
 	SwapToModelMatrix();
 #endif
-    
+
     glDisable           (GL_CLIP_PLANE0);
     glDisable           (GL_CLIP_PLANE1);
     glDepthMask         (true);
@@ -294,7 +294,7 @@ Vector3 FeedingTube::GetStartPoint()
 
 
 Vector3 FeedingTube::GetEndPoint()
-{   
+{
     return GetDishPos(0.0f) + (GetDishFront(0.0f) * m_range);
 }
 
@@ -344,7 +344,7 @@ void FeedingTube::SetBuildingLink(int _buildingId)
 void FeedingTube::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
-   
+
     m_receiverId = atoi(_in->GetNextToken());
 }
 

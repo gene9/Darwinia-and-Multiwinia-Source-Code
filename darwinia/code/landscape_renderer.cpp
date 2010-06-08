@@ -110,7 +110,7 @@ void LandscapeRenderer::BuildNormArray()
 		m_verts[nextNormId++].m_norm = g_upVector;
 		m_verts[nextNormId++].m_norm = g_upVector;
 		int const maxJ = strip->m_numVerts - 2;
-		
+
 		// For each vertex in strip
 		for (int j = 0; j < maxJ; j += 2)
 		{
@@ -147,14 +147,14 @@ void LandscapeRenderer::BuildUVArray(SurfaceMap2D <float> *_heightMap)
 		return;
 
 	int nextUVId = 0;
-	
+
     float factorX = 1.0f / _heightMap->m_cellSizeX;
     float factorZ = 1.0f / _heightMap->m_cellSizeY;
 
     for (int i = 0; i < m_strips.Size(); ++i)
 	{
 		LandTriangleStrip *strip = m_strips[i];
-	
+
 		int const numVerts = strip->m_numVerts;
 		for (int j = 0; j < numVerts; ++j)
 		{
@@ -171,7 +171,7 @@ void LandscapeRenderer::BuildUVArray(SurfaceMap2D <float> *_heightMap)
 
 // _gradient=1 means flat, _gradient=0 means vertical
 // x and z are only passed in as a means to get predicatable noise
-void LandscapeRenderer::GetLandscapeColour( float _height, float _gradient, 
+void LandscapeRenderer::GetLandscapeColour( float _height, float _gradient,
 											unsigned int _x, unsigned int _y, RGBAColour *_colour )
 {
 	float heightAboveSea = _height;
@@ -189,8 +189,8 @@ void LandscapeRenderer::GetLandscapeColour( float _height, float _gradient,
     if( y < 0 ) y = 0;
     if( y > m_landscapeColour->m_height - 1) y = m_landscapeColour->m_height - 1;
 
-    *_colour = m_landscapeColour->GetPixel(x, y);    
-    
+    *_colour = m_landscapeColour->GetPixel(x, y);
+
     if( g_app->m_negativeRenderer ) _colour->a = 0;
 }
 
@@ -201,11 +201,11 @@ void LandscapeRenderer::BuildColourArray()
 		return;
 
 	int nextColId = 0;
-	
+
 	for (int i = 0; i < m_strips.Size(); ++i)
 	{
 		LandTriangleStrip *strip = m_strips[i];
-	
+
 		m_verts[nextColId++].m_col.Set(255,0,255);
 		m_verts[nextColId++].m_col.Set(255,0,255);
 
@@ -218,8 +218,8 @@ void LandscapeRenderer::BuildColourArray()
 			Vector3 centre = (v1 + v2 + v3) * 0.33333f;
 			Vector3 const &norm = m_verts[strip->m_firstVertIndex + j + 2].m_norm;
 			RGBAColour col;
-			GetLandscapeColour(centre.y, norm.y, 
-							   (unsigned int)centre.x, (unsigned int)centre.z, 
+			GetLandscapeColour(centre.y, norm.y,
+							   (unsigned int)centre.x, (unsigned int)centre.z,
 							   &col);
 
 			//DebugOut("%d[%d]: r:%02x g:%02x b:%02x a:%02x\n", i, j,  col.r, col.g, col.b, col.a);
@@ -229,7 +229,7 @@ void LandscapeRenderer::BuildColourArray()
 
 			if (j == 0) {
 				// We need to set the colours of the first two verticies to something
-				// other than bright pink. Why this isn't a problem in OpenGL I 
+				// other than bright pink. Why this isn't a problem in OpenGL I
 				// don't know.
 				memcpy(&m_verts[nextColId - 3].m_col, &d3dCol, sizeof(d3dCol));
 				memcpy(&m_verts[nextColId - 2].m_col, &d3dCol, sizeof(d3dCol));
@@ -292,12 +292,12 @@ LandscapeRenderer::LandscapeRenderer(SurfaceMap2D <float> *_heightMap)
 
 LandscapeRenderer::~LandscapeRenderer()
 {
-	if (m_renderMode == RenderModeDisplayList) 
+	if (m_renderMode == RenderModeDisplayList)
 	{
 		g_app->m_resource->DeleteDisplayList(MAIN_DISPLAY_LIST_NAME);
 		g_app->m_resource->DeleteDisplayList(OVERLAY_DISPLAY_LIST_NAME);
 	}
-	
+
 	m_verts.Empty();
 
 #ifdef USE_DIRECT3D
@@ -332,10 +332,10 @@ static LPDIRECT3DVERTEXDECLARATION9 GetVertexDecl()
 		{0, LandscapeRenderer::m_normOffset, D3DDECLTYPE_FLOAT3,   D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0},
 		{0, LandscapeRenderer::m_colOffset, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
 		{0, LandscapeRenderer::m_uvOffset, D3DDECLTYPE_FLOAT2,    D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
-		{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0} // D3DDECL_END 
+		{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0} // D3DDECL_END
 	};
 
-	if (!s_vertexDecl) 
+	if (!s_vertexDecl)
 		OpenGLD3D::g_pd3dDevice->CreateVertexDeclaration( s_vertexDesc, &s_vertexDecl );
 
 	return s_vertexDecl;
@@ -361,8 +361,8 @@ void LandscapeRenderer::BuildOpenGlState(SurfaceMap2D <float> *_heightMap)
 
 	if (m_verts.NumUsed() <= 0)
 		return;
-		
-	
+
+
 	switch (m_renderMode) {
 		case RenderModeVertexBufferObject:
 			DarwiniaDebugAssert(!m_vertexBuffer);
@@ -393,7 +393,7 @@ void LandscapeRenderer::RenderMainSlow()
     GLfloat materialSpecular[] = { 0.0f, 0.0f, 0.0f, 0.0f };
    	GLfloat materialDiffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	GLfloat materialShininess[] = { 100.0f };
- 
+
 
 	glMaterialfv	(GL_FRONT, GL_SPECULAR, materialSpecular);
 	glMaterialfv	(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialDiffuse);
@@ -404,13 +404,13 @@ void LandscapeRenderer::RenderMainSlow()
     glEnable		(GL_COLOR_MATERIAL);
     glEnable		(GL_LIGHTING);
 
-	
+
     if( g_app->m_negativeRenderer )
     {
         glEnable        (GL_BLEND);
         glBlendFunc     (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
     }
-    
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -471,7 +471,7 @@ void LandscapeRenderer::RenderOverlaySlow()
     glEnable		(GL_BLEND);
     glEnable		(GL_TEXTURE_2D);
 	glDepthMask		(false);
-	
+
     if( !g_app->m_negativeRenderer )    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     else								glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
 
@@ -481,14 +481,14 @@ void LandscapeRenderer::RenderOverlaySlow()
     glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
     glTexParameteri	(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-    
+
     glEnable        (GL_LIGHTING);
     glEnable        (GL_LIGHT0);
     glEnable        (GL_LIGHT1);
     GLfloat materialSpecular[] = { 0.5f, 0.5f, 0.5f, 1.0f };
    	GLfloat materialDiffuse[] = { 1.2f, 1.2f, 1.2f, 0.0f };
 	GLfloat materialShininess[] = { 40.0f };
- 
+
 	glMaterialfv	(GL_FRONT, GL_SPECULAR, materialSpecular);
 	glMaterialfv	(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, materialDiffuse);
 	glMaterialfv	(GL_FRONT, GL_SHININESS, materialShininess);
@@ -548,7 +548,7 @@ void LandscapeRenderer::RenderOverlaySlow()
 	glDisableClientState(GL_COLOR_ARRAY);
 
 	glDisable		(GL_COLOR_MATERIAL);
-    glDisable		(GL_BLEND);   
+    glDisable		(GL_BLEND);
     glDisable		(GL_TEXTURE_2D);
 	glDisable		(GL_COLOR_MATERIAL);
     glDisable       (GL_LIGHTING);
@@ -605,6 +605,6 @@ void LandscapeRenderer::Render()
 	    }
 	    END_PROFILE(g_app->m_profiler, "Render Landscape Overlay");
     }
-    
+
     glDisable		(GL_FOG);
 }

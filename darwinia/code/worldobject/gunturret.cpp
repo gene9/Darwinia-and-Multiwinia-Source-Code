@@ -44,12 +44,12 @@ GunTurret::GunTurret()
 {
     SetShape( g_app->m_resource->GetShape( "battlecannonbase.shp" ) );
     m_type = TypeGunTurret;
-    
+
     m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp" );
     m_barrel = g_app->m_resource->GetShape( "battlecannonbarrel.shp" );
-    
+
     m_barrelMount = m_turret->m_rootFragment->LookupMarker( "MarkerBarrel" );
-    
+
     for( int i = 0; i < GUNTURRET_NUMBARRELS; ++i )
     {
         char name[64];
@@ -72,7 +72,7 @@ void GunTurret::Initialise( Building *_template )
     Vector3 right( 1, 0, 0 );
     _template->m_front = right ^ _template->m_up;
 
-    Building::Initialise( _template );    
+    Building::Initialise( _template );
 
     m_turretFront = m_front;
     m_barrelUp = g_upVector;
@@ -95,7 +95,7 @@ void GunTurret::SetDetail( int _detail )
 void GunTurret::Damage( float _damage )
 {
     m_health += _damage;
-    
+
     if( m_health <= 0.0f )
     {
         ExplodeBody();
@@ -122,14 +122,14 @@ bool GunTurret::SearchForTargets()
 
     if( m_id.GetTeamId() != 255 )
     {
-        m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 
-                                                                    GUNTURRET_MINRANGE, 
-                                                                    GUNTURRET_MAXRANGE, 
-                                                                    m_id.GetTeamId() );   
+        m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z,
+                                                                    GUNTURRET_MINRANGE,
+                                                                    GUNTURRET_MAXRANGE,
+                                                                    m_id.GetTeamId() );
     }
 
     Entity *entity = g_app->m_location->GetEntity( m_targetId );
-    
+
     if( entity && m_targetId != previousTarget )
     {
         g_app->m_soundSystem->TriggerBuildingEvent( this, "TargetSighted" );
@@ -168,13 +168,13 @@ void GunTurret::RecalculateOwnership()
     int winningTeam = -1;
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        if( teamCount[i] > 0 && 
+        if( teamCount[i] > 0 &&
             winningTeam == -1 )
         {
             winningTeam = i;
         }
-        else if( winningTeam != -1 && 
-                 teamCount[i] > 0 && 
+        else if( winningTeam != -1 &&
+                 teamCount[i] > 0 &&
                  teamCount[i] > teamCount[winningTeam] )
         {
             winningTeam = i;
@@ -191,7 +191,7 @@ void GunTurret::RecalculateOwnership()
         // can control the building
         SetTeamId(2);
     }
-    else 
+    else
     {
         // Red own the building
         SetTeamId(winningTeam);
@@ -214,17 +214,17 @@ void GunTurret::PrimaryFire()
             barrelMountFront = m_barrelUp ^ barrelRight;
             Matrix34 barrelMountMat( barrelMountFront, m_barrelUp, barrelMountPos );
             Matrix34 barrelMat = m_barrelEnd[m_nextBarrel]->GetWorldMatrix(barrelMountMat);
-            
+
             Vector3 shellPos = barrelMat.pos;
             Vector3 shellVel = barrelMountFront.SetLength(500.0f);
-        
-            
-            g_app->m_location->FireTurretShell( shellPos, shellVel );        
+
+
+            g_app->m_location->FireTurretShell( shellPos, shellVel );
             fired = true;
         }
-        
+
         ++m_nextBarrel;
-        if( m_nextBarrel >= GUNTURRET_NUMBARRELS ) 
+        if( m_nextBarrel >= GUNTURRET_NUMBARRELS )
         {
             m_nextBarrel = 0;
         }
@@ -243,14 +243,14 @@ bool GunTurret::Advance()
     if( m_health <= 0.0f ) return true;
 
     //
-    // Create an AI target on top of us, 
+    // Create an AI target on top of us,
     // to get Darwinians to fight hard for control
 
     if( !m_aiTargetCreated )
     {
         Building *aiTarget = Building::CreateBuilding( TypeAITarget );
         aiTarget->m_pos = m_pos;
-        aiTarget->m_front = m_front;        
+        aiTarget->m_front = m_front;
         g_app->m_location->m_buildings.PutData( aiTarget );
         int uniqueId = g_app->m_globalWorld->GenerateBuildingId();
         aiTarget->m_id.SetUniqueId( uniqueId );
@@ -264,13 +264,13 @@ bool GunTurret::Advance()
     {
         GunTurretTarget *target = new GunTurretTarget( m_id.GetUniqueId() );
         int index = g_app->m_location->m_effects.PutData( target );
-        target->m_id.Set( m_id.GetTeamId(), UNIT_EFFECTS, index, -1 );        
+        target->m_id.Set( m_id.GetTeamId(), UNIT_EFFECTS, index, -1 );
         target->m_id.GenerateUniqueId();
         m_targetCreated = true;
     }
-    
 
-    // 
+
+    //
     // Time to recalculate ownership?
 
     m_ownershipTimer -= SERVER_ADVANCE_PERIOD;
@@ -284,10 +284,10 @@ bool GunTurret::Advance()
     Team *team = g_app->m_location->GetMyTeam();
     bool underPlayerControl = ( team && team->m_currentBuildingId == m_id.GetUniqueId() );
 
-    
+
     //
     // Look for a new target
-    
+
     bool primaryFire = false;
     bool secondaryFire = false;
 
@@ -318,7 +318,7 @@ bool GunTurret::Advance()
             if( !targetFound && m_id.GetTeamId() != 255 ) SearchForRandomPos();
             m_retargetTimer = GUNTURRET_RETARGETTIMER;
         }
-    
+
         if( m_targetId.IsValid() )
         {
             // Check our target is still alive
@@ -334,15 +334,15 @@ bool GunTurret::Advance()
             Vector3 targetFront = ( m_target - m_pos );
             targetFront.HorizontalAndNormalise();
             float angle = acosf( targetFront * m_turretFront );
-            
-            primaryFire = ( angle < 0.25f );            
-        }            
+
+            primaryFire = ( angle < 0.25f );
+        }
     }
 
-    
+
     float distance = ( m_target - m_pos ).Mag();
     if( distance < 75.0f ) m_target = m_pos + ( m_target - m_pos ).SetLength(75.0f);
-    
+
 
     //
     // Face our target
@@ -351,24 +351,24 @@ bool GunTurret::Advance()
     Vector3 barrelPos = m_barrelMount->GetWorldMatrix(turretPos).pos;
 	Vector3 toTarget = m_target - barrelPos;
 	toTarget.HorizontalAndNormalise();
-	float angle = acosf( toTarget * m_turretFront );    
-    
+	float angle = acosf( toTarget * m_turretFront );
+
     Vector3 rotation = m_turretFront ^ toTarget;
 	rotation.SetLength(angle * 0.2f);
-	m_turretFront.RotateAround(rotation);    
+	m_turretFront.RotateAround(rotation);
     m_turretFront.Normalise();
-    
+
     toTarget = (m_target - barrelPos).Normalise();
     Vector3 barrelRight = toTarget ^ g_upVector;
     Vector3 targetBarrelUp = toTarget ^ barrelRight;
-    float factor = SERVER_ADVANCE_PERIOD * 2.0f;    
+    float factor = SERVER_ADVANCE_PERIOD * 2.0f;
     m_barrelUp = m_barrelUp * (1.0f-factor) + targetBarrelUp * factor;
-    
+
     //
     // Open fire
 
     if( primaryFire ) PrimaryFire();
-    
+
     return Building::Advance();
 }
 
@@ -384,7 +384,7 @@ bool GunTurret::IsInView()
     Team *team = g_app->m_location->GetMyTeam();
     bool underPlayerControl = ( team && team->m_currentBuildingId == m_id.GetUniqueId() );
 
-    if( underPlayerControl ) 
+    if( underPlayerControl )
     {
         return true;
     }
@@ -410,12 +410,12 @@ void GunTurret::Render( float _predictionTime )
     Vector3 barrelRight = barrelFront ^ m_barrelUp;
     barrelFront = m_barrelUp ^ barrelRight;
     barrelFront.Normalise();
-    Matrix34 barrelMat( barrelFront, m_barrelUp, barrelPos );    
+    Matrix34 barrelMat( barrelFront, m_barrelUp, barrelPos );
     m_barrel->Render( _predictionTime, barrelMat );
-    
+
     //RenderArrow( barrelPos, barrelPos + barrelFront * 1000.0f, 1.0f );
-    
-    // 
+
+    //
     // Render targetting crosshair
 
 /*
@@ -467,10 +467,10 @@ void GunTurret::RenderPorts()
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
 
     for( int i = 0; i < GetNumPorts(); ++i )
-    {        
+    {
         Matrix34 rootMat(m_front, m_up, m_pos);
         Matrix34 worldMat = m_statusMarkers[i]->GetWorldMatrix(rootMat);
-        
+
         //
         // Render the status light
 
@@ -481,7 +481,7 @@ void GunTurret::RenderPorts()
         Vector3 statusPos = worldMat.pos;
 
         WorldObjectId occupantId = GetPortOccupant(i);
-        if( !occupantId.IsValid() ) 
+        if( !occupantId.IsValid() )
         {
             glColor4ub( 150, 150, 150, 255 );
         }
@@ -490,7 +490,7 @@ void GunTurret::RenderPorts()
             RGBAColour teamColour = g_app->m_location->m_teams[occupantId.GetTeamId()].m_colour;
             glColor4ubv( teamColour.GetData() );
         }
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i( 0, 0 );           glVertex3fv( (statusPos - camR - camU).GetData() );
             glTexCoord2i( 1, 0 );           glVertex3fv( (statusPos + camR - camU).GetData() );
@@ -506,7 +506,7 @@ void GunTurret::RenderPorts()
     glEnable        ( GL_CULL_FACE );
 }
 
-bool GunTurret::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool GunTurret::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                           float _rayLen, Vector3 *_pos, Vector3 *norm )
 {
     if( g_app->m_editing )
@@ -547,7 +547,7 @@ bool GunTurretTarget::Advance()
 
     if( turret->GetNumPortsOccupied() > 0 )
     {
-        m_pos = turret->GetTarget();    
+        m_pos = turret->GetTarget();
     }
     else
     {

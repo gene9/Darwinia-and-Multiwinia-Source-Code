@@ -42,7 +42,7 @@ void PosterMaker::AddFrame()
 	// Copy of the frame buffer into system memory
 
     glReadPixels(0, 0, m_screenWidth, m_screenHeight, GL_RGB, GL_UNSIGNED_BYTE, m_screenPixels);
-	
+
 
 	//
 	// Work out where the current tile goes
@@ -64,7 +64,7 @@ void PosterMaker::AddFrame()
 		}
 	}
 
-	
+
 	//
 	// Move on to the next tile
 

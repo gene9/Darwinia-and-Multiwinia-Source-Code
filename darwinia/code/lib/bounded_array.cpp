@@ -26,7 +26,7 @@ BoundedArray<T>::BoundedArray(BoundedArray *_otherArray)
 :	m_numElements(_otherArray->m_numElements)
 {
 	m_data = new T[m_numElements];
-	
+
 	for (unsigned int i = 0; i < m_numElements; ++i)
 	{
 		m_data[i] = _otherArray[i];
@@ -69,15 +69,15 @@ T const &BoundedArray<T>::operator [] (unsigned int _index) const
 
 template <class T>
 unsigned int BoundedArray<T>::Size() const
-{ 
-	return m_numElements; 
+{
+	return m_numElements;
 }
 
 
 template <class T>
 void BoundedArray<T>::SetAll(T const &_value)
 {
-	for (int i = 0; i < m_numElements; ++i) 
+	for (int i = 0; i < m_numElements; ++i)
 	{
 		m_data[i] = _value;
 	}

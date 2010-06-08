@@ -64,15 +64,15 @@ bool ConstructionYard::Advance()
         m_numSurges > 0 &&
         m_numPrimitives > 0 )
     {
-        GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );    
+        GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
         if( gb && !gb->m_online )
         {
             gb->m_online = true;
             g_app->m_globalWorld->EvaluateEvents();
-        }                                    
+        }
     }
 
-    
+
     if( m_timer < 0.0f )
     {
         // Not currently building anything
@@ -101,18 +101,18 @@ bool ConstructionYard::Advance()
                 Matrix34 prim = m_primitives[5]->GetWorldMatrix( mat );
                 WorldObjectId objId = g_app->m_location->SpawnEntities( prim.pos, 2, -1, Entity::TypeArmour, 1, g_zeroVector, 0.0f );
                 Entity *entity = g_app->m_location->GetEntity( objId );
-                Armour *armour = (Armour *) entity;     
+                Armour *armour = (Armour *) entity;
                 armour->m_front.Set( 0, 0, 1 );
                 armour->m_vel.Zero();
                 armour->SetWayPoint( m_pos + Vector3(0,0,500) );
-            
+
                 ++m_numTanksProduced;
                 m_timer = -1.0f;
             }
         }
     }
-    
-    return Building::Advance();    
+
+    return Building::Advance();
 }
 
 
@@ -159,7 +159,7 @@ Matrix34 ConstructionYard::GetRungMatrix2()
 void ConstructionYard::Render( float _predictionTime )
 {
     Building::Render( _predictionTime );
-        
+
     // Rung 1
     Matrix34 mat = GetRungMatrix1();
     m_rung->Render(_predictionTime, mat);
@@ -167,16 +167,16 @@ void ConstructionYard::Render( float _predictionTime )
 
     // Rung 2
     mat = GetRungMatrix2();
-	m_rung->Render(_predictionTime, mat);        
+	m_rung->Render(_predictionTime, mat);
 
 
     //
     // Primitives
-    
+
     for( int i = 0; i < m_numPrimitives; ++i )
     {
         Matrix34 mat( m_front, g_upVector, m_pos );
-        Matrix34 prim = m_primitives[i]->GetWorldMatrix( mat );        
+        Matrix34 prim = m_primitives[i]->GetWorldMatrix( mat );
         prim.pos.y += sinf(g_gameTime+i) * 5.0f;
 
         m_primitive->Render( _predictionTime, prim );
@@ -186,24 +186,24 @@ void ConstructionYard::Render( float _predictionTime )
 
 void ConstructionYard::RenderAlphas( float _predictionTime )
 {
-    Building::RenderAlphas( _predictionTime );   
+    Building::RenderAlphas( _predictionTime );
 
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
-        
+
     glDepthMask     ( false );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/cloudyglow.bmp" ) );
-    
+
     float timeIndex = g_gameTime * 2;
 
     int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
     int maxBlobs = 50;
     if( buildingDetail == 2 ) maxBlobs = 25;
     if( buildingDetail == 3 ) maxBlobs = 10;
-    
+
 
     //
     // Calculate alpha value
@@ -221,17 +221,17 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
     {
         targetAlpha = max( targetAlpha, 0.2f );
     }
-    
+
     float factor1 = g_advanceTime;
     float factor2 = 1.0f - factor1;
-    m_alpha = m_alpha * factor2 + targetAlpha * factor1; 
-    
+    m_alpha = m_alpha * factor2 + targetAlpha * factor1;
+
 
     //
     // Central glow effect
 
     for( int i = 0; i < maxBlobs; ++i )
-    {        
+    {
         Vector3 pos = m_centrePos;
         pos.x += sinf(timeIndex+i) * i * 1.7f;
         pos.y += fabs(cosf(timeIndex+i) * cosf(i*20) * 64);
@@ -239,11 +239,11 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
 
         float size = 30.0f * sinf(timeIndex+i*13);
         size = max( size, 5.0f );
-        
+
         glColor4f( 0.6f, 0.2f, 0.1f, m_alpha);
         //glColor4f( 0.5f, 0.6f, 0.8f, m_alpha );
 
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
@@ -252,7 +252,7 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
         glEnd();
     }
 
-    
+
     //
     // Central starbursts
 
@@ -261,7 +261,7 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
     int numStars = 10;
     if( buildingDetail == 2 ) numStars = 5;
     if( buildingDetail == 3 ) numStars = 2;
-    
+
     for( int i = 0; i < numStars; ++i )
     {
         Vector3 pos = m_centrePos;
@@ -270,7 +270,7 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
         pos.z += cosf(timeIndex+i) * i * 1.7f;
 
         float size = i * 30.0f;
-        
+
         glColor4f( 1.0f, 0.4f, 0.2f, m_alpha );
         //glColor4f( 0.4f, 0.5f, 1.0f, m_alpha );
 
@@ -295,7 +295,7 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
             Matrix34 rungMat;
             if( r == 0 ) rungMat = GetRungMatrix1();
             else         rungMat = GetRungMatrix2();
-    
+
             for( int i = 0; i < YARD_NUMRUNGSPIKES; ++i )
             {
                 Matrix34 spikeMat = m_rungSpikes[i]->GetWorldMatrix(rungMat);
@@ -312,10 +312,10 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
                         glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
                         glTexCoord2i(1,1);      glVertex3fv( (pos + camRight * size - camUp * size).GetData() );
                         glTexCoord2i(0,1);      glVertex3fv( (pos - camRight * size - camUp * size).GetData() );
-                    glEnd();        
+                    glEnd();
                 }
             }
-        }    
+        }
     }
 
     glDisable       ( GL_TEXTURE_2D );
@@ -333,7 +333,7 @@ void ConstructionYard::RenderAlphas( float _predictionTime )
 bool ConstructionYard::IsPopulationLocked()
 {
     Team *team = g_app->m_location->GetMyTeam();
-    
+
     int numArmour = 0;
     for( int i = 0; i < team->m_specials.Size(); ++i )
     {
@@ -355,7 +355,7 @@ bool ConstructionYard::AddPrimitive()
     {
         ++m_numPrimitives;
         return true;
-    }    
+    }
 
     return false;
 }
@@ -402,7 +402,7 @@ void DisplayScreen::RenderAlphas( float _predictionTime )
 
     Vector3 targetPos = armourMat.pos + Vector3(0,50,0);
 
-    glEnable( GL_BLEND );    
+    glEnable( GL_BLEND );
     glDisable( GL_CULL_FACE );
     glDepthMask( false );
 
@@ -427,11 +427,11 @@ void DisplayScreen::RenderAlphas( float _predictionTime )
 
     glDisable( GL_TEXTURE_2D );
 
-    
+
     //
     // Render rays
 
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE );    
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
     glShadeModel( GL_SMOOTH );
 
     for( int i = 0; i < DISPLAYSCREEN_NUMRAYS; ++i )
@@ -442,12 +442,12 @@ void DisplayScreen::RenderAlphas( float _predictionTime )
         Vector3 rayToArmour = (rayMat.pos - targetPos).Normalise();
         Vector3 right = ( g_app->m_camera->GetPos() - rayMat.pos ) ^ rayToArmour;
         right.Normalise();
-        
+
         glBegin( GL_QUADS );
             glColor4f( 0.9f, 0.9f, 0.9f, 0.5f );
             glVertex3fv( (rayMat.pos - right).GetData() );
             glVertex3fv( (rayMat.pos + right).GetData() );
-            
+
             glColor4f( 0.9f, 0.9f, 0.9f, 0.0f );
             glVertex3fv( (targetPos + right * 30).GetData() );
             glVertex3fv( (targetPos - right * 30).GetData() );
@@ -461,16 +461,16 @@ void DisplayScreen::RenderAlphas( float _predictionTime )
     // Render armour
 
     glEnable( GL_NORMALIZE );
-    
-    glBlendFunc( GL_ZERO, GL_SRC_COLOR );
-    m_armour->Render( _predictionTime, armourMat );    
 
-    //g_app->m_renderer->SetObjectLighting();    
+    glBlendFunc( GL_ZERO, GL_SRC_COLOR );
+    m_armour->Render( _predictionTime, armourMat );
+
+    //g_app->m_renderer->SetObjectLighting();
     //glBlendFunc( GL_SRC_ALPHA, GL_ONE );
-    //m_armour->Render( _predictionTime, armourMat );    
-    
+    //m_armour->Render( _predictionTime, armourMat );
+
     g_app->m_renderer->UnsetObjectLighting();
-    
+
     glDisable( GL_NORMALIZE );
 
 }

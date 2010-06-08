@@ -19,11 +19,11 @@
 #include "team.h"
 
 class NetworkUpdate
-{   
+{
 public:
     enum UpdateType
     {
-        Invalid,                            // Unused  
+        Invalid,                            // Unused
         ClientJoin,                         // New Client connects
         ClientLeave,                        // Client disconnects
         RequestTeam,                        // Client requests a new team, either virtual player or real
@@ -37,7 +37,7 @@ public:
         Pause,
         Syncronise                          // Performs a check to make sure we're in sync
     };
-       
+
     UpdateType      m_type;
     char            m_clientIp[16];
     unsigned char   m_teamType;
@@ -54,10 +54,10 @@ public:
 	float			m_power;
     unsigned char   m_program;
 	TeamControls	m_teamControls;
-	
+
     int             m_lastProcessedSeqId;       // Used for sync checks
     unsigned char   m_sync;
-    
+
     int m_lastSequenceId;
 
     char m_byteStream[NETWORKUPDATE_BYTESTREAMSIZE];
@@ -93,7 +93,7 @@ public:
 	Vector3 &				GetWorldPos();
 
     int ReadByteStream(char *_byteStream);                          // Returns number of bytes read
-	char *GetByteStream(int *_linearSize);	
+	char *GetByteStream(int *_linearSize);
 
 //    void SendToDebugStream(FILE *_out, int _seqNum);
 

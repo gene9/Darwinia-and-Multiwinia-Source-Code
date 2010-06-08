@@ -14,7 +14,7 @@ public:
     int     m_buildingDetail;
     int     m_entityDetail;
     int     m_pixelEffectRange;
-    
+
 public:
     PrefsGraphicsWindow();
     ~PrefsGraphicsWindow();

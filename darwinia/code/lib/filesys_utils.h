@@ -18,7 +18,7 @@ bool DoesFileExist(char const *_fullPath);
 char const *GetDirectoryPart    (char const *_fullFilePath);
 char const *GetFilenamePart     (char const *_fullFilePath);
 char const *GetExtensionPart    (char const *_fileFilePath);
-char const *RemoveExtension     (char const *_fullFileName);           
+char const *RemoveExtension     (char const *_fullFileName);
 
 bool AreFilesIdentical          (char const *_name1, char const *_name2);
 

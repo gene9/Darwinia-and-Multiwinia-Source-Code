@@ -46,15 +46,15 @@ public:
 
 public:
 	CamAnimNode()
-	:	m_mountName(NULL), 
-		m_transitionMode(CamAnimNode::TransitionMove), 
+	:	m_mountName(NULL),
+		m_transitionMode(CamAnimNode::TransitionMove),
 		m_duration(1.0f)
 	{
 	}
 
-	~CamAnimNode() 
-	{ 
-		free(m_mountName); m_mountName = NULL; 
+	~CamAnimNode()
+	{
+		free(m_mountName); m_mountName = NULL;
 	}
 
 	static int GetTransitModeId(char const *_word);
@@ -68,7 +68,7 @@ public:
 	LList <CamAnimNode *>	m_nodes;
 	char	m_name[CAMERA_ANIM_MAX_NAME_LEN + 1];
 
-	~CameraAnimation() 
+	~CameraAnimation()
 	{
 		m_nodes.EmptyAndDelete();
 	}
@@ -130,7 +130,7 @@ public:
     :   m_cellSize(12.0f),
         m_worldSizeX(2000),
         m_worldSizeZ(2000),
-        m_outsideHeight(-10)      
+        m_outsideHeight(-10)
 	{
 	}
 
@@ -151,7 +151,7 @@ public:
     int     m_data;
     float   m_waypointX;
     float   m_waypointZ;
-    
+
     float   m_positionX[10];
     float   m_positionZ[10];
     int     m_health[10];
@@ -219,7 +219,7 @@ public:
 	int					m_levelDifficulty;	// The difficulty factor that this level represents.
 
 	LandscapeDef		m_landscape;
-	
+
 	LevelFile           ();
     LevelFile           (char const *_missionFilename, char const *_mapFilename);
 	~LevelFile          ();

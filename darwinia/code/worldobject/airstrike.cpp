@@ -35,7 +35,7 @@ void AirstrikeUnit::Begin()
     float startHeight = 500.0f;
     float landSizeX = g_app->m_location->m_landscape.GetWorldSizeX();
     float landSizeZ = g_app->m_location->m_landscape.GetWorldSizeZ();
-    
+
     DArray<Vector3> startPositions;
     startPositions.PutData( Vector3(inset,startHeight,inset) );
     startPositions.PutData( Vector3(inset,startHeight,landSizeZ-inset) );
@@ -77,10 +77,10 @@ void AirstrikeUnit::Begin()
             }
         }
     }
-  
+
 
     //
-    // Set up our flight path 
+    // Set up our flight path
 
     m_enterPosition = startPositions[ enterIndex ];
     m_exitPosition = startPositions[ exitIndex ];
@@ -94,7 +94,7 @@ void AirstrikeUnit::Begin()
 
     //
     // Spawn our space invaders
-    
+
     g_app->m_location->SpawnEntities( m_enterPosition, m_teamId, m_unitId, Entity::TypeSpaceInvader, m_numInvaders, front, 0.0f );
 }
 
@@ -108,7 +108,7 @@ bool AirstrikeUnit::AdvanceToTargetPosition( Vector3 _targetPos )
     Vector3 actualDir = m_front * (1.0f - amountToTurn) + targetFront * amountToTurn;
     actualDir.Normalise();
     m_front = actualDir;
-    
+
     Vector3 right = m_front ^ g_upVector;
     m_up = right ^ m_front;
 
@@ -120,7 +120,7 @@ bool AirstrikeUnit::AdvanceToTargetPosition( Vector3 _targetPos )
         desiredSpeed *= 10.0f;
     }
     m_speed = m_speed * (1.0f - amountToTurn) + desiredSpeed * amountToTurn;
-        
+
     m_wayPoint += m_front * m_speed * SERVER_ADVANCE_PERIOD;
 
     float newDistance = (_targetPos - m_wayPoint).Mag();
@@ -142,23 +142,23 @@ bool AirstrikeUnit::Advance( int _slice )
 
     switch( m_state )
     {
-        case StateApproaching:      
+        case StateApproaching:
         {
             bool amIThere = AdvanceToTargetPosition( m_attackPosition );
-            if( amIThere ) 
+            if( amIThere )
             {
-                m_state = StateLeaving;            
+                m_state = StateLeaving;
             }
             break;
         }
-        
+
         case StateLeaving:
         {
             bool amIThere = AdvanceToTargetPosition( m_exitPosition );
             break;
         }
     };
-        
+
     return Unit::Advance( _slice );
 }
 
@@ -176,11 +176,11 @@ void AirstrikeUnit::Render( float _predictionTime )
 //    Vector3 height(0,50,0);
 //    RenderArrow     ( m_enterPosition, m_attackPosition, 10.0f, RGBAColour(255,50,50,255) );
 //    RenderArrow     ( m_attackPosition, m_exitPosition, 10.0f, RGBAColour(255,50,50,255) );
-//    
+//
 //    Vector3 right = m_front ^ m_up;
 //    RenderSphere    ( m_wayPoint, 5.0f, RGBAColour(255,255,255,255) );
 //    RenderArrow     ( m_wayPoint, m_wayPoint + m_front * 50.0f, 10.0f, RGBAColour(255,255,255,255) );
-//    RenderArrow     ( m_wayPoint, m_wayPoint + m_up * 30.0f, 6.0f, RGBAColour(50,50,255,255) );    
+//    RenderArrow     ( m_wayPoint, m_wayPoint + m_up * 30.0f, 6.0f, RGBAColour(50,50,255,255) );
 //    RenderArrow     ( m_wayPoint, m_wayPoint + right * 30.0f, 6.0f, RGBAColour(50,255,50,255) );
 //#endif
 
@@ -204,7 +204,7 @@ bool SpaceInvader::Advance( Unit *_unit )
     AirstrikeUnit *airstrikeUnit = (AirstrikeUnit *) _unit;
 
     //
-    // Move a little 
+    // Move a little
 
     Vector3 targetPos = _unit->GetWayPoint();
 
@@ -214,10 +214,10 @@ bool SpaceInvader::Advance( Unit *_unit )
 
         m_vel = ( targetPos - m_pos ) / SERVER_ADVANCE_PERIOD;
         m_pos = targetPos;
-    
+
         m_front = airstrikeUnit->m_front;
     }
-    
+
     //
     // Drop bombs if near enough
 
@@ -226,11 +226,11 @@ bool SpaceInvader::Advance( Unit *_unit )
         float distToTarget = ( m_pos - airstrikeUnit->m_attackPosition ).Mag();
         if( distToTarget < 90.0f )
         {
-            Grenade *weapon = new Grenade( m_pos - g_upVector * 12.0f, m_front, m_vel.Mag() );                   
+            Grenade *weapon = new Grenade( m_pos - g_upVector * 12.0f, m_front, m_vel.Mag() );
             weapon->m_type = EffectThrowableAirstrikeBomb;
             weapon->m_life = 1.5f;
             weapon->m_power = 50.0f;
-            int index = g_app->m_location->m_effects.PutData( weapon );            
+            int index = g_app->m_location->m_effects.PutData( weapon );
             weapon->m_id.Set( m_id.GetTeamId(), UNIT_EFFECTS, index, -1 );
             weapon->m_id.GenerateUniqueId();
             g_app->m_soundSystem->TriggerEntityEvent( this, "DropGrenade" );
@@ -245,7 +245,7 @@ bool SpaceInvader::Advance( Unit *_unit )
     float worldSizeX = g_app->m_location->m_landscape.GetWorldSizeX();
     float worldSizeZ = g_app->m_location->m_landscape.GetWorldSizeZ();
 
-    if( m_pos.x < 0.0f || 
+    if( m_pos.x < 0.0f ||
         m_pos.z < 0.0f ||
         m_pos.x >= worldSizeX ||
         m_pos.z >= worldSizeZ )
@@ -262,14 +262,14 @@ void SpaceInvader::ChangeHealth( int _amount )
     // Space invaders are now INVINCIBLE
 
 //    bool dead = m_dead;
-//    
+//
 //    Entity::ChangeHealth( _amount );
-//    
+//
 //    if( m_dead && !dead )
 //    {
 //        // We just died
 //        Matrix34 transform( m_front, g_upVector, m_pos );
-//        g_explosionManager.AddExplosion( m_shape, transform );         
+//        g_explosionManager.AddExplosion( m_shape, transform );
 //    }
 }
 
@@ -277,7 +277,7 @@ void SpaceInvader::ChangeHealth( int _amount )
 void SpaceInvader::ListSoundEvents( LList<char *> *_list )
 {
     Entity::ListSoundEvents( _list );
-    
+
     _list->PutData( "DropGrenade" );
 }
 
@@ -290,22 +290,22 @@ void SpaceInvader::Render( float _predictionTime )
 #ifdef DEBUG_RENDER_ENABLED
     //RenderSphere( m_targetPos, 5.0f );
 #endif
-    
+
     g_app->m_renderer->SetObjectLighting();
 
     Matrix34 mat(m_front, g_upVector, predictedPos);
     mat.f *= 2.0f;
     mat.u *= 2.0f;
     mat.r *= 2.0f;
-    m_shape->Render(_predictionTime, mat);       
-    
+    m_shape->Render(_predictionTime, mat);
+
     if( m_armed )
     {
         mat = Matrix34(-g_upVector, m_front, predictedPos - g_upVector * 12.0f );
         m_bombShape->Render(_predictionTime, mat);
     }
 
-    g_app->m_renderer->UnsetObjectLighting();  
+    g_app->m_renderer->UnsetObjectLighting();
 
 }
 

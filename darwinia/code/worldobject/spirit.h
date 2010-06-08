@@ -25,21 +25,21 @@ public:
     int             m_state;
     WorldObjectId   m_worldObjectId;                    // The Id of the entity that died
 
-    WorldObjectId   m_nearbyEggs[SPIRIT_MAXNEARBYEGGS];               
+    WorldObjectId   m_nearbyEggs[SPIRIT_MAXNEARBYEGGS];
     int             m_numNearbyEggs;
     float           m_eggSearchTimer;                   // How often to re-search
-    
+
 protected:
     float       m_timeSync;
-    
+
     Vector3     m_hover;
     float       m_positionOffset;                       // Used to make them float around a bit
     float       m_xaxisRate;
     float       m_yaxisRate;
     float       m_zaxisRate;
-    
+
     bool        m_pushFromBuildings;
-    
+
 public:
 
     Spirit();
@@ -54,7 +54,7 @@ public:
 
     void InEgg();                                           // I have been used to fertilise an egg
     void EggDestroyed();                                    // My egg was destroyed, i'm now free
-    
+
     void SkipStage();
     void AddToGlobalWorld();
 

@@ -7,7 +7,7 @@
 
 MultiTexCoord2fARB gglMultiTexCoord2fARB = NULL;
 ActiveTextureARB gglActiveTextureARB = NULL;
-	
+
 glBindBufferARB                 gglBindBufferARB = NULL;
 glDeleteBuffersARB              gglDeleteBuffersARB = NULL;
 glGenBuffersARB                 gglGenBuffersARB = NULL;
@@ -20,7 +20,7 @@ glUnmapBufferARB                gglUnmapBufferARB = NULL;
 glGetBufferParameterivARB       gglGetBufferParameterivARB = NULL;
 glGetBufferPointervARB          gglGetBufferPointervARB = NULL;
 
-	
+
 void InitialiseOGLExtensions()
 {
 	gglMultiTexCoord2fARB = (MultiTexCoord2fARB)SDL_GL_GetProcAddress("glMultiTexCoord2fARB");

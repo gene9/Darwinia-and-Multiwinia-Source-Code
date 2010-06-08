@@ -24,8 +24,8 @@ public:
 
 class Server
 {
-private:  
-    NetLib	        *m_netLib;         
+private:
+    NetLib	        *m_netLib;
 
     LList           <ServerToClientLetter *> m_history;
 
@@ -47,7 +47,7 @@ public:
     ~Server();
 
     void Initialise			();
-    
+
     NetworkUpdate *GetNextLetter();
 
     void ReceiveLetter      ( NetworkUpdate *update, char *fromIP );

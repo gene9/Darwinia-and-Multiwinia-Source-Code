@@ -34,7 +34,7 @@ Channel::~Channel()
 
 
 // *** Advance
-// Returns false if we have reached the end 
+// Returns false if we have reached the end
 bool Channel::Advance()
 {
 	m_currentTime++;
@@ -102,7 +102,7 @@ unsigned char Channel::GetValue(int _type)
 // *** GetVolume
 unsigned char Channel::GetVolume()
 {
-	return GetValue(TimeValue::TypeVol);	
+	return GetValue(TimeValue::TypeVol);
 //	TimeValue *p1 = m_volumePoints.GetData(m_currentVolumePoint);
 //	TimeValue *p2 = m_volumePoints.GetData(m_currentVolumePoint + 1);
 //	if (p2 && p2->m_time <= m_currentTime)
@@ -129,7 +129,7 @@ unsigned char Channel::GetVolume()
 // *** GetFreq
 unsigned char Channel::GetFreq()
 {
-	return GetValue(TimeValue::TypeFreq);	
+	return GetValue(TimeValue::TypeFreq);
 //	TimeValue *p1 = m_freqPoints.GetData(m_currentFreqPoint);
 //	TimeValue *p2 = m_freqPoints.GetData(m_currentFreqPoint + 1);
 //	if (p2 && p2->m_time <= m_currentTime)
@@ -148,7 +148,7 @@ unsigned char Channel::GetFreq()
 //		float returnVal = p1->m_value + slope * interpTime;
 //		return (unsigned char)returnVal;
 //	}
-//	
+//
 //	return p1->m_value;
 }
 
@@ -156,7 +156,7 @@ unsigned char Channel::GetFreq()
 // *** GetCtrl
 unsigned char Channel::GetCtrl()
 {
-	return GetValue(TimeValue::TypeCtrl);	
+	return GetValue(TimeValue::TypeCtrl);
 //	TimeValue *p1 = m_ctrlPoints.GetData(m_currentCtrlPoint);
 //	TimeValue *p2 = m_ctrlPoints.GetData(m_currentCtrlPoint + 1);
 //	if (p2 && p2->m_time <= m_currentTime)
@@ -170,8 +170,8 @@ unsigned char Channel::GetCtrl()
 
 
 // *** CreateTimeValue
-// Inserts a new TimeValue into the correct place in a sorted list of 
-// TimeValues. Will overwrite an existing TimeValue if there is one at 
+// Inserts a new TimeValue into the correct place in a sorted list of
+// TimeValues. Will overwrite an existing TimeValue if there is one at
 // the specified time index already.
 void Channel::CreateTimeValue(int _type, unsigned char _freq, unsigned short _time)
 {
@@ -179,7 +179,7 @@ void Channel::CreateTimeValue(int _type, unsigned char _freq, unsigned short _ti
 	{
 		m_duration = _time;
 	}
-	
+
 	LList<TimeValue*> *points = &m_points[_type];
 
 	unsigned int numPoints = points->Size();
@@ -215,7 +215,7 @@ void Channel::DeleteTimeValue(int _type, int _index)
 	{
 		return;
 	}
-	
+
 	points->RemoveData(_index);
 }
 
@@ -227,7 +227,7 @@ void Channel::SetTimeValue(int _type, unsigned char _value, unsigned short _time
 
 	TimeValue *t = points->GetData(_index);
 	DarwiniaDebugAssert(t);
-	
+
 	points->RemoveData(_index);
 	t->m_time = _time;
 	t->m_value = _value;

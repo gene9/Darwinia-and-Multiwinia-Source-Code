@@ -37,7 +37,7 @@ Spam::Spam()
 {
     m_type = TypeSpam;
     m_timer = syncfrand( SpamReloadTime() );
-    
+
     m_front.RotateAroundY( frand(2.0f * M_PI) );
 
     SetShape( g_app->m_resource->GetShape( "researchitem.shp" ) );
@@ -59,15 +59,15 @@ void Spam::SetDetail( int _detail )
     }
 
     Matrix34 mat( m_front, m_up, m_pos );
-    m_centrePos = m_shape->CalculateCentre( mat );        
-    m_radius = m_shape->CalculateRadius( mat, m_centrePos );        
+    m_centrePos = m_shape->CalculateCentre( mat );
+    m_radius = m_shape->CalculateRadius( mat, m_centrePos );
 }
 
 
 void Spam::Damage( float _damage )
 {
     bool dead = m_damage <= 0.0f;
-    
+
     int oldHealthBand = int( m_damage / 10.0f );
     Building::Damage( _damage );
     m_damage += _damage;
@@ -81,7 +81,7 @@ void Spam::Damage( float _damage )
         Matrix34 mat( m_front, g_upVector, m_pos );
         g_explosionManager.AddExplosion( m_shape, mat, percentDead );
     }
-    
+
     if( !dead && m_damage <= 0.0f )
     {
         // We just died
@@ -114,13 +114,13 @@ void Spam::Render( float _predictionTime )
 //    m_shape->Render( _predictionTime, mat );
 
     Vector3 rotateAround = g_upVector;
-    rotateAround.RotateAroundX( g_gameTime * 1.0f );    
+    rotateAround.RotateAroundX( g_gameTime * 1.0f );
     rotateAround.RotateAroundZ( g_gameTime * 0.7f );
     rotateAround.Normalise();
-    
+
     m_front.RotateAround( rotateAround * g_advanceTime );
     m_up.RotateAround( rotateAround * g_advanceTime );
-        
+
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;
 	Matrix34 mat(m_front, m_up, predictedPos);
 
@@ -135,13 +135,13 @@ void Spam::RenderAlphas( float _predictionTime )
 
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
-        
+
     glDepthMask     ( false );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/cloudyglow.bmp" ) );
-    
+
     float timeIndex = g_gameTime + m_id.GetUniqueId() * 10.0f;
 
     int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
@@ -155,7 +155,7 @@ void Spam::RenderAlphas( float _predictionTime )
     Vector3 centreToMpos = m_pos - m_centrePos;
 
     for( int i = 0; i < maxBlobs; ++i )
-    {        
+    {
         Vector3 pos = predictedPos + centreToMpos;
         pos.x += sinf(timeIndex+i) * i * 0.3f;
         pos.y += cosf(timeIndex+i) * sinf(i*10) * 5;
@@ -163,10 +163,10 @@ void Spam::RenderAlphas( float _predictionTime )
 
         float size = 5.0f + sinf(timeIndex+i*10) * 7.0f;
         size = max( size, 2.0f );
-        
+
         //glColor4f( 0.6f, 0.2f, 0.1f, alpha);
         glColor4f( 0.9f, 0.2f, 0.2f, alpha);
-        
+
         if( m_research ) glColor4f( 0.1f, 0.2f, 0.8f, alpha);
 
         glBegin( GL_QUADS );
@@ -177,7 +177,7 @@ void Spam::RenderAlphas( float _predictionTime )
         glEnd();
     }
 
-    
+
     //
     // Starbursts
 
@@ -189,7 +189,7 @@ void Spam::RenderAlphas( float _predictionTime )
     int numStars = 10;
     if( buildingDetail == 2 ) numStars = 5;
     if( buildingDetail == 3 ) numStars = 2;
-    
+
     for( int i = 0; i < numStars; ++i )
     {
         Vector3 pos = predictedPos + centreToMpos;
@@ -199,12 +199,12 @@ void Spam::RenderAlphas( float _predictionTime )
 
         float size = i * 10 * alpha;
         if( i > numStars - 2 ) size = i * 20 * alpha;
-        
+
         //glColor4f( 1.0f, 0.4f, 0.2f, alpha );
         glColor4f( 0.8f, 0.2f, 0.2f, alpha);
 
         if( m_research ) glColor4f( 0.1f, 0.2f, 0.8f, alpha);
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
@@ -220,7 +220,7 @@ void Spam::RenderAlphas( float _predictionTime )
 void Spam::SpawnInfection()
 {
     if( m_research ) return;
-    
+
     for( int i = 0; i < 20; ++i )
     {
         Vector3 vel = g_upVector;
@@ -247,7 +247,7 @@ bool Spam::Advance()
     if( !m_onGround )
     {
         m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-        
+
         float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z);
         if( m_pos.y <= landHeight + 20.0f )
         {
@@ -261,7 +261,7 @@ bool Spam::Advance()
         }
 
         Matrix34 mat( m_front, m_up, m_pos );
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
     }
     else if( m_onGround )
     {
@@ -273,7 +273,7 @@ bool Spam::Advance()
             m_pos.y = landHeight + 20.0f;
 
             Matrix34 mat( m_front, m_up, m_pos );
-            m_centrePos = m_shape->CalculateCentre( mat );        
+            m_centrePos = m_shape->CalculateCentre( mat );
         }
         else
         {
@@ -300,7 +300,7 @@ bool Spam::Advance()
             }
         }
     }
-    
+
     bool readyToSpawn = m_activated;
     if( readyToSpawn )
     {
@@ -358,8 +358,8 @@ SpamInfection::SpamInfection()
 
 bool SpamInfection::SearchForEntities()
 {
-    m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 
-                                                                SPAMINFECTION_MINSEARCHRANGE, 
+    m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z,
+                                                                SPAMINFECTION_MINSEARCHRANGE,
                                                                 SPAMINFECTION_MAXSEARCHRANGE, 1 );
 
     if( m_targetId.IsValid() )
@@ -392,7 +392,7 @@ bool SpamInfection::SearchForRandomPosition()
 
     float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( m_targetPos.x, m_targetPos.z );
     m_targetPos.y = max( m_targetPos.y, landHeight );
-    
+
     return true;
 }
 
@@ -419,19 +419,19 @@ bool SpamInfection::SearchForSpirits()
                 theDist < nearest &&
                 s->m_state == Spirit::StateFloating &&
                 s->m_pos.y > 10.0f )
-            {                
+            {
                 index = i;
-                nearest = theDist;            
+                nearest = theDist;
             }
         }
-    }            
+    }
 
     if( index != -1 )
-    {        
+    {
         m_spiritId = index;
         m_state = StateAttackingSpirit;
         return true;
-    }    
+    }
 
     return false;
 }
@@ -458,7 +458,7 @@ void SpamInfection::AdvanceIdle()
     }
 
     AdvanceToTargetPosition();
-}   
+}
 
 
 void SpamInfection::AdvanceAttackingEntity()
@@ -484,7 +484,7 @@ void SpamInfection::AdvanceAttackingEntity()
             int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian );
             if( darwinianResearch > 2 && syncfrand(10.0f) < 5.0f )
             {
-                g_app->m_location->SpawnEntities( target->m_pos, 1, -1, Entity::TypeDarwinian, 1, target->m_vel, 0.0f );            
+                g_app->m_location->SpawnEntities( target->m_pos, 1, -1, Entity::TypeDarwinian, 1, target->m_vel, 0.0f );
                 g_app->m_location->m_entityGrid->RemoveObject( m_targetId, target->m_pos.x, target->m_pos.z, target->m_radius );
                 g_app->m_location->m_teams[0].m_others.MarkNotUsed( m_targetId.GetIndex() );
                 delete target;
@@ -508,7 +508,7 @@ void SpamInfection::AdvanceAttackingEntity()
             Vector3 pos = m_pos + Vector3(0,50,0);
             g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeFire, size );
         }
-        
+
         m_life += 1.0f;
         m_state = StateIdle;
     }
@@ -521,30 +521,30 @@ void SpamInfection::AdvanceAttackingSpirit()
     // Is our spirit still alive and well?
 
     if( !g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
-    {   
+    {
         m_state = StateIdle;
         return;
     }
 
 
     Spirit *spirit = g_app->m_location->m_spirits.GetPointer(m_spiritId);
-    
+
     if( spirit->m_state != Spirit::StateFloating )
     {
         m_state = StateIdle;
         return;
     }
-    
+
     m_targetPos = spirit->m_pos;
 
     bool arrived = AdvanceToTargetPosition();
     if( arrived )
     {
         int entityType = Entity::TypeVirii;
-        if( syncfrand(20.0f) < 1.0f ) entityType = Entity::TypeSpider;        
+        if( syncfrand(20.0f) < 1.0f ) entityType = Entity::TypeSpider;
         g_app->m_location->SpawnEntities( spirit->m_pos, 1, -1, entityType, 1, g_zeroVector, 0.0f, 200.0f );
         g_app->m_location->m_spirits.MarkNotUsed(m_spiritId);
-        
+
         int numFlashes = 5 + darwiniaRandom() % 5;
         for( int i = 0; i < numFlashes; ++i )
         {
@@ -553,7 +553,7 @@ void SpamInfection::AdvanceAttackingSpirit()
             Vector3 pos = m_pos + Vector3(0,50,0);
             g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeFire, size );
         }
-        
+
         m_life += 1.0f;
         m_state = StateIdle;
     }
@@ -563,7 +563,7 @@ void SpamInfection::AdvanceAttackingSpirit()
 bool SpamInfection::AdvanceToTargetPosition()
 {
     m_positionHistory.PutDataAtStart( m_pos );
-    int maxLength = SPAMINFECTION_TAILLENGTH;   
+    int maxLength = SPAMINFECTION_TAILLENGTH;
     for( int i = maxLength; i < m_positionHistory.Size(); ++i )
     {
         m_positionHistory.RemoveData(i);
@@ -573,7 +573,7 @@ bool SpamInfection::AdvanceToTargetPosition()
     float factor = SERVER_ADVANCE_PERIOD * 0.5f;
     m_vel = m_vel * (1.0f-factor) + targetVel * factor;
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-    
+
     float distance = ( m_targetPos - m_pos ).Mag();
     return( distance < 20.0f );
 }
@@ -605,7 +605,7 @@ void SpamInfection::Render( float _time )
     glShadeModel( GL_SMOOTH );
     glEnable( GL_BLEND );
     //glDepthMask( false );
-    int maxLength = SPAMINFECTION_TAILLENGTH * (m_life / SPAMINFECTION_LIFE);    
+    int maxLength = SPAMINFECTION_TAILLENGTH * (m_life / SPAMINFECTION_LIFE);
     maxLength = max( maxLength, 2 );
     maxLength = min( maxLength, m_positionHistory.Size() );
 

@@ -32,12 +32,12 @@ WindowManager *g_windowManager = NULL;
 
 // *** Constructor
 WindowManager::WindowManager()
-	:	m_mousePointerVisible(true), m_invertY(true), m_warpInvertY(false), m_windowed(false), 
+	:	m_mousePointerVisible(true), m_invertY(true), m_warpInvertY(false), m_windowed(false),
 		m_mouseCaptured(false)
 {
 	m_win32Specific = NULL;
 	DarwiniaReleaseAssert(SDL_Init(SDL_INIT_VIDEO) == 0, "Couldn't initialise SDL");
-	
+
 	SDL_Rect **validModes = SDL_ListModes(NULL, SDL_OPENGL|SDL_FULLSCREEN);
 
 	for (; *validModes; validModes++) {
@@ -90,43 +90,43 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 
     const SDL_VideoInfo* info = SDL_GetVideoInfo();
 	SDL_PixelFormat vfmt = *info->vfmt;
-	
+
     DarwiniaReleaseAssert(info, "SDL_GetVideoInfo failed: %s", SDL_GetError());
-	
+
 	m_windowed = _windowed;
 
 	// Set the flags for creating the mode
-    flags = SDL_OPENGL; 
+    flags = SDL_OPENGL;
 	if (!_windowed)
 	{
 		flags |= SDL_FULLSCREEN;
 		m_invertY = false;
 		m_warpInvertY = false;
-		
+
 		// Look for the best valid video mode
 		if (_colourDepth != -1)
-			vfmt.BitsPerPixel = _colourDepth;	
+			vfmt.BitsPerPixel = _colourDepth;
 		SDL_Rect **validModes = SDL_ListModes(&vfmt, flags);
 		SDL_Rect *bestMode = NULL;
 		unsigned bestDiagonalDifference = (unsigned) -1;
-			
+
 		if (validModes == NULL)
 			return false;
 
 		for (; *validModes; validModes++) {
 			SDL_Rect *mode = *validModes;
-			unsigned diagonalDifference = (_width - mode->w) * (_width - mode->w) + 
+			unsigned diagonalDifference = (_width - mode->w) * (_width - mode->w) +
 										  (_height - mode->h) * (_height - mode->h);
-			
+
 			if (bestMode == NULL || diagonalDifference < bestDiagonalDifference) {
 				bestMode = mode;
 				bestDiagonalDifference = diagonalDifference;
 			}
 		}
 		DarwiniaReleaseAssert(bestMode != NULL, "Failed to find any valid video modes");
-	
+
 		m_screenW = bestMode->w;
-		m_screenH = bestMode->h;		
+		m_screenH = bestMode->h;
 		bpp = vfmt.BitsPerPixel;
 	}
 	else {
@@ -138,7 +138,7 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 		m_warpInvertY = true;
 		printf("%sinverting Y coordinate in windowed mode\n", (m_invertY ? "" : "not "));
 		printf("%swarp-inverting Y coordinate in windowed mode\n", (m_warpInvertY ? "" : "not "));
-		
+
 #endif
 #ifdef TARGET_OS_LINUX
 		m_invertY = false;
@@ -147,7 +147,7 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 		// Usually any combination is OK for windowed mode.
 		m_screenW = _width;
 		m_screenH = _height;
-		
+
 		// Add it to the list of screen resolutions if need be
 		Resolution *found = NULL;
 		for (int i = 0; i < m_resolutions.Size(); i++) {
@@ -157,22 +157,22 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 				break;
 			}
 		}
-		
+
 		if (!found) {
 			Resolution *res = new Resolution(_width, _height);
 			m_resolutions.PutData(res);
 		}
 		bpp = info->vfmt->BitsPerPixel;
-	}	
-	
-	switch (bpp) {	
+	}
+
+	switch (bpp) {
 		case 24:
 		case 32:
 			SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
 			SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
 			SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
 			break;
-	
+
 		case 16:
 		default:
 			SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
@@ -180,28 +180,28 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 			SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
 		break;
 	}
-	
+
     SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
 	bool setVideoMode = false;
-	
+
 	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, _zDepth );
-	
+
 	if (!_windowed && SDL_VideoModeOK(m_screenW, m_screenH, _colourDepth, flags))
 		bpp = _colourDepth;
-	
+
 	setVideoMode = SDL_SetVideoMode(m_screenW, m_screenH, bpp, flags);
-	
+
 	// Fall back to a 16 bit Z-Buffer
 	if (!setVideoMode) {
 		_zDepth = 16;
 		SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, _zDepth );
 		setVideoMode = SDL_SetVideoMode(m_screenW, m_screenH, bpp, flags);
 	}
-	
+
 	if (!setVideoMode)
 		return false;
-		
+
 	// Pass back the actual values to the Renderer
 	_width = m_screenW;
 	_height = m_screenH;
@@ -212,7 +212,7 @@ bool WindowManager::CreateWin(int &_width, int &_height, bool _windowed, int _co
 
 	if (m_mouseCaptured)
 		CaptureMouse();
-		
+
 	return true;
 }
 
@@ -252,7 +252,7 @@ void WindowManager::CaptureMouse()
 	// Don't grab if we don't have focus
 	if (!g_inputManager->m_windowHasFocus)
 		return;
-		
+
 	SDL_WM_GrabInput(SDL_GRAB_ON);
 	m_mouseCaptured = true;
 }
@@ -302,8 +302,8 @@ void WindowManager::UnhideMousePointer()
 }
 
 void WindowManager::OpenWebsite( char *_url )
-{	
-#ifdef TARGET_OS_MACOSX 
+{
+#ifdef TARGET_OS_MACOSX
 #ifdef AMBROSIA_REGISTRATION
 	 IT_OpenBrowser(_url);
 #else
@@ -338,10 +338,10 @@ void ChangeToProgramDir(const char *program)
 	g_origWorkingDir = new char [PATH_MAX];
 	getcwd(g_origWorkingDir, PATH_MAX);
 
-	if (pos != std::string::npos) 
+	if (pos != std::string::npos)
 		dir.erase(pos);
 	DarwiniaReleaseAssert(
-		chdir(dir.c_str()) == 0, 
+		chdir(dir.c_str()) == 0,
 		"Failed to change directory to %s", dir.c_str());
 }
 
@@ -376,10 +376,10 @@ void CheckAllPirateCodes(bool *isValid, Uint64 licenseCode)
 		RT3_PIRATED_FAKE_19,
 		RT3_PIRATED_FAKE_20,
 	};
-	
-	for (int i = 0; i < NUM_PIRATED_CODES; i++) 
+
+	for (int i = 0; i < NUM_PIRATED_CODES; i++)
 		qRT3_LicenseTestPirate(licenseCode,allPiratedCodes[i],isValid[i]);
-	
+
 	return isValid;
 }
 #endif
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
 	// exits.
 
 	g_windowManager	= new WindowManager;
-	
+
 #if defined(TARGET_OS_LINUX)
 	SetupPathToProgram(SELFPATH);
 	ChangeToProgramDir(SELFPATH);
@@ -421,31 +421,31 @@ int main(int argc, char *argv[])
 			return 0;
 		}
 	}
-	
+
 	SDL_version compiledVersion;
 	SDL_VERSION(&compiledVersion);
 	const SDL_version *linkedVersion = SDL_Linked_Version();
-	
-	printf("SDL Version: Compiled against %d.%d.%d, running with %d.%d.%d\n", 
+
+	printf("SDL Version: Compiled against %d.%d.%d, running with %d.%d.%d\n",
 		compiledVersion.major, compiledVersion.minor, compiledVersion.patch,
 		linkedVersion->major, linkedVersion->minor, linkedVersion->patch);
-		
+
 #ifdef AMBROSIA_REGISTRATION
 	// Ambrosia Registration Tool
 	RT3_Open(true, VERSION_3_CODES, RT3_PRODUCT_NAME, "Darwinia");
 	SystemSetQuitProc(RT3_Close);
 	atexit(RT3_Close);
-	
+
 	// Ambrosia's Display Notice (Nag)
 	Bool8 launchedRegApp;
 	Result32 result = RT3_DisplayNotice(false, &launchedRegApp);
 	DarwiniaReleaseAssert(result == 0, "Failed to display Ambrosia Registration Notice");
-	
+
 	// Check for pirate registration codes
 	bool isValid[NUM_PIRATED_CODES];
 	memset(isValid, 0, sizeof(bool) * NUM_PIRATED_CODES);
 	CheckAllPirateCodes(isValid, RT3_GetLicenseCode());
-	
+
 	for (int i = 0; i < NUM_PIRATED_CODES; i++) {
 		if (!isValid[i])
 			FT_FileDelete(kPathRefPreferences, "Darwinia License");
@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 #endif
 
 	AppMain();
-	
+
 	return 0;
 }
 

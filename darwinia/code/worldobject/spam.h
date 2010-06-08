@@ -4,8 +4,8 @@
 
 #include "worldobject/building.h"
 
-#define SPAM_RELOADTIME             60.0f 
-#define SPAM_DAMAGE                 100.0f 
+#define SPAM_RELOADTIME             60.0f
+#define SPAM_DAMAGE                 100.0f
 
 
 class Spam : public Building
@@ -13,11 +13,11 @@ class Spam : public Building
 protected:
     float   m_timer;
     float   m_damage;
-            
+
     bool    m_research;
     bool    m_onGround;
     bool    m_activated;
-    
+
 public:
     Spam();
 
@@ -44,8 +44,8 @@ public:
 //  Class SpamInfection
 // ****************************************************************************
 
-#define SPAMINFECTION_MINSEARCHRANGE    100.0f 
-#define SPAMINFECTION_MAXSEARCHRANGE    200.0f 
+#define SPAMINFECTION_MINSEARCHRANGE    100.0f
+#define SPAMINFECTION_MAXSEARCHRANGE    200.0f
 #define SPAMINFECTION_LIFE              10.0f
 #define SPAMINFECTION_TAILLENGTH        30
 
@@ -65,9 +65,9 @@ protected:
     int             m_spiritId;
     Vector3         m_targetPos;
     float           m_life;
-    
+
     LList           <Vector3> m_positionHistory;
-    
+
 protected:
     void AdvanceIdle();
     void AdvanceAttackingEntity();

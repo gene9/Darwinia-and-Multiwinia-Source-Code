@@ -4,7 +4,7 @@
 
 #include "worldobject/building.h"
 
-#define ANTHILL_SEARCHRANGE     400.0f 
+#define ANTHILL_SEARCHRANGE     400.0f
 
 
 class FileWriter;
@@ -30,7 +30,7 @@ protected:
     int     m_unitId;
     int     m_populationLock;
     bool    m_renderDamaged;
-    
+
 protected:
     bool SearchingArea          ( Vector3  _pos );
     bool TargettedEntity        ( WorldObjectId _id );
@@ -46,7 +46,7 @@ protected:
 public:
     int m_numAntsInside;
     int m_numSpiritsInside;
-    
+
 public:
     AntHill();
 
@@ -57,9 +57,9 @@ public:
     void Damage ( float _damage );
 	void Destroy( float _intensity );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );		
-    
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
     void ListSoundEvents( LList<char *> *_list );
 };
 

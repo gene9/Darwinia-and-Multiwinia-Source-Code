@@ -52,7 +52,7 @@ static NetCallBackRetType ListenCallback(NetUdpPacket *udpdata)
             g_app->m_server->ReceiveLetter( letter, newip );
 //            SET_PROFILE(g_app->m_profiler,  "#Server Receive", (double) udpdata->getLength() );
         }
-        
+
         delete udpdata;
     }
 
@@ -75,7 +75,7 @@ Server::~Server()
     m_clients.EmptyAndDelete();
     m_teams.EmptyAndDelete();
 
-    m_inboxMutex->Lock();    
+    m_inboxMutex->Lock();
     m_inbox.EmptyAndDelete();
     m_inboxMutex->Unlock();
 
@@ -97,7 +97,7 @@ void Server::Initialise()
 {
     m_inboxMutex = new NetMutex();
     m_outboxMutex = new NetMutex();
-    
+
     if( !g_app->m_bypassNetworking )
     {
         m_netLib = new NetLib();
@@ -110,7 +110,7 @@ void Server::Initialise()
 
 int Server::GetClientId ( char *_ip )
 {
-    for ( int i = 0; i < m_clients.Size(); ++i ) 
+    for ( int i = 0; i < m_clients.Size(); ++i )
     {
         if ( m_clients.ValidIndex(i) )
         {
@@ -171,7 +171,7 @@ void Server::RegisterNewClient ( char *_ip )
     ServerToClient *sToC = new ServerToClient(_ip);
     m_clients.PutData(sToC);
 
-    
+
     //
     // Tell all clients about it
 
@@ -203,12 +203,12 @@ void Server::RemoveClient( char *_ip )
 
 // *** RegisterNewTeam
 void Server::RegisterNewTeam ( char *_ip, int _teamType, int _desiredTeamId )
-{               
+{
     int clientId = GetClientId(_ip);
     DarwiniaDebugAssert( clientId != -1 );                           // Client not properly connected
 
     if( _desiredTeamId != -1 )                              // Specified Team ID - An AI
-    {                                                       
+    {
         if( !m_teams.ValidIndex(_desiredTeamId) )
         {
             ServerTeam *team = new ServerTeam(clientId);
@@ -268,9 +268,9 @@ void Server::RegisterNewTeam ( char *_ip, int _teamType, int _desiredTeamId )
             letter->SetIp( ConvertIPToInt( _ip ) );
             letter->SetTeamType( _teamType );
             letter->SetAIType( _aiType );
-            
+
             SendLetter( letter );
-        }                
+        }
     }*/
 
 }
@@ -323,17 +323,17 @@ void Server::AdvanceSender()
         DarwiniaDebugAssert(letter);
 
         if (m_clients.ValidIndex(letter->GetClientId()))
-        {                               
+        {
             if( g_app->m_bypassNetworking )
             {
                 g_app->m_clientToServer->ReceiveLetter( letter );
             }
             else
-            {                
+            {
     			int linearSize = 0;
                 ServerToClient *client = m_clients[letter->GetClientId()];
                 NetSocket *socket = client->GetSocket();
-                char *linearisedLetter = letter->GetByteStream(&linearSize);                
+                char *linearisedLetter = letter->GetByteStream(&linearSize);
 				socket->WriteData( linearisedLetter, linearSize );
                 bytesSentThisFrame += linearSize;
                 delete letter;
@@ -363,7 +363,7 @@ void Server::Advance()
 
     ServerToClientLetter *letter = new ServerToClientLetter();
     letter->SetType( ServerToClientLetter::Update );
-    
+
     NetworkUpdate *incoming = GetNextLetter();
 
     while( incoming )
@@ -381,7 +381,7 @@ void Server::Advance()
             if( GetClientId( incoming->m_clientIp ) != -1 )
             {
                 DebugOut ( "SERVER: Client at %s disconnected gracefully\n", incoming->m_clientIp );
-                RemoveClient( incoming->m_clientIp );                
+                RemoveClient( incoming->m_clientIp );
             }
         }
         else if ( incoming->m_type == NetworkUpdate::RequestTeam )
@@ -396,27 +396,27 @@ void Server::Advance()
         {
             int sequenceId = incoming->m_lastProcessedSeqId;
             unsigned char sync = incoming->m_sync;
-            
+
             if( sequenceId != 0 && !m_sync.ValidIndex(sequenceId-1) )
             {
                 // This incoming packet has a sequence ID that is too high
                 // Most likely it was sent from a previous client connected to a previous server
-                // Then that server shut down, and this one started up 
+                // Then that server shut down, and this one started up
                 // Then this server received the packet intended for the old server
-                // So we simply discard it   
+                // So we simply discard it
                 //DebugOut( "Sync %d discarded as bogus\n", sequenceId );
             }
             else
             {
                 if( m_sync.Size() <= sequenceId )
-                {                
+                {
                     m_sync.SetSize( m_sync.Size() + 1000 );
                 }
 
                 if( m_sync.ValidIndex(sequenceId) )
                 {
                     unsigned char lastKnownSync = m_sync[sequenceId];
-                    DarwiniaDebugAssert( lastKnownSync == sync );   
+                    DarwiniaDebugAssert( lastKnownSync == sync );
                     //DebugOut( "Sync %02d verified as %03d\n", sequenceId, sync );
                 }
                 else
@@ -427,10 +427,10 @@ void Server::Advance()
             }
         }
         else if( incoming->m_teamId != 255 )
-        {            
+        {
             letter->AddUpdate( incoming );
         }
-        
+
         int clientId = GetClientId( incoming->m_clientIp );
         if( clientId != -1 )
         {
@@ -464,8 +464,8 @@ void Server::Advance()
             ServerToClient *s2c = m_clients[i];
             int sendFrom = s2c->m_lastKnownSequenceId + 1;
             int sendTo   = m_history.Size();
-            if( sendTo - sendFrom > maxUpdates ) sendTo = sendFrom + maxUpdates;                
-            
+            if( sendTo - sendFrom > maxUpdates ) sendTo = sendFrom + maxUpdates;
+
             for( int l = sendFrom; l < sendTo; ++l )
             {
                 if( m_history.ValidIndex(l) )
@@ -473,7 +473,7 @@ void Server::Advance()
                     ServerToClientLetter *theLetter = m_history[l];
                     ServerToClientLetter *letterCopy = new ServerToClientLetter( *theLetter );
                     letterCopy->SetClientId(i);
-            
+
                     m_outboxMutex->Lock();
                     m_outbox.PutDataAtEnd( letterCopy );
                     m_outboxMutex->Unlock();
@@ -526,7 +526,7 @@ void Server::SaveHistory( char *_filename )
         ServerToClientLetter *letter = m_history[i];
         int linearSize;
         char *byteStream = letter->GetByteStream( &linearSize );
-        
+
         fwrite( &linearSize, sizeof(linearSize), 1, file );
         fwrite( byteStream, linearSize, 1, file );
     }

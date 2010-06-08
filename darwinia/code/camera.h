@@ -92,14 +92,14 @@ private:
 	float   m_maxFovRadians;    // Updated once per frame from m_fov in SetupProjectionMatrix
     float   m_height;			// Distance above ground (in metres)
     Vector3 m_vel;
-   
+
 	float	m_minX, m_maxX;		// Bounds of camera movement
 	float	m_minZ, m_maxZ;
-    Vector3 m_targetPos;  
-    Vector3 m_targetFront;        
+    Vector3 m_targetPos;
+    Vector3 m_targetFront;
     Vector3 m_targetUp;
     float   m_targetFov;
-	Vector3 m_cameraTarget;		// Target Position of camera for automatic entity tracking	
+	Vector3 m_cameraTarget;		// Target Position of camera for automatic entity tracking
 	Vector3 m_predictedEntityPos;	// Predicted Position of entity for automatic entity tracking
 	Entity *m_trackingEntity;	// The entity we are tracking
 
@@ -116,7 +116,7 @@ private:
     int		m_mode;
 	int		m_debugMode;
 	int		m_framesInThisMode;
-    
+
     WorldObjectId m_objectId;		// WorldObjectId of creature to track
     float m_trackRange;
     float m_trackHeight;
@@ -136,7 +136,7 @@ private:
     bool    m_entityTrack;         // the current state of automatic entity tracking
 	Vector3	m_controlVector;			// previous right value of the camera, if the unit is not directly below
 	bool	m_skipDirectionCalculation;
-    
+
 public:
 	Camera();
 
@@ -154,7 +154,7 @@ public:
     bool SphereInViewFrustum        (Vector3 const &_centre, float _radius );
 
     Building *GetBestBuildingInView ();  // Is the player currently looking at a building?
-                                                                                
+
 	void Advance();
     void Render();
 
@@ -175,23 +175,23 @@ public:
 	bool IsMoving					();
     bool IsInteractive              ();
     bool IsInMode                   (int _mode);
-	
+
     void RecordCameraPosition       ();                 // So you can return easily
     void RestoreCameraPosition      ( bool _cut=false );
 
 	// SetTarget() only sets the target data. To make these changes take effect, call either
-	// CutToTarget() or RequestMode(Camera::ModeMoveToTarget), depending on whether you 
+	// CutToTarget() or RequestMode(Camera::ModeMoveToTarget), depending on whether you
 	// want an instant cut or a smooth transition
 	void SetTarget		(Vector3 const &_pos, Vector3 const &_front, Vector3 const &_up=g_upVector);
 	bool SetTarget		(char const *_mountName); // Returns false if mount not found
     void SetTarget      (Vector3 const &_focusPos, float _distance, float _height );
-	void SetMoveDuration(float _duration);    
+	void SetMoveDuration(float _duration);
 	void CutToTarget	();
     void SetHeight      (float _height);
     void SetFOV         (float _fov);
     void SetTargetFOV   (float _fov);
 
-	void Normalise		(); // Needs to be called reasonably regularly to prevent the front 
+	void Normalise		(); // Needs to be called reasonably regularly to prevent the front
 							// and up vectors becoming non-orthogonal
 
     void GetClickRay    (int _x, int _y, Vector3 *_rayStart, Vector3 *_rayDir);

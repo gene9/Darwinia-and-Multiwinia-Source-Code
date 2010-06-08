@@ -24,7 +24,7 @@
 #define GL_QUADS                          0x0007
 #define GL_QUAD_STRIP                     0x0008
 
-// Shading Model 
+// Shading Model
 #define GL_FLAT							  0x1D00
 #define GL_SMOOTH						  0x1D01
 
@@ -68,7 +68,7 @@
 #define GL_CLAMP                          0x2900
 #define GL_REPEAT                         0x2901
 
-// Material Face 
+// Material Face
 #define GL_FRONT                          0x0404
 #define GL_BACK                           0x0405
 #define GL_FRONT_AND_BACK                 0x0408
@@ -100,7 +100,7 @@
 #define GL_RGB                            0x1907
 #define GL_RGBA                           0x1908
 
-// Data types 
+// Data types
 #define GL_UNSIGNED_BYTE                  0x1401
 #define GL_FLOAT                          0x1406
 

@@ -49,8 +49,8 @@ void StartSequence::RegisterCaption( char *_caption, float _x, float _y, float _
                                      float _startTime, float _endTime )
 {
     StartSequenceCaption *caption = new StartSequenceCaption();
-    
-    
+
+
     caption->m_caption = strdup( _caption );
     caption->m_x = _x;
     caption->m_y = _y;
@@ -78,12 +78,12 @@ bool StartSequence::Advance()
 	if( !g_eventHandler->WindowHasFocus() )
     {
 		Sleep(1);
-		g_app->m_userInput->Advance();			
+		g_app->m_userInput->Advance();
 		return false;
     }
 
     if( g_inputManager->controlEvent( ControlSkipMessage ) ||
-		g_app->m_requestQuit || 
+		g_app->m_requestQuit ||
 		( GetHighResTime() - m_startTime ) > 90 )
     {
         g_app->m_soundSystem->StopAllSounds( WorldObjectId(), "Music StartSequence" );
@@ -91,14 +91,14 @@ bool StartSequence::Advance()
     }
 
     g_app->m_userInput->Advance();
-    g_app->m_camera->Advance();  
+    g_app->m_camera->Advance();
     g_app->m_soundSystem->Advance();
 #ifdef PROFILER_ENABLED
 	g_app->m_profiler->Advance();
 #endif // PROFILER_ENABLED
 
     g_app->m_renderer->Render();
-    
+
     return false;
 }
 
@@ -165,12 +165,12 @@ void StartSequence::Render()
             {
                 theString[ maxTimeLength ] = '\x0';
             }
-            
-            glColor4f( 1.0f, 1.0f, 1.0f, 0.8f );             
+
+            glColor4f( 1.0f, 1.0f, 1.0f, 0.8f );
             g_gameFont.DrawText2D( caption->m_x, caption->m_y, caption->m_size, theString );
 
             int finishedLen = strlen(theString);
-            int texW = g_gameFont.GetTextWidth( finishedLen, caption->m_size );            
+            int texW = g_gameFont.GetTextWidth( finishedLen, caption->m_size );
             cursorPos.Set( caption->m_x + texW, caption->m_y - 7.25f );
             cursorFlash = maxTimeLength > stringLength;
             cursorSize = caption->m_size;
@@ -202,7 +202,7 @@ void StartSequence::Render()
     float fogCol[] = { fog, fog, fog, fog };
 
     int fogVal = 5810000;
-    
+
     float r = 2.0f;
     float height = -400.0f;
     float gridSize = 100.0f;
@@ -237,7 +237,7 @@ void StartSequence::Render()
         percentDrawn = max( percentDrawn, 0.0f );
         xEnd -= ( 8000 + 4000 * r * percentDrawn );
         zEnd -= ( 8000 + 4000 * r * percentDrawn );
-        
+
         for( int x = xStart; x < xEnd; x += gridSize )
         {
             glBegin( GL_LINES );

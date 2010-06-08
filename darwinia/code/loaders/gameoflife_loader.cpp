@@ -32,10 +32,10 @@ GameOfLifeLoader::GameOfLifeLoader( bool _glow )
 #ifdef USE_DIRECT3D
 	glTraceEnable(true);
 #endif // USE_DIRECT3D
-    
+
     m_numCellsX = 128;
     m_numCellsY = int( m_numCellsX * (float) g_app->m_renderer->ScreenH() / (float) g_app->m_renderer->ScreenW() );
-    
+
     m_cells = new int[ m_numCellsX * m_numCellsY ];
     m_cellsTemp = new int[ m_numCellsX * m_numCellsY ];
     m_age = new int[ m_numCellsX * m_numCellsY ];
@@ -61,7 +61,7 @@ GameOfLifeLoader::GameOfLifeLoader( bool _glow )
 
 void GameOfLifeLoader::ClearCells()
 {
-    memset( m_cells, 0, m_numCellsX * m_numCellsY * sizeof(int) );   
+    memset( m_cells, 0, m_numCellsX * m_numCellsY * sizeof(int) );
     memset( m_age, 0, m_numCellsX * m_numCellsY * sizeof(int) );
 }
 
@@ -86,7 +86,7 @@ void GameOfLifeLoader::PropagateCells( float _start, float _end )
 {
     float startY = ceil(m_numCellsY * _start);
     float endY = m_numCellsY * _end;
-    
+
     for( int x = 0; x < m_numCellsX; ++x )
     {
         for( int y = startY; y < endY; ++y )
@@ -129,7 +129,7 @@ void GameOfLifeLoader::PropagateCells( float _start, float _end )
             }
             else if( prevCell == CellStateAlive && numNeighbours <= 3 && numNeighbours > 1 && prevAge < MAXAGE )
             {
-                m_cellsTemp[y * m_numCellsX + x] = CellStateAlive;            
+                m_cellsTemp[y * m_numCellsX + x] = CellStateAlive;
                 m_age[y * m_numCellsX + x]++;
             }
             else if( prevCell == CellStateAlive )
@@ -189,7 +189,7 @@ void GameOfLifeLoader::RenderDarwinian( int _cellX, int _cellY, int _age )
             glTexCoord2i(0,0);      glVertex2f( screenX-CELLSIZE*2, screenY+CELLSIZE*3 );
         glEnd();
     }
-    
+
     glDisable( GL_TEXTURE_2D );
 }
 
@@ -296,7 +296,7 @@ void GameOfLifeLoader::RenderHelp()
     g_gameFont.DrawText2DCentre( 400, y+=dh, h, LANGUAGEPHRASE("bootloader_life_14") );
 
     y+=dh*7;
-    
+
     g_gameFont.DrawText2DCentre( 400, y, h, LANGUAGEPHRASE("bootloader_life_15") );
     g_gameFont.DrawText2DCentre( 400, y+20, h, LANGUAGEPHRASE("bootloader_life_16a") );
     g_gameFont.DrawText2DCentre( 450, y+20, h, LANGUAGEPHRASE("bootloader_life_16b") );
@@ -305,7 +305,7 @@ void GameOfLifeLoader::RenderHelp()
 
 
 void GameOfLifeLoader::Run()
-{    
+{
 #ifdef USE_DIRECT3D
 	glTraceEnable(true);
 #endif // USE_DIRECT3D
@@ -345,7 +345,7 @@ void GameOfLifeLoader::Run()
 
         if( g_inputManager->controlEvent( ControlGOLLoaderSpeedup ) ) m_speed *= 1.1f;
         if( g_inputManager->controlEvent( ControlGOLLoaderSlowdown ) ) m_speed *= 0.9f;
-        if( g_inputManager->controlEvent( ControlGOLLoaderReset ) ) 
+        if( g_inputManager->controlEvent( ControlGOLLoaderReset ) )
         {
             CommitCells();
             ClearCells();
@@ -353,14 +353,14 @@ void GameOfLifeLoader::Run()
             lastPropagation = 0;
             m_totalAge = 0;
         }
-        
+
         //
         // Render
 
         m_zoom = 0.08f + powf( GetHighResTime() - startTime, 2.0f ) / 500;
         m_speed = 0.1f / (m_zoom * 5.0f);
         m_speed = max( m_speed, 0.1f );
-        
+
         float screenW = g_app->m_renderer->ScreenW() * m_zoom;
         float screenH = g_app->m_renderer->ScreenH() * m_zoom;
         if( screenW > CELLSIZE * m_numCellsX )

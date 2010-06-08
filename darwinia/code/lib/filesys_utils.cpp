@@ -42,13 +42,13 @@ static bool FilterMatch( const char *_filename, const char *_filter )
 					return true;
 			}
 			return false;
-		
+
 		case '?':
 			if (!*_filename)
 				return false;
 			_filename++;
 			return FilterMatch(_filename, _filter);
-			
+
 		default:
 			return false;
 	}
@@ -57,7 +57,7 @@ static bool FilterMatch( const char *_filename, const char *_filter )
 // Finds all the filenames in the specified directory that match the specified
 // filter. Directory should be like "data/textures" or "data/textures/".
 // Filter can be NULL or "" or "*.bmp" or "map_*" or "map_*.txt"
-// Set FullFilename to true if you want results like "data/textures/blah.bmp" 
+// Set FullFilename to true if you want results like "data/textures/blah.bmp"
 // or false for "blah.bmp"
 LList <char *> *ListDirectory( char const *_dir, char const *_filter, bool _fullFilename )
 {
@@ -80,18 +80,18 @@ LList <char *> *ListDirectory( char const *_dir, char const *_filter, bool _full
 
 	int exitmeplease = 0;
 
-	while( fileindex != -1 && !exitmeplease ) 
+	while( fileindex != -1 && !exitmeplease )
 	{
         if( strcmp( thisfile.name, "." ) != 0 &&
             strcmp( thisfile.name, ".." ) != 0 &&
             !(thisfile.attrib & _A_SUBDIR) )
         {
 		    char *newname = NULL;
-		    if( _fullFilename ) 
+		    if( _fullFilename )
 			{
 				int len = strlen(_dir) + strlen(thisfile.name);
 				newname = new char [len + 1];
-				sprintf( newname, "%s%s", _dir, thisfile.name );      
+				sprintf( newname, "%s%s", _dir, thisfile.name );
 			}
             else
 			{
@@ -112,12 +112,12 @@ LList <char *> *ListDirectory( char const *_dir, char const *_filter, bool _full
 	for (struct dirent *entry; (entry = readdir(dir)) != NULL; ) {
 		if (FilterMatch(entry->d_name, _filter)) {
 			char fullname[strlen(_dir) + strlen(entry->d_name) + 2];
-			sprintf(fullname, "%s%s%s", 
-				_dir, 
+			sprintf(fullname, "%s%s%s",
+				_dir,
 				_dir[0] ? "/" : "",
 				entry->d_name);
 			if (!IsDirectory(fullname)) {
-				result->PutData( 
+				result->PutData(
 					NewStr(_fullFilename ? fullname : entry->d_name));
 			}
 		}
@@ -139,13 +139,13 @@ LList <char *> *ListSubDirectoryNames(char const *_dir)
 
 	int exitmeplease = 0;
 
-	while( fileindex != -1 && !exitmeplease ) 
+	while( fileindex != -1 && !exitmeplease )
 	{
         if( strcmp( thisfile.name, "." ) != 0 &&
             strcmp( thisfile.name, ".." ) != 0 &&
             (thisfile.attrib & _A_SUBDIR) )
         {
-		    char *newname = strdup( thisfile.name );   
+		    char *newname = strdup( thisfile.name );
             result->PutData( newname );
         }
 
@@ -159,18 +159,18 @@ LList <char *> *ListSubDirectoryNames(char const *_dir)
 	for (struct dirent *entry; (entry = readdir(dir)) != NULL; ) {
 		if (entry->d_name[0] == '.')
 			continue;
-			
+
 		char fullname[strlen(_dir) + strlen(entry->d_name) + 2];
-		sprintf(fullname, "%s%s%s", 
-			_dir, 
+		sprintf(fullname, "%s%s%s",
+			_dir,
 			_dir[0] ? "/" : "",
 			entry->d_name);
-			
+
 		if (IsDirectory(fullname))
 			result->PutData( strdup(entry->d_name) );
 	}
 	closedir(dir);
-	
+
 #endif
     return result;
 }
@@ -179,7 +179,7 @@ LList <char *> *ListSubDirectoryNames(char const *_dir)
 bool DoesFileExist(char const *_fullPath)
 {
 	FILE *f = fopen(_fullPath, "r");
-	if(f) 
+	if(f)
 	{
 		fclose(f);
 		return true;
@@ -195,7 +195,7 @@ static char s_filePathBuffer[FILE_PATH_BUFFER_SIZE + 1];
 char const *GetDirectoryPart(char const *_fullFilePath)
 {
 	strncpy(s_filePathBuffer, _fullFilePath, FILE_PATH_BUFFER_SIZE);
-    
+
     char *finalSlash = strrchr(s_filePathBuffer, '/');
     if( finalSlash )
     {
@@ -231,7 +231,7 @@ char const *RemoveExtension(char const *_fullFileName)
 
     char *dot = strrchr(s_filePathBuffer, '.');
     if( dot ) *dot = '\x0';
-        
+
     return s_filePathBuffer;
 }
 
@@ -253,7 +253,7 @@ bool AreFilesIdentical(char const *_name1, char const *_name2)
 	{
 		int a = fgetc(in1);
 		int b = fgetc(in2);
-		if (a != b) 
+		if (a != b)
 		{
 			rv = false;
 			exitNow = true;
@@ -278,7 +278,7 @@ bool CreateDirectory(char const *_directory)
 #ifdef TARGET_MSVC
     int result = _mkdir ( _directory );
     if( result == 0 ) return true;                              // Directory was created
-    if( result == -1 && errno == 17 /* EEXIST */ ) return true;              // Directory already exists    
+    if( result == -1 && errno == 17 /* EEXIST */ ) return true;              // Directory already exists
     else return false;
 #else
 	if (access(_directory, W_OK|X_OK|R_OK) == 0)
@@ -318,11 +318,11 @@ bool IsDirectory(const char *_fullPath)
 // ***************************************************************************
 
 static unsigned int s_offsets[] = {
-	31, 7, 9, 1, 
-	11, 2, 5, 5, 
+	31, 7, 9, 1,
+	11, 2, 5, 5,
 	3, 17, 40, 12,
 	35, 22, 27, 2
-}; 
+};
 
 
 EncryptedFileWriter::EncryptedFileWriter(char const *_name)
@@ -352,6 +352,6 @@ void EncryptedFileWriter::WriteLine(char *_line)
 			_line[i] = j;
 		}
 	}
-	
+
 	fprintf(m_out, "%s", _line);
 }

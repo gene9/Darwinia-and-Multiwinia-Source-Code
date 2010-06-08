@@ -32,7 +32,7 @@ public:
 	LandscapeTile *m_def;
 
 	LandscapeTileButton(LandscapeTile *_def): m_def(_def) {}
-	
+
 	void MouseUp()
 	{
 		if (stricmp(m_name, LANGUAGEPHRASE("editor_generate")) == 0)
@@ -78,10 +78,10 @@ public:
             tile->m_randomSeed = m_def->m_randomSeed;
             tile->m_lowlandSmoothingFactor = m_def->m_lowlandSmoothingFactor;
             tile->m_generationMethod = m_def->m_generationMethod;
-            
+
 		    LandscapeDef *def = &g_app->m_location->m_levelFile->m_landscape;
             g_app->m_location->m_landscape.Init(def);
-            
+
         }
         else if( stricmp(m_name, LANGUAGEPHRASE("editor_guidegrid")) == 0 )
         {
@@ -101,7 +101,7 @@ public:
 
 LandscapeTileEditWindow::LandscapeTileEditWindow( char *name, int tileId )
 :   DarwiniaWindow(name),
-    m_tileId(tileId) 
+    m_tileId(tileId)
 {
 }
 
@@ -142,7 +142,7 @@ void LandscapeTileEditWindow::Create()
     LandscapeTileButton *guideGrid = new LandscapeTileButton(m_tileDef);
     guideGrid->SetShortProperties(LANGUAGEPHRASE("editor_guidegrid"), 10, height += pitch, m_w - 20 );
     RegisterButton(guideGrid);
-    
+
     height += 6;
 
 #define FLOAT InputField::TypeFloat
@@ -175,7 +175,7 @@ public:
 	int m_areaId;
 
 	LandscapeFlattenAreaDeleteButton(int _areaId): m_areaId(_areaId) {}
-	
+
 	void MouseUp()
 	{
 		g_app->m_location->m_levelFile->m_landscape.m_flattenAreas.RemoveData(m_areaId);
@@ -191,7 +191,7 @@ public:
 
 LandscapeFlattenAreaEditWindow::LandscapeFlattenAreaEditWindow(char *_name, int areaId)
 :   DarwiniaWindow(_name),
-    m_areaId(areaId) 
+    m_areaId(areaId)
 {
 }
 
@@ -223,7 +223,7 @@ void LandscapeFlattenAreaEditWindow::Create()
 	del->SetShortProperties(LANGUAGEPHRASE("editor_delete"), 10, height += pitch, buttonWidth);
 	RegisterButton(del);
 
-    
+
 }
 
 
@@ -314,7 +314,7 @@ public:
 
         levelFile->m_landscape.m_worldSizeX *= m_scaleFactor;
         levelFile->m_landscape.m_worldSizeZ *= m_scaleFactor;
-        
+
     	g_app->m_location->m_landscape.Init(&levelFile->m_landscape);
 
         //
@@ -390,7 +390,7 @@ void LandscapeEditWindow::Create()
     RegisterButton(newFlat);
 
     height += 8;
-    
+
     ScaleLandscapeButton *scaleDown = new ScaleLandscapeButton();
     scaleDown->SetShortProperties( LANGUAGEPHRASE("editor_scaledown"), 10, height += pitch, m_w - 20 );
     scaleDown->m_scaleFactor = 0.95f;
@@ -406,7 +406,7 @@ void LandscapeEditWindow::Create()
 #define FLOAT InputField::TypeFloat
 #define INTGR InputField::TypeInt
 #define Y height += pitch
-	
+
 	LandscapeDef *landDef = &g_app->m_location->m_levelFile->m_landscape;
     CreateValueControl( LANGUAGEPHRASE("editor_outsideheight"), FLOAT, &landDef->m_outsideHeight,	Y, 1.0f,	-100,	100,	gen );
     CreateValueControl( LANGUAGEPHRASE("editor_cellsize"),		FLOAT, &landDef->m_cellSize,		Y, 1,		1.0f,	100.0f,	gen );
@@ -417,7 +417,7 @@ void LandscapeEditWindow::Create()
 #undef INTGR
 #undef Y
 
-    CreateValueControl( LANGUAGEPHRASE("editor_movebuildings"), InputField::TypeInt, &g_app->m_locationEditor->m_moveBuildingsWithLandscape, 
+    CreateValueControl( LANGUAGEPHRASE("editor_movebuildings"), InputField::TypeInt, &g_app->m_locationEditor->m_moveBuildingsWithLandscape,
                         height+=pitch, 1, 0, 1 );
 }
 
@@ -433,11 +433,11 @@ public:
     {
         if( stricmp( m_name, LANGUAGEPHRASE("editor_generate") ) == 0 )
         {
-            LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+            LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
 	        parent->m_tileDef->GuideGridSetPower(parent->m_guideGridPower);
 			LandscapeDef *def = &g_app->m_location->m_levelFile->m_landscape;
-            g_app->m_location->m_landscape.Init(def);   
-            
+            g_app->m_location->m_landscape.Init(def);
+
             parent->Remove();
             parent->Create();
         }
@@ -449,7 +449,7 @@ class GuideGrid : public EclButton
 public:
     void RenderBorder( int realX, int realY, bool highlighted, bool clicked )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
         if( def->m_guideGrid )
@@ -469,7 +469,7 @@ public:
 
     void RenderGrid( int realX, int realY, bool highlighted, bool clicked )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
         if( def->m_guideGrid )
@@ -485,7 +485,7 @@ public:
                 glVertex2i( realX + (x+0.5f) * parent->m_pixelSizePerSample, realY + h );
             }
             for( int z = 0; z < def->m_guideGrid->GetNumColumns(); z++ )
-            {            
+            {
                 glVertex2i( realX, realY + (z+0.5f) * parent->m_pixelSizePerSample );
                 glVertex2i( realX + w, realY + (z+0.5f) * parent->m_pixelSizePerSample );
             }
@@ -495,7 +495,7 @@ public:
 
     void RenderColours( int realX, int realY, bool highlighted, bool clicked )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
         if( def->m_guideGrid )
@@ -507,13 +507,13 @@ public:
                 {
                     unsigned char val = def->m_guideGrid->GetData( x, z );
                     glColor4ub( val, val, val, 255 );
-                    glVertex2i( realX + x * parent->m_pixelSizePerSample, 
+                    glVertex2i( realX + x * parent->m_pixelSizePerSample,
                                 realY + z * parent->m_pixelSizePerSample );
-                    glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample, 
+                    glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample,
                                 realY + z * parent->m_pixelSizePerSample );
-                    glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample, 
+                    glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample,
                                 realY + (z+1) * parent->m_pixelSizePerSample );
-                    glVertex2i( realX + x * parent->m_pixelSizePerSample, 
+                    glVertex2i( realX + x * parent->m_pixelSizePerSample,
                                 realY + (z+1) * parent->m_pixelSizePerSample );
                 }
             }
@@ -523,7 +523,7 @@ public:
 
     void RenderMouse( int realX, int realY, bool highlighted, bool clicked )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
         if( def->m_guideGrid )
@@ -539,26 +539,26 @@ public:
                     {
                         glColor3f( effect, effect, 0.0f );
                         glBegin( GL_LINE_LOOP );
-                            glVertex2i( realX + x * parent->m_pixelSizePerSample, 
+                            glVertex2i( realX + x * parent->m_pixelSizePerSample,
                                         realY + z * parent->m_pixelSizePerSample );
-                            glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample, 
+                            glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample,
                                         realY + z * parent->m_pixelSizePerSample );
-                            glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample, 
+                            glVertex2i( realX + (x+1) * parent->m_pixelSizePerSample,
                                         realY + (z+1) * parent->m_pixelSizePerSample );
-                            glVertex2i( realX + x * parent->m_pixelSizePerSample, 
-                                        realY + (z+1) * parent->m_pixelSizePerSample );        
+                            glVertex2i( realX + x * parent->m_pixelSizePerSample,
+                                        realY + (z+1) * parent->m_pixelSizePerSample );
                         glEnd();
                     }
                 }
             }
 
             glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-        }        
+        }
     }
 
     void HandleMouseInput()
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
 		int mouseX = g_target->X();
@@ -571,7 +571,7 @@ public:
             mouseY >= m_y + m_parent->m_y &&
             mouseX < m_x + m_w + m_parent->m_x &&
             mouseY < m_y + m_h + m_parent->m_y )
-        {            
+        {
             for( int x = 0; x < def->m_guideGrid->GetNumColumns(); ++x )
             {
                 for( int z = 0; z < def->m_guideGrid->GetNumColumns(); ++z )
@@ -631,7 +631,7 @@ public:
 
     float GetToolEffect( int x, int y )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
         int toolSize = parent->m_toolSize;
 
@@ -646,13 +646,13 @@ public:
             float providedX = ( x + 0.5f );
             float providedY = ( y + 0.5f );
 
-            if( toolSize == 1 && 
+            if( toolSize == 1 &&
                 int(mouseX) == int(providedX) &&
                 int(mouseY) == int(providedY) )
             {
                 return 1.0f;
             }
-            
+
             float distance = sqrtf( (providedX - mouseX) * (providedX - mouseX) +
                                     (providedY - mouseY) * (providedY - mouseY) );
 
@@ -670,8 +670,8 @@ public:
     }
 
     void Render( int realX, int realY, bool highlighted, bool clicked )
-    {        
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+    {
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         LandscapeTile *def = parent->m_tileDef;
 
         if( def->m_guideGrid )
@@ -697,7 +697,7 @@ public:
 
     void Render( int realX, int realY, bool highlighted, bool clicked )
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         if( parent->m_tool == m_toolType )
         {
             DarwiniaButton::Render( realX, realY, highlighted, true );
@@ -706,11 +706,11 @@ public:
         {
             DarwiniaButton::Render( realX, realY, highlighted, clicked );
         }
-    }    
+    }
 
     void MouseUp()
     {
-        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;        
+        LandscapeGuideGridWindow *parent = (LandscapeGuideGridWindow *) m_parent;
         parent->m_tool = m_toolType;
     }
 };
@@ -737,7 +737,7 @@ void LandscapeGuideGridWindow::Create()
 
     int biggerSize = min( gridW, gridH );
     if( m_guideGridPower > 0 )
-    {   
+    {
         m_pixelSizePerSample = biggerSize / m_tileDef->m_guideGrid->GetNumColumns();
     }
     else
@@ -776,7 +776,7 @@ void LandscapeGuideGridWindow::Create()
     GuideGridTool *binary = new GuideGridTool( GuideGridToolBinary );
     binary->SetShortProperties( LANGUAGEPHRASE("editor_binary"), controlsX, controlsY += controlsH, controlsW );
     RegisterButton( binary );
-    
+
     DarwiniaWindow::Create();
 }
 

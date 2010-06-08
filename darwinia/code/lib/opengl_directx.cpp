@@ -38,11 +38,11 @@ using namespace OpenGLD3D;
 //#define D3DTS_WORLD D3DTS_VIEW
 
 // Notes:
-// OpenGL uses a RH coordinate system (+ve Z goes into the monitor), 
+// OpenGL uses a RH coordinate system (+ve Z goes into the monitor),
 // Direct3D uses LH coordinate system (-ve Z goes into the monitor)
 // Matrix format is different in the two systems (One is the transpose of the other)
 // gluLookAt -> D3DXMatrixLookAtRH (LH) ?
-// gluOrtho, gluOrtho2D -> D3DXMatrixOrthoRH (LH) ? 
+// gluOrtho, gluOrtho2D -> D3DXMatrixOrthoRH (LH) ?
 
 /* TODO:
 
@@ -68,9 +68,9 @@ namespace OpenGLD3D {
 
 	LPDIRECT3D9             g_pD3D       = NULL; // Used to create the D3DDevice
     D3DPRESENT_PARAMETERS	g_d3dpp;			 // The device parameters
-	
+
 	LPDIRECT3DDEVICE9       g_pd3dDevice = NULL;
-	LPDIRECT3DDEVICE9		g_pd3dDeviceActual = NULL; // The device corresponding to the 
+	LPDIRECT3DDEVICE9		g_pd3dDeviceActual = NULL; // The device corresponding to the
 	bool                    g_supportsHwVertexProcessing = true;
 	bool					g_supportsAutoMipmapping = true;
 
@@ -129,7 +129,7 @@ static D3DVERTEXELEMENT9 s_customVertexDesc[] = {
 	{0, 24, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
 	{0, 28, D3DDECLTYPE_FLOAT2,    D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
 	{0, 36, D3DDECLTYPE_FLOAT2,    D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 1},
-	{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0}// D3DDECL_END 
+	{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0}// D3DDECL_END
 };
 
 LPDIRECT3DVERTEXDECLARATION9 s_pCustomVertexDecl;
@@ -159,15 +159,15 @@ public:
 	CurrentAttributes();
 
 public:
-									// Current raster position 
-									// GL_CURRENT_RASTER_POSITION_VALID flag 
-									// RGBA color associated with current raster position 
-									// Color index associated with current raster position 
-									// Texture coordinates associated with current raster position 
-									// GL_EDGE_FLAG flag 
+									// Current raster position
+									// GL_CURRENT_RASTER_POSITION_VALID flag
+									// RGBA color associated with current raster position
+									// Color index associated with current raster position
+									// Texture coordinates associated with current raster position
+									// GL_EDGE_FLAG flag
 
 	float	alphaRef;				// Store precise value of alpha ref
-	
+
 	bool	texturingEnabled[MAX_ACTIVE_TEXTURES];		//			(GL_ENABLE_BIT)
 	bool	backCullingEnabled;		//								(GL_CULL_FACE)
 
@@ -213,8 +213,8 @@ static void InitialiseData()
 	D3DXMATRIX m;
 
 	// Matrix Data
-	
-	if (s_pModelViewMatrixStackActual != NULL) { 
+
+	if (s_pModelViewMatrixStackActual != NULL) {
 		delete s_pModelViewMatrixStackActual;
 		delete s_pProjectionMatrixStackActual;
 	}
@@ -226,9 +226,9 @@ static void InitialiseData()
 	s_targetMatrixTransformType = D3DTS_WORLD;
 	s_pModelViewMatrixStack = s_pModelViewMatrixStackActual;
 	s_pProjectionMatrixStack = s_pProjectionMatrixStackActual;
-	s_pTargetMatrixStack = s_pModelViewMatrixStack;	
+	s_pTargetMatrixStack = s_pModelViewMatrixStack;
 
-	// Colours 
+	// Colours
 	s_clearColor = D3DCOLOR_RGBA(0, 0, 0, 255);
 
 	// Vertex data
@@ -237,7 +237,7 @@ static void InitialiseData()
 
 	if (s_vertices == NULL) {
 		s_allocatedVertices = 1024;
-		s_vertices = new CustomVertex[s_allocatedVertices];			
+		s_vertices = new CustomVertex[s_allocatedVertices];
 	}
 	s_currentVertexNumber = 0;
 	s_currentVertex = s_vertices;
@@ -386,7 +386,7 @@ bool Direct3DInit(HWND _hWnd, bool _windowed, int _width, int _height, int _colo
 
 	g_d3dpp.PresentationInterval = _waitVRT ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;
 	g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	
+
 	if (_zDepth) {
 		g_d3dpp.EnableAutoDepthStencil = TRUE;
 		switch (_zDepth) {
@@ -441,11 +441,11 @@ bool Direct3DInit(HWND _hWnd, bool _windowed, int _width, int _height, int _colo
 	}
 
     // Create the D3DDevice
-    if( FAILED( g_pD3D->CreateDevice( 
+    if( FAILED( g_pD3D->CreateDevice(
 		// NVPerfHud adapter
 		//g_pD3D->GetAdapterCount()-1, D3DDEVTYPE_REF,
 		// standard adapter
-		D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, 
+		D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
 		_hWnd, g_supportsHwVertexProcessing?D3DCREATE_HARDWARE_VERTEXPROCESSING:D3DCREATE_SOFTWARE_VERTEXPROCESSING,&g_d3dpp, &g_pd3dDevice ) ) )
     {
 		// non fatal end, res change can help
@@ -458,7 +458,7 @@ bool Direct3DInit(HWND _hWnd, bool _windowed, int _width, int _height, int _colo
 
 	InitialiseData();
 
-	g_pd3dDevice->BeginScene();	
+	g_pd3dDevice->BeginScene();
 	g_pd3dDevice->SetVertexDeclaration( s_pCustomVertexDecl );
 	// g_pd3dDevice->SetFVF(CustomVertexFVF);
 
@@ -484,7 +484,7 @@ void WaitAndResetDevice()
 	// wait until device can be reset and reset device
 	while (true)
 	{
-		Sleep( 100 ); 
+		Sleep( 100 );
 
 		HRESULT hr;
 		if (FAILED(hr = g_pd3dDevice->TestCooperativeLevel()))
@@ -518,7 +518,7 @@ void Direct3DSwapBuffers()
 		WaitAndResetDevice();
 	}
 	g_pd3dDevice->BeginScene();
-    
+
 #ifdef FRAMES_PER_SECOND_COUNTER
 	static DWORD s_startTime = GetTickCount();
 	static unsigned s_numFrames = 0;
@@ -546,19 +546,19 @@ void glClear (GLbitfield mask)
 
 	DWORD flags = 0;
 
-	if (mask & GL_COLOR_BUFFER_BIT) 
+	if (mask & GL_COLOR_BUFFER_BIT)
 		flags |= D3DCLEAR_TARGET;
 
 	if (mask & GL_DEPTH_BUFFER_BIT)
 		flags |= D3DCLEAR_ZBUFFER;
 
 	// Not implemented:
-	// OpenGL supports specifying which buffers to clear 
+	// OpenGL supports specifying which buffers to clear
 	// (Front or Back buffers, left or right stereoscopic)
 	// by means of glDrawBuffers
 
 	g_pd3dDevice->Clear( 0, NULL, flags, s_clearColor, 1.0f, 0 );
-	
+
 	// Ensure that mask does not include any flags that we may not
 	// have handled.
 	DarwiniaDebugAssert( (mask & ~(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)) == 0 );
@@ -571,7 +571,7 @@ void glMatrixMode (GLenum mode)
 	DarwiniaDebugAssert( mode == GL_MODELVIEW || mode == GL_PROJECTION );
 
 	// Nothing to be done if we're already in this matrix mode
-	if (s_matrixMode == mode) 
+	if (s_matrixMode == mode)
 		return;
 
 	s_pTargetMatrixStack->FastSetTransform();
@@ -602,7 +602,7 @@ void glLoadIdentity ()
 void gluOrtho2D (GLdouble left, GLdouble right, GLdouble bottom, GLdouble top)
 {
 	GL_TRACE_IMP(" gluOrtho2D(%10.4g, %10.4g, %10.4g, %10.4g)", left, right, bottom, top)
-	
+
 	D3DXMATRIX m;
 	D3DXMatrixOrthoOffCenterRH( &m, left, right, bottom, top, -1.0, +1.0 );
 	s_pTargetMatrixStack->Load(m);
@@ -612,11 +612,11 @@ void gluLookAt (GLdouble eyex, GLdouble eyey, GLdouble eyez, GLdouble centerx, G
 {
 	GL_TRACE_IMP(" gluLookAt(%10.4g, %10.4g, %10.4g, %10.4g, %10.4g, %10.4g, %10.4g, %10.4g, %10.4g)", eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz)
 
-	D3DXVECTOR3 
+	D3DXVECTOR3
 		eye( (FLOAT) eyex,    (FLOAT) eyey,    (FLOAT) eyez ),
 		 at( (FLOAT) centerx, (FLOAT) centery, (FLOAT) centerz ),
 		 up( (FLOAT) upx,     (FLOAT) upy,     (FLOAT) upz );
-		
+
 	D3DXMATRIX m;
 	D3DXMatrixLookAtRH( &m, &eye, &at, &up );
 	s_pTargetMatrixStack->Load(m);
@@ -626,8 +626,8 @@ void gluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zF
 {
 	GL_TRACE_IMP(" gluPerspective(%10.4g, %10.4g, %10.4g, %10.4g)", fovy, aspect, zNear, zFar)
 
-	// zNear The distance from the viewer to the near clipping plane (always positive). 
-	// zFar  The distance from the viewer to the far clipping plane (always positive). 
+	// zNear The distance from the viewer to the near clipping plane (always positive).
+	// zFar  The distance from the viewer to the far clipping plane (always positive).
 
 	// zn [in] Z-value of the near view-plane.
 	// zf [in] Z-value of the far view-plane.
@@ -642,7 +642,7 @@ void gluPerspective (GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zF
 
 static void setupTexturing()
 {
-	// JAK: I think that the glPushAttrib stuff might be interfering with 
+	// JAK: I think that the glPushAttrib stuff might be interfering with
 	//      the commented optimisation below:
 
 	//if (s.envMode != s.lastEnvMode ||
@@ -660,7 +660,7 @@ static void setupTexturing()
 
 		switch (s.envMode) {
 			case GL_MODULATE:
-				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE ); 
+				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE );
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 
@@ -670,15 +670,15 @@ static void setupTexturing()
 				break;
 
 			case GL_REPLACE:
-				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTOP_SELECTARG1 ); 
-				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTA_TEXTURE ); 
+				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTOP_SELECTARG1 );
+				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTA_TEXTURE );
 
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_ALPHAOP,   D3DTOP_SELECTARG1 );
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_ALPHAARG1, D3DTA_TEXTURE );
 				break;
 
 			case GL_DECAL:
-				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE ); 
+				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE );
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 				g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 
@@ -689,8 +689,8 @@ static void setupTexturing()
 			case GL_COMBINE_EXT:
 				switch (s.rgbCombineMode) {
 					case GL_REPLACE:
-						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTOP_SELECTARG1 ); 
-						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTA_TEXTURE ); 
+						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTOP_SELECTARG1 );
+						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP, D3DTA_TEXTURE );
 
 
                         g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_ALPHAOP,   D3DTOP_MODULATE );
@@ -702,7 +702,7 @@ static void setupTexturing()
 						break;
 
 					case GL_MULT:
-						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE ); 
+						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE );
 						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG2, D3DTA_CURRENT );
 
@@ -711,7 +711,7 @@ static void setupTexturing()
 						break;
 
 					case GL_MODULATE:
-						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE ); 
+						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLOROP,   D3DTOP_MODULATE );
 						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 						g_pd3dDevice->SetTextureStageState( s_activeTexture, D3DTSS_COLORARG2, D3DTA_CURRENT );
 
@@ -789,7 +789,7 @@ void glDisable ( GLenum cap )
 
 	switch (cap) {
 		case GL_ALPHA_TEST:
-			g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); 
+			g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 			break;
 
 		case GL_BLEND:
@@ -825,7 +825,7 @@ void glDisable ( GLenum cap )
 			break;
 
 		case GL_LIGHTING:
-			g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE); 
+			g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 			break;
 
 		case GL_LIGHT0:
@@ -871,7 +871,7 @@ void glEnable ( GLenum cap )
 
 	switch (cap) {
 		case GL_ALPHA_TEST:
-			g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); 
+			g_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 			break;
 
 		case GL_BLEND:
@@ -907,7 +907,7 @@ void glEnable ( GLenum cap )
 			break;
 
 		case GL_LIGHTING:
-			g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, TRUE); 
+			g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 			break;
 
 		case GL_LIGHT0:
@@ -1010,7 +1010,7 @@ void glEnd ()
 
 		case GL_LINE_LOOP:
 			DarwiniaDebugAssert(s_currentVertexNumber>1);
-			if(s_currentVertexNumber+2 >= s_allocatedVertices) 
+			if(s_currentVertexNumber+2 >= s_allocatedVertices)
 				reallocateVertexList();
 			s_vertices[s_currentVertexNumber] = s_vertices[0];
 			g_pd3dDevice->DrawPrimitiveUP(D3DPT_LINESTRIP, s_currentVertexNumber, s_vertices, sizeof(CustomVertex));
@@ -1061,7 +1061,7 @@ void glEnd ()
 void glVertex3f_impl( GLfloat x, GLfloat y, GLfloat z )
 {
 	// Check to see if we need to expand the list
-	if (s_currentVertexNumber+2 >= s_allocatedVertices) 
+	if (s_currentVertexNumber+2 >= s_allocatedVertices)
 		reallocateVertexList();
 
 	*s_currentVertex = s_currentAttribs;
@@ -1102,7 +1102,7 @@ void glGenTextures (GLsizei n, GLuint *textures)
 
 	for (int i = 0; i < n; i++) {
 		textures[i] = s_textureIds.size();
-		s_textureIds.push_back( 0 );		
+		s_textureIds.push_back( 0 );
 	}
 }
 
@@ -1134,7 +1134,7 @@ void glCopyTexImage2D (GLenum target, GLint level, GLenum internalFormat, GLint 
 		DarwiniaDebugAssert( hr != D3DERR_INVALIDCALL );
 		DarwiniaDebugAssert( hr != D3DXERR_INVALIDDATA );
 	}
-	
+
 	// Get the backbuffer surface
 	IDirect3DSurface9 *backbuffer = NULL;
 	RECT backbufferRect = { x, y, x + width, y + height };
@@ -1183,7 +1183,7 @@ void glReadPixels (GLint x, GLint y, GLsizei width, GLsizei height, GLenum forma
 							for(unsigned y=0;y<height;y++)
 							{
 								for(unsigned x=0;x<width;x++)
-								{        
+								{
 									*dst++ = src[width*4*(height-1-y)+4*x+2];
 									*dst++ = src[width*4*(height-1-y)+4*x+1];
 									*dst++ = src[width*4*(height-1-y)+4*x+0];
@@ -1218,15 +1218,15 @@ int gluBuild2DMipmaps (GLenum target, GLint components, GLint width, GLint heigh
 		pTexture->Release();
 		pTexture = NULL;
 	}
-	
-	// We enforce that the width and height are powers of 2. 
+
+	// We enforce that the width and height are powers of 2.
 	// gluBuild2DMipmaps ought to be able to deal with it, but
 	// it's easier to get the application to do it.
 	DarwiniaDebugAssert( width == 1 << (int) ceil(log((float) width)/log(2.0f)) );
 	DarwiniaDebugAssert( height == 1 << (int) ceil(log((float) height)/log(2.0f)) );
 
 	// We also enforce that the format is convenient
-	DarwiniaDebugAssert( format == GL_RGBA );	
+	DarwiniaDebugAssert( format == GL_RGBA );
 	DarwiniaDebugAssert( type == GL_UNSIGNED_BYTE );
 
 	HRESULT rc = g_pd3dDevice->CreateTexture(width, height, 0, D3DUSAGE_AUTOGENMIPMAP, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, NULL);
@@ -1281,7 +1281,7 @@ static DWORD glMinMagFilterToDirect3D(GLenum param)
 		case GL_LINEAR: return D3DTEXF_LINEAR;
 		case GL_NEAREST: return D3DTEXF_POINT;
 		case GL_LINEAR_MIPMAP_LINEAR: return D3DTEXF_LINEAR;
-		default: 
+		default:
 			DarwiniaReleaseAssert(FALSE, "Unknown Filter %u", param);
 			return D3DTEXF_NONE;
 	}
@@ -1310,7 +1310,7 @@ static DWORD glTextureWrapToDirect3D(GLenum param)
 }
 
 
-// Implement glTexParameteri , glTexParameterf 
+// Implement glTexParameteri , glTexParameterf
 //  See: SetSamplerState and 'Texture Wrapping' and 'Texture Addressing Modes'
 
 void glTexParameteri (GLenum target, GLenum pname, GLint param)
@@ -1334,7 +1334,7 @@ void glTexParameteri (GLenum target, GLenum pname, GLint param)
 
 		case GL_TEXTURE_MIN_FILTER:
 			g_pd3dDevice->SetSamplerState( s_activeTexture, D3DSAMP_MINFILTER, glMinMagFilterToDirect3D(param) );
-			g_pd3dDevice->SetSamplerState( s_activeTexture, D3DSAMP_MIPFILTER, 
+			g_pd3dDevice->SetSamplerState( s_activeTexture, D3DSAMP_MIPFILTER,
 				param == GL_LINEAR_MIPMAP_LINEAR ? D3DTEXF_LINEAR : D3DTEXF_NONE );
 			break;
 	}
@@ -1351,7 +1351,7 @@ void glTexParameterf ( GLenum target, GLenum pname, GLfloat param )
 static D3DBLEND openGLBlendFactorToDirect3D( GLenum factor )
 {
 	switch (factor) {
-		
+
 		case GL_ZERO:					return D3DBLEND_ZERO;
 		case GL_ONE:					return D3DBLEND_ONE;
 		case GL_SRC_COLOR:				return D3DBLEND_SRCCOLOR;
@@ -1408,17 +1408,17 @@ void glFogf_impl (GLenum pname, GLfloat param)
 static D3DFOGMODE openGLFogModeToDirect3D( GLenum param )
 {
 	switch (param) {
-		
+
 		case GL_LINEAR: return D3DFOG_LINEAR;
 		//case GL_EXP: return D3DFOG_EXP;
 		//case GL_EXP2: return D3DFOG_EXP2;
-		default: 
+		default:
 			// Invalid fog mode
 			DarwiniaDebugAssert(FALSE);
 			return D3DFOG_NONE;
 	};
 }
-	
+
 void glFogi_impl (GLenum pname, GLint param)
 {
 	switch (pname) {
@@ -1434,7 +1434,7 @@ void glFogi_impl (GLenum pname, GLint param)
 		case GL_FOG_MODE:
 			// glHint( GL_FOG, GL_DONT_CARE ) should result in D3DRS_FOGVERTEXMODE being used
 			// instead, if pixel based fog is inefficient
-			
+
 			// g_pd3dDevice->SetRenderState( D3DRS_FOGVERTEXMODE, openGLFogModeToDirect3D((GLenum) param) );
 			g_pd3dDevice->SetRenderState( D3DRS_FOGTABLEMODE, openGLFogModeToDirect3D((GLenum) param) );
 			break;
@@ -1517,7 +1517,7 @@ static GLenum direct3DFuncToOpenGL( D3DCMPFUNC func )
 static GLenum direct3DBlendFactorToOpenGL( D3DBLEND factor )
 {
 	switch (factor) {
-		
+
 		case D3DBLEND_ZERO:				return GL_ZERO;
 		case D3DBLEND_ONE:				return GL_ONE;
 		case D3DBLEND_SRCCOLOR:			return GL_SRC_COLOR;
@@ -1535,11 +1535,11 @@ static GLenum direct3DBlendFactorToOpenGL( D3DBLEND factor )
 static GLenum direct3DFogModeToOpenGL( D3DFOGMODE param )
 {
 	switch (param) {
-		
+
 		case D3DFOG_LINEAR: return GL_LINEAR;
 		//case GL_EXP: return D3DFOG_EXP;
 		//case GL_EXP2: return D3DFOG_EXP2;
-		default: 
+		default:
 			// Invalid fog mode
 			DarwiniaDebugAssert(FALSE);
 			return GL_LINEAR;
@@ -1723,13 +1723,13 @@ static void direct3DMatrixToOpenGL( const D3DMATRIX &_matrix, DoubleFloat *_out 
 	// and OpenGL does post-multiplying. Therefore, we do not need to transpose them
 	// again.
 
-	// We should provide a specialisation of this function which performs a 
+	// We should provide a specialisation of this function which performs a
 	// memcpy for Float.
 	_out[0] = _matrix._11;
 	_out[1] = _matrix._12;
 	_out[2] = _matrix._13;
 	_out[3] = _matrix._14;
-	
+
 	_out[4] = _matrix._21;
 	_out[5] = _matrix._22;
 	_out[6] = _matrix._23;
@@ -1777,8 +1777,8 @@ void glGetDoublev (GLenum pname, GLdouble *params)
 	GL_TRACE_IMP(" glGetDoublev(%s, (double *)%p)", glEnumToString(pname), params)
 
 	switch (pname) {
-		case GL_MODELVIEW_MATRIX: 
-			{				
+		case GL_MODELVIEW_MATRIX:
+			{
 				D3DXMATRIX matrix = s_pModelViewMatrixStack->GetTransform();
 				direct3DMatrixToOpenGL( matrix, params );
 			}
@@ -1819,7 +1819,7 @@ int gluProject (GLdouble objx, GLdouble objy, GLdouble objz, const GLdouble mode
 	win.y = win.y * 0.5f + 0.5f;
 	win.z = win.z * 0.5f + 0.5f;
 
-    // Map to viewport 
+    // Map to viewport
 	*winx = win.x * viewport[2] + viewport[0];
 	*winy = win.y * viewport[3] + viewport[1];
 	*winz = win.z;
@@ -1830,7 +1830,7 @@ int gluProject (GLdouble objx, GLdouble objy, GLdouble objz, const GLdouble mode
 
 int gluUnProject (GLdouble winx, GLdouble winy, GLdouble winz, const GLdouble modelMatrix[16], const GLdouble projMatrix[16], const GLint viewport[4], GLdouble *objx, GLdouble *objy, GLdouble *objz)
 {
-	// Attempt to determine a 3d coordinate that a given window coordinate (winx, winy) 
+	// Attempt to determine a 3d coordinate that a given window coordinate (winx, winy)
 	// corresponds to, given the winz, and model and projection matrices
 	// (as well as the viewport dimensions).
 
@@ -1860,7 +1860,7 @@ int gluUnProject (GLdouble winx, GLdouble winy, GLdouble winz, const GLdouble mo
 	D3DXVec4Transform( &source, &win, &inv );
 	if (source.w == 0.0f)
 		return false;
-	
+
 	*objx = source.x / source.w;
 	*objy = source.y / source.w;
 	*objz = source.z / source.w;
@@ -1895,8 +1895,8 @@ static void transformByModelView( D3DVECTOR &v, float w /* 0.0f for directional,
 void glLightfv (GLenum light, GLenum pname, const GLfloat *params)
 {
 	GL_TRACE_IMP(" glLightfv(%s, %s, (const float *)%p)", glEnumToString(light), glEnumToString(pname), params)
-	
-	// Possible rewrite: 
+
+	// Possible rewrite:
 	//	- Change this function to modify just a D3DLIGHT9 structure
 	//	- and make the state changes only when required.
 
@@ -1910,7 +1910,7 @@ void glLightfv (GLenum light, GLenum pname, const GLfloat *params)
 
 	g_pd3dDevice->GetLight( lightIndex, &lightInfo );
 
-	// Apply the modelview matrix to the parameters to get the 
+	// Apply the modelview matrix to the parameters to get the
 	// lights into eye-space
 
 	switch (pname) {
@@ -1958,7 +1958,7 @@ void glLightfv (GLenum light, GLenum pname, const GLfloat *params)
 			lightInfo.Specular.b = params[2];
 			lightInfo.Specular.a = params[3];
 			break;
-		
+
 		case GL_AMBIENT:
 			lightInfo.Ambient.r = params[0];
 			lightInfo.Ambient.g = params[1];
@@ -1966,7 +1966,7 @@ void glLightfv (GLenum light, GLenum pname, const GLfloat *params)
 			lightInfo.Ambient.a = params[3];
 			break;
 
-		default: 
+		default:
 			GL_TRACE("-glLightfv(%s, %s, (const float *)%p) not implemented", glEnumToString(light), glEnumToString(pname), params);
 			break;
 	}
@@ -1977,7 +1977,7 @@ void glLightfv (GLenum light, GLenum pname, const GLfloat *params)
 void glGetLightfv (GLenum light, GLenum pname, GLfloat *params)
 {
 	GL_TRACE_IMP(" glGetLightfv(%s, %s, (float *)%p)", glEnumToString(light), glEnumToString(pname), params);
-	
+
 	int lightIndex = light - GL_LIGHT0;
 	D3DLIGHT9 lightInfo;
 
@@ -2012,7 +2012,7 @@ void glGetLightfv (GLenum light, GLenum pname, GLfloat *params)
 			params[2] = lightInfo.Specular.b;
 			params[3] = lightInfo.Specular.a;
 			break;
-		
+
 		case GL_AMBIENT:
 			params[0] = lightInfo.Ambient.r;
 			params[1] = lightInfo.Ambient.g;
@@ -2051,10 +2051,10 @@ void glFrontFace (GLenum mode)
 	if (s_ccwFrontFace != v) {
 		s_ccwFrontFace = v;
 		s_cullMode = (v ? D3DCULL_CW : D3DCULL_CCW);
-		
+
 		if (s_currentAttribs.backCullingEnabled)
 			g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, s_cullMode);
-	}	
+	}
 }
 
 static D3DFILLMODE openGLFillModeToDirect3D( GLenum mode )
@@ -2065,7 +2065,7 @@ static D3DFILLMODE openGLFillModeToDirect3D( GLenum mode )
 
 		case GL_LINE:
 			return D3DFILL_WIREFRAME;
-			
+
 		default:
 			DarwiniaDebugAssert( mode == D3DFILL_SOLID || mode == D3DFILL_WIREFRAME );
 			return D3DFILL_WIREFRAME;
@@ -2076,10 +2076,10 @@ void glPolygonMode (GLenum face, GLenum mode)
 {
 	GL_TRACE_IMP(" glPolygonMode(%s, %s) .", glEnumToString(face), glEnumToString(mode));
 
-	// Warning: This does not respect whether the face is front facing or 
+	// Warning: This does not respect whether the face is front facing or
 	//          back facing
 
-	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, openGLFillModeToDirect3D(mode));	
+	g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, openGLFillModeToDirect3D(mode));
 }
 
 static D3DSHADEMODE openGLShadeModelToDirect3D( GLenum mode )
@@ -2203,7 +2203,7 @@ void glDepthFunc (GLenum func)
 {
 	GL_TRACE_IMP(" glDepthFunc(%s)", glEnumToString(func))
 
-	g_pd3dDevice->SetRenderState(D3DRS_ZFUNC, openGLFuncToDirect3D( func ));	
+	g_pd3dDevice->SetRenderState(D3DRS_ZFUNC, openGLFuncToDirect3D( func ));
 }
 
 
@@ -2240,7 +2240,7 @@ void glNewList (GLuint list, GLenum mode)
 	s_pDisplayListDevice = new DisplayListDevice( list );
 	s_pModelViewMatrixStack = new MatrixStackDisplayList( D3DTS_WORLD, s_pDisplayListDevice, s_pModelViewMatrixStackActual );
 	s_pProjectionMatrixStack = new MatrixStackDisplayList( D3DTS_PROJECTION, s_pDisplayListDevice, s_pProjectionMatrixStackActual );
-	s_pTargetMatrixStack = 
+	s_pTargetMatrixStack =
 		s_matrixMode == GL_MODELVIEW ? s_pModelViewMatrixStack : s_pProjectionMatrixStack;
 
 	g_pd3dDevice = s_pDisplayListDevice;
@@ -2265,7 +2265,7 @@ void glEndList ()
 	s_pDisplayListDevice = NULL;
 	s_pModelViewMatrixStack = s_pModelViewMatrixStackActual;
 	s_pProjectionMatrixStack = s_pProjectionMatrixStackActual;
-	s_pTargetMatrixStack = 
+	s_pTargetMatrixStack =
 		s_matrixMode == GL_MODELVIEW ? s_pModelViewMatrixStack : s_pProjectionMatrixStack;
 }
 
@@ -2292,7 +2292,7 @@ void glMaterialfv (GLenum face, GLenum pname, const GLfloat *params)
 
 	D3DMATERIAL9 mat;
 	g_pd3dDevice->GetMaterial(&mat);
-	
+
 	switch (pname) {
 		case GL_SPECULAR:
 			mat.Specular.r = params[0];
@@ -2367,7 +2367,7 @@ GLboolean glIsEnabled ( GLenum cap )
 
 	switch (cap) {
 		case GL_ALPHA_TEST:
-			g_pd3dDevice->GetRenderState(D3DRS_ALPHATESTENABLE, &state); 
+			g_pd3dDevice->GetRenderState(D3DRS_ALPHATESTENABLE, &state);
 			return state == TRUE;
 
 		case GL_BLEND:
@@ -2404,7 +2404,7 @@ GLboolean glIsEnabled ( GLenum cap )
 			}
 
 		case GL_LIGHTING:
-			g_pd3dDevice->GetRenderState(D3DRS_LIGHTING, &state); 
+			g_pd3dDevice->GetRenderState(D3DRS_LIGHTING, &state);
 			return state == TRUE;
 
 		case GL_LINE_SMOOTH:
@@ -2444,7 +2444,7 @@ void glGetTexParameteriv (GLenum target, GLenum pname, GLint *params)
 	GL_TRACE_IMP(" glGetTexParameteriv(%s, %s, (int *)%p)", glEnumToString(target), glEnumToString(pname), params);
 
 	DarwiniaDebugAssert(target == GL_TEXTURE_2D);
-		
+
 	switch (pname) {
 		case GL_TEXTURE_MAG_FILTER:
 			{
@@ -2494,10 +2494,10 @@ void glTexEnvf (GLenum target, GLenum pname, GLfloat param)
 	GL_TRACE_IMP(" glTexEnvf(%s, %s, %s)", glEnumToString(target), glEnumToString(pname), glEnumToString(param));
 
 	switch (target) {
-		case GL_TEXTURE_ENV:			
+		case GL_TEXTURE_ENV:
 			switch (pname) {
 				case GL_TEXTURE_ENV_MODE:
-					s_activeTextureState->envMode = param;					
+					s_activeTextureState->envMode = param;
 					if (s_currentAttribs.texturingEnabled[s_activeTexture])
 						setupTexturing();
 					return;
@@ -2523,7 +2523,7 @@ void glTexEnvi (GLenum target, GLenum pname, GLint param)
 		case GL_TEXTURE_ENV:
 			switch (pname) {
 				case GL_TEXTURE_ENV_MODE:
-					s_activeTextureState->envMode = param;					
+					s_activeTextureState->envMode = param;
 					if (s_currentAttribs.texturingEnabled[s_activeTexture])
 						setupTexturing();
 					return;
@@ -2539,10 +2539,10 @@ void glTexEnviv (GLenum target, GLenum pname, const GLint *params)
 {
 	GL_TRACE_IMP(" glTexEnviv(%s, %s, (const int *)%p)", glEnumToString(target), glEnumToString(pname), params);
 
-	switch (target) {	
+	switch (target) {
 		case GL_TEXTURE_ENV:
 			switch (pname) {
-				case GL_TEXTURE_ENV_COLOR: 
+				case GL_TEXTURE_ENV_COLOR:
 					{
 						TextureState &s = *s_activeTextureState;
 
@@ -2587,7 +2587,7 @@ void glGetTexEnviv (GLenum target, GLenum pname, GLint *params)
 void glHint (GLenum target, GLenum mode)
 {
 	GL_TRACE_IMP(" glHint(%s, %s)", glEnumToString(target), glEnumToString(mode));
-	
+
 	switch (target) {
 		case GL_FOG_HINT:
 			s_fogHint = mode;
@@ -2626,7 +2626,7 @@ void glClipPlane (GLenum plane, const GLdouble *equation)
 
     int planeIndex = plane - GL_CLIP_PLANE0;
 
-    float equationAsFloats[4] = { equation[0], equation[1], equation[2], equation[3] };	
+    float equationAsFloats[4] = { equation[0], equation[1], equation[2], equation[3] };
 
     g_pd3dDevice->SetClipPlane(planeIndex, equationAsFloats );
 }
@@ -2635,7 +2635,7 @@ void glClipPlane (GLenum plane, const GLdouble *equation)
 void glFinish ()
 {
     GL_TRACE_IMP(" glFinish()");
-    
+
     return;
 
     // Lock the back buffer to force Direct3D to flush all pending graphics operations

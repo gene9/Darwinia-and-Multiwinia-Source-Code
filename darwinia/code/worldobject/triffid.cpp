@@ -44,7 +44,7 @@ Triffid::Triffid()
     m_triggerTimer(0.0f)
 {
     m_type = TypeTriffid;
-    
+
     SetShape( g_app->m_resource->GetShape("triffidhead.shp") );
 
     m_launchPoint = m_shape->m_rootFragment->LookupMarker( "MarkerLaunchPoint" );
@@ -81,7 +81,7 @@ Matrix34 Triffid::GetHead()
         justFiredFraction = min( justFiredFraction, 1.0f );
         justFiredFraction = max( justFiredFraction, 0.0f );
         justFiredFraction = pow( justFiredFraction, 5 );
-    
+
         _pos -= _front * justFiredFraction * 10.0f;
     }
     else
@@ -89,11 +89,11 @@ Matrix34 Triffid::GetHead()
         // We are on fire, so thrash around a lot
         Vector3 right = _front ^ _up;
         _front = g_upVector;
-        _up = right ^ _front;        
+        _up = right ^ _front;
 
         _front.RotateAround( right * sinf(timer*5.0f) * m_variance );
         _up.RotateAroundY( sinf(timer*3.5f) * m_variance );
-        
+
         _pos += Vector3( sinf(timer*3.3f)*8, sinf(timer*4.5f), sinf(timer*3.2f)*6 );
 
     }
@@ -105,12 +105,12 @@ Matrix34 Triffid::GetHead()
     result.f *= size;
     result.u *= size;
     result.r *= size;
-    
+
     return result;
 }
 
 
-bool Triffid::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool Triffid::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                          float _rayLen, Vector3 *_pos, Vector3 *_norm)
 {
     Matrix34 mat = GetHead();
@@ -121,7 +121,7 @@ bool Triffid::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
 }
 
 
-    
+
 void Triffid::Render( float _predictionTime )
 {
     Matrix34 mat = GetHead();
@@ -149,7 +149,7 @@ void Triffid::Render( float _predictionTime )
         float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
         float thefrand = frand();
         if      ( thefrand > 0.7f ) mat.f *= ( 1.0f - sinf(timeIndex) * 0.5f );
-        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.2f );    
+        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.2f );
         else                        mat.r *= ( 1.0f - sinf(timeIndex) * 0.5f );
         glEnable( GL_BLEND );
         glBlendFunc( GL_ONE, GL_ONE );
@@ -160,7 +160,7 @@ void Triffid::Render( float _predictionTime )
     m_shape->Render( _predictionTime, mat );
 
     if( m_triggered && GetHighResTime() > m_timerSync - m_reloadTime * 0.25f )
-    {        
+    {
         Matrix34 launchMat = m_launchPoint->GetWorldMatrix(mat);
         Shape *eggShape = g_app->m_resource->GetShape( "triffidegg.shp" );
         Matrix34 eggMat( launchMat.u, -launchMat.f, launchMat.pos );
@@ -172,7 +172,7 @@ void Triffid::Render( float _predictionTime )
 
     glDisable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    
+
     glDisable( GL_NORMALIZE );
 }
 
@@ -187,14 +187,14 @@ void Triffid::RenderAlphas( float _predictionTime )
         Matrix34 headMat = GetHead();
         Matrix34 mat( m_front, g_upVector, headMat.pos );
         Matrix34 launchMat = m_launchPoint->GetWorldMatrix(mat);
-    
+
         Vector3 point1 = launchMat.pos;
-        
+
         Vector3 angle = launchMat.f;
         angle.HorizontalAndNormalise();
         angle.RotateAroundY( m_variance*0.5f );
         Vector3 right = angle ^ g_upVector;
-        angle.RotateAround( right * m_pitch * 0.5f );        
+        angle.RotateAround( right * m_pitch * 0.5f );
         Vector3 point2 = point1 + angle * m_force * 3.0f;
 
         angle = launchMat.f;
@@ -215,7 +215,7 @@ void Triffid::RenderAlphas( float _predictionTime )
         // Create a fake egg and plot its course
         // Render our trigger location
 
-#ifdef LOCATION_EDITOR        
+#ifdef LOCATION_EDITOR
         if( g_app->m_locationEditor->m_mode == LocationEditor::ModeBuilding &&
             g_app->m_locationEditor->m_selectionId == m_id.GetUniqueId() )
         {
@@ -225,7 +225,7 @@ void Triffid::RenderAlphas( float _predictionTime )
             egg.m_pos = headMat.pos;
             egg.m_vel = velocity;
             egg.m_front = headMat.f;
-        
+
             glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
             glLineWidth( 2.0f );
             glBegin( GL_LINES );
@@ -234,7 +234,7 @@ void Triffid::RenderAlphas( float _predictionTime )
                 glVertex3fv( egg.m_pos.GetData() );
                 egg.Advance( NULL );
                 glVertex3fv( egg.m_pos.GetData() );
-            
+
                 if( egg.m_vel.Mag() < 20.0f ) break;
             }
             glEnd();
@@ -261,7 +261,7 @@ void Triffid::RenderAlphas( float _predictionTime )
             }
         }
 #endif
-        
+
     }
 }
 
@@ -306,13 +306,13 @@ void Triffid::Launch()
     // Fire the egg
 
     Matrix34 mat = GetHead();
-    Matrix34 launchMat = m_launchPoint->GetWorldMatrix(mat);    
+    Matrix34 launchMat = m_launchPoint->GetWorldMatrix(mat);
     Vector3 velocity = launchMat.f;
     velocity.SetLength( m_force * m_size * ( 1.0f + syncsfrand(0.2f) ) );
-    
+
     WorldObjectId wobjId = g_app->m_location->SpawnEntities( launchMat.pos, m_id.GetTeamId(), -1, Entity::TypeTriffidEgg, 1, velocity, 0.0f );
     TriffidEgg *triffidEgg = (TriffidEgg *) g_app->m_location->GetEntitySafe( wobjId, Entity::TypeTriffidEgg );
-    if( triffidEgg ) 
+    if( triffidEgg )
     {
         triffidEgg->m_spawnType = spawnType;
         triffidEgg->m_size = 1.0f + syncsfrand(0.3f);
@@ -329,13 +329,13 @@ void Triffid::Initialise( Building *_template )
     Building::Initialise( _template );
 
     Triffid *triffid = (Triffid *) _template;
-    
+
     m_size = triffid->m_size;
     m_pitch = triffid->m_pitch;
     m_force = triffid->m_force;
     m_variance = triffid->m_variance;
     m_reloadTime = triffid->m_reloadTime;
-    
+
     m_useTrigger = triffid->m_useTrigger;
     m_triggerLocation.x = triffid->m_triggerLocation.x;
     m_triggerLocation.z = triffid->m_triggerLocation.z;
@@ -347,12 +347,12 @@ void Triffid::Initialise( Building *_template )
 
     float timeAdd = syncrand() % (int) m_reloadTime;
     timeAdd += 10.0f;
-    m_timerSync = GetHighResTime() + timeAdd;    
+    m_timerSync = GetHighResTime() + timeAdd;
 }
 
 
 bool Triffid::Advance()
-{    
+{
     //
     // Burn if we have been damaged
 
@@ -360,17 +360,17 @@ bool Triffid::Advance()
     {
         Matrix34 headMat = GetHead();
         Vector3 fireSpawn = headMat.pos;
-        fireSpawn += Vector3( sfrand(10.0f*m_size), 
+        fireSpawn += Vector3( sfrand(10.0f*m_size),
                               sfrand(10.0f*m_size),
                               sfrand(10.0f*m_size) );
         float fireSize = 100.0f + sfrand(100.0f*m_size);
         g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeFire, fireSize );
-        
-        fireSpawn = m_pos + Vector3( sfrand(10.0f*m_size), 
+
+        fireSpawn = m_pos + Vector3( sfrand(10.0f*m_size),
                                      sfrand(10.0f*m_size),
                                      sfrand(10.0f*m_size) );
         g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeFire, fireSize );
-        
+
         if( frand(100.0f) < 10.0f )
         {
             g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeExplosionDebris );
@@ -406,7 +406,7 @@ bool Triffid::Advance()
         END_PROFILE( g_app->m_profiler, "CheckTrigger" );
     }
 
-    
+
     //
     // If we have just triggered, start our random timer
 
@@ -414,13 +414,13 @@ bool Triffid::Advance()
     {
         float timeAdd = syncrand() % (int) m_reloadTime;
         timeAdd += 10.0f;
-        m_timerSync = GetHighResTime() + timeAdd;    
+        m_timerSync = GetHighResTime() + timeAdd;
     }
 
 
     //
     // Launch an egg if it is time
-    
+
     if( m_triggered && GetHighResTime() > m_timerSync )
     {
         Launch();
@@ -449,7 +449,7 @@ void Triffid::Read( TextReader *_in, bool _dynamic )
     m_variance      = atof( _in->GetNextToken() );
     m_reloadTime    = atof( _in->GetNextToken() );
     m_useTrigger    = atoi( _in->GetNextToken() );
-    
+
     m_triggerLocation.x = atof(_in->GetNextToken() );
     m_triggerLocation.z = atof(_in->GetNextToken() );
     m_triggerRadius     = atof(_in->GetNextToken() );
@@ -467,7 +467,7 @@ void Triffid::Write( FileWriter *_out )
 
     _out->printf( "%-6.2f %-6.2f %-6.2f %-6.2f %-6.2f ", m_size, m_pitch, m_force, m_variance, m_reloadTime );
     _out->printf( "%d %-8.2f %-8.2f %-6.2f ", m_useTrigger, m_triggerLocation.x, m_triggerLocation.z, m_triggerRadius );
-    
+
     for( int i = 0; i < NumSpawnTypes; ++i )
     {
         if( m_spawn[i] )    _out->printf( "1 " );
@@ -478,7 +478,7 @@ void Triffid::Write( FileWriter *_out )
 
 char *Triffid::GetSpawnName( int _spawnType )
 {
-    static char *names[NumSpawnTypes] = {  
+    static char *names[NumSpawnTypes] = {
                                             "SpawnVirii",
                                             "SpawnCentipedes",
                                             "SpawnSpider",
@@ -529,7 +529,7 @@ TriffidEgg::TriffidEgg()
     m_size(1.0f)
 {
     SetType( TypeTriffidEgg );
-    
+
     m_up = g_upVector;
     m_shape = g_app->m_resource->GetShape( "triffidegg.shp" );
 
@@ -550,7 +550,7 @@ void TriffidEgg::ChangeHealth( int _amount )
         transform.f *= m_size;
         transform.u *= m_size;
         transform.r *= m_size;
-        g_explosionManager.AddExplosion( m_shape, transform );         
+        g_explosionManager.AddExplosion( m_shape, transform );
     }
 }
 
@@ -561,13 +561,13 @@ void TriffidEgg::Spawn()
 
     switch( m_spawnType )
     {
-        case Triffid::SpawnVirii:    
+        case Triffid::SpawnVirii:
         {
             int numVirii = 5 + syncrand() % 5;
             g_app->m_location->SpawnEntities( m_pos, teamId, -1, TypeVirii, numVirii, g_zeroVector, 0.0f, 100.0f );
             break;
         }
-    
+
         case Triffid::SpawnCentipede:
         {
             int size = 5 + syncrand() % 5;
@@ -617,7 +617,7 @@ void TriffidEgg::Spawn()
                 vel.SetLength( 75.0f + syncfrand(50.0f) );
                 WorldObjectId id = g_app->m_location->SpawnEntities( m_pos, teamId, -1, TypeTriffidEgg, 1, vel, 0.0f, 0.0f );
                 TriffidEgg *egg = (TriffidEgg *) g_app->m_location->GetEntitySafe( id, TypeTriffidEgg );
-                if( egg ) egg->m_spawnType = syncrand() % (Triffid::NumSpawnTypes-1);                                                                    
+                if( egg ) egg->m_spawnType = syncrand() % (Triffid::NumSpawnTypes-1);
                 // The NumSpawnTypes-1 prevents Darwinians from coming out
             }
             break;
@@ -649,7 +649,7 @@ bool TriffidEgg::Advance( Unit *_unit )
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
 
     // Fly through the air, bounce
-    m_vel.y -= 9.8f * m_force;    
+    m_vel.y -= 9.8f * m_force;
     Vector3 direction = m_vel;
     Vector3 right = (g_upVector ^ direction).Normalise();
     m_up.RotateAround( right * SERVER_ADVANCE_PERIOD * m_force * m_force * 30.0f );
@@ -659,11 +659,11 @@ bool TriffidEgg::Advance( Unit *_unit )
 
     float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
     if( m_pos.y < landHeight + 3.0f )
-    {            
+    {
         BounceOffLandscape();
         m_force *= TRIFFIDEGG_BOUNCEFRICTION;
         m_vel *= m_force;
-        if( m_pos.y < landHeight + 3.0f ) m_pos.y = landHeight + 3.0f;               
+        if( m_pos.y < landHeight + 3.0f ) m_pos.y = landHeight + 3.0f;
         if( m_force > 0.1f )
         {
             g_app->m_soundSystem->TriggerEntityEvent( this, "Bounce" );
@@ -686,7 +686,7 @@ bool TriffidEgg::Advance( Unit *_unit )
 
     if( GetHighResTime() > m_timerSync )
     {
-        Matrix34 transform( m_front, m_up, m_pos );    
+        Matrix34 transform( m_front, m_up, m_pos );
         g_explosionManager.AddExplosion( m_shape, transform );
         Spawn();
         g_app->m_soundSystem->TriggerEntityEvent( this, "BurstOpen" );
@@ -706,12 +706,12 @@ void TriffidEgg::Render( float _predictionTime )
     Vector3 direction = m_vel;
     Vector3 right = (g_upVector ^ direction).Normalise();
     Vector3 up = m_up;
-    up.RotateAround( right * _predictionTime * m_force * m_force * 30.0f );   
+    up.RotateAround( right * _predictionTime * m_force * m_force * 30.0f );
     Vector3 front = right ^ up;
     up.Normalise();
     front.Normalise();
 
-    // 
+    //
     // Make our size pulsate a little
     float age = (m_timerSync - GetHighResTime()) / m_life;
     age = max( age, 0.0f );
@@ -742,9 +742,9 @@ void TriffidEgg::Render( float _predictionTime )
 
 
 bool TriffidEgg::RenderPixelEffect( float _predictionTime )
-{    
+{
     Render( _predictionTime );
-     
+
     return true;
 }
 

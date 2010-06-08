@@ -35,7 +35,7 @@ public:
 	BOOL GetFileFlags(DWORD& rdwFlags);
 	BOOL GetFileOS(DWORD& rdwOS);
 	BOOL GetFileType(DWORD& rdwType);
-	BOOL GetFileSubtype(DWORD& rdwType);	
+	BOOL GetFileSubtype(DWORD& rdwType);
 
 	// string info
 	BOOL GetCompanyName(LPTSTR lpszCompanyName, int nSize);

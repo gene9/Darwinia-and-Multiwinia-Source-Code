@@ -68,7 +68,7 @@ void Tree::Initialise( Building *_template )
     m_pushUp = tree->m_pushUp;
     m_seed = tree->m_seed;
     m_branchColour = tree->m_branchColour;
-    m_leafColour = tree->m_leafColour;  
+    m_leafColour = tree->m_leafColour;
 	m_leafDropRate = tree->m_leafDropRate;
 }
 
@@ -96,7 +96,7 @@ bool Tree::Advance()
     if( m_fireDamage < 0.0f ) m_fireDamage = 0.0f;
     if( m_fireDamage > 100.0f ) m_fireDamage = 100.0f;
 
-    if( m_onFire > 0.0f ) 
+    if( m_onFire > 0.0f )
     {
         //
         // Spawn fire particle
@@ -106,23 +106,23 @@ bool Tree::Advance()
         for( int i = 0; i < numFire; ++i )
         {
             Vector3 fireSpawn = m_pos + Vector3(0,actualHeight,0);
-            fireSpawn += Vector3( sfrand(actualHeight*1.0f), 
+            fireSpawn += Vector3( sfrand(actualHeight*1.0f),
                                   sfrand(actualHeight*0.5f),
                                   sfrand(actualHeight*1.0f) );
             float fireSize = actualHeight*2.0f;
             fireSize *= (1.0f + sfrand(0.5f) );
             g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeFire, fireSize );
         }
-        
+
         if( frand(100.0f) < 10.0f )
         {
             Vector3 fireSpawn = m_pos + Vector3(0,actualHeight,0);
-            fireSpawn += Vector3( sfrand(actualHeight*0.75f), 
+            fireSpawn += Vector3( sfrand(actualHeight*0.75f),
                                   sfrand(actualHeight*0.75f),
                                   sfrand(actualHeight*0.75f) );
             g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeExplosionDebris );
         }
-        
+
         //
         // Burn down
 
@@ -139,7 +139,7 @@ bool Tree::Advance()
         float hitRadius = m_hitcheckRadius * actualHeight;
 
         for( int b = 0; b < g_app->m_location->m_buildings.Size(); ++b )
-        {            
+        {
             if( g_app->m_location->m_buildings.ValidIndex(b) )
             {
                 Building *building = g_app->m_location->m_buildings[b];
@@ -159,7 +159,7 @@ bool Tree::Advance()
                 }
             }
         }
-        
+
     }
     else if( m_onFire < 0.0f )
     {
@@ -188,13 +188,13 @@ bool Tree::Advance()
 		{
 			float actualHeight = GetActualHeight(0.0f);
 			Vector3 fireSpawn = m_pos + Vector3(0,actualHeight,0);
-			fireSpawn += Vector3( sfrand(actualHeight*1.0f), 
+			fireSpawn += Vector3( sfrand(actualHeight*1.0f),
 								  sfrand(actualHeight*0.25f),
 								  sfrand(actualHeight*1.0f) );
 			g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeLeaf, -1.0f, RGBAColour (m_leafColourArray[0], m_leafColourArray[1], m_leafColourArray[2] ) );
 		}
 	}
-    
+
     return false;
 }
 
@@ -237,7 +237,7 @@ void Tree::DeleteDisplayLists()
         m_leafDisplayListId = -1;
     }
 }
-	
+
 void Tree::Generate()
 {
     float timeNow = GetHighResTime();
@@ -247,9 +247,9 @@ void Tree::Generate()
     m_numLeafs = 0;
 
 	DeleteDisplayLists();
-	
+
 	intToArray(m_branchColour, m_branchColourArray);
-	intToArray(m_leafColour, m_leafColourArray);	
+	intToArray(m_leafColour, m_leafColourArray);
 
     int treeDetail = g_prefsManager->GetInt( "RenderTreeDetail", 1 );
     if( treeDetail > 1 )
@@ -263,7 +263,7 @@ void Tree::Generate()
     darwiniaSeedRandom( m_seed );
     m_branchDisplayListId = glGenLists(1);
     glNewList       ( m_branchDisplayListId, GL_COMPILE );
-    glBegin         ( GL_QUADS );	
+    glBegin         ( GL_QUADS );
 #ifdef USE_DIRECT3D
 	// The colour is not supposed to be specified here so that it can be changed
 	// easily in the editor (when experimenting).
@@ -285,7 +285,7 @@ void Tree::Generate()
     glEnd           ();
     glEndList       ();
 
-    
+
     //
     // We now have all the leaf positions accumulated in m_hitcheckCentre
     // So we can calculate the actual centre position, then the radius
@@ -312,33 +312,33 @@ bool Tree::PerformDepthSort( Vector3 &_centrePos )
 
 
 void Tree::RenderAlphas( float _predictionTime )
-{            
+{
     if( m_branchDisplayListId == -1 ||
         m_leafDisplayListId == -1 )
     {
         Generate();
     }
-    
+
     if( g_app->m_editing )
     {
 	    intToArray(m_branchColour, m_branchColourArray);
-	    intToArray(m_leafColour, m_leafColourArray);	
+	    intToArray(m_leafColour, m_leafColourArray);
     }
-        
+
     float actualHeight = GetActualHeight( _predictionTime );
-        
-    glEnable        ( GL_TEXTURE_2D );   
+
+    glEnable        ( GL_TEXTURE_2D );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/laser.bmp" ) );
 	glTexParameteri	( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri	( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );    
+    glTexParameteri	( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     glDisable       ( GL_CULL_FACE );
     glDepthMask     ( false );
 
     glMatrixMode    ( GL_MODELVIEW );
 	glPushMatrix    ();
-    Matrix34 mat    ( m_front, g_upVector, m_pos );    
+    Matrix34 mat    ( m_front, g_upVector, m_pos );
     glMultMatrixf   ( mat.ConvertToOpenGLFormat());
     glScalef        ( actualHeight, actualHeight, actualHeight );
 
@@ -348,7 +348,7 @@ void Tree::RenderAlphas( float _predictionTime )
         m_branchColourArray[1] = 100;
         m_branchColourArray[2] = 50;
     }
-    
+
     glColor4ubv     ( m_branchColourArray );
     glCallList      ( m_branchDisplayListId );
 
@@ -358,11 +358,11 @@ void Tree::RenderAlphas( float _predictionTime )
         glCallList      ( m_leafDisplayListId );
     }
 
-    glPopMatrix     ();                
-    
+    glPopMatrix     ();
+
     glDepthMask     ( true );
     glEnable        ( GL_CULL_FACE );
-    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );    
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDisable       ( GL_TEXTURE_2D );
     glDisable       ( GL_BLEND );
 }
@@ -408,7 +408,7 @@ void Tree::Damage( float _damage )
 
 bool Tree::DoesSphereHit(Vector3 const &_pos, float _radius)
 {
-    if( SphereSphereIntersection( m_pos, 10.0f, 
+    if( SphereSphereIntersection( m_pos, 10.0f,
                                   _pos, _radius ) )
     {
         return true;
@@ -444,7 +444,7 @@ bool Tree::DoesShapeHit(Shape *_shape, Matrix34 _transform)
     return false;
 }
 
-bool Tree::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool Tree::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                       float _rayLen, Vector3 *_pos, Vector3 *_norm)
 {
     if( RaySphereIntersection( _rayStart, _rayDir, m_pos, 10.00f, _rayLen, _pos, _norm ) )
@@ -454,7 +454,7 @@ bool Tree::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
 
     float actualHeight = GetActualHeight(0.0f);
 
-    if( RaySphereIntersection( _rayStart, _rayDir, 
+    if( RaySphereIntersection( _rayStart, _rayDir,
                                m_pos+m_hitcheckCentre*actualHeight, m_hitcheckRadius*actualHeight,
                                _rayLen, _pos, _norm ) )
     {
@@ -465,7 +465,7 @@ bool Tree::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
 }
 
 
-void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations, 
+void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations,
                          bool _calcRadius, bool _renderBranch, bool _renderLeaf )
 {
     if( _iterations == 0 ) return;
@@ -484,7 +484,7 @@ void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations,
             m_numLeafs++;
         }
     }
-    
+
     /*
     Make the tree seem more alive animation
     _to += Vector3(sinf(g_gameTime*(7-_iterations))*0.005f * _iterations,
@@ -493,22 +493,22 @@ void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations,
     */
 
     Vector3 rightAngleA = ((_to - _from) ^ _to).Normalise();
-    Vector3 rightAngleB = (rightAngleA ^ (_to - _from)).Normalise();    
+    Vector3 rightAngleB = (rightAngleA ^ (_to - _from)).Normalise();
 
-    Vector3 thisBranch = (_to - _from);       
+    Vector3 thisBranch = (_to - _from);
 
     float thickness = thisBranch.Mag();
-        
+
     float budsize = 0.1f;
-    
+
     if( _iterations == 0 )
     {
-        budsize *= m_budsize; 
+        budsize *= m_budsize;
     }
-    
+
     Vector3 camRightA = rightAngleA * thickness * budsize;
     Vector3 camRightB = rightAngleB * thickness * budsize;
-    
+
 
     if( (_iterations == 0 && _renderLeaf) ||
         (_iterations != 0 && _renderBranch) )
@@ -521,9 +521,9 @@ void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations,
         glTexCoord2f( 0.0f, 0.0f );             glVertex3fv( (_from - camRightB).GetData() );
         glTexCoord2f( 0.0f, 1.0f );             glVertex3fv( (_from + camRightB).GetData() );
         glTexCoord2f( 1.0f, 1.0f );             glVertex3fv( (_to + camRightB).GetData() );
-        glTexCoord2f( 1.0f, 0.0f );             glVertex3fv( (_to - camRightB).GetData() );        
+        glTexCoord2f( 1.0f, 0.0f );             glVertex3fv( (_to - camRightB).GetData() );
     }
-    
+
     int numBranches = 4;
 
     for( int i = 0; i < numBranches; ++i )
@@ -534,9 +534,9 @@ void Tree::RenderBranch( Vector3 _from, Vector3 _to, int _iterations,
         if( i == 2 ) thisRightAngle = rightAngleB;
         if( i == 3 ) thisRightAngle = -rightAngleB;
 
-        float distance = 0.3f + frand(0.6f);        
+        float distance = 0.3f + frand(0.6f);
         Vector3 thisFrom = _from + thisBranch * distance;
-        Vector3 thisTo = thisFrom + thisRightAngle * thickness * 0.4f * m_pushOut 
+        Vector3 thisTo = thisFrom + thisRightAngle * thickness * 0.4f * m_pushOut
                                   + thisBranch * (1.0f-distance) * m_pushUp;
         RenderBranch( thisFrom, thisTo, _iterations, _calcRadius, _renderBranch, _renderLeaf );
     }
@@ -555,7 +555,7 @@ void Tree::ListSoundEvents( LList<char *> *_list )
 void Tree::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
-    
+
     m_height        = atof( _in->GetNextToken() );
     m_budsize       = atof( _in->GetNextToken() );
     m_pushOut       = atof( _in->GetNextToken() );
@@ -573,7 +573,7 @@ void Tree::Read( TextReader *_in, bool _dynamic )
 void Tree::Write( FileWriter *_out )
 {
     Building::Write( _out );
-    
+
     _out->printf( "%-8.2f", m_height);
     _out->printf( "%-8.2f", m_budsize);
     _out->printf( "%-8.2f", m_pushOut);

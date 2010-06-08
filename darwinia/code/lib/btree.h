@@ -26,12 +26,12 @@ protected:
     BTree *rtree;
 
 	bool m_caseSensitive;
-		
+
     void RecursiveConvertToDArray ( DArray <T> *darray, BTree <T> *btree );
     void RecursiveConvertIndexToDArray ( DArray <char *> *darray, BTree <T> *btree );
-    
+
     void AppendRight ( BTree <T> *tempright );                            // Used by Remove
-    
+
 public:
     char *id;
     T data;
@@ -48,16 +48,16 @@ public:
     T GetData ( const char *searchid );
 
     BTree *LookupTree( const char *searchid );
-    
+
     void Empty ();
-    
+
     int Size () const;							 // Returns the size in elements
-    
+
     void Print ();                              // Prints this tree to stdout
-    
+
     inline BTree *Left () const;
     inline BTree *Right () const;
-    
+
     DArray <T> *ConvertToDArray ();
     DArray <char *> *ConvertIndexToDArray ();
 };

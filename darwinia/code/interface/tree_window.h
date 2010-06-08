@@ -12,7 +12,7 @@ class TreeWindow : public DarwiniaWindow
 {
 public:
     int m_selectionId;
-    
+
 public:
     TreeWindow( char *_name );
 

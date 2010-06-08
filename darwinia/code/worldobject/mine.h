@@ -26,7 +26,7 @@ protected:
 
     float           m_previousMineSpeed;
     float           m_wheelRotate;
-    
+
     static Shape        *s_wheelShape;
     static Shape        *s_cartShape;
     static ShapeMarker  *s_cartMarker1;
@@ -34,15 +34,15 @@ protected:
     static ShapeMarker  *s_cartContents[3];
     static Shape        *s_polygon1;
     static Shape        *s_primitive1;
-    
+
     static float        s_refineryPopulation;
     static float        s_refineryRecalculateTimer;
     static float        RefinerySpeed();
-                
+
 public:
     MineBuilding();
 
-    void Initialise     ( Building *_template );    
+    void Initialise     ( Building *_template );
     bool Advance        ();
 
     bool IsInView       ();
@@ -53,16 +53,16 @@ public:
 
     Vector3     GetTrackMarker1();
     Vector3     GetTrackMarker2();
-    
+
     virtual void TriggerCart ( MineCart *_cart, float _initValue );
-    
+
     void ListSoundEvents    ( LList<char *> *_list );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
-    void SetBuildingLink( int _buildingId );            
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
+    int  GetBuildingLink();
+    void SetBuildingLink( int _buildingId );
 
 };
 
@@ -74,7 +74,7 @@ public:
 
     bool    m_polygons[3];
     bool    m_primitives[3];
-    
+
 public:
     MineCart();
 };
@@ -105,16 +105,16 @@ public:
 public:
     TrackJunction();
 
-    void Initialise     ( Building *_template );    
+    void Initialise     ( Building *_template );
 
     void Render         ( float _predictionTime );
     void TriggerCart    ( MineCart *_cart, float _initValue );
 
     void RenderLink     ();
-    void SetBuildingLink( int _buildingId );            
+    void SetBuildingLink( int _buildingId );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 
@@ -126,16 +126,16 @@ class TrackStart : public MineBuilding
 {
 public:
     int m_reqBuildingId;                   // This building must be online
-    
-public:    
+
+public:
     TrackStart();
 
     void Initialise     ( Building *_template );
-    bool Advance        ();    
+    bool Advance        ();
     void RenderAlphas   ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 
@@ -147,7 +147,7 @@ class TrackEnd : public MineBuilding
 {
 public:
     int m_reqBuildingId;                   // This building must be online
-    
+
 public:
     TrackEnd();
 
@@ -156,8 +156,8 @@ public:
 
     void RenderAlphas   ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 
@@ -172,7 +172,7 @@ protected:
     ShapeMarker *m_wheel2;
     ShapeMarker *m_wheel3;
     ShapeMarker *m_counter1;
-    
+
 public:
     Refinery();
 
@@ -194,12 +194,12 @@ class Mine : public MineBuilding
 protected:
     ShapeMarker *m_wheel1;
     ShapeMarker *m_wheel2;
-    
+
 public:
     Mine();
 
     void Render         ( float _predictionTime );
-    
+
     void TriggerCart    ( MineCart *_cart, float _initValue );
 };
 

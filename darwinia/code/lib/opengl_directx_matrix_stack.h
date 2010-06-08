@@ -18,7 +18,7 @@ namespace OpenGLD3D {
 
 		virtual void SetTransform() = 0;
 		virtual D3DXMATRIX const &GetTransform() const = 0;
-		
+
 		void FastSetTransform();
 		bool Modified() const;
 
@@ -70,12 +70,12 @@ namespace OpenGLD3D {
 
 	// Inlines
 
-	inline bool MatrixStack::Modified() const 
+	inline bool MatrixStack::Modified() const
 	{
 		return m_modified;
 	}
 
-	inline void MatrixStack::FastSetTransform() 
+	inline void MatrixStack::FastSetTransform()
 	{
 		if (m_modified)
 			SetTransform();

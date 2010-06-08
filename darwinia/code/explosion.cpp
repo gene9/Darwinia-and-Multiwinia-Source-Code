@@ -127,7 +127,7 @@ Explosion::Explosion(ShapeFragment *_frag, Matrix34 const &_transform, float _fr
 
 		triangles.PutData(tri);
 	}
-    
+
 	m_numTris = triangles.Size();
     if( m_numTris > 0 )
     {
@@ -165,7 +165,7 @@ bool Explosion::Advance()
 		if (g_gameTime > m_tris[i].m_timeToDie) continue;
 
 		m_tris[i].m_pos += m_tris[i].m_vel * g_advanceTime;
-	
+
 		// Friction
 		float speed = m_tris[i].m_vel.Mag();
 		float friction = speed * FRICTION_COEF * g_advanceTime;
@@ -202,12 +202,12 @@ void Explosion::Render()
 		Vector3 const v1(m_tris[i].m_tumbler->m_rotMat * m_tris[i].m_v1 + m_tris[i].m_pos);
 		Vector3 const v2(m_tris[i].m_tumbler->m_rotMat * m_tris[i].m_v2 + m_tris[i].m_pos);
 		Vector3 const v3(m_tris[i].m_tumbler->m_rotMat * m_tris[i].m_v3 + m_tris[i].m_pos);
-	
-		glColor4ub(m_tris[i].m_colour.r, 
+
+		glColor4ub(m_tris[i].m_colour.r,
                    m_tris[i].m_colour.g,
                    m_tris[i].m_colour.b,
                    (1.0f-age) * 255);
-        
+
 		glNormal3fv(norm.GetDataConst());
 
         glTexCoord2i( 0, 0 );       glVertex3fv(v1.GetDataConst());
@@ -251,14 +251,14 @@ ExplosionManager::~ExplosionManager()
 }
 
 
-void ExplosionManager::AddExplosion(ShapeFragment *_frag, 
+void ExplosionManager::AddExplosion(ShapeFragment *_frag,
 									Matrix34 const &_transform, bool _recurse, float _fraction)
 {
     if( _fraction <= 0.0f )
     {
         return;
     }
-    
+
 	if (_frag->m_numTriangles > 0)
 	{
 		Explosion *explosion = new Explosion(_frag, _transform, _fraction);

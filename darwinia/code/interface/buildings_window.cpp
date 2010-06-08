@@ -63,7 +63,7 @@ public:
 
 	void Render(int realX, int realY, bool highlighted, bool clicked)
 	{
-		if(g_app->m_locationEditor->m_tool == m_toolType) 
+		if(g_app->m_locationEditor->m_tool == m_toolType)
 		{
 			DarwiniaButton::Render(realX, realY, highlighted, true);
 		}
@@ -91,7 +91,7 @@ public:
     bool m_safetyCatch;
     DeleteBuildingButton()
         : m_safetyCatch(true){}
-    
+
     void MouseUp()
     {
         if( m_safetyCatch )
@@ -137,7 +137,7 @@ public:
     {
         Building *b = g_app->m_location->GetBuilding(g_app->m_locationEditor->m_selectionId);
         if( b )
-        {            
+        {
             if( b->m_id.GetTeamId() == m_teamId )
             {
                 DarwiniaButton::Render( realX, realY, true, clicked );
@@ -206,7 +206,7 @@ class CloneBuildingButton : public DarwiniaButton
     {
 	    Vector3 rayStart;
 	    Vector3 rayDir;
-	    g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	    g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									 g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
         Vector3 _pos;
         g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
@@ -214,12 +214,12 @@ class CloneBuildingButton : public DarwiniaButton
         Building *building = g_app->m_location->GetBuilding(g_app->m_locationEditor->m_selectionId);
         DarwiniaDebugAssert(building);
 
-        Building *newBuilding = Building::CreateBuilding( building->m_type );   
+        Building *newBuilding = Building::CreateBuilding( building->m_type );
         newBuilding->Initialise( building );
         newBuilding->SetDetail( g_prefsManager->GetInt( "RenderBuildingDetail", 1 ) );
-        newBuilding->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );            
+        newBuilding->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );
         newBuilding->m_pos = _pos;
-        g_app->m_location->m_levelFile->m_buildings.PutData( newBuilding );                        
+        g_app->m_location->m_levelFile->m_buildings.PutData( newBuilding );
     }
 };
 
@@ -242,13 +242,13 @@ BuildingEditWindow::~BuildingEditWindow()
 void BuildingEditWindow::Create()
 {
 	DarwiniaWindow::Create();
-	
+
 	Building *building = g_app->m_location->GetBuilding(g_app->m_locationEditor->m_selectionId);
 	DarwiniaDebugAssert(building);
 
 	int buttonPitch = 18;
 	int y = 6;
-    
+
     ToolButton *mb = new ToolButton(LocationEditor::ToolMove);
 	mb->SetShortProperties(LANGUAGEPHRASE("editor_move"), 10, y += buttonPitch, m_w-20);
 	RegisterButton(mb);
@@ -266,7 +266,7 @@ void BuildingEditWindow::Create()
     RegisterButton(db);
 
     ToolButton *lb = new ToolButton(LocationEditor::ToolLink);
-    lb->SetShortProperties(LANGUAGEPHRASE("editor_link"), 10, y += buttonPitch, m_w-20);    
+    lb->SetShortProperties(LANGUAGEPHRASE("editor_link"), 10, y += buttonPitch, m_w-20);
     RegisterButton(lb);
 
 	y += buttonPitch;
@@ -281,10 +281,10 @@ void BuildingEditWindow::Create()
         RegisterButton(tb);
     }
 
-	CreateValueControl(LANGUAGEPHRASE("editor_dynamic"), InputField::TypeChar, &building->m_dynamic, y += buttonPitch, 
+	CreateValueControl(LANGUAGEPHRASE("editor_dynamic"), InputField::TypeChar, &building->m_dynamic, y += buttonPitch,
 					   1.0f, 0, 1);
 
-	CreateValueControl(LANGUAGEPHRASE("editor_isglobal"), InputField::TypeChar, &building->m_isGlobal, y += buttonPitch, 
+	CreateValueControl(LANGUAGEPHRASE("editor_isglobal"), InputField::TypeChar, &building->m_isGlobal, y += buttonPitch,
 					   1.0f, 0, 1);
 
     if (building->m_type == Building::TypeFactory)
@@ -307,7 +307,7 @@ void BuildingEditWindow::Create()
     {
         LaserFence *fence = (LaserFence *) building;
         CreateValueControl( LANGUAGEPHRASE("editor_scale"), InputField::TypeFloat, &fence->m_scale, y+=buttonPitch, 0.01f, 0.0f, 100.0f );
-        
+
        DropDownMenu *menu = new DropDownMenu(true);
         menu->SetShortProperties( LANGUAGEPHRASE("editor_mode"), 10, y+=buttonPitch, m_w-20 );
         menu->AddOption( LANGUAGEPHRASE("editor_disabled") );
@@ -328,7 +328,7 @@ void BuildingEditWindow::Create()
         SafeArea *safeArea = (SafeArea *) building;
         CreateValueControl( LANGUAGEPHRASE("editor_size"), InputField::TypeFloat, &safeArea->m_size, y+=buttonPitch, 1.0f, 0.0f, 1000.0f );
         CreateValueControl( LANGUAGEPHRASE("editor_capacity"), InputField::TypeInt, &safeArea->m_entitiesRequired, y+=buttonPitch, 1, 0, 10000 );
-        
+
         DropDownMenu *menu = new DropDownMenu(true);
         menu->SetShortProperties( LANGUAGEPHRASE("editor_entitytype"), 10, y+=buttonPitch, m_w-20 );
         for( int i = 0; i < Entity::NumEntityTypes; ++i)
@@ -361,7 +361,7 @@ void BuildingEditWindow::Create()
         {
             menu->AddOption( GlobalResearch::GetTypeNameTranslated( i ), i );
         }
-        menu->RegisterInt( &((ResearchItem *)building)->m_researchType );        
+        menu->RegisterInt( &((ResearchItem *)building)->m_researchType );
         RegisterButton( menu );
         CreateValueControl( LANGUAGEPHRASE("editor_level"), InputField::TypeInt, &((ResearchItem *)building)->m_level, y+=buttonPitch, 1, 0, 4 );
     }
@@ -524,22 +524,22 @@ void BuildingEditWindow::Render( bool hasFocus )
 
 class NewBuildingButton : public DarwiniaButton
 {
-public:    
+public:
     void MouseUp()
     {
 	    Vector3 rayStart;
 	    Vector3 rayDir;
-	    g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	    g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									 g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
         Vector3 _pos;
         g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
-    
-        BuildingsCreateWindow *bcw = (BuildingsCreateWindow *) m_parent;        
-        Building *building = Building::CreateBuilding( bcw->m_buildingType );  
+
+        BuildingsCreateWindow *bcw = (BuildingsCreateWindow *) m_parent;
+        Building *building = Building::CreateBuilding( bcw->m_buildingType );
         if( building )
         {
             building->m_pos = _pos;
-            building->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );            
+            building->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );
             g_app->m_location->m_levelFile->m_buildings.PutData( building );
         }
     }
@@ -567,7 +567,7 @@ BuildingsCreateWindow::~BuildingsCreateWindow()
 void BuildingsCreateWindow::Create()
 {
 	DarwiniaWindow::Create();
-	
+
 	int y = 25;
 	int ySpacing = 18;
 

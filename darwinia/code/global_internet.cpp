@@ -68,7 +68,7 @@ unsigned short GlobalInternet::GenerateInternet( Vector3 const &_pos, unsigned c
 
     GlobalInternetNode *node = &m_nodes[m_numNodes];
     node->m_pos = _pos;
-    node->m_size = _size;    
+    node->m_size = _size;
     unsigned short nodeIndex = m_numNodes;
 	m_numNodes++;
 	DarwiniaDebugAssert(m_numNodes < GLOBALINTERNET_MAXNODES);
@@ -82,7 +82,7 @@ unsigned short GlobalInternet::GenerateInternet( Vector3 const &_pos, unsigned c
 
     unsigned char numLinks = _size;
     float distance = powf( _size, 4.0f ) * 2.0f;
-    
+
     while( numLinks > 0 )
     {
         float z = sfrand(distance);
@@ -103,7 +103,7 @@ unsigned short GlobalInternet::GenerateInternet( Vector3 const &_pos, unsigned c
         --numLinks;
     }
 
-    return nodeIndex;    
+    return nodeIndex;
 }
 
 
@@ -118,19 +118,19 @@ void GlobalInternet::GenerateInternet()
     //Vector3 centre(449,1787,-139);
     Vector3 centre(-797,1949,-1135);
     unsigned short firstNode = GenerateInternet( centre, GLOBALINTERNET_ITERATIONS );
-    
+
     m_nodes[m_numNodes].m_pos.Zero();
     m_nodes[m_numNodes].m_size = 0.0f;
     unsigned short nodeIndex = m_numNodes;
 	m_numNodes++;
 	DarwiniaDebugAssert(m_numNodes <= GLOBALINTERNET_MAXNODES);
-    
+
     m_links[m_numLinks].m_from = m_nearestNodeToCentre;
     m_links[m_numLinks].m_to = nodeIndex;
     m_links[m_numLinks].m_size = 1.0f;
     m_numLinks++;
 	DarwiniaDebugAssert(m_numLinks <= GLOBALINTERNET_MAXLINKS);
-    
+
     for( int i = 0; i < m_numNodes; ++i )
     {
         GlobalInternetNode *node = &m_nodes[i];
@@ -200,14 +200,14 @@ void GlobalInternet::Render()
 //    {
 //        fogVal -= 100000;
 //    }
-    
+
     glFogf      ( GL_FOG_DENSITY, 1.0f );
     glFogf      ( GL_FOG_START, 0.0f );
     glFogf      ( GL_FOG_END, (float) fogVal );
     glFogfv     ( GL_FOG_COLOR, fogCol );
     glFogi      ( GL_FOG_MODE, GL_LINEAR );
     glEnable    ( GL_FOG );
-    
+
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glDepthMask     ( false );
@@ -225,7 +225,7 @@ void GlobalInternet::Render()
     else
     {
         linksId = g_app->m_resource->CreateDisplayList(DISPLAY_LIST_NAME_LINKS);
-        glNewList(linksId, GL_COMPILE);       
+        glNewList(linksId, GL_COMPILE);
 
         glColor4f       ( 0.25f, 0.25f, 0.5f, 0.8f );
 
@@ -245,13 +245,13 @@ void GlobalInternet::Render()
             Vector3 midPoint        = (toPos + fromPos)/2.0f;
             Vector3 camToMidPoint   = g_zeroVector - midPoint;
             Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
-        
+
             rightAngle *= link->m_size * 0.5f;
-        
+
             glTexCoord2i( 0, 0 );       glVertex3fv( (fromPos - rightAngle).GetData() );
             glTexCoord2i( 0, 1 );       glVertex3fv( (fromPos + rightAngle).GetData() );
-            glTexCoord2i( 1, 1 );       glVertex3fv( (toPos + rightAngle).GetData() );                
-            glTexCoord2i( 1, 0 );       glVertex3fv( (toPos - rightAngle).GetData() );                
+            glTexCoord2i( 1, 1 );       glVertex3fv( (toPos + rightAngle).GetData() );
+            glTexCoord2i( 1, 0 );       glVertex3fv( (toPos - rightAngle).GetData() );
         }
         glEnd();
 
@@ -278,7 +278,7 @@ void GlobalInternet::Render()
         for( int i = 0; i < m_numNodes; ++i )
         {
             GlobalInternetNode *node = &m_nodes[i];
-       
+
             Vector3 camToMidPoint   = (g_zeroVector - node->m_pos).Normalise();
             Vector3 right           = camToMidPoint ^ Vector3(0,0,1);
             Vector3 up              = right ^ camToMidPoint;
@@ -299,12 +299,12 @@ void GlobalInternet::Render()
     glEnable        ( GL_CULL_FACE );
     glDepthMask     ( true );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glDisable       ( GL_BLEND );    
-    
-        
-   
+    glDisable       ( GL_BLEND );
+
+
+
     RenderPackets();
-    
+
     g_app->m_globalWorld->SetupFog();
     glDisable( GL_FOG );
 
@@ -350,7 +350,7 @@ void GlobalInternet::RenderPackets()
 
     if( frand(100.0f) < 11.0f )
     {
-        int leafIndex = frand( m_leafs.Size() );    
+        int leafIndex = frand( m_leafs.Size() );
         GlobalInternetNode *node = &m_nodes[m_leafs[leafIndex]];
         node->m_burst = 4.0f;
         m_bursts.PutData( m_leafs[leafIndex] );
@@ -392,7 +392,7 @@ void GlobalInternet::RenderPackets()
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
     glDepthMask     ( false );
-    
+
     for( int i = 0; i < m_numLinks; ++i )
     {
         GlobalInternetLink *link = &m_links[i];
@@ -419,10 +419,10 @@ void GlobalInternet::RenderPackets()
                     *thisPacket = -0.01f;
                     TriggerPacket( link->m_from, i );
                     link->m_packets.RemoveData(j);
-                    --j;                        
+                    --j;
                 }
-            }                
-        
+            }
+
             GlobalInternetNode *from = &m_nodes[ link->m_from ];
             GlobalInternetNode *to = &m_nodes[ link->m_to ];
             Vector3 packetPos;
@@ -434,20 +434,20 @@ void GlobalInternet::RenderPackets()
             {
                 packetPos = from->m_pos + ( to->m_pos - from->m_pos ) * -packetVal;
             }
-                        
+
             glBegin( GL_QUADS );
                 glTexCoord2i( 0, 0 );       glVertex3fv( (packetPos - camUp - camRight).GetData() );
                 glTexCoord2i( 1, 0 );       glVertex3fv( (packetPos - camUp + camRight).GetData() );
                 glTexCoord2i( 1, 1 );       glVertex3fv( (packetPos + camUp + camRight).GetData() );
                 glTexCoord2i( 0, 1 );       glVertex3fv( (packetPos + camUp - camRight).GetData() );
-            glEnd();                
+            glEnd();
         }
     }
 
     glDepthMask ( true );
     glDisable   ( GL_TEXTURE_2D );
     glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glDisable   ( GL_BLEND );    
+    glDisable   ( GL_BLEND );
     glEnable    ( GL_CULL_FACE );
 
     glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );

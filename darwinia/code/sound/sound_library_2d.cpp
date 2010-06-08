@@ -111,7 +111,7 @@ SoundLibrary2d::SoundLibrary2d()
 	DarwiniaReleaseAssert(result == MMSYSERR_NOERROR, "Failed to open audio output device: \"%s\"", errString);
 
 
-	// 
+	//
 	// Create the sound buffers
 
 	m_buffers = new SoundLib2dBuf[m_numBuffers];
@@ -139,7 +139,7 @@ void SoundLibrary2d::TopupBuffer()
 	{
 		static double nextOutputTime = -1.0;
 		if (nextOutputTime < 0.0) nextOutputTime = GetHighResTime();
-		
+
 		if (GetHighResTime() > nextOutputTime)
 		{
 			StereoSample buf[5000];

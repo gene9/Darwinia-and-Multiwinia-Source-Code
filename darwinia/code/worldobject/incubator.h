@@ -30,7 +30,7 @@ protected:
 
     int             m_troopType;
     float           m_timer;
-    
+
     LList           <IncubatorIncoming *> m_incoming;
 
 public:
@@ -41,8 +41,8 @@ public:
     ~Incubator();
 
     void Initialise ( Building *_template );
-    
-    bool Advance    ();   
+
+    bool Advance    ();
     void SpawnEntity();
     void AddSpirit  ( Spirit *_spirit );
 
@@ -51,8 +51,8 @@ public:
 
     int  NumSpiritsInside();
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 
     void GetDockPoint( Vector3 &_pos, Vector3 &_front );
 

@@ -54,17 +54,17 @@ public:
             case TypeClone:
 	            Vector3 rayStart;
 	            Vector3 rayDir;
-	            g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	            g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									         g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
                 Vector3 _pos;
                 g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
-    
-                Building *newBuilding = Building::CreateBuilding( Building::TypeTree );   
+
+                Building *newBuilding = Building::CreateBuilding( Building::TypeTree );
                 newBuilding->Initialise( building );
                 newBuilding->SetDetail( g_prefsManager->GetInt( "RenderBuildingDetail", 1 ) );
-                newBuilding->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );            
-                g_app->m_location->m_levelFile->m_buildings.PutData( newBuilding );                
-                
+                newBuilding->m_id.SetUniqueId( g_app->m_globalWorld->GenerateBuildingId() );
+                g_app->m_location->m_levelFile->m_buildings.PutData( newBuilding );
+
                 darwiniaSeedRandom(time(NULL));
                 Tree *newTree = (Tree *) newBuilding;
                 newTree->m_pos = _pos;
@@ -114,7 +114,7 @@ void TreeWindow::Create()
 
     CreateColourControl( LANGUAGEPHRASE("editor_branchcolour"), &tree->m_branchColour, y+=h, NULL, 10, m_w - 7 );
     CreateColourControl( LANGUAGEPHRASE("editor_leafcolour"), &tree->m_leafColour, y+=h, NULL, 10, m_w - 7 );
-    
+
     CreateValueControl( LANGUAGEPHRASE("editor_height"),        InputField::TypeFloat, &tree->m_height, y+=h, 1.0f, 1.0f, 1000.0f );
     CreateValueControl( LANGUAGEPHRASE("editor_budsize"),       InputField::TypeFloat, &tree->m_budsize, y+=h, 0.05f, 0.0f, 50.0f, generate );
     CreateValueControl( LANGUAGEPHRASE("editor_pushup"),        InputField::TypeFloat, &tree->m_pushUp, y+=h, 0.01f, 0.0f, 5.0f, generate );

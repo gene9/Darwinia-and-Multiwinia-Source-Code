@@ -5,11 +5,11 @@
 
 
 static unsigned int s_offsets[] = {
-	31, 7, 9, 1, 
-	11, 2, 5, 5, 
+	31, 7, 9, 1,
+	11, 2, 5, 5,
 	3, 17, 40, 12,
 	35, 22, 27, 2
-}; 
+};
 
 
 FileWriter::FileWriter(char const *_filename, bool _encrypt)
@@ -17,7 +17,7 @@ FileWriter::FileWriter(char const *_filename, bool _encrypt)
 	m_encrypt(_encrypt)
 {
 	m_file = fopen(_filename, "w");
-	
+
 	DarwiniaReleaseAssert(m_file, "Couldn't create file %s", _filename);
 
 	if (_encrypt)

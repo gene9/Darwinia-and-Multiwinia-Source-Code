@@ -17,7 +17,7 @@ SpiritStore::SpiritStore()
 {
 }
 
-void SpiritStore::Initialise ( int _initialCapacity, int _maxCapacity, Vector3 _pos, 
+void SpiritStore::Initialise ( int _initialCapacity, int _maxCapacity, Vector3 _pos,
                                 float _sizeX, float _sizeY, float _sizeZ )
 {
     m_spirits.SetSize( _maxCapacity );
@@ -42,7 +42,7 @@ void SpiritStore::Advance()
     {
         if( m_spirits.ValidIndex(i) )
         {
-            Spirit *s = m_spirits.GetPointer(i);            
+            Spirit *s = m_spirits.GetPointer(i);
             s->Advance();
         }
     }
@@ -115,7 +115,7 @@ void SpiritStore::Render( float _predictionTime )
     glEnable        ( GL_CULL_FACE );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDepthMask     ( true );
-	
+
 	END_PROFILE(g_app->m_profiler, "Spirit Store");
 }
 

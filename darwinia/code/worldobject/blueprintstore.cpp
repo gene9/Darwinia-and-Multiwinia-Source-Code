@@ -35,10 +35,10 @@ BlueprintBuilding::BlueprintBuilding()
 void BlueprintBuilding::Initialise( Building *_template )
 {
     Building::Initialise( _template );
-    
+
     m_marker = m_shape->m_rootFragment->LookupMarker( "MarkerBlueprint" );
     DarwiniaDebugAssert( m_marker );
-    
+
     BlueprintBuilding *blueprintBuilding = (BlueprintBuilding *) _template;
 
     m_buildingLink = blueprintBuilding->m_buildingLink;
@@ -67,7 +67,7 @@ Matrix34 BlueprintBuilding::GetMarker( float _predictionTime )
     Matrix34 mat( m_front, g_upVector, pos );
 
     if( m_marker )
-    {    
+    {
         Matrix34 markerMat = m_marker->GetWorldMatrix(mat);
         return markerMat;
     }
@@ -105,9 +105,9 @@ void BlueprintBuilding::Render( float _predictionTime )
 
 
 void BlueprintBuilding::RenderAlphas( float _predictionTime )
-{   
+{
     Building::RenderAlphas( _predictionTime );
-    
+
     BlueprintBuilding *link = (BlueprintBuilding *) g_app->m_location->GetBuilding( m_buildingLink );
     if( link )
     {
@@ -115,14 +115,14 @@ void BlueprintBuilding::RenderAlphas( float _predictionTime )
         float linkInfected = link->m_infected / 100.0f;
         float ourTime = g_gameTime + m_id.GetUniqueId() + m_id.GetIndex();
         if( fabs( infected - linkInfected ) < 0.01f )
-        {            
+        {
             glColor4f( infected, 0.7f-infected*0.7f, 0.0f, 0.1f+fabs(sinf(ourTime))*0.2f );
         }
         else
         {
             glColor4f( infected, 0.7f-infected*0.7f, 0.0f, 0.5f+fabs(sinf(ourTime))*0.5f );
         }
-        
+
         Vector3 ourPos = GetMarker(_predictionTime).pos;
         Vector3 theirPos = link->GetMarker(_predictionTime).pos;
 
@@ -208,7 +208,7 @@ BlueprintStore::BlueprintStore()
 char *BlueprintStore::GetObjectiveCounter()
 {
     static char result[256];
-    
+
     float totalInfection = 0;
     for( int i = 0; i < BLUEPRINTSTORE_NUMSEGMENTS; ++i )
         totalInfection += m_segments[i];
@@ -223,7 +223,7 @@ char *BlueprintStore::GetObjectiveCounter()
 void BlueprintStore::Initialise( Building *_template )
 {
     BlueprintBuilding::Initialise( _template );
-    
+
     if( m_id.GetTeamId() == 1 )
     {
         for( int i = 0; i < BLUEPRINTSTORE_NUMSEGMENTS; ++i )
@@ -244,13 +244,13 @@ void BlueprintStore::Initialise( Building *_template )
 void BlueprintStore::SendBlueprint( int _segment, bool _infected )
 {
     float oldValue = m_segments[_segment];
-    
+
     if( _infected ) oldValue += SERVER_ADVANCE_PERIOD * 1.0f;
     else            oldValue -= SERVER_ADVANCE_PERIOD * 1.0f;
 
     oldValue = max( oldValue, 0.0f );
     oldValue = min( oldValue, 100.0f );
-    
+
     m_segments[_segment] = oldValue;
 }
 
@@ -279,16 +279,16 @@ bool BlueprintStore::Advance()
         {
             if( m_segments[i] < 100.0f )
             {
-                float oldValue = m_segments[i];   
+                float oldValue = m_segments[i];
                 oldValue += SERVER_ADVANCE_PERIOD * infectionChange;
                 oldValue = max( oldValue, 0.0f );
                 oldValue = min( oldValue, 100.0f );
-                m_segments[i] = oldValue;        
+                m_segments[i] = oldValue;
             }
         }
     }
 
-    
+
     //
     // Are we clean?
 
@@ -369,14 +369,14 @@ void BlueprintStore::Render( float _predictionTime )
 
 /*
 void BlueprintStore::RenderAlphas( float _predictionTime )
-{    
+{
     BlueprintBuilding::RenderAlphas( _predictionTime );
 
     Vector3 screenPos, screenRight, screenUp;
     float screenSize;
     GetDisplay( screenPos, screenRight, screenUp, screenSize );
-    
-    glColor4f( 1.0f, 1.0f, 1.0f, 0.75f );    
+
+    glColor4f( 1.0f, 1.0f, 1.0f, 0.75f );
     glDisable( GL_CULL_FACE );
     glEnable( GL_BLEND );
     glEnable( GL_TEXTURE_2D );
@@ -392,7 +392,7 @@ void BlueprintStore::RenderAlphas( float _predictionTime )
             float tx = (float) x / (float) numSteps;
             float ty = (float) y / (float) numSteps;
             float size = 1.0f / (float) numSteps;
-            
+
             Vector3 pos = screenPos + x * screenRight * screenSize
                                     + y * screenUp * screenSize;
             Vector3 width = screenRight * screenSize;
@@ -422,7 +422,7 @@ void BlueprintStore::RenderAlphas( float _predictionTime )
     Vector3 screenPos, screenRight, screenUp;
     float screenSize;
     GetDisplay( screenPos, screenRight, screenUp, screenSize );
-    
+
     //
     // Render main darwinian
 
@@ -431,33 +431,33 @@ void BlueprintStore::RenderAlphas( float _predictionTime )
     glDisable( GL_CULL_FACE );
     glEnable( GL_BLEND );
     glDepthMask( false );
-    
+
     float texX = 0.0f;
     float texY = 0.0f;
     float texH = 1.0f;
     float texW = 1.0f;
-    
+
     glShadeModel( GL_SMOOTH );
 
     glBegin( GL_QUADS );
         float infected = m_segments[0] / 100.0f;
         glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-        glTexCoord2f(texX,texY);            
+        glTexCoord2f(texX,texY);
         glVertex3fv( screenPos.GetData() );
 
         infected = m_segments[1] / 100.0f;
         glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-        glTexCoord2f(texX+texW,texY);       
+        glTexCoord2f(texX+texW,texY);
         glVertex3fv( (screenPos + screenRight * screenSize * 2).GetData() );
 
         infected = m_segments[2] / 100.0f;
         glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-        glTexCoord2f(texX+texW,texY+texH);  
+        glTexCoord2f(texX+texW,texY+texH);
         glVertex3fv( (screenPos + screenRight * screenSize * 2 + screenUp * screenSize * 2).GetData() );
 
         infected = m_segments[3] / 100.0f;
         glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-        glTexCoord2f(texX,texY+texH);       
+        glTexCoord2f(texX,texY+texH);
         glVertex3fv( (screenPos + screenUp * screenSize * 2).GetData() );
     glEnd();
 
@@ -479,22 +479,22 @@ void BlueprintStore::RenderAlphas( float _predictionTime )
         glBegin( GL_QUADS );
             float infected = m_segments[0] / 100.0f;
             glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-            glTexCoord2f(texX,texY);            
+            glTexCoord2f(texX,texY);
             glVertex3fv( screenPos.GetData() );
 
             infected = m_segments[1] / 100.0f;
             glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-            glTexCoord2f(texX+texW,texY);       
+            glTexCoord2f(texX+texW,texY);
             glVertex3fv( (screenPos + screenRight * screenSize * 2).GetData() );
 
             infected = m_segments[2] / 100.0f;
             glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-            glTexCoord2f(texX+texW,texY+texH);  
+            glTexCoord2f(texX+texW,texY+texH);
             glVertex3fv( (screenPos + screenRight * screenSize * 2 + screenUp * screenSize * 2).GetData() );
 
             infected = m_segments[3] / 100.0f;
             glColor4f( infected*0.8f, 0.8f-infected*0.8f, 0.0f, 1.0f );
-            glTexCoord2f(texX,texY+texH);       
+            glTexCoord2f(texX,texY+texH);
             glVertex3fv( (screenPos + screenUp * screenSize * 2).GetData() );
         glEnd();
 
@@ -547,13 +547,13 @@ void BlueprintConsole::RecalculateOwnership()
     int winningTeam = -1;
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        if( teamCount[i] > 2 && 
+        if( teamCount[i] > 2 &&
             winningTeam == -1 )
         {
             winningTeam = i;
         }
-        else if( winningTeam != -1 && 
-                 teamCount[i] > 2 && 
+        else if( winningTeam != -1 &&
+                 teamCount[i] > 2 &&
                  teamCount[i] > teamCount[winningTeam] )
         {
             winningTeam = i;
@@ -585,15 +585,15 @@ void BlueprintConsole::Write( FileWriter *_out )
 
     _out->printf( "%-8d", m_segment );
 }
-    
+
 
 bool BlueprintConsole::Advance()
 {
     RecalculateOwnership();
-    
+
     bool infected = ( m_id.GetTeamId() == 1 );
     bool clean = ( m_id.GetTeamId() == 0 );
-    
+
     if( infected )  SendBlueprint( m_segment, true );
     if( clean )     SendBlueprint( m_segment, false );
 
@@ -604,7 +604,7 @@ bool BlueprintConsole::Advance()
 void BlueprintConsole::Render( float _predictionTime )
 {
     BlueprintBuilding::Render( _predictionTime );
-    
+
     Matrix34 mat( m_front, g_upVector, m_pos );
     m_shape->Render( 0.0f, mat );
 }
@@ -620,7 +620,7 @@ void BlueprintConsole::RenderPorts()
 
         Vector3 portUp = g_upVector;
         Matrix34 mat( portFront, portUp, portPos );
-         
+
         //
         // Render the status light
 
@@ -631,9 +631,9 @@ void BlueprintConsole::RenderPorts()
         Vector3 statusPos = s_controlPadStatus->GetWorldMatrix( mat ).pos;
         statusPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(statusPos.x, statusPos.z);
         statusPos.y += 5.0f;
-        
+
         WorldObjectId occupantId = GetPortOccupant(i);
-        if( !occupantId.IsValid() ) 
+        if( !occupantId.IsValid() )
         {
             glColor4ub( 150, 150, 150, 255 );
         }
@@ -685,9 +685,9 @@ void BlueprintRelay::Initialise( Building *_template )
     BlueprintRelay *blueprintRelay = (BlueprintRelay *) _template;
     m_altitude = blueprintRelay->m_altitude;
 
-    m_pos.y = m_altitude;    
+    m_pos.y = m_altitude;
     Matrix34 mat( m_front, m_up, m_pos );
-    m_centrePos = m_shape->CalculateCentre( mat );        
+    m_centrePos = m_shape->CalculateCentre( mat );
 }
 
 
@@ -696,7 +696,7 @@ void BlueprintRelay::SetDetail( int _detail )
     m_pos.y = m_altitude;
 
     Matrix34 mat( m_front, m_up, m_pos );
-    m_centrePos = m_shape->CalculateCentre( mat );        
+    m_centrePos = m_shape->CalculateCentre( mat );
     m_radius = m_shape->CalculateRadius( mat, m_centrePos );
 }
 
@@ -714,7 +714,7 @@ bool BlueprintRelay::Advance()
     m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
 
     m_centrePos = m_pos;
-    
+
     return BlueprintBuilding::Advance();
 }
 
@@ -725,7 +725,7 @@ void BlueprintRelay::Render( float _predictionTime )
 
     if( g_app->m_editing )
     {
-        m_pos.y = m_altitude;    
+        m_pos.y = m_altitude;
     }
 }
 

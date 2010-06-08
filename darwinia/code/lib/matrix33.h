@@ -19,7 +19,7 @@ public:
 	Matrix33( Vector3 const &_r, Vector3 const &_u, Vector3 const &_f );
 	Matrix33( float _yaw, float _dive, float _roll );
 	inline Matrix33( float _rx, float _ry, float _rz, float _ux, float _uy, float _uz, float _fx, float _fy, float _fz );
-	
+
 	void OrientRU( Vector3 const & _r, Vector3 const & _u );
 	void OrientRF( Vector3 const & _r, Vector3 const & _f );
 	void OrientUF( Vector3 const & _u, Vector3 const & _f );

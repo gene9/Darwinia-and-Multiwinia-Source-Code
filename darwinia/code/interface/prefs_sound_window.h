@@ -15,7 +15,7 @@ public:
     int     m_swapStereo;
     int     m_dspEffects;
     int     m_memoryUsage;
-    
+
 public:
     PrefsSoundWindow();
 

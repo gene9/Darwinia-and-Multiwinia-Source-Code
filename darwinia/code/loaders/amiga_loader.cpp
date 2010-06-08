@@ -16,7 +16,7 @@
 #include "renderer.h"
 
 
-class Star 
+class Star
 {
 public:
 	Vector2	m_pos;
@@ -131,7 +131,7 @@ void AmigaLoader::RenderScrollText(float _frameTime)
 		g_editorFont.DrawText2DSimple(x, y, textHeight, buf);
 		x += textPitch;
 	}
-		
+
 	g_editorFont.EndText2D();
 
 	m_scrollOffsetX += _frameTime * textSpeed;
@@ -184,7 +184,7 @@ void AmigaLoader::RenderFracTri(float _frameTime)
 	float scale = sinf(m_timeSinceStart * 4.0f) * 1.0f + 1.25f;
 
 	SetupFor3d();
-	glTranslatef(0, 0, -100);	
+	glTranslatef(0, 0, -100);
 	glRotatef(90.0f, -1, 0, 0);
 	glRotatef(m_fracTriPhase * 50.0f, m_fracTriPhase/50.0f, 0, 1);
 	if (m_timeSinceStart < startTime + 1.0f)
@@ -205,7 +205,7 @@ void AmigaLoader::RenderFracTri(float _frameTime)
 	{
 		m_fracTriSpinRate -= 2.1f * _frameTime;
 	}
-	else 
+	else
 	{
 		m_fracTriSpinRate += 2.1f * _frameTime;
 	}

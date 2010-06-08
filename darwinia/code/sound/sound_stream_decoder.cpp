@@ -55,47 +55,47 @@ void SoundStreamDecoder::ReadWavHeader()
 {
 	char buffer[25];
 	int chunkLength;
-	
-	// Check RIFF header 
+
+	// Check RIFF header
 	m_in->ReadBytes(12, (unsigned char *)buffer);
 	if (memcmp(buffer, "RIFF", 4) || memcmp(buffer + 8, "WAVE", 4))
 	{
 		return;
 	}
-	
-	while (!m_in->m_eof) 
+
+	while (!m_in->m_eof)
 	{
 		if (m_in->ReadBytes(4, (unsigned char*)buffer) != 4)
 		{
 			break;
 		}
-		
-		chunkLength = m_in->ReadS32();   // read chunk length 
-		
+
+		chunkLength = m_in->ReadS32();   // read chunk length
+
 		if (memcmp(buffer, "fmt ", 4) == 0)
 		{
-			int i = m_in->ReadS16();     // should be 1 for PCM data 
+			int i = m_in->ReadS16();     // should be 1 for PCM data
 			chunkLength -= 2;
-			if (i != 1) 
+			if (i != 1)
 			{
 				return;
 			}
-			
-			m_numChannels = m_in->ReadS16();// mono or stereo data 
+
+			m_numChannels = m_in->ReadS16();// mono or stereo data
 			chunkLength -= 2;
 			if ((m_numChannels != 1) && (m_numChannels != 2))
 			{
 				return;
 			}
-			
-			m_freq = m_in->ReadS32();    // sample frequency 
+
+			m_freq = m_in->ReadS32();    // sample frequency
 			chunkLength -= 4;
-			
-			m_in->ReadS32();             // skip six bytes 
+
+			m_in->ReadS32();             // skip six bytes
 			m_in->ReadS16();
 			chunkLength -= 6;
-			
-			m_bits = m_in->ReadS16();    // 8 or 16 bit data? 
+
+			m_bits = m_in->ReadS16();    // 8 or 16 bit data?
 			chunkLength -= 2;
 			if ((m_bits != 8) && (m_bits != 16))
 			{
@@ -113,15 +113,15 @@ void SoundStreamDecoder::ReadWavHeader()
 
 			return;
 		}
-		
-		// Skip the remainder of the chunk 
-		while (chunkLength > 0) 
-		{             
+
+		// Skip the remainder of the chunk
+		while (chunkLength > 0)
+		{
 			if (m_in->ReadU8() == EOF)
 			{
 				break;
 			}
-			
+
 			chunkLength--;
 		}
 	}
@@ -200,7 +200,7 @@ unsigned int SoundStreamDecoder::ReadWavData(signed short *_data, unsigned int _
 		}
 
 	}
-	else 
+	else
 	{
 		int bytesPerSample = 2 * m_numChannels;
 		_numSamples = m_in->ReadBytes(_numSamples * bytesPerSample, (unsigned char*)_data);

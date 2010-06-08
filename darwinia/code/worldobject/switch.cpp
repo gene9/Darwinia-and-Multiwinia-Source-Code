@@ -92,7 +92,7 @@ bool FenceSwitch::Advance()
     {
         SetTeamId( 2 );
     }
-    else 
+    else
     {
         SetTeamId( 1 );
     }
@@ -106,7 +106,7 @@ bool FenceSwitch::Advance()
 	    if( b->m_type == Building::TypeLaserFence )
         {
             LaserFence *fence = (LaserFence *) b;
-            
+
             if( GetNumPorts() == GetNumPortsOccupied() )
             {
 			    GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
@@ -178,7 +178,7 @@ bool FenceSwitch::Advance()
 				    g_app->m_globalWorld->EvaluateEvents();
 			    }
             }
-            else 
+            else
 		    {
 			    GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
 			    if( gb &&
@@ -282,7 +282,7 @@ void FenceSwitch::RenderConnection( Vector3 _targetPos, bool _active )
 
     if( _active )
     {
-        glColor4f   ( 0.9f, 0.9f, 0.5f, 1.0f );     
+        glColor4f   ( 0.9f, 0.9f, 0.5f, 1.0f );
     }
     else
     {
@@ -331,7 +331,7 @@ void FenceSwitch::SetBuildingLink( int _buildingId )
 void FenceSwitch::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
-   
+
     m_linkedBuildingId = atoi(_in->GetNextToken());
     m_linkedBuildingId2 = atoi(_in->GetNextToken());
     m_switchValue = atoi( _in->GetNextToken() );
@@ -472,7 +472,7 @@ void FenceSwitch::RenderLights()
 
                 glDepthMask     ( true );
                 glEnable        ( GL_CULL_FACE );
-                glDisable       ( GL_TEXTURE_2D );                    
+                glDisable       ( GL_TEXTURE_2D );
             }
         }
     }

@@ -19,7 +19,7 @@ class NewModWindow : public DarwiniaWindow
 {
 public:
     static char s_modName[256];
-    
+
 public:
     NewModWindow();
 

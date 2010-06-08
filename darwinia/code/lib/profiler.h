@@ -45,7 +45,7 @@ public:
 public:
     ProfiledElement	 (char const *_name, ProfiledElement *_parent);
     ~ProfiledElement ();
-	
+
 	void				Start			();
 	void				End				();
 	void				Advance			();

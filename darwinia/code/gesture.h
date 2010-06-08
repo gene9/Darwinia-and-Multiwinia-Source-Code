@@ -25,7 +25,7 @@
 
 // struct MouseSample
 struct MouseSample
-{   
+{
     int             x;
     int             y;
     double          time;
@@ -37,7 +37,7 @@ class FeatureSet
 {
 public:
     FeatureSet      ();
-    double          f[GESTURE_MAX_FEATURES+1];          // Features are numbered 1 to MAX_FEATURES inclusive          
+    double          f[GESTURE_MAX_FEATURES+1];          // Features are numbered 1 to MAX_FEATURES inclusive
 };
 
 
@@ -58,7 +58,7 @@ class GestureSymbol
 public:
     GestureSymbol   ();
     void            ClearResults();
-    
+
     FeatureSet      m_averages;
     Classification  m_classes;
     double          m_results;
@@ -88,7 +88,7 @@ protected:
     void            RunComparison();
 
 public:
-    
+
     Gesture( char *_filename );
 
     //

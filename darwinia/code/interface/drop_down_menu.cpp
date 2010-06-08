@@ -99,7 +99,7 @@ void DropDownMenu::Empty()
 {
     m_options.EmptyAndDelete();
 	m_nextValue = 0;
-    
+
     SelectOption( -1 );
 }
 
@@ -137,7 +137,7 @@ void DropDownMenu::AddOption( char const *_word, int _value )
 void DropDownMenu::SelectOption( int _value )
 {
 	m_currentOption = FindValue(_value);
-    
+
     if( m_currentOption < 0 || m_currentOption >= m_options.Size() )
     {
         SetCaption( m_name );
@@ -173,7 +173,7 @@ int DropDownMenu::GetSelectionValue()
 	{
 		return m_options[m_currentOption]->m_value;
 	}
-	
+
 	return -1;
 }
 
@@ -248,7 +248,7 @@ void DropDownMenu::CreateMenu()
         {
             if( index >= m_options.Size() ) break;
 
-            char *thisOption = m_options[index]->m_word;            
+            char *thisOption = m_options[index]->m_word;
             char thisName[64];
             sprintf( thisName, "%s %d", m_name, index );
 
@@ -268,12 +268,12 @@ void DropDownMenu::CreateMenu()
         }
     }
 
-    window->SetSize( m_w*numColumnsRequired, (numPerColumn+1) * m_h );    
+    window->SetSize( m_w*numColumnsRequired, (numPerColumn+1) * m_h );
 }
 
 
 void DropDownMenu::RemoveMenu()
-{    
+{
     DropDownWindow::RemoveDropDownWindow();
 }
 
@@ -282,7 +282,7 @@ void DropDownMenu::MouseUp()
 {
 	if (m_disabled)
 		return;
-		
+
     if( IsMenuVisible() )
     {
         RemoveMenu();
@@ -332,7 +332,7 @@ void DropDownMenuOption::SetParentMenu( EclWindow *_window, DropDownMenu *_menu,
         delete [] m_parentMenuName;
         m_parentMenuName = NULL;
     }
-    m_parentMenuName = NewStr( _menu->m_name );    
+    m_parentMenuName = NewStr( _menu->m_name );
 
 //    m_menuIndex = _index;
 	m_value = _value;
@@ -343,7 +343,7 @@ void DropDownMenuOption::Render( int realX, int realY, bool highlighted, bool cl
 {
     //BorderlessButton::Render( realX, realY, highlighted, clicked );
     //return;
-    
+
     DarwiniaWindow *window = (DarwiniaWindow *)EclGetWindow( m_parentWindowName );
     if( window )
     {

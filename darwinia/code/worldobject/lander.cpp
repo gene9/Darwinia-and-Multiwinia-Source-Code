@@ -28,14 +28,14 @@ Lander::Lander()
 }
 
 bool Lander::Advance( Unit *_unit )
-{    
+{
     m_front.Set( -1, 0, 0 );
 
-    if( m_dead ) 
+    if( m_dead )
     {
         bool amIDead = AdvanceDead( _unit );
-        if( amIDead ) 
-		{		
+        if( amIDead )
+		{
             g_app->m_location->Bang( m_pos, 30.0f, 50.0f );
 			return true;
 		}
@@ -46,7 +46,7 @@ bool Lander::Advance( Unit *_unit )
         case StateSailing:              return AdvanceSailing();                break;
         case StateLanded:               return AdvanceLanded();                 break;
     }
-    
+
     float worldSizeX = g_app->m_location->m_landscape.GetWorldSizeX();
     float worldSizeZ = g_app->m_location->m_landscape.GetWorldSizeZ();
     if( m_pos.x < 0.0f ) m_pos.x = 0.0f;
@@ -54,7 +54,7 @@ bool Lander::Advance( Unit *_unit )
     if( m_pos.x >= worldSizeX ) m_pos.x = worldSizeX;
     if( m_pos.z >= worldSizeZ ) m_pos.z = worldSizeZ;
 
-    return false;    
+    return false;
 }
 
 void Lander::ChangeHealth( int amount )
@@ -66,11 +66,11 @@ bool Lander::AdvanceSailing()
 {
     m_vel = m_front * m_stats[StatSpeed];
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-    
+
     float groundLevel = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
     m_pos.y = groundLevel;
     if( m_pos.y < 0.0f ) m_pos.y = 0.0f;
-    
+
     if( groundLevel > 0.0f )
     {
         m_vel.Zero();
@@ -83,7 +83,7 @@ bool Lander::AdvanceSailing()
 bool Lander::AdvanceLanded()
 {
     m_vel.Zero();
-    
+
     m_spawnTimer -= SERVER_ADVANCE_PERIOD;
     if( m_spawnTimer <= 0.0f )
     {
@@ -94,7 +94,7 @@ bool Lander::AdvanceLanded()
 
         Vector3 offset( 0.0f, 0.0f, syncsfrand(200.0f) );
         unit->SetWayPoint( m_pos + m_front * 750.0f + offset );
-        
+
         m_spawnTimer = m_stats[StatRate];
     }
 
@@ -107,7 +107,7 @@ void Lander::Render( float predictionTime, int teamId )
     // Work out our predicted position and orientation
 
     Vector3 predictedPos = m_pos + m_vel * predictionTime;
-    
+
     Vector3 entityUp = g_app->m_location->m_landscape.m_normalMap->GetValue( predictedPos.x, predictedPos.z );
     Vector3 entityFront = m_front;
     entityFront.Normalise();
@@ -117,7 +117,7 @@ void Lander::Render( float predictionTime, int teamId )
     if( !m_dead )
     {
         RGBAColour colour = g_app->m_location->m_teams[ teamId ].m_colour;
-        
+
         if( m_reloading > 0.0f )
         {
             colour.r = ( colour.r == 255 ? 255 : 100 );
@@ -125,7 +125,7 @@ void Lander::Render( float predictionTime, int teamId )
             colour.b = ( colour.b == 255 ? 255 : 100 );
         }
         glColor3ubv( colour.GetData() );
-        
+
         //
         // 3d Shape
 
@@ -144,7 +144,7 @@ void Lander::Render( float predictionTime, int teamId )
         glEnable        (GL_TEXTURE_2D);
 		g_app->m_renderer->UnsetObjectLighting();
         glEnable        (GL_CULL_FACE);
-     
+
     }
 }
 

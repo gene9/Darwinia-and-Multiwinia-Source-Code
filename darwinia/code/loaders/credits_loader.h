@@ -49,7 +49,7 @@ public:
 
 
 
-class CreditsItem 
+class CreditsItem
 {
 public:
     char    *m_string;
@@ -68,7 +68,7 @@ public:
     Vector2 m_pos;
     Vector2 m_targetPos;
     int     m_itemId;
-    
+
     enum
     {
         StateWalkingToItem,

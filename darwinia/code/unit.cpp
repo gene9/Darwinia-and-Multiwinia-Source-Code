@@ -25,7 +25,7 @@
 
 Unit::Unit(int troopType, int teamId, int unitId, int numEntities, Vector3 const &_pos)
 :   m_troopType(troopType),
-    m_teamId(teamId),    
+    m_teamId(teamId),
     m_unitId(unitId),
     m_radius(0.0f),
     m_centrePos(_pos),
@@ -74,7 +74,7 @@ int Unit::AddEntity( Entity *_entity )
 // _posX and _posZ specify the position that the entity last registered
 // with the EntityGrid.
 void Unit::RemoveEntity( int _index, float _posX, float _posZ )
-{         
+{
     if( m_entities.ValidIndex( _index ) )
     {
         Entity *entity = m_entities[ _index ];
@@ -82,7 +82,7 @@ void Unit::RemoveEntity( int _index, float _posX, float _posZ )
 		WorldObjectId myId( m_teamId, m_unitId, _index, entity->m_id.GetUniqueId() );
 
 		g_app->m_location->m_entityGrid->RemoveObject( myId, _posX, _posZ, entity->m_radius );
-        
+
 		m_entities.MarkNotUsed( _index );
         delete entity;
     }
@@ -90,7 +90,7 @@ void Unit::RemoveEntity( int _index, float _posX, float _posZ )
 
 void Unit::AdvanceEntities(int _slice)
 {
-    int startIndex, endIndex;    
+    int startIndex, endIndex;
     m_entities.GetNextSliceBounds(_slice, &startIndex, &endIndex);
 
     for (int i = startIndex; i <= endIndex; i++)
@@ -98,7 +98,7 @@ void Unit::AdvanceEntities(int _slice)
         if (m_entities.ValidIndex(i))
         {
             Entity *s = m_entities[i];
-            
+
             if( s->m_enabled )
             {
                 Vector3 oldPos( s->m_pos );
@@ -152,7 +152,7 @@ void Unit::Render( float _predictionTime )
             entity->Render(_predictionTime);
         }
 	}
-        
+
     glEnable        ( GL_CULL_FACE );
 }
 
@@ -199,14 +199,14 @@ bool Unit::Advance( int _slice )
                 LaserTrooper *l = (LaserTrooper *) m_entities[i];
 
                 if( (l->m_pos - l->m_targetPos).Mag() < leadDistance / 5.0f )
-                {                
+                {
                     Vector3 pos = l->m_pos;
 //                    Vector3 targetPos = m_wayPoint;
 //                    targetPos += GetFormationOffset( FormationRectangle, l->m_unitIndex );
 //                    targetPos = l->PushFromObstructions( targetPos );
 //                    //targetPos = l->PushFromEachOther( targetPos );
 //                    l->m_unitTargetPos = targetPos;
-    
+
                     Vector3 targetPos = l->m_unitTargetPos;
                     Vector3 desiredDirection = (targetPos - pos).Normalise();
                     float distance = (targetPos - pos).Mag();
@@ -219,10 +219,10 @@ bool Unit::Advance( int _slice )
 
                     l->m_targetPos = pos;
                 }
-            }    
-        }       
+            }
+        }
     }
-   
+
     return false;
 }
 
@@ -241,7 +241,7 @@ int Unit::NumAliveEntities()
         if( m_entities.ValidIndex(i) )
         {
             Entity *entity = m_entities[i];
-            if( !entity->m_dead ) ++result;        
+            if( !entity->m_dead ) ++result;
         }
     }
 
@@ -251,7 +251,7 @@ int Unit::NumAliveEntities()
 
 void Unit::Attack( Vector3 pos, bool _withGrenade )
 {
-	// 
+	//
 	// Deal with grenades
 
 	if (_withGrenade)
@@ -278,7 +278,7 @@ void Unit::Attack( Vector3 pos, bool _withGrenade )
                 }
             }
         }
-        
+
         if( nearestEnt )
         {
             g_app->m_location->ThrowWeapon( nearestEnt->m_pos, pos, WorldObject::EffectThrowableGrenade, m_teamId );
@@ -296,7 +296,7 @@ void Unit::Attack( Vector3 pos, bool _withGrenade )
         {
             Entity *ent = m_entities[i];
             if( ent->m_enabled &&
-                !ent->m_dead && 
+                !ent->m_dead &&
                 ent->m_reloading == 0.0f )
             {
                 canAttack.PutData( i );
@@ -304,17 +304,17 @@ void Unit::Attack( Vector3 pos, bool _withGrenade )
         }
     }
 
-    
+
     if( canAttack.Size() > 0 )
     {
         //
-        // Decide the maximum number of entities 
+        // Decide the maximum number of entities
         // that can attack now without pauses appearing in fire rate
 
         float reloadTime = EntityBlueprint::GetStat( m_troopType, Entity::StatRate );
         float timeToWait = (float) reloadTime / (float) NumEntities();
         m_attackAccumulator += ( (float) SERVER_ADVANCE_PERIOD / timeToWait );
-        
+
 
         //
         // Pick guys randomly to attack
@@ -326,7 +326,7 @@ void Unit::Attack( Vector3 pos, bool _withGrenade )
             int entityIndex = canAttack[randomIndex];
             canAttack.RemoveData(randomIndex);
             Entity *ent = m_entities[entityIndex];
-    		ent->Attack( pos );	
+    		ent->Attack( pos );
         }
     }
 }
@@ -340,7 +340,7 @@ void Unit::UpdateEntityPosition( Vector3 pos, float _radius )
     float distanceFromCentre = (pos - m_centrePos).Mag();
     distanceFromCentre += _radius;
     float distanceFromCentreSquared = distanceFromCentre * distanceFromCentre;
-    
+
     if( distanceFromCentreSquared > m_accumulatedRadiusSquared )
     {
         m_accumulatedRadiusSquared = distanceFromCentreSquared;
@@ -370,7 +370,7 @@ Vector3 Unit::GetFormationOffset(int _formation, int _index)
     {
         return g_zeroVector;
     }
-    
+
     // Generate some noise in our formation
     if( !s_offsets )
     {
@@ -386,7 +386,7 @@ Vector3 Unit::GetFormationOffset(int _formation, int _index)
         case FormationRectangle:
         {
             int rowLen = sqrtf( NumEntities() );
-            
+
             float x = _index % rowLen;
             x -= rowLen/2.0f;
             x *= spacedOut;
@@ -394,17 +394,17 @@ Vector3 Unit::GetFormationOffset(int _formation, int _index)
             float z = _index / rowLen;
 			z -= rowLen/2.0f;
 			z *= spacedOut;
-            
+
             x += s_offsets[_index % numOffsets];
             z += s_offsets[_index % numOffsets];
-            
+
             return Vector3(z, 0, x);
         }
 
         case FormationAirstrike:
         {
             int rowLen = 4;
-            
+
             float x = _index % rowLen;
             x -= rowLen/2.0f;
             x *= spacedOut * 6.0f;
@@ -412,7 +412,7 @@ Vector3 Unit::GetFormationOffset(int _formation, int _index)
             float y = _index / rowLen;
 			y -= rowLen/2.0f;
 			y *= spacedOut * 3.0f;
-            
+
             float z = _index / rowLen;
 			z -= rowLen/2.0f;
 			z *= spacedOut * 6.0f;
@@ -420,8 +420,8 @@ Vector3 Unit::GetFormationOffset(int _formation, int _index)
             x += s_offsets[_index % numOffsets];
             y += s_offsets[_index % numOffsets];
             z += s_offsets[_index % numOffsets];
-            
-            return Vector3(x, -y, z);            
+
+            return Vector3(x, -y, z);
         }
     }
 
@@ -433,7 +433,7 @@ Vector3 Unit::GetOffset(int _formation, int _index)
 {
     Vector3 formationOffset = GetFormationOffset( _formation, _index );
     Vector3 finalPos = m_wayPoint + formationOffset;
-        
+
     if( finalPos.Mag() == 0.0f )
     {
         return finalPos;
@@ -478,7 +478,7 @@ void Unit::RecalculateOffsets()
                 targetPos += GetFormationOffset( FormationRectangle, l->m_id.GetIndex() );
                 targetPos = l->PushFromObstructions( targetPos );
                 //targetPos = l->PushFromEachOther( targetPos );
-                l->m_unitTargetPos = targetPos;                
+                l->m_unitTargetPos = targetPos;
             }
         }
     }

@@ -49,20 +49,20 @@ public:
 
 	LList &operator = (const LList<T> &);
 
-	inline void PutData			( const T &newdata );   // Adds in data at the end	
+	inline void PutData			( const T &newdata );   // Adds in data at the end
 	void		PutDataAtEnd	( const T &newdata );
-	void		PutDataAtStart	( const T &newdata );	
+	void		PutDataAtStart	( const T &newdata );
 	void		PutDataAtIndex	( const T &newdata, int index );
 
     inline T	GetData			( int index ) const;	// slow unless sequential
     inline T   *GetPointer		( int index );			// slow unless sequential
-	void		RemoveData		( int index );			// slow 
+	void		RemoveData		( int index );			// slow
     int			FindData		( const T &data );		// -1 means 'not found'
-  
+
     inline int	Size			() const;				// Returns the total size of the array
     inline bool ValidIndex		( int index ) const;
 
-    void		Empty			();						// Resets the array to empty    
+    void		Empty			();						// Resets the array to empty
     void		EmptyAndDelete	();						// As above, deletes all data as well
 	void        EmptyAndDeleteArray();                  // As above, but with delete[]
 

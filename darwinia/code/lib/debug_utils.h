@@ -48,6 +48,6 @@ void WriteSystemReport(FILE *_out);
 
 void PrintMemoryLeaks();
 void GenerateBlackBox( char *_msg );
-    
+
 #endif
 

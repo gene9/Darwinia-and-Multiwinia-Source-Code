@@ -87,7 +87,7 @@ void SoundProfileWindow::Render( bool hasFocus )
     int yPos = m_y + 40;
     int yDif = 13;
     int textSize = DEF_FONT_SIZE;
-      
+
 	//
     // Print Main Profiles
 
@@ -108,13 +108,13 @@ void SoundProfileWindow::Render( bool hasFocus )
 				timePerCall = time/(float)pe->m_lastNumCalls;
 			}
 			char caption[256];
-			sprintf( caption, "%-28s:%3dx%2.1f = %2.0f  %2.0f", 
-					 pe->m_name, 
-					 pe->m_lastNumCalls, 
+			sprintf( caption, "%-28s:%3dx%2.1f = %2.0f  %2.0f",
+					 pe->m_name,
+					 pe->m_lastNumCalls,
 					 timePerCall,
 					 time,
  					 pe->m_historyTotalTime * 1000.0 / pe->m_historyNumSeconds);
-        
+
 			float colour = 0.5f + 0.5f * time / maxTime;
 			glColor4f( colour, colour, colour, 1.0f );
 
@@ -134,10 +134,10 @@ void SoundProfileWindow::Render( bool hasFocus )
 		g_editorFont.DrawText2D( xPos, yPos+=yDif, textSize, "Other         :        = %2.0f", other );
 		total += other;
 	}
-																			
-    
+
+
 	yPos = m_y + 300;
-   
+
 
 	//
     // Print Event Profiles
@@ -160,12 +160,12 @@ void SoundProfileWindow::Render( bool hasFocus )
 			}
 			char caption[256];
 			sprintf( caption, "%-28s:%3dx%2.1f = %2.0f  %2.0f",
-					 pe->m_name, 
-					 pe->m_lastNumCalls, 
+					 pe->m_name,
+					 pe->m_lastNumCalls,
 					 timePerCall,
 					 time,
 					 pe->m_historyTotalTime * 1000.0 / pe->m_historyNumSeconds);
-        
+
 			float colour = 0.5f + 0.5f * time / maxTime;
 			glColor4f( colour, colour, colour, 1.0f );
 
@@ -179,8 +179,8 @@ void SoundProfileWindow::Render( bool hasFocus )
 
 
 	//
-	// Print total						
-	
+	// Print total
+
 	yPos += yDif;
 	glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
 	g_editorFont.DrawText2D( xPos, m_y + m_h - 20, 15, "Total : %2.2fms", total );
@@ -208,12 +208,12 @@ void SoundProfileWindow::Render( bool hasFocus )
 			}
 			char caption[256];
 			sprintf( caption, "%-28s:%3dx%2.1f = %2.0f  %2.0f",
-					 pe->m_name, 
-					 pe->m_lastNumCalls, 
+					 pe->m_name,
+					 pe->m_lastNumCalls,
 					 timePerCall,
 					 time,
 					 pe->m_historyTotalTime * 1000.0 / pe->m_historyNumSeconds);
-        
+
 			float colour = 0.5f + 0.5f * time / maxTime;
 			glColor4f( colour, colour, colour, 1.0f );
 

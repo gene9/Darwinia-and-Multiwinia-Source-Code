@@ -80,7 +80,7 @@ int SoundSourceBlueprint::GetSoundSoundType ( char const *_name )
 
 char *SoundSourceBlueprint::GetSoundSourceName( int _type )
 {
-    char *names[] = { 
+    char *names[] = {
                         "Laser",
                         "Grenade",
                         "Rocket",
@@ -117,7 +117,7 @@ void SoundSourceBlueprint::ListSoundEvents( int _type, LList<char *> *_list )
             _list->PutData( "Explode" );
             _list->PutData( "ExplodeController" );
             break;
-            
+
         case TypeRocket:
             _list->PutData( "Create" );
             _list->PutData( "Explode" );
@@ -129,7 +129,7 @@ void SoundSourceBlueprint::ListSoundEvents( int _type, LList<char *> *_list )
             _list->PutData( "Flash" );
             _list->PutData( "Explode" );
             break;
-            
+
         case TypeSpirit:
             _list->PutData( "Create" );
             _list->PutData( "PickedUp" );
@@ -184,7 +184,7 @@ void SoundSourceBlueprint::ListSoundEvents( int _type, LList<char *> *_list )
             //_list->PutData( "TaskManagerSelectTask" );
             //_list->PutData( "TaskManagerDeselectTask" );
             _list->PutData( "DeleteTask" );
-            _list->PutData( "MouseOverIcon" );     
+            _list->PutData( "MouseOverIcon" );
             _list->PutData( "ShowLogo" );
             break;
     }
@@ -246,7 +246,7 @@ SoundSystem::SoundSystem()
     m_numChannels(0),
 	m_music(NULL),
 	m_requestedMusic(NULL)
-{    
+{
 #ifdef PROFILER_ENABLED
     m_eventProfiler = new Profiler();
     m_mainProfiler = new Profiler();
@@ -261,7 +261,7 @@ SoundSystem::~SoundSystem()
     delete m_mainProfiler;
 #endif
     delete [] m_channels;
-    
+
     m_sounds.EmptyAndDelete();
     m_entityBlueprints.EmptyAndDelete();
     m_buildingBlueprints.EmptyAndDelete();
@@ -298,8 +298,8 @@ void SoundSystem::RestartSoundLibrary()
         g_soundLibrary2d = NULL;
         g_soundLibrary3d = NULL;
     }
-    
-    
+
+
     //
     // Start up a new sound library
 
@@ -312,18 +312,18 @@ void SoundSystem::RestartSoundLibrary()
 
 	g_soundLibrary2d = new SoundLibrary2d;
 	g_soundLibrary3d = NULL;
-	
+
 #ifdef HAVE_DSOUND
-	if (stricmp(libName, "dsound") == 0)    g_soundLibrary3d = new SoundLibrary3dDirectSound();	
+	if (stricmp(libName, "dsound") == 0)    g_soundLibrary3d = new SoundLibrary3dDirectSound();
 #endif
 	if (!g_soundLibrary3d)                  g_soundLibrary3d = new SoundLibrary3dSoftware();
-	
+
     g_soundLibrary3d->SetMasterVolume( volume );
     g_soundLibrary3d->Initialise( mixrate, m_numChannels, hw3d, bufSize, bufSize * 10 );
-    
-    m_numChannels = g_soundLibrary3d->GetNumMainChannels();	
-    m_channels = new SoundInstanceId[m_numChannels];    
-    
+
+    m_numChannels = g_soundLibrary3d->GetNumMainChannels();
+    m_channels = new SoundInstanceId[m_numChannels];
+
     g_soundLibrary3d->SetMainCallback( &SoundLibraryMainCallback );
     g_soundLibrary3d->SetMusicCallback( &SoundLibraryMusicCallback );
 }
@@ -347,7 +347,7 @@ void SoundSystem::StopAllDSPEffects()
 }
 
 
-bool SoundSystem::SoundLibraryMainCallback( unsigned int _channel, signed short *_data, 
+bool SoundSystem::SoundLibraryMainCallback( unsigned int _channel, signed short *_data,
 									        unsigned int _numSamples, int *_silenceRemaining )
 {
     if( !g_app->m_soundSystem ) return false;
@@ -361,7 +361,7 @@ bool SoundSystem::SoundLibraryMainCallback( unsigned int _channel, signed short 
 		g_app->m_soundSystem->m_eventProfiler->StartProfile(instance->m_eventName);
 #endif
 
-   
+
 		//
         // Fill the space with sample data
 
@@ -371,7 +371,7 @@ bool SoundSystem::SoundLibraryMainCallback( unsigned int _channel, signed short 
         {
             signed short *loopStart = _data + numSamplesWritten;
             unsigned int numSamplesRemaining = _numSamples - numSamplesWritten;
-            
+
             if( instance->m_loopType == SoundInstance::Looped ||
                 instance->m_loopType == SoundInstance::LoopedADSR )
             {
@@ -437,7 +437,7 @@ bool SoundSystem::SoundLibraryMusicCallback( signed short *_data, unsigned int _
 		g_app->m_soundSystem->m_eventProfiler->StartProfile(instance->m_eventName);
 #endif
 
-   
+
 		//
         // Fill the space with sample data
 
@@ -447,7 +447,7 @@ bool SoundSystem::SoundLibraryMusicCallback( signed short *_data, unsigned int _
         {
             signed short *loopStart = _data + numSamplesWritten;
             unsigned int numSamplesRemaining = _numSamples - numSamplesWritten;
-            
+
             if( instance->m_loopType == SoundInstance::Looped ||
                 instance->m_loopType == SoundInstance::LoopedADSR )
             {
@@ -504,7 +504,7 @@ bool SoundSystem::SoundLibraryMusicCallback( signed short *_data, unsigned int _
 void SoundSystem::LoadEffects()
 {
     m_filterBlueprints.SetSize( SoundLibrary3d::NUM_FILTERS );
-    
+
     TextReader *in = g_app->m_resource->GetTextReader( "effects.txt" );
 	DarwiniaReleaseAssert(in && in->IsOpen(), "Couldn't load effects.txt");
 
@@ -530,7 +530,7 @@ void SoundSystem::LoadEffects()
             sb->m_max       = atof( in->GetNextToken() );
             sb->m_default   = atof( in->GetNextToken() );
             sb->m_dataType  = atoi( in->GetNextToken() );
-            
+
             in->ReadLine();
             param = in->GetNextToken();
         }
@@ -567,7 +567,7 @@ void SoundSystem::LoadBlueprints()
     m_entityBlueprints.SetSize( Entity::NumEntityTypes );
     m_buildingBlueprints.SetSize( Building::NumBuildingTypes );
     m_otherBlueprints.SetSize( SoundSourceBlueprint::NumOtherSoundSources );
-    
+
     TextReader *in = g_app->m_resource->GetTextReader( "sounds.txt" );
 	DarwiniaReleaseAssert(in && in->IsOpen(), "Couldn't open sounds.txt");
 
@@ -580,14 +580,14 @@ void SoundSystem::LoadBlueprints()
         char *type = in->GetNextToken();
         bool event = false;
         SoundSourceBlueprint *ssb = NULL;
-        
+
         if( stricmp( group, "ENTITY" ) == 0 )
         {
 			strncpy(objectName, type, 127);
             int entityType = Entity::GetTypeId( type );
             DarwiniaDebugAssert( entityType >= 0 && entityType < Entity::NumEntityTypes );
             DarwiniaDebugAssert( !m_entityBlueprints.ValidIndex( entityType ) );
-            
+
             ssb = new SoundSourceBlueprint();
             m_entityBlueprints.PutData( ssb, entityType );
             event = true;
@@ -632,12 +632,12 @@ void SoundSystem::LoadBlueprints()
                     DarwiniaDebugAssert( stricmp( word, "EVENT"  ) == 0 );
                     ParseSoundEvent( in, ssb, objectName );
                 }
-            }            
+            }
         }
     }
-        
 
-	// 
+
+	//
 	// Verify the data we just loaded - make sure all the samples exist, are
 	// in the right format etc.
 
@@ -689,17 +689,17 @@ void SoundSystem::SaveBlueprints(char const *_filename)
     FileWriter *file = g_app->m_resource->GetFileWriter( _filename, false );
     // Not always possible - this may be a release version with a data.dat
     if( !file ) return;
-     
+
     for( int i = 0; i < m_entityBlueprints.Size(); ++i )
     {
         DarwiniaDebugAssert( m_entityBlueprints.ValidIndex(i) );
         SoundSourceBlueprint *ssb = m_entityBlueprints[i];
-        
+
         if( ssb->m_events.Size() > 0 )
         {
-            file->printf( "# =========================================================\n" );                        
+            file->printf( "# =========================================================\n" );
             file->printf( "ENTITY %s\n", Entity::GetTypeName(i) );
-        
+
             for( int j = 0; j < ssb->m_events.Size(); ++j )
             {
                 SoundEventBlueprint *seb = ssb->m_events[j];
@@ -714,12 +714,12 @@ void SoundSystem::SaveBlueprints(char const *_filename)
     {
         DarwiniaDebugAssert( m_buildingBlueprints.ValidIndex(i) );
         SoundSourceBlueprint *ssb = m_buildingBlueprints[i];
-        
+
         if( ssb->m_events.Size() > 0 )
         {
             file->printf( "# =========================================================\n" );
             file->printf( "BUILDING %s\n", Building::GetTypeName(i) );
-        
+
             for( int j = 0; j < ssb->m_events.Size(); ++j )
             {
                 SoundEventBlueprint *seb = ssb->m_events[j];
@@ -734,12 +734,12 @@ void SoundSystem::SaveBlueprints(char const *_filename)
     {
         DarwiniaDebugAssert( m_otherBlueprints.ValidIndex(i) );
         SoundSourceBlueprint *ssb = m_otherBlueprints[i];
-        
+
         if( ssb->m_events.Size() > 0 )
         {
             file->printf( "# =========================================================\n" );
             file->printf( "OTHER %s\n", SoundSourceBlueprint::GetSoundSourceName(i) );
-        
+
             for( int j = 0; j < ssb->m_events.Size(); ++j )
             {
                 SoundEventBlueprint *seb = ssb->m_events[j];
@@ -758,11 +758,11 @@ void SoundSystem::SaveBlueprints(char const *_filename)
 
             file->printf( "# =========================================================\n" );
             file->printf( "SAMPLEGROUP %s\n", group->m_name );
-            
+
             WriteSampleGroup( file, group );
 
             file->printf( "END\n\n\n" );
-            
+
         }
     }
 
@@ -774,17 +774,17 @@ void SoundSystem::ParseSoundEvent( TextReader *_in, SoundSourceBlueprint *_sourc
 {
     SoundEventBlueprint *seb = new SoundEventBlueprint();
     seb->SetEventName( _in->GetNextToken() );
-    
+
     seb->m_instance = new SoundInstance();
 	seb->m_instance->SetEventName(_entityName, seb->m_eventName);
 
     int oldUserPriority;            // backwards compatability, no longer used
-    
+
     _in->ReadLine();
     char *fieldName = _in->GetNextToken();
     while( stricmp( fieldName, "END" ) != 0 )
     {
-        if ( stricmp( fieldName, "SOUNDNAME" ) == 0 )      
+        if ( stricmp( fieldName, "SOUNDNAME" ) == 0 )
 		{
 			char *soundName = _in->GetNextToken();
 			StrToLower(soundName);
@@ -805,7 +805,7 @@ void SoundSystem::ParseSoundEvent( TextReader *_in, SoundSourceBlueprint *_sourc
         else if ( stricmp( fieldName, "LOOPDELAY" ) == 0 )      seb->m_instance->m_loopDelay.Read( _in );
         else if ( stricmp( fieldName, "EFFECT" ) == 0 )         ParseSoundEffect( _in, seb );
         else												    DarwiniaDebugAssert( false );
-        
+
         // This is bad, we have a looping sound that won't be attached
         // to any one object
 //        DarwiniaDebugAssert( !( seb->m_instance->m_loopType &&
@@ -814,7 +814,7 @@ void SoundSystem::ParseSoundEvent( TextReader *_in, SoundSourceBlueprint *_sourc
         _in->ReadLine();
         fieldName = _in->GetNextToken();
     }
-        
+
     _source->m_events.PutData( seb );
 }
 
@@ -833,9 +833,9 @@ void SoundSystem::ParseSoundEffect( TextReader *_in, SoundEventBlueprint *_bluep
             break;
         }
     }
-    
+
     DarwiniaDebugAssert( fxType != -1 );
-    
+
     DspHandle *effect = new DspHandle();
     effect->m_type = fxType;
 
@@ -844,9 +844,9 @@ void SoundSystem::ParseSoundEffect( TextReader *_in, SoundEventBlueprint *_bluep
     {
         _in->ReadLine();
         char *paramName = _in->GetNextToken();
-        if( stricmp( paramName, "END" ) == 0 ) break;        
+        if( stricmp( paramName, "END" ) == 0 ) break;
         effect->m_params[paramIndex].Read( _in );
-        ++paramIndex;        
+        ++paramIndex;
     }
     _blueprint->m_instance->m_dspFX.PutData( effect );
 }
@@ -893,7 +893,7 @@ void SoundSystem::WriteSoundEvent( FileWriter *_file, SoundEventBlueprint *_even
                                                                             );
 
     _event->m_instance->m_volume.Write      ( _file, "VOLUME", 2 );
-    
+
     if( !_event->m_instance->m_freq.IsFixedValue( 1.0f ) )      _event->m_instance->m_freq.Write        ( _file, "FREQUENCY", 2 );
     if( !_event->m_instance->m_attack.IsFixedValue( 0.0f ) )    _event->m_instance->m_attack.Write      ( _file, "ATTACK", 2 );
     if( !_event->m_instance->m_sustain.IsFixedValue( 0.0f ) )   _event->m_instance->m_sustain.Write     ( _file, "SUSTAIN", 2 );
@@ -904,12 +904,12 @@ void SoundSystem::WriteSoundEvent( FileWriter *_file, SoundEventBlueprint *_even
     {
         DspHandle *effect = _event->m_instance->m_dspFX[i];
         DspBlueprint *blueprint = m_filterBlueprints[ effect->m_type ];
-        
+
         _file->printf( "\t\tEFFECT             %s\n", blueprint->m_name );
         int paramIndex = 0;
         while( true )
         {
-            char *paramName = blueprint->GetParameter( paramIndex );            
+            char *paramName = blueprint->GetParameter( paramIndex );
             if( !paramName ) break;
             SoundParameter *param = &effect->m_params[ paramIndex ];
             param->Write( _file, paramName, 3 );
@@ -959,7 +959,7 @@ bool SoundSystem::InitialiseSound( SoundInstance *_instance )
                 }
             }
         }
-    }   
+    }
 
     if( createNewSound )
     {
@@ -988,7 +988,7 @@ int SoundSystem::FindBestAvailableChannel()
         SoundInstance *currentSound = GetSoundInstance( soundId );
 
         float channelPriority = 0.0f;
-        if( currentSound ) 
+        if( currentSound )
         {
             channelPriority = currentSound->m_calculatedPriority;
         }
@@ -1004,7 +1004,7 @@ int SoundSystem::FindBestAvailableChannel()
             lowestPriorityChannelIndex = i;
         }
     }
-    
+
 
     //
     // Did we find any empty channels?
@@ -1034,7 +1034,7 @@ void SoundSystem::ShutdownSound( SoundInstance *_instance )
 
 SoundInstance *SoundSystem::GetSoundInstance( SoundInstanceId id )
 {
-    if( !m_sounds.ValidIndex(id.m_index) ) 
+    if( !m_sounds.ValidIndex(id.m_index) )
     {
         return NULL;
     }
@@ -1057,7 +1057,7 @@ void SoundSystem::TriggerEntityEvent( Entity *_entity, char *_eventName )
     WorldObjectId objId( _entity->m_id );
 
     if( m_entityBlueprints.ValidIndex( _entity->m_type ) )
-    {   
+    {
         SoundSourceBlueprint *sourceBlueprint = m_entityBlueprints[ _entity->m_type ];
         for( int i = 0; i < sourceBlueprint->m_events.Size(); ++i )
         {
@@ -1070,8 +1070,8 @@ void SoundSystem::TriggerEntityEvent( Entity *_entity, char *_eventName )
                 instance->m_objIds.PutData( new WorldObjectId(objId) );
                 instance->m_pos = _entity->m_pos;
                 instance->m_vel = _entity->m_vel;
-                bool success = InitialiseSound  ( instance );                
-                if( !success ) ShutdownSound    ( instance );                
+                bool success = InitialiseSound  ( instance );
+                if( !success ) ShutdownSound    ( instance );
             }
         }
     }
@@ -1082,10 +1082,10 @@ void SoundSystem::TriggerEntityEvent( Entity *_entity, char *_eventName )
 void SoundSystem::TriggerBuildingEvent( Building *_building, char *_eventName )
 {
     if( !m_channels ) return;
-    
+
  	START_PROFILE(m_mainProfiler, "TriggerBuildingEvent");
     if( m_buildingBlueprints.ValidIndex( _building->m_type ) )
-    {   
+    {
         SoundSourceBlueprint *sourceBlueprint = m_buildingBlueprints[ _building->m_type ];
         for( int i = 0; i < sourceBlueprint->m_events.Size(); ++i )
         {
@@ -1098,7 +1098,7 @@ void SoundSystem::TriggerBuildingEvent( Building *_building, char *_eventName )
                 instance->m_objIds.PutData( new WorldObjectId(_building->m_id) );
                 instance->m_pos = _building->m_pos;
                 bool success = InitialiseSound  ( instance );
-                if( !success ) ShutdownSound    ( instance );                
+                if( !success ) ShutdownSound    ( instance );
             }
         }
     }
@@ -1120,7 +1120,7 @@ void SoundSystem::TriggerOtherEvent( WorldObject *_other, char *_eventName, int 
 	}
 
     if( m_otherBlueprints.ValidIndex( _type ) )
-    {   
+    {
 		// Search for the event blueprint matching _eventName
         SoundSourceBlueprint *sourceBlueprint = m_otherBlueprints[ _type ];
         for( int i = 0; i < sourceBlueprint->m_events.Size(); ++i )
@@ -1131,7 +1131,7 @@ void SoundSystem::TriggerOtherEvent( WorldObject *_other, char *_eventName, int 
 				// We have a match
                 DarwiniaDebugAssert( seb->m_instance );
                 SoundInstance *instance = new SoundInstance();
-                instance->Copy( seb->m_instance );                
+                instance->Copy( seb->m_instance );
                 if( _type == musicType )
 				{
                     //if( m_music && stricmp( m_music->m_eventName+6, _eventName ) == 0 )
@@ -1156,7 +1156,7 @@ void SoundSystem::TriggerOtherEvent( WorldObject *_other, char *_eventName, int 
 						instance->m_objIds.PutData( new WorldObjectId( _other->m_id ) );
 					}
 					bool success = InitialiseSound  ( instance );
-					if( !success ) ShutdownSound    ( instance );                
+					if( !success ) ShutdownSound    ( instance );
 				}
             }
         }
@@ -1183,7 +1183,7 @@ void SoundSystem::TriggerDuplicateSound ( SoundInstance *_instance )
     bool success = InitialiseSound( newInstance );
     if( success && newInstance->m_positionType == SoundInstance::TypeInEditor )
     {
-        m_editorInstanceId = newInstance->m_id;        
+        m_editorInstanceId = newInstance->m_id;
     }
     else if( !success )
     {
@@ -1196,7 +1196,7 @@ void SoundSystem::StopAllSounds( WorldObjectId _id, char *_eventName )
 {
     if( strstr( _eventName, "Music" ) )
     {
-        if( m_music ) m_music->BeginRelease(true);        
+        if( m_music ) m_music->BeginRelease(true);
     }
     else
     {
@@ -1205,9 +1205,9 @@ void SoundSystem::StopAllSounds( WorldObjectId _id, char *_eventName )
             if( m_sounds.ValidIndex(i) )
             {
                 SoundInstance *instance = m_sounds[i];
-                
+
                 if( instance->m_objId == _id )
-                {                    
+                {
                     if( !_eventName || stricmp(instance->m_eventName, _eventName) == 0 )
                     {
                         if( instance->IsPlaying() )
@@ -1229,15 +1229,15 @@ void SoundSystem::StopAllSounds( WorldObjectId _id, char *_eventName )
 int SoundSystem::IsSoundPlaying( SoundInstanceId _id )
 {
     for( int i = 0; i < m_numChannels; ++i )
-    {            
-        SoundInstanceId soundId = m_channels[i];            
+    {
+        SoundInstanceId soundId = m_channels[i];
         if( _id == soundId )
         {
             return i;
         }
     }
 
-    return -1;               
+    return -1;
 }
 
 
@@ -1246,19 +1246,19 @@ int SoundSystem::NumInstancesPlaying( WorldObjectId _id, char *_eventName )
     int result = 0;
 
     for( int i = 0; i < m_numChannels; ++i )
-    {            
-        SoundInstanceId soundId = m_channels[i];            
+    {
+        SoundInstanceId soundId = m_channels[i];
         SoundInstance *instance = GetSoundInstance( soundId );
         bool instanceMatch = !_id.IsValid() || instance->m_objId == _id;
 
-        if( instance && 
+        if( instance &&
             instanceMatch &&
             stricmp( instance->m_eventName, _eventName ) == 0 )
         {
             ++result;
-        }                
+        }
     }
-    
+
     return result;
 }
 
@@ -1268,23 +1268,23 @@ int SoundSystem::NumInstances( WorldObjectId _id, char *_eventName )
     int result = 0;
 
     for( int i = 0; i < m_sounds.Size(); ++i )
-    {            
+    {
         if( m_sounds.ValidIndex(i) )
         {
             SoundInstance *instance = m_sounds[i];
             bool instanceMatch = !_id.IsValid() || instance->m_objId == _id;
 
-            if( instance && 
+            if( instance &&
                 instanceMatch &&
                 stricmp( instance->m_eventName, _eventName ) == 0 )
             {
                 ++result;
-            }                
+            }
         }
     }
-    
+
     return result;
-  
+
 }
 
 
@@ -1320,14 +1320,14 @@ int SoundInstanceCompare(const void *elem1, const void *elem2 )
 {
     SoundInstanceId id1 = *((SoundInstanceId *) elem1);
     SoundInstanceId id2 = *((SoundInstanceId *) elem2);
-    
+
     SoundInstance *instance1 = g_app->m_soundSystem->GetSoundInstance( id1 );
     SoundInstance *instance2 = g_app->m_soundSystem->GetSoundInstance( id2 );
 
     DarwiniaDebugAssert( instance1 );
     DarwiniaDebugAssert( instance2 );
 
-    
+
     if      ( instance1->m_perceivedVolume < instance2->m_perceivedVolume )     return +1;
     else if ( instance1->m_perceivedVolume > instance2->m_perceivedVolume )     return -1;
     else                                                                        return 0;
@@ -1358,9 +1358,9 @@ void SoundSystem::Advance()
     if( m_timeSync >= SOUNDSYSTEM_UPDATEPERIOD )
     {
         m_timeSync -= SOUNDSYSTEM_UPDATEPERIOD;
-        
-        START_PROFILE(g_app->m_profiler, "Advance SoundSystem");        
-		
+
+        START_PROFILE(g_app->m_profiler, "Advance SoundSystem");
+
 
 		//
 		// Advance music
@@ -1369,12 +1369,12 @@ void SoundSystem::Advance()
 		{
             bool amIDone = m_music->Advance();
             if( amIDone )
-            {                    
+            {
 			    START_PROFILE(g_app->m_profiler, "Shutdown Music" );
                 ShutdownSound( m_music );
 				m_music = NULL;
 			    END_PROFILE(g_app->m_profiler, "Shutdown Music" );
-            }    
+            }
 		}
 
 		if (m_music == NULL && m_requestedMusic != NULL)
@@ -1415,7 +1415,7 @@ void SoundSystem::Advance()
                 sortedArraySize *= 2;
         }
         if( !sortedIds )
-        {            
+        {
             sortedIds = new SoundInstanceId[ sortedArraySize ];
         }
 
@@ -1449,11 +1449,11 @@ void SoundSystem::Advance()
         END_PROFILE(g_app->m_profiler, "Perceived Volumes" );
 
 
-        //        
+        //
 		// Sort sounds into perceived volume order
-        // NOTE : There are exactly numSortedId elements in sortedIds.  
+        // NOTE : There are exactly numSortedId elements in sortedIds.
         // NOTE : It isn't safe to assume numSortedIds == m_sounds.NumUsed()
-        
+
         START_PROFILE(g_app->m_profiler, "Sort Samples" );
         qsort( sortedIds, numSortedIds, sizeof(SoundInstanceId), SoundInstanceCompare );
         END_PROFILE(g_app->m_profiler, "Sort Samples" );
@@ -1464,9 +1464,9 @@ void SoundSystem::Advance()
         // Reduce priorities as more of the same sounds are played
 
         BTree<float> existingInstances;
-        
-                
-        //                
+
+
+        //
         // Also look out for the highest priority new sound to swap in
 
         START_PROFILE(g_app->m_profiler, "Recalculate Priorities" );
@@ -1502,11 +1502,11 @@ void SoundSystem::Advance()
         }
 
         END_PROFILE(g_app->m_profiler, "Recalculate Priorities" );
-        
-     
+
+
         if( newInstance )
-        {            
-            // Find worst old sound to get rid of  
+        {
+            // Find worst old sound to get rid of
             START_PROFILE(g_app->m_profiler, "Find best Channel" );
             int bestAvailableChannel = FindBestAvailableChannel();
             END_PROFILE(g_app->m_profiler, "Find best Channel" );
@@ -1522,7 +1522,7 @@ void SoundSystem::Advance()
             else if( existingInstance )
             {
                 existingInstance->StopPlaying();
-            }            
+            }
             END_PROFILE(g_app->m_profiler, "Stop Old Sound" );
 
 
@@ -1540,7 +1540,7 @@ void SoundSystem::Advance()
                 ShutdownSound( newInstance );
             }
             END_PROFILE(g_app->m_profiler, "Start New Sound" );
-            
+
             START_PROFILE(g_app->m_profiler, "Reset Channel" );
             g_soundLibrary3d->ResetChannel( bestAvailableChannel);
             END_PROFILE(g_app->m_profiler, "Reset Channel" );
@@ -1552,18 +1552,18 @@ void SoundSystem::Advance()
 
         START_PROFILE(g_app->m_profiler, "Advance All Channels" );
         for( int i = 0; i < m_numChannels; ++i )
-        {            
-            SoundInstanceId soundId = m_channels[i];            
-            SoundInstance *currentSound = GetSoundInstance( soundId );                         
+        {
+            SoundInstanceId soundId = m_channels[i];
+            SoundInstance *currentSound = GetSoundInstance( soundId );
             if( currentSound )
             {
                 bool amIDone = currentSound->Advance();
                 if( amIDone )
-                {                    
+                {
 			        START_PROFILE(g_app->m_profiler, "Shutdown Sound" );
                     ShutdownSound( currentSound );
 			        END_PROFILE(g_app->m_profiler, "Shutdown Sound" );
-                }    
+                }
             }
         }
         END_PROFILE(g_app->m_profiler, "Advance All Channels" );
@@ -1572,7 +1572,7 @@ void SoundSystem::Advance()
 		//
         // Update our listener position
 
-        START_PROFILE(g_app->m_profiler, "UpdateListener" );    
+        START_PROFILE(g_app->m_profiler, "UpdateListener" );
 
         Vector3 camUp = g_app->m_camera->GetUp();
         if( g_prefsManager->GetInt("SoundSwapStereo",0) == 0 )
@@ -1581,11 +1581,11 @@ void SoundSystem::Advance()
         }
 
         Vector3 camVel = g_app->m_camera->GetVel() * 0.2f;
-        g_soundLibrary3d->SetListenerPosition( g_app->m_camera->GetPos(), 
+        g_soundLibrary3d->SetListenerPosition( g_app->m_camera->GetPos(),
                                                g_app->m_camera->GetFront(),
                                                camUp, camVel );
-        
-        END_PROFILE(g_app->m_profiler, "UpdateListener" );    
+
+        END_PROFILE(g_app->m_profiler, "UpdateListener" );
 
 
         //
@@ -1594,12 +1594,12 @@ void SoundSystem::Advance()
         START_PROFILE(g_app->m_profiler, "SoundLibrary3d Advance" );
         g_soundLibrary3d->Advance();
         END_PROFILE(g_app->m_profiler, "SoundLibrary3d Advance" );
-      
+
 #ifdef SOUNDSYSTEM_VERIFY
         RuntimeVerify();
 #endif
 
-        END_PROFILE(g_app->m_profiler, "Advance SoundSystem");                    
+        END_PROFILE(g_app->m_profiler, "Advance SoundSystem");
     }
 }
 
@@ -1621,13 +1621,13 @@ void SoundSystem::Advance()
     m_mainProfiler->Advance();
     m_eventProfiler->Advance();
 #endif
-    
+
     m_timeSync += g_advanceTime;
     if( m_timeSync >= SOUNDSYSTEM_UPDATEPERIOD )
     {
         m_timeSync -= SOUNDSYSTEM_UPDATEPERIOD;
 
-        START_PROFILE(g_app->m_profiler, "Advance SoundSystem");                    
+        START_PROFILE(g_app->m_profiler, "Advance SoundSystem");
 
         //
         // Resync with blueprints (changed by editor)
@@ -1638,12 +1638,12 @@ void SoundSystem::Advance()
             PropagateBlueprints();
         }
         END_PROFILE(g_app->m_profiler,  "Propagate Blueprints" );
-        
+
 
         //
         // Build a list of change requests, ordered on priority
 
-        START_PROFILE(g_app->m_profiler,  "HandleRequests" );    
+        START_PROFILE(g_app->m_profiler,  "HandleRequests" );
 
         int maxChannelChanges = 1;
         int numChannelChanges = 0;
@@ -1651,11 +1651,11 @@ void SoundSystem::Advance()
         LList<int> newRequests;                                 // Indexes of the channels
 
         for( int i = 0; i < m_numChannels; ++i )
-        {            
-            SoundChannel *channel = &m_channels[i];            
+        {
+            SoundChannel *channel = &m_channels[i];
             SoundInstance *requestedSound = GetSoundInstance( channel->m_requestedSound );
-            
-            if( requestedSound )                                                   
+
+            if( requestedSound )
             {
                 bool inserted = false;
                 for( int x = 0; x < newRequests.Size(); ++x )
@@ -1678,23 +1678,23 @@ void SoundSystem::Advance()
                 }
             }
         }
-       
-        END_PROFILE(g_app->m_profiler,  "HandleRequests" );    
 
-        
+        END_PROFILE(g_app->m_profiler,  "HandleRequests" );
+
+
         //
         // Start the highest priority new requests
 
-        START_PROFILE(g_app->m_profiler,  "StartNewSound" );    
+        START_PROFILE(g_app->m_profiler,  "StartNewSound" );
 
-        while( newRequests.Size() > 0 && 
+        while( newRequests.Size() > 0 &&
                numChannelChanges < maxChannelChanges )
         {
             int channelIndex = newRequests[0];
             newRequests.RemoveData(0);
-         
-            SoundChannel *channel = &m_channels[channelIndex];          
-            SoundInstance *currentSound = GetSoundInstance( channel->m_currentSound );            
+
+            SoundChannel *channel = &m_channels[channelIndex];
+            SoundInstance *currentSound = GetSoundInstance( channel->m_currentSound );
             if( currentSound && !currentSound->m_loopType )
             {
                 ShutdownSound( currentSound );
@@ -1702,7 +1702,7 @@ void SoundSystem::Advance()
             else if( currentSound )
             {
                 currentSound->StopPlaying();
-            }            
+            }
             channel->m_currentSound.SetInvalid();
 
             SoundInstance *requestedSound = GetSoundInstance( channel->m_requestedSound );
@@ -1727,55 +1727,55 @@ void SoundSystem::Advance()
 #endif
         }
 
-        END_PROFILE(g_app->m_profiler,  "StartNewSound" );    
-        
+        END_PROFILE(g_app->m_profiler,  "StartNewSound" );
+
 
         //
         // Advance all our channels
         // Clear out all the sound requests that have failed to start
 
-        START_PROFILE(g_app->m_profiler,  "Advance Channels" );    
+        START_PROFILE(g_app->m_profiler,  "Advance Channels" );
 
         for( int i = 0; i < m_numChannels; ++i )
-        {            
-            SoundChannel *channel = &m_channels[i];            
+        {
+            SoundChannel *channel = &m_channels[i];
 
-            SoundInstance *currentSound = GetSoundInstance( channel->m_currentSound );                         
+            SoundInstance *currentSound = GetSoundInstance( channel->m_currentSound );
             if( currentSound )
             {
                 bool amIDone = currentSound->Advance();
                 if( amIDone )
-                {                    
+                {
                     ShutdownSound( currentSound );
-                }    
+                }
             }
 
             SoundInstance *requestedSound = GetSoundInstance( channel->m_requestedSound );
             channel->m_requestedSound.SetInvalid();
-            if(  requestedSound && 
+            if(  requestedSound &&
                 !requestedSound->m_loopType &&
                  requestedSound->m_restartAttempts <= 0 )
             {
-                ShutdownSound( requestedSound );            
+                ShutdownSound( requestedSound );
             }
         }
 
-        END_PROFILE(g_app->m_profiler,  "Advance Channels" );    
+        END_PROFILE(g_app->m_profiler,  "Advance Channels" );
 
 
         //
         // Recalculate all sound priorities
         // If we're attached to a bogus object then give up trying
-        
-        START_PROFILE(g_app->m_profiler,  "UpdatePriority" );    
-        
+
+        START_PROFILE(g_app->m_profiler,  "UpdatePriority" );
+
         for( int i = 0; i < m_sounds.Size(); ++i )
         {
             if( m_sounds.ValidIndex(i) )
             {
                 SoundInstance *instance = m_sounds[i];
-                instance->RecalculatePriority();               
-                
+                instance->RecalculatePriority();
+
                 if( instance->m_positionType == SoundInstance::Type3DAttachedToObject &&
                     !instance->GetAttachedObject() )
                 {
@@ -1784,7 +1784,7 @@ void SoundSystem::Advance()
             }
         }
 
-        END_PROFILE(g_app->m_profiler,  "UpdatePriority" );    
+        END_PROFILE(g_app->m_profiler,  "UpdatePriority" );
 
 
         //
@@ -1796,8 +1796,8 @@ void SoundSystem::Advance()
         {
             if( m_sounds.ValidIndex(i) )
             {
-                SoundInstance *instance = m_sounds[i];                
-                {                
+                SoundInstance *instance = m_sounds[i];
+                {
                     if( !instance->IsPlaying() )
                     {
                         if( !instance->m_loopType && instance->m_restartAttempts <= 0 )
@@ -1822,7 +1822,7 @@ void SoundSystem::Advance()
         //
         // Update our listener position
 
-        START_PROFILE(g_app->m_profiler, "UpdateListener" );    
+        START_PROFILE(g_app->m_profiler, "UpdateListener" );
 
         Vector3 camUp = g_app->m_camera->GetUp();
         if( g_prefsManager->GetInt("SoundSwapStereo",0) == 1 )
@@ -1830,12 +1830,12 @@ void SoundSystem::Advance()
             camUp.y *= -1.0f;
         }
 
-        g_soundLibrary3d->SetListenerPosition( g_app->m_camera->GetPos(), 
+        g_soundLibrary3d->SetListenerPosition( g_app->m_camera->GetPos(),
                                             g_app->m_camera->GetFront(),
                                             camUp,
                                             g_app->m_camera->GetVel() );
-        
-        END_PROFILE(g_app->m_profiler, "UpdateListener" );    
+
+        END_PROFILE(g_app->m_profiler, "UpdateListener" );
 
 
         //
@@ -1847,13 +1847,13 @@ void SoundSystem::Advance()
         START_PROFILE(g_app->m_profiler, "SoundLibrary3d Advance" );
         g_soundLibrary3d->Advance();
         END_PROFILE(g_app->m_profiler, "SoundLibrary3d Advance" );
-        
+
 
 #ifdef SOUNDSYSTEM_VERIFY
         RuntimeVerify();
 #endif
 
-        END_PROFILE(g_app->m_profiler, "Advance SoundSystem");   
+        END_PROFILE(g_app->m_profiler, "Advance SoundSystem");
     }
 }
 */
@@ -1870,11 +1870,11 @@ void SoundSystem::RuntimeVerify()
     {
         SoundInstanceId id1 = m_channels[i];
         SoundInstance *currentSound = GetSoundInstance( id1 );
-        DarwiniaDebugAssert( !currentSound || 
+        DarwiniaDebugAssert( !currentSound ||
                      !(currentSound->IsPlaying() && currentSound->m_channelIndex == -1) );
-        
+
         if( currentSound )
-        {                
+        {
             for( int j = 0; j < m_numChannels; ++j )
             {
                 if( i != j )
@@ -1908,17 +1908,17 @@ void SoundSystem::RuntimeVerify()
 void SoundSystem::LoadtimeVerify()
 {
 	// If you want to comment this out then comment out the call.
-    
+
 	//
 	// Verify that the samples referred to in SampleGroups are valid
 
     FILE *soundErrors = fopen( "sounderrors.txt", "wt" );
     bool errorFound = false;
-    
+
 	for (int i = 0; i < m_sampleGroups.Size(); ++i)
 	{
 		if (!m_sampleGroups.ValidIndex(i)) continue;
-		
+
 		SampleGroup *sg = m_sampleGroups[i];
 		int size = sg->m_samples.Size();
 		for (int j = 0; j < size; ++j)
@@ -1927,14 +1927,14 @@ void SoundSystem::LoadtimeVerify()
 			char const *err = IsSoundSourceOK(soundName);
 			if(err != NULL )
             {
-                fprintf( soundErrors, "%s: %s In sound group %s\n", 
+                fprintf( soundErrors, "%s: %s In sound group %s\n",
 							            err, soundName, sg->m_name);
                 errorFound = true;
             }
 		}
 	}
 
-	
+
 	//
 	// Verify that the samples referred to in SoundEventBlueprints are valid
 
@@ -1945,7 +1945,7 @@ void SoundSystem::LoadtimeVerify()
 
 		SoundSourceBlueprint *ssb = m_entityBlueprints[i];
 		int size = ssb->m_events.Size();
-		
+
 		for (int j = 0; j < size; ++j)
 		{
 			SoundEventBlueprint *seb = ssb->m_events[j];
@@ -1955,7 +1955,7 @@ void SoundSystem::LoadtimeVerify()
 				char const *err = IsSoundSourceOK(si->m_soundName);
 				if(err != NULL )
                 {
-                    fprintf( soundErrors, "%s: %s In entity %s, event %s\n", 
+                    fprintf( soundErrors, "%s: %s In entity %s, event %s\n",
 					        err, si->m_soundName, Entity::GetTypeName(i), seb->m_eventName);
                     errorFound = true;
                 }
@@ -1968,7 +1968,7 @@ void SoundSystem::LoadtimeVerify()
                 {
                     fprintf( soundErrors, "Sound Group %s does not exist. "
 								    "Referenced by entity %s, event %s\n",
-								    si->m_soundName, Entity::GetTypeName(i), 
+								    si->m_soundName, Entity::GetTypeName(i),
 								    seb->m_eventName);
                     errorFound = true;
                 }
@@ -1983,7 +1983,7 @@ void SoundSystem::LoadtimeVerify()
 
 		SoundSourceBlueprint *ssb = m_buildingBlueprints[i];
 		int size = ssb->m_events.Size();
-		
+
 		for (int j = 0; j < size; ++j)
 		{
 			SoundEventBlueprint *seb = ssb->m_events[j];
@@ -1993,7 +1993,7 @@ void SoundSystem::LoadtimeVerify()
 				char const *err = IsSoundSourceOK(si->m_soundName);
 				if(err != NULL)
                 {
-                    fprintf( soundErrors, "%s: %s In building %s, event %s\n", 
+                    fprintf( soundErrors, "%s: %s In building %s, event %s\n",
 					            err, si->m_soundName, Building::GetTypeName(i), seb->m_eventName);
                     errorFound = true;
                 }
@@ -2006,7 +2006,7 @@ void SoundSystem::LoadtimeVerify()
                 {
                     fprintf( soundErrors, "Sound Group %s does not exist. "
 								    "Referenced by building %s, event %s\n",
-								    si->m_soundName, Building::GetTypeName(i), 
+								    si->m_soundName, Building::GetTypeName(i),
 								    seb->m_eventName);
                     errorFound = true;
                 }
@@ -2021,7 +2021,7 @@ void SoundSystem::LoadtimeVerify()
 
 		SoundSourceBlueprint *ssb = m_otherBlueprints[i];
 		int size = ssb->m_events.Size();
-		
+
 		for (int j = 0; j < size; ++j)
 		{
 			SoundEventBlueprint *seb = ssb->m_events[j];
@@ -2031,7 +2031,7 @@ void SoundSystem::LoadtimeVerify()
 				char const *err = IsSoundSourceOK(si->m_soundName);
 				if(err != NULL)
                 {
-                    fprintf( soundErrors, "%s: %s In Others %s, event %s\n", 
+                    fprintf( soundErrors, "%s: %s In Others %s, event %s\n",
 					        err, si->m_soundName, ssb->GetSoundSourceName(i), seb->m_eventName);
                     errorFound = true;
                 }
@@ -2044,7 +2044,7 @@ void SoundSystem::LoadtimeVerify()
                 {
                     fprintf( soundErrors, "Sound Group %s does not exist. "
 								    "Referenced by \"others\" %s, event %s\n",
-								    si->m_soundName, ssb->GetSoundSourceName(i), 
+								    si->m_soundName, ssb->GetSoundSourceName(i),
 								    seb->m_eventName);
                     errorFound = true;
                 }
@@ -2141,7 +2141,7 @@ bool SoundSystem::IsSampleUsed(char const *_soundName)
         }
     }
 
-    
+
     //
     // Building blueprints
 
@@ -2236,7 +2236,7 @@ void SoundSystem::PropagateBlueprints()
         }
     }
 }
-    
+
 
 SampleGroup *SoundSystem::GetSampleGroup ( char *_name )
 {
@@ -2305,7 +2305,7 @@ bool SoundSystem::RenameSampleGroup( char *_oldName, char *_newName )
 
         //
         // Update entity blueprints
-        
+
         for( int i = 0; i < m_entityBlueprints.Size(); ++i )
         {
             if( m_entityBlueprints.ValidIndex(i) )
@@ -2326,7 +2326,7 @@ bool SoundSystem::RenameSampleGroup( char *_oldName, char *_newName )
 
         //
         // Update building blueprints
-        
+
         for( int i = 0; i < m_buildingBlueprints.Size(); ++i )
         {
             if( m_buildingBlueprints.ValidIndex(i) )
@@ -2347,7 +2347,7 @@ bool SoundSystem::RenameSampleGroup( char *_oldName, char *_newName )
 
         //
         // Update other blueprints
-        
+
         for( int i = 0; i < m_otherBlueprints.Size(); ++i )
         {
             if( m_otherBlueprints.ValidIndex(i) )

@@ -17,7 +17,7 @@ public:
     SoundParameter *m_parameter;
     float           m_minOutput;
     float           m_maxOutput;
-    
+
 public:
     SoundParameterButton();
 
@@ -58,7 +58,7 @@ public:
     float           m_minInput;
     float           m_maxInput;
 	bool			m_linearScale;
-    
+
 public:
 	SoundParameterGraph(): m_linearScale(true) {}
 

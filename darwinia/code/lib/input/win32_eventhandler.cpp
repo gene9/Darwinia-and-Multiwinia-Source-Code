@@ -31,21 +31,21 @@ LRESULT CALLBACK W32EventHandler::WndProc( HWND hWnd, UINT message,
 	g_windowHasFocus = GetForegroundWindow() == g_windowManager->m_win32Specific->m_hWnd;
 
 	if (!g_windowHasFocus || !s_previousFocus) {
-		// When switching away, ALT is often left down. 
+		// When switching away, ALT is often left down.
 		// Let's clear it.
 
 		extern signed char g_keyDeltas[KEY_MAX];
 		extern signed char g_keys[KEY_MAX];
 
-		if (g_keys[KEY_ALT]) { 
+		if (g_keys[KEY_ALT]) {
 			g_keyDeltas[KEY_ALT] = -1;
-			g_keys[KEY_ALT] = 0;		
+			g_keys[KEY_ALT] = 0;
 		}
 	}
 
 	s_previousFocus = g_windowHasFocus;
 
-	switch (message) 
+	switch (message)
 	{
 		case WM_SIZING:
 		case WM_WINDOWPOSCHANGING:

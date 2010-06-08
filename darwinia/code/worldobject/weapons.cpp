@@ -53,7 +53,7 @@ ThrowableWeapon::ThrowableWeapon( int _type, Vector3 const &_startPos, Vector3 c
     m_front = g_upVector;
     Vector3 right = m_front ^ m_up;
     m_front = right ^ m_up;
-    
+
     m_birthTime = GetHighResTime();
 
     m_type = _type;
@@ -73,9 +73,9 @@ void ThrowableWeapon::TriggerSoundEvent( char *_event )
         case EffectThrowableGrenade:
         case EffectThrowableAirstrikeMarker:
         case EffectThrowableControllerGrenade:
-            g_app->m_soundSystem->TriggerOtherEvent( this, _event, SoundSourceBlueprint::TypeGrenade );    
+            g_app->m_soundSystem->TriggerOtherEvent( this, _event, SoundSourceBlueprint::TypeGrenade );
             break;
-    
+
         case EffectThrowableAirstrikeBomb:
             g_app->m_soundSystem->TriggerOtherEvent( this, _event, SoundSourceBlueprint::TypeAirstrikeBomb );
             break;
@@ -105,7 +105,7 @@ bool ThrowableWeapon::Advance()
             BounceOffLandscape();
             m_force *= 0.75f;
             m_vel *= m_force;
-            if( m_pos.y < landHeight + 1.0f ) m_pos.y = landHeight + 1.0f;               
+            if( m_pos.y < landHeight + 1.0f ) m_pos.y = landHeight + 1.0f;
             TriggerSoundEvent( "Bounce" );
         }
     }
@@ -117,13 +117,13 @@ bool ThrowableWeapon::Advance()
 void ThrowableWeapon::Render( float _predictionTime )
 {
     _predictionTime -= SERVER_ADVANCE_PERIOD;
-    
+
     Vector3 right = m_up ^ m_front;
     m_up.RotateAround( right * m_force * m_force * 0.15f );
-    m_front = right ^ m_up;    
+    m_front = right ^ m_up;
     m_front.Normalise();
     m_up.Normalise();
-    
+
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;
     Matrix34 transform( m_front, m_up, predictedPos );
 
@@ -147,13 +147,13 @@ void ThrowableWeapon::Render( float _predictionTime )
         m_numFlashes = numFlashes;
     }
 
-    float flashAlpha = 1.0f - (( GetHighResTime() - m_birthTime ) - numFlashes);    
+    float flashAlpha = 1.0f - (( GetHighResTime() - m_birthTime ) - numFlashes);
     if( flashAlpha < 0.2f )
     {
         float distToThrowable = (g_app->m_camera->GetPos() - predictedPos).Mag();
 
-        float size = 1000.0f / sqrtf(distToThrowable);    
-        glColor4ub      ( m_colour.r, m_colour.g, m_colour.b, 200 );   
+        float size = 1000.0f / sqrtf(distToThrowable);
+        glColor4ub      ( m_colour.r, m_colour.g, m_colour.b, 200 );
         glEnable        (GL_TEXTURE_2D);
         glBindTexture   (GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
         glDisable       (GL_CULL_FACE);
@@ -164,7 +164,7 @@ void ThrowableWeapon::Render( float _predictionTime )
             glTexCoord2i( 0, 1 );       glVertex3fv( (predictedPos - g_app->m_camera->GetRight()*size).GetData() );
         glEnd();
         size *= 0.4f;
-        glColor4f       ( 1.0f, 1.0f, 1.0f, 0.7f );   
+        glColor4f       ( 1.0f, 1.0f, 1.0f, 0.7f );
         glBindTexture   (GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
         glBegin( GL_QUADS );
             glTexCoord2i( 0, 1 );       glVertex3fv( (predictedPos - g_app->m_camera->GetUp()*size).GetData() );
@@ -180,7 +180,7 @@ void ThrowableWeapon::Render( float _predictionTime )
 float ThrowableWeapon::GetMaxForce( int _researchLevel )
 {
 	switch( _researchLevel )
-    {        
+    {
         case 0 :    return 50.0f;
         case 1 :    return 80.0f;
         case 2 :    return 110.0f;
@@ -200,7 +200,7 @@ float ThrowableWeapon::GetApproxMaxRange( float _maxForce )
 // ****************************************************************************
 
 Grenade::Grenade( Vector3 const &_startPos, Vector3 const &_front, float _force )
-:   ThrowableWeapon( EffectThrowableGrenade, _startPos, _front, _force ),    
+:   ThrowableWeapon( EffectThrowableGrenade, _startPos, _front, _force ),
     m_life(3.0f),
     m_power(25.0f)
 {
@@ -219,7 +219,7 @@ bool Grenade::Advance()
         g_app->m_location->Bang( m_pos, m_power/2.0f, m_power*2.0f);
         return true;
     }
-    
+
     return ThrowableWeapon::Advance();
 }
 
@@ -232,7 +232,7 @@ bool Grenade::Advance()
 AirStrikeMarker::AirStrikeMarker( Vector3 const &_startPos, Vector3 const &_front, float _force )
 :   ThrowableWeapon( EffectThrowableAirstrikeMarker, _startPos, _front, _force )
 {
-    m_colour.Set( 255, 100, 100 );     
+    m_colour.Set( 255, 100, 100 );
 }
 
 
@@ -256,7 +256,7 @@ bool AirStrikeMarker::Advance()
 
     if( GetHighResTime() > m_birthTime + 2.0f )
     {
-        if( m_airstrikeUnit.GetTeamId() != -1 && 
+        if( m_airstrikeUnit.GetTeamId() != -1 &&
             m_airstrikeUnit.GetUnitId() != -1 )
         {
             // Air strike unit has been created
@@ -280,8 +280,8 @@ bool AirStrikeMarker::Advance()
             int unitId;
             Team *team = g_app->m_location->GetMyTeam();
 
-            int airStikeResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeAirStrike );            
-            AirstrikeUnit *unit = (AirstrikeUnit *) team->NewUnit( Entity::TypeSpaceInvader, airStikeResearch, &unitId, m_pos );            
+            int airStikeResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeAirStrike );
+            AirstrikeUnit *unit = (AirstrikeUnit *) team->NewUnit( Entity::TypeSpaceInvader, airStikeResearch, &unitId, m_pos );
             unit->m_effectId = m_id.GetIndex();
             m_airstrikeUnit.Set( teamId, unitId, -1, -1 );
         }
@@ -307,7 +307,7 @@ bool ControllerGrenade::Advance()
     ThrowableWeapon::Advance();
 
     if( GetHighResTime() > m_birthTime + 3.0f )
-    {             
+    {
         g_app->m_soundSystem->TriggerOtherEvent( this, "ExplodeController", SoundSourceBlueprint::TypeGrenade );
 
         int numFlashes = 5 + darwiniaRandom() % 5;
@@ -357,9 +357,9 @@ Rocket::Rocket(Vector3 _startPos, Vector3 _targetPos)
 {
     m_pos = _startPos + Vector3(0,2,0);
     m_vel = ( _targetPos - m_pos ).Normalise() * 50.0f;
-    
+
     m_shape = g_app->m_resource->GetShape( "throwable.shp" );
-   
+
     m_timer = GetHighResTime();
     m_type = EffectRocket;
 }
@@ -372,7 +372,7 @@ void Rocket::Initialise()
 
 
 bool Rocket::Advance()
-{   
+{
     //
     // Move a little bit
 
@@ -380,10 +380,10 @@ bool Rocket::Advance()
     {
         m_vel *= 1.2f;
     }
-    
+
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;
 
-    
+
     //
     // Create smoke trail
 
@@ -395,7 +395,7 @@ bool Rocket::Advance()
         vel.z += syncsfrand(4.0f);
         g_app->m_particleSystem->CreateParticle(m_pos - m_vel * SERVER_ADVANCE_PERIOD, vel, Particle::TypeFire);
 	}
-    
+
 
     //
     // Have we run out of steam?
@@ -425,7 +425,7 @@ bool Rocket::Advance()
 
     if (g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z) >= m_pos.y)
     {
-        g_app->m_location->Bang( m_pos, 15.0f, 25.0f );    
+        g_app->m_location->Bang( m_pos, 15.0f, 25.0f );
         g_app->m_soundSystem->TriggerOtherEvent( this, "Explode", SoundSourceBlueprint::TypeRocket );
         return true;
     }
@@ -442,7 +442,7 @@ bool Rocket::Advance()
         Building *building = g_app->m_location->GetBuilding( buildingId );
         if( building->DoesSphereHit( m_pos, 3.0f ) )
         {
-            g_app->m_location->Bang( m_pos, 15.0f, 25.0f );    
+            g_app->m_location->Bang( m_pos, 15.0f, 25.0f );
             g_app->m_soundSystem->TriggerOtherEvent( this, "Explode", SoundSourceBlueprint::TypeRocket );
             return true;
         }
@@ -454,7 +454,7 @@ bool Rocket::Advance()
 
 void Rocket::Render( float predictionTime )
 {
-    Vector3 predictedPos = m_pos + m_vel * predictionTime;    
+    Vector3 predictedPos = m_pos + m_vel * predictionTime;
 
     Vector3 front = m_vel;
     front.Normalise();
@@ -487,7 +487,7 @@ void Rocket::Render( float predictionTime )
         pos.z += sfrand(8.0f);
         float size = 50.0f + frand(50.0f);
         g_app->m_particleSystem->CreateParticle( pos, vel, Particle::TypeMissileFire, size );
-    }   
+    }
 }
 
 
@@ -538,12 +538,12 @@ bool Laser::Advance()
             g_app->m_location->m_landscape.RayHit( oldPos, vel, &hitPoint );
             float distanceTravelled = (hitPoint - oldPos).Mag();
             float distanceTotal = (m_vel * SERVER_ADVANCE_PERIOD).Mag();
-        
+
             Vector3 normal = g_app->m_location->m_landscape.m_normalMap->GetValue(hitPoint.x, hitPoint.z);
             Vector3 incomingVel = m_vel * -1.0f;
-            float dotProd = normal * incomingVel;        
+            float dotProd = normal * incomingVel;
             m_vel = 2.0f * dotProd * normal - incomingVel;
-        
+
             m_pos = hitPoint;
             Vector3 distanceRemaining = m_vel;
             distanceRemaining.SetLength( distanceTotal - distanceTravelled );
@@ -569,7 +569,7 @@ bool Laser::Advance()
         rayDir.Normalise();
         Vector3 hitPos(0,0,0);
         Vector3 hitNorm(0,0,0);
-        
+
         LList<int> *nearbyBuildings = g_app->m_location->m_obstructionGrid->GetBuildings( m_pos.x, m_pos.z );
         for( int i = 0; i < nearbyBuildings->Size(); ++i )
         {
@@ -589,7 +589,7 @@ bool Laser::Advance()
 
         //
         // Detect collisions with entities
-        
+
         if( !m_harmless )
         {
 		    Vector3 halfDelta = m_vel * (SERVER_ADVANCE_PERIOD * 0.5f);
@@ -647,9 +647,9 @@ bool Laser::Advance()
 
 
 void Laser::Render( float predictionTime )
-{        
+{
     Vector3 predictedPos = m_pos + m_vel * predictionTime;
-    
+
     //
     // No richochet occurred recently
 	Vector3 lengthVector = m_vel;
@@ -661,7 +661,7 @@ void Laser::Render( float predictionTime )
     Vector3 camToMidPoint   = g_app->m_camera->GetPos() - midPoint;
     float   camDistSqd      = camToMidPoint.MagSquared();
     Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
-    
+
     rightAngle *= 0.8f;
 
     RGBAColour const &colour = g_app->m_location->m_teams[ m_fromTeamId ].m_colour;
@@ -672,8 +672,8 @@ void Laser::Render( float predictionTime )
         {
             glTexCoord2i(0,0);      glVertex3fv( (fromPos - rightAngle).GetData() );
             glTexCoord2i(0,1);      glVertex3fv( (fromPos + rightAngle).GetData() );
-            glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );                
-            glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );                     
+            glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );
+            glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );
         }
     glEnd();
 
@@ -693,7 +693,7 @@ Shockwave::Shockwave( int _teamId, float _size )
     m_size(_size),
     m_life(_size),
     m_shape(NULL)
-{    
+{
 //    m_shape = g_app->m_resource->GetShape( "shockwave.shp" );
     m_type = EffectShockwave;
 }
@@ -714,11 +714,11 @@ bool Shockwave::Advance()
     {
         ids = g_app->m_location->m_entityGrid->GetEnemies( m_pos.x, m_pos.z, radius, &numFound, m_teamId );
     }
-    else                 
+    else
     {
         ids = g_app->m_location->m_entityGrid->GetNeighbours( m_pos.x, m_pos.z, radius, &numFound );
     }
-    
+
     for( int i = 0; i < numFound; ++i )
     {
         WorldObjectId id = ids[i];
@@ -753,10 +753,10 @@ bool Shockwave::Advance()
 				ent->ChangeHealth( -40 * fraction );
 			}
         }
-        
+
     }
-   
-    return false;    
+
+    return false;
 }
 
 void Shockwave::Render( float predictionTime )
@@ -784,13 +784,13 @@ void Shockwave::Render( float predictionTime )
         glVertex3fv( pos.GetData() );
         angle += 2.0f * M_PI / (float) numSteps;
     }
-    
+
     glEnd();
 
     glShadeModel( GL_FLAT );
     glEnable    ( GL_DEPTH_TEST );
 
-    //  
+    //
     // Render screen flash if we are new
 
     if( m_size - predictedLife < 0.1f )
@@ -800,7 +800,7 @@ void Shockwave::Render( float predictionTime )
 			float distance = ( g_app->m_camera->GetPos() - m_pos ).Mag();
             float distanceFactor = 1.0f - ( distance / 500.0f );
             if( distanceFactor < 0.0f ) distanceFactor = 0.0f;
-            
+
             float alpha = 1.0f - ( m_size - predictedLife ) / 0.1f;
             alpha *= distanceFactor;
 			glColor4f(1,1,1,alpha);
@@ -815,7 +815,7 @@ void Shockwave::Render( float predictionTime )
                 glVertex2i( 0, screenH );
             glEnd();
             glEnable( GL_CULL_FACE );
-            g_app->m_renderer->SetupMatricesFor3D(); 
+            g_app->m_renderer->SetupMatricesFor3D();
 
             g_app->m_camera->CreateCameraShake( alpha );
         }
@@ -823,13 +823,13 @@ void Shockwave::Render( float predictionTime )
 
 
     //
-    // Render big blast 
+    // Render big blast
 
     if( m_size - predictedLife < 1.0f )
     {
         float distToBang = (g_app->m_camera->GetPos() - m_pos).Mag();
         Vector3 predictedPos = m_pos;
-        float size = (m_size * 2000.0f) / sqrtf(distToBang); 
+        float size = (m_size * 2000.0f) / sqrtf(distToBang);
         float alpha = 1.0f - ( m_size - predictedLife ) / 1.0f;
         glColor4f       (1.0f,0.4f,0.4f,alpha);
         glEnable        (GL_TEXTURE_2D);
@@ -842,8 +842,8 @@ void Shockwave::Render( float predictionTime )
             glTexCoord2i( 0, 1 );       glVertex3fv( (predictedPos - g_app->m_camera->GetRight()*size).GetData() );
         glEnd();
 
-        size *= 0.4f;        
-        glColor4f       ( 1.0f, 1.0f, 0.0f, alpha );   
+        size *= 0.4f;
+        glColor4f       ( 1.0f, 1.0f, 0.0f, alpha );
         glBindTexture   (GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
         glBegin( GL_QUADS );
             glTexCoord2i( 0, 1 );       glVertex3fv( (predictedPos - g_app->m_camera->GetUp()*size).GetData() );
@@ -887,7 +887,7 @@ bool MuzzleFlash::Advance()
 
     m_pos += m_front * SERVER_ADVANCE_PERIOD * 10.0f;
     m_life -= SERVER_ADVANCE_PERIOD * 10.0f;
-        
+
     return false;
 }
 
@@ -898,7 +898,7 @@ void MuzzleFlash::Render( float _predictionTime )
     //float predictedLife = m_life;
     Vector3 predictedPos = m_pos + m_front * _predictionTime * 10.0f;
     Vector3 right = m_front ^ g_upVector;
-    
+
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
 
@@ -911,7 +911,7 @@ void MuzzleFlash::Render( float _predictionTime )
     Vector3 toPosToFromPos  = toPos - fromPos;
 
     rightAngle *= m_size * 0.5f;
-    
+
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/muzzleflash.bmp" ) );
     glDepthMask     ( false );
@@ -920,7 +920,7 @@ void MuzzleFlash::Render( float _predictionTime )
     alpha = min( 1.0f, alpha );
     alpha = max( 0.0f, alpha );
     glColor4f       ( 1.0f, 1.0f, 1.0f, alpha );
- 
+
     glBegin( GL_QUADS );
         for( int i = 0; i < 5; ++i )
         {
@@ -928,12 +928,12 @@ void MuzzleFlash::Render( float _predictionTime )
             toPosToFromPos *= 0.8f;
             glTexCoord2i(0,0);      glVertex3fv( (fromPos - rightAngle).GetData() );
             glTexCoord2i(0,1);      glVertex3fv( (fromPos + rightAngle).GetData() );
-            glTexCoord2i(1,1);      glVertex3fv( (fromPos + toPosToFromPos + rightAngle).GetData() );                
-            glTexCoord2i(1,0);      glVertex3fv( (fromPos + toPosToFromPos - rightAngle).GetData() );                     
+            glTexCoord2i(1,1);      glVertex3fv( (fromPos + toPosToFromPos + rightAngle).GetData() );
+            glTexCoord2i(1,0);      glVertex3fv( (fromPos + toPosToFromPos - rightAngle).GetData() );
         }
     glEnd();
 
-    glDisable       ( GL_TEXTURE_2D );    
+    glDisable       ( GL_TEXTURE_2D );
 }
 
 
@@ -968,23 +968,23 @@ bool Missile::AdvanceToTargetPosition( Vector3 const &_pos )
     Vector3 actualDir = m_front * (1.0f - amountToTurn) + targetDir * amountToTurn;
     actualDir.Normalise();
     float speed = 200.0f;
-    
+
     Vector3 oldPos = m_pos;
     Vector3 newPos = m_pos + actualDir * speed * SERVER_ADVANCE_PERIOD;
     landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( newPos.x, newPos.z );
     if( newPos.y <= landHeight ) return true;
-    
+
     Vector3 moved = newPos - oldPos;
     if( moved.Mag() > speed * SERVER_ADVANCE_PERIOD ) moved.SetLength( speed * SERVER_ADVANCE_PERIOD );
     newPos = m_pos + moved;
 
-    m_pos = newPos;       
+    m_pos = newPos;
     m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
     m_front = actualDir;
-            
+
     Vector3 right = m_front ^ g_upVector;
     m_up = right ^ m_front;
-    
+
     return ( m_pos - _pos ).Mag() < 20.0f;
 }
 
@@ -1011,7 +1011,7 @@ bool Missile::Advance()
         Explode();
         return true;
     }
-    
+
     m_history.PutData( m_pos );
 
     //
@@ -1065,7 +1065,7 @@ void Missile::Render( float _predictionTime )
     m_fire.m_size = 30.0f + frand(20.0f);
     m_fire.m_front = -m_front;
     m_fire.Render( _predictionTime );
-    
+
     for( int i = 0; i < 5; ++i )
     {
         Vector3 vel( m_vel / -10.0f );
@@ -1078,7 +1078,7 @@ void Missile::Render( float _predictionTime )
         pos.z += sfrand(8.0f);
         float size = 200.0f + frand(200.0f);
         g_app->m_particleSystem->CreateParticle( pos, vel, Particle::TypeMissileFire, size );
-    }   
+    }
 }
 
 
@@ -1102,7 +1102,7 @@ bool TurretShell::Advance()
     Vector3 oldPos = m_pos;
 
     m_life -= SERVER_ADVANCE_PERIOD;
-    //m_vel.y -= 10.0f * SERVER_ADVANCE_PERIOD;        
+    //m_vel.y -= 10.0f * SERVER_ADVANCE_PERIOD;
     //m_vel.x *= ( 1.0f - SERVER_ADVANCE_PERIOD );
     //m_vel.z *= ( 1.0f - SERVER_ADVANCE_PERIOD );
     //if( m_vel.y > 0 ) m_vel.y *= ( 1.0f - SERVER_ADVANCE_PERIOD );
@@ -1113,7 +1113,7 @@ bool TurretShell::Advance()
         return true;
     }
 
-    
+
     if ( m_pos.x < 0 || m_pos.x > g_app->m_location->m_landscape.GetWorldSizeX() ||
          m_pos.z < 0 || m_pos.z > g_app->m_location->m_landscape.GetWorldSizeZ() ||
          m_pos.y < 0 )
@@ -1121,7 +1121,7 @@ bool TurretShell::Advance()
         // Outside of world
         return true;
     }
-     
+
 
     //
     // Did we hit anyone?
@@ -1130,13 +1130,13 @@ bool TurretShell::Advance()
     float radius = ( m_pos - oldPos ).Mag() / 1.0f;
     int numFound;
     WorldObjectId *ids = g_app->m_location->m_entityGrid->GetNeighbours( centrePos.x, centrePos.z, radius, &numFound );
-    
+
     for( int i = 0; i < numFound; ++i )
     {
         WorldObjectId id = ids[i];
         Entity *entity = g_app->m_location->GetEntity( id );
         if( entity )
-        {            
+        {
             Vector3 rayDir = m_vel;
             rayDir.Normalise();
             if( entity->RayHit( oldPos, rayDir ) )
@@ -1149,7 +1149,7 @@ bool TurretShell::Advance()
                     push += Vector3( syncsfrand(3.0f), syncfrand(3.0f), syncsfrand(3.0f) );
                     push.SetLength( 20.0f );
                     entity->m_vel += push;
-                    entity->m_onGround = false;            
+                    entity->m_onGround = false;
                 }
             }
         }
@@ -1158,13 +1158,13 @@ bool TurretShell::Advance()
 
     //
     // Did we hit any buildings?
-    
+
     {
         Vector3 rayDir = m_vel;
         rayDir.Normalise();
         Vector3 hitPos(0,0,0);
         Vector3 hitNorm(0,0,0);
-        
+
         for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
         {
             if( g_app->m_location->m_buildings.ValidIndex(i) )
@@ -1180,7 +1180,7 @@ bool TurretShell::Advance()
                         vel.y += frand(10.0f);
                         vel.z += sfrand(10.0f);
                         float size = 25.0f + frand(25.0f);
-                        g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeRocketTrail, size );        
+                        g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeRocketTrail, size );
                     }
                     building->Damage( -2 );
                     return true;
@@ -1205,9 +1205,9 @@ bool TurretShell::Advance()
             vel.y += frand(10.0f);
             vel.z += sfrand(10.0f);
             float size = 25.0f + frand(25.0f);
-            g_app->m_particleSystem->CreateParticle( oldPos, vel, Particle::TypeRocketTrail, size );        
+            g_app->m_particleSystem->CreateParticle( oldPos, vel, Particle::TypeRocketTrail, size );
         }
-        
+
         return true;
     }
 
@@ -1218,11 +1218,11 @@ bool TurretShell::Advance()
 void TurretShell::Render( float predictionTime )
 {
     predictionTime+=SERVER_ADVANCE_PERIOD;
-    
+
     //Vector3 predictedVel = m_vel;
     //predictedVel.y -= 30.0f * predictionTime;
     //Vector3 predictedPos = m_pos + predictedVel * predictionTime;
-    //RenderSphere( predictedPos, 1.0f );    
+    //RenderSphere( predictedPos, 1.0f );
 
 
     Vector3 predictedPos = m_pos + m_vel * predictionTime;
@@ -1231,8 +1231,8 @@ void TurretShell::Render( float predictionTime )
     Vector3 right = predictedFront ^ g_upVector;
     Vector3 up = right ^ predictedFront;
     Shape *shape = g_app->m_resource->GetShape( "turretshell.shp" );
-    
-    
+
+
     Matrix34 shellMat( predictedFront, up, predictedPos );
 
     glDisable( GL_BLEND );

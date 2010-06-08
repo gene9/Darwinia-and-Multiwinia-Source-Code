@@ -66,7 +66,7 @@ Tripod::Tripod()
 {
 	m_shape = g_app->m_resource->GetShape("tripod.shp");
 	m_modeStartTime = 0.0f;
-	
+
 	// Initialise legs
 	for (int i = 0; i < 3; ++i)
 	{
@@ -93,7 +93,7 @@ Tripod::~Tripod()
 void Tripod::Begin()
 {
 	Entity::Begin();
-	
+
 	for (int i = 0; i < 3; ++i)
 	{
 		m_legs[i]->LiftFoot(m_targetHoverHeight);
@@ -110,14 +110,14 @@ void Tripod::ChangeHealth(int _amount)
 	if (m_mode == ModeAttacking)
 	{
 	    bool dead = m_dead;
-	
+
 		Entity::ChangeHealth(_amount);
 
 		if (m_dead && !dead)
 		{
 			// We just died
 			Matrix34 transform( m_front, m_up, m_pos );
-			g_explosionManager.AddExplosion( m_shape, transform ); 
+			g_explosionManager.AddExplosion( m_shape, transform );
 		}
 	}
 }
@@ -137,7 +137,7 @@ int Tripod::CalcWhichFootToMove()
 	for (int i = 0; i < 3; ++i)
 	{
 		float score = m_legs[i]->CalcFootsDesireToMove(m_targetHoverHeight);
-		if (score > bestScore) 
+		if (score > bestScore)
 		{
 			bestScore = score;
 			bestFoot = i;
@@ -195,7 +195,7 @@ void Tripod::DoFallForTwoLegs()
 	Vector3 axis(footToFootDir * -rotation * 0.1f);
 	m_up.RotateAround(axis);
 //		m_front.RotateAround(axis);
-	
+
 	m_pos += m_bodyVel * SERVER_ADVANCE_PERIOD;
 	Vector3 newFeetToBody(m_pos - pointBetweenFeet);
 	newFeetToBody.SetLength(feetToBodyLen);
@@ -209,8 +209,8 @@ WorldObjectId Tripod::FindEntityToAttack()
 
 	WorldObjectId id;
 
-	int numFound;	
-	WorldObjectId *enemies = g_app->m_location->m_entityGrid->GetEnemies(m_pos.x, m_pos.z, 
+	int numFound;
+	WorldObjectId *enemies = g_app->m_location->m_entityGrid->GetEnemies(m_pos.x, m_pos.z,
 																	ATTACK_SEARCH_RADIUS, &numFound, m_id.GetTeamId());
 
 	int nearest = -1;
@@ -244,7 +244,7 @@ Vector2 Tripod::ChooseDestination()
 	START_PROFILE(g_app->m_profiler, "ChooseDest");
 
 	int numFound;
-	WorldObjectId *enemies = g_app->m_location->m_entityGrid->GetEnemies(m_pos.x, m_pos.z, 
+	WorldObjectId *enemies = g_app->m_location->m_entityGrid->GetEnemies(m_pos.x, m_pos.z,
 																	NAVIGATION_SEARCH_RADIUS, &numFound, m_id.GetTeamId());
 	Vector2 pos;
 
@@ -378,7 +378,7 @@ void Tripod::AdvanceWalk()
 	// Consider choosing a different nav dest
 	if (syncrand() % 40 == 1)
 	{
-		m_navData.m_targetPos = ChooseDestination();				
+		m_navData.m_targetPos = ChooseDestination();
 	}
 
 
@@ -388,7 +388,7 @@ void Tripod::AdvanceWalk()
 
 	// Navigate
 	DoNavigation();
-	
+
 
 	// Fall
 	{
@@ -421,7 +421,7 @@ void Tripod::AdvancePreAttack()
 		END_PROFILE(g_app->m_profiler, "AdvancePreAttack");
 		return;
 	}
-	
+
 	m_targetHoverHeight = ATTACK_HOVER_HEIGHT;
 
 	// See if we have achieved a full crouch yet
@@ -524,7 +524,7 @@ bool Tripod::Advance(Unit *_unit)
 	}
 
 
-	// 
+	//
 	// Rotation
 
 	m_front.RotateAroundY(g_advanceTime * m_angVel.y);
@@ -569,8 +569,8 @@ bool Tripod::Advance(Unit *_unit)
 		m_legs[i]->Advance();
 	}
 
-	
-	// 
+
+	//
 	// Detect death
 
 	if (m_pos.y < g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z))
@@ -579,7 +579,7 @@ bool Tripod::Advance(Unit *_unit)
 		g_explosionManager.AddExplosion(m_shape, mat);
 		return true;
 	}
-	
+
 	return m_dead;
 }
 
@@ -587,11 +587,11 @@ bool Tripod::Advance(Unit *_unit)
 void Tripod::Render(float _predictionTime)
 {
     glDisable( GL_TEXTURE_2D );
-    
+
 	g_app->m_renderer->SetObjectLighting();
 
 
-	// 
+	//
 	// Render body
 
 	Vector3 predictedMovement = _predictionTime * m_vel;

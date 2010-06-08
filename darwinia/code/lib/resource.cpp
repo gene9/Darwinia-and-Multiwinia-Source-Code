@@ -64,15 +64,15 @@ void Resource::ParseArchive( char const *_dataFile, char const *_password )
 		if (file->m_size > 0)
 		{
 			strlwr(file->m_filename);
-			
+
 			// Subsequent archives may override existing resources
-			
+
 			MemMappedFile *oldFile = m_resourceFiles.GetData(file->m_filename);
 			if (oldFile) {
 				m_resourceFiles.RemoveData(file->m_filename);
 				delete oldFile;
 			}
-			
+
 			m_resourceFiles.PutData(file->m_filename, file);
 		}
 	}
@@ -129,7 +129,7 @@ TextReader *Resource::GetTextReader(char const *_filename)
     if( m_modName )
     {
         sprintf( fullFilename, "%smods/%s/%s", g_app->GetProfileDirectory(), m_modName, _filename );
-        if( DoesFileExist(fullFilename) ) 
+        if( DoesFileExist(fullFilename) )
 			reader = new TextFileReader(fullFilename);
 
 #ifdef TARGET_OS_VISTA
@@ -137,7 +137,7 @@ TextReader *Resource::GetTextReader(char const *_filename)
 		if( !reader )
 		{
 			sprintf( fullFilename, "mods/%s/%s", m_modName, _filename );
-			if( DoesFileExist(fullFilename) ) 
+			if( DoesFileExist(fullFilename) )
 				reader = new TextFileReader(fullFilename);
 		}
 #endif
@@ -146,16 +146,16 @@ TextReader *Resource::GetTextReader(char const *_filename)
     if( !reader )
     {
         sprintf( fullFilename, "data/%s", _filename );
-	    if (DoesFileExist(fullFilename)) 
-			reader = new TextFileReader(fullFilename);	    
+	    if (DoesFileExist(fullFilename))
+			reader = new TextFileReader(fullFilename);
     }
 
 	if( !reader )
 	{
         sprintf( fullFilename, "data/%s", _filename );
 		MemMappedFile *mmfile = GetUncompressedFile(fullFilename);
-		if (mmfile) 
-			reader = new TextDataReader((char*)mmfile->m_data, mmfile->m_size, fullFilename);		
+		if (mmfile)
+			reader = new TextDataReader((char*)mmfile->m_data, mmfile->m_size, fullFilename);
 	}
 
 	return reader;
@@ -193,7 +193,7 @@ BinaryReader *Resource::GetBinaryReader(char const *_filename)
 	{
         sprintf( fullFilename, "data/%s", _filename );
 		MemMappedFile *mmfile = GetUncompressedFile(fullFilename);
-		if (mmfile) reader = new BinaryDataReader(mmfile->m_data, mmfile->m_size, fullFilename);		
+		if (mmfile) reader = new BinaryDataReader(mmfile->m_data, mmfile->m_size, fullFilename);
 	}
 
 	return reader;
@@ -224,7 +224,7 @@ int Resource::GetTexture( char const *_name, bool _mipMapping, bool _masked )
         sprintf( fullPath, "%s", _name );
 		strlwr(fullPath);
         BinaryReader *reader = GetBinaryReader(fullPath);
-            		
+
         if( reader )
         {
 		    char const *extension = GetExtensionPart(fullPath);
@@ -243,7 +243,7 @@ int Resource::GetTexture( char const *_name, bool _mipMapping, bool _masked )
         sprintf( errorString, "Failed to load texture %s", _name );
         DarwiniaReleaseAssert( false, errorString );
     }
-    
+
     return theTexture;
 }
 
@@ -267,7 +267,7 @@ bool Resource::DoesTextureExist(char const *_name)
     BinaryReader *reader = GetBinaryReader(fullPath);
     if( reader ) return true;
 
-    
+
 
     return false;
 }
@@ -310,7 +310,7 @@ Shape *Resource::GetShapeCopy( char const *_name, bool _animating )
     {
         sprintf( fullPath, "%smods/%s/shapes/%s", g_app->GetProfileDirectory(), m_modName, _name );
         strlwr(fullPath);
-        if (DoesFileExist(fullPath)) theShape = new Shape( fullPath, _animating );		
+        if (DoesFileExist(fullPath)) theShape = new Shape( fullPath, _animating );
     }
 
 #ifdef TARGET_OS_VISTA
@@ -319,7 +319,7 @@ Shape *Resource::GetShapeCopy( char const *_name, bool _animating )
     {
         sprintf( fullPath, "mods/%s/shapes/%s", m_modName, _name );
         strlwr(fullPath);
-        if (DoesFileExist(fullPath)) theShape = new Shape( fullPath, _animating );		
+        if (DoesFileExist(fullPath)) theShape = new Shape( fullPath, _animating );
     }
 
 #endif
@@ -353,8 +353,8 @@ GestureDemo *Resource::GetGestureDemo(char const *_name)
 	{
 	    char fullPath[512];
         sprintf( fullPath, "gesture_demos/%s", _name );
-		TextReader *in = GetTextReader(fullPath);        
-        
+		TextReader *in = GetTextReader(fullPath);
+
 		DarwiniaReleaseAssert(in && in->IsOpen(), "Couldn't find mouse gesture demo %s", _name);
 		demo = new GestureDemo(in);
 		delete in;
@@ -365,18 +365,18 @@ GestureDemo *Resource::GetGestureDemo(char const *_name)
 	return demo;
 }
 
-	
+
 SoundStreamDecoder *Resource::GetSoundStreamDecoder(char const *_filename)
 {
 	char buf[256];
 	sprintf( buf, "%s.ogg", _filename );
 	BinaryReader *binReader = GetBinaryReader(buf);
-		
+
 	if(!binReader || !binReader->IsOpen() )
     {
         return NULL;
     }
-	
+
 	SoundStreamDecoder *ssd = new SoundStreamDecoder(binReader);
 	if(!ssd)
     {
@@ -387,12 +387,12 @@ SoundStreamDecoder *Resource::GetSoundStreamDecoder(char const *_filename)
 }
 
 
-int Resource::WildCmp(char const *wild, char const *string) 
+int Resource::WildCmp(char const *wild, char const *string)
 {
 	char const *cp;
 	char const *mp;
-	
-	while ((*string) && (*wild != '*')) 
+
+	while ((*string) && (*wild != '*'))
 	{
 		if ((*wild != *string) && (*wild != '?'))
 		{
@@ -401,8 +401,8 @@ int Resource::WildCmp(char const *wild, char const *string)
 		wild++;
 		string++;
 	}
-	
-	while (*string) 
+
+	while (*string)
 	{
 		if (*wild == '*')
 		{
@@ -418,14 +418,14 @@ int Resource::WildCmp(char const *wild, char const *string)
 			wild++;
 			string++;
 		}
-		else 
+		else
 		{
 			wild = mp;
 			string = cp++;
 		}
 	}
-	
-	while (*wild == '*') 
+
+	while (*wild == '*')
 	{
 		wild++;
 	}
@@ -476,7 +476,7 @@ void Resource::FlushOpenGlState()
 		// Tell OpenGL to delete the display lists
 		for (int i = 0; i < m_displayLists.Size(); ++i)
 		{
-			if (m_displayLists.ValidIndex(i)) 
+			if (m_displayLists.ValidIndex(i))
 			{
 				glDeleteLists(m_displayLists[i], 1);
 			}
@@ -511,7 +511,7 @@ void Resource::RegenerateOpenGlState()
 	// Tell the text renderers to reload their font
 	g_editorFont.BuildOpenGlState();
 	g_gameFont.BuildOpenGlState();
-	
+
 	// Tell all the shapes to generate a new display list
 	for (int i = 0; i < m_shapes.Size(); ++i)
 	{
@@ -558,7 +558,7 @@ void Resource::LoadMod( char const *_modName )
         if( stricmp( _modName, "none" ) != 0 )
         {
             m_modName = strdup( _modName );
-    
+
             FlushOpenGlState();
 			RegenerateOpenGlState();
         }
@@ -590,7 +590,7 @@ char *Resource::GetBaseDirectory()
         sprintf( result, "%smods/%s/", g_app->GetProfileDirectory(), m_modName );
     }
     else
-    {      
+    {
         sprintf( result, "data/" );
     }
 
@@ -628,7 +628,7 @@ FileWriter *Resource::GetFileWriter( char const *_filename, bool _encrypt )
 
         return new FileWriter( fullFilename, _encrypt );
     }
-    
+
     sprintf( fullFilename, "data/%s", _filename );
     return new FileWriter( fullFilename, _encrypt );
 }
@@ -667,12 +667,12 @@ void OrderedInsert( LList<char *> *_llist, char *_newString )
 // Finds all the filenames in the specified directory that match the specified
 // filter. Directory should be like "textures" or "textures/".
 // Filter can be NULL or "" or "*.bmp" or "map_*" or "map_*.txt"
-// Set _longResults to true if you want results like "textures/blah.bmp" 
+// Set _longResults to true if you want results like "textures/blah.bmp"
 // or false for "blah.bmp"
 LList <char *> *Resource::ListResources(char const *_dir, char const *_filter, bool _longResults /* = true */)
 {
     LList<char *> *results = NULL;
-    
+
     //
     // List the base data directory
 
@@ -734,8 +734,8 @@ LList <char *> *Resource::ListResources(char const *_dir, char const *_filter, b
 			    int result = WildCmp(_filter, filePart);
 			    if (result != 0)
 			    {
-				    if( _longResults ) OrderedInsert(results, fullname);				
-				    else   			   OrderedInsert(results, filePart);				
+				    if( _longResults ) OrderedInsert(results, fullname);
+				    else   			   OrderedInsert(results, filePart);
 			    }
             }
 		}
@@ -743,6 +743,6 @@ LList <char *> *Resource::ListResources(char const *_dir, char const *_filter, b
 		delete unfilteredResults;
 	}
 
-    
+
     return results;
 }

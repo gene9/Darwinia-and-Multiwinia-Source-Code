@@ -17,9 +17,9 @@ public:
 static char *buf = NULL;
 
 UpdateAvailableWindow::UpdateAvailableWindow( const char *newVersion, const char *changeLog )
-	: MessageDialog("New version available", 
+	: MessageDialog("New version available",
 				(sprintf(
-					buf = new char [512 + strlen(newVersion) + strlen(changeLog)], 
+					buf = new char [512 + strlen(newVersion) + strlen(changeLog)],
 					"There is a new version of Darwinia available (%s) at\n"
 					"http://www.ambrosiasw.com/games/darwinia/\n"
 					"\n"
@@ -32,7 +32,7 @@ UpdateAvailableWindow::UpdateAvailableWindow( const char *newVersion, const char
 void UpdateAvailableWindow::Create()
 {
 	MessageDialog::Create();
-	
+
 	int const buttonWidth = 80;
 	int const buttonHeight = 18;
 	DarwiniaButton *button = new GetItNowButton();

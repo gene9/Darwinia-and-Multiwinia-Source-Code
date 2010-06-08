@@ -50,7 +50,7 @@ public:
 	LangTable			*m_langTable;
     AVIGenerator        *m_aviGenerator;
     Profiler            *m_profiler;
-	
+
 	// Things that are the world
     GlobalWorld         *m_globalWorld;
     Location            *m_location;
@@ -127,7 +127,7 @@ public:
     bool    LoadProfile     ();
     bool    SaveProfile     ( bool _global, bool _local );
     void    ResetLevel      ( bool _global );
-	
+
     void    SetLanguage     ( char *_language, bool _test );
 
 	bool	HasBoughtGame	();
@@ -138,7 +138,7 @@ public:
 	static const char *GetProfileDirectory();
 	static const char *GetPreferencesPath();
     static const char *GetScreenshotDirectory();
-	
+
 	void	UpdateDifficultyFromPreferences();
 
 #ifdef	TARGET_OS_VISTA
@@ -148,23 +148,23 @@ public:
 };
 
 #ifdef TARGET_OS_VISTA
-#define RM_MAXLENGTH     1024 
-#define RM_MAGICNUMBER   'HMGR' 
+#define RM_MAXLENGTH     1024
+#define RM_MAGICNUMBER   'HMGR'
 
 #pragma pack(push)
 #pragma pack(1)
-typedef  struct  _RICH_GAME_MEDIA_HEADER 
-{ 
-     DWORD        dwMagicNumber; 
-     DWORD        dwHeaderVersion; 
-     DWORD        dwHeaderSize; 
-     LARGE_INTEGER liThumbnailOffset; 
-     DWORD        dwThumbnailSize; 
-     GUID         guidGameId; 
-     WCHAR        szGameName[RM_MAXLENGTH]; 
-     WCHAR        szSaveName[RM_MAXLENGTH]; 
-     WCHAR        szLevelName[RM_MAXLENGTH]; 
-     WCHAR        szComments[RM_MAXLENGTH]; 
+typedef  struct  _RICH_GAME_MEDIA_HEADER
+{
+     DWORD        dwMagicNumber;
+     DWORD        dwHeaderVersion;
+     DWORD        dwHeaderSize;
+     LARGE_INTEGER liThumbnailOffset;
+     DWORD        dwThumbnailSize;
+     GUID         guidGameId;
+     WCHAR        szGameName[RM_MAXLENGTH];
+     WCHAR        szSaveName[RM_MAXLENGTH];
+     WCHAR        szLevelName[RM_MAXLENGTH];
+     WCHAR        szComments[RM_MAXLENGTH];
 }  RICH_GAME_MEDIA_HEADER;
 #pragma pack(pop)
 

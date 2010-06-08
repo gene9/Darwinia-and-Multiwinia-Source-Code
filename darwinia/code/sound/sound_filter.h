@@ -6,7 +6,7 @@
 // Class DspEffect
 //*****************************************************************************
 
-class DspEffect 
+class DspEffect
 {
 protected:
 	int		m_sampleRate;
@@ -70,7 +70,7 @@ public:
 
     void SetParameters  ( float const *_params );
 	void Process        ( signed short *_data, unsigned int _numSamples);
-   
+
 };
 
 

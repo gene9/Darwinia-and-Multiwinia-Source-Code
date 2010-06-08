@@ -80,7 +80,7 @@ void Tutorial::RepeatMessage( char *_stringId, float _repeatPeriod, char *_gestu
 
     if( _gestureDemo )
     {
-        m_repeatGesture = strdup( _gestureDemo );    
+        m_repeatGesture = strdup( _gestureDemo );
     }
 }
 
@@ -94,7 +94,7 @@ bool Tutorial::IsRunning()
 void Tutorial::Restart()
 {
     g_app->m_sepulveda->ShutUp();
-    
+
     m_chapter = 0;
     m_nextChapterTimer = -1.0f;
     m_repeatMessageTimer = -1.0f;
@@ -122,7 +122,7 @@ void Tutorial::Advance()
     if( !g_app->m_location ) return;
     if( !g_app->m_location->m_teams ) return;
     if( g_app->m_location->m_teams[2].m_teamType == Team::TeamTypeUnused ) return;
-   
+
 
     //
     // Has the user skipped the tutorial?
@@ -137,16 +137,16 @@ void Tutorial::Advance()
         return;
     }
 
-    // 
+    //
     // Are we ready to start the tutorial?
 
-    if( m_chapter == 0 && g_app->m_location && 
-        g_app->m_renderer->IsFadeComplete() && 
+    if( m_chapter == 0 && g_app->m_location &&
+        g_app->m_renderer->IsFadeComplete() &&
         !g_app->m_script->IsRunningScript() )
     {
         TriggerChapter( 1 );
     }
-    
+
 
     //
     // Don't do anything while scripts are running
@@ -161,7 +161,7 @@ void Tutorial::Advance()
     // Run the damn thing
 
     bool amIDone = AdvanceCurrentChapter();
-    
+
     if( amIDone )
     {
         delete g_app->m_tutorial;
@@ -169,24 +169,24 @@ void Tutorial::Advance()
         return;
     }
 }
- 
+
 
 void Tutorial::Render()
 {
-    if( !g_app->m_editing && 
-        g_app->m_location && 
+    if( !g_app->m_editing &&
+        g_app->m_location &&
         !g_app->m_renderer->m_renderingPoster &&
         ( (int) g_gameTime % 2 == 0 ) &&
         m_chapter > 0 )
     {
         g_gameFont.BeginText2D();
-        g_gameFont.SetRenderOutline(true);        
+        g_gameFont.SetRenderOutline(true);
         glColor4f(1.0f,1.0f,1.0f,0.0f);
         g_gameFont.DrawText2DCentre( g_app->m_renderer->ScreenW()/2.0f, 15, 15, LANGUAGEPHRASE("dialog_skiptutorial") );
         g_gameFont.SetRenderOutline(false);
         glColor4f(1.0f,1.0f,1.0f,1.0f);
         g_gameFont.DrawText2DCentre( g_app->m_renderer->ScreenW()/2.0f, 15, 15, LANGUAGEPHRASE("dialog_skiptutorial") );
-        g_gameFont.EndText2D();    
+        g_gameFont.EndText2D();
     }
 }
 
@@ -197,7 +197,7 @@ void Tutorial::TriggerChapter( int _chapter )
     m_nextChapterTimer = -1.0f;
 
     RepeatMessage(NULL,0.0f);
-    
+
     g_app->m_sepulveda->ShutUp();
 }
 
@@ -216,8 +216,8 @@ bool Tutorial::AdvanceCurrentChapter()
         }
         return false;
     }
-    
-    
+
+
     //
     // If a repeat message has been set, say it when the time comes
 

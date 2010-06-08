@@ -31,22 +31,22 @@ protected:
 
     Vector3      m_spiritPosition[SOULDESTROYER_MAXSPIRITS];
 
-protected:   
+protected:
     bool        SearchForRandomPosition();
     bool        SearchForTargetEnemy();
     bool        SearchForRetreatPosition();
-    
-    bool        AdvanceToTargetPosition();        
-    void        RecordHistoryPosition();          
+
+    bool        AdvanceToTargetPosition();
+    void        RecordHistoryPosition();
     bool        GetTrailPosition( Vector3 &_pos, Vector3 &_vel );
 
     void RenderShapes               ( float _predictionTime );
     void RenderShapesForPixelEffect ( float _predictionTime );
     void RenderSpirit               ( Vector3 const &_pos, float _alpha );
     bool RenderPixelEffect          ( float _predictionTime );
-    
+
     void Panic( float _time );
-    
+
 public:
     SoulDestroyer();
 
@@ -77,7 +77,7 @@ public:
     float       m_xaxisRate;
     float       m_yaxisRate;
     float       m_zaxisRate;
-    
+
 public:
     Zombie();
 

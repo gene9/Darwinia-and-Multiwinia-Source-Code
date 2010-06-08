@@ -12,7 +12,7 @@ class ShapeMarker;
 class FenceSwitch : public Building
 {
 protected:
-    int         m_linkedBuildingId; 
+    int         m_linkedBuildingId;
     int         m_linkedBuildingId2;    // optional second link for fence toggling
 
     bool        m_switchable;
@@ -29,7 +29,7 @@ public:
 
 public:
     FenceSwitch 		();
-	
+
 	void Initialise		(Building *_template);
     void SetDetail      ( int _detail );
 
@@ -42,7 +42,7 @@ public:
 
     void Switch         ();
 
-    int  GetBuildingLink();                 
+    int  GetBuildingLink();
     void SetBuildingLink(int _buildingId);
 
 	void Read( TextReader *_in, bool _dynamic );

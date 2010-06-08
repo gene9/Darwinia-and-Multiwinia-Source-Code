@@ -19,11 +19,11 @@
 //*****************************************************************************
 
 static unsigned int s_offsets[] = {
-	31, 7, 9, 1, 
-	11, 2, 5, 5, 
+	31, 7, 9, 1,
+	11, 2, 5, 5,
 	3, 17, 40, 12,
 	35, 22, 27, 2
-}; 
+};
 
 
 TextReader::TextReader()
@@ -59,7 +59,7 @@ void TextReader::CleanLine()
 {
 	//
 	// Decryption stuff
-	
+
 	if (m_fileEncrypted != 0)
 	{
 		int len = strlen(m_line);
@@ -72,7 +72,7 @@ void TextReader::CleanLine()
 				m_fileEncrypted = 1;
 				for (int i = 9; i < len; ++i)
 				{
-					m_line[i - 9] = m_line[i]; 
+					m_line[i - 9] = m_line[i];
 				}
 				len -= 9;
 			}
@@ -100,7 +100,7 @@ void TextReader::CleanLine()
 
 	//
 	// Scan for comments (which we remove) and merge conflict markers (which we assert on)
-	
+
 	int numAdjacentAngleBracketsFound = 0;
 	char *c = m_line;
 	while (c[0] != '\0')
@@ -140,7 +140,7 @@ void TextReader::SetDefaultSeperatorChars()
 bool TextReader::TokenAvailable()
 {
 	unsigned int i = m_tokenIndex;
-	
+
 	while (m_line[i] != '\0')
 	{
 		if (strchr(m_seperatorChars, m_line[i]) == NULL)
@@ -163,7 +163,7 @@ char const *TextReader::GetFilename()
 
 // Returns the next token on the current line. Strips all separator
 // characters from the start and end of the token, so "blah, wibble:7"
-// would yield the tokens "blah", "wibble" and "7". If there are 
+// would yield the tokens "blah", "wibble" and "7". If there are
 // trailing separator characters at the end of the line, then they are
 // also discarded (the naive implementation would return the empty string
 // for the last token)
@@ -259,14 +259,14 @@ bool TextFileReader::IsOpen()
 
 
 // Reads a line from m_file. Removes comments that are marked with
-// a hash ('#', aka the pound sign or indeed the octothorpe) character. 
+// a hash ('#', aka the pound sign or indeed the octothorpe) character.
 // Returns 0 on EOF, 1 otherwise
 bool TextFileReader::ReadLine()
 {
 	bool eof = false;
 	m_tokenIndex = 0;
 
-	
+
 	//
 	// Read some data from the file
 
@@ -276,7 +276,7 @@ bool TextFileReader::ReadLine()
 		eof = true;
 	}
 
-	
+
 	//
 	// Make sure we read a whole line
 
@@ -299,7 +299,7 @@ bool TextFileReader::ReadLine()
 		}
 	}
 
-	CleanLine();	
+	CleanLine();
 	m_lineNum++;
 
 	return !eof;
@@ -328,7 +328,7 @@ bool TextDataReader::IsOpen()
 
 
 // Reads a line from a block of text data. Removes comments that are marked with
-// a hash ('#', aka the pound sign or indeed the octothorpe) character. 
+// a hash ('#', aka the pound sign or indeed the octothorpe) character.
 // Returns 0 on EOF, 1 otherwise
 bool TextDataReader::ReadLine()
 {
@@ -340,12 +340,12 @@ bool TextDataReader::ReadLine()
 	unsigned int eolOffset = m_offset;
 	for (eolOffset = m_offset; eolOffset < m_dataSize; ++eolOffset)
 	{
-		if (m_data[eolOffset] == '\n') 
+		if (m_data[eolOffset] == '\n')
 		{
 			break;
 		}
 	}
-	if (eolOffset == m_dataSize) 
+	if (eolOffset == m_dataSize)
 	{
 		eolOffset--;
 		eof = true;

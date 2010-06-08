@@ -12,7 +12,7 @@ public:
     float   m_timer;
     int     m_numSpawned;
     bool    m_spawnSpam;
-    
+
 public:
     GodDish();
 

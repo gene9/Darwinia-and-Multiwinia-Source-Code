@@ -5,7 +5,7 @@
 #include "unit.h"
 
 #define VIRII_MAXSEARCHRANGE    60.0f
-#define VIRII_MINSEARCHRANGE    30.0f 
+#define VIRII_MINSEARCHRANGE    30.0f
 #define VIRII_TAILLENGTH        175.0f
 
 
@@ -21,12 +21,12 @@ class ViriiUnit : public Unit
 public:
     bool m_enemiesFound;
     bool m_cameraClose;
-    
+
 public:
     ViriiUnit(int teamId, int unitId, int numEntities, Vector3 const &_pos);
 
     bool Advance( int _slice );
-    void Render( float _predictionTime );    
+    void Render( float _predictionTime );
 };
 
 
@@ -45,20 +45,20 @@ public:
         StateToEgg
     };
     int                 m_state;
-    
+
     float               m_hoverHeight;
-    float               m_retargetTimer;           
-    WorldObjectId	    m_enemyId;                  
+    float               m_retargetTimer;
+    WorldObjectId	    m_enemyId;
     WorldObjectId		m_eggId;
-    int                 m_spiritId;  
+    int                 m_spiritId;
     Vector3             m_wayPoint;
     float               m_historyTimer;
 
     Vector3             m_prevPos;
     float               m_prevPosTimer;
-            
+
 protected:
-    
+
     bool SearchForEnemies();
     bool SearchForSpirits();
     bool SearchForEggs();
@@ -66,12 +66,12 @@ protected:
 
     WorldObjectId  FindNearbyEgg        ( int _spiritId, float _autoAccept=99999.9f );
     WorldObjectId  FindNearbyEgg        ( Vector3 const &_pos );
-    
-    bool    AdvanceToTargetPos          ( Vector3 const &_pos ); // returns have-I-Arrived?    
+
+    bool    AdvanceToTargetPos          ( Vector3 const &_pos ); // returns have-I-Arrived?
     void    RecordHistoryPosition       ( bool _required );      // if !_required this is simply to make it smoother
     Vector3 AdvanceDeadPositionVector   ( int _index, Vector3 const &_pos, float _time );
 
-    LList <ViriiHistory *> m_positionHistory;          
+    LList <ViriiHistory *> m_positionHistory;
 
 public:
     Virii();

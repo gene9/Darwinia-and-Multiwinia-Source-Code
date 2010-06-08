@@ -93,7 +93,7 @@ Building::Building()
     }
 
     m_id.SetTeamId(1);
-    
+
     m_up = g_upVector;
 }
 
@@ -111,21 +111,21 @@ void Building::Initialise( Building *_template )
     if( m_shape )
     {
         Matrix34 mat( m_front, m_up, m_pos );
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
         m_radius = m_shape->CalculateRadius( mat, m_centrePos );
 
-        SetShapeLights( m_shape->m_rootFragment );  
+        SetShapeLights( m_shape->m_rootFragment );
         SetShapePorts( m_shape->m_rootFragment );
     }
     else
     {
-        m_centrePos = m_pos;     
+        m_centrePos = m_pos;
         m_radius = 13.0f;
     }
-    
+
     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_requestedLocationId );
     if( gb ) m_id.SetTeamId( gb->m_teamId );
-    
+
     g_app->m_soundSystem->TriggerBuildingEvent( this, "Create" );
 }
 
@@ -137,7 +137,7 @@ void Building::SetDetail( int _detail )
     if( m_shape )
     {
         Matrix34 mat( m_front, m_up, m_pos );
-        m_centrePos = m_shape->CalculateCentre( mat );        
+        m_centrePos = m_shape->CalculateCentre( mat );
         m_radius = m_shape->CalculateRadius( mat, m_centrePos );
 
         m_ports.EmptyAndDelete();
@@ -200,19 +200,19 @@ void Building::SetShapePorts( ShapeFragment *_fragment )
     int i;
 
     Matrix34 buildingMat( m_front, m_up, m_pos );
-    
+
     for( i = 0; i < _fragment->m_childMarkers.Size(); ++i )
     {
         ShapeMarker *marker = _fragment->m_childMarkers[i];
         if( strstr( marker->m_name, "MarkerPort" ) )
         {
             BuildingPort *port = new BuildingPort();
-            port->m_marker = marker;     
+            port->m_marker = marker;
             port->m_mat = marker->GetWorldMatrix(buildingMat);
             port->m_mat.pos = PushFromBuilding( port->m_mat.pos, 5.0f );
             port->m_mat.pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( port->m_mat.pos.x, port->m_mat.pos.z );
-            
-            for( int t = 0; t < NUM_TEAMS; ++t )            
+
+            for( int t = 0; t < NUM_TEAMS; ++t )
             {
                 port->m_counter[t] = 0;
             }
@@ -248,7 +248,7 @@ void Building::ReprogramComplete()
     {
         gb->m_online = !gb->m_online;
     }
-    
+
     g_app->m_globalWorld->EvaluateEvents();
 }
 
@@ -259,7 +259,7 @@ void Building::SetTeamId( int _teamId )
 
     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
     if( gb ) gb->m_teamId = _teamId;
-    
+
     g_app->m_soundSystem->TriggerBuildingEvent( this, "ChangeTeam" );
 }
 
@@ -274,11 +274,11 @@ Vector3 Building::PushFromBuilding( Vector3 const &pos, float _radius )
     if( DoesSphereHit( result, _radius ) ) hit = true;
 
     if( hit )
-    {            
+    {
         Vector3 pushForce = (m_pos - result).SetLength(2.0f);
         while( DoesSphereHit( result, _radius ) )
         {
-            result -= pushForce;                
+            result -= pushForce;
         }
     }
 
@@ -315,7 +315,7 @@ void Building::Render( float predictionTime )
 	{
 		Matrix34 mat(m_front, m_up, m_pos);
 		m_shape->Render(predictionTime, mat);
-    
+
         //m_shape->RenderMarkers(mat);
 	}
 }
@@ -325,10 +325,10 @@ void Building::RenderAlphas( float predictionTime )
 {
     RenderLights();
     RenderPorts();
-    
+
     //RenderHitCheck();
-    //RenderSphere(m_pos, 300);		
-        
+    //RenderSphere(m_pos, 300);
+
 //	if (m_shape)
 //	{
 //		Matrix34 mat(m_front, g_upVector, m_pos);
@@ -390,7 +390,7 @@ void Building::RenderLights()
 
                 glDepthMask     ( true );
                 glEnable        ( GL_CULL_FACE );
-                glDisable       ( GL_TEXTURE_2D );                    
+                glDisable       ( GL_TEXTURE_2D );
             }
         }
     }
@@ -407,7 +407,7 @@ void Building::EvaluatePorts()
 
         //
         // Look for a valid Darwinian near the port
-    
+
         int numFound;
         if( g_app->m_location->m_entityGrid )
         {
@@ -426,7 +426,7 @@ void Building::EvaluatePorts()
                     }
                 }
             }
-        }    
+        }
 
         //
         // Update the operation counter
@@ -440,7 +440,7 @@ void Building::EvaluatePorts()
             else
             {
                 port->m_counter[t]-=4;
-                port->m_counter[t] = max( port->m_counter[t], 0 );    
+                port->m_counter[t] = max( port->m_counter[t], 0 );
             }
         }
     }
@@ -473,8 +473,8 @@ void Building::RenderPorts()
             s_controlPad->Render( 0.0f, mat );
             g_app->m_renderer->UnsetObjectLighting();
         }
-        
-        
+
+
         //
         // Render the status light
 
@@ -484,10 +484,10 @@ void Building::RenderPorts()
         Vector3 camU = g_app->m_camera->GetUp() * size;
 
         Vector3 statusPos = s_controlPadStatus->GetWorldMatrix( mat ).pos;
-        
-        if( GetPortOccupant(i).IsValid() )      glColor4f( 0.3f, 1.0f, 0.3f, 1.0f );        
+
+        if( GetPortOccupant(i).IsValid() )      glColor4f( 0.3f, 1.0f, 0.3f, 1.0f );
         else                                    glColor4f( 1.0f, 0.3f, 0.3f, 1.0f );
-        
+
         glDisable       ( GL_CULL_FACE );
         glEnable        ( GL_TEXTURE_2D );
         glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
@@ -521,7 +521,7 @@ void Building::RenderHitCheck()
 	}
 	else
 	{
-		RenderSphere(m_pos, m_radius);		
+		RenderSphere(m_pos, m_radius);
 	}
 #endif
 }
@@ -571,10 +571,10 @@ void Building::Destroy( float _intensity )
 		vel.y += syncsfrand(100.0f);
 		vel.z += syncsfrand(100.0f);
 		g_app->m_particleSystem->CreateParticle(m_pos, vel, Particle::TypeExplosionCore, 100.0f);
-	}	
+	}
 }
 
-bool Building::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+bool Building::DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                           float _rayLen, Vector3 *_pos, Vector3 *norm )
 {
 	if (m_shape)
@@ -723,7 +723,7 @@ void Building::Read( TextReader *_in, bool _dynamic )
 
 void Building::Write( FileWriter *_out )
 {
-    _out->printf( "\t%-20s", GetTypeName(m_type) );        
+    _out->printf( "\t%-20s", GetTypeName(m_type) );
 
     _out->printf( "%-8d",    m_id.GetUniqueId());
 	_out->printf( "%-8.2f",  m_pos.x);
@@ -823,7 +823,7 @@ Building *Building::CreateBuilding( int _type )
     {
         building->m_isGlobal = true;
     }
-    
+
     return building;
 }
 
@@ -937,7 +937,7 @@ void Building::ListSoundEvents( LList<char *> *_list )
     _list->PutData( "Reprogramming" );              // Remove me
     _list->PutData( "ReprogramComplete" );
     _list->PutData( "ChangeTeam" );
-    _list->PutData( "Damage" );    
+    _list->PutData( "Damage" );
 }
 
 

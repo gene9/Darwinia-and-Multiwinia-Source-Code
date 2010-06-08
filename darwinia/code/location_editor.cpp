@@ -107,7 +107,7 @@ int LocationEditor::DoesRayHitInstantUnit(Vector3 const &rayStart, Vector3 const
 		InstantUnit *iu = location->m_levelFile->m_instantUnits.GetData(i);
 		Vector3 pos(iu->m_posX, 0, iu->m_posZ);
 		pos.y = location->m_landscape.m_heightMap->GetValue(pos.x, pos.z);
-		bool result = RaySphereIntersection(rayStart, rayDir, pos, 
+		bool result = RaySphereIntersection(rayStart, rayDir, pos,
 											sqrtf(iu->m_number) * INSTANT_UNIT_SIZE_FACTOR);
 		if (result)
 		{
@@ -156,7 +156,7 @@ int	LocationEditor::IsPosInLandTile(Vector3 const &pos)
 		if (pos.x > worldX &&
 			pos.x < worldX + sizeX &&
 			pos.z > worldZ &&
-			pos.z < worldZ + sizeZ) 
+			pos.z < worldZ + sizeZ)
 		{
 			if (tile->m_size < smallestSize)
 			{
@@ -185,7 +185,7 @@ int	LocationEditor::IsPosInFlattenArea(Vector3 const &pos)
 		if (pos.x > worldX &&
 			pos.x < worldX + size &&
 			pos.z > worldZ &&
-			pos.z < worldZ + size) 
+			pos.z < worldZ + size)
 		{
 			return i;
 		}
@@ -247,7 +247,7 @@ void LocationEditor::CreateEditWindowForMode(int _mode)
 	window->m_x = 0;
 	window->m_y = g_app->m_renderer->ScreenH() - window->m_h;
 	EclRegisterWindow(window);
-	
+
 	mainWin->m_currentEditWindow = window;
 }
 
@@ -255,11 +255,11 @@ void LocationEditor::CreateEditWindowForMode(int _mode)
 void LocationEditor::RequestMode(int _mode)
 {
 	if (_mode == m_mode) return;
-	if (_mode != ModeNone) 
+	if (_mode != ModeNone)
 	{
 		CreateEditWindowForMode(_mode);
 	}
-	
+
 	m_mode = _mode;
 	m_selectionId = -1;
 }
@@ -289,7 +289,7 @@ void LocationEditor::AdvanceModeNone()
 
 
 void LocationEditor::MoveBuildingsInTile( LandscapeTile *_tile, float _dX, float _dZ )
-{    
+{
     for( int i = 0; i < g_app->m_location->m_levelFile->m_buildings.Size(); ++i )
     {
         if( g_app->m_location->m_levelFile->m_buildings.ValidIndex(i) )
@@ -325,9 +325,9 @@ void LocationEditor::AdvanceModeLandTile()
 
 		Landscape *land = &g_app->m_location->m_landscape;
 		LList<LandscapeTile *> *tiles = &g_app->m_location->m_levelFile->m_landscape.m_tiles;
-		
+
 		// Has the user selected a tile
-		if (newSelectionId != -1) 
+		if (newSelectionId != -1)
 		{
 			LandscapeTile *tile = tiles->GetData(newSelectionId);
 			m_tool = ToolMove;
@@ -346,7 +346,7 @@ void LocationEditor::AdvanceModeLandTile()
 			ew->m_y = cw->m_y - ew->m_h - 10;
 		}
 	}
-	
+
 	if (m_selectionId != -1)
 	{
 		// There is a current selection
@@ -393,7 +393,7 @@ void LocationEditor::AdvanceModeLandTile()
 		{
 			// The user "drags" the landscape around
 			m_newLandscapeX = mousePos3D.x - m_landscapeGrabX;
-			m_newLandscapeZ = mousePos3D.z - m_landscapeGrabZ;        
+			m_newLandscapeZ = mousePos3D.z - m_landscapeGrabZ;
 		}
 	}
 }
@@ -417,7 +417,7 @@ void LocationEditor::AdvanceModeLandFlat()
 		{
 			m_selectionId = newSelectionId;
 			m_waitingForRelease = true;
-			
+
 			EclWindow *cw = EclGetWindow(LANGUAGEPHRASE("editor_landscape"));
 			DarwiniaDebugAssert(cw);
 			LandscapeFlattenAreaEditWindow *ew = new LandscapeFlattenAreaEditWindow("Flatten Area", newSelectionId);
@@ -465,7 +465,7 @@ void LocationEditor::AdvanceModeBuilding()
 {
 	BuildingEditWindow *ew = (BuildingEditWindow *)EclGetWindow(LANGUAGEPHRASE("editor_buildingid"));
 	if (ew && EclMouseInWindow(ew))	return;
-	
+
 	Camera *cam = g_app->m_camera;
 
 	// Find the ID of the building the user is clicking on
@@ -495,7 +495,7 @@ void LocationEditor::AdvanceModeBuilding()
 			m_waitingForRelease = true;
 
             Location *location = g_app->m_location;
-		    Building *building = location->GetBuilding(m_selectionId);            
+		    Building *building = location->GetBuilding(m_selectionId);
             if( building->m_type == Building::TypeTree )
             {
                 TreeWindow *tw = new TreeWindow( LANGUAGEPHRASE("editor_treeditor") );
@@ -507,12 +507,12 @@ void LocationEditor::AdvanceModeBuilding()
             }
 		}
 	}
-	else 
+	else
 	{
 		Location *location = g_app->m_location;
 		Building *building = location->GetBuilding(m_selectionId);
-	
-		
+
+
 		if ( g_inputManager->controlEvent( ControlTileSelect ) )                  // If left mouse is clicked then consider creating a new link
 		{
 			if (newSelectionId == -1)
@@ -525,7 +525,7 @@ void LocationEditor::AdvanceModeBuilding()
 				building->SetBuildingLink(newSelectionId);
 				m_tool = ToolNone;
 			}
-		}		
+		}
 		else if ( g_inputManager->controlEvent( ControlTileDrag ) && newSelectionId == -1 )  // Otherwise consider rotation and movement
 		{
 			switch (m_tool)
@@ -591,7 +591,7 @@ void LocationEditor::AdvanceModeInstantUnit()
 			m_waitingForRelease = true;
 		}
 	}
-	else 
+	else
 	{
 		if ( g_inputManager->controlEvent( ControlTileSelect ) ) // TODO: Something else?
 		{
@@ -628,7 +628,7 @@ void LocationEditor::AdvanceModeCameraMount()
 		if (win && win->m_newNodeArmed)
 		{
 			Vector3 rayStart, rayDir;
-			g_app->m_camera->GetClickRay( g_target->X(), 
+			g_app->m_camera->GetClickRay( g_target->X(),
 										  g_target->Y(),
 										  &rayStart, &rayDir );
 			int mountId = DoesRayHitCameraMount(rayStart, rayDir);
@@ -636,10 +636,10 @@ void LocationEditor::AdvanceModeCameraMount()
 			{
 				CameraMount *mount = g_app->m_location->m_levelFile->m_cameraMounts[mountId];
 				DarwiniaDebugAssert(mount);
-				
+
 				CameraAnimation *anim = g_app->m_location->m_levelFile->m_cameraAnimations[m_selectionId];
 				DarwiniaDebugAssert(anim);
-				
+
 				CamAnimNode *node = new CamAnimNode;
 				node->m_mountName = strdup(mount->m_name);
 
@@ -683,7 +683,7 @@ void LocationEditor::Advance()
 void LocationEditor::RenderUnit(InstantUnit *_iu)
 {
 	char *typeName = Entity::GetTypeName(_iu->m_type);
-	
+
 	float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(_iu->m_posX, _iu->m_posZ);
 	glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     g_editorFont.DrawText3DCentre(Vector3(_iu->m_posX, landHeight + 15.0f, _iu->m_posZ),
@@ -700,7 +700,7 @@ void LocationEditor::RenderUnit(InstantUnit *_iu)
     if( _iu->m_teamId >= 0 ) colour = g_app->m_location->m_teams[_iu->m_teamId].m_colour;
 	colour.a = 200;
     glColor4ubv(colour.GetData());
-    
+
     Vector3 camUp = g_app->m_camera->GetUp() * 5.0f;
     Vector3 camRight = g_app->m_camera->GetRight() * 5.0f;
 
@@ -709,7 +709,7 @@ void LocationEditor::RenderUnit(InstantUnit *_iu)
     glBlendFunc (GL_SRC_ALPHA, GL_ONE);
     glDepthMask (false);
 	glBegin     (GL_QUADS);
-    
+
     //
     // Render dots for the number and team of the unit
 
@@ -754,7 +754,7 @@ void LocationEditor::RenderUnit(InstantUnit *_iu)
         }
         glEnd();
     }
-    
+
 
     glDisable   (GL_BLEND);
     glDepthMask (true);
@@ -784,7 +784,7 @@ void LocationEditor::RenderModeLandTile()
 		if (mousePos3D.x > worldX &&
 			mousePos3D.x < worldX + sizeX &&
 			mousePos3D.z > worldZ &&
-			mousePos3D.z < worldZ + sizeZ) 
+			mousePos3D.z < worldZ + sizeZ)
 		{
 			Vector3 centre(worldX, tile->m_outsideHeight, worldZ);
 			centre.x += sizeX * 0.5f;
@@ -812,12 +812,12 @@ void LocationEditor::RenderModeLandTile()
                 for( int x = 0; x < tile->m_guideGrid->GetNumColumns()-1; ++x )
                 {
                     for( int z = 0; z < tile->m_guideGrid->GetNumColumns()-1; ++z )
-                    {                    
+                    {
                         float value1 = tile->m_desiredHeight * (tile->m_guideGrid->GetData( x, z ) / 256.0f);
                         float value2 = tile->m_desiredHeight * (tile->m_guideGrid->GetData( x+1, z ) / 256.0f );
                         float value3 = tile->m_desiredHeight * (tile->m_guideGrid->GetData( x+1, z+1 ) / 256.0f );
                         float value4 = tile->m_desiredHeight * (tile->m_guideGrid->GetData( x, z+1 ) / 256.0f );
-                 
+
                         float tileX = tile->m_posX + (x+1) * gridCellSize;
                         float tileZ = tile->m_posZ + (z+1) * gridCellSize;
                         float tileW = gridCellSize;
@@ -852,7 +852,7 @@ void LocationEditor::RenderModeLandTile()
         glEnable( GL_DEPTH_TEST );
     }
 
-    
+
 	// Render a green box around the currently selected tile (if any)
 	if (m_selectionId != -1)
 	{
@@ -884,7 +884,7 @@ void LocationEditor::RenderModeLandTile()
             glEnd();
         }
 	}
-    
+
 	CHECK_OPENGL_STATE();
 }
 
@@ -927,7 +927,7 @@ void LocationEditor::RenderModeLandFlat()
 
 		RenderCube(centre, s, y + 20, s, RGBAColour(128,255,128,255));
 	}
-	
+
 	CHECK_OPENGL_STATE();
 }
 
@@ -974,7 +974,7 @@ void LocationEditor::RenderModeBuilding()
 			glDisable   ( GL_LINE_SMOOTH );
 			glEnable    ( GL_DEPTH_TEST );
 		}
-		
+
 		CHECK_OPENGL_STATE();
     }
 }
@@ -987,7 +987,7 @@ void LocationEditor::RenderModeInstantUnit()
 		InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(m_selectionId);
 		Vector3 pos(iu->m_posX, 0, iu->m_posZ);
 		pos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(pos.x, pos.z);
-		RenderSphere(pos, sqrtf(iu->m_number) * INSTANT_UNIT_SIZE_FACTOR);	
+		RenderSphere(pos, sqrtf(iu->m_number) * INSTANT_UNIT_SIZE_FACTOR);
 	}
 }
 
@@ -1032,7 +1032,7 @@ void LocationEditor::Render()
 {
     //
     // Render our buildings
-	
+
 	g_app->m_renderer->SetObjectLighting();
     LevelFile *levelFile = g_app->m_location->m_levelFile;
     for( int i = 0; i < levelFile->m_buildings.Size(); ++i )
@@ -1042,7 +1042,7 @@ void LocationEditor::Render()
             Building *b = levelFile->m_buildings.GetData(i);
             b->Render(0.0f);
         }
-    } 
+    }
     g_app->m_renderer->UnsetObjectLighting();
 	if (m_mode == ModeBuilding)
 	{
@@ -1058,14 +1058,14 @@ void LocationEditor::Render()
 	}
 
 
-	// 
+	//
 	// Render camera mounts
 
 	{
 		g_app->m_renderer->SetObjectLighting();
 		Shape *camShape = g_app->m_resource->GetShape("camera.shp");
 		Matrix34 mat;
-		
+
 		for (int i = 0; i < g_app->m_location->m_levelFile->m_cameraMounts.Size(); ++i)
 		{
 			CameraMount *mount = g_app->m_location->m_levelFile->m_cameraMounts[i];
@@ -1082,9 +1082,9 @@ void LocationEditor::Render()
     g_app->m_renderer->UnsetObjectLighting();
 
 
-	// 
+	//
 	// Render our instant units
-	
+
 	for (int i = 0; i < levelFile->m_instantUnits.Size(); ++i)
 	{
 		InstantUnit *iu = levelFile->m_instantUnits.GetData(i);
@@ -1101,7 +1101,7 @@ void LocationEditor::Render()
 		case ModeCameraMount:		RenderModeCameraMount();			break;
 	}
 
-	
+
 	//
 	// Render axes
 
@@ -1144,7 +1144,7 @@ void LocationEditor::Render()
         glVertex2i( g_app->m_renderer->ScreenW()/2 + 30, g_app->m_renderer->ScreenH()/2 );
     glEnd();
     g_app->m_renderer->SetupMatricesFor3D();
-    
+
 
 	CHECK_OPENGL_STATE();
 }

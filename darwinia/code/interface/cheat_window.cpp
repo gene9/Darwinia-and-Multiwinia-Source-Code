@@ -31,7 +31,7 @@ class KillAllEnemiesButton : public DarwiniaButton
                 if( !g_app->m_location->IsFriend( myTeamId, t ) )
                 {
                     Team *team = &g_app->m_location->m_teams[t];
-                    
+
                     // Kill all UNITS
                     for( int u = 0; u < team->m_units.Size(); ++u )
                     {
@@ -89,13 +89,13 @@ public:
         {
 	        Vector3 rayStart;
 	        Vector3 rayDir;
-	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									     g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
             Vector3 _pos;
             g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
 
             g_app->m_location->SpawnEntities( _pos, m_teamId, -1, Entity::TypeDarwinian, 20, g_zeroVector, 30 );
-        }        
+        }
     }
 };
 
@@ -108,13 +108,13 @@ class SpawnTankButton : public DarwiniaButton
         {
 	        Vector3 rayStart;
 	        Vector3 rayDir;
-	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									     g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
             Vector3 _pos;
             g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
 
             g_app->m_location->SpawnEntities( _pos, 2, -1, Entity::TypeArmour, 1, g_zeroVector, 0 );
-        }        
+        }
     }
 };
 
@@ -127,13 +127,13 @@ class SpawnViriiButton : public DarwiniaButton
         {
 	        Vector3 rayStart;
 	        Vector3 rayDir;
-	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									     g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
             Vector3 _pos;
             g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
 
             g_app->m_location->SpawnEntities( _pos, 1, -1, Entity::TypeVirii, 20, g_zeroVector, 0, 1000.0f );
-        }        
+        }
     }
 };
 
@@ -146,7 +146,7 @@ class SpawnSpiritButton : public DarwiniaButton
         {
 	        Vector3 rayStart;
 	        Vector3 rayDir;
-	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2, 
+	        g_app->m_camera->GetClickRay(g_app->m_renderer->ScreenW()/2,
 									     g_app->m_renderer->ScreenH()/2, &rayStart, &rayDir);
             Vector3 _pos;
             g_app->m_location->m_landscape.RayHit( rayStart, rayDir, &_pos );
@@ -227,7 +227,7 @@ class EnableReceiverAndBufferButton : public DarwiniaButton
             }
         }
 
-        g_app->m_globalWorld->EvaluateEvents();        
+        g_app->m_globalWorld->EvaluateEvents();
     }
 };
 
@@ -322,7 +322,7 @@ class SoundStatsCreateButton : public DarwiniaButton
 void CheatWindow::Create()
 {
     DarwiniaWindow::Create();
-    
+
     int y = 25;
 
     KillAllEnemiesButton *killAllEnemies = new KillAllEnemiesButton();
@@ -350,11 +350,11 @@ void CheatWindow::Create()
     SpawnSpiritButton *spawnSpirits = new SpawnSpiritButton();
     spawnSpirits->SetShortProperties( "Spawn Spirits", 10, y += 20, m_w - 20 );
     RegisterButton( spawnSpirits );
-    
+
     AllowArbitraryPlacementButton *allowPlacement = new AllowArbitraryPlacementButton();
     allowPlacement->SetShortProperties( "Allow Arbitrary Placement", 10, y += 20, m_w - 20 );
     RegisterButton( allowPlacement );
-    
+
     EnableGeneratorAndMineButton *enable = new EnableGeneratorAndMineButton();
     enable->SetShortProperties( "Enable Generator and Mine", 10, y += 20, m_w - 20 );
     RegisterButton( enable );
@@ -380,13 +380,13 @@ void CheatWindow::Create()
     RegisterButton( spawnPorts );
 
     y+=20;
-    
+
 #ifdef PROFILER_ENABLED
     ProfilerCreateButton *profiler = new ProfilerCreateButton();
     profiler->SetShortProperties( "Profiler", 10, y+=20, m_w-20);
     RegisterButton( profiler );
 #endif // PROFILER_ENABLED
-	
+
 #ifdef SOUND_EDITOR
     SoundEditorCreateButton *soundEditor = new SoundEditorCreateButton();
     soundEditor->SetShortProperties( "Sound Editor", 10, y+=20, m_w-20);

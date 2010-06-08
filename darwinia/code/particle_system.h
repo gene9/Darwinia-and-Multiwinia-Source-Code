@@ -63,10 +63,10 @@ public:
 	int				m_typeId;
     float           m_size;
     RGBAColour      m_colour;
-	
+
 	Particle();
 
-    void Initialise(Vector3 const &_pos, Vector3 const &_vel, 
+    void Initialise(Vector3 const &_pos, Vector3 const &_vel,
                     int _type, float _size=-1.0f);
 	bool Advance();
 	void Render(float _predictionTime);
@@ -88,7 +88,7 @@ private:
 public:
 	ParticleSystem();
 
-	void CreateParticle(Vector3 const &_pos, Vector3 const &_vel, 
+	void CreateParticle(Vector3 const &_pos, Vector3 const &_vel,
                         int _particleTypeId, float _size=-1.0f, RGBAColour col = NULL );
 
 	void Advance(int _slice);

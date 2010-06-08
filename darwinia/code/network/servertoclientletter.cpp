@@ -27,11 +27,11 @@ ServerToClientLetter::ServerToClientLetter()
 // *** Constructor
 ServerToClientLetter::ServerToClientLetter( ServerToClientLetter &copyMe )
 :   m_clientId( copyMe.m_clientId ),
-    m_type( copyMe.m_type ),    
+    m_type( copyMe.m_type ),
     m_sequenceId( copyMe.m_sequenceId ),
     m_teamId(copyMe.m_teamId),
     m_teamType(copyMe.m_teamType),
-    m_ip(copyMe.m_ip)    
+    m_ip(copyMe.m_ip)
 {
     //memcpy( m_updates, copyMe.m_updates, MAX_SERVER_TO_CLIENT_UPDATES*sizeof(NetworkUpdate) );
 
@@ -41,7 +41,7 @@ ServerToClientLetter::ServerToClientLetter( ServerToClientLetter &copyMe )
         NetworkUpdate *newUpdate = new NetworkUpdate();
         memcpy( newUpdate, copyUpdate, sizeof(NetworkUpdate) );
         m_updates.PutData( newUpdate );
-    }   
+    }
 }
 
 
@@ -141,11 +141,11 @@ void ServerToClientLetter::SetIp(int ip)
 
 // *** AddUpdate
 void ServerToClientLetter::AddUpdate ( NetworkUpdate *_update )
-{    
+{
     // Make sure we COPY the update
     NetworkUpdate *update = new NetworkUpdate();
     memcpy( update, _update, sizeof(NetworkUpdate) );
-    m_updates.PutData( update );                   
+    m_updates.PutData( update );
 }
 
 // *** GetByteStream
@@ -155,7 +155,7 @@ char *ServerToClientLetter::GetByteStream(int *_linearSize)
 
     WRITE_INT(byteStream, m_type);
     WRITE_INT(byteStream, m_sequenceId);
-    
+
     switch (m_type)
     {
     case HelloClient:

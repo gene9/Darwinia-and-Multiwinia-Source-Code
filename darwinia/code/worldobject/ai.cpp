@@ -27,7 +27,7 @@ AI::AI()
 {
     SetType( TypeAI );
 
-    
+
 }
 
 
@@ -90,7 +90,7 @@ void AI::Begin()
                             DarwiniaDebugAssert( b && b->m_type == Building::TypeAITarget );
                             float distanceAtoB = a->IsNearTo( bId );
                             float distanceBtoC = b->IsNearTo( cId );
-                            if( distanceBtoC > 0.0f && 
+                            if( distanceBtoC > 0.0f &&
                                 distanceAtoC > (distanceAtoB + distanceBtoC) * 0.8f )
                             {
                                 a->m_neighbours.RemoveData(n);
@@ -126,7 +126,7 @@ int AI::FindTargetBuilding( int _fromTargetId, int _fromTeamId )
 
     int id = -1;
     bool randomMovement = syncfrand() < 0.25f;
-    
+
 #ifdef DEMO2
     randomMovement = false;
 #endif
@@ -182,19 +182,19 @@ int AI::FindNearestTarget( Vector3 const &_fromPos )
                     if( g_app->m_location->IsWalkable( _fromPos, target->m_pos, true ) )
                     {
                         id = building->m_id.GetUniqueId();
-                        nearest = distance;                    
+                        nearest = distance;
                     }
                 }
             }
         }
     }
-    
+
     return id;
 }
 
 
 bool AI::Advance( Unit *_unit )
-{    
+{
     //
     // Try to get Darwinians to stay near AI Targets
     // We can't do this for every darwinian every frame, so just do it for some
@@ -225,7 +225,7 @@ bool AI::Advance( Unit *_unit )
                             Vector3 targetPos = nearestTarget->m_pos;
                             float positionError = 20.0f;
                             float radius = 20.0f+syncfrand(positionError);
-	                        float theta = syncfrand(M_PI * 2);                
+	                        float theta = syncfrand(M_PI * 2);
                             targetPos.x += radius * sinf(theta);
 	                        targetPos.z += radius * cosf(theta);
                             targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(targetPos.x, targetPos.z);
@@ -246,7 +246,7 @@ bool AI::Advance( Unit *_unit )
     m_timer -= SERVER_ADVANCE_PERIOD;
     if( m_timer > 0.0f ) return false;
     m_timer = 1.0f;
-    
+
 
     //
     // Look for buildings that are well defended
@@ -273,7 +273,7 @@ bool AI::Advance( Unit *_unit )
         }
     }
 
-    
+
     //
     // For each well defended building, choose a valid nearby target
     // and send some troops to it
@@ -297,7 +297,7 @@ bool AI::Advance( Unit *_unit )
             Vector3 targetPos = targetBuilding->m_pos;
             float positionError = 20.0f;
             float radius = 20.0f+syncfrand(positionError);
-	        float theta = syncfrand(M_PI * 2);                
+	        float theta = syncfrand(M_PI * 2);
             targetPos.x += radius * sinf(theta);
 	        targetPos.z += radius * cosf(theta);
             targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(targetPos.x, targetPos.z);
@@ -331,7 +331,7 @@ void AI::Render( float _predictionTime )
     if( g_app->m_editing )
     {
         RGBAColour teamCol = g_app->m_location->m_teams[m_id.GetTeamId()].m_colour;
- 
+
         Vector3 pos = m_pos;
         pos.y = 400.0f;
         RenderSphere( pos, 20.0f, teamCol );
@@ -357,9 +357,9 @@ AITarget::AITarget()
 
     memset( m_friendCount, 0, NUM_TEAMS*sizeof(int) );
     memset( m_enemyCount, 0, NUM_TEAMS*sizeof(int) );
-    memset( m_idleCount, 0, NUM_TEAMS*sizeof(int) );    
+    memset( m_idleCount, 0, NUM_TEAMS*sizeof(int) );
     memset( m_priority, 0, NUM_TEAMS*sizeof(float) );
-    
+
     SetShape( g_app->m_resource->GetShape("aitarget.shp") );
 
     m_teamCountTimer = syncfrand( 2.0f );
@@ -369,7 +369,7 @@ AITarget::AITarget()
 void AITarget::RecalculateNeighbours()
 {
     m_neighbours.Empty();
-    
+
     for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
     {
         if( g_app->m_location->m_buildings.ValidIndex(i) )
@@ -395,7 +395,7 @@ void AITarget::RecountTeams()
     memset( m_friendCount, 0, NUM_TEAMS*sizeof(int) );
     memset( m_enemyCount, 0, NUM_TEAMS*sizeof(int) );
     memset( m_idleCount, 0, NUM_TEAMS*sizeof(int) );
-        
+
     int numFound;
     WorldObjectId *ids = g_app->m_location->m_entityGrid->GetNeighbours( m_pos.x, m_pos.z, 100.0f, &numFound );
     for( int j = 0; j < numFound; ++j )
@@ -406,7 +406,7 @@ void AITarget::RecountTeams()
         {
             for( int t = 0; t < NUM_TEAMS; ++t )
             {
-                if( g_app->m_location->IsFriend( id.GetTeamId(), t ) ) 
+                if( g_app->m_location->IsFriend( id.GetTeamId(), t ) )
                     ++m_friendCount[t];
                 else
                     ++m_enemyCount[t];
@@ -472,7 +472,7 @@ float AITarget::IsNearTo( int _aiTargetId )
 
 
 bool AITarget::Advance()
-{   
+{
     RecalculatePriority();
 
 
@@ -530,24 +530,24 @@ void AITarget::RecalculatePriority()
                     {
                         prioritySum += target->m_priority[t];
                     }
-                }            
+                }
                 prioritySum /= (float) (m_neighbours.Size() + 1);
                 m_priority[t] = prioritySum;
             }
         }
 
         m_priority[t] += (float) m_neighbours.Size() * 0.01f;
-        m_priority[t] = min( m_priority[t], 1.0f );        
+        m_priority[t] = min( m_priority[t], 1.0f );
     }
 }
 
 
 void AITarget::Render( float _predictionTime )
-{    
+{
     if( g_app->m_editing )
     {
         Building::Render( _predictionTime );
-    }       
+    }
 
 //    g_editorFont.DrawText3DCentre( m_pos+Vector3(0,80,0), 10.0f, "Green  : f%d e%d i%d", m_friendCount[0], m_enemyCount[0], m_idleCount[0] );
 //    g_editorFont.DrawText3DCentre( m_pos+Vector3(0,70,0), 10.0f, "Red    : f%d e%d i%d", m_friendCount[1], m_enemyCount[1], m_idleCount[1] );
@@ -557,7 +557,7 @@ void AITarget::Render( float _predictionTime )
 //        int t = 1;
 //        Team *team = &g_app->m_location->m_teams[t];
 //        if( team->m_teamType != Team::TeamTypeUnused )
-//        {            
+//        {
 //            glColor3ubv( team->m_colour.GetData() );
 //            g_editorFont.DrawText3DCentre( m_pos+Vector3(0,60+t*15,0), 10.0f, "%2.2f", m_priority[t] );
 //        }
@@ -566,16 +566,16 @@ void AITarget::Render( float _predictionTime )
 
 
 void AITarget::RenderAlphas( float _predictionTime )
-{   
+{
     //Building::RenderAlphas( _predictionTime );
-        
+
 
 /*
         Vector3 height(0,20,0);
         glLineWidth( 2.0f );
         glShadeModel( GL_SMOOTH );
         glEnable( GL_BLEND );
-    
+
         for( int i = 0; i < m_neighbours.Size(); ++i )
         {
             int buildingId = m_neighbours[i];
@@ -592,9 +592,9 @@ void AITarget::RenderAlphas( float _predictionTime )
                     RGBAColour col = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
                     glColor4ub( col.r, col.g, col.b, 255 );
                 }
-    
+
                 glVertex3fv( (m_pos+height).GetData() );
-    
+
                 if( building->m_id.GetTeamId() == 255 )
                 {
                     glColor4ub( 128, 128, 128, 255 );
@@ -604,14 +604,14 @@ void AITarget::RenderAlphas( float _predictionTime )
                     RGBAColour col = g_app->m_location->m_teams[ building->m_id.GetTeamId() ].m_colour;
                     glColor4ub( col.r, col.g, col.b, 255 );
                 }
-    
+
                 glVertex3fv( (building->m_pos+height).GetData() );
                 glEnd();
             }
         }
-    
+
         glShadeModel( GL_FLAT );*/
-    
+
 
 
 #ifdef LOCATION_EDITOR
@@ -661,7 +661,7 @@ AISpawnPoint::AISpawnPoint()
 void AISpawnPoint::Initialise( Building *_template )
 {
     Building::Initialise( _template );
-    
+
     AISpawnPoint *spawnPoint = (AISpawnPoint *) _template;
 
     m_entityType = spawnPoint->m_entityType;
@@ -771,7 +771,7 @@ bool AISpawnPoint::Advance()
 			    greenVictory = false;
                 break;
 		    }
-	    }    
+	    }
     }
 
     if( m_online && !greenVictory && !PopulationLocked() && m_spawnLimit != 0)
@@ -797,7 +797,7 @@ bool AISpawnPoint::Advance()
         {
             g_app->m_location->SpawnEntities( m_pos, m_id.GetTeamId(), -1, m_entityType, 1, g_zeroVector, 20.0f, 100.0f, m_routeId );
             ++m_numSpawned;
-        
+
             if( m_numSpawned >= m_count )
             {
                 m_timer = m_period + syncsfrand(m_period/3.0f);
@@ -811,7 +811,7 @@ bool AISpawnPoint::Advance()
 
 
 void AISpawnPoint::RenderAlphas( float _predictionTime )
-{    
+{
     if( g_app->m_editing )
     {
         RGBAColour colour;

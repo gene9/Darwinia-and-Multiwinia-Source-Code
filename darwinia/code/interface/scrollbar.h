@@ -37,7 +37,7 @@ public:
     ScrollBar( EclWindow *parent );
     ~ScrollBar();
 
-    void Create( char *name, 
+    void Create( char *name,
                  int x, int y, int w, int h,
                  int numRows, int winSize,
                  int stepSize=1 );
@@ -57,7 +57,7 @@ class ScrollBarButton : public EclButton
 {
 protected:
     ScrollBar *m_scrollBar;
-    int m_grabOffset;                      
+    int m_grabOffset;
 
 public:
     ScrollBarButton ( ScrollBar *scrollBar );

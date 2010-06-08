@@ -16,7 +16,7 @@ protected:
 
 public:
     Vector3     m_hover;
-    
+
 public:
     Snow();
 

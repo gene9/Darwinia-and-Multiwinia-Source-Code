@@ -4,7 +4,7 @@
 // A class to easily create AVI
 //
 // Original code : Example code in WriteAvi.c of MSDN
-// 
+//
 // Author : Jonathan de Halleux. dehalleux@auto.ucl.ac.be
 //////////////////////////////////////////////////////////////////////
 
@@ -46,12 +46,12 @@ Demo Code:
 
 	AviGen.ReleaseEngine();
 */
-class AVIGenerator  
+class AVIGenerator
 {
 public:
 	char				*m_error;
 	BITMAPINFOHEADER	m_bih;			// Format of the one uncompressed frame's bitmap
-	char				*m_outputFilename;			
+	char				*m_outputFilename;
 
 	AVIGenerator();
 	~AVIGenerator();
@@ -62,9 +62,9 @@ public:
 	// Some asserts are made to check that bitmap has been properly initialized
 	int InitEngine();
 
-	// Adds a frame to the movie. 
+	// Adds a frame to the movie.
     // First one grabs directly from openGL
-	void AddFrame(); 
+	void AddFrame();
 
     // The data pointed by bmBits has to be compatible with the bitmap description of the movie.
     int AddFrame(unsigned char* bmBits);
@@ -80,7 +80,7 @@ private:
 	AVICOMPRESSOPTIONS  m_opts;
 
 	unsigned			m_motionBlurFactor;		// Number of frames blended together in the accumulation buffer. 1 = no motion blur
-	unsigned long		m_frameRate;	
+	unsigned long		m_frameRate;
 	int					m_inFrameCount;
 	int					m_outFrameCount;
 	PAVIFILE			m_AVIFile;				// file interface pointer

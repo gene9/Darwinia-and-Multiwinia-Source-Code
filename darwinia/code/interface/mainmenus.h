@@ -54,7 +54,7 @@ public:
 
 class SkipPrologueWindow : public DarwiniaWindow
 {
-public: 
+public:
 	SkipPrologueWindow();
 
 	void Create();

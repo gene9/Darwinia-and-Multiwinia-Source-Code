@@ -42,7 +42,7 @@ class HelpIcon
 {
 public:
     HelpIcon( const char *_filename, const char *_shadowFilename, const Vector2 &_setRelativePos );
-	
+
 	void AddTextPosition( int _relx, int _rely );
 
 	bool Enabled() const;
@@ -57,7 +57,7 @@ private:
     char m_filename[256], m_shadowFilename[256];
     Vector2 m_setRelativePos;
 
-	struct PosText {		
+	struct PosText {
 		Vector2 m_pos;
 		const char * m_text;
 		float m_alpha;
@@ -98,7 +98,7 @@ bool HelpIcon::Enabled( float &_iconAlpha ) const
 {
 	bool enabled = false;
 
-	_iconAlpha = 0.3f;	
+	_iconAlpha = 0.3f;
 
 	for (int i = 0; i < m_texts.size(); i++) {
 		if (m_texts[i].m_text) {
@@ -125,8 +125,8 @@ void HelpIcon::Set( int _index, const char *_helpText, float _alpha )
 
 	m_texts[_index].m_text = _helpText;
 	m_texts[_index].m_alpha = _alpha;
-	
-	if (m_texts[_index].m_text != m_lastTexts[_index].m_text) 
+
+	if (m_texts[_index].m_text != m_lastTexts[_index].m_text)
 		m_lastHelpTextChangeTime = g_gameTime;
 }
 
@@ -138,7 +138,7 @@ void HelpIcon::Render( const Vector2 &_setPosition, float _alpha )
 
 	float iconAlpha;
     float shadowOffset = 0;
-    float shadowSize = iconSize; 
+    float shadowSize = iconSize;
 
 	const bool enabled = Enabled( iconAlpha );
 
@@ -156,7 +156,7 @@ void HelpIcon::Render( const Vector2 &_setPosition, float _alpha )
 
 	Vector2 iconCentre = Vector2(position.x, position.y);
 
-	//if( g_app->m_largeMenus ) 
+	//if( g_app->m_largeMenus )
 	//{
 	//	iconGap *= 2.0f;
 	//	iconSize *= 1.5f;
@@ -172,22 +172,22 @@ void HelpIcon::Render( const Vector2 &_setPosition, float _alpha )
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( m_shadowFilename ) );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
     glDepthMask     ( false );
-    glColor4f       ( iconAlpha, iconAlpha, iconAlpha, 0.0f );         
-	
+    glColor4f       ( iconAlpha, iconAlpha, iconAlpha, 0.0f );
+
     glBegin( GL_QUADS );
         glTexCoord2i( 0, 1 );           glVertex2f( iconCentre.x - shadowX + shadowOffset, iconCentre.y - shadowSize/2 + shadowOffset );
         glTexCoord2i( 1, 1 );           glVertex2f( iconCentre.x + shadowX + shadowOffset, iconCentre.y - shadowSize/2 + shadowOffset );
         glTexCoord2i( 1, 0 );           glVertex2f( iconCentre.x + shadowX + shadowOffset, iconCentre.y + shadowSize/2 + shadowOffset );
         glTexCoord2i( 0, 0 );           glVertex2f( iconCentre.x - shadowX + shadowOffset, iconCentre.y + shadowSize/2 + shadowOffset );
-    glEnd();	
+    glEnd();
 
-    unsigned int texId = g_app->m_resource->GetTexture( m_filename );       
+    unsigned int texId = g_app->m_resource->GetTexture( m_filename );
 
 	// Render the icon
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, texId );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
-    
+
     glColor4f   ( 1.0f, 1.0f, 1.0f, iconAlpha );
 
     float x = iconSize/2;
@@ -217,8 +217,8 @@ void HelpIcon::Render( const Vector2 &_setPosition, float _alpha )
 			//{
 			//	fontSize *= 1.5f;
 			//}
-			
-			Vector2 textCentrePos( 
+
+			Vector2 textCentrePos(
 				iconCentre.x + (shadowSize / 2 + iconGap) * pos.x,
 				iconCentre.y + (shadowSize / 2 + iconGap) * pos.y);
 
@@ -276,10 +276,10 @@ void HelpIconSet::Render( Vector2 &_setPosition )
 			break;
 		}
 
-	if (!atLeastOneEnabled && m_lastEnabled) 
+	if (!atLeastOneEnabled && m_lastEnabled)
 		m_beginFadeOutTime = g_gameTime;
 
-	else if (atLeastOneEnabled && !m_lastEnabled) 
+	else if (atLeastOneEnabled && !m_lastEnabled)
 		m_beginFadeInTime = g_gameTime;
 
 	float alpha;
@@ -306,10 +306,10 @@ void HelpIconSet::Render( Vector2 &_setPosition )
 	// If none enabled, we don't render the entire set
 	if (alpha > 0.0f) {
 		// Render
-		for (int i = 0; i < m_icons.size(); i++) 
+		for (int i = 0; i < m_icons.size(); i++)
 			m_icons[i]->Render( _setPosition, alpha );
-	}	
-	
+	}
+
 	// Adjust the y value
 	_setPosition.y += m_height;
 	m_lastEnabled = atLeastOneEnabled;
@@ -330,47 +330,47 @@ void ControlHelpSystem::InitialiseIcons()
 	m_icons[A]->AddTextPosition( 0, 1 );
 
 	m_icons[B] = new HelpIcon("icons/button_b.bmp", "icons/button_abxy_shadow.bmp", Vector2(100, 50));
-	m_icons[B]->AddTextPosition( 1, 0 );	
+	m_icons[B]->AddTextPosition( 1, 0 );
 
 	m_icons[X] = new HelpIcon("icons/button_x.bmp", "icons/button_abxy_shadow.bmp", Vector2(0, 50));
-	m_icons[X]->AddTextPosition( -1, 0 );	
+	m_icons[X]->AddTextPosition( -1, 0 );
 
 	m_icons[Y] = new HelpIcon("icons/button_y.bmp", "icons/button_abxy_shadow.bmp", Vector2(50, 0));
-	m_icons[Y]->AddTextPosition( 0, -1 );	
+	m_icons[Y]->AddTextPosition( 0, -1 );
 
 	m_icons[DPAD] = new HelpIcon("icons/button_dpad.bmp", "icons/button_control_shadow.bmp", Vector2(50, 0));
 	m_icons[DPAD]->AddTextPosition( 1, 0 );
-	m_icons[DPAD]->AddTextPosition( 0, -1 );	
+	m_icons[DPAD]->AddTextPosition( 0, -1 );
 	m_icons[DPAD]->AddTextPosition( 0, 1 );
 
 	const int hsep = 25;
 
 	m_icons[LB] = new HelpIcon("icons/button_lb.bmp", "icons/button_lb_shadow.bmp", Vector2(-hsep + 25, 0));
-	m_icons[LB]->AddTextPosition( -1, 0 );	
+	m_icons[LB]->AddTextPosition( -1, 0 );
 
 	m_icons[RB] = new HelpIcon("icons/button_rb.bmp", "icons/button_rb_shadow.bmp", Vector2(+hsep + 75, 0));
-	m_icons[RB]->AddTextPosition( 1, 0 );	
+	m_icons[RB]->AddTextPosition( 1, 0 );
 
 	const int vsep = -25;
 	const int yoffset = -25;
 
 	m_icons[LA] = new HelpIcon("icons/button_la.bmp", "icons/button_control_shadow.bmp", Vector2(-hsep + 50, yoffset + -vsep + 0));
-	m_icons[LA]->AddTextPosition( 1, 0 );	
+	m_icons[LA]->AddTextPosition( 1, 0 );
 
 	m_icons[LT] = new HelpIcon("icons/button_lt.bmp", "icons/button_trigger_shadow.bmp", Vector2(-hsep + 0, yoffset + -vsep + 0));
-	m_icons[LT]->AddTextPosition( 0, 1 );	
+	m_icons[LT]->AddTextPosition( 0, 1 );
 
 	m_icons[RA] = new HelpIcon("icons/button_ra.bmp", "icons/button_control_shadow.bmp", Vector2(+hsep + 50, yoffset + +vsep + 100));
-	m_icons[RA]->AddTextPosition( -1, 0 );	
+	m_icons[RA]->AddTextPosition( -1, 0 );
 
 	m_icons[RT] = new HelpIcon("icons/button_rt.bmp", "icons/button_trigger_shadow.bmp", Vector2(+hsep + 100, yoffset + +vsep + 100));
-	m_icons[RT]->AddTextPosition( 0, 1 );	
+	m_icons[RT]->AddTextPosition( 0, 1 );
 
 	m_sets[++set] = new HelpIconSet( 175 );
 	m_sets[set]->AddIcon( m_icons[A] );
 	m_sets[set]->AddIcon( m_icons[B] );
 	m_sets[set]->AddIcon( m_icons[X] );
-	m_sets[set]->AddIcon( m_icons[Y] );	
+	m_sets[set]->AddIcon( m_icons[Y] );
 
 	m_sets[++set] = new HelpIconSet( 75 );
 	m_sets[set]->AddIcon( m_icons[LB] );
@@ -437,7 +437,7 @@ void ControlHelpSystem::Advance()
 	for (int i = 0; i < MaxConditions; i++)
 		DecayCond(i);
 
-	// Check conditions	
+	// Check conditions
 	for (int i = 0; i < MaxConditions; i++)
 		if (CheckCondition(i))
 			SetCondIcon(i);
@@ -461,7 +461,7 @@ static Unit *GetSelectedUnit()
 {
 	Team *team = NULL;
 
-	if (g_app->m_location && 
+	if (g_app->m_location &&
 	    (team = g_app->m_location->GetMyTeam()))
 		return team->GetMyUnit();
 	else
@@ -473,9 +473,9 @@ static bool SquaddieSelected()
 	Unit *unit = NULL;
 	Task *currentTask = NULL;
 
-	return 
+	return
 		g_app->m_camera->IsInMode( Camera::ModeEntityTrack ) &&
-		(unit = GetSelectedUnit()) && 
+		(unit = GetSelectedUnit()) &&
 		unit->m_troopType == Entity::TypeInsertionSquadie &&
 		(currentTask = g_app->m_taskManager->GetCurrentTask()) &&
 		currentTask->m_state == Task::StateRunning;
@@ -486,7 +486,7 @@ static bool WeaponSelected( int _type )
 {
     InsertionSquad *squad = NULL;
 
-	return 
+	return
 		(squad = (InsertionSquad *) GetSelectedUnit()) &&
 		squad->m_troopType == Entity::TypeInsertionSquadie &&
 		_type == squad->m_weaponType &&
@@ -498,7 +498,7 @@ static bool OfficerOrArmourSelected()
 	Team *team = NULL;
 	Entity *entity = NULL;
 
-	return 
+	return
 		g_app->m_location &&
 		(team = g_app->m_location->GetMyTeam()) &&
 		(entity = team->GetMyEntity()) &&
@@ -511,7 +511,7 @@ static bool OfficerSelected()
 	Team *team = NULL;
 	Entity *entity = NULL;
 
-	return 
+	return
 		g_app->m_location &&
 		(team = g_app->m_location->GetMyTeam()) &&
 		(entity = team->GetMyEntity()) &&
@@ -523,7 +523,7 @@ static bool ArmourSelected()
 	Team *team = NULL;
 	Entity *entity = NULL;
 
-	return 
+	return
 		g_app->m_location &&
 		(team = g_app->m_location->GetMyTeam()) &&
 		(entity = team->GetMyEntity()) &&
@@ -533,7 +533,7 @@ static bool ArmourSelected()
 
 static bool HasMoreThanOneSecondaryWeapon()
 {
-	int numSecondaryWeapons = 
+	int numSecondaryWeapons =
 		g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) +
 		g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeAirStrike ) +
 		g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket );
@@ -544,7 +544,7 @@ static bool HasMoreThanOneSecondaryWeapon()
 static bool UnitSelected()
 {
 	if( !g_app->m_location )
-		return false;    
+		return false;
 
     Team *team = g_app->m_location->GetMyTeam();
 
@@ -625,7 +625,7 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 		case CondTaskManagerCloseBlue:
 			// Too cluttered to have two close buttons
 			return false; // g_app->m_taskManagerInterface->AdviseCloseControlHelp();
-		
+
 		case CondTaskManagerCloseRed:
 			return g_app->m_taskManagerInterface->m_visible;
 
@@ -633,11 +633,11 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 			return UnitSelected() || BuildingSelected();
 
 		case CondSelectUnit:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_app->m_gameCursor->AdviseHighlightingSomething();
 
 		case CondTaskManagerCreateGreen:
-			return g_app->m_taskManagerInterface->m_visible && 
+			return g_app->m_taskManagerInterface->m_visible &&
 				   g_app->m_taskManagerInterface->AdviseCreateControlHelpGreen();
 
 		case CondMoveUnit:
@@ -645,7 +645,7 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 				   g_app->m_gameCursor->AdviseMoveableEntitySelected();
 
 		case CondTaskManagerSelect:
-			return g_app->m_taskManagerInterface->m_visible && 
+			return g_app->m_taskManagerInterface->m_visible &&
 				   g_app->m_taskManagerInterface->AdviseOverSelectableZone();
 
 		case CondPlaceUnit:
@@ -655,28 +655,28 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 		case CondPromoteOfficer:
 			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_app->m_gameCursor->AdviseHighlightingSomething() &&
-				   PlacingOfficerProgram();		
+				   PlacingOfficerProgram();
 
 		case CondMoveCameraOrUnit:
-			return !g_app->m_taskManagerInterface->m_visible && 
-				   (g_app->m_camera->IsInMode( Camera::ModeFreeMovement ) || 
+			return !g_app->m_taskManagerInterface->m_visible &&
+				   (g_app->m_camera->IsInMode( Camera::ModeFreeMovement ) ||
 				    g_app->m_camera->IsInMode( Camera::ModeEntityTrack ));
 
 		case CondCameraAim:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_app->m_camera->IsInMode( Camera::ModeFreeMovement );
 
 		case CondSquaddieFire:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					SquaddieSelected();
 
 		case CondChangeWeapon:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					SquaddieSelected() &&
 					HasMoreThanOneSecondaryWeapon();
 
 		case CondChangeOrders:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					OfficerOrArmourSelected();
 
 		case CondCameraUp:
@@ -686,30 +686,30 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 			return !m_icons[LA]->Enabled() && !m_icons[RA]->Enabled() && !g_app->m_taskManagerInterface->m_visible;
 
 		case CondZoom:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 				   // RadarDishSelected() &&
 				   g_app->m_camera->IsInMode( Camera::ModeRadarAim );
 
 		case CondFireGrenades:
 			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_inputManager->controlEvent( ControlUnitPrimaryFireDirected ) &&
-				   SquaddieSelected() &&				   
+				   SquaddieSelected() &&
 				   WeaponSelected( GlobalResearch::TypeGrenade );
-							   
+
 		case CondFireRocket:
 			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_inputManager->controlEvent( ControlUnitPrimaryFireDirected ) &&
-				   SquaddieSelected() &&				   
+				   SquaddieSelected() &&
 				   WeaponSelected( GlobalResearch::TypeRocket );
 
 		case CondFireAirstrike:
 			return !g_app->m_taskManagerInterface->m_visible &&
 				   g_inputManager->controlEvent( ControlUnitPrimaryFireDirected ) &&
-				   SquaddieSelected() &&				   
+				   SquaddieSelected() &&
 				   WeaponSelected( GlobalResearch::TypeAirStrike );
 
 		case CondOfficerSetGoto:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					OfficerSelected();
 
 		case CondOfficerSetFollow:
@@ -721,18 +721,18 @@ bool ControlHelpSystem::CheckCondition( int _condition )
 				Entity *e = g_app->m_location->GetEntity( idUnderMouse );
 				if( e && e->m_type == Entity::TypeOfficer ) officerHighlighted = true;
 			}
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					OfficerSelected() &&
 					officerHighlighted;
 		}
 
 		case CondArmourSetTurret:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					ArmourSelected();
 
 		case CondSwitchPrevUnit:
 		case CondSwitchNextUnit:
-			return !g_app->m_taskManagerInterface->m_visible && 
+			return !g_app->m_taskManagerInterface->m_visible &&
 					CanSwitchUnit();
 
         case CondRadarAim:
@@ -784,7 +784,7 @@ void ControlHelpSystem::SetCondIcon( int _cond )
 	if (ti.m_minTime != 0.0f && ti.m_maxTime != 0.0f) {
 		if (ti.m_timeUsed < ti.m_minTime)
 			alpha = 1.0f;
-		else 
+		else
 			alpha = (ti.m_maxTime - ti.m_timeUsed ) / (ti.m_maxTime - ti.m_minTime);
 
 		if (alpha < 0.0f)
@@ -802,7 +802,7 @@ void ControlHelpSystem::Render()
 {
 	// Don't render if not in location
 	if (g_app->m_locationId == -1 ||
-		g_inputManager->getInputMode() != INPUT_MODE_GAMEPAD || 
+		g_inputManager->getInputMode() != INPUT_MODE_GAMEPAD ||
 		!g_prefsManager->GetInt(OTHER_CONTROLHELPENABLED, 1))
 	{
 		return;
@@ -825,7 +825,7 @@ void ControlHelpSystem::Render()
 		return;
 	}
 
-	if (g_app->m_taskManagerInterface->m_visible) 
+	if (g_app->m_taskManagerInterface->m_visible)
 		setPosition.x -= 100;
 
 	for (int i = 0; i < MaxSets; i++)

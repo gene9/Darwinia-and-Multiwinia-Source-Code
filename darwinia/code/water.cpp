@@ -59,7 +59,7 @@ Water::Water()
     if( !g_app->m_editing )
     {
         Landscape *land = &g_app->m_location->m_landscape;
-        
+
 	    GenerateLightMap();
 
 	    int detail = g_prefsManager->GetInt( "RenderWaterDetail" );
@@ -69,7 +69,7 @@ Water::Water()
             float worldSize = max( g_app->m_location->m_landscape.GetWorldSizeX(),
                                  g_app->m_location->m_landscape.GetWorldSizeZ() );
             worldSize /= 100.0f;
-        
+
             m_cellSize = (float)detail * worldSize;
 
 		    int alpha = ( g_app->m_negativeRenderer ? 0 : 255 );
@@ -150,7 +150,7 @@ void Water::GenerateLightMap()
 
     //
     // Generate basic mask image data
-    
+
 	Array2D <float> landData;
 	landData.Initialise(MASK_SIZE, MASK_SIZE, 0.0f);
 	landData.SetAll(0.0f);
@@ -172,7 +172,7 @@ void Water::GenerateLightMap()
 
 	//
 	// Horizontal blur
-	
+
 	int const blurSize = 11;
 	int const halfBlurSize = 5;
 	float m[blurSize] = { 0.2, 0.3, 0.4, 0.5, 0.8, 1.0, 0.8, 0.5, 0.4, 0.3, 0.2 };
@@ -197,7 +197,7 @@ void Water::GenerateLightMap()
 			}
 		}
 	}
-	
+
 
 	//
 	// Vertical blur
@@ -216,7 +216,7 @@ void Water::GenerateLightMap()
 			}
 		}
 	}
-	
+
 
     //
     // Generate finished image and upload to openGL
@@ -228,7 +228,7 @@ void Water::GenerateLightMap()
         {
             float grayVal = (float)landData.GetData(x, z) * 855.0f;
 			if (grayVal > 255.0f) grayVal = 255.0f;
-            finalImage.PutPixel( x, MASK_SIZE - z - 1, RGBAColour(grayVal, grayVal, grayVal) );    
+            finalImage.PutPixel( x, MASK_SIZE - z - 1, RGBAColour(grayVal, grayVal, grayVal) );
         }
     }
 
@@ -244,7 +244,7 @@ void Water::GenerateLightMap()
 
     g_app->m_resource->AddBitmap(LIGHTMAP_TEXTURE_NAME, finalImage);
 
-    
+
 
 	//
 	// Create the water depth map
@@ -268,12 +268,12 @@ void Water::GenerateLightMap()
 		}
 	}
 
-	
+
 	//
 	// Take a low res copy of the water depth map that the flat water renderer
 	// can efficiently use to determine where under water polys are needed
-	
-	int const flatWaterRatio = 4;	// One flat water quad is the same size as 8x8 dynamic water quads 
+
+	int const flatWaterRatio = 4;	// One flat water quad is the same size as 8x8 dynamic water quads
 	scaleFactorX *= flatWaterRatio;
 	scaleFactorZ *= flatWaterRatio;
 	m_flatWaterTiles = new Array2D<bool> (m_waterDepthMap->GetNumColumns() / flatWaterRatio,
@@ -295,9 +295,9 @@ void Water::GenerateLightMap()
 						++currentVal;
 				}
 			}
-		
+
 			int const topScore = flatWaterRatio * flatWaterRatio;
-			if (currentVal == topScore)	
+			if (currentVal == topScore)
 				m_flatWaterTiles->PutData(x, m_flatWaterTiles->GetNumRows() - z - 1, false);
 			else
 				m_flatWaterTiles->PutData(x, m_flatWaterTiles->GetNumRows() - z - 1, true);
@@ -321,7 +321,7 @@ void Water::BuildOpenGlState()
 bool Water::IsVertNeeded(float x, float z)
 {
 	float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(x, z);
-	if (landHeight > 4.0f) 
+	if (landHeight > 4.0f)
 	{
 		return false;
 	}
@@ -381,8 +381,8 @@ void Water::BuildTriangleStrips()
 					m_renderVerts.PutData(vertex1);
 				}
 				degen = 2;
-				m_renderVerts.PutData(vertex1);		
-				m_renderVerts.PutData(vertex2);		
+				m_renderVerts.PutData(vertex1);
+				m_renderVerts.PutData(vertex2);
 			}
 			else
 			{
@@ -408,7 +408,7 @@ void Water::BuildTriangleStrips()
 	m_waterDepths = new float[m_renderVerts.NumUsed()];
 	m_shoreNoise = new float[m_renderVerts.NumUsed()];
 
-	// Create other per-vertex arrays 
+	// Create other per-vertex arrays
 	for (int i = 0; i < m_renderVerts.Size(); ++i)
 	{
 		Vector3 const &pos = m_renderVerts[i].m_pos;
@@ -431,10 +431,10 @@ static LPDIRECT3DVERTEXDECLARATION9 GetVertexDeclWater()
 		{0, 0, D3DDECLTYPE_FLOAT3,   D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
 		{0, 12, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
 		{0, 16, D3DDECLTYPE_FLOAT3,   D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0},
-		{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0} // D3DDECL_END 
+		{0xFF,0,D3DDECLTYPE_UNUSED, 0,0,0} // D3DDECL_END
 	};
 
-	if (!s_vertexDecl) 
+	if (!s_vertexDecl)
 		OpenGLD3D::g_pd3dDevice->CreateVertexDeclaration( s_vertexDesc, &s_vertexDecl );
 
 	return s_vertexDecl;
@@ -461,7 +461,7 @@ void Water::RenderFlatWaterTiles(
     float sizeZ = posSouth - posNorth;
 	float posStepX = sizeX / (float)steps;
 	float posStepZ = sizeZ / (float)steps;
-	
+
 	float texSizeX1 = texWest1 - texEast1;
 	float texSizeZ1 = texSouth1 - texNorth1;
 	float texStepX1 = texSizeX1 / (float)steps;
@@ -495,7 +495,7 @@ void Water::RenderFlatWaterTiles(
 				gglMultiTexCoord2fARB(GL_TEXTURE0_ARB, tx1 + texStepX1, tz1 + texStepZ1);
 				gglMultiTexCoord2fARB(GL_TEXTURE1_ARB, tx2 + texStepX2, tz2 + texStepZ2);
 				glVertex3f(px + posStepX, height, pz + posStepZ);
-				
+
 				gglMultiTexCoord2fARB(GL_TEXTURE0_ARB, tx1, tz1 + texStepZ1);
 				gglMultiTexCoord2fARB(GL_TEXTURE1_ARB, tx2, tz2 + texStepZ2);
 				glVertex3f(px, height, pz + posStepZ);
@@ -510,7 +510,7 @@ void Water::RenderFlatWaterTiles(
 
 
 void Water::RenderFlatWater()
-{    
+{
     Landscape *land = &g_app->m_location->m_landscape;
 
 	glDisable			(GL_CULL_FACE);
@@ -531,7 +531,7 @@ void Water::RenderFlatWater()
 
 	char waterFilename[256];
 	sprintf( waterFilename, "terrain/%s", g_app->m_location->m_levelFile->m_waterColourFilename );
-    
+
     if( Location::ChristmasModEnabled() == 1 )
     {
         strcpy( waterFilename, "terrain/water_icecaps.bmp" );
@@ -553,7 +553,7 @@ void Water::RenderFlatWater()
 	glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri	    (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     glTexEnvf           (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
-    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_MODULATE); 
+    glTexEnvf           (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_MODULATE);
 	glEnable		    (GL_TEXTURE_2D);
 
     float landSizeX = land->GetWorldSizeX();
@@ -570,9 +570,9 @@ void Water::RenderFlatWater()
 #endif
 
 	RenderFlatWaterTiles(
-		landSizeZ + borderZ, -borderZ, -borderX, landSizeX + borderX, -9.0f, 
+		landSizeZ + borderZ, -borderZ, -borderX, landSizeX + borderX, -9.0f,
 		timeFactor, timeFactor + 30.0f, timeFactor, timeFactor + 30.0f,
-		0.0f, 1.0f, 0.0f, 1.0f, 
+		0.0f, 1.0f, 0.0f, 1.0f,
 		m_flatWaterTiles->GetNumColumns());
 
 	gglActiveTextureARB  (GL_TEXTURE1_ARB);
@@ -601,7 +601,7 @@ void Water::UpdateDynamicWater()
 {
 	float const scaleFactor = 7.0f;
 
-	// 
+	//
 	// Generate lookup tables
 
 	for (int i = 0; i < m_waveTableSizeX; ++i)
@@ -626,7 +626,7 @@ void Water::UpdateDynamicWater()
 	int totalNumVertices = 0;
 
 	for (int i = 0; i < m_strips.Size(); ++i)
-	{		
+	{
 		WaterTriangleStrip *strip = m_strips[i];
 
 		float prevHeight1 = 0.0f;
@@ -652,7 +652,7 @@ void Water::UpdateDynamicWater()
 			DarwiniaDebugAssert(indexX < m_waveTableSizeX);
 			DarwiniaDebugAssert(indexZ + 1 < m_waveTableSizeZ);
 
-			// Update the height and calc brightness for FIRST vertex of the pair 
+			// Update the height and calc brightness for FIRST vertex of the pair
 			vertex1->m_pos.y = m_waveTableX[indexX] + m_waveTableZ[indexZ];
 			vertex1->m_pos.y *= m_waterDepths[j];
 			if(j>=2 && isIdentical(m_renderVerts[j-2].m_pos,m_renderVerts[j-1].m_pos,vertex1->m_pos))
@@ -661,13 +661,13 @@ void Water::UpdateDynamicWater()
 				m_renderVerts[j-2].m_pos.y = vertex1->m_pos.y;
 				m_renderVerts[j-1].m_pos.y = vertex1->m_pos.y;
 			}
-			float brightness = (prevHeight1 + prevHeight2 + vertex1->m_pos.y) * waveBrightnessScale; 
+			float brightness = (prevHeight1 + prevHeight2 + vertex1->m_pos.y) * waveBrightnessScale;
 			float shoreness = 1.0f - m_waterDepths[j];
-			brightness *= shoreness;	
+			brightness *= shoreness;
 			brightness += m_shoreNoise[j];
 			prevHeight1 = vertex1->m_pos.y;
 
-			// Update the height and calc brightness for SECOND vertex of the pair 
+			// Update the height and calc brightness for SECOND vertex of the pair
 			++j;
 			vertex2->m_pos.y = m_waveTableX[indexX] + m_waveTableZ[indexZ + 1];
 			vertex2->m_pos.y *= m_waterDepths[j];
@@ -713,7 +713,7 @@ void Water::UpdateDynamicWater()
 
 		if (m_vertexBuffer == NULL) {
 			HRESULT hr = OpenGLD3D::g_pd3dDevice->CreateVertexBuffer(
-				bufferSize, 
+				bufferSize,
 				D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY|(OpenGLD3D::g_supportsHwVertexProcessing?0:D3DUSAGE_SOFTWAREPROCESSING),
 				0,
 				D3DPOOL_DEFAULT,
@@ -780,7 +780,7 @@ void Water::RenderDynamicWater()
 #ifdef USE_DIRECT3D
 		OpenGLD3D::g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, strip->m_startRenderVertIndex, strip->m_numVerts-2);
 #else
-		glDrawArrays(GL_TRIANGLE_STRIP, 
+		glDrawArrays(GL_TRIANGLE_STRIP,
 					 strip->m_startRenderVertIndex,
 					 strip->m_numVerts);
 #endif
@@ -792,7 +792,7 @@ void Water::RenderDynamicWater()
 		g_waterReflectionEffect->Stop();
 	}
 #endif
-    
+
 #ifdef USE_DIRECT3D
 	OpenGLD3D::g_pd3dDevice->SetVertexDeclaration( savedDecl );
 #else
@@ -858,11 +858,11 @@ void Water::Render()
         else
         {
             START_PROFILE(g_app->m_profiler,  "Render Water" );
-    		RenderFlatWater();    
+    		RenderFlatWater();
             END_PROFILE(g_app->m_profiler,  "Render Water" );
         }
 	}
-    
+
     g_app->m_location->SetupFog();
     g_app->m_renderer->CheckOpenGLState();
 }
@@ -871,7 +871,7 @@ void Water::Advance()
 {
 	if( !g_app->m_editing && g_prefsManager->GetInt( "RenderWaterDetail" ) > 0
 #ifdef USE_DIRECT3D
-		&& OpenGLD3D::g_supportsHwVertexProcessing 
+		&& OpenGLD3D::g_supportsHwVertexProcessing
 #endif
 		)
 	{

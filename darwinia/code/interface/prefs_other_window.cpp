@@ -20,20 +20,20 @@ class ApplyOtherButton : public DarwiniaButton
     void MouseUp()
     {
         PrefsOtherWindow *parent = (PrefsOtherWindow *) m_parent;
-        
+
         g_prefsManager->SetInt( OTHER_HELPENABLED, parent->m_helpEnabled );
 
 		g_prefsManager->SetInt( OTHER_CONTROLHELPENABLED, parent->m_controlHelpEnabled );
-		
+
 		if (g_app->m_locationId == -1)
 		{
 			// Only set the difficulty from the top level
-			// Preferences value is 1-based, m_difficultyLevel is 0-based.			
+			// Preferences value is 1-based, m_difficultyLevel is 0-based.
 			g_prefsManager->SetInt( OTHER_DIFFICULTY, parent->m_difficulty + 1 );
 			g_app->m_difficultyLevel = parent->m_difficulty;
 		}
-		
-        if( parent->m_bootLoader == 0 ) 
+
+        if( parent->m_bootLoader == 0 )
         {
             g_prefsManager->SetString( OTHER_BOOTLOADER, "none" );
         }
@@ -66,12 +66,12 @@ class ApplyOtherButton : public DarwiniaButton
         {
             g_prefsManager->SetString( OTHER_LANGUAGE, desiredLanguage );
             g_app->SetLanguage( desiredLanguage, false );
-            
+
 	        removeWindows = true;
 
         }
 
-		g_prefsManager->SetInt( OTHER_AUTOMATICCAM, parent->m_automaticCamera );		
+		g_prefsManager->SetInt( OTHER_AUTOMATICCAM, parent->m_automaticCamera );
 
 		bool oldMode = g_app->m_largeMenus;
 		g_prefsManager->SetInt( OTHER_LARGEMENUS, parent->m_largeMenus );
@@ -96,7 +96,7 @@ class ApplyOtherButton : public DarwiniaButton
 		{
 			removeWindows = true;
 		}
-		
+
 		if( removeWindows )
 		{
 			LList<EclWindow *> *windows = EclGetWindows();
@@ -105,7 +105,7 @@ class ApplyOtherButton : public DarwiniaButton
                 EclRemoveWindow(w->m_name);
 	        }
 		}
-        
+
         g_prefsManager->Save();
     }
 };
@@ -116,7 +116,7 @@ PrefsOtherWindow::PrefsOtherWindow()
 {
     SetMenuSize( 468, 350 );
 
-    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2, 
+    SetPosition( g_app->m_renderer->ScreenW()/2 - m_w/2,
                  g_app->m_renderer->ScreenH()/2 - m_h/2 );
 
     m_helpEnabled = g_prefsManager->GetInt( OTHER_HELPENABLED, 1 );
@@ -133,13 +133,13 @@ PrefsOtherWindow::PrefsOtherWindow()
 		if( m_difficulty < 0 ) m_difficulty = 0;
 	}
 	else
-	{	
+	{
 		m_difficulty = g_app->m_difficultyLevel;
 	}
 
 	m_largeMenus = g_prefsManager->GetInt( OTHER_LARGEMENUS, 0 );
     m_automaticCamera = g_prefsManager->GetInt( OTHER_AUTOMATICCAM, 0 );
-	
+
     ListAvailableLanguages();
     m_language = -1;
     for( int i = 0; i < m_languages.Size(); ++i )
@@ -184,9 +184,9 @@ void PrefsOtherWindow::Create()
 	int buttonW = m_w/2 - border * 2;
 	int h = buttonH + border;
 	int fontSize = GetMenuSize(13);
-    
+
     InvertedBox *box = new InvertedBox();
-    box->SetShortProperties( "invert", 10, y += border, m_w - 20, h * 7 + border * 2 );        
+    box->SetShortProperties( "invert", 10, y += border, m_w - 20, h * 7 + border * 2 );
     RegisterButton( box );
 
     DropDownMenu *helpEnabled = new DropDownMenu();
@@ -237,22 +237,22 @@ void PrefsOtherWindow::Create()
     RegisterButton( language );
 	m_buttonOrder.PutData( language );
 
-#ifndef DEMOBUILD	
+#ifndef DEMOBUILD
 	DropDownMenu *difficulty = new DropDownMenu();
 	difficulty->SetShortProperties( LANGUAGEPHRASE("dialog_difficulty"), x, y+=h, buttonW, buttonH );
-    
-	for (int i = 0; i < 10; i++) {	
+
+	for (int i = 0; i < 10; i++) {
 		char option[32];
 		switch (i) {
 			case 0:
 				sprintf(option, "%d (%s)", i + 1, LANGUAGEPHRASE("dialog_standard_difficulty"));
 				break;
-				
+
 			case 9:
 				sprintf(option, "%d (%s)", i + 1, LANGUAGEPHRASE("dialog_hard_difficulty"));
 				break;
-				
-			default: 
+
+			default:
 				sprintf(option, "%d", i + 1);
 				break;
 		}
@@ -305,7 +305,7 @@ void PrefsOtherWindow::Create()
 	CloseButton *cancel = new CloseButton();
     cancel->SetShortProperties( LANGUAGEPHRASE("dialog_close"), border, y, buttonW, buttonH );
     cancel->m_fontSize = fontSize;
-    cancel->m_centered = true;    
+    cancel->m_centered = true;
     RegisterButton( cancel );
 	m_buttonOrder.PutData( cancel );
 
@@ -313,7 +313,7 @@ void PrefsOtherWindow::Create()
     apply->SetShortProperties( LANGUAGEPHRASE("dialog_apply"), m_w - buttonW - border, y, buttonW, buttonH );
     apply->m_fontSize = fontSize;
     apply->m_centered = true;
-    RegisterButton( apply );    
+    RegisterButton( apply );
 	m_buttonOrder.PutData( apply );
 }
 
@@ -321,7 +321,7 @@ void PrefsOtherWindow::Create()
 void PrefsOtherWindow::Render( bool _hasFocus )
 {
     DarwiniaWindow::Render( _hasFocus );
-        
+
 	int border = GetClientRectX1() + 10;
 	int size = GetMenuSize(13);
     int x = m_x + 20;
@@ -332,22 +332,22 @@ void PrefsOtherWindow::Render( bool _hasFocus )
 	g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_controlhelpsystem") );
     g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_bootloaders") );
     g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_language") );
-	
-#ifndef DEMOBUILD	
+
+#ifndef DEMOBUILD
 	if (g_app->m_locationId != -1)
-		glColor4f( 0.5f, 0.5f, 0.5f, 1.0f );		
-		
-    g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_difficulty") );	
+		glColor4f( 0.5f, 0.5f, 0.5f, 1.0f );
+
+    g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_difficulty") );
 #endif // DEMOBUILD
-	
-	glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );    
+
+	glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     if( Location::ChristmasModEnabled() )
     {
         g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_christmas") );
     }
 
-	g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_largemenus") );	
-    g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_autocam") );	
+	g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_largemenus") );
+    g_editorFont.DrawText2D( x, y+=h, size, LANGUAGEPHRASE("dialog_autocam") );
 
     g_editorFont.DrawText2DCentre( m_x+m_w/2.0f, m_y+m_h - GetMenuSize(50), GetMenuSize(15), DARWINIA_VERSION_STRING );
 }

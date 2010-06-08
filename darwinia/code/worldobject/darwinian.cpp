@@ -51,7 +51,7 @@ Darwinian::Darwinian()
     m_shadowBuildingId(-1),
     m_threatRange(DARWINIAN_SEARCHRANGE_THREATS),
     m_grenadeTimer(0.0f),
-    m_officerTimer(0.0f)	
+    m_officerTimer(0.0f)
 {
     SetType( TypeDarwinian );
     m_grenadeTimer = syncfrand( 5.0f );
@@ -61,7 +61,7 @@ Darwinian::Darwinian()
 void Darwinian::Begin()
 {
     Entity::Begin();
-    m_onGround = true;   
+    m_onGround = true;
     m_wayPoint = m_pos;
     m_centrePos.Set(0,2,0);
     m_radius = 4.0f;
@@ -82,7 +82,7 @@ void Darwinian::ChangeHealth( int _amount )
 
     if( !dead && m_dead )
     {
-        // We just died        
+        // We just died
     }
 }
 
@@ -92,24 +92,24 @@ bool Darwinian::SearchForNewTask()
 //
 //            switch( m_state )                   // Deliberate fall through here - check all states above our priority
 //            {
-//                case StateIdle:                 SearchForRandomPosition();                                                
-//                                                SearchForSpirits();                            
+//                case StateIdle:                 SearchForRandomPosition();
+//                                                SearchForSpirits();
 //                case StateWorshipSpirit:        SearchForOfficers();
 //                                                SearchForArmour();
 //                case StateApproachingArmour:
 //                case StateFollowingOrders:
 //                case StateFollowingOfficer:     SearchForPorts();
-//                case StateApproachingPort:      
-//                case StateOperatingPort:        
+//                case StateApproachingPort:
+//                case StateOperatingPort:
 //                case StateWatchingGodDish:
 //                case StateCombat:               SearchForThreats();
-//                //case StateUnderControl:       
+//                //case StateUnderControl:
 //                //case StateCapturedByAnt:
-//                //case StateInsideArmour    
+//                //case StateInsideArmour
 //            }
 
     bool newTargetFound = false;
-    
+
     switch( m_state )
     {
         case StateIdle:
@@ -128,7 +128,7 @@ bool Darwinian::SearchForNewTask()
             if( !newTargetFound )       newTargetFound = SearchForArmour();
             if( !newTargetFound )       newTargetFound = SearchForOfficers();
             break;
-            
+
         case StateApproachingArmour:
         case StateFollowingOrders:
         case StateFollowingOfficer:
@@ -159,9 +159,9 @@ bool Darwinian::Advance( Unit *_unit )
     {
         return true;
     }
-    
+
     bool amIDead = Entity::Advance( _unit );
-    
+
     if( !amIDead && !m_dead && m_onGround && m_inWater == -1.0f )
     {
         //
@@ -208,24 +208,24 @@ bool Darwinian::Advance( Unit *_unit )
         boxKite->Release();
         m_boxKiteId.SetInvalid();
     }
-    
 
-    if( !m_onGround ) AdvanceInAir( _unit );       
+
+    if( !m_onGround ) AdvanceInAir( _unit );
 
     if( m_state == StateOnFire && !amIDead && !m_dead )
     {
         amIDead = AdvanceOnFire();
     }
 
-    if( m_pos.y < 0.0f && 
-        m_inWater == -1.0f && 
+    if( m_pos.y < 0.0f &&
+        m_inWater == -1.0f &&
         m_state != StateInsideArmour ) m_inWater = syncfrand(3.0f);
 
     if( m_dead && m_onGround )
     {
         m_vel *= 0.9f;
         m_pos += m_vel * SERVER_ADVANCE_PERIOD;
-    }	
+    }
 
     return amIDead;
 }
@@ -237,7 +237,7 @@ bool Darwinian::AdvanceIdle()
     {
         AdvanceToTargetPosition();
     }
-    
+
     return false;
 }
 
@@ -245,7 +245,7 @@ bool Darwinian::AdvanceIdle()
 bool Darwinian::AdvanceWatchingSpectacle()
 {
     Building *building = g_app->m_location->GetBuilding( m_buildingId );
-    if( !building || 
+    if( !building ||
         (building->m_type != Building::TypeGodDish &&
          building->m_type != Building::TypeEscapeRocket) )
     {
@@ -256,7 +256,7 @@ bool Darwinian::AdvanceWatchingSpectacle()
 
     //
     // Face the spectacle
-    
+
     float amountToTurn = SERVER_ADVANCE_PERIOD * 4.0f;
     Vector3 targetPos = building->m_centrePos;
     targetPos += Vector3( sinf(g_gameTime) * 30.0f,
@@ -280,8 +280,8 @@ bool Darwinian::AdvanceWatchingSpectacle()
         m_front = targetDir;
         m_vel.Zero();
     }
-    
-     
+
+
     //
     // Is it an escape rocket?
 
@@ -293,7 +293,7 @@ bool Darwinian::AdvanceWatchingSpectacle()
             m_state = StateIdle;
             return false;
         }
-        
+
         float distance = ( building->m_pos - m_pos ).Mag();
         if( distance < 200.0f )
         {
@@ -309,7 +309,7 @@ bool Darwinian::AdvanceWatchingSpectacle()
             m_vel.Zero();
         }
     }
-    
+
     return false;
 }
 
@@ -357,7 +357,7 @@ bool Darwinian::AdvanceApproachingArmour()
 
     m_wayPoint = exitPos;
     m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
-    
+
     bool arrived = AdvanceToTargetPosition();
     if( arrived || distance < 20.0f )
     {
@@ -392,8 +392,8 @@ bool Darwinian::AdvanceInsideArmour()
 
         return false;
     }
-    
-    
+
+
     m_pos = armour->m_pos;
     m_vel = armour->m_vel;
     m_inWater = -1.0f;
@@ -441,7 +441,7 @@ bool Darwinian::AdvanceCapturedByAnt()
 
     m_pos = carryPos;
     m_vel = carryVel;
-            
+
     return false;
 }
 
@@ -452,11 +452,11 @@ bool Darwinian::AdvanceCombat()
 
     //
     // Does our threat still exist?
-    
-    WorldObject *threat = g_app->m_location->GetWorldObject( m_threatId );    
+
+    WorldObject *threat = g_app->m_location->GetWorldObject( m_threatId );
     bool isEntity = threat && threat->m_id.GetUnitId() != UNIT_EFFECTS;
     Entity *entity = ( isEntity ? (Entity *)threat : NULL );
-    
+
     if( !threat || ( entity && entity->m_dead) )
     {
         m_state = StateIdle;
@@ -490,43 +490,43 @@ bool Darwinian::AdvanceCombat()
 
     bool soldier = m_id.GetTeamId() == 1 ||
                     g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 2;
-    
+
     if( soldier && !m_scared )
     {
-//        bool arrived = AdvanceToTargetPosition();    
+//        bool arrived = AdvanceToTargetPosition();
 //        if( arrived )
 //        {
 /*
             Vector3 targetVector = ( threat->m_pos - m_pos );
             float angle = syncsfrand( M_PI * 0.5f );
-            targetVector.RotateAroundY( angle );    
+            targetVector.RotateAroundY( angle );
             float distance = targetVector.Mag();
-            float ourDesiredRange = 20.0f + syncfrand(20.0f);                
+            float ourDesiredRange = 20.0f + syncfrand(20.0f);
             targetVector.SetLength( distance - ourDesiredRange );
             m_wayPoint = m_pos + targetVector;
             m_wayPoint = PushFromObstructions( m_wayPoint );
-            m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+            m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
 */
         float distance = ( m_pos - threat->m_pos ).Mag();
         if( distance < DARWINIAN_FEARRANGE/2.0f )
         {
             Vector3 moveAwayVector = ( m_pos - threat->m_pos ).Normalise() * 30.0f;
             float angle = syncsfrand( M_PI * 0.5f );
-            moveAwayVector.RotateAroundY( angle );    
+            moveAwayVector.RotateAroundY( angle );
             m_wayPoint = m_pos + moveAwayVector;
         }
         else
         {
             Vector3 targetVector = ( threat->m_pos - m_pos );
             float angle = syncsfrand( M_PI * 0.5f );
-            targetVector.RotateAroundY( angle );    
+            targetVector.RotateAroundY( angle );
             float distance = targetVector.Mag();
-            float ourDesiredRange = 20.0f + syncfrand(20.0f);                
+            float ourDesiredRange = 20.0f + syncfrand(20.0f);
             targetVector.SetLength( distance - ourDesiredRange );
             m_wayPoint = m_pos + targetVector;
         }
         m_wayPoint = PushFromObstructions( m_wayPoint );
-        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );                        
+        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
         AdvanceToTargetPosition();
     }
     else
@@ -540,11 +540,11 @@ bool Darwinian::AdvanceCombat()
 
         Vector3 moveAwayVector = ( m_pos - threat->m_pos ).Normalise() * 30.0f;
         float angle = syncsfrand( M_PI * 0.5f );
-        moveAwayVector.RotateAroundY( angle );    
+        moveAwayVector.RotateAroundY( angle );
         m_wayPoint = m_pos + moveAwayVector;
         m_wayPoint = PushFromObstructions( m_wayPoint );
-        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
-        AdvanceToTargetPosition();    
+        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
+        AdvanceToTargetPosition();
     }
 
 
@@ -557,7 +557,7 @@ bool Darwinian::AdvanceCombat()
         {
             Attack( threat->m_pos + Vector3(0,2,0) );
         }
-    
+
 
         //
         // Throw grenades if we have a good opportunity
@@ -575,7 +575,7 @@ bool Darwinian::AdvanceCombat()
             if( m_grenadeTimer <= 0.0f )
             {
                 m_grenadeTimer = 12.0f+syncfrand(8.0f);
-                float distanceToTarget = ( threat->m_pos - m_pos ).Mag();                
+                float distanceToTarget = ( threat->m_pos - m_pos ).Mag();
                 if( distanceToTarget > 75.0f )
                 {
                     bool includeTeams[] = { false, false, true, false, false, false, false, false };
@@ -585,10 +585,10 @@ bool Darwinian::AdvanceCombat()
                         bool throwGrenade = false;
                         Vector3 ourLandNormal = g_app->m_location->m_landscape.m_normalMap->GetValue( m_pos.x, m_pos.z );
                         Vector3 targetLandNormal = g_app->m_location->m_landscape.m_normalMap->GetValue(threat->m_pos.x, threat->m_pos.z);
-                        
+
                         if( ourLandNormal.y > 0.7f && targetLandNormal.y > 0.7f )
                         {
-                            bool grenadeRequired =  entity->m_type == TypeSporeGenerator ||                                            
+                            bool grenadeRequired =  entity->m_type == TypeSporeGenerator ||
                                                     entity->m_type == TypeSpider ||
                                                     entity->m_type == TypeTriffidEgg ||
                                                     entity->m_type == TypeInsertionSquadie ||
@@ -603,13 +603,13 @@ bool Darwinian::AdvanceCombat()
                             {
                                 int numFriends = g_app->m_location->m_entityGrid->GetNumFriends( threat->m_pos.x, threat->m_pos.z, 50.0f, m_id.GetTeamId() );
                                 int numEnemies = g_app->m_location->m_entityGrid->GetNumEnemies( threat->m_pos.x, threat->m_pos.z, 50.0f, m_id.GetTeamId() );
-                                if( numEnemies > 5 && numFriends < 2 ) throwGrenade = true;                            
+                                if( numEnemies > 5 && numFriends < 2 ) throwGrenade = true;
                             }
                         }
 
                         if( throwGrenade )
                         {
-                            g_app->m_location->ThrowWeapon( m_pos, threat->m_pos, EffectThrowableGrenade, m_id.GetTeamId() );                                                               
+                            g_app->m_location->ThrowWeapon( m_pos, threat->m_pos, EffectThrowableGrenade, m_id.GetTeamId() );
                         }
                     }
                 }
@@ -619,14 +619,14 @@ bool Darwinian::AdvanceCombat()
     }
 
     END_PROFILE( g_app->m_profiler, "AdvanceCombat" );
-    return false;    
+    return false;
 }
 
 
 bool Darwinian::AdvanceWorshipSpirit()
 {
     START_PROFILE( g_app->m_profiler, "AdvanceWorship" );
-    
+
     //
     // Check our spirit is still there and valid
 
@@ -651,7 +651,7 @@ bool Darwinian::AdvanceWorshipSpirit()
             boxKite->Release();
             m_boxKiteId.SetInvalid();
         }
- 
+
         END_PROFILE( g_app->m_profiler, "AdvanceWorship" );
         return false;
     }
@@ -665,8 +665,8 @@ bool Darwinian::AdvanceWorshipSpirit()
     float ourDesiredRange = 20 + (m_id.GetUniqueId() % 20);
     targetVector.SetLength( distance - ourDesiredRange );
     Vector3 newWaypoint = m_pos + targetVector;
-    newWaypoint = PushFromObstructions( newWaypoint );    
-    newWaypoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( newWaypoint.x, newWaypoint.z );    
+    newWaypoint = PushFromObstructions( newWaypoint );
+    newWaypoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( newWaypoint.x, newWaypoint.z );
     if( (newWaypoint - m_wayPoint).Mag() > 10.0f )
     {
         m_wayPoint = newWaypoint;
@@ -726,16 +726,16 @@ bool Darwinian::AdvanceApproachingPort()
 {
     //
     // Check the port is still available
-    
+
     Building *building = g_app->m_location->GetBuilding( m_buildingId );
-    if( !building ) 
+    if( !building )
     {
         m_state = StateIdle;
         return false;
-    }        
+    }
 
     WorldObjectId occupant = building->GetPortOccupant(m_portId);
-    bool otherOccupantFound = occupant.IsValid() &&          
+    bool otherOccupantFound = occupant.IsValid() &&
                             !(building->GetPortOccupant(m_portId) == m_id);
     if( otherOccupantFound )
     {
@@ -767,11 +767,11 @@ bool Darwinian::AdvanceOperatingPort()
     //
     // Check the port is still available
     Building *building = g_app->m_location->GetBuilding( m_buildingId );
-    if( !building ) 
+    if( !building )
     {
         m_state = StateIdle;
         return false;
-    }        
+    }
 
 
     if( building->GetPortOccupant(m_portId) != m_id )
@@ -791,7 +791,7 @@ bool Darwinian::AdvanceUnderControl()
 
     Task *task = g_app->m_taskManager->GetTask( m_controllerId );
     Unit *controller = NULL;
-    if( task ) controller = g_app->m_location->GetUnit( task->m_objId );    
+    if( task ) controller = g_app->m_location->GetUnit( task->m_objId );
 
     if( !task || !controller )
     {
@@ -801,7 +801,7 @@ bool Darwinian::AdvanceUnderControl()
         {
             Vector3 vel( sfrand(5.0f), frand(15.0f), sfrand(5.0f) );
             g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeControlFlash );
-        }        
+        }
         g_app->m_soundSystem->StopAllSounds( m_id, "Darwinian TakenControl" );
         g_app->m_soundSystem->TriggerEntityEvent( this, "EscapedControl" );
         return false;
@@ -841,7 +841,7 @@ bool Darwinian::AdvanceUnderControl()
             WayPoint *wp = task->m_route->GetWayPoint( m_wayPointId+1 );
             if( wp )
             {
-                // 
+                //
                 // Our next waypoint is available
                 // So head there immediately
                 ++m_wayPointId;
@@ -861,7 +861,7 @@ bool Darwinian::AdvanceUnderControl()
 
         //
         // Add some randomness to our waypoint
-        
+
 	    float radius = syncfrand(positionError);
 	    float theta = syncfrand(M_PI * 2);
     	m_wayPoint.x += radius * sinf(theta);
@@ -888,7 +888,7 @@ bool Darwinian::AdvanceFollowingOrders ()
             arrived = true;
         }
     }
-    
+
     if( arrived )
     {
         if( m_ordersBuildingId != -1 )
@@ -919,10 +919,10 @@ bool Darwinian::AdvanceFollowingOrders ()
             else
             {
                 m_ordersBuildingId = -1;
-            }            
+            }
         }
         else
-        {            
+        {
             m_state = StateIdle;
             m_retargetTimer = 0.0f;
             m_ordersBuildingId = -1;
@@ -965,7 +965,7 @@ bool Darwinian::AdvanceFollowingOfficer()
             {
                 m_ordersBuildingId = officer->m_ordersBuildingId;
                 Building *building = g_app->m_location->GetBuilding( m_ordersBuildingId );
-                DarwiniaDebugAssert( building );        
+                DarwiniaDebugAssert( building );
                 Teleport *teleport = (Teleport *) building;
                 if( !teleport->Connected() )
                 {
@@ -980,7 +980,7 @@ bool Darwinian::AdvanceFollowingOfficer()
                     teleport->GetEntrance( entrancePos, entranceFront );
 	                m_wayPoint = entrancePos;
                     m_wayPoint = PushFromObstructions( m_wayPoint );
-                    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );            
+                    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
                 }
             }
             else
@@ -997,11 +997,11 @@ bool Darwinian::AdvanceFollowingOfficer()
             float radius = syncfrand(positionError);
 	        float theta = syncfrand(M_PI * 2);
             m_wayPoint.x += radius * sinf(theta);
-	        m_wayPoint.z += radius * cosf(theta);            
+	        m_wayPoint.z += radius * cosf(theta);
             m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
         }
     }
-    
+
 
     //
     // Head straight for him
@@ -1010,14 +1010,14 @@ bool Darwinian::AdvanceFollowingOfficer()
 
     if( m_ordersBuildingId != -1 )
     {
-        bool teleported = ( EnterTeleports(m_ordersBuildingId) != -1 ); 
+        bool teleported = ( EnterTeleports(m_ordersBuildingId) != -1 );
         if( teleported )
         {
             m_ordersBuildingId = -1;
             arrived = true;
         }
     }
-    
+
     if( arrived )
     {
         float positionError = 0.0f;
@@ -1042,14 +1042,14 @@ bool Darwinian::AdvanceFollowingOfficer()
         }
         else
         {
-            m_wayPoint = officer->m_pos;            
+            m_wayPoint = officer->m_pos;
             positionError = 40.0f;
         }
 
         float radius = syncfrand(positionError);
 	    float theta = syncfrand(M_PI * 2);
         m_wayPoint.x += radius * sinf(theta);
-	    m_wayPoint.z += radius * cosf(theta);   
+	    m_wayPoint.z += radius * cosf(theta);
         m_wayPoint = PushFromObstructions( m_wayPoint );
         m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
     }
@@ -1061,7 +1061,7 @@ bool Darwinian::AdvanceFollowingOfficer()
 void Darwinian::BoardRocket( int _buildingId )
 {
     m_state = StateBoardingRocket;
-    m_buildingId = _buildingId;    
+    m_buildingId = _buildingId;
 }
 
 
@@ -1123,7 +1123,7 @@ bool Darwinian::AdvanceAttackingBuilding()
         m_state = StateIdle;
         return false;
     }
-    
+
 
     //
     // Run towards our building
@@ -1142,7 +1142,7 @@ bool Darwinian::AdvanceAttackingBuilding()
     {
         Vector3 targetPos = building->m_pos;
         targetPos.y += 50.0f;
-        g_app->m_location->ThrowWeapon( m_pos, targetPos, WorldObject::EffectThrowableGrenade, 1 );        
+        g_app->m_location->ThrowWeapon( m_pos, targetPos, WorldObject::EffectThrowableGrenade, 1 );
         m_state = StateIdle;
     }
 
@@ -1156,7 +1156,7 @@ bool Darwinian::SearchForRandomPosition()
 
     //
     // Search for a new random position
-    // Sometimes just don't bother, so we stand still, 
+    // Sometimes just don't bother, so we stand still,
     // pondering the meaning of the world
 
     if( syncfrand() < 0.7f )
@@ -1168,10 +1168,10 @@ bool Darwinian::SearchForRandomPosition()
                                        0.0f,
                                        cosf(angle) * distance );
 
-        m_wayPoint = PushFromObstructions( m_wayPoint );    
-        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+        m_wayPoint = PushFromObstructions( m_wayPoint );
+        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
     }
-    
+
     END_PROFILE( g_app->m_profiler, "SearchRandomPos" );
 
     return true;
@@ -1202,7 +1202,7 @@ bool Darwinian::SearchForArmour()
             WorldObjectId id = *team->m_specials.GetPointer(i);
             Entity *entity = g_app->m_location->GetEntity( id );
             if( entity && !entity->m_dead && entity->m_type == Entity::TypeArmour )
-            {            
+            {
                 Armour *armour = (Armour *) entity;
                 float range = ( armour->m_pos - m_pos ).Mag();
                 if( range <= DARWINIAN_SEARCHRANGE_ARMOUR &&
@@ -1219,7 +1219,7 @@ bool Darwinian::SearchForArmour()
 
     if( m_armour.Size() > 0 )
     {
-        int chosenIndex = rand() % m_armour.Size();        
+        int chosenIndex = rand() % m_armour.Size();
         m_armourId = *m_armour.GetPointer(chosenIndex);
         m_state = StateApproachingArmour;
     }
@@ -1236,7 +1236,7 @@ bool Darwinian::SearchForOfficers()
 
     if( m_id.GetTeamId() == 1 ) return false;
 
-    
+
     START_PROFILE( g_app->m_profiler, "SearchOfficers" );
 
     //
@@ -1264,7 +1264,7 @@ bool Darwinian::SearchForOfficers()
     // Also find the nearest officer with FOLLOW orders set
 
     Team *team = g_app->m_location->GetMyTeam();
-    
+
     if( team )
     {
         LList<WorldObjectId> officers;
@@ -1275,8 +1275,8 @@ bool Darwinian::SearchForOfficers()
         {
             WorldObjectId id = *team->m_specials.GetPointer(i);
             Entity *entity = g_app->m_location->GetEntity( id );
-            if( entity && 
-               !entity->m_dead && 
+            if( entity &&
+               !entity->m_dead &&
                 entity->m_type == Entity::TypeOfficer )
             {
                 Officer *officer = (Officer *) entity;
@@ -1293,7 +1293,7 @@ bool Darwinian::SearchForOfficers()
                     nearestId = id;
                 }
             }
-        }    
+        }
 
 
         //
@@ -1305,7 +1305,7 @@ bool Darwinian::SearchForOfficers()
             WorldObjectId officerId = *officers.GetPointer(chosenOfficer);
             Officer *officer = (Officer *) g_app->m_location->GetEntitySafe(officerId, TypeOfficer);
             DarwiniaDebugAssert( officer );
-        
+
             if( g_app->m_location->IsWalkable( m_pos, officer->m_orderPosition ) )
             {
                 m_orders = officer->m_orderPosition;
@@ -1336,7 +1336,7 @@ bool Darwinian::SearchForOfficers()
         // with the FOLLOW order set and head for them
 
         if( officers.Size() == 0 && nearestId.IsValid() )
-        {            
+        {
             m_officerId = nearestId;
             Officer *officer = (Officer *) g_app->m_location->GetEntitySafe( m_officerId, TypeOfficer );
             if( g_app->m_location->IsWalkable( m_pos, officer->m_pos, true ) )
@@ -1347,9 +1347,9 @@ bool Darwinian::SearchForOfficers()
                 float radius = syncfrand(positionError);
 	            float theta = syncfrand(M_PI * 2);
                 m_wayPoint.x += radius * sinf(theta);
-	            m_wayPoint.z += radius * cosf(theta);            
+	            m_wayPoint.z += radius * cosf(theta);
                 m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
-            
+
                 m_state = StateFollowingOfficer;
                 m_officerTimer = 5.0f;
                 END_PROFILE( g_app->m_profiler, "SearchOfficers" );
@@ -1370,7 +1370,7 @@ void Darwinian::GiveOrders( Vector3 const &_targetPos )
     m_ordersSet = true;
 
     //
-    // If there is a teleport nearby, 
+    // If there is a teleport nearby,
     // assume he wants us to go in it
 
     bool foundTeleport = false;
@@ -1383,7 +1383,7 @@ void Darwinian::GiveOrders( Vector3 const &_targetPos )
         if( building->m_type == Building::TypeRadarDish ||
             building->m_type == Building::TypeBridge )
         {
-            float distance = ( building->m_pos - m_orders ).Mag();                    
+            float distance = ( building->m_pos - m_orders ).Mag();
             if( distance < 5 )
             {
                 Teleport *teleport = (Teleport *) building;
@@ -1407,11 +1407,11 @@ void Darwinian::GiveOrders( Vector3 const &_targetPos )
         m_wayPoint.x += radius * sinf(theta);
 	    m_wayPoint.z += radius * cosf(theta);
     }
-    
+
     m_wayPoint = PushFromObstructions( m_wayPoint );
     m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
     m_wayPoint = PushFromObstructions( m_wayPoint );
-    
+
     g_app->m_soundSystem->TriggerEntityEvent( this, "GivenOrders" );
 
     m_state = StateFollowingOrders;
@@ -1438,23 +1438,23 @@ bool Darwinian::SearchForSpirits()
                 Spirit *s = g_app->m_location->m_spirits.GetPointer(i);
                 float theDist = ( s->m_pos - m_pos ).Mag();
 
-                if( theDist < closest &&                
+                if( theDist < closest &&
                     ( s->m_state == Spirit::StateBirth ||
                       s->m_state == Spirit::StateFloating ) )
-                {                
+                {
                     found = s;
                     spiritId = i;
                     closest = theDist;
                 }
             }
-        }            
+        }
     }
 
     if( found )
     {
-        m_spiritId = spiritId;        
+        m_spiritId = spiritId;
         m_state = StateWorshipSpirit;
-    }    
+    }
 
     END_PROFILE( g_app->m_profiler, "SearchSpirits" );
     return found;
@@ -1472,9 +1472,9 @@ bool Darwinian::SearchForThreats()
     m_threatRange = ( DARWINIAN_SEARCHRANGE_THREATS * threatRangeChange ) +
                     ( m_threatRange * (1.0f - threatRangeChange) );
 
-    
+
     //
-    // If we are running towards a Battle Cannon, this takes 
+    // If we are running towards a Battle Cannon, this takes
     // priority over everything else
 
     if( m_state == StateApproachingPort )
@@ -1522,7 +1522,7 @@ bool Darwinian::SearchForThreats()
 
     //
     // If we found a grenade, run away immediately
-    
+
     if( throwableWeaponFound )
     {
         m_state = StateCombat;
@@ -1532,7 +1532,7 @@ bool Darwinian::SearchForThreats()
             g_app->m_soundSystem->TriggerEntityEvent( this, "SeenThreatRunAway" );
             m_threatId = threatId;
         }
-        END_PROFILE( g_app->m_profiler, "SearchThreats" );       
+        END_PROFILE( g_app->m_profiler, "SearchThreats" );
         return true;
     }
 
@@ -1569,7 +1569,7 @@ bool Darwinian::SearchForThreats()
 
     int numFound = 0;
     float searchRange = m_threatRange;
-    if( m_state == StateOperatingPort ) 
+    if( m_state == StateOperatingPort )
     {
         searchRange *= 0.5f;
         Building *building = g_app->m_location->GetBuilding(m_buildingId);
@@ -1578,7 +1578,7 @@ bool Darwinian::SearchForThreats()
             searchRange = 0.0f;
         }
     }
-    
+
     WorldObjectId *ids = g_app->m_location->m_entityGrid->GetEnemies( m_pos.x, m_pos.z, searchRange, &numFound, m_id.GetTeamId() );
     bool friendsPresent = g_app->m_location->m_entityGrid->AreFriendsPresent( m_pos.x, m_pos.z, searchRange, m_id.GetTeamId() );
 
@@ -1590,7 +1590,7 @@ bool Darwinian::SearchForThreats()
 
         if( !entity->m_dead && !onFire && entity->m_type != TypeEgg )
         {
-            ++numEnemies;       
+            ++numEnemies;
 
             float distanceSqd = ( entity->m_pos - m_pos ).MagSquared();
             if( distanceSqd < nearestThreatSqd )
@@ -1600,8 +1600,8 @@ bool Darwinian::SearchForThreats()
             }
         }
     }
-        
-    
+
+
     //
     // Decide what to do with our threat
 
@@ -1612,10 +1612,10 @@ bool Darwinian::SearchForThreats()
         m_state = StateCombat;
         bool soldier = m_id.GetTeamId() == 1 ||
                         g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 2;
-        
+
         if( !soldier ) m_scared = true;
         if( soldier )
-        {            
+        {
             m_scared = numEnemies > 5 && !friendsPresent;
         }
 
@@ -1632,7 +1632,7 @@ bool Darwinian::SearchForThreats()
 
         if( m_threatId != threatId )
         {
-            if( m_scared ) 
+            if( m_scared )
             {
                 g_app->m_soundSystem->TriggerEntityEvent( this, "SeenThreatRunAway" );
             }
@@ -1658,7 +1658,7 @@ bool Darwinian::SearchForThreats()
         // There are no nearby threats
         m_threatId.SetInvalid();
         g_app->m_soundSystem->StopAllSounds( m_id, "Darwinian SeenThreat" );
-        
+
         END_PROFILE( g_app->m_profiler, "SearchThreats" );
         return false;
     }
@@ -1696,7 +1696,7 @@ bool Darwinian::SearchForPorts()
         END_PROFILE( g_app->m_profiler, "SearchPorts" );
         return false;
     }
-    
+
 
     //
     // Select a random building
@@ -1714,7 +1714,7 @@ bool Darwinian::SearchForPorts()
     {
         if( !chosenBuilding->GetPortOccupant(p).IsValid() &&
             chosenBuilding->GetPortOperatorCount(p,m_id.GetTeamId()) < 20 )
-        {	
+        {
             availablePorts.PutData(p);
         }
     }
@@ -1728,15 +1728,15 @@ bool Darwinian::SearchForPorts()
         END_PROFILE( g_app->m_profiler, "SearchPorts" );
         return false;
     }
-        
+
     int randomSelection = syncrand() % availablePorts.Size();
     m_buildingId = chosenBuilding->m_id.GetUniqueId();
     m_portId = availablePorts[ randomSelection ];
     m_state = StateApproachingPort;
     Vector3 portPos, portFront;
-    chosenBuilding->GetPortPosition( m_portId, portPos, portFront );    
+    chosenBuilding->GetPortPosition( m_portId, portPos, portFront );
     m_wayPoint = portPos;
-    //m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+    //m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
 
     END_PROFILE( g_app->m_profiler, "SearchPorts" );
     return true;
@@ -1758,9 +1758,9 @@ bool Darwinian::BeginVictoryDance()
 			    victory = false;
                 break;
 		    }
-	    }    
+	    }
 
-    
+
         if( victory )
         {
             // jump!
@@ -1783,7 +1783,7 @@ bool Darwinian::AdvanceToTargetPosition()
 
     //
     // Are we there yet?
-    
+
     Vector3 vectorRemaining = m_wayPoint - m_pos;
     vectorRemaining.y = 0;
     float distance = vectorRemaining.Mag();
@@ -1795,7 +1795,7 @@ bool Darwinian::AdvanceToTargetPosition()
     }
     else if (distance < 1.0f)
     {
-        m_pos = m_wayPoint;        
+        m_pos = m_wayPoint;
         m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
         END_PROFILE( g_app->m_profiler, "AdvanceToTargetPos" );
         return false;
@@ -1806,7 +1806,7 @@ bool Darwinian::AdvanceToTargetPosition()
     // Work out where we want to be next
 
     float speed = m_stats[StatSpeed];
-    if( m_state == StateIdle || 
+    if( m_state == StateIdle ||
         m_state == StateWorshipSpirit ) speed *= 0.2f;
 
     float amountToTurn = SERVER_ADVANCE_PERIOD * 4.0f;
@@ -1845,19 +1845,19 @@ bool Darwinian::AdvanceToTargetPosition()
     Vector3 moved = newPos - oldPos;
     if( moved.Mag() > speed * SERVER_ADVANCE_PERIOD ) moved.SetLength( speed * SERVER_ADVANCE_PERIOD );
     newPos = m_pos + moved;
-    
-    m_pos = newPos;       
+
+    m_pos = newPos;
     m_vel = ( m_pos - oldPos ) / SERVER_ADVANCE_PERIOD;
-    m_front = ( newPos - oldPos ).Normalise();    
+    m_front = ( newPos - oldPos ).Normalise();
 
     END_PROFILE( g_app->m_profiler, "AdvanceToTargetPos" );
-    return false;    
+    return false;
 }
 
 
 Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
 {
-    Vector3 result = pos;    
+    Vector3 result = pos;
     if( m_onGround )
     {
         result.y = g_app->m_location->m_landscape.m_heightMap->GetValue( result.x, result.z );
@@ -1870,7 +1870,7 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
 
 
     if( result.y <= 1.0f )
-    {        
+    {
         START_PROFILE( g_app->m_profiler, "PushFromWater" );
 
         float pushAngle = syncsfrand(1.0f);
@@ -1893,7 +1893,7 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
 
         END_PROFILE( g_app->m_profiler, "PushFromWater" );
     }
-    
+
 
     //
     // Push from buildings
@@ -1907,7 +1907,7 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
         int buildingId = buildings->GetData(b);
         Building *building = g_app->m_location->GetBuilding( buildingId );
         if( building )
-        {        
+        {
             if( building->m_type == Building::TypeLaserFence &&
 				((LaserFence *) building)->IsEnabled() )
             {
@@ -1920,7 +1920,7 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
                 }
                 else if( building->DoesSphereHit( result, closest ) )
                 {
-                    LaserFence *nextFence = (LaserFence *) g_app->m_location->GetBuilding( ((LaserFence *)building)->GetBuildingLink() );                    
+                    LaserFence *nextFence = (LaserFence *) g_app->m_location->GetBuilding( ((LaserFence *)building)->GetBuildingLink() );
                     Vector3 pushForce = (building->m_centrePos - result).SetLength(1.0f);
                     if( nextFence )
                     {
@@ -1937,13 +1937,13 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
                 }
             }
             else
-            {               
+            {
                 if( building->DoesSphereHit( result, 30.0f ) )
                 {
                     Vector3 pushForce = (building->m_pos - result).SetLength(2.0f);
                     while( building->DoesSphereHit( result, 1.0f ) )
                     {
-                        result -= pushForce;                
+                        result -= pushForce;
                         //result.y = g_app->m_location->m_landscape.m_heightMap->GetValue( result.x, result.z );
                     }
                 }
@@ -1955,9 +1955,9 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
     END_PROFILE( g_app->m_profiler, "PushFromBuildings" );
 
     //
-    // If we already have some avoidance rules, 
+    // If we already have some avoidance rules,
     // follow them above all else
-    
+
     if( m_avoidObstruction != g_zeroVector )
     {
         float distance = ( m_avoidObstruction - pos ).Mag();
@@ -1968,7 +1968,7 @@ Vector3 Darwinian::PushFromObstructions( Vector3 const &pos, bool killem )
         else
         {
             return m_avoidObstruction;
-        }   
+        }
     }
 
     return result;
@@ -1985,10 +1985,10 @@ void Darwinian::TakeControl( int _controllerId )
         m_wayPoint = controller->m_route->GetWayPoint( m_wayPointId )->GetPos();
         m_wayPoint += Vector3( syncsfrand(30.0f), 0.0f, syncsfrand(30.0f) );
         m_wayPoint = PushFromObstructions( m_wayPoint );
-        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
         m_state = StateUnderControl;
         m_ordersSet = false;
-        
+
         int numFlashes = 5 + darwiniaRandom() % 5;
         for( int i = 0; i < numFlashes; ++i )
         {
@@ -2018,7 +2018,7 @@ bool Darwinian::AdvanceOnFire()
 {
     m_wayPoint = m_pos;
     m_wayPoint += Vector3( syncsfrand(100.0f), 0.0f, syncsfrand(100.0f) );
-    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );    
+    m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
 
     if( m_onGround ) AdvanceToTargetPosition();
 
@@ -2040,19 +2040,19 @@ bool Darwinian::AdvanceOnFire()
     }
 
     if( !m_dead && syncfrand(10) < 2 && m_onGround) ChangeHealth(-2);
-    
+
     if( m_inWater > 0.0f )
     {
-        m_state = StateIdle;        
+        m_state = StateIdle;
     }
-    
+
     return false;
 }
 
 
 void Darwinian::SetFire()
 {
-    m_state = StateOnFire;    
+    m_state = StateOnFire;
 }
 
 
@@ -2073,7 +2073,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
 
     RGBAColour colour;
     if( m_id.GetTeamId() >= 0 ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
-    
+
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;;
     Vector3 entityUp = g_upVector;
 
@@ -2097,9 +2097,9 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             entityUp.RotateAround( m_front * sinf(g_gameTime) * 0.3f );
         }
     }
-    
+
     if( !m_onGround ) entityUp.RotateAround( m_front * g_gameTime * (m_id.GetUniqueId() % 10) * 0.1f );
-    
+
     Vector3 entityRight(m_front ^ entityUp);
 
     if( m_state == StateCapturedByAnt )
@@ -2111,12 +2111,12 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         predictedPos += Vector3( 0, 4, 0 );
     }
 
-    float size = 3.0f;  
+    float size = 3.0f;
     size *= (1.0f + 0.03f * (( m_id.GetIndex() * m_id.GetUniqueId() ) % 10));
     entityRight *= size;
     entityUp *= size * 2.0f;
 
-            
+
 /*
     #ifdef DEBUG_RENDER_ENABLED
         glDisable( GL_TEXTURE_2D );
@@ -2137,13 +2137,13 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
     //    {
     //        RenderArrow( predictedPos, m_grenadeTarget, 1.0f, RGBAColour(255,0,0,255) );
     //        RenderSphere( m_grenadeTarget, 50.0f, RGBAColour(255,0,0,255) );
-    //    }    
+    //    }
           glEnable( GL_TEXTURE_2D );
           glEnable( GL_BLEND );
     #endif*/
 
 
-        
+
     //
     // Draw our shadow on the landscape
 
@@ -2152,7 +2152,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         int alpha = 150 * _highDetail;
         alpha = min( alpha, 255 );
         glColor4ub( 0, 0, 0, alpha  );
-        
+
         Vector3 pos1 = predictedPos - entityRight;
         Vector3 pos2 = predictedPos + entityRight;
         Vector3 pos4 = pos1 + Vector3( 0.0f, 0.0f, size * 2.0f );
@@ -2185,7 +2185,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         if( health > 1.0f ) health = 1.0f;
 		colour *= 0.3f + 0.7f * health;
         colour.a = 255;
-        
+
         if( m_dead )
         {
             glEnable( GL_BLEND );
@@ -2194,13 +2194,13 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             colour.g *= 0.2f;
             colour.b *= 0.2f;
         }
-        
+
         if( m_state == StateOnFire )
         {
             colour.r *= 0.01f;
             colour.g *= 0.01f;
             colour.b *= 0.01f;
-            
+
         }
 
         glColor4ubv(colour.GetData());
@@ -2212,14 +2212,14 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         glEnd();
 
         //glDisable( GL_BLEND );
-       
+
         //
         // Draw a blue glow if we are under control
 
         if( m_state == StateUnderControl )
         {
             glBlendFunc ( GL_SRC_ALPHA, GL_ONE );
-            glEnable    ( GL_BLEND );    
+            glEnable    ( GL_BLEND );
             glDisable   ( GL_DEPTH_TEST );
             float scale = 1.1f;
             entityRight *= scale;
@@ -2286,8 +2286,8 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
                     if( m_id.GetTeamId() == 0 )
                     {
                         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-                        glEnable    ( GL_BLEND );    
-                        glColor4f   ( 0.0f, 0.0f, 0.0f, alpha);                    
+                        glEnable    ( GL_BLEND );
+                        glColor4f   ( 0.0f, 0.0f, 0.0f, alpha);
                         Vector3 shadowVector = length;
                         shadowVector.SetLength( 0.05f );
                         predictedPos += shadowVector;
@@ -2298,16 +2298,16 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
                             glTexCoord2i(0, 0);     glVertex3fv( (predictedPos - entityRight).GetData() );
                         glEnd();
                     }
-                    
-                    // Shadow on the ground 
-                                
+
+                    // Shadow on the ground
+
                     Vector3 pos1 = predictedPos - entityRight;
                     Vector3 pos2 = predictedPos + entityRight;
                     Vector3 pos4 = pos1 + length;
                     Vector3 pos3 = pos2 + length;
                     pos4 -= entityRight;
                     pos3 += entityRight;
-            
+
                     pos1.y = 0.3f + g_app->m_location->m_landscape.m_heightMap->GetValue( pos1.x, pos1.z );
                     pos2.y = 0.3f + g_app->m_location->m_landscape.m_heightMap->GetValue( pos2.x, pos2.z );
                     pos3.y = 0.3f + g_app->m_location->m_landscape.m_heightMap->GetValue( pos3.x, pos3.z );
@@ -2329,14 +2329,14 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
                 }
             }
         }
-        
+
     }
 
 
 
     //
     // Render a santa hat if it's Christmas
-    
+
     if( m_id.GetTeamId() == 0 && Location::ChristmasModEnabled() == 1 )
     {
         if( m_id.GetUniqueId() % 3 == 0 )
@@ -2360,7 +2360,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
 
     //
     // Render our box kite if we have one
-  
+
     if( m_boxKiteId.IsValid() )
     {
         BoxKite *boxKite = (BoxKite *) g_app->m_location->GetEffect( m_boxKiteId );
@@ -2374,11 +2374,11 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             boxKite->m_vel = m_vel;
         }
     }
-    
+
 
     //
     // If we are dead render us in pieces
-    
+
     if( m_dead )
     {
         Vector3 entityFront = m_front;
@@ -2389,7 +2389,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         entityRight.Normalise();
 		entityRight *= size;
         unsigned char alpha = (float)m_stats[StatHealth] * 2.55f;
-       
+
         glColor4ub( 0, 0, 0, alpha );
 
         entityRight *= 0.5f;
@@ -2405,10 +2405,10 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             if( i == 0 ) fragmentPos.x += 10.0f - predictedHealth / 10.0f;
             if( i == 1 ) fragmentPos.x += 10.0f - predictedHealth / 10.0f;
             if( i == 1 ) fragmentPos.z += 10.0f - predictedHealth / 10.0f;
-            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;            
+            if( i == 2 ) fragmentPos.x -= 10.0f - predictedHealth / 10.0f;
             fragmentPos.y += ( fragmentPos.y - landHeight ) * i * 0.5f;
-            
-            
+
+
             float left = 0.0f;
             float right = 1.0f;
             float top = 1.0f;
@@ -2437,14 +2437,14 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
                 glTexCoord2f(left, top);        glVertex3fv( (fragmentPos - entityRight).GetData() );
             glEnd();
         }
-    }    
+    }
 }
 
 
 void Darwinian::ListSoundEvents( LList<char *> *_list )
 {
     Entity::ListSoundEvents( _list );
-    
+
     _list->PutData( "SeenThreatAttack" );
     _list->PutData( "SeenThreatRunAway" );
     _list->PutData( "TakenControl" );
@@ -2482,9 +2482,9 @@ bool BoxKite::Advance()
         m_vel.y = 2.0f + syncfrand(2.0f);
 
         m_vel.x = sinf( g_gameTime + m_id.GetIndex() );
-        m_vel.z = sinf( g_gameTime + m_id.GetIndex() );            
-        
-        m_pos += m_vel * SERVER_ADVANCE_PERIOD;    
+        m_vel.z = sinf( g_gameTime + m_id.GetIndex() );
+
+        m_pos += m_vel * SERVER_ADVANCE_PERIOD;
 
         float factor1 = SERVER_ADVANCE_PERIOD * 0.1f;
         float factor2 = 1.0f - factor1;
@@ -2512,12 +2512,12 @@ void BoxKite::Release()
 
 
 void BoxKite::Render( float _predictionTime )
-{        
+{
     glDisable   (GL_BLEND);
     glDepthMask (true);
-        
+
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;
-    
+
     float scale = ( GetHighResTime() - m_birthTime ) / 10.0f;
     if( scale > m_size ) scale = m_size;
 
@@ -2539,10 +2539,10 @@ void BoxKite::Render( float _predictionTime )
 
     //
     // Candle in the middle
-    
+
     glEnable    (GL_BLEND);
     glDepthMask (false);
-    
+
     Vector3 camUp = g_app->m_camera->GetUp() * 3.0f * scale * m_brightness;
     Vector3 camRight = g_app->m_camera->GetRight() * 3.0f * scale * m_brightness;
 
@@ -2560,13 +2560,13 @@ void BoxKite::Render( float _predictionTime )
 
     camUp *= 0.2f;
     camRight *= 0.2f;
-    
+
     glBegin( GL_QUADS );
         glTexCoord2i(0,0);      glVertex3fv( (predictedPos-camRight+camUp).GetData() );
         glTexCoord2i(1,0);      glVertex3fv( (predictedPos+camRight+camUp).GetData() );
         glTexCoord2i(1,1);      glVertex3fv( (predictedPos+camRight-camUp).GetData() );
         glTexCoord2i(0,1);      glVertex3fv( (predictedPos-camRight-camUp).GetData() );
      glEnd();
-     
+
     glDisable       ( GL_TEXTURE_2D );
 }

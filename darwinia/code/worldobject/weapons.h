@@ -13,7 +13,7 @@ class Shape;
 // ****************************************************************************
 
 class ThrowableWeapon : public WorldObject
-{    
+{
 protected:
     Shape   *m_shape;
     float   m_birthTime;
@@ -21,11 +21,11 @@ protected:
 
     Vector3 m_front;
     Vector3 m_up;
-        
+
     int     m_numFlashes;
-    
+
     RGBAColour m_colour;
-    
+
     void TriggerSoundEvent( char *_event );
 
 public:
@@ -49,7 +49,7 @@ class Grenade : public ThrowableWeapon
 public:
     float   m_life;
     float   m_power;
-    
+
 public:
     Grenade( Vector3 const &_startPos, Vector3 const &_front, float _force );
     bool Advance    ();
@@ -64,7 +64,7 @@ class AirStrikeMarker : public ThrowableWeapon
 {
 public:
     WorldObjectId    m_airstrikeUnit;
-    
+
 public:
     AirStrikeMarker( Vector3 const &_startPos, Vector3 const &_front, float _force );
     bool Advance    ();
@@ -91,7 +91,7 @@ class Rocket : public WorldObject
 {
 public:
     unsigned char m_fromTeamId;
-    
+
     Shape   *m_shape;
     float    m_timer;
 
@@ -121,9 +121,9 @@ protected:
     float   m_life;
     bool    m_harmless;                 // becomes true after hitting someone
     bool    m_bounced;
-    
-public:   
-    Laser() {}    
+
+public:
+    Laser() {}
 
     void Initialise(float _lifeTime);
     bool Advance();
@@ -163,7 +163,7 @@ public:
 
 public:
     Shockwave( int _teamId, float _size );
-    
+
     bool Advance();
     void Render( float predictionTime );
 };
@@ -184,7 +184,7 @@ public:
 public:
     MuzzleFlash();
     MuzzleFlash( Vector3 const &_pos, Vector3 const &_front, float _size, float _life );
-    
+
     bool Advance();
     void Render( float _predictionTime );
 };
@@ -203,16 +203,16 @@ protected:
     Shape           *m_shape;
     ShapeMarker     *m_booster;
     MuzzleFlash     m_fire;
-    
+
 public:
     WorldObjectId   m_tankId;                   // Who fired me
     Vector3         m_front;
     Vector3         m_up;
     Vector3         m_target;
-    
+
 public:
     Missile();
-    
+
     bool Advance();
     bool AdvanceToTargetPosition( Vector3 const &_pos );
     void Explode();

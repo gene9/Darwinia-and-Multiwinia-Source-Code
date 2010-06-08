@@ -26,12 +26,12 @@ public:
 
 	// *** Constructors ***
 	Vector3()
-	:	x(0.0f), y(0.0f), z(0.0f) 
+	:	x(0.0f), y(0.0f), z(0.0f)
 	{
 	}
 
 	Vector3(float _x, float _y, float _z)
-	:	x(_x), y(_y), z(_z) 
+	:	x(_x), y(_y), z(_z)
 	{
 	}
 
@@ -54,7 +54,7 @@ public:
 
 	Vector3 operator ^ (Vector3 const &b) const
 	{
-		return Vector3(y*b.z - z*b.y, z*b.x - x*b.z, x*b.y - y*b.x); 
+		return Vector3(y*b.z - z*b.y, z*b.x - x*b.z, x*b.y - y*b.x);
 	}
 
 	float operator * (Vector3 const &b) const
@@ -152,7 +152,7 @@ public:
 	{
 		float mag = Mag();
 		if (NearlyEquals(mag, 0.0f))
-		{	
+		{
 			x = _len;
 			return *this;
 		}

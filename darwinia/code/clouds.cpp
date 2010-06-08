@@ -19,20 +19,20 @@ Clouds::Clouds()
     m_vel.Set(0.04f,0.0f,0.0f);
 }
 
- 
+
 void Clouds::Advance()
-{    
+{
     m_vel.Set(0.03f,0.0f,-0.01f);
     m_offset += m_vel * SERVER_ADVANCE_PERIOD;
 }
 
 
 void Clouds::Render(float _predictionTime)
-{    
+{
     START_PROFILE( g_app->m_profiler, "RenderSky" );
 	RenderSky();
     END_PROFILE( g_app->m_profiler, "RenderSky" );
-	
+
     START_PROFILE( g_app->m_profiler, "RenderBlobby" );
     RenderBlobby(_predictionTime);
     END_PROFILE( g_app->m_profiler, "RenderBlobby" );
@@ -75,7 +75,7 @@ void Clouds::RenderQuad(float posNorth, float posSouth, float posEast, float pos
 
 				glTexCoord2f(tx + texStepX, tz + texStepZ);
 				glVertex3f(px + posStepX, height, pz + posStepZ);
-				
+
 				glTexCoord2f(tx, tz + texStepZ);
 				glVertex3f(px, height, pz + posStepZ);
 
@@ -98,21 +98,21 @@ void Clouds::RenderFlat( float _predictionTime )
     float detail    = 9.0f;
 
     int cloudDetail = g_prefsManager->GetInt( "RenderCloudDetail", 1 );
-    
+
     Vector3 offset  = m_offset + m_vel * _predictionTime;
 
     glEnable        ( GL_TEXTURE_2D );
-    glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/clouds.bmp" ) );	
+    glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/clouds.bmp" ) );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );    
-    
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_BLEND );
     glDepthMask     ( false );
     glDisable		( GL_DEPTH_TEST );
-    
+
     float fogColor  [4] = { 0.0f, 0.0f, 0.0f, 0.0f };
     glFogfv         ( GL_FOG_COLOR, fogColor );
     glFogf          ( GL_FOG_START, 2000.0f );
@@ -128,7 +128,7 @@ void Clouds::RenderFlat( float _predictionTime )
 
     RenderQuad(zStart, zEnd, xStart, xEnd, height,
 			   offset.z, offset.z + detail, offset.x, offset.x + detail);
-    
+
     detail          *= 0.5f;
     height          -= 200.0f;
 
@@ -137,7 +137,7 @@ void Clouds::RenderFlat( float _predictionTime )
 	    RenderQuad(zStart, zEnd, xStart, xEnd, height,
 			       offset.x/2, offset.x/2 + detail, offset.x/2, offset.x/2 + detail);
     }
-    
+
     g_app->m_location->SetupFog();
     glDepthMask     ( true );
     glEnable		( GL_DEPTH_TEST );
@@ -145,7 +145,7 @@ void Clouds::RenderFlat( float _predictionTime )
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDisable       ( GL_TEXTURE_2D );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );    
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
 
 }
 
@@ -168,8 +168,8 @@ void Clouds::RenderBlobby( float _predictionTime )
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );    
-        
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_BLEND );
     glDisable		( GL_DEPTH_TEST );
@@ -188,13 +188,13 @@ void Clouds::RenderBlobby( float _predictionTime )
         RenderQuad		(zStart, zEnd, xStart, xEnd, height,
 	    				 offset.z, detail + offset.z, offset.x, detail + offset.x);
     }
-    
+
     detail          *= 0.5f;
     height          -= 200.0f;
-	
+
     RenderQuad		(zStart, zEnd, xStart, xEnd, height,
 					 offset.x/2, detail + offset.x/2, offset.x/2, detail + offset.x/2);
-    
+
     detail          *= 0.4f;
     height          -= 200.0f;
 
@@ -211,7 +211,7 @@ void Clouds::RenderBlobby( float _predictionTime )
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glDisable       ( GL_TEXTURE_2D );
     glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );    
+    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
 }
 
 

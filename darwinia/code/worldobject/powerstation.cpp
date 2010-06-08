@@ -88,8 +88,8 @@ void Powerstation::Read( TextReader *_in, bool _dynamic )
 {
     Building::Read( _in, _dynamic );
 
-    char *word = _in->GetNextToken();  
-    m_linkedBuildingId = atoi(word);    
+    char *word = _in->GetNextToken();
+    m_linkedBuildingId = atoi(word);
 }
 
 

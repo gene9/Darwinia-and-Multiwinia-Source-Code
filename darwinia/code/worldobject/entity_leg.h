@@ -61,11 +61,11 @@ protected:
 	Vector3	GetIdealSwingingFootPos(float _fractionComplete);
 
 public:
-	EntityLeg(int _legNum, Entity *_parent, 
+	EntityLeg(int _legNum, Entity *_parent,
                 char const *_shapeNameUpper,
                 char const *_shapeNameLower,
                 char const *_rootMarkerName);
-	
+
 	float	CalcFootsDesireToMove(float _targetHoverHeight);
 	void	LiftFoot(float _targetHoverHeight);
 	void	PlantFoot();

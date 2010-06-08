@@ -22,14 +22,14 @@ class SepulvedaCaption;
 
 class Sepulveda
 {
-protected:   
+protected:
     char        m_caption[SEPULVEDA_MAX_PHRASE_LENGTH];
 
-    LList       <char *> m_msgQueue;                
-        
+    LList       <char *> m_msgQueue;
+
     float       m_timeSync;
     float       m_fade;
-    int         m_previousNumChars;      
+    int         m_previousNumChars;
     bool        m_cutsceneMode;
     float       m_scrollbarOffset;
 
@@ -40,7 +40,7 @@ protected:
     LList           <SepulvedaHighlight *> m_highlights;
     LList           <SepulvedaCaption *> m_history;
     BTree			<const char *> m_langDefines;
-	
+
 protected:
     float       CalculateTextTime();            // Time for Dr Sepulveda to speak
     float       CalculatePauseTime();           // Pause time between Sepulveda's lines
@@ -65,14 +65,14 @@ public:
 
     void Say                ( char *_stringId );
     void DemoGesture        ( char const *_gestureDemoName, float _startDelay );
-    void ShutUp             ();     
+    void ShutUp             ();
 
     void SetCutsceneMode    ( bool _cutsceneMode );
     bool IsInCutsceneMode   ();
     void HighlightBuilding  ( int _buildingId, char *_highlightName );
     void HighlightPosition  ( Vector3 const &_pos, float _radius, char *_highlightName );
     bool IsHighlighted      ( Vector3 const &_pos, float _radius, char *_highlightName=NULL );
-    void ClearHighlights    ( char *_highlightName=NULL );    
+    void ClearHighlights    ( char *_highlightName=NULL );
 
     bool PlayerSkipsMessage();      // Returns true if a message was skipped
 

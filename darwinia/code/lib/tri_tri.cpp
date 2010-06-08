@@ -15,9 +15,9 @@
  * Here is a version withouts divisions (a little faster)
  * int NoDivTriTriIsect(float V0[3],float V1[3],float V2[3],
  *                      float U0[3],float U1[3],float U2[3]);
- * 
+ *
  * This version computes the line of intersection as well (if they are not coplanar):
- * int tri_tri_intersect_with_isectline(float V0[3],float V1[3],float V2[3], 
+ * int tri_tri_intersect_with_isectline(float V0[3],float V1[3],float V2[3],
  *				        float U0[3],float U1[3],float U2[3],int *coplanar,
  *				        float isectpt1[3],float isectpt2[3]);
  * coplanar returns whether the tris are coplanar
@@ -31,11 +31,11 @@
 
 #define FABS(x) ((float)fabs(x))        /* implement as is fastest on your machine */
 
-/* if USE_EPSILON_TEST is true then we do a check: 
+/* if USE_EPSILON_TEST is true then we do a check:
          if |dv|<EPSILON then dv=0.0;
    else no check is done (which is less robust)
 */
-#define USE_EPSILON_TEST TRUE  
+#define USE_EPSILON_TEST TRUE
 #define EPSILON 0.000001f
 
 
@@ -47,13 +47,13 @@
 
 #define DOT(v1,v2) (v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])
 
-#define SUB(dest,v1,v2) dest[0]=v1[0]-v2[0]; dest[1]=v1[1]-v2[1]; dest[2]=v1[2]-v2[2]; 
+#define SUB(dest,v1,v2) dest[0]=v1[0]-v2[0]; dest[1]=v1[1]-v2[1]; dest[2]=v1[2]-v2[2];
 
-#define ADD(dest,v1,v2) dest[0]=v1[0]+v2[0]; dest[1]=v1[1]+v2[1]; dest[2]=v1[2]+v2[2]; 
+#define ADD(dest,v1,v2) dest[0]=v1[0]+v2[0]; dest[1]=v1[1]+v2[1]; dest[2]=v1[2]+v2[2];
 
 #define MULT(dest,v,factor) dest[0]=factor*v[0]; dest[1]=factor*v[1]; dest[2]=factor*v[2];
 
-#define SET(dest,src) dest[0]=src[0]; dest[1]=src[1]; dest[2]=src[2]; 
+#define SET(dest,src) dest[0]=src[0]; dest[1]=src[1]; dest[2]=src[2];
 
 /* sort so that a<=b */
 #define SORT(a,b)       \
@@ -105,7 +105,7 @@
 
 /* this edge to edge test is based on Franlin Antonio's gem:
    "Faster Line Segment Intersection", in Graphics Gems III,
-   pp. 199-202 */ 
+   pp. 199-202 */
 #define EDGE_EDGE_TEST(V0,U0,U1)                      \
   Bx=U0[i0]-U1[i0];                                   \
   By=U0[i1]-U1[i1];                                   \
@@ -124,7 +124,7 @@
     {                                                 \
       if(e<=0 && e>=f) return 1;                      \
     }                                                 \
-  }                                
+  }
 
 #define EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2) \
 {                                              \
@@ -176,7 +176,7 @@ int coplanar_tri_tri(float const N[3],float const V0[3], float const V1[3], floa
    A[2]=fabs(N[2]);
    if(A[0]>A[1])
    {
-      if(A[0]>A[2])  
+      if(A[0]>A[2])
       {
           i0=1;      /* A[0] is greatest */
           i1=2;
@@ -192,20 +192,20 @@ int coplanar_tri_tri(float const N[3],float const V0[3], float const V1[3], floa
       if(A[2]>A[1])
       {
           i0=0;      /* A[2] is greatest */
-          i1=1;                                           
+          i1=1;
       }
       else
       {
           i0=0;      /* A[1] is greatest */
           i1=2;
       }
-    }               
-                
+    }
+
     /* test all edges of triangle 1 against the edges of triangle 2 */
     EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2);
     EDGE_AGAINST_TRI_EDGES(V1,V2,U0,U1,U2);
     EDGE_AGAINST_TRI_EDGES(V2,V0,U0,U1,U2);
-                
+
     /* finally, test if tri1 is totally contained in tri2 or vice versa */
     POINT_IN_TRI(V0,U0,U1,U2);
     POINT_IN_TRI(U0,V0,V1,V2);
@@ -248,7 +248,7 @@ int coplanar_tri_tri(float const N[3],float const V0[3], float const V1[3], floa
 }
 
 
-bool TriTriIntersection(Vector3 const &_v0, Vector3 const &_v1, Vector3 const &_v2, 
+bool TriTriIntersection(Vector3 const &_v0, Vector3 const &_v1, Vector3 const &_v2,
 						Vector3 const &_u0, Vector3 const &_u1, Vector3 const &_u2)
 {
   float const *V0 = _v0.GetDataConst();

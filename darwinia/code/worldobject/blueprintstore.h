@@ -15,7 +15,7 @@ public:
 protected:
     ShapeMarker *m_marker;
     Vector3      m_vel;
-    
+
 public:
     BlueprintBuilding();
 
@@ -29,11 +29,11 @@ public:
 
     Matrix34 GetMarker( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
-    
-    int  GetBuildingLink();                             
-    void SetBuildingLink( int _buildingId );            
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
+
+    int  GetBuildingLink();
+    void SetBuildingLink( int _buildingId );
 };
 
 
@@ -45,7 +45,7 @@ class BlueprintStore : public BlueprintBuilding
 {
 public:
     float m_segments[BLUEPRINTSTORE_NUMSEGMENTS];
-  
+
 public:
     BlueprintStore();
 
@@ -71,16 +71,16 @@ class BlueprintConsole : public BlueprintBuilding
 {
 public:
     BlueprintConsole();
-    
+
     void            Initialise( Building *_template );
-    
+
     void            RecalculateOwnership();
     bool            Advance();
     void            Render( float _predictionTime );
     void            RenderPorts();
-        
-    void            Read   ( TextReader *_in, bool _dynamic );     
-    void            Write  ( FileWriter *_out );							
+
+    void            Read   ( TextReader *_in, bool _dynamic );
+    void            Write  ( FileWriter *_out );
 };
 
 
@@ -94,16 +94,16 @@ public:
 
 public:
     BlueprintRelay();
-    
+
     void Initialise( Building *_template );
     void SetDetail( int _detail );
 
     bool Advance();
-    
+
     void Render         ( float _predictionTime );
 
-    void Read   ( TextReader *_in, bool _dynamic );     
-    void Write  ( FileWriter *_out );							
+    void Read   ( TextReader *_in, bool _dynamic );
+    void Write  ( FileWriter *_out );
 };
 
 #endif

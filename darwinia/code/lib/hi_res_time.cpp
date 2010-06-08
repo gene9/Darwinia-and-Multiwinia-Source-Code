@@ -27,7 +27,7 @@ inline  unsigned int GetPentiumCounter()
 	{
 		_emit 0x0F		        // Call RDTSC (Read time stamp counter) this will
 		_emit 0x31				// put a 64 bit clock cycle count in edx;eax
-					
+
 		shr eax,6				// 64 bits are too much and the resolution is too
 								// high, so throw away the bottom 6 bits of eax
 		shl edx,26				// Now throw away everything other than the top 6 bits of edx
@@ -57,16 +57,16 @@ void InitialiseHighResTime()
 
 	// Wait for roughly one second
 	Sleep(1000);
-	
+
 	// Get end times
 	QueryPerformanceCounter(&count);
 	unsigned int pentiumCounterEnd = GetPentiumCounter();
 	double perfCounterEnd = count.QuadPart * g_tickInterval;
-	
+
 	double perfCounterTicks = perfCounterEnd - perfCounterStart;
 	double perfCounterTime = perfCounterTicks;
 	double pentiumTicks = pentiumCounterEnd - pentiumCounterStart;
-       
+
 	g_ticksPerSec = pentiumTicks / perfCounterTime;
 	g_tickInterval = 1.0 / (double)g_ticksPerSec;
 #endif
@@ -79,18 +79,18 @@ inline double GetLowLevelTime()
 	static double wraps = 0.0;		// Each time the counter wraps, we increment this value by the wrap period
 	static unsigned int lastCount = 0;
 	unsigned int newCount = GetPentiumCounter();
-	
+
 	// Has the counter wrapped?
 	if (newCount < lastCount)
 	{
 		wraps += g_tickInterval * pow(2, 32);
 	}
 	lastCount = newCount;
-	
+
 	return (double)newCount * g_tickInterval + wraps;
 #else
     LARGE_INTEGER count;
- 
+
     static LARGE_INTEGER startTime;
     static bool initted = false;
 

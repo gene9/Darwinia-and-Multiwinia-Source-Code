@@ -10,7 +10,7 @@
 class Egg : public Entity
 {
 public:
-    
+
     enum
     {
         StateDormant,
@@ -21,7 +21,7 @@ public:
     int     m_state;
     int     m_spiritId;
     float   m_timer;
-    
+
 public:
     Egg();
 

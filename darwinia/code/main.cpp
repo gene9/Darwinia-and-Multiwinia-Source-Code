@@ -201,10 +201,10 @@ int GetNumSlicesToAdvance()
 		ratio = (float)slicesPerSecond / (float)g_app->m_aviGenerator->GetRecordingFrameRate();
 	}
 #endif
-	
+
 	static float accumulator = 0.0f;
 	accumulator += ratio;
-	
+
 	int returnVal = floorf(accumulator);
 
 	accumulator -= (float)returnVal;
@@ -220,7 +220,7 @@ int GetNumSlicesToAdvance()
     int numSlicesPending = numUpdatesToProcess * NUM_SLICES_PER_FRAME;
     if( g_sliceNum != -1 ) numSlicesPending -= g_sliceNum;
     else if( g_sliceNum == -1 ) numSlicesPending -= 10;
-    
+
     float timeSinceStartOfAdvance = g_gameTime - g_lastServerAdvance;
 	//int numSlicesThatShouldBePending = 10 - timeSinceStartOfAdvance * 10.0f;
 
@@ -231,7 +231,7 @@ int GetNumSlicesToAdvance()
     //DarwiniaDebugAssert( numSlicesToAdvance >= 0 );
     numSlicesToAdvance = max( numSlicesToAdvance, 0 );
     numSlicesToAdvance = min( numSlicesToAdvance, 10 );
-    
+
     return numSlicesToAdvance;
 }
 
@@ -251,8 +251,8 @@ bool ProcessServerLetters( ServerToClientLetter *letter )
             //g_app->m_location->RemoveTeam( letter->m_teamId );
             return true;
 
-        case ServerToClientLetter::TeamAssign:    
-            
+        case ServerToClientLetter::TeamAssign:
+
             if( letter->m_ip == g_app->m_clientToServer->GetOurIP_Int() )
             {
                 g_app->m_location->InitialiseTeam(letter->m_teamId, letter->m_teamType );
@@ -317,7 +317,7 @@ bool HandleCommonConditions()
 		g_app->m_renderer->Render();
 		return true;
 	}
-	
+
 #ifdef TARGET_OS_MACOSX
 	// Quit on Command-Q
 	if (g_keyDeltas[KEY_Q] && g_keys[KEY_META]) { // TODO: This
@@ -327,7 +327,7 @@ bool HandleCommonConditions()
 			g_app->m_requestQuit = true;
 	}
 #endif
-	
+
 	if (g_app->m_requestQuit)
 	{
 		if( g_app->m_gameMode == App::GameModePrologue )
@@ -362,7 +362,7 @@ unsigned char GenerateSyncValue()
             {
                 if( team->m_units.ValidIndex(u) )
                 {
-                    Unit *unit = team->m_units[u];                    
+                    Unit *unit = team->m_units[u];
                     unitPosition += unit->m_centrePos;
                     for( int e = 0; e < unit->m_entities.Size(); ++e )
                     {
@@ -397,7 +397,7 @@ unsigned char GenerateSyncValue()
             laserPosition += laser->m_vel;
         }
     }
-    
+
     for( int e = 0; e < g_app->m_location->m_effects.Size(); ++e )
     {
         if( g_app->m_location->m_effects.ValidIndex(e) )
@@ -412,15 +412,15 @@ unsigned char GenerateSyncValue()
     Vector3 position = unitPosition + entityPosition + laserPosition + effectsPosition;
     float totalValue = position.x + position.y + position.z;
 
-    totalValue -= int(totalValue);    
+    totalValue -= int(totalValue);
     DarwiniaDebugAssert( totalValue >= 0.0f && totalValue <= 1.0f );
     unsigned char syncValue = totalValue * 255;
-    
+
 //    float unitPositionSync = ( unitPosition.x + unitPosition.y + unitPosition.z );
 //    float entityPositionSync = ( entityPosition.x + entityPosition.y + entityPosition.z );
 //    float laserPositionSync = ( laserPosition.x + laserPosition.y + laserPosition.z );
 //    float effectsPositionSync = ( effectsPosition.x + effectsPosition.y + effectsPosition.z );
-//    
+//
 //    unitPositionSync -= (int) unitPositionSync;
 //    entityPositionSync -= (int) entityPositionSync;
 //    laserPositionSync -= (int) laserPositionSync;
@@ -428,11 +428,11 @@ unsigned char GenerateSyncValue()
 //
 //    DebugOut( "Frame [%3d] Sync [%3d] unit[%3d] entity[%3d] laser[%3d] effects[%3d]\n",
 //            g_lastProcessedSequenceId, syncValue,
-//            (int)(unitPositionSync*255), 
-//            (int)(entityPositionSync*255), 
-//            (int)(laserPositionSync*255), 
+//            (int)(unitPositionSync*255),
+//            (int)(entityPositionSync*255),
+//            (int)(laserPositionSync*255),
 //            (int)(effectsPositionSync*255) );
-    
+
     return syncValue;
 
 #else
@@ -467,7 +467,7 @@ void LocationGameLoop()
 
 	bool fadingOut = false;
 	while(1)
-	{		
+	{
 		if (!fadingOut)
 		{
 			if (g_app->m_requestedLocationId != g_app->m_locationId)
@@ -485,7 +485,7 @@ void LocationGameLoop()
 			}
 		}
 
-		g_inputManager->PollForEvents(); 
+		g_inputManager->PollForEvents();
 		if (g_inputManager->controlEvent( ControlMenuEscape ) && g_app->m_renderer->IsFadeComplete())
 		{
 			if (g_app->m_script && g_app->m_script->IsRunningScript())
@@ -505,7 +505,7 @@ void LocationGameLoop()
 					EclRegisterWindow( new LocationWindow() );
 				}
 			}
-			g_app->m_userInput->Advance();				
+			g_app->m_userInput->Advance();
 		}
 
 		if (HandleCommonConditions())
@@ -528,20 +528,20 @@ void LocationGameLoop()
 					nextServerAdvanceTime = timeNow + SERVER_ADVANCE_PERIOD;
 				}
             }
-        }        		
+        }
 
 		if ( !WindowsOnScreen() )
 			teamControls.Advance();
 
         if( iAmAClient )
-        {            
+        {
             START_PROFILE(g_app->m_profiler, "Client Main Loop");
-		
+
             //
             // Send Client input to Server
             if( timeNow > nextIAmAliveMessage )
             {
-				// Read the current teamControls from the inputManager				
+				// Read the current teamControls from the inputManager
 
 				bool chatLog = g_app->m_sepulveda->ChatLogVisible();
                 bool entityUnderMouse = false;
@@ -559,7 +559,7 @@ void LocationGameLoop()
                     if( g_inputManager->getInputMode() == INPUT_MODE_GAMEPAD &&
                         teamControls.m_secondaryFireDirected ) orderGiven = true;
 
-                    if( team->GetMyEntity() && 
+                    if( team->GetMyEntity() &&
                         team->GetMyEntity()->m_type == Entity::TypeOfficer &&
                         orderGiven )
                             checkMouse = true;
@@ -567,17 +567,17 @@ void LocationGameLoop()
                     if( checkMouse )
                     {
                         // We don't actually want to pass any left-clicks to the network system
-                        // If the user has left-clicked on another of his entities, because that 
-                        // entity is about to be selected.  We don't want our original entity 
+                        // If the user has left-clicked on another of his entities, because that
+                        // entity is about to be selected.  We don't want our original entity
                         // walking up to him.
                         WorldObjectId idUnderMouse;
-                        bool objectUnderMouse = g_app->m_locationInput->GetObjectUnderMouse( idUnderMouse, g_app->m_globalWorld->m_myTeamId );                    
+                        bool objectUnderMouse = g_app->m_locationInput->GetObjectUnderMouse( idUnderMouse, g_app->m_globalWorld->m_myTeamId );
 
                         bool isCurrentEntity = ( objectUnderMouse && idUnderMouse.GetUnitId() == -1 && idUnderMouse.GetIndex() == team->m_currentEntityId );
                         bool isCurrentUnit = ( objectUnderMouse && idUnderMouse.GetUnitId() != -1 && idUnderMouse.GetUnitId() == team->m_currentUnitId );
-                    
-				        entityUnderMouse = ( 
-                            objectUnderMouse && 
+
+				        entityUnderMouse = (
+                            objectUnderMouse &&
                             idUnderMouse.GetUnitId() != UNIT_BUILDINGS &&
                             !isCurrentEntity && !isCurrentUnit );
 
@@ -594,12 +594,12 @@ void LocationGameLoop()
                 }
 
                 if( g_app->m_taskManagerInterface->m_visible ||
-                    EclGetWindows()->Size() != 0 || 
-					chatLog || entityUnderMouse ) 
+                    EclGetWindows()->Size() != 0 ||
+					chatLog || entityUnderMouse )
 				{
 					teamControls.ClearFlags();
 				}
-                
+
                 g_app->m_clientToServer->SendIAmAlive( g_app->m_globalWorld->m_myTeamId, teamControls );
 
                 nextIAmAliveMessage += IAMALIVE_PERIOD;
@@ -639,7 +639,7 @@ void LocationGameLoop()
 						{
 							g_app->m_clientToServer->ProcessServerUpdates( letter );
 						}
-                
+
 						g_sliceNum = 0;
 						heavyWeightAdvanceStartTime = timeNow;
 						g_lastServerAdvance = (float)letter->GetSequenceId() * SERVER_ADVANCE_PERIOD + g_startTime;
@@ -650,12 +650,12 @@ void LocationGameLoop()
                         g_app->m_clientToServer->SendSyncronisation( g_lastProcessedSequenceId, sync );
 					}
 				}
-				
+
 				if( g_sliceNum != -1 )
-				{               
+				{
         			g_app->m_location->Advance( g_sliceNum );
 					g_app->m_particleSystem->Advance( g_sliceNum );
-               
+
 					if (g_sliceNum < NUM_SLICES_PER_FRAME-1)
 					{
 						g_sliceNum++;
@@ -682,19 +682,19 @@ void LocationGameLoop()
 
 			// The following are candidates for running in parallel
 			// using something like OpenMP
-			g_app->m_location->m_water->Advance(); 
-			g_soundLibrary2d->TopupBuffer(); 
-			g_app->m_camera->Advance(); 
-			g_app->m_locationInput->Advance(); 
-			g_app->m_helpSystem->Advance(); 
+			g_app->m_location->m_water->Advance();
+			g_soundLibrary2d->TopupBuffer();
+			g_app->m_camera->Advance();
+			g_app->m_locationInput->Advance();
+			g_app->m_helpSystem->Advance();
 			g_app->m_taskManager->Advance();
-			g_app->m_taskManagerInterface->Advance(); 
-			g_app->m_script->Advance(); 
-			g_app->m_sepulveda->Advance(); 
-			g_explosionManager.Advance(); 
-			g_app->m_soundSystem->Advance(); 
-			g_app->m_controlHelpSystem->Advance(); 
-			
+			g_app->m_taskManagerInterface->Advance();
+			g_app->m_script->Advance();
+			g_app->m_sepulveda->Advance();
+			g_explosionManager.Advance();
+			g_app->m_soundSystem->Advance();
+			g_app->m_controlHelpSystem->Advance();
+
 #ifdef ATTRACTMODE_ENABLED
 			if( g_app->m_attractMode->m_running )
 			{
@@ -702,32 +702,32 @@ void LocationGameLoop()
 			}
 #endif // ATTRACTMODE_ENABLED
 
-			if( g_app->m_tutorial ) 
-				g_app->m_tutorial->Advance(); 
+			if( g_app->m_tutorial )
+				g_app->m_tutorial->Advance();
 
 			// DELETEME: for debug purposes only
-			g_app->m_globalWorld->EvaluateEvents();			
+			g_app->m_globalWorld->EvaluateEvents();
 
 			g_app->m_renderer->Render();
 
-			if (g_app->m_renderer->m_fps < 15) 
+			if (g_app->m_renderer->m_fps < 15)
 			{
 				g_app->m_soundSystem->Advance();
 			}
         }
     }
-    
+
     g_app->SaveProfile( false, true );
 
     g_app->m_soundSystem->StopAllSounds( WorldObjectId(), "Ambience EnterLocation" );
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "ExitLocation", SoundSourceBlueprint::TypeAmbience );
-    
+
     if( g_prefsManager->GetInt( "RecordDemo" ) == 1 )
     {
         if( g_app->m_server ) g_app->m_server->SaveHistory( "serverHistory.dat" );
         //g_inputManager->StopLogging( "inputLog.dat" );
     }
-        
+
 	g_explosionManager.Reset();
 
 	if( g_app->m_globalWorld->GetLocationName( g_app->m_locationId ) )
@@ -753,7 +753,7 @@ void LocationGameLoop()
     g_app->m_server = NULL;
 
     g_app->m_taskManager->StopAllTasks();
-    
+
     g_app->m_globalWorld->m_myTeamId = 255;
     g_app->m_globalWorld->EvaluateEvents();
     g_app->SaveProfile( true, false );
@@ -806,7 +806,7 @@ void LocationEditorLoop()
         double timeNow = GetHighResTime();
 
         g_app->m_userInput->Advance();
-        g_app->m_camera->Advance();            
+        g_app->m_camera->Advance();
 		g_app->m_locationEditor->Advance();
         g_app->m_soundSystem->Advance();
         #ifdef PROFILER_ENABLED
@@ -853,16 +853,16 @@ void GlobalWorldGameLoop()
 
         if( g_inputManager->controlEvent( ControlMenuEscape ) && g_app->m_renderer->IsFadeComplete() )
         {
-			if (WindowsOnScreen()) 
+			if (WindowsOnScreen())
 			{
 				RemoveAllWindows();
 			}
-			else 
+			else
 			{
 				g_app->m_camera->SetDebugMode(Camera::DebugModeAuto);
                 EclRegisterWindow( new MainMenuWindow() );
 			}
-			g_app->m_userInput->Advance();				
+			g_app->m_userInput->Advance();
         }
 
 		if (HandleCommonConditions())
@@ -876,7 +876,7 @@ void GlobalWorldGameLoop()
 		g_app->m_sepulveda->Advance();
 		g_app->m_globalWorld->Advance();
         g_app->m_userInput->Advance();
-		g_app->m_camera->Advance();  		
+		g_app->m_camera->Advance();
         g_app->m_soundSystem->Advance();
 
 #ifdef ATTRACTMODE_ENABLED
@@ -885,7 +885,7 @@ void GlobalWorldGameLoop()
 #ifdef PROFILER_ENABLED
 		g_app->m_profiler->Advance();
 #endif // PROFILER_ENABLED
-		
+
 		g_app->m_globalWorld->EvaluateEvents();
 
         g_app->m_renderer->Render();
@@ -905,10 +905,10 @@ void GlobalWorldGameLoop()
 void GlobalWorldEditorLoop()
 {
 	g_app->m_camera->SetDebugMode(Camera::DebugModeAlways);
-	
+
     GlobalWorldEditorWindow *gweWindow = new GlobalWorldEditorWindow();
     EclRegisterWindow( gweWindow );
-    
+
 	while(g_app->m_requestedLocationId == -1 && !g_app->m_requestToggleEditing)
     {
 		g_inputManager->PollForEvents();
@@ -921,7 +921,7 @@ void GlobalWorldEditorLoop()
 
 		if (HandleCommonConditions())
 			continue;
-		
+
         //
         // Get the time
         UpdateAdvanceTime();
@@ -929,7 +929,7 @@ void GlobalWorldEditorLoop()
 
 		g_app->m_globalWorld->Advance();
         g_app->m_userInput->Advance();
-        g_app->m_camera->Advance();            
+        g_app->m_camera->Advance();
         g_app->m_soundSystem->Advance();
 #ifdef PROFILER_ENABLED
 		g_app->m_profiler->Advance();
@@ -959,7 +959,7 @@ void SetPreferenceOverrides()
 	// Mac OS X 10.2.8 and I presume earlier require textures to be scaled.
 	long version = 0;
 	Gestalt(gestaltSystemVersion, &version);
-	if (version < 0x1030) 
+	if (version < 0x1030)
 		g_prefsManager->SetInt("ManuallyScaleTextures", 1);
 	DarwiniaReleaseAssert(version >= 0x1020, "Darwinia requires at least Mac OS X version 10.2.x to run");
 #endif
@@ -971,7 +971,7 @@ void SetPreferenceOverrides()
 	g_fogLogging = g_prefsManager->GetInt("RenderFog", 1) == 2;
 #endif
 
-#ifdef FOG_PREFERENCE	
+#ifdef FOG_PREFERENCE
 	extern bool g_fogEnabled;
 	g_fogEnabled = g_prefsManager->GetInt("RenderFog", 1);
 #endif
@@ -989,7 +989,7 @@ void InitialiseInputManager()
 	g_inputManager->addDriver( new IdleInputDriver() );
 #ifdef TARGET_MSVC
 	g_inputManager->addDriver( new W32InputDriver() );
-	
+
 	if (LoadLibrary("XINPUT1_3"))
 		g_inputManager->addDriver( new XInputDriver() );
 #endif
@@ -1035,7 +1035,7 @@ bool IsRunningVista()
 	versionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	GetVersionEx( (OSVERSIONINFO *) &versionInfo );
 
-	if ( versionInfo.dwMajorVersion < 6 || 
+	if ( versionInfo.dwMajorVersion < 6 ||
 		 versionInfo.wProductType != VER_NT_WORKSTATION )
 	{
 		return false;
@@ -1060,7 +1060,7 @@ void DoVistaChecks()
 	HRESULT hr = CoInitialize(NULL);
 
 	IWindowsParentalControls* wpc = NULL;
-	hr = CoCreateInstance(__uuidof(WindowsParentalControls), 0, CLSCTX_INPROC_SERVER, 
+	hr = CoCreateInstance(__uuidof(WindowsParentalControls), 0, CLSCTX_INPROC_SERVER,
                     __uuidof(IWindowsParentalControls), (LPVOID *)&wpc);
 
 	if( FAILED(hr) )
@@ -1127,7 +1127,7 @@ void Initialise()
     InitialiseInputManager();
 
 #if defined(TARGET_OS_VISTA)
-    DoVistaChecks();	
+    DoVistaChecks();
 #endif
 
 	g_target = new TargetCursor();
@@ -1143,8 +1143,8 @@ void Initialise()
 	{
 		int requestedLocationId = g_app->m_globalWorld->GetLocationId(startMap);
 		GlobalLocation *gloc = g_app->m_globalWorld->GetLocation(requestedLocationId);
-		
-		if( gloc ) 
+
+		if( gloc )
 		{
 			g_app->m_requestedLocationId = requestedLocationId;
 			strcpy(g_app->m_requestedMap, gloc->m_mapFilename);
@@ -1167,7 +1167,7 @@ void Finalise()
 
 #ifdef TARGET_OS_VISTA
 	// Skip if not running on a Media Center
-    if( g_mediaCenter ) 
+    if( g_mediaCenter )
 	{
 		// Get the path to Media Center
 		WCHAR szExpandedPath[MAX_PATH];
@@ -1175,8 +1175,8 @@ void Finalise()
 		{
 			// Skip if ehshell.exe doesn't exist
 			if( GetFileAttributesW( szExpandedPath ) != 0xFFFFFFFF )
-			{		 
-				// Launch ehshell.exe 
+			{
+				// Launch ehshell.exe
 				INT_PTR result = (INT_PTR)ShellExecuteW( NULL, L"open", szExpandedPath, NULL, NULL, SW_SHOWNORMAL);
 			}
 		}
@@ -1186,7 +1186,7 @@ void Finalise()
 }
 
 void RunBootLoaders()
-{   
+{
 #ifndef DEMOBUILD
 	if (g_app->HasBoughtGame() && g_prefsManager->GetInt("CurrentGameMode", 1 ) == 1) {
 		char *loaderName = g_prefsManager->GetString("BootLoader", "none");
@@ -1219,7 +1219,7 @@ void RunBootLoaders()
 				loader->Run();
 				delete loader;
 			}
-		}	
+		}
 
 		g_inputManager->Advance();          // clears g_keyDeltas[KEY_ESC]
 		g_inputManager->Advance();
@@ -1247,7 +1247,7 @@ void EnterLocation()
     g_app->m_locationId = g_app->m_requestedLocationId;
 
     g_app->m_camera->UpdateEntityTrackingMode();
-                
+
     if (!g_app->m_editing)
     {
         if( g_prefsManager->GetInt( "RecordDemo" ) == 2 )
@@ -1256,7 +1256,7 @@ void EnterLocation()
             {
                 g_app->m_server->LoadHistory( "ServerHistory.dat" );
             }
-        }          
+        }
         else
         {
             if( iAmAServer )
@@ -1282,7 +1282,7 @@ void EnterLocation()
 #ifndef PURITY_CONTROL
 	    g_app->m_locationEditor = new LocationEditor();
 	    g_app->m_camera->SetDebugMode(Camera::DebugModeAlways);
-		
+
 	    LocationEditorLoop();
 #endif  // PURITY_CONTROL
 #endif // LOCATION_EDITOR
@@ -1321,13 +1321,13 @@ void EnterGlobalWorld()
     g_app->m_camera->SetDebugMode(Camera::DebugModeAuto);
     g_app->m_camera->RequestMode(Camera::ModeSphereWorld);
     g_app->m_camera->SetHeight( 50.0f );
-    
+
     if (g_app->m_editing)
     {
 	    GlobalWorldEditorLoop();
     }
     else
-    {                
+    {
 	    GlobalWorldGameLoop();
     }
 }
@@ -1340,7 +1340,7 @@ void MainMenuLoop()
         UpdateAdvanceTime();
         g_app->m_renderer->Render();
         g_app->m_userInput->Advance();
-        g_app->m_camera->Advance();  
+        g_app->m_camera->Advance();
         g_app->m_soundSystem->Advance();
         HandleCommonConditions();
 
@@ -1357,10 +1357,10 @@ void MainMenuLoop()
 }
 
 void RunTheGame()
-{    
+{
 	Initialise();
     RunBootLoaders();
-    
+
 
 #ifdef TEST_HARNESS_ENABLED
     if( g_prefsManager->GetInt("TestHarness") == 1 )
@@ -1372,7 +1372,7 @@ void RunTheGame()
     }
 #endif // TEST_HARNESS_ENABLED
 
-	// 
+	//
 	// Do whatever mode was requested
 
 	if( g_prefsManager->GetInt( "CurrentGameMode", 1 ) == 0 )
@@ -1399,7 +1399,7 @@ void RunTheGame()
         else // Not in location
         {
             EnterGlobalWorld();
-        }        
+        }
 
 	    g_inputManager->Advance();
     }

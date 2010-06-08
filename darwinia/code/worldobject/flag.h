@@ -22,14 +22,14 @@ public:
     Flag();
 
     void Initialise         ();
-    
+
     void SetTexture         ( int _textureId );
     void SetPosition        ( Vector3 const &_pos );
     void SetOrientation     ( Vector3 const &_front, Vector3 const &_up );
     void SetSize            ( float _size );
 
     void Render();
-    void RenderText         ( int _posX, int _posY, char *_caption );    
+    void RenderText         ( int _posX, int _posY, char *_caption );
 };
 
 

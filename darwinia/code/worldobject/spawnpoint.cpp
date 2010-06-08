@@ -43,7 +43,7 @@ void SpawnBuilding::Initialise( Building *_template )
 
     SpawnBuilding *spawn = (SpawnBuilding *) _template;
     for( int i = 0; i < spawn->m_links.Size(); ++i )
-    {   
+    {
         SpawnBuildingLink *link = spawn->m_links[i];
         SetBuildingLink( link->m_targetBuildingId );
     }
@@ -112,33 +112,33 @@ void SpawnBuilding::RenderSpirit( Vector3 const &_pos )
     int outerAlpha = 150;
     int spiritInnerSize = 2;
     int spiritOuterSize = 6;
- 
+
     float size = spiritInnerSize;
-    glColor4ub(150, 50, 25, innerAlpha );            
-    
+    glColor4ub(150, 50, 25, innerAlpha );
+
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 
     size = spiritOuterSize;
-    glColor4ub(150, 50, 25, outerAlpha );            
-        
+    glColor4ub(150, 50, 25, outerAlpha );
+
     glBegin( GL_QUADS );
         glVertex3fv( (pos - g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetRight()*size).GetData() );
         glVertex3fv( (pos + g_app->m_camera->GetUp()*size).GetData() );
         glVertex3fv( (pos - g_app->m_camera->GetRight()*size).GetData() );
-    glEnd();    
+    glEnd();
 }
 
 
 void SpawnBuilding::RenderAlphas( float _predictionTime )
 {
     Vector3 ourPos = GetSpiritLink();
-    
+
     int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
 
     for( int i = 0; i < m_links.Size(); ++i )
@@ -148,13 +148,13 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
         if( building )
         {
             Vector3 theirPos = building->GetSpiritLink();
-    
+
             Vector3 camToOurPos = g_app->m_camera->GetPos() - ourPos;
             Vector3 ourPosRight = camToOurPos ^ ( theirPos - ourPos );
 
             Vector3 camToTheirPos = g_app->m_camera->GetPos() - theirPos;
             Vector3 theirPosRight = camToTheirPos ^ ( theirPos - ourPos );
-            
+
             glDisable   ( GL_CULL_FACE );
             glDepthMask ( false );
             glColor4f   ( 0.9f, 0.9f, 0.5f, 1.0f );
@@ -165,7 +165,7 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
             {
                 glEnable    ( GL_BLEND );
                 glBlendFunc ( GL_SRC_ALPHA, GL_ONE );
-                
+
                 glEnable        ( GL_TEXTURE_2D );
                 glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/laser.bmp" ) );
                 glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -176,30 +176,30 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
 
             theirPosRight.SetLength( size );
             ourPosRight.SetLength( size );
-            
+
             glBegin( GL_QUADS );
                 glTexCoord2f(0.1f, 0);      glVertex3fv( (ourPos - ourPosRight).GetData() );
                 glTexCoord2f(0.1f, 1);      glVertex3fv( (ourPos + ourPosRight).GetData() );
                 glTexCoord2f(0.9f, 1);      glVertex3fv( (theirPos + theirPosRight).GetData() );
                 glTexCoord2f(0.9f, 0);      glVertex3fv( (theirPos - theirPosRight).GetData() );
-            glEnd();           
-    
+            glEnd();
+
             glDisable       ( GL_TEXTURE_2D );
 
 
             //
             // Render spirits in transit
-            
+
             for( int j = 0; j < link->m_spirits.Size(); ++j )
             {
-                SpawnBuildingSpirit *spirit = link->m_spirits[j];                
+                SpawnBuildingSpirit *spirit = link->m_spirits[j];
                 float predictedProgress = spirit->m_currentProgress + _predictionTime;
                 if( predictedProgress >= 0.0f && predictedProgress <= 1.0f )
                 {
                     Vector3 position = ourPos + ( theirPos - ourPos ) * predictedProgress;
                     RenderSpirit( position );
                 }
-            }            
+            }
         }
     }
 
@@ -256,8 +256,8 @@ LList<int> *SpawnBuilding::ExploreLinks()
 Vector3 SpawnBuilding::GetSpiritLink()
 {
     if( !m_spiritLink )
-    {    
-        m_spiritLink = m_shape->m_rootFragment->LookupMarker( "MarkerSpiritLink" );    
+    {
+        m_spiritLink = m_shape->m_rootFragment->LookupMarker( "MarkerSpiritLink" );
         DarwiniaDebugAssert( m_spiritLink );
     }
 
@@ -280,7 +280,7 @@ void SpawnBuilding::TriggerSpirit( SpawnBuildingSpirit *_spirit )
             if( link->m_targets[j] == _spirit->m_targetBuildingId )
             {
                 link->m_spirits.PutData( _spirit );
-                _spirit->m_currentProgress = 0.0f;                
+                _spirit->m_currentProgress = 0.0f;
                 ++numAdds;
             }
         }
@@ -316,7 +316,7 @@ bool SpawnBuilding::Advance()
             }
         }
     }
-  
+
     return Building::Advance();
 }
 
@@ -374,7 +374,7 @@ MasterSpawnPoint::MasterSpawnPoint()
 {
     m_type = TypeSpawnPointMaster;
 
-    SetShape( g_app->m_resource->GetShape("masterspawnpoint.shp") );    
+    SetShape( g_app->m_resource->GetShape("masterspawnpoint.shp") );
 }
 
 
@@ -413,7 +413,7 @@ bool MasterSpawnPoint::Advance()
         float timeTaken = GetHighResTime() - startTime;
         DebugOut( "Time to Explore all Spawn Point links : %d ms\n", int(timeTaken*1000.0f) );
     }
-    
+
 
     //
     // Accelerate spirits to heaven
@@ -432,7 +432,7 @@ bool MasterSpawnPoint::Advance()
             }
         }
     }
-    
+
     //
     // Have the red guys been wiped out?
 
@@ -475,7 +475,7 @@ char *MasterSpawnPoint::GetObjectiveCounter()
 
     if( g_app->m_location->m_teams[1].m_teamType != Team::TeamTypeUnused )
     {
-        int numRed = g_app->m_location->m_teams[1].m_others.NumUsed();    
+        int numRed = g_app->m_location->m_teams[1].m_others.NumUsed();
         sprintf( result, "%s : %d", LANGUAGEPHRASE("objective_redpopulation"), numRed );
     }
     else
@@ -497,7 +497,7 @@ SpawnPoint::SpawnPoint()
     m_populationLock(-1)
 {
     m_type = Building::TypeSpawnPoint;
-    
+
     SetShape( g_app->m_resource->GetShape("spawnpoint.shp") );
     m_doorMarker = m_shape->m_rootFragment->LookupMarker( "MarkerDoor" );
 
@@ -571,13 +571,13 @@ void SpawnPoint::RecalculateOwnership()
     int winningTeam = -1;
     for( int i = 0; i < NUM_TEAMS; ++i )
     {
-        if( teamCount[i] > 2 && 
+        if( teamCount[i] > 2 &&
             winningTeam == -1 )
         {
             winningTeam = i;
         }
-        else if( winningTeam != -1 && 
-                 teamCount[i] > 2 && 
+        else if( winningTeam != -1 &&
+                 teamCount[i] > 2 &&
                  teamCount[i] > teamCount[winningTeam] )
         {
             winningTeam = i;
@@ -616,7 +616,7 @@ void SpawnPoint::TriggerSpirit( SpawnBuildingSpirit *_spirit )
     }
     else
     {
-        SpawnBuilding::TriggerSpirit( _spirit );    
+        SpawnBuilding::TriggerSpirit( _spirit );
     }
 }
 
@@ -629,7 +629,7 @@ bool SpawnPoint::PerformDepthSort( Vector3 &_centrePos )
 
 
 bool SpawnPoint::Advance()
-{    
+{
     //
     // Re-evalulate our situation
 
@@ -637,7 +637,7 @@ bool SpawnPoint::Advance()
     if( m_evaluateTimer <= 0.0f )
     {
         START_PROFILE( g_app->m_profiler, "Evaluate" );
-        
+
         RecalculateOwnership();
         m_evaluateTimer = 2.0f;
 
@@ -650,17 +650,17 @@ bool SpawnPoint::Advance()
 
     START_PROFILE( g_app->m_profiler, "SpawnDarwinians" );
     if( m_id.GetTeamId() != 255 && !PopulationLocked() )
-    {        
+    {
         m_spawnTimer -= SERVER_ADVANCE_PERIOD;
         if( m_spawnTimer <= 0.0f )
-        {            
+        {
             MasterSpawnPoint *masterSpawn = MasterSpawnPoint::GetMasterSpawnPoint();
             if( masterSpawn ) masterSpawn->RequestSpirit( m_id.GetUniqueId() );
-            
+
             float fractionOccupied = (float) GetNumPortsOccupied() / (float) GetNumPorts();
-			
+
             m_spawnTimer = 2.0f + 5.0f * (1.0f - fractionOccupied);
-			
+
 			// Reds spawn a bit quicker
 			if (m_id.GetTeamId() == 1)
 			  m_spawnTimer -= 1.0 * (g_app->m_difficultyLevel / 10.0);
@@ -686,13 +686,13 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
 
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
-        
+
     glDepthMask     ( false );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/cloudyglow.bmp" ) );
-    
+
     float timeIndex = g_gameTime + m_id.GetUniqueId() * 10.0f;
 
     int buildingDetail = g_prefsManager->GetInt( "RenderBuildingDetail", 1 );
@@ -703,7 +703,7 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
     float alpha = GetNumPortsOccupied() / (float) GetNumPorts();
 
     for( int i = 0; i < maxBlobs; ++i )
-    {        
+    {
         Vector3 pos = m_centrePos;
         pos += Vector3(0,25,0);
         pos.x += sinf(timeIndex+i) * i * 0.7f;
@@ -712,9 +712,9 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
 
         float size = 10.0f + sinf(timeIndex+i*10) * 10.0f;
         size = max( size, 5.0f );
-        
+
         glColor4f( 0.6f, 0.2f, 0.1f, alpha);
-        
+
         glBegin( GL_QUADS );
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
@@ -722,14 +722,14 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
             glTexCoord2i(0,1);      glVertex3fv( (pos - camRight * size - camUp * size).GetData() );
         glEnd();
     }
-           
+
     glDisable       ( GL_TEXTURE_2D );
     glDepthMask     ( true );
 }
 
 
 void SpawnPoint::RenderPorts()
-{    
+{
     glDisable       ( GL_CULL_FACE );
     glEnable        ( GL_TEXTURE_2D );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
@@ -746,7 +746,7 @@ void SpawnPoint::RenderPorts()
 
         Vector3 portUp = g_upVector;
         Matrix34 mat( portFront, portUp, portPos );
-         
+
         //
         // Render the status light
 
@@ -757,9 +757,9 @@ void SpawnPoint::RenderPorts()
         Vector3 statusPos = s_controlPadStatus->GetWorldMatrix( mat ).pos;
         statusPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(statusPos.x, statusPos.z);
         statusPos.y += 5.0f;
-        
+
         WorldObjectId occupantId = GetPortOccupant(i);
-        if( !occupantId.IsValid() ) 
+        if( !occupantId.IsValid() )
         {
             glColor4ub( 150, 150, 150, 255 );
         }
@@ -832,7 +832,7 @@ bool SpawnPopulationLock::Advance()
         s_overpopulationTimer = GetHighResTime() + 1.0f;
 
         int totalOverpopulation = 0;
-        
+
         for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
         {
             if( g_app->m_location->m_buildings.ValidIndex(i) )
@@ -856,7 +856,7 @@ bool SpawnPopulationLock::Advance()
     m_maxPopulation = m_originalMaxPopulation - s_overpopulation;
     m_maxPopulation = max( m_maxPopulation, 0 );
 
-    
+
     //
     // Recount the number of entities nearby
 
@@ -890,15 +890,15 @@ void SpawnPopulationLock::RenderAlphas( float _predictionTime )
     if( g_app->m_editing )
     {
         RenderSphere( m_pos, 30.0f, RGBAColour(255,255,255,255) );
-    
+
         Vector3 pos = m_pos + Vector3(0,250,0);
-    
+
         g_editorFont.DrawText3DCentre( pos+Vector3(0,80,0), 10, "SpawnPopulationLock" );
         g_editorFont.DrawText3DCentre( pos+Vector3(0,70,0), 10, "OriginalMaxPopulation = %d", m_originalMaxPopulation );
         g_editorFont.DrawText3DCentre( pos+Vector3(0,60,0), 10, "CurrentMaxPopulation = %d", m_maxPopulation );
         g_editorFont.DrawText3DCentre( pos+Vector3(0,50,0), 10, "Red = %d", m_teamCount[1] );
         g_editorFont.DrawText3DCentre( pos+Vector3(0,40,0), 10, "Green = %d", m_teamCount[0] );
-        
+
         if( m_teamCount[0] > m_originalMaxPopulation )
         {
             g_editorFont.DrawText3DCentre( pos+Vector3(0,30,0), 10, "Green Overpopulated by %d", m_teamCount[0]-m_originalMaxPopulation );

@@ -4,7 +4,7 @@
 #include "worldobject/building.h"
 
 #define GUNTURRET_RETARGETTIMER     3.0f
-#define GUNTURRET_MINRANGE          100.0f 
+#define GUNTURRET_MINRANGE          100.0f
 #define GUNTURRET_MAXRANGE          300.0f
 #define GUNTURRET_NUMSTATUSMARKERS  5
 #define GUNTURRET_NUMBARRELS        4
@@ -22,16 +22,16 @@ protected:
 
     Vector3         m_turretFront;
     Vector3         m_barrelUp;
-    
+
     bool            m_aiTargetCreated;
-    
+
     Vector3         m_target;
     WorldObjectId   m_targetId;
     float           m_fireTimer;
     int             m_nextBarrel;
     float           m_retargetTimer;
     bool            m_targetCreated;
-    
+
     float           m_health;
     float           m_ownershipTimer;
 
@@ -40,7 +40,7 @@ protected:
     bool SearchForTargets();
     void SearchForRandomPos();
     void RecalculateOwnership();
-    
+
 public:
     GunTurret();
 
@@ -50,16 +50,16 @@ public:
     void ExplodeBody    ();
     void Damage         ( float _damage );
     bool Advance        ();
-    
+
     Vector3 GetTarget   ();
 
     bool IsInView       ();
     void Render         ( float _predictionTime );
     void RenderPorts    ();
 
-    bool DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir, 
+    bool DoesRayHit(Vector3 const &_rayStart, Vector3 const &_rayDir,
                     float _rayLen, Vector3 *_pos, Vector3 *norm );
-    
+
     void ListSoundEvents( LList<char *> *_list );
 };
 

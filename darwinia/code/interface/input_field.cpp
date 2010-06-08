@@ -76,7 +76,7 @@ void InputField::Render( int realX, int realY, bool highlighted, bool clicked )
         glVertex2f( realX + m_w, realY );
         glVertex2f( realX + m_w, realY + m_h );
     glEnd();
-    
+
     glBegin( GL_LINES );                        // bottom
         glVertex2f( realX + m_w - editAreaWidth, realY+m_h );
         glVertex2f( realX + m_w, realY + m_h );
@@ -135,7 +135,7 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
 	if (keyCode == KEY_BACKSPACE)
 	{
 		if (len > 0) m_buf[len - 1] = '\0';
-        if( m_type == TypeString ) 
+        if( m_type == TypeString )
         {
 			strcpy(m_string, m_buf);
             Refresh();
@@ -153,7 +153,7 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
 		{
 			*m_int = atoi(m_buf);
 		}
-		else if (m_string)	
+		else if (m_string)
 		{
 			strcpy(m_string, m_buf);
 		}
@@ -172,7 +172,7 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
 			strcat(m_buf, ".");
 		}
 
-        if( m_type == TypeString ) 
+        if( m_type == TypeString )
         {
 			strcpy(m_string, m_buf);
             Refresh();
@@ -187,7 +187,7 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
 			strcat(m_buf, buf);
 		}
 
-        if( m_type == TypeString ) 
+        if( m_type == TypeString )
         {
 			strcpy(m_string, m_buf);
             Refresh();
@@ -201,10 +201,10 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
             if( !shift ) ascii -= ( 'A' - 'a' );
             int location = strlen(m_buf);
             m_buf[ location ] = ascii;
-            m_buf[ location+1 ] = '\x0';         
+            m_buf[ location+1 ] = '\x0';
         }
 
-        if( m_type == TypeString ) 
+        if( m_type == TypeString )
         {
 			strcpy(m_string, m_buf);
             Refresh();
@@ -443,7 +443,7 @@ void ColourWindow::SetCallback(DarwiniaButton *button)
 void ColourWindow::Create()
 {
     DarwiniaWindow::Create();
-    
+
     int y = 25;
     int h = 18;
 

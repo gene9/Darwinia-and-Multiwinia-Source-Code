@@ -14,7 +14,7 @@
 
 ServerToClient::ServerToClient( char *_ip )
 :   m_socket(NULL)
-{   
+{
     strcpy ( m_ip, _ip );
 
     if( !g_app->m_bypassNetworking )
@@ -23,7 +23,7 @@ ServerToClient::ServerToClient( char *_ip )
         NetRetCode retCode = m_socket->Connect( _ip, 4001 );
         DarwiniaDebugAssert( retCode == NetOk );
     }
-        
+
     m_lastKnownSequenceId = -1;
 }
 

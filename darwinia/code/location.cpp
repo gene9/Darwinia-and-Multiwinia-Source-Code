@@ -113,7 +113,7 @@ void Location::Init( char const *_missionFilename, char const *_mapFilename )
     InitLights();
     InitLandscape();
 
-    m_water = new Water();	
+    m_water = new Water();
 
     if( !g_app->m_editing )
     {
@@ -131,18 +131,18 @@ void Location::Init( char const *_missionFilename, char const *_mapFilename )
             building->m_pos.y = m_landscape.m_heightMap->GetValue( building->m_pos.x, building->m_pos.z );
         }
     }
-    
+
 	InitTeams();
-	
+
 	if( m_levelFile->m_levelDifficulty == -1 )
 	{
 		// Remember the difficulty factor that this with which this level was created.
 		m_levelFile->m_levelDifficulty = g_app->m_difficultyLevel;
 	}
-	else 
+	else
 	{
 		// Set difficulty level to the created level difficulty
-		g_app->m_difficultyLevel = m_levelFile->m_levelDifficulty;		
+		g_app->m_difficultyLevel = m_levelFile->m_levelDifficulty;
 	}
 }
 
@@ -167,8 +167,8 @@ void Location::Empty()
 
 
 void Location::LoadLevel(char const *missionFilename, char const *mapFilename)
-{    
-	m_levelFile = new LevelFile(missionFilename, mapFilename);	
+{
+	m_levelFile = new LevelFile(missionFilename, mapFilename);
 
 
     //
@@ -182,7 +182,7 @@ void Location::LoadLevel(char const *missionFilename, char const *mapFilename)
         GlobalLocation *gloc = g_app->m_globalWorld->GetLocation(g_app->m_requestedLocationId);
         gloc->m_missionCompleted = true;
     }
-	
+
 }
 
 
@@ -193,7 +193,7 @@ void Location::InitLandscape()
 
 
 void Location::InitLights()
-{	
+{
 	for (int i = 0; i < m_levelFile->m_lights.Size(); i++)
 	{
 		Light *levelLight = m_levelFile->m_lights.GetData(i);
@@ -224,7 +224,7 @@ void Location::InitBuildings()
         }
         Building *newBuilding = Building::CreateBuilding( building->m_type );
         m_buildings.PutData(newBuilding);
-        newBuilding->Initialise( building );        
+        newBuilding->Initialise( building );
         newBuilding->SetDetail( g_prefsManager->GetInt( "RenderBuildingDetail", 1 ) );
 	}
 }
@@ -250,12 +250,12 @@ void Location::InitTeams()
 // Returns id of last entity spawned
 // Only useful if we've only spawned one entity, eg an engineer
 WorldObjectId Location::SpawnEntities( Vector3 const &_pos, unsigned char _teamId, int _unitId,
-                                       unsigned char _type, int _numEntities, Vector3 const &_vel, 
+                                       unsigned char _type, int _numEntities, Vector3 const &_vel,
                                        float _spread, float _range, int _routeId, int _routeWaypointId )
 {
     DarwiniaDebugAssert( _teamId < NUM_TEAMS &&
                 m_teams[_teamId].m_teamType > Team::TeamTypeUnused );
-       
+
     Team *team = &m_teams[_teamId];
     WorldObjectId entityId;
 
@@ -265,7 +265,7 @@ WorldObjectId Location::SpawnEntities( Vector3 const &_pos, unsigned char _teamI
         Entity *s = team->NewEntity( _type, _unitId, &unitIndex );
         DarwiniaDebugAssert( s );
 
-        s->SetType( _type );        
+        s->SetType( _type );
         s->m_pos         = FindValidSpawnPosition( _pos, _spread );
         s->m_onGround    = false;
         s->m_vel         = _vel;
@@ -315,7 +315,7 @@ Vector3 Location::FindValidSpawnPosition( Vector3 const &_pos, float _spread )
 	    float theta = syncfrand(M_PI * 2);
     	randomPos.x += radius * sinf(theta);
 	    randomPos.z += radius * cosf(theta);
-        
+
         bool onMap = randomPos.x >= 0 && randomPos.z >= 0 &&
                      randomPos.x < m_landscape.GetWorldSizeX() &&
                      randomPos.z < m_landscape.GetWorldSizeZ();
@@ -329,7 +329,7 @@ Vector3 Location::FindValidSpawnPosition( Vector3 const &_pos, float _spread )
                 return randomPos;
             }
         }
-        
+
         tries--;
     }
 
@@ -349,7 +349,7 @@ Vector3 Location::FindValidSpawnPosition( Vector3 const &_pos, float _spread )
 int Location::SpawnSpirit( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, WorldObjectId _id )
 {
     DarwiniaDebugAssert( _teamId < NUM_TEAMS );
-    
+
     int index = m_spirits.GetNextFree();
     Spirit *s = m_spirits.GetPointer( index );
     s->m_pos = _pos + g_upVector;
@@ -395,7 +395,7 @@ WorldObject *Location::GetWorldObject( WorldObjectId _id )
         case UNIT_EFFECTS:              return GetEffect( _id );
         case UNIT_SPIRITS:              return GetSpirit( _id.GetIndex() );
         default:                        return GetEntity( _id );
-    }    
+    }
 }
 
 
@@ -426,14 +426,14 @@ WorldObject *Location::GetEffect( WorldObjectId _id )
 
 
 Entity *Location::GetEntity( WorldObjectId _id )
-{         
+{
     unsigned char const teamId = _id.GetTeamId();
     int const unitId = _id.GetUnitId();
     int const index = _id.GetIndex();
     int const uniqueId = _id.GetUniqueId();
 
     if( teamId >= NUM_TEAMS ||
-        m_teams[teamId].m_teamType == Team::TeamTypeUnused ) 
+        m_teams[teamId].m_teamType == Team::TeamTypeUnused )
     {
         return NULL;
     }
@@ -486,7 +486,7 @@ Entity *Location::GetEntitySafe( WorldObjectId _id, unsigned char _type )
 {
     WorldObject *wobj = GetEntity( _id );
     Entity *ent = (Entity *) wobj;
-    
+
     if( ent && ent->m_type == _type )
     {
         return ent;
@@ -502,7 +502,7 @@ Unit *Location::GetUnit( WorldObjectId _id )
     int unitId = _id.GetUnitId();
 
     if( teamId >= NUM_TEAMS ||
-        m_teams[teamId].m_teamType == Team::TeamTypeUnused ) 
+        m_teams[teamId].m_teamType == Team::TeamTypeUnused )
     {
         return NULL;
     }
@@ -520,7 +520,7 @@ Unit *Location::GetUnit( WorldObjectId _id )
 Building *Location::GetBuilding( int _id )
 {
     if( _id == -1 ) return NULL;
-    
+
     if( g_app->m_editing )
     {
         return m_levelFile->GetBuilding( _id );
@@ -563,11 +563,11 @@ Building *Location::GetBuilding(Vector3 const &_rayStart, Vector3 const &_rayDir
 
 
 bool Location::IsVisible( Vector3 const &_from, Vector3 const &_to )
-{    
+{
     Vector3 rayDir = (_to - _from).Normalise();
     float tolerance = 20.0f;
     Vector3 startPos = _from + rayDir * tolerance;
-    
+
     Vector3 hitPos;
     bool landHit = g_app->m_location->m_landscape.RayHit( startPos, rayDir, &hitPos );
 
@@ -578,21 +578,21 @@ bool Location::IsVisible( Vector3 const &_from, Vector3 const &_to )
     if( distanceToHit > distanceToTarget + tolerance ) return true;
 
     return false;
-}   
+}
 
 
 bool Location::IsWalkable( Vector3 const &_from, Vector3 const &_to, bool _evaluateCliffs )
 {
     float waterLevel = -1.0f;
 
-    if( _from.y <= waterLevel || _to.y <= waterLevel ) 
+    if( _from.y <= waterLevel || _to.y <= waterLevel )
     {
         return false;
     }
- 
+
     START_PROFILE( g_app->m_profiler, "QueryWalkable" );
- 
-    float stepSize = 50.0f;   
+
+    float stepSize = 50.0f;
     float totalDistance = ( _from - _to ).Mag();
     int numSteps = totalDistance / stepSize;
     Vector3 diff = ( _to - _from ) / (float)numSteps;
@@ -613,10 +613,10 @@ bool Location::IsWalkable( Vector3 const &_from, Vector3 const &_to, bool _evalu
             END_PROFILE( g_app->m_profiler, "QueryWalkable" );
             return false;
         }
-        
+
         if( _evaluateCliffs )
         {
-            float gradient = ( position.y - oldPosition.y ) / stepSize;        
+            float gradient = ( position.y - oldPosition.y ) / stepSize;
             if( gradient > 2.3f )
             {
                 END_PROFILE( g_app->m_profiler, "QueryWalkable" );
@@ -637,7 +637,7 @@ void Location::AdvanceWeapons( int _slice )
 {
     START_PROFILE(g_app->m_profiler, "Advance Lasers");
     int startIndex, endIndex;
-    m_lasers.GetNextSliceBounds(_slice, &startIndex, &endIndex);   
+    m_lasers.GetNextSliceBounds(_slice, &startIndex, &endIndex);
     for( int i = startIndex; i <= endIndex; ++i )
     {
         if( m_lasers.ValidIndex(i) )
@@ -654,7 +654,7 @@ void Location::AdvanceWeapons( int _slice )
 
 
     START_PROFILE(g_app->m_profiler, "Advance Effects");
-    m_effects.GetNextSliceBounds(_slice, &startIndex, &endIndex);   
+    m_effects.GetNextSliceBounds(_slice, &startIndex, &endIndex);
     for( int i = startIndex; i <= endIndex; ++i )
     {
         if( m_effects.ValidIndex(i) )
@@ -674,7 +674,7 @@ void Location::AdvanceWeapons( int _slice )
 
 // *** AdvanceBuildings
 void Location::AdvanceBuildings( int _slice )
-{        
+{
     START_PROFILE(g_app->m_profiler, "Advance Buildings");
     bool obstructionGridChanged = false;
 
@@ -689,7 +689,7 @@ void Location::AdvanceBuildings( int _slice )
             START_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
             bool removeBuilding = building->Advance();
             END_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
-            
+
             if( removeBuilding )
             {
                 m_buildings.MarkNotUsed(i);
@@ -703,12 +703,12 @@ void Location::AdvanceBuildings( int _slice )
         // TODO: This is WAY too slow, should only recalculate the areas affected
         g_app->m_location->m_obstructionGrid->CalculateAll();
     }
-    
-    END_PROFILE(g_app->m_profiler, "Advance Buildings");    
+
+    END_PROFILE(g_app->m_profiler, "Advance Buildings");
 }
 /*
 void Location::AdvanceBuildings( int _slice )
-{        
+{
     if( _slice == 5 )
     {
         START_PROFILE(g_app->m_profiler, "Advance Buildings");
@@ -723,7 +723,7 @@ void Location::AdvanceBuildings( int _slice )
                 START_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
                 bool removeBuilding = building->Advance();
                 END_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
-                
+
                 if( removeBuilding )
                 {
                     m_buildings.MarkNotUsed(i);
@@ -731,13 +731,13 @@ void Location::AdvanceBuildings( int _slice )
                 }
             }
         }
-    
+
         if( obstructionGridChanged )
         {
             // TODO: This is WAY too slow, should only recalculate the areas affected
             g_app->m_location->m_obstructionGrid->CalculateAll();
         }
-        
+
         END_PROFILE(g_app->m_profiler, "Advance Buildings");
     }
 }*/
@@ -746,7 +746,7 @@ void Location::AdvanceBuildings( int _slice )
 
 // *** AdvanceTeams
 void Location::AdvanceTeams( int _slice )
-{    
+{
     for (int i = 0; i < NUM_TEAMS; i++)
     {
         m_teams[i].Advance(_slice);
@@ -794,12 +794,12 @@ void Location::AdvanceClouds( int _slice )
 // Does whatever needs to be done when a mission is completed
 void Location::DoMissionCompleteActions()
 {
-	// 
+	//
 	// Update the mission file for this location
-	
+
 	GlobalLocation *gloc = g_app->m_globalWorld->GetLocation(g_app->m_locationId);
     gloc->m_missionCompleted = true;
-    
+
     //gloc->m_missionAvailable = false;
 	//strcpy(gloc->m_missionFilename, "null");
 
@@ -874,7 +874,7 @@ void Location::Advance( int _slice )
 }
 
 void Location::AdvanceChristmas()
-{    
+{
     if( m_christmasTimer < -90.0f )
     {
         for( int i = 0; i < 150; ++i )
@@ -890,7 +890,7 @@ void Location::AdvanceChristmas()
             snow->m_id.GenerateUniqueId();
         }
     }
-    
+
     m_christmasTimer -= SERVER_ADVANCE_PERIOD;
     if( m_christmasTimer <= 0.0f )
     {
@@ -916,7 +916,7 @@ void Location::RenderLandscape()
 
 // *** Render Particles
 void Location::RenderParticles()
-{    
+{
 }
 
 
@@ -930,7 +930,7 @@ void Location::RenderTeams()
         Team *team = &m_teams[i];
         team->Render();
     }
-    
+
 	CHECK_OPENGL_STATE();
 }
 
@@ -953,7 +953,7 @@ void Location::RenderSpirits()
         if( m_spirits.ValidIndex(i) )
         {
             Spirit *r = m_spirits.GetPointer(i);
-                        
+
             if( i > m_spirits.GetLastUpdated() )
             {
                 r->Render( timeSinceAdvance + 0.1f );
@@ -963,7 +963,7 @@ void Location::RenderSpirits()
                 r->Render( timeSinceAdvance );
             }
         }
-    }    
+    }
 
     glDepthMask     ( true );
     glDisable       ( GL_BLEND );
@@ -983,14 +983,14 @@ void Location::RenderWater()
 
 // *** Render
 void Location::Render(bool renderWaterAndClouds)
-{   
+{
     //
     // Render all solid objects
 
     if( renderWaterAndClouds ) RenderClouds();
 		else {glBegin( GL_QUADS ); for(unsigned i=0;i<4;i++) glVertex2f(0,0); glEnd();} // necessary for correct reflection. why???
 	CHECK_OPENGL_STATE();
-    RenderLandscape();   
+    RenderLandscape();
 	CHECK_OPENGL_STATE();
     if( renderWaterAndClouds ) RenderWater();
 #ifdef USE_DIRECT3D
@@ -1031,7 +1031,7 @@ void Location::Render(bool renderWaterAndClouds)
     	RenderSpirits();
 		CHECK_OPENGL_STATE();
     }
-         
+
 
 	CHECK_OPENGL_STATE();
 }
@@ -1053,7 +1053,7 @@ void Location::RenderBuildings()
 
     //
     // Special lighting mode used for Demo2
-    
+
     if( g_prefsManager->GetInt( "RenderSpecialLighting" ) == 1 )
     {
 	    float spec = 1.0f;
@@ -1063,7 +1063,7 @@ void Location::RenderBuildings()
 	    GLfloat materialSpecular[] = { spec, spec, spec, 1.0f };
    	    GLfloat materialDiffuse[] = { diffuse, diffuse, diffuse, 1.0f };
 	    GLfloat ambCol[] = { amb, amb, amb, 1.0f };
-   
+
 	    glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
 	    glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
 	    glMaterialfv(GL_FRONT, GL_SHININESS, materialShininess);
@@ -1080,7 +1080,7 @@ void Location::RenderBuildings()
 	    glLightfv(GL_LIGHT0, GL_DIFFUSE, colour1);
 	    glLightfv(GL_LIGHT0, GL_SPECULAR, colour1);
 	    glLightfv(GL_LIGHT0, GL_AMBIENT, black);
-    	    
+
         glEnable        (GL_LIGHTING);
         glEnable        (GL_LIGHT0);
         glDisable       (GL_LIGHT1);
@@ -1100,7 +1100,7 @@ void Location::RenderBuildings()
             {
                 START_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
                 if( i > m_buildings.GetLastUpdated() )
-                {         
+                {
                     building->Render( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
                 }
                 else
@@ -1119,7 +1119,7 @@ void Location::RenderBuildings()
 	g_app->m_renderer->SetObjectLighting();
 	g_app->m_renderer->UnsetObjectLighting();
 
-    END_PROFILE(g_app->m_profiler, "Render Buildings");    
+    END_PROFILE(g_app->m_profiler, "Render Buildings");
 
 	CHECK_OPENGL_STATE();
 }
@@ -1164,7 +1164,7 @@ void Location::RenderBuildingAlphas()
 
     SetupFog        ();
     glEnable        (GL_FOG);
-    
+
     for( int i = 0; i < m_buildings.Size(); ++i )
     {
 	    if( m_buildings.ValidIndex(i) )
@@ -1184,18 +1184,18 @@ void Location::RenderBuildingAlphas()
                 else
                 {
                     START_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
-                    
-                    if( i > m_buildings.GetLastUpdated() )     
+
+                    if( i > m_buildings.GetLastUpdated() )
                     {
-                        building->RenderAlphas( timeSinceAdvance + SERVER_ADVANCE_PERIOD );                
+                        building->RenderAlphas( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
                     }
-                    else                                
+                    else
                     {
                         building->RenderAlphas( timeSinceAdvance );
                     }
-                    
+
                     END_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
-                }                
+                }
             }
         }
     }
@@ -1221,9 +1221,9 @@ void Location::RenderBuildingAlphas()
 
         if( buildingIndex > m_buildings.GetLastUpdated() )
         {
-            building->RenderAlphas( timeSinceAdvance + SERVER_ADVANCE_PERIOD );                
+            building->RenderAlphas( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
         }
-        else                                
+        else
         {
             building->RenderAlphas( timeSinceAdvance );
         }
@@ -1234,7 +1234,7 @@ void Location::RenderBuildingAlphas()
 
     glDisable       (GL_FOG);
 
-    END_PROFILE(g_app->m_profiler, "Render Building Alphas");    
+    END_PROFILE(g_app->m_profiler, "Render Building Alphas");
 }
 
 
@@ -1266,11 +1266,11 @@ void Location::RenderWeapons()
     START_PROFILE(g_app->m_profiler,  "Render Weapons" );
 
     float timeSinceAdvance = g_predictionTime;
-    
+
 
     //
     // Render effects
-	
+
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
 	glEnable        ( GL_BLEND );
 	glDisable       ( GL_CULL_FACE );
@@ -1281,7 +1281,7 @@ void Location::RenderWeapons()
 		if( m_effects.ValidIndex(i) )
 		{
 			WorldObject *w = m_effects[i];
-                    
+
 			if( i > m_effects.GetLastUpdated() )
 			{
 				w->Render( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
@@ -1314,7 +1314,7 @@ void Location::RenderWeapons()
 		if( m_lasers.ValidIndex(i) )
 		{
 			Laser *l = m_lasers.GetPointer(i);
-                    
+
 			if( i > m_lasers.GetLastUpdated() )
 			{
 				l->Render( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
@@ -1333,7 +1333,7 @@ void Location::RenderWeapons()
 	glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	glDisable       ( GL_LINE_SMOOTH );
 
-	g_app->m_camera->SetupProjectionMatrix(nearPlaneStart, 
+	g_app->m_camera->SetupProjectionMatrix(nearPlaneStart,
 										   g_app->m_renderer->GetFarPlane());
 
     END_PROFILE(g_app->m_profiler,  "Render Weapons" );
@@ -1341,12 +1341,12 @@ void Location::RenderWeapons()
 
 
 void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
-{    
+{
     DarwiniaDebugAssert( _teamId < NUM_TEAMS );
     DarwiniaDebugAssert( m_teams[_teamId].m_teamType == Team::TeamTypeUnused );
 
     Team *team = &m_teams[_teamId];
-    team->Initialise(_teamId);  
+    team->Initialise(_teamId);
     team->SetTeamType( _teamType );
 
     DebugOut( "CLIENT : New team created, id %d, type %d\n", _teamId, _teamType );
@@ -1358,19 +1358,19 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
 //		g_target->SetMousePos(g_app->m_renderer->ScreenW(), g_app->m_renderer->ScreenH());
 //		g_app->m_camera->RequestMode(Camera::ModeFreeMovement);
     }
- 
+
 	// Create instant units that belong to this team
 	for (int i = 0; i < m_levelFile->m_instantUnits.Size(); i++)
 	{
 		InstantUnit *iu = m_levelFile->m_instantUnits.GetData(i);
 		if (team->m_teamId != iu->m_teamId) continue;
-		
+
 		Team *team = &g_app->m_location->m_teams[iu->m_teamId];
 		Vector3 pos(iu->m_posX, 0, iu->m_posZ);
 		pos.y = m_landscape.m_heightMap->GetValue(pos.x, pos.z);
 		int unitId = -1;
         Unit *newUnit = NULL;
-        if( iu->m_inAUnit ) 
+        if( iu->m_inAUnit )
         {
             newUnit = team->NewUnit(iu->m_type, iu->m_number, &unitId, pos);
 		    newUnit->SetWayPoint(pos);
@@ -1382,7 +1382,7 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
 
         //
         // Is the waypoint in a Radar Dish?
-        
+
         Vector3 targetPos( iu->m_waypointX, 0, iu->m_waypointZ);
         LList<int> *buildingIds = m_obstructionGrid->GetBuildings( iu->m_waypointX, iu->m_waypointZ );
         for( int i = 0; i < buildingIds->Size(); ++i )
@@ -1409,7 +1409,7 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
         {
             Officer *officer = (Officer *) g_app->m_location->GetEntitySafe( spawnedId, Entity::TypeOfficer );
             if( iu->m_state == Officer::OrderGoto )
-            {                
+            {
                 officer->SetOrders( targetPos );
             }
             else
@@ -1434,7 +1434,7 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
         for( int i = 0; i < m_levelFile->m_runningPrograms.Size(); ++i )
         {
             RunningProgram *program = m_levelFile->m_runningPrograms[i];
-            
+
             if( program->m_type == Entity::TypeEngineer )
             {
                 Vector3 pos( program->m_positionX[0], 0, program->m_positionZ[0] );
@@ -1446,7 +1446,7 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
                 engineer->m_wayPoint.y = m_landscape.m_heightMap->GetValue( program->m_waypointX, program->m_waypointZ );
                 engineer->m_stats[Entity::StatHealth] = program->m_health[0];
 
-                // m_data = num spirits carried 
+                // m_data = num spirits carried
                 for( int s = 0; s < program->m_data; ++s )
                 {
                     int index = SpawnSpirit( engineer->m_pos, g_zeroVector, 1, WorldObjectId() );
@@ -1467,19 +1467,19 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
 
                 int unitId;
                 InsertionSquad *squad = (InsertionSquad *) GetMyTeam()->NewUnit( Entity::TypeInsertionSquadie, program->m_count, &unitId, pos );
-                
+
                 Vector3 waypoint( program->m_waypointX, 0, program->m_waypointZ );
-                waypoint.y = m_landscape.m_heightMap->GetValue( program->m_waypointX, program->m_waypointZ );                   
+                waypoint.y = m_landscape.m_heightMap->GetValue( program->m_waypointX, program->m_waypointZ );
                 //squad->SetWayPoint( waypoint );
                 squad->SetWeaponType( program->m_data );
-                
+
                 SpawnEntities( pos, _teamId, unitId, Entity::TypeInsertionSquadie, program->m_count, g_zeroVector, 10.0f );
-                
+
                 for( int s = 0; s < squad->m_entities.Size(); ++s )
                 {
-                    DarwiniaDebugAssert( squad->m_entities.ValidIndex(s) );                    
+                    DarwiniaDebugAssert( squad->m_entities.ValidIndex(s) );
                     Entity *entity = squad->m_entities[s];
-                    entity->m_stats[Entity::StatHealth] = program->m_health[s];                    
+                    entity->m_stats[Entity::StatHealth] = program->m_health[s];
                 }
 
                 Task *task = new Task();
@@ -1513,7 +1513,7 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
 	Team *team = &m_teams[teamId];
     team->m_currentMousePos = teamControls.m_mousePos;
 
-	// Note: Any reference to the current state of the input manager (g_inputManager) 
+	// Note: Any reference to the current state of the input manager (g_inputManager)
 	//		 in this code is incorrect, since this works on data sent over the network
 	//		 (and may not even correspond to your team!)
 
@@ -1534,7 +1534,7 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
             unit->SetWayPoint( teamControls.m_mousePos);
             unit->m_targetDir = ( teamControls.m_mousePos - unit->m_centrePos ).Normalise();
             unit->RecalculateOffsets();
-			
+
 			//
 			// TODO: When do we want to create a marker ?
 			//		(doing it all the time for now)
@@ -1542,7 +1542,7 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
 			unitMoved = true;
         }
 
-		if( unitMoved && teamControls.m_endSetTarget ) 
+		if( unitMoved && teamControls.m_endSetTarget )
 			g_app->m_gameCursor->CreateMarker( teamControls.m_mousePos );
 
 		unitMoved = unitMove;
@@ -1574,15 +1574,15 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
                 case Entity::TypeEngineer:
                 {
                     Engineer *eng = (Engineer *) entity;
-                    if( unitMove ) eng->SetWaypoint( teamControls.m_mousePos );                    
-                    if( secondaryFire ) eng->BeginBridge( teamControls.m_mousePos );                                                                    
+                    if( unitMove ) eng->SetWaypoint( teamControls.m_mousePos );
+                    if( secondaryFire ) eng->BeginBridge( teamControls.m_mousePos );
                     break;
                 }
-            
+
                 case Entity::TypeOfficer:
                 {
                     Officer *officer = (Officer *) entity;
-                    if( unitMove ) officer->SetWaypoint( teamControls.m_mousePos ); 
+                    if( unitMove ) officer->SetWaypoint( teamControls.m_mousePos );
                     if( primaryFire ) officer->SetOrders( teamControls.m_mousePos );
                     if( teamControls.m_secondaryFireDirected ) officer->SetOrders( teamControls.m_mousePos );
                     break;
@@ -1591,9 +1591,9 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
                 case Entity::TypeArmour:
                 {
                     g_app->m_helpSystem->PlayerDoneAction( HelpSystem::UseArmour );
-                    
+
                     Armour *armour = (Armour *) entity;
-                    if( unitMove ) armour->SetWayPoint( teamControls.m_mousePos );                         
+                    if( unitMove ) armour->SetWayPoint( teamControls.m_mousePos );
                     if( primaryFire ) armour->SetOrders( teamControls.m_mousePos );
 					if( teamControls.m_unitSecondaryMode ) armour->SetOrders( teamControls.m_mousePos );
                     break;
@@ -1607,7 +1607,7 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
 int Location::GetUnitId( Vector3 const &startRay, Vector3 const &direction, unsigned char team, float *_range )
 {
     if( team == 255 ) return -1;
-            
+
     float closestRangeSqd = FLT_MAX;
     int unitId = -1;
 
@@ -1631,7 +1631,7 @@ int Location::GetUnitId( Vector3 const &startRay, Vector3 const &direction, unsi
                     {
                         Entity *entity = theUnit->m_entities[i];
                         Vector3 spherePos = entity->m_pos+entity->m_centrePos;
-                        float sphereRadius = entity->m_radius * 1.5f;             
+                        float sphereRadius = entity->m_radius * 1.5f;
                         Vector3 hitPos;
 
                         bool entityHit = RaySphereIntersection( startRay, direction, spherePos, sphereRadius, 1e10, &hitPos );
@@ -1640,7 +1640,7 @@ int Location::GetUnitId( Vector3 const &startRay, Vector3 const &direction, unsi
                             float centrePosX, centrePosY, rayHitX, rayHitY;
                             g_app->m_camera->Get2DScreenPos( spherePos, &centrePosX, &centrePosY );
                             g_app->m_camera->Get2DScreenPos( hitPos, &rayHitX, &rayHitY );
-            
+
                             float rangeSqd = pow(centrePosX - rayHitX, 2) + pow(centrePosY - rayHitY, 2);
                             if( rangeSqd < closestRangeSqd )
                             {
@@ -1679,7 +1679,7 @@ WorldObjectId Location::GetEntityId( Vector3 const &startRay, Vector3 const &dir
             if( !ent->m_dead )
             {
                 Vector3 spherePos = ent->m_pos+ent->m_centrePos;
-                float sphereRadius = ent->m_radius * 1.5f;             
+                float sphereRadius = ent->m_radius * 1.5f;
                 Vector3 hitPos;
                 bool rayHit = RaySphereIntersection( startRay, direction, spherePos, sphereRadius, 1e10, &hitPos );
                 if( rayHit )
@@ -1709,7 +1709,7 @@ WorldObjectId Location::GetEntityId( Vector3 const &startRay, Vector3 const &dir
 
 
 int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsigned char teamId, float _maxDistance, float *_range )
-{    
+{
     float closestRangeSqd = FLT_MAX;
     int buildingId = -1;
 
@@ -1726,7 +1726,7 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
             {
                 Vector3 hitPos;
                 bool rayHit = false;
-                
+
                 if( building->m_type == Building::TypeRadarDish )
                 {
                     rayHit = building->DoesRayHit( rayStart, rayDir, 1e10 );
@@ -1737,7 +1737,7 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
                 {
                     rayHit = RaySphereIntersection( rayStart, rayDir, building->m_centrePos, building->m_radius, _maxDistance, &hitPos );
                 }
-                
+
                 if( rayHit )
                 {
                     float centrePosX, centrePosY, rayHitX, rayHitY;
@@ -1747,7 +1747,7 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
                     float rangeSqd = pow(centrePosX - rayHitX, 2) + pow(centrePosY - rayHitY, 2);
                     if( rangeSqd < closestRangeSqd )
                     {
-				        buildingId = building->m_id.GetUniqueId();                    
+				        buildingId = building->m_id.GetUniqueId();
                         closestRangeSqd = rangeSqd;
                     }
                 }
@@ -1768,10 +1768,10 @@ void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _ty
 {
     float distance = ( _target - _pos ).Mag();
     float force = sqrtf(distance) * 8.0f;
-    
+
     int grenadeResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeGrenade );
     if( _fromTeamId == 1 ) grenadeResearch = 4;
-    
+
 	float maxForce = ThrowableWeapon::GetMaxForce( grenadeResearch );
 
     if( force > maxForce ) force = maxForce;
@@ -1781,7 +1781,7 @@ void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _ty
     front.Normalise();
 
     ThrowableWeapon *weapon = NULL;
-    
+
     switch( _type )
     {
         case WorldObject::EffectThrowableGrenade:             weapon = new Grenade( _pos, front, force );             break;
@@ -1812,7 +1812,7 @@ void Location::FireRocket( Vector3 const &_pos, Vector3 const &_target, unsigned
     Rocket *r = new Rocket(_pos, _target);
     r->m_fromTeamId = _teamId;
 
-    int weaponId = m_effects.PutData( r );    
+    int weaponId = m_effects.PutData( r );
     r->m_id.Set( _teamId, UNIT_EFFECTS, weaponId, -1 );
     r->m_id.GenerateUniqueId();
     r->Initialise();
@@ -1857,7 +1857,7 @@ void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel )
 
     Vector3 flashFront = _vel;
     flashFront.Normalise();
-    
+
     MuzzleFlash *mf = new MuzzleFlash( _pos, flashFront, 40.0f, 2.0f);
     int index = m_effects.PutData( mf );
     mf->m_id.Set( -1, UNIT_EFFECTS, index, -1 );
@@ -1877,14 +1877,14 @@ void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned cha
         case 3 :        lifetime = 0.8f;            break;
         case 4 :        lifetime = 1.0f;            break;
     }
-    
+
     Laser *l = m_lasers.GetPointer();
     l->m_pos = _pos;
     l->m_vel = _vel;
     l->m_fromTeamId = _teamId;
     l->Initialise(lifetime);
 
-    
+
     //
     // Create muzzle flash
 
@@ -1917,22 +1917,22 @@ void Location::Bang( Vector3 const &_pos, float _range, float _damage )
 	numCores += syncfrand(numCores);
     for( int p = 0; p < numCores; ++p )
     {
-        Vector3 vel( syncsfrand( 20.0f ), 
-                     10.0f + syncfrand( 10.0f ), 
+        Vector3 vel( syncsfrand( 20.0f ),
+                     10.0f + syncfrand( 10.0f ),
                      syncsfrand( 20.0f ) );
         float size = 120.0f + syncfrand(60.0f);
-        g_app->m_particleSystem->CreateParticle( _pos + g_upVector * _range * 0.3f, vel, 
+        g_app->m_particleSystem->CreateParticle( _pos + g_upVector * _range * 0.3f, vel,
 												 Particle::TypeExplosionCore, size );
     }
 
     int numDebris = max(1, _range * _damage * 0.005f);
     for( int p = 0; p < numDebris; ++p )
     {
-        Vector3 vel( syncsfrand( 30.0f ), 
-                     20.0f + syncfrand( 20.0f ), 
+        Vector3 vel( syncsfrand( 30.0f ),
+                     20.0f + syncfrand( 20.0f ),
                      syncsfrand( 30.0f ) );
         float size = 30.0f + syncfrand(20.0f);
-        g_app->m_particleSystem->CreateParticle( _pos + g_upVector * _range * 0.5f, vel, 
+        g_app->m_particleSystem->CreateParticle( _pos + g_upVector * _range * 0.5f, vel,
                                                  Particle::TypeExplosionDebris, size );
     }
 
@@ -1995,19 +1995,19 @@ void Location::Bang( Vector3 const &_pos, float _range, float _damage )
 #ifdef USE_DIRECT3D
 	if(g_deformEffect && isVisible) g_deformEffect->AddPunch( _pos, _range );
 #endif
-    
-	
-	// 
+
+
+	//
 	// Wow, that was a big bang. Maybe we killed a building
 
     float maxBuildingRange = _range * 3.0f;
     for( int i = 0; i < m_buildings.Size(); ++i )
     {
         if( m_buildings.ValidIndex(i) )
-        {	    
+        {
 		    Building *building = m_buildings[i];
 		    float dist = (_pos - building->m_pos).Mag();
-            
+
             if( dist < maxBuildingRange )
             {
                 //float fraction = (_range*3.0f - dist) / _range*3.0f;
@@ -2033,11 +2033,11 @@ void Location::CreateShockwave( Vector3 const &_pos, float _size, unsigned char 
 
 void Location::SetupFog()
 {
-    float fogCol[] = {  g_app->m_backgroundColour.r/255.0f, 
-                        g_app->m_backgroundColour.g/255.0f, 
-                        g_app->m_backgroundColour.b/255.0f, 
+    float fogCol[] = {  g_app->m_backgroundColour.r/255.0f,
+                        g_app->m_backgroundColour.g/255.0f,
+                        g_app->m_backgroundColour.b/255.0f,
                         0 };
-    
+
 	glHint		( GL_FOG_HINT, GL_DONT_CARE );
     glFogf      ( GL_FOG_DENSITY, 1.0f );
     glFogf      ( GL_FOG_START, 1000.0f );
@@ -2071,9 +2071,9 @@ void Location::SetupLights()
 	for (int i = 0; i < m_lights.Size(); i++)
 	{
 		Light *light = m_lights.GetData(i);
-	    
+
 		GLfloat ambCol[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		
+
 		Vector3 front(light->m_front[0], light->m_front[1], light->m_front[2]);
         front.Normalise();
 		GLfloat frontAsFourFloats[] = { front.x, front.y, front.z, 0.0f };
@@ -2100,27 +2100,27 @@ void Location::SetupLights()
 
 
 int Location::ChristmasModEnabled()
-{    
+{
 #ifdef DEMOBUILD
     return 0;
 #endif
-   
+
     if( g_app->m_editing ) return 0;
-    
+
     // Last 2 weeks in December only
     // Also allow user to disable if he wishes
 
 	time_t now = time(NULL);
     tm *theTime = localtime(&now);
-    
-    if( theTime->tm_mon == 11 && 
+
+    if( theTime->tm_mon == 11 &&
         (theTime->tm_mday == 25 || theTime->tm_mday == 26) )
     {
-        int prefValue = g_prefsManager->GetInt( "ChristmasEnabled", 1 );        
+        int prefValue = g_prefsManager->GetInt( "ChristmasEnabled", 1 );
         if( prefValue == 1 ) return 1;
         return 2;
     }
-    
+
     return 0;
 }
 
@@ -2132,7 +2132,7 @@ bool Location::IsFriend( unsigned char _teamId1, unsigned char _teamId2 )
 
                                         /*  green   red     player  player  */
 
-    bool friends[NUM_TEAMS][NUM_TEAMS] = {  
+    bool friends[NUM_TEAMS][NUM_TEAMS] = {
                                             true,   false,  true,   false,  // Green
                                             false,  true,   false,  false,  // Red
                                             true,   false,  true,   true,   // Player
@@ -2141,7 +2141,7 @@ bool Location::IsFriend( unsigned char _teamId1, unsigned char _teamId2 )
 
 
 //      STRESS TEST SETTINGS
-//    bool friends[NUM_TEAMS][NUM_TEAMS] = {  
+//    bool friends[NUM_TEAMS][NUM_TEAMS] = {
 //                                            true,   false,  false,   false,  false,  false,  false,  false,      // Green
 //                                            false,  true,   false,  false,  false,  false,  false,  false,      // Red
 //                                            false,   false,  true,   true,   false,  false,  false,  false,      // Player

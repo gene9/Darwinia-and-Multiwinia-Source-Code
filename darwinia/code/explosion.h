@@ -11,7 +11,7 @@
 // Class Tumbler
 //*****************************************************************************
 
-// This class maintains a rotation matrix that is used to make an ExplodingTri 
+// This class maintains a rotation matrix that is used to make an ExplodingTri
 // tumble as it flys through space. The m_rotMat matrix has a little bit of
 // rotation multiplied on to it every frame.
 class Tumbler

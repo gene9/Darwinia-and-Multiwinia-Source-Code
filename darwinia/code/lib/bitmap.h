@@ -21,7 +21,7 @@ private:
 	void Read8BitLine(int length, BinaryReader *f, RGBAColour *pal, int line);
 	void Read24BitLine(int length, BinaryReader *f, int line);
 	void LoadBmp(BinaryReader *_in);
-	
+
 	void WriteBMPFileHeader(FILE *_out);
 	void WriteWinBMPInfoHeader(FILE *_out);
 	void Write24BitLine(FILE *_out, int _y);
@@ -61,9 +61,9 @@ public:
 
 	RGBAColour GetInterpolatedPixel(float x, float y) const;
 
-	void Blit(int srcX,  int srcY,  int srcW,  int srcH, const BitmapRGBA *_srcBmp, 
+	void Blit(int srcX,  int srcY,  int srcW,  int srcH, const BitmapRGBA *_srcBmp,
 			  int destX, int destY, int destW, int destH, bool _bilinear);
-    
+
     void ApplyBlurFilter(float _scale);
     void ApplyDilateFilter();
 

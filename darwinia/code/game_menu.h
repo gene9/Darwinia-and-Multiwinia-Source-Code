@@ -63,7 +63,7 @@ public:
     void SetupMainPage();
     void SetupDarwiniaPage();
 
-    void CreateMenuControl( char const *name, int dataType, void *value, int y, 
+    void CreateMenuControl( char const *name, int dataType, void *value, int y,
 							float change, float _lowBound, float _highBound,
                             DarwiniaButton *callback, int x, int w, float fontSize);
 

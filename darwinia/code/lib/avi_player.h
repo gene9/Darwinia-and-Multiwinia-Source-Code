@@ -7,13 +7,13 @@
 class AviPlayer
 {
 protected:
-    PAVIFILE            m_aviFile;    
+    PAVIFILE            m_aviFile;
     AVIFILEINFO         m_aviFileInfo;
 
     PAVISTREAM          m_streamVideo;
     PGETFRAME           m_streamVideoFrame;
     BITMAPINFOHEADER    m_streamVideoInfo;
-    
+
     unsigned char       *m_currentFrame;
     int                 m_previousFrameIndex;
 

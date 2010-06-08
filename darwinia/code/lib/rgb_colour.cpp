@@ -55,8 +55,8 @@ RGBAColour RGBAColour::operator + (RGBAColour const &_b) const
 // *** Operator -
 RGBAColour RGBAColour::operator - (RGBAColour const &_b) const
 {
-	return RGBAColour((r - _b.r), 
-					  (g - _b.g), 
+	return RGBAColour((r - _b.r),
+					  (g - _b.g),
 					  (b - _b.b),
 					  (a - _b.a));
 }
@@ -157,7 +157,7 @@ void RGBAColour::AddWithClamp( RGBAColour const &_b)
     int newR = (int)r + int( _b.r * alpha );
     int newG = (int)g + int( _b.g * alpha );
     int newB = (int)b + int( _b.b * alpha );
-    
+
     newR = max(newR, 0);
     newG = max(newG, 0);
     newB = max(newB, 0);
@@ -180,18 +180,18 @@ void RGBAColour::MultiplyWithClamp(float _scale)
 	else
 		r = 255;
 
-	if ((float)g * _scale < 255.0f)	
+	if ((float)g * _scale < 255.0f)
 		g = (unsigned char) ((float)g * _scale);
 	else
 		g = 255;
-	
-	if ((float)b * _scale < 255.0f)	
+
+	if ((float)b * _scale < 255.0f)
 		b = (unsigned char) ((float)b * _scale);
 	else
 		b = 255;
-	
-	if ((float)a * _scale < 255.0f)	
+
+	if ((float)a * _scale < 255.0f)
 		a = (unsigned char)((float)a * _scale);
-	else 
+	else
 		a = 255;
 }

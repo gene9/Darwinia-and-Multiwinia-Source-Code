@@ -27,7 +27,7 @@ public:
     Vector3			m_pos;
     unsigned char	m_size;
     float			m_burst;
-    
+
 	unsigned short	m_links[GLOBALINTERNET_ITERATIONS];
 	unsigned short	m_numLinks;
 };
@@ -60,10 +60,10 @@ protected:
 	unsigned short	        m_numLinks;
     LList       <int>       m_leafs;
     LList       <int>       m_bursts;
-    
+
     int                     m_nearestNodeToCentre;
     float                   m_nearestDistance;
-    
+
     void            GenerateInternet();
     unsigned short  GenerateInternet( Vector3 const &_pos, unsigned char _size );
     void            DeleteInternet();

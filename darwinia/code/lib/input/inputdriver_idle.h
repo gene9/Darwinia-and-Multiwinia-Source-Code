@@ -12,11 +12,11 @@ private:
 	double m_lastChecked;
 
 	bool acceptDriver( std::string const &name );
-	
+
 	control_id_t getControlID( std::string const &name );
 
 	inputtype_t getControlType( control_id_t control_id );
-	
+
 	condition_t getConditionID( std::string const &name, inputtype_t &type );
 
 public:

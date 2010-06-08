@@ -18,7 +18,7 @@ class ProfileWindow : public DarwiniaWindow
 {
 protected:
 	int		m_yPos;
-	
+
 	void RenderElementProfile(ProfiledElement *_pe, unsigned int _indent);
 
 

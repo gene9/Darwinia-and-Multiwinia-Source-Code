@@ -66,7 +66,7 @@ void SpeccyLoader::DrawText()
 void SpeccyLoader::Header(float _endTime, bool _drawText)
 {
 	m_mode = ModeHeader;
-	
+
 	while (!g_inputManager->controlEvent( ControlSkipMessage ) && GetHighResTime() < _endTime)
 	{
         if( g_app->m_requestQuit ) break;
@@ -104,7 +104,7 @@ void SpeccyLoader::Header(float _endTime, bool _drawText)
 			}
 		}
 
-		glColor3ub(200,200,200);	
+		glColor3ub(200,200,200);
 		glBegin(GL_QUADS);
 			glVertex2i(32, 32);
 			glVertex2i(288, 32);
@@ -164,7 +164,7 @@ void SpeccyLoader::Data(float _endTime, bool _drawText)
 			}
 		}
 
-		glColor3ub(200,200,200);	
+		glColor3ub(200,200,200);
 		glBegin(GL_QUADS);
 			glVertex2i(32, 32);
 			glVertex2i(288, 32);
@@ -210,7 +210,7 @@ void SpeccyLoader::Silence(float _endTime, bool _drawText)
 			glVertex2i(0, 256);
 		glEnd();
 
-		glColor3ub(200,200,200);	
+		glColor3ub(200,200,200);
 		glBegin(GL_QUADS);
 			glVertex2i(32, 32);
 			glVertex2i(288, 32);
@@ -276,7 +276,7 @@ void SpeccyLoader::Screen()
 			}
 		}
 
-		glColor3ub(200,200,200);	
+		glColor3ub(200,200,200);
 		glBegin(GL_QUADS);
 			glVertex2i(32, 32);
 			glVertex2i(288, 32);
@@ -287,7 +287,7 @@ void SpeccyLoader::Screen()
 
 		DrawText();
 
-		
+
 		//
 		// Loading screen image
 
@@ -319,7 +319,7 @@ void SpeccyLoader::Screen()
 		{
 			return;
 		}
-		
+
 		FlipBuffers();
 		AdvanceSound();
 	}
@@ -345,7 +345,7 @@ void SpeccyLoader::Run()
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "LoaderSpeccy", SoundSourceBlueprint::TypeMusic );
 
 	Silence(GetHighResTime() + 1.5f,	false);
-	
+
 	Header(GetHighResTime() + 4.8f,		false);
 	Data(GetHighResTime() + 0.07f,		false);
 	Silence(GetHighResTime() + 1.1f,	true);

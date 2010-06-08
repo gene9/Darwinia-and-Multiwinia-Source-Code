@@ -16,18 +16,18 @@ protected:
 
     Vector3     m_entrancePos;
     Vector3     m_entranceFront;
-    
-    Vector3     m_target;    
+
+    Vector3     m_target;
     int         m_receiverId;
     float       m_range;
     float       m_signal;
 
     bool        m_newlyCreated;
-    
+
     bool        m_horizontallyAligned;
     bool        m_verticallyAligned;
     bool        m_movementSoundsPlaying;
-    
+
     Vector3     GetDishPos      ( float _predictionTime );      // Returns the position of the transmission point
     Vector3     GetDishFront    ( float _predictionTime );      // Returns the front vector of the dish
 

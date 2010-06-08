@@ -62,7 +62,7 @@ int Loader::SetupFor2D( int _screenW )
 
 void Loader::FlipBuffers()
 {
-	g_inputManager->PollForEvents(); 
+	g_inputManager->PollForEvents();
 	g_inputManager->Advance();
 	glFinish();
 	g_windowManager->Flip();
@@ -79,7 +79,7 @@ void Loader::AdvanceSound()
 	g_gameTime = realTime;
 
     g_app->m_soundSystem->Advance();
-    g_soundLibrary2d->TopupBuffer();    
+    g_soundLibrary2d->TopupBuffer();
 }
 
 
@@ -117,7 +117,7 @@ char *Loader::GetLoaderName( int _index )
 
     // TODO : These strings should be encrypted
 
-    static char *loaderNames[] = {  
+    static char *loaderNames[] = {
                                     "Spectrum",
                                     "Matrix",
                                     "Fodder",
@@ -160,7 +160,7 @@ int Loader::GetRandomLoaderIndex()
     for( int i = 0; i < NumLoaders; ++i )
     {
         int thisChance = loaderChance[i];
-        if( chosenChance >= totalChance && 
+        if( chosenChance >= totalChance &&
             chosenChance < totalChance + thisChance )
         {
             return i;
@@ -173,7 +173,7 @@ int Loader::GetRandomLoaderIndex()
 
 
 int Loader::GetLoaderIndex( char *_name )
-{    
+{
 
     if( stricmp( _name, "random" ) == 0 )
     {
