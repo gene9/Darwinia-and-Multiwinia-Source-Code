@@ -1,0 +1,29 @@
+in data\textures\unicode there are three fonts:
+	speccy
+	square
+	editor
+	
+The Latin-1 characters can be found in the files with extension
+	.0020.00ff.bmp
+	
+The Cyrillic characters can be found in the files with extension 
+	.0410.042f.bmp
+	.0430.044f.bmp
+	
+The only font with Cyrillic characters is Speccy, so what I've
+done is copy Speccy -> Square and Editor. However, ideally, 
+we would like to have Cyrillic glyphfs for "square" and "editor" fonts
+
+I've included the latin-1 characters so that you can see what
+style the fonts should be.
+
+Would it be possible to make up some custom Square and Editor 
+cyrillic bitmaps?
+
+If you modify the textures, you can try it out in game by copying 
+the data directory here to C:\Program Files\Multiwinia
+(so that you get C:\Program Files\Multiwinia\data\...)
+
+All the best
+
+John

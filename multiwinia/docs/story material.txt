@@ -1,0 +1,95 @@
+
+Abstract.  There will be a number of supporting documents and prints that come
+           with the game, mostly detailing Dr Sepulvedas failed life.
+
+
+
+==========
+PROTOLOGIC
+==========
+
+Dr Sepulveda is a pioneering British home computer developer in the 1980s.  He
+starts up his own company and builds a highly successful games console called 
+the Protologic 5000.  This console sells very well, especially in the UK, and
+numerous classic games are written for it over a 5 year period.
+
+During this time Dr Sepulveda is working on the next generation of home
+computer - the Protologic 68000.  He makes numerous promises about this console
+and the hype really starts to build up.
+
+The Protologic 68000 is released in 1987.  It goes on to sell ten thousand
+units in the first few days.  
+
+Unfortunately there is a problem.  People begin to find that their home 
+consoles just burn out without any explanation.  Some of the returned units are
+examined, and it is discovered the power supply becomes heavily overloaded
+and dies, taking the machine with it.  
+
+This makes the units highly dangerous due to the risk of fire, so all units are
+recalled to the manufacturing factory.  This is extremely embarassing for 
+Protologic and causes massive financial problems, as all fifty thousand initial
+units are recalled to the factory.  There is much press coverage about the high
+profile failure of the console.
+
+Protologic rush to design and manufacture a power supply with twice the 
+capacity, but this does not solve the problem.  Protologic are forced to refund
+the purchase price of all units to their retailers.  Facing mounting debts and
+increased public ridicule, Dr Sepulvedas company Protologic Entertainment 
+goes bankrupt.
+
+
+===============
+HYPERPROCESSING
+===============
+
+Dr Sepulveda himself goes into hiding as a recluse, with nobody really certain
+what happened to him.  After spending many years rethinking his life, Sepulveda
+eventually returns to the unsolved problem of what exactly went wrong with the
+power supplies that caused such a massive failure.
+
+After much experimentation (mostly on returned units, now stock-piled in a
+large warehouse and scheduled for destruction), Sepulveda successfully designs
+a power supply that can hold while the Protologic 68000 is running.  He 
+discoveres that after a certain period of time, the 68000 will enter a state of
+Hyperprocessing, where every component in the machine resonates on a quantum
+level, producing massive amounts of processing power.
+
+Sepulveda realises that some quirk of the 68000's construction has led him to
+build the worlds first quantum computer, completely by accident.  It is little
+wonder the meagre 50w power supplies burnt out with such regularity - they 
+would play games normally, then eventually achieve hyperprocessing for around
+10ms before completely burning out the power supply.
+
+More experiments lead Sepulveda to discover that the 68000's are doing much
+more than just running fast - they are operating in a completely different way
+to conventional binary computer systems.  They have become much more than the
+sum of their parts.
+
+Dr Sepulveda uses the last of his earnings from the early days to buy back all
+50,000 Protologic 68000 machines at a highly reduced price.  He even buys the
+warehouse they are stored in.  He has an idea of how to turn these 
+hyperprocessing systems into the worlds biggest and most advanced parallel
+computer system in the world - and to use it to simulate the one thing that
+conventional computers cannot - Life.
+
+
+===================
+DARWIN DIGITAL LIFE
+===================
+
+Dr Sepulveda fits the warehouse with a massive distributed power supply and
+connecting network, and wires 10,000 Protologic 68000's into a huge grid.  Each
+computer is attached to the building's power supply, and networked to the 
+neighbouring Protologic systems.  He begins to bring the Protologic's online
+a few at a time, waiting until each one is Hyperprocessing before continuing.
+He begins to see that neighbouring 68000's are communicating and sharing 
+processing resources with each other, forming a huge distributed grid of 
+Quantum computing power.
+
+Once the network is up and running he starts work building a huge virtual 
+world.  He builds several islands and locations and uses the Hyperprocessing
+computers to simulate individual inhabitants of this world.  He finds a way
+to represent a single hyperprocessing computer within this world - as a Digital
+Spirit - which can then be harnessed and shaped by reprogramming into a life
+form.  He watches as these new life forms begin to grow and learn about the
+world he has built for them.

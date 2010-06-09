@@ -1,0 +1,144 @@
+
+=========
+TASK LIST
+=========
+
+- All levels layout
+- All levels objects
+- Global Map
+- Mission briefings / objectives system
+- Sound / Music
+- Intros
+- Multiplayer / Co-operative
+- Main menu / options menu / multiplayer menu
+- Animation exporter / Shape exporter / Shape renderer
+- Localisation
+
+
+
+
+==========                                                                              ==================          ==========
+MILESTONES                                                                              DONE BY                     CONFIDENCE
+==========                                                                              ==================          ==========
+
+- First Playable                                                                        Early October 2003              V.High
+    A single level completely playable from start to finish
+    The player can succeed or fail
+    Almost all placeholder art / sounds
+
+- Second Playable                                                                       Late December 2003                High
+    Top level game system in place - mission briefings, global world map,
+    Save game/load game system
+    Several playable levels
+    This is a cut down version of the final game
+        ie all major gameplay / technical features are working
+        but only 20% of levels are in place
+
+- Alpha                                                                                 April 2004                         Low
+    All missions working but not balanced / tweaked                                                             (many unknowns)
+    Game can be played all the way through for the first time
+    Ready for internal testing 
+    Possible still to add new features if required
+    Final iterations of graphics / sounds
+    English only
+
+- Beta                                                                                  Begins April 2004                 High
+    We think its the final version, ie everything done                                  Ends June 2004
+    All features locked unless major problems found
+    Lots of difficulty tweaking
+    Lots of bug fixing
+    Compatability testing
+    Performance tweaking
+    Box art / "Manual" / Web site
+    Localisation / other language builds
+    Demo
+        A small taster from the game
+        Tweaked and modified to maximise sales
+        Extra features specific to demo ie mini plot
+
+- Gold                                                                                  June 2004
+    All done
+
+
+
+
+==================                                          ============        ============        ==========
+MAC FIRST PLAYABLE                                          MINIMUM TIME        MAXIMUM TIME        CONFIDENCE
+==================                                          ============        ============        ==========
+
+- Select / Purchase / setup Mac hardware                            
+- Purchase / install codewarrior 
+- Install CVS / networking / additional utils               1 day               3 days              High
+- Fix immediate compile problems                            1 day               3 days              Medium
+- Port major non-portable systems                           1 week              3 weeks             Medium
+    Graphics driver 
+    Sound driver
+    Input driver        
+    Window managing
+    Networking              (probably bypassable)
+    High resolution timer
+- Sort out control issues                                   1 week              2 weeks             High 
+    mac has one mouse button/different alt-keys
+- Performance enhancements                                                      1 week              High                                                            
+- Make a standalone version                                     
+    All libs, drivers, tested on different OS etc
+
+                                        TOTAL TIME          2 weeks             7 weeks
+
+
+========
+HARDWARE
+========
+
+Requirements:
+At least Power Mac G4, 800Mhz
+NVIDIA GeForce FX or GeForce 4   (definately not GeForce MX)
+or Radion 9600 or above
+LAN, CD Burner
+
+
+Power Mac G5                        (best case, needs monitor)
+1.6Ghz  256Mb RAM
+80Gb HD, CD Burner
+NVIDIA GeForce FX 5200 Ultra
+LAN
+No monitor, keyboard or mouse
+Seen on EBAY for £1000
+http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&item=2759444941&category=4607
+Seen on Apple.com for £1549
+
+
+iMac                                (everything we need)
+1.25Ghz G4 processor
+GeForce FX 5200 Ultra
+80Gb HD, CD Burner
+17 inch flat panel monitor
+256Mb RAM
+LAN
+Available for £1449
+http://store.apple.com/Apple/WebObjects/ukstore?family=iMacG4
+
+
+Powerbook                           (everything we need + portable for demos)
+15" TFT screen
+1Ghz G4 Processor
+256MB Ram
+ATI Mobility Radeon 9600
+60Gb HD, CD Burner
+Available for £1599
+http://store.apple.com/Apple/WebObjects/ukstore
+
+
+
+========
+SOFTWARE
+========
+
+CodeWarrior 
+for Mac OS9 and OSX
+$399
+http://www.metrowerks.com
+
+
+CVS Client (free)
+SSH Client (free)

@@ -1,0 +1,6 @@
+levels/mp_koth_2P_1.txt
+levels/mp_koth_4P_1.txt
+levels/mp_cts_2P_1.txt
+thumbnails/mp_koth_2P_1.bmp
+thumbnails/mp_koth_4P_1.bmp
+thumbnails/mp_cts_2P_1.bmp

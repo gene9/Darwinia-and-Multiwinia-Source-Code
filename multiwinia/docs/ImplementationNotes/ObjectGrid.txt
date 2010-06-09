@@ -1,0 +1,24 @@
+Assumptions:
+
+- 100,000 objects in the world
+- All objects need to know all other objects in neighbouring cells (9 cells total)
+- All update about 10 times per second
+- All objects move from one cell to an adjacent one regularly
+- In order to get a small number of neighbours we will have a grid of 632x632
+- Using the 80/20 rule we know most cells will be empty. 80% of objects in 20% of cells.
+- Average 10 objects in the 20% of occupied cells.
+
+- Landscape is 10,000m square
+- Man can run at 3 m/s
+- Cell is 15m across
+- Man takes 5 seconds to cross a cell
+- Therefore 20,000 cell changes per second (total for all objects) (3e4)
+
+
+Things That Need To Fast:
+
+- Find all objects nearby (100,000 * 10 * 9 = 9e6 per second)
+- Remove from cell (3e4)
+- Add to cell (3e4)
+
+

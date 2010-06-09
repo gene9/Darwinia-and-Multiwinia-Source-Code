@@ -1,0 +1,25 @@
+
+- The Server currently has a DArray of ServerToClient objects
+    These represent a network socket connection
+    Their index represents their teamId
+
+- Due to arrival of Virtual Players, a single Client might have more than one team
+
+- Modify Server to include two structures:
+    DArray of Teams          <- includes which Client is responsible for this team
+    DArray of Clients        <- includes socket connection
+
+- The process of a new Client joining should be split into two seperate events:
+    
+    A new Client joins.  Establish a new socket connection.
+    A Client requests a Team assignment.  This may be a Player or a Virtual Player.
+    
+- This will permit 
+    Clients without a Team (spectators)
+    Clients with three Teams (Single Player Game)
+    Clients with one Team (Multi Player Game)
+    or Clients playing a Multi Player game, with an AI running locally As Well
+
+
+
+

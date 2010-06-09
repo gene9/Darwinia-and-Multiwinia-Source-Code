@@ -1,0 +1,14 @@
+# Example TestBed config script
+
+# Set the game progression to random - it will pick a random game mode and map to play
+SetProgression RANDOM
+
+# Set the name of the testbed server
+SetTestBedName TESTBED_GodOfCode
+
+
+# Add in the sequence. The first number is the game index and the second is the rand seed to use
+AddSequenceItem 0 10
+AddSequenceItem 10 20
+
+# End of script

@@ -1,0 +1,74 @@
+
+=============
+TOP LEVEL MAP
+=============
+
+
+- Seperate landscape definition from mission definition
+    Move landscape def and static tile data into seperate map files
+    Each level file specifies a map file at the start
+    Map files have a list of static buildings which will appear on all levels on this map
+    Level files also have a list of buildings, which are specific to the level
+    All buildings need a new flag which specifies if they are static or dynamic
+    Put building flag into editor
+
+- Top level landscape Auto generated from all maps
+    Much lower resolution
+    Light data for each island?
+
+- Need to be able to click on a map to go to level
+    Transition effect
+    Disguise loading
+
+- Need to be able to view from higher/further
+    Less fog
+    No clouds
+    Larger back clip plane
+
+- Scaled rendering
+    Big buildings still need to be rendered
+        Main reset switch
+        Trunk Line Port
+    Waves / water effect
+    Show links between islands
+    Show ownership of each level Red or Green
+
+- Ability to show mission information to player
+    Highlight hot spots
+    Highlight/summarise available missions
+    
+- Mission completion data
+    Test conditions for detecting completion
+        eg Building destroyed
+        >300 green guys in safe area
+        Research carried to transmitter
+        All red guys dead
+        etc
+    List of global data changes
+
+- Need starting Global Data File (for New Game)
+
+GLOBAL DATA FILE
+    For each map
+        X Z position in the global world
+        Current map file                    (specifies landscape tiles + static buildings)
+        current level file                  (specifies units/buildings etc)
+
+    List of global buildings
+        Unique ID
+        Global X Z position            
+        Trunk line port
+            Link data to link to another trunk line port
+            Ownership / Enabled / Disabled
+            Can calculate orientation from global data
+
+    Research
+        List of research items
+            Percentage research complete / Level of research
+            eg 250% complete means v2.0 available, v3.0 in production
+
+    Global War State
+        Green / Red strength
+        Green transmitter progress
+        Reset All progress etc
+            

@@ -1,0 +1,6 @@
+levels/mp_blitzkrieg_2p_2.txt
+levels/mp_blitzkrieg_3P_2.txt
+levels/mp_blitzkrieg_4P_2.txt
+thumbnails/mp_blitzkrieg_2p_2.bmp
+thumbnails/mp_blitzkrieg_3P_2.bmp
+thumbnails/mp_blitzkrieg_4P_2.bmp

@@ -1,0 +1,3 @@
+editor_font.bmp
+landscape.bmp
+viriifull.bmp

@@ -1,0 +1,156 @@
+
+=========
+THE WORLD
+=========
+
+    - Dr Sepulveda has created a large virtual world
+    - The world is made up of lots of islands, each one connected to its 
+        neighbours by large links
+    - Populated by a form of artificial life - The Green Guys
+    - These Green Guys just amble around
+    - His plan is to bring tourists in, fly them around in a digital Zepellin,
+        then allow them to play various games set in this world
+
+    - Something goes wrong, some Red Virii are created
+    - These Red Virii go on the rampage, and start killing Green Guys
+    - They then drag the Green spirits back to "Nests", 
+        and new Red Virii are spawned
+    - As their population grows, they begin to develop Emergent Intelligence
+
+    - The Red Virii quickly take control of various key things and hide them
+    - eg
+        Sepulvedas research documents
+        Programs for Engineers, Debug tools etc
+        Communication devices
+
+
+
+===========
+VIRII TYPES
+===========
+
+    - Basic Red Virii
+        Small individual entity, shootable
+        Moves fast and erratically
+        Once in range comes towards target mindlessly
+        Attaches to target, kills it after a couple of seconds
+        Carries spirit back to Nest
+
+    - Swoopers
+        Swoops down on target from air
+        Picks up target, drops over Nest
+
+    - Kamikaze bombers
+        Walk towards target, explode
+        Kill lots
+
+    - "Motherships"
+        Slow moving, large, fly overhead
+        Drop loads of new Virii or eggs all over the place
+
+    - Carrier
+        Slow moving, large fly overhead
+        Lots of Virii attach to it and move about the landscape
+
+    - Spawn plant
+        Gradually builds up charge, before discharging lots of Virii
+
+
+
+==========
+GREEN GUYS
+==========
+
+    - Initially useless, ambling, slow, unarmed
+    - Need to be ushered from one place to another
+    - Gradually power up over the course of the game
+        New weapons eg lasers
+        Speed
+        Intelligence
+
+    - Initially they are slaughtered because they have no weaponry
+    - You start to see Green counter-attacks a few levels into the game
+    - By the end, Green are in full attack mode
+     
+
+
+=============
+MISSION TYPES
+=============
+
+    - Lemmings style recovery of Green Guys
+        escort them to safety while being waylaid by Virii
+
+    - Recovery of stolen Research / Code
+        Gets you a new object / weapon etc
+
+    - Eliminate all Red Guys
+        Spawners / Motherships require special action to kill
+
+    - Capture comms port to allow access to new location
+
+    - Upgrading of Green Guys
+        Mid term objectives such as Research New Weapon
+        Might require resources eg 200 spirits, some memory, some code
+        Capture and hold a Processor while your program runs
+
+    - Sepulveda has a number of programs almost ready to run
+        eg New Laser, Level Wipe, Air Strike
+        Each requires resources to run eg 200 spirits, 500 CPU cycles, 50Mb mem
+        You can capture these resources "on the side" as you perform missions
+        Then you can run programs when you need to
+    
+    - Escort the Last Reprogrammer Engineer to a de-rez terminal, so Sepulveda 
+        can extract his Reprogram code and give it to your squad
+ 
+
+===================
+YOUR DIRECT CONTROL
+===================
+
+    - Zepellin
+        Allows you to fly around quite slowly, high up
+        This is your fall-back transport
+
+    - Your Insertion Squad
+        Cannon fodder style control
+        Lasers, grenades, rockets
+        Very fast
+
+    - Defender squad
+        Fly overhead, top down view, very fast, lots of bombs
+
+    - Gun Turrets 
+    - Artillery guns
+
+    - Fast APC style vehicle, size 5 - 10 people
+    - Big slow troop mover for green guys
+
+
+
+======
+SKILLS
+======
+
+    - There are a set of "skills" in the world
+    - List:                
+        Laser       -   Scale defines range / accuracy
+        Grenade     -   Scale defines how many you have
+        Rocket      -   Scale defines how many you have
+        
+        Move    1   -   Walk slowly, no group ordering
+                2,3 -   Faster, more grouped together
+        
+        Shield      -   how many lives you have
+        
+        Think   1   -   Amble around
+        Think   2   -   Run away if scared
+        Think   3   -   Shoot at nearby enemies
+
+        Reprogram 
+        Harvest
+        Bridge
+
+    - Your squad starts with :    Laser1, Move1, Think1
+    - Green guys start with  :    Move1, Think1
+    

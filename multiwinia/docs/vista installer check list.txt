@@ -1,0 +1,18 @@
+VISTA CHECKLIST:
+
+1. Update version number in universal_include.h
+2. Check that TARGET_VISTA is set
+3. Full rebuilding of Darwinia in ReleaseD3D mode
+4. Recompile GESetup.dll
+5. Rebuild dat files using build_vista.bat
+6. Sign darwinia.exe using vs signtool
+7. Run darwiniainstaller.nsi to create the installer
+8. rar up darwinia.exe and darwinia.pdb
+
+
+BETA CHECKLIST:
+
+1. PDB
+2. Mods - Perdition
+3. DarwiniaSupport.ini
+4. DarwiniaSupport.exe

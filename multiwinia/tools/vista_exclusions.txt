@@ -1,0 +1,8 @@
+**/.svn
+**/.DS_Store
+shapes/source
+language
+purity
+english_demo.txt
+textures/editor_font*
+textures/speccy_font*
