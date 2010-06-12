@@ -24,7 +24,7 @@ public:
         if( authStatus == AuthenticationAccepted )
         {
             char fullFileName[512];
-            snprintf( fullFileName, sizeof(fullFileName), "%sauthkey", g_app->GetProfileDirectory() );
+            snprintf( fullFileName, sizeof(fullFileName), "%sauthkey.dev", g_app->GetProfileDirectory() );
             fullFileName[sizeof(fullFileName) - 1] = '\0';
 
             Authentication_SetKey( parent->m_authKey );

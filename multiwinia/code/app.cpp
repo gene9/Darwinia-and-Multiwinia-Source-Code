@@ -474,7 +474,7 @@ void App::InitMetaServer()
 
 	strcpy( path, GetProfileDirectory() );
 	char fullFileName[512];
-	sprintf( fullFileName, "%sauthkey", path );
+	sprintf( fullFileName, "%sauthkey.dev", path );
 
 	Authentication_LoadKey( key, fullFileName );
 	Authentication_SetKey( key );

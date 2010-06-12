@@ -4986,7 +4986,7 @@ void GameMenuWindow::PasteFromClipboard()
 		char path[512];
 		strcpy( path, g_app->GetProfileDirectory() );
 		char fullFileName[512];
-		sprintf( fullFileName, "%sauthkey", path );
+		sprintf( fullFileName, "%sauthkey.dev", path );
 
         Authentication_SetKey( m_authKey );
         Authentication_SaveKey( m_authKey, fullFileName );
