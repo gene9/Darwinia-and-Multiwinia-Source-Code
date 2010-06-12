@@ -1,8 +1,0 @@
-
-CamBuildingFocus 92 300 200
-Say	jailbreak_objective5
-Say	jailbreak_objective6
-Say	jailbreak_objective7
-WaitSay
-
-CamReset

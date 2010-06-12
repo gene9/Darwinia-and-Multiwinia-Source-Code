@@ -1,4 +1,0 @@
-
-CamBuildingFocus	76	200	400
-Wait 6
-CamReset

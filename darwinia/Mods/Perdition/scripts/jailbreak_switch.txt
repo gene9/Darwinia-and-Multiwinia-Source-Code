@@ -1,6 +1,0 @@
-
-CamBuilingFocus	40	300	50
-Say	jailbreak_switch_3
-Say	jailbreak_switch_4
-WaitSay
-CamReset
