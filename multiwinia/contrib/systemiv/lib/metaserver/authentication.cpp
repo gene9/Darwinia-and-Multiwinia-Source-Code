@@ -63,13 +63,9 @@ int Authentication_SimpleKeyCheck( const char *_key, int _gameType )
         return AuthenticationAccepted;
     }
 
-    if( strlen(_key) != AUTHENTICATION_KEYLEN - 1 || 
-		strncmp( _key, "MDEV", 4 ) != 0 )
-    {
-        return AuthenticationKeyInvalid;
-    }
-
-    return AuthenticationAccepted;
+    return strlen(_key) == AUTHENTICATION_KEYLEN - 1
+		?	AuthenticationAccepted
+		:   AuthenticationKeyInvalid;
 }
 
 
