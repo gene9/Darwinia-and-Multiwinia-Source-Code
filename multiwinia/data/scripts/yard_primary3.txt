@@ -1,8 +1,0 @@
-
-CamBuildingFocus        101   500     300
-Say                     yard_safearea_1
-Say                     yard_safearea_2
-
-WaitSay
-CamReset
-
