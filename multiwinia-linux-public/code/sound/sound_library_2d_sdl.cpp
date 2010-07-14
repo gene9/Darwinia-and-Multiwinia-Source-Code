@@ -37,6 +37,8 @@ void SoundLibrary2dSDL::AudioCallback(StereoSample *stream, unsigned int numByte
 			
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 	NetLockMutex lock( g_app->m_soundSystem->m_mutex );
+	AppReleaseAssert(numBytes / sizeof(StereoSample) <= m_samplesPerBuffer,
+		"Too many samples in the SDL sound callback.");
 	m_callback(stream, numBytes / sizeof(StereoSample));
 #else
 	m_ringBuffer->FetchAudio((short *)stream, numBytes);
@@ -71,7 +73,7 @@ void SoundLibrary2dSDL::TopupBuffer()
 			unsigned int samplesStored = 0;
 			while (samplesStored < totalSamplesRequested)
 			{
-				unsigned int samplesRequested = min(m_freq, totalSamplesRequested - samplesStored);
+				unsigned int samplesRequested = min(m_samplesPerBuffer, totalSamplesRequested - samplesStored);
 				
 				m_callback(m_callbackBuffer, samplesRequested);
 				m_ringBuffer->StoreAudio((short *)(m_callbackBuffer+samplesStored),
@@ -112,7 +114,7 @@ SoundLibrary2dSDL::SoundLibrary2dSDL()
 	
 	desired.freq = m_freq;
 	desired.format = AUDIO_S16SYS;
-	desired.samples = 512;
+	desired.samples = m_samplesPerBuffer; //LINUX: Was 512, caused crash
 	desired.channels = 2;
 	desired.userdata = 0;
 	desired.callback = sdlAudioCallback;
@@ -126,6 +128,10 @@ SoundLibrary2dSDL::SoundLibrary2dSDL()
 		AppDebugOut("Frequency: %d\nFormat: %d\nChannels: %d\nSamples: %d\n", s_audioSpec.freq, s_audioSpec.format, s_audioSpec.channels, s_audioSpec.samples);
 		AppDebugOut("Size of Stereo Sample: %u\n", sizeof(StereoSample));
 	}
+	
+	// LINUX: We set this to the obtained value to prevent crashes on
+	// weird ALSA setups (things like spdif/hdmi output).
+	m_samplesPerBuffer = s_audioSpec.samples;
 	
 	s_audioStarted = 1;
 		

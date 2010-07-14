@@ -146,7 +146,7 @@ public:
 			char path[512];
 			strcpy( path, g_app->GetProfileDirectory() );
 			char fullFileName[512];
-			sprintf( fullFileName, "%sauthkey", path );
+			sprintf( fullFileName, "%sauthkey.dev", path );
 
             Authentication_SetKey( parent->m_authKey );
             Authentication_SaveKey( parent->m_authKey, fullFileName );
