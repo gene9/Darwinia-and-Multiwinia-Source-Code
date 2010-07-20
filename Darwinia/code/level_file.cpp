@@ -145,6 +145,14 @@ void LevelFile::ParseMissionFile(char const *_filename)
 		{
 			ParseDifficulty(in);
 		}
+		else if (stricmp("TeamColours_StartDefinition", word) == 0)
+		{
+			ParseTeamColours(in);
+		}
+		else if (stricmp("TeamAlliances_StartDefinition", word) == 0)
+		{
+			ParseTeamAlliances(in);
+		}
 		else
 		{
 			// Looks like a damaged level file
@@ -645,6 +653,59 @@ void LevelFile::ParseLights(TextReader *_in)
  	}
 }
 
+void LevelFile::ParseTeamColours(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamColours_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID = atoi(word);
+
+		if ( teamID >= 0 && teamID <= NUM_TEAMS )
+		{
+			char *red = _in->GetNextToken();
+			char *green = _in->GetNextToken();
+			char *blue = _in->GetNextToken();
+			m_teamColours[teamID] = RGBAColour(atoi(red), atoi(green), atoi(blue));
+		}
+ 	}
+}
+
+void LevelFile::ParseTeamAlliances(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamAlliances_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID1 = atoi(word);
+
+		if (!_in->TokenAvailable()) continue;
+		word = _in->GetNextToken();
+		int teamID2 = atoi(word);
+
+		if (!_in->TokenAvailable()) continue;
+		word = _in->GetNextToken();
+		int teamState = atoi(word);
+
+		if ( teamID1 >= 0 && teamID1 < NUM_TEAMS && teamID2 >= 0 && teamID2 < NUM_TEAMS)
+		{
+			if ( teamState > 0 ) { m_teamAlliances[ teamID1 ][ teamID2 ] = true; }
+			else  { m_teamAlliances[ teamID1 ][ teamID2 ] = false; }
+		}
+ 	}
+}
 
 void LevelFile::ParseRoute(TextReader *_in, int _id)
 {
@@ -911,6 +972,45 @@ void LevelFile::WriteLights(FileWriter *_out)
 	_out->printf( "Lights_EndDefinition\n\n");
 }
 
+void LevelFile::WriteTeamColours(FileWriter *_out)
+{
+	_out->printf( "TeamColours_StartDefinition\n");
+	_out->printf( "\t# ID     Type R   G   B\n");
+	_out->printf( "\t# ========================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+		    _out->printf( "\t  %d   %d %d %d\n",
+				    i, m_teamColours[i].r, m_teamColours[i].g, m_teamColours[i].b);
+        }
+    }
+
+	_out->printf( "TeamColours_EndDefinition\n\n");
+}
+void LevelFile::WriteTeamAlliances(FileWriter *_out)
+{
+	_out->printf( "TeamAlliances_StartDefinition\n");
+	_out->printf( "\t# ID1  ID2   Allied?\n");
+	_out->printf( "\t# ===================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+			for ( int j = 0; j < NUM_TEAMS; ++j )
+			{
+				if ( m_teamAlliances[i][j] && i != j ) {
+					_out->printf( "\t  %d   %d   %d\n",
+							i, j, 1);
+				}
+			}
+        }
+    }
+
+	_out->printf( "TeamAlliances_EndDefinition\n\n");
+}
 
 void LevelFile::WriteCameraMounts(FileWriter *_out)
 {
@@ -1098,6 +1198,31 @@ LevelFile::LevelFile()
     sprintf(m_wavesColourFilename,      "waves_default.bmp" );
     sprintf(m_waterColourFilename,      "water_default.bmp" );
 	m_levelDifficulty = -1;
+
+	m_teamColours = new RGBAColour[NUM_TEAMS];
+	m_teamColours[0] = (RGBAColour(100,255,100));
+	m_teamColours[1] = (RGBAColour(200, 50, 50));
+	m_teamColours[2] = (RGBAColour(200,200, 30));
+	m_teamColours[3] = (RGBAColour(100,100,255));
+	m_teamColours[4] = (RGBAColour(200,100, 30));
+	m_teamColours[5] = (RGBAColour( 50,255, 50));
+	m_teamColours[6] = (RGBAColour(200,200, 10));
+	m_teamColours[7] = (RGBAColour(150,150,150));
+
+	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
+	{
+			for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
+			{
+				if ( id1 == id2 ) {
+					m_teamAlliances[id1][id2] = true;
+				} else {
+					m_teamAlliances[id1][id2] = false;
+				}
+			}
+	}
+	m_teamAlliances[0][2] = true;
+	m_teamAlliances[2][0] = true; // Ally Player with Green Team
+
 }
 
 LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
@@ -1115,13 +1240,39 @@ LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
 	// level to what the preferences say).
 	g_app->UpdateDifficultyFromPreferences();
 
+	m_teamColours = new RGBAColour[NUM_TEAMS];
+	m_teamColours[0] = (RGBAColour(100,255,100));
+	m_teamColours[1] = (RGBAColour(200, 50, 50));
+	m_teamColours[2] = (RGBAColour(200,200, 30));
+	m_teamColours[3] = (RGBAColour(120,180,255));
+	m_teamColours[4] = (RGBAColour(120,180,255));
+	m_teamColours[5] = (RGBAColour( 50,255, 50));
+	m_teamColours[6] = (RGBAColour(200,200, 10));
+	m_teamColours[7] = (RGBAColour(150,150,150));
+
+	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
+	{
+			for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
+			{
+				if ( id1 == id2 ) {
+					m_teamAlliances[id1][id2] = true;
+				} else {
+					m_teamAlliances[id1][id2] = false;
+				}
+			}
+	}
+	m_teamAlliances[0][2] = true;
+	m_teamAlliances[2][0] = true; // Ally Player with Green Team by default
+
 	if (stricmp(_missionFilename, "null") != 0)
     {
         ParseMissionFile(m_missionFilename);
     }
-   	ParseMapFile(m_mapFilename);
+
+	ParseMapFile(m_mapFilename);
 
 	GenerateAutomaticObjectives();
+
 }
 
 
@@ -1199,6 +1350,8 @@ void LevelFile::SaveMissionFile(char const *_filename)
 	WriteRoutes(out);
 	WritePrimaryObjectives(out);
     WriteRunningPrograms(out);
+	WriteTeamColours(out);
+	WriteTeamAlliances(out);
 
 	delete out;
 }

@@ -838,7 +838,8 @@ void Virii::Render( float predictionTime, int teamId, int _detail )
     float health = (float) m_stats[StatHealth] / (float) EntityBlueprint::GetStat( m_type, StatHealth );
 
     RGBAColour wormColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health;
-    RGBAColour glowColour( 200, 100, 100 );
+    //RGBAColour glowColour( 200, 100, 100 );
+    RGBAColour glowColour = wormColour;
     wormColour.a = 200;
     glowColour.a = 150;
 

@@ -97,7 +97,6 @@ Location::Location()
 	m_effects.SetSize(100);
 }
 
-
 // *** Destructor
 Location::~Location()
 {
@@ -170,7 +169,6 @@ void Location::LoadLevel(char const *missionFilename, char const *mapFilename)
 {
 	m_levelFile = new LevelFile(missionFilename, mapFilename);
 
-
     //
     // Are the objectives already completed on entry?
     // If so, suppress congratulations message
@@ -233,15 +231,10 @@ void Location::InitBuildings()
 void Location::InitTeams()
 {
 	m_teams = new Team[NUM_TEAMS];
-
-    m_teams[0].m_colour.Set(100,255,100);   // Normally Green AI
-    m_teams[1].m_colour.Set(200, 50, 50);   // Normally Virii
-    m_teams[2].m_colour.Set(200,200, 30);   // Normally Player
-    m_teams[3].m_colour.Set(120,180,255);	// Magenta
-//    m_teams[4].m_colour.Set(120,180,255);	// Blue
-//    m_teams[5].m_colour.Set( 50,255, 50);	// Green
-//    m_teams[6].m_colour.Set(250,200, 10);	// Orange
-//    m_teams[7].m_colour.Set(150,150,150);	// Grey
+	for ( int t = 0; t < NUM_TEAMS; t += 1 )
+	{
+		m_teams[t].m_colour = m_levelFile->m_teamColours[t];
+	}
 
 }
 
@@ -2130,15 +2123,19 @@ bool Location::IsFriend( unsigned char _teamId1, unsigned char _teamId2 )
     if( _teamId1 == 255 || _teamId2 == 255 ) return false;
 
 
-                                        /*  green   red     player  player  */
+                                        /*  green   red     player  ally    ally    enemy   enemy  rogue  */
 
-    bool friends[NUM_TEAMS][NUM_TEAMS] = {
-                                            true,   false,  true,   false,  // Green
-                                            false,  true,   false,  false,  // Red
-                                            true,   false,  true,   true,   // Player
-                                            true,   false,  true,   true    // Player
+ /*   bool friends[NUM_TEAMS][NUM_TEAMS] = {
+                                            true,   false,  true,   true,   true,   false,  false,  false,    // Green
+                                            false,  true,   false,  false,  false,  false,  false,  false,    // Red
+                                            true,   false,  true,   true,   true,   false,  false,  false,    // Player
+                                            true,   false,  true,   true,   true,   false,  false,  false,    // Ally
+                                            true,   false,  true,   true,   true,   false,  false,  false,    // Ally
+                                            false,  true,   false,  false,  false,  true,   true,   false,    // Enemy
+                                            false,  true,   false,  false,  false,  true,   true,   false,    // Enemy
+                                            false,  false,  false,  false,  false,  false,  false,  true      // Rogue
                                          };
-
+*/
 
 //      STRESS TEST SETTINGS
 //    bool friends[NUM_TEAMS][NUM_TEAMS] = {
@@ -2152,7 +2149,8 @@ bool Location::IsFriend( unsigned char _teamId1, unsigned char _teamId2 )
 //                                            false,  false,  false,  false,  false,  false,  false,  true        // grey
 //                                         };
 
-    return friends[ _teamId1 ][ _teamId2 ];
+    //return friends[ _teamId1 ][ _teamId2 ];
+	return m_levelFile->m_teamAlliances[ _teamId1 ][ _teamId2 ];
 }
 
 

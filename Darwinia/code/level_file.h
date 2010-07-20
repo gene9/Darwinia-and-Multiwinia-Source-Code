@@ -5,7 +5,7 @@
 #include "lib/llist.h"
 #include "worldobject/worldobject.h"
 #include "landscape.h"
-
+#include "globals.h"
 
 #define CAMERA_MOUNT_MAX_NAME_LEN	63
 #define CAMERA_ANIM_MAX_NAME_LEN	63
@@ -181,6 +181,8 @@ private:
 	void				ParsePrimaryObjectives		(TextReader *_in);
     void                ParseRunningPrograms        (TextReader *_in);
 	void				ParseDifficulty				(TextReader *_in);
+	void				ParseTeamColours            (TextReader *_in);
+	void				ParseTeamAlliances          (TextReader *_in);
 
 	void				GenerateAutomaticObjectives	();
 
@@ -196,6 +198,8 @@ private:
 	void				WritePrimaryObjectives		(FileWriter *_out);
     void                WriteRunningPrograms        (FileWriter *_out);
 	void				WriteDifficulty				(FileWriter *_out);
+	void				WriteTeamColours			(FileWriter *_out);
+	void				WriteTeamAlliances			(FileWriter *_out);
 
 public:
 	char				m_missionFilename           [MAX_FILENAME_LEN];
@@ -217,6 +221,10 @@ public:
 																		   // directly, but is calculated at load time for your
 																		   // convenience
 	int					m_levelDifficulty;	// The difficulty factor that this level represents.
+
+	RGBAColour			*m_teamColours;
+	bool				m_teamAlliances[NUM_TEAMS][NUM_TEAMS];
+
 
 	LandscapeDef		m_landscape;
 
