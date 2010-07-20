@@ -1,1 +1,0 @@
-build_multiwinia_retail efigs
