@@ -12,6 +12,8 @@
 #define MAX_FILENAME_LEN			256
 #define MAGIC_MOUNT_NAME_START_POS	"CamPosBefore"
 
+#define TEAM_FLAG_PLAYER_SPAWN_TEAM		1		//Team 2 incubators spawn darwinians on this team
+#define TEAM_FLAG_EGGWINIANS			2		//Eggs belonging to this team will spawn darwinians
 
 class Building;
 class TextReader;
@@ -183,6 +185,7 @@ private:
 	void				ParseDifficulty				(TextReader *_in);
 	void				ParseTeamColours            (TextReader *_in);
 	void				ParseTeamAlliances          (TextReader *_in);
+	void				ParseTeamFlags              (TextReader *_in);
 
 	void				GenerateAutomaticObjectives	();
 
@@ -200,6 +203,7 @@ private:
 	void				WriteDifficulty				(FileWriter *_out);
 	void				WriteTeamColours			(FileWriter *_out);
 	void				WriteTeamAlliances			(FileWriter *_out);
+	void				WriteTeamFlags   			(FileWriter *_out);
 
 public:
 	char				m_missionFilename           [MAX_FILENAME_LEN];
@@ -224,6 +228,7 @@ public:
 
 	RGBAColour			*m_teamColours;
 	bool				m_teamAlliances[NUM_TEAMS][NUM_TEAMS];
+	int					m_teamFlags[NUM_TEAMS];
 
 
 	LandscapeDef		m_landscape;

@@ -11,6 +11,7 @@
 #include "app.h"
 #include "globals.h"
 #include "location.h"
+#include "level_file.h"
 #include "particle_system.h"
 #include "global_world.h"
 #include "camera.h"
@@ -140,7 +141,12 @@ void Incubator::SpawnEntity()
     //
     // Spawn the entity
     int teamId = m_id.GetTeamId();
-    if( teamId == 2 ) teamId = 0;               // Green rather than yellow
+    //if( teamId == 2 ) teamId = 0;               // Green rather than yellow
+	if ( teamId == 2 ) { // Instead of hardcoding, look up the team we need to use based on team flags
+		for ( int i = 0; i < NUM_TEAMS; i++ ) {
+			if ( g_app->m_location->m_levelFile->m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { teamId = i; }
+		}
+	}
 
     g_app->m_location->SpawnEntities( exit.pos, teamId, -1, m_troopType, 1, exit.f, 0.0f );
 

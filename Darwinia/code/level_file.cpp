@@ -153,6 +153,10 @@ void LevelFile::ParseMissionFile(char const *_filename)
 		{
 			ParseTeamAlliances(in);
 		}
+		else if (stricmp("TeamFlags_StartDefinition", word) == 0)
+		{
+			ParseTeamFlags(in);
+		}
 		else
 		{
 			// Looks like a damaged level file
@@ -707,6 +711,39 @@ void LevelFile::ParseTeamAlliances(TextReader *_in)
  	}
 }
 
+void LevelFile::ParseTeamFlags(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamFlags_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID = atoi(word);
+
+		while (_in->TokenAvailable())
+		{
+			word = _in->GetNextToken();
+			int flag = 0;
+			if ( stricmp("PlayerSpawnTeam",word) == 0 ) { flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
+			else if ( stricmp("Eggwinians",word) == 0 ) { flag = TEAM_FLAG_EGGWINIANS; }
+			else { flag = atoi(word); }
+
+			if ( teamID >= 0 && teamID < NUM_TEAMS )
+			{
+				if ( flag == TEAM_FLAG_PLAYER_SPAWN_TEAM ) { // Only one team per map can have this flag
+					for ( int i = 0; i < NUM_TEAMS; i++ ) { if ( m_teamFlags[teamID] & flag ) { m_teamFlags[teamID] = m_teamFlags[teamID] - flag; } }
+				}
+				m_teamFlags[teamID] = m_teamFlags[teamID] | flag;
+			}
+		}
+ 	}
+}
+
 void LevelFile::ParseRoute(TextReader *_in, int _id)
 {
 	Route *r = new Route(_id);
@@ -1011,6 +1048,27 @@ void LevelFile::WriteTeamAlliances(FileWriter *_out)
 
 	_out->printf( "TeamAlliances_EndDefinition\n\n");
 }
+void LevelFile::WriteTeamFlags(FileWriter *_out)
+{
+	_out->printf( "TeamFlags_StartDefinition\n");
+	_out->printf( "\t# ID     Flags\n");
+	_out->printf( "\t# ========================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+			if ( m_teamFlags[i] > 0 )
+			{
+				_out->printf( "\t  %d   ", i);
+				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { _out->printf( " PlayerSpawnTeam "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS ) { _out->printf( " Eggwinians "); }
+				_out->printf( "\n");
+			}
+        }
+    }
+	_out->printf( "TeamFlags_EndDefinition\n\n");
+}
 
 void LevelFile::WriteCameraMounts(FileWriter *_out)
 {
@@ -1211,17 +1269,20 @@ LevelFile::LevelFile()
 
 	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
 	{
-			for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
-			{
-				if ( id1 == id2 ) {
-					m_teamAlliances[id1][id2] = true;
-				} else {
-					m_teamAlliances[id1][id2] = false;
-				}
+		for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
+		{
+			if ( id1 == id2 ) {
+				m_teamAlliances[id1][id2] = true;
+			} else {
+				m_teamAlliances[id1][id2] = false;
 			}
+		}
+		m_teamFlags[id1] = 0;
 	}
 	m_teamAlliances[0][2] = true;
 	m_teamAlliances[2][0] = true; // Ally Player with Green Team
+
+	m_teamFlags[0] = TEAM_FLAG_PLAYER_SPAWN_TEAM; // Player incubators spawn team 0 darwinians (green)
 
 }
 
@@ -1252,17 +1313,20 @@ LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
 
 	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
 	{
-			for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
-			{
-				if ( id1 == id2 ) {
-					m_teamAlliances[id1][id2] = true;
-				} else {
-					m_teamAlliances[id1][id2] = false;
-				}
+		for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
+		{
+			if ( id1 == id2 ) {
+				m_teamAlliances[id1][id2] = true;
+			} else {
+				m_teamAlliances[id1][id2] = false;
 			}
+		}
+		m_teamFlags[id1] = 0;
 	}
 	m_teamAlliances[0][2] = true;
 	m_teamAlliances[2][0] = true; // Ally Player with Green Team by default
+
+	m_teamFlags[0] = TEAM_FLAG_PLAYER_SPAWN_TEAM; // Player incubators spawn team 0 darwinians (green)
 
 	if (stricmp(_missionFilename, "null") != 0)
     {
@@ -1352,6 +1416,7 @@ void LevelFile::SaveMissionFile(char const *_filename)
     WriteRunningPrograms(out);
 	WriteTeamColours(out);
 	WriteTeamAlliances(out);
+	WriteTeamFlags(out);
 
 	delete out;
 }
