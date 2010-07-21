@@ -1064,6 +1064,7 @@ void LevelFile::WriteTeamFlags(FileWriter *_out)
 				_out->printf( "\t  %d   ", i);
 				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { _out->printf( " PlayerSpawnTeam "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS ) { _out->printf( " Eggwinians "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST ) { _out->printf( " SoulHarvest "); }
 				_out->printf( "\n");
 			}
         }
