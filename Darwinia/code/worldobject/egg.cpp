@@ -199,7 +199,7 @@ bool Egg::Advance( Unit *_unit )
                 g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
 				if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_EGGWINIANS ) {
 					char spawnTeam =  m_id.GetTeamId();
-					if ( m_id.GetTeamId() == 2 ) // We are the player
+					if ( m_id.GetTeamId() == 2 ) // We are the player so find the team we are supposed to spawn instead (defaults to 0/green)
 					{
 						for ( int i = 0; i < NUM_TEAMS; i++ )
 						{

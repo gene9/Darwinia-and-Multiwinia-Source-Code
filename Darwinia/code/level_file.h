@@ -167,6 +167,8 @@ public:
 class LevelFile
 {
 private:
+	void				SetDefaults					();
+
 	void				ParseMissionFile			(char const *_filename);
 	void				ParseMapFile				(char const *_filename);
 

@@ -122,6 +122,7 @@ void TreeWindow::Create()
     CreateValueControl( LANGUAGEPHRASE("editor_iterations"),    InputField::TypeInt, &tree->m_iterations, y+=h, 1, 1, 10, generate );
     CreateValueControl( LANGUAGEPHRASE("editor_seed"),          InputField::TypeInt, &tree->m_seed, y+=h, 1, 0, 99999, generate );
 	CreateValueControl( LANGUAGEPHRASE("editor_leafdrop"),      InputField::TypeInt, &tree->m_leafDropRate, y+=h, 1, 0, 50 );
+	CreateValueControl( LANGUAGEPHRASE("editor_spiritdrop"),    InputField::TypeInt, &tree->m_spiritDropRate, y+=h, 1, 0, 50 );
 }
 
 void TreeWindow::Update()

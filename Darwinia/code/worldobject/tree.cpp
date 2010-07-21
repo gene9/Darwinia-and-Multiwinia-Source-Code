@@ -21,6 +21,7 @@
 #include "camera.h"
 #include "particle_system.h"
 #include "location.h"
+#include "level_file.h"
 #include "obstruction_grid.h"
 #include "global_world.h"
 #include "main.h"
@@ -44,7 +45,8 @@ Tree::Tree()
     m_onFire(0.0f),
     m_fireDamage(0.0f),
     m_burnSoundPlaying(false),
-	m_leafDropRate(0)
+	m_leafDropRate(0),
+	m_spiritDropRate(0)
 {
     m_type = TypeTree;
 }
@@ -70,6 +72,7 @@ void Tree::Initialise( Building *_template )
     m_branchColour = tree->m_branchColour;
     m_leafColour = tree->m_leafColour;
 	m_leafDropRate = tree->m_leafDropRate;
+	m_spiritDropRate = tree->m_spiritDropRate;
 }
 
 
@@ -180,21 +183,41 @@ bool Tree::Advance()
         }
     }
 
-	if( m_onFire == 0.0f &&
-		m_leafDropRate > 0 )
+	if( m_onFire == 0.0f )
 	{
-		// drop some leaves
-		if( rand() % (51-m_leafDropRate) == 0 )
+		if ( m_leafDropRate > 0 )
 		{
-			float actualHeight = GetActualHeight(0.0f);
-			Vector3 fireSpawn = m_pos + Vector3(0,actualHeight,0);
-			fireSpawn += Vector3( sfrand(actualHeight*1.0f),
-								  sfrand(actualHeight*0.25f),
-								  sfrand(actualHeight*1.0f) );
-			g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeLeaf, -1.0f, RGBAColour (m_leafColourArray[0], m_leafColourArray[1], m_leafColourArray[2] ) );
+			// drop some leaves
+			if( rand() % (51-m_leafDropRate) == 0 )
+			{
+				float actualHeight = GetActualHeight(0.0f);
+				Vector3 fireSpawn = m_pos + Vector3(0,actualHeight,0);
+				fireSpawn += Vector3( sfrand(actualHeight*1.0f),
+									  sfrand(actualHeight*0.25f),
+									  sfrand(actualHeight*1.0f) );
+				g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeLeaf, -1.0f, RGBAColour (m_leafColourArray[0], m_leafColourArray[1], m_leafColourArray[2] ) );
+			}
 		}
-	}
+        if ( m_spiritDropRate > 0 )
+        {
+            // drop some spirits
+            if( syncrand() % (51-m_spiritDropRate) == 0 )
+            {
+                double actualHeight = GetActualHeight(0.0);
+			    Vector3 pos = Vector3(frand(actualHeight),actualHeight,0);
+                pos.RotateAroundY( frand(2.0 * M_PI) );
+                pos += m_pos;
 
+                int teamId = -1;
+                while( teamId == -1 )
+                {
+                    teamId = frand( NUM_TEAMS ); 
+                }
+
+                g_app->m_location->SpawnSpirit( pos, g_zeroVector, teamId, WorldObjectId() );
+            }
+        }
+	}
     return false;
 }
 
@@ -568,6 +591,10 @@ void Tree::Read( TextReader *_in, bool _dynamic )
 	{
 		m_leafDropRate = atoi( _in->GetNextToken() );
 	}
+	if( _in->TokenAvailable() )
+	{
+		m_spiritDropRate = atoi( _in->GetNextToken() );
+	}
 }
 
 void Tree::Write( FileWriter *_out )
@@ -583,5 +610,6 @@ void Tree::Write( FileWriter *_out )
     _out->printf( "%-12d", m_branchColour);
     _out->printf( "%-12d", m_leafColour);
 	_out->printf( "%-8d", m_leafDropRate);
+	_out->printf( "%-8d", m_spiritDropRate);
 }
 

@@ -1250,22 +1250,23 @@ void LevelFile::WritePrimaryObjectives(FileWriter *_out)
 // Public Methods
 // **************
 
-LevelFile::LevelFile()
+void LevelFile::SetDefaults()
 {
-	sprintf(m_landscapeColourFilename,  "landscape_default.bmp" );
-    sprintf(m_wavesColourFilename,      "waves_default.bmp" );
-    sprintf(m_waterColourFilename,      "water_default.bmp" );
-	m_levelDifficulty = -1;
-
-	m_teamColours = new RGBAColour[NUM_TEAMS];
-	m_teamColours[0] = (RGBAColour(100,255,100));
-	m_teamColours[1] = (RGBAColour(200, 50, 50));
-	m_teamColours[2] = (RGBAColour(200,200, 30));
-	m_teamColours[3] = (RGBAColour(100,100,255));
-	m_teamColours[4] = (RGBAColour(200,100, 30));
-	m_teamColours[5] = (RGBAColour( 50,255, 50));
-	m_teamColours[6] = (RGBAColour(200,200, 10));
-	m_teamColours[7] = (RGBAColour(150,150,150));
+	if ( NUM_TEAMS < 3 )
+	{
+	
+	}
+	m_teamColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
+	if ( NUM_TEAMS >  0 ) { m_teamColours[0] = RGBAColour( 100, 255, 100 ); }		// Normally Green AI
+    if ( NUM_TEAMS >  1 ) { m_teamColours[1] = RGBAColour( 255, 50 , 50 ); }		// Normally Virii (Red)
+	if ( NUM_TEAMS >  2 ) { m_teamColours[2] = RGBAColour( 255, 255, 50 ); }		// Normally Player (Yellow)
+	if ( NUM_TEAMS >  3 ) { m_teamColours[3] = RGBAColour( 120, 180, 255); }		// Blue
+    if ( NUM_TEAMS >  4 ) { m_teamColours[4] = RGBAColour( 255, 150, 0  ); }		// Orange
+    if ( NUM_TEAMS >  5 ) { m_teamColours[5] = RGBAColour( 150, 0, 255 ); }			// Purple
+    if ( NUM_TEAMS >  6 ) { m_teamColours[6] = RGBAColour( 70, 200, 200 ); }		// Cyan
+    if ( NUM_TEAMS >  7 ) { m_teamColours[7] = RGBAColour( 255, 150, 255 ); }		// Pink
+    if ( NUM_TEAMS >  8 ) { m_teamColours[8] = RGBAColour( 10,10,10 ); }			// Multiwinia Virus (Black)
+    if ( NUM_TEAMS >  9 ) { m_teamColours[9] = RGBAColour( 200,200,200 ); }			// Futurwinian (Whiteish)
 
 	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
 	{
@@ -1277,12 +1278,23 @@ LevelFile::LevelFile()
 				m_teamAlliances[id1][id2] = false;
 			}
 		}
-		m_teamFlags[id1] = 0;
+		m_teamFlags[id1] = 0; // Clear All Flags
 	}
+	
 	m_teamAlliances[0][2] = true;
 	m_teamAlliances[2][0] = true; // Ally Player with Green Team
 
 	m_teamFlags[0] = TEAM_FLAG_PLAYER_SPAWN_TEAM; // Player incubators spawn team 0 darwinians (green)
+
+}
+LevelFile::LevelFile()
+{
+	sprintf(m_landscapeColourFilename,  "landscape_default.bmp" );
+    sprintf(m_wavesColourFilename,      "waves_default.bmp" );
+    sprintf(m_waterColourFilename,      "water_default.bmp" );
+	m_levelDifficulty = -1;
+
+	SetDefaults();
 
 }
 
@@ -1301,32 +1313,7 @@ LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
 	// level to what the preferences say).
 	g_app->UpdateDifficultyFromPreferences();
 
-	m_teamColours = new RGBAColour[NUM_TEAMS];
-	m_teamColours[0] = (RGBAColour(100,255,100));
-	m_teamColours[1] = (RGBAColour(200, 50, 50));
-	m_teamColours[2] = (RGBAColour(200,200, 30));
-	m_teamColours[3] = (RGBAColour(120,180,255));
-	m_teamColours[4] = (RGBAColour(120,180,255));
-	m_teamColours[5] = (RGBAColour( 50,255, 50));
-	m_teamColours[6] = (RGBAColour(200,200, 10));
-	m_teamColours[7] = (RGBAColour(150,150,150));
-
-	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
-	{
-		for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
-		{
-			if ( id1 == id2 ) {
-				m_teamAlliances[id1][id2] = true;
-			} else {
-				m_teamAlliances[id1][id2] = false;
-			}
-		}
-		m_teamFlags[id1] = 0;
-	}
-	m_teamAlliances[0][2] = true;
-	m_teamAlliances[2][0] = true; // Ally Player with Green Team by default
-
-	m_teamFlags[0] = TEAM_FLAG_PLAYER_SPAWN_TEAM; // Player incubators spawn team 0 darwinians (green)
+	SetDefaults();
 
 	if (stricmp(_missionFilename, "null") != 0)
     {

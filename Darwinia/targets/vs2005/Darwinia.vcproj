@@ -79,10 +79,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="xinput.lib"
 				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_d_gl.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="&quot;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86&quot;"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/Darwinia.pdb"
@@ -187,7 +188,7 @@
 				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_gl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2006)\Lib\x86&quot;"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/Darwinia.pdb"

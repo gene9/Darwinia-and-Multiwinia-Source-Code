@@ -36,6 +36,7 @@ public:
     int     m_leafColour;
     int     m_branchColour;
 	int		m_leafDropRate;
+	int		m_spiritDropRate;
 
 public:
     Tree();

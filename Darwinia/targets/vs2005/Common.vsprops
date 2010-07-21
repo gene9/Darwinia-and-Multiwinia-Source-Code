@@ -12,7 +12,7 @@
 	/>
 	<Tool
 		Name="VCLinkerTool"
-		AdditionalDependencies="vfw32.lib winmm.lib dxguid.lib dxerr9.lib dsound.lib wsock32.lib dbghelp.lib"
+		AdditionalDependencies="vfw32.lib winmm.lib dxguid.lib dsound.lib wsock32.lib dbghelp.lib"
 		AdditionalLibraryDirectories="../../contrib/oggvorbis/lib;../../contrib/unrar;../../contrib/eclipse;../../contrib/netclass;&quot;$(DXSDK_DIR)\Lib\x86&quot;"
 		DelayLoadDLLs="xinput1_3.dll"
 	/>
