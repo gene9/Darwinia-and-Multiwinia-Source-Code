@@ -13,6 +13,7 @@
 #define DARWINIAN_SEARCHRANGE_PORTS         100.0f
 
 #define DARWINIAN_FEARRANGE                 200.0f
+#define DARWINIAN_INCUBATOR_SEARCH_RADIUS	1000.0f
 
 class Darwinian : public Entity
 {
@@ -33,7 +34,8 @@ public:
         StateBoardingRocket,
         StateWatchingSpectacle,
         StateAttackingBuilding,                        // Eg attacking rocket in demo2
-        StateOnFire
+        StateOnFire,
+		StateCarryingSpirit
     };
 
     int         m_state;
@@ -76,6 +78,7 @@ protected:
     bool        SearchForPorts();
     bool        SearchForOfficers();
     bool        SearchForArmour();
+	bool		SearchForIncubator();
     bool        BeginVictoryDance();
 
     bool        AdvanceIdle             ();
@@ -93,6 +96,7 @@ protected:
     bool        AdvanceBoardingRocket   ();
     bool        AdvanceAttackingBuilding();
     bool        AdvanceOnFire           ();
+	bool		AdvanceCarryingSpirit	();
 
     bool        AdvanceToTargetPosition();
 

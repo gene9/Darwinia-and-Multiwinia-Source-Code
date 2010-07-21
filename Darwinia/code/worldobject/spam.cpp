@@ -7,6 +7,7 @@
 #include "lib/hi_res_time.h"
 
 #include "worldobject/spam.h"
+#include "entity_grid.h"
 
 #include "explosion.h"
 #include "app.h"
@@ -19,6 +20,7 @@
 #include "global_world.h"
 #include "main.h"
 #include "camera.h"
+#include "worldobject/entity.h"
 
 #include "sound/soundsystem.h"
 
@@ -165,7 +167,10 @@ void Spam::RenderAlphas( float _predictionTime )
         size = max( size, 2.0f );
 
         //glColor4f( 0.6f, 0.2f, 0.1f, alpha);
-        glColor4f( 0.9f, 0.2f, 0.2f, alpha);
+        //glColor4f( 0.9f, 0.2f, 0.2f, alpha);
+
+		RGBAColour spamColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
+		glColor4f(spamColour.r, spamColour.g, spamColour.b, alpha);
 
         if( m_research ) glColor4f( 0.1f, 0.2f, 0.8f, alpha);
 
@@ -201,7 +206,16 @@ void Spam::RenderAlphas( float _predictionTime )
         if( i > numStars - 2 ) size = i * 20 * alpha;
 
         //glColor4f( 1.0f, 0.4f, 0.2f, alpha );
-        glColor4f( 0.8f, 0.2f, 0.2f, alpha);
+		//glColor4f( 0.8f, 0.2f, 0.2f, alpha); //"the" backup code in case we can't do anything about this shit below...
+
+		//if( g_app->m_location )
+    //{
+	    //for (int i = 0; i < NUM_TEAMS; ++i)
+	   // {
+			RGBAColour spamColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
+			glColor4f((float) spamColour.r / 255.0,(float)  spamColour.g / 255.0,(float)  spamColour.b / 255.0, alpha);
+        //}
+    //}
 
         if( m_research ) glColor4f( 0.1f, 0.2f, 0.8f, alpha);
 
@@ -226,13 +240,16 @@ void Spam::SpawnInfection()
         Vector3 vel = g_upVector;
         vel += Vector3( syncsfrand(1.0f), syncfrand(2.0f), syncsfrand(1.0f) );
         vel.SetLength( 100.0f );
+		Team *spam_team = g_app->m_location->GetMyTeam();
 
         SpamInfection *infection = new SpamInfection();
         infection->m_pos = m_centrePos;
         infection->m_vel = vel;
         infection->m_parentId = m_id.GetUniqueId();
+		//infection->m_
         int index = g_app->m_location->m_effects.PutData( infection );
-        infection->m_id.Set( -1, UNIT_EFFECTS, index, -1 );
+        infection->m_id.Set( m_id.GetTeamId(), UNIT_EFFECTS, index, -1 );
+		//infection->m_id.SetTeamId(spam_team);
         infection->m_id.GenerateUniqueId();
     }
 
@@ -476,17 +493,23 @@ void SpamInfection::AdvanceAttackingEntity()
     m_targetPos = target->m_pos;
     bool arrived = AdvanceToTargetPosition();
 
+	//Team *_team = g_app->m_location->m_teams[m_id.GetTeamId()];
+	//WorldObject *wobj = GetEntity( _id );
+   // Entity *ent = (Entity *) wobj;
+
     if( arrived )
     {
-        if( m_targetId.GetTeamId() == 0 )
+        //if( m_targetId.GetTeamId() != m_id.GetTeamId() )
+		//bool friendly
+		if (m_targetId.GetTeamId() != m_id.GetTeamId())
         {
             // Green darwinian
             int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian );
             if( darwinianResearch > 2 && syncfrand(10.0f) < 5.0f )
             {
-                g_app->m_location->SpawnEntities( target->m_pos, 1, -1, Entity::TypeDarwinian, 1, target->m_vel, 0.0f );
+                g_app->m_location->SpawnEntities( target->m_pos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, target->m_vel, 0.0f );
                 g_app->m_location->m_entityGrid->RemoveObject( m_targetId, target->m_pos.x, target->m_pos.z, target->m_radius );
-                g_app->m_location->m_teams[0].m_others.MarkNotUsed( m_targetId.GetIndex() );
+                g_app->m_location->m_teams[m_targetId.GetTeamId()].m_others.MarkNotUsed( m_targetId.GetIndex() );
                 delete target;
             }
             else
@@ -494,7 +517,7 @@ void SpamInfection::AdvanceAttackingEntity()
                 target->ChangeHealth( -999 );
             }
         }
-        else if( m_targetId.GetTeamId() == 2 )
+		else if( (m_targetId.GetTeamId() != m_id.GetTeamId()) && !(Entity::TypeDarwinian) )
         {
             // Player
             target->ChangeHealth( -999 );
@@ -538,11 +561,13 @@ void SpamInfection::AdvanceAttackingSpirit()
     m_targetPos = spirit->m_pos;
 
     bool arrived = AdvanceToTargetPosition();
+	//Team *team = g_app->m_location->m_teams[m_id.GetTeamId];
+
     if( arrived )
     {
         int entityType = Entity::TypeVirii;
         if( syncfrand(20.0f) < 1.0f ) entityType = Entity::TypeSpider;
-        g_app->m_location->SpawnEntities( spirit->m_pos, 1, -1, entityType, 1, g_zeroVector, 0.0f, 200.0f );
+        g_app->m_location->SpawnEntities( spirit->m_pos, m_id.GetTeamId(), -1, entityType, 1, g_zeroVector, 0.0f, 200.0f );
         g_app->m_location->m_spirits.MarkNotUsed(m_spiritId);
 
         int numFlashes = 5 + darwiniaRandom() % 5;
@@ -623,7 +648,8 @@ void SpamInfection::Render( float _time )
         {
             float alpha = 1.0f - i / (float) maxLength;
             alpha *= 0.75f;
-            glColor4f( 1.0f, 0.1f, 0.1f, alpha );
+			RGBAColour spamColour = g_app->m_location->m_teams[m_id.GetTeamId()].m_colour;
+            glColor4f( spamColour.r, spamColour.g, spamColour.b, alpha );
             Vector3 thisPos = *m_positionHistory.GetPointer(i);
             Vector3 lastPos = *m_positionHistory.GetPointer(i-1);
             Vector3 rightAngle = (thisPos - lastPos) ^ ( camPos - thisPos );
@@ -637,7 +663,9 @@ void SpamInfection::Render( float _time )
         }
         if( m_positionHistory.Size() > 0 )
         {
-            glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
+            //glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
+			RGBAColour spamColour = g_app->m_location->m_teams[m_id.GetTeamId()].m_colour;
+            glColor4f( spamColour.r, spamColour.g, spamColour.b, 1.0f );
             Vector3 lastPos = *m_positionHistory.GetPointer(0);
             Vector3 thisPos = predictedPos;
             Vector3 rightAngle = (thisPos - lastPos) ^ ( camPos - thisPos );

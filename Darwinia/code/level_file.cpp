@@ -731,6 +731,7 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
 			int flag = 0;
 			if ( stricmp("PlayerSpawnTeam",word) == 0 ) { flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
 			else if ( stricmp("Eggwinians",word) == 0 ) { flag = TEAM_FLAG_EGGWINIANS; }
+			else if ( stricmp("SoulHarvest",word) == 0 ) { flag = TEAM_FLAG_SOULHARVEST; }
 			else { flag = atoi(word); }
 
 			if ( teamID >= 0 && teamID < NUM_TEAMS )

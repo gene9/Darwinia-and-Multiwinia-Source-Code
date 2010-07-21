@@ -219,7 +219,14 @@ void Incubator::GetDockPoint( Vector3 &_pos, Vector3 &_front )
     _front = dock.f;
 }
 
-
+void Incubator::GetExitPoint( Vector3 &_pos, Vector3 &_front )
+{
+    Matrix34 mat( m_front, g_upVector, m_pos );
+    Matrix34 dock = m_exit->GetWorldMatrix( mat );
+    _pos = dock.pos;
+    _pos = PushFromBuilding( _pos, 5.0f );
+    _front = dock.f;
+}
 int Incubator::NumSpiritsInside()
 {
     return m_spirits.NumUsed();

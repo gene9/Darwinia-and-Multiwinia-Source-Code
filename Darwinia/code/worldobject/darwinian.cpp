@@ -33,6 +33,7 @@
 #include "worldobject/laserfence.h"
 #include "worldobject/goddish.h"
 #include "worldobject/rocket.h"
+#include "worldobject/incubator.h"
 
 Darwinian::Darwinian()
 :   Entity(),
@@ -139,6 +140,7 @@ bool Darwinian::SearchForNewTask()
         case StateApproachingPort:
         case StateOperatingPort:
         case StateCombat:
+        case StateCarryingSpirit:
             if( !newTargetFound )       newTargetFound = SearchForThreats();
             break;
 
@@ -199,6 +201,7 @@ bool Darwinian::Advance( Unit *_unit )
             case StateWatchingSpectacle :   amIDead = AdvanceWatchingSpectacle();   break;
             case StateBoardingRocket :      amIDead = AdvanceBoardingRocket();      break;
             case StateAttackingBuilding :   amIDead = AdvanceAttackingBuilding();   break;
+            case StateCarryingSpirit :      amIDead = AdvanceCarryingSpirit();      break;
         }
     }
 
@@ -208,7 +211,28 @@ bool Darwinian::Advance( Unit *_unit )
         boxKite->Release();
         m_boxKiteId.SetInvalid();
     }
-
+	if ( g_app->m_location->m_spirits.ValidIndex( m_spiritId ) ) {
+		Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+		if( s && s->m_state == Spirit::StateAttached && (m_state != StateCarryingSpirit || m_dead) )
+		{
+			if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+			{
+				//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+				s->CollectorDrops();
+				m_spiritId = -1;
+			}
+		}
+	}
+    if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+    {
+        Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+        if( spirit && spirit->m_state == Spirit::StateAttached )
+        {
+            spirit->m_pos = m_pos;
+			spirit->m_pos.y += 4.0f;
+            spirit->m_vel = m_vel;
+		}
+    }
 
     if( !m_onGround ) AdvanceInAir( _unit );
 
@@ -625,6 +649,9 @@ bool Darwinian::AdvanceCombat()
 
 bool Darwinian::AdvanceWorshipSpirit()
 {
+	bool captureSpirit = false;
+	if ( SearchForIncubator() && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SOULHARVEST) ) { captureSpirit = true; }
+
     START_PROFILE( g_app->m_profiler, "AdvanceWorship" );
 
     //
@@ -663,6 +690,7 @@ bool Darwinian::AdvanceWorshipSpirit()
     Vector3 targetVector = ( spirit->m_pos - m_pos );
     float distance = targetVector.Mag();
     float ourDesiredRange = 20 + (m_id.GetUniqueId() % 20);
+	if ( captureSpirit ) { ourDesiredRange = 0; } // If theres a friendly incubator, move right up
     targetVector.SetLength( distance - ourDesiredRange );
     Vector3 newWaypoint = m_pos + targetVector;
     newWaypoint = PushFromObstructions( newWaypoint );
@@ -681,6 +709,21 @@ bool Darwinian::AdvanceWorshipSpirit()
 
     //
     // Possibly spawn a boxkite to guide the spirit to heaven
+
+	if ( captureSpirit )
+	{
+		Vector3 vectorRemaining = m_wayPoint - m_pos;
+		vectorRemaining.y = 0;
+		float distance = vectorRemaining.Mag();
+		if ( distance < 10.0f && (spirit->m_state == Spirit::StateBirth || spirit->m_state == Spirit::StateFloating) )
+		{
+			spirit->CollectorArrives();
+			//m_spiritId = spirit->m_id.GetUniqueId();
+			m_state = StateCarryingSpirit;
+			END_PROFILE( g_app->m_profiler, "AdvanceWorship" );
+			return false;
+		}
+	}
 
     if( areWeThere && !m_boxKiteId.IsValid() )
     {
@@ -1057,7 +1100,74 @@ bool Darwinian::AdvanceFollowingOfficer()
     return false;
 }
 
+bool Darwinian::AdvanceCarryingSpirit()
+{
+    Incubator *incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
 
+    if( !incubator )
+    {
+        bool found = SearchForIncubator();
+        incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
+        if( !incubator )
+        {
+            // We can't find a friendly incubator, so go into holding pattern
+            m_state = StateIdle;
+            return false;
+        }
+    }
+
+
+	Vector3 tempVector3;
+    incubator->GetExitPoint( m_wayPoint, tempVector3 );
+    bool arrived = AdvanceToTargetPosition();
+    if( arrived )
+    {
+        // Arrived at our incubator, drop spirit off here one at a time
+        if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+        {
+			Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+            incubator->AddSpirit( spirit );
+            g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
+            m_spiritId = -1;
+        }
+        m_state = StateIdle;
+    }
+
+    return false;
+}
+
+bool Darwinian::SearchForIncubator()
+{
+    //
+    // Source building lost, look for another incubator to bind to
+    float nearest = DARWINIAN_INCUBATOR_SEARCH_RADIUS;
+    bool found = false;
+
+    for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
+    {
+        if( g_app->m_location->m_buildings.ValidIndex(i) )
+        {
+            Building *building = g_app->m_location->m_buildings[i];
+            if( building->m_type == Building::TypeIncubator &&
+                g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
+            {
+                float distance = ( building->m_pos - m_pos ).Mag();
+                int population = ((Incubator *)building)->NumSpiritsInside();
+                distance += population * 10;
+
+                if( distance < nearest )
+                {
+                    m_buildingId = building->m_id.GetUniqueId();
+                    nearest = distance;
+                    found = true;
+                }
+            }
+        }
+    }
+
+    return found;
+
+}
 void Darwinian::BoardRocket( int _buildingId )
 {
     m_state = StateBoardingRocket;
@@ -1421,12 +1531,13 @@ void Darwinian::GiveOrders( Vector3 const &_targetPos )
 bool Darwinian::SearchForSpirits()
 {
     // Red darwinians don't worship spirits
-    if( m_id.GetTeamId() == 1 ) return false;
+    //if( m_id.GetTeamId() == 1 ) return false;
 
     START_PROFILE( g_app->m_profiler, "SearchSpirits" );
 
     Spirit *found = NULL;
     int spiritId = -1;
+
     float closest = DARWINIAN_SEARCHRANGE_SPIRITS;
 
     if( syncrand() % 5 == 0 )

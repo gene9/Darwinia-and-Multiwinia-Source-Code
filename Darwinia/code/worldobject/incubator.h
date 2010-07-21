@@ -55,6 +55,7 @@ public:
     void Write  ( FileWriter *_out );
 
     void GetDockPoint( Vector3 &_pos, Vector3 &_front );
+    void GetExitPoint( Vector3 &_pos, Vector3 &_front );
 
     void ListSoundEvents( LList<char *> *_list );
 };
