@@ -1315,7 +1315,8 @@ Shape::Shape(char const *filename, bool _animating)
 :	m_displayListName(NULL),
 	m_rootFragment(NULL),
 	m_name(NULL),
-	m_animating(_animating)
+	m_animating(_animating),
+	isTeamColoured (false)
 {
 	TextFileReader in(filename);
 	Load(&in);
@@ -1328,7 +1329,8 @@ Shape::Shape(char const *filename, bool _animating)
 Shape::Shape(TextReader *in, bool _animating)
 :	m_displayListName(NULL),
 	m_rootFragment(NULL),
-	m_animating(_animating)
+	m_animating(_animating),
+	isTeamColoured (false)
 {
 	Load(in);
 	BuildDisplayList();
@@ -1569,3 +1571,50 @@ float Shape::CalculateRadius( Matrix34 const &_transform, Vector3 const &_centre
     return radius;
 }
 
+
+void Shape::Recolour ( RGBAColour _teamColour )
+{
+	m_rootFragment->Recolour( _teamColour );
+	isTeamColoured = true;
+
+	g_app->m_resource->DeleteDisplayList(m_displayListName);
+	delete [] m_displayListName;
+	m_displayListName = NULL;
+	BuildDisplayList();
+}
+
+void ShapeFragment::Recolour ( RGBAColour _teamColour )
+{
+
+	for ( int i = 0; i < m_numColours; i++ )
+	{
+		float maxFactor = (float) m_colours[i].r + (float) m_colours[i].g + (float) m_colours[i].b;
+		maxFactor = maxFactor / (192.0*3.0); // Increasing the first number here makes models darker, lowering it makes them lighter
+
+		m_colours[i].r = (char) min(((float)_teamColour.r * maxFactor),255.0);
+		m_colours[i].g = (char) min(((float)_teamColour.g * maxFactor),255.0);
+		m_colours[i].b = (char) min(((float)_teamColour.b * maxFactor),255.0);
+
+	}
+
+	/*
+	for ( int i = 0; i < m_numColours; i++ )
+	{
+		float maxFactor = (float) m_colours[i].r + (float) m_colours[i].g + (float) m_colours[i].b;
+
+		float redFactor = (float) m_colours[i].r / maxFactor * 3;
+		float greenFactor = (float) m_colours[i].g / maxFactor * 3;
+		float blueFactor = (float) m_colours[i].b / maxFactor * 3;
+
+		m_colours[i].r = (char) (_teamColour.r * redFactor);
+		m_colours[i].g = (char) (_teamColour.g * redFactor);
+		m_colours[i].b = (char) (_teamColour.b * redFactor);
+
+	}
+*/
+
+	for ( int j = 0; j < m_childFragments.Size(); j++ )
+	{
+		m_childFragments[j]->Recolour(_teamColour);
+	}
+}

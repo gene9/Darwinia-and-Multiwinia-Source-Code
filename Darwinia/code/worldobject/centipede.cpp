@@ -23,8 +23,8 @@
 
 #include "worldobject/centipede.h"
 
-Shape *Centipede::s_shapeBody = NULL;
-Shape *Centipede::s_shapeHead = NULL;
+//Shape *Centipede::s_shapeBody = NULL;
+//Shape *Centipede::s_shapeHead = NULL;
 
 
 Centipede::Centipede()
@@ -33,7 +33,9 @@ Centipede::Centipede()
     m_linked(false),
     m_panic(0.0f),
     m_numSpiritsEaten(0),
-    m_lastAdvance(0.0f)
+    m_lastAdvance(0.0f),
+	s_shapeBody(NULL),
+	s_shapeHead(NULL)
 {
     m_type = TypeCentipede;
 
@@ -49,10 +51,17 @@ Centipede::Centipede()
 
 void Centipede::Begin()
 {
-    Entity::Begin();
+	if ( !s_shapeBody->isTeamColoured ) {
+		s_shapeBody = g_app->m_resource->GetShape( s_shapeBody->m_name, m_id.GetTeamId(), s_shapeBody->m_animating );
+	}
+	if ( !s_shapeHead->isTeamColoured ) {
+		s_shapeHead = g_app->m_resource->GetShape( s_shapeHead->m_name, m_id.GetTeamId(), s_shapeHead->m_animating );
+	}
+
+	Entity::Begin();
     m_onGround = true;
 
-    if( !m_next.IsValid() )
+	if( !m_next.IsValid() )
     {
         //
         // Link every centipede in this unit into one long centipede
@@ -173,7 +182,8 @@ bool Centipede::Advance( Unit *_unit )
         //
         // We are trailing, so just follow the leader
 
-        m_shape = s_shapeBody;
+        //m_shape = s_shapeBody;
+		m_shape = s_shapeBody;
 
         Centipede *centipede = (Centipede *) g_app->m_location->GetEntitySafe( m_next, TypeCentipede );
         if( centipede && !centipede->m_dead )
@@ -204,7 +214,8 @@ bool Centipede::Advance( Unit *_unit )
         // We are a leader, so look for enemies
 
         EatSpirits();
-        m_shape = s_shapeHead;
+        //m_shape = s_shapeHead;
+		m_shape = s_shapeHead;
         m_linked = true;
         recordPositionHistory = true;
 

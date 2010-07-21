@@ -180,6 +180,8 @@ public:
     bool ShapeHit               (Shape *_shape, Matrix34 const &_theTransform,              // Transform of _shape
                                                 Matrix34 const &_ourTransform,              // Transform of this
 								 bool _accurate = false);
+
+	void Recolour				( RGBAColour _teamColour );
 };
 
 
@@ -191,10 +193,12 @@ class Shape
 {
 protected:
 	void Load					(TextReader *_in);
-	bool						m_animating;		// If false then whole shape in one display list otherwise one display list per fragment
 	char						*m_displayListName;
 
+
 public:
+	bool						m_animating;		// If false then whole shape in one display list otherwise one display list per fragment
+
 	ShapeFragment				*m_rootFragment;
 	char						*m_name;
 
@@ -219,6 +223,9 @@ public:
 
     Vector3 CalculateCentre     ( Matrix34 const &_transform );
     float   CalculateRadius     ( Matrix34 const &_transform, Vector3 const &_centre );
+
+	bool isTeamColoured;
+	void						Recolour ( RGBAColour _teamColour );
 };
 
 #endif
