@@ -52,7 +52,8 @@ Darwinian::Darwinian()
     m_shadowBuildingId(-1),
     m_threatRange(DARWINIAN_SEARCHRANGE_THREATS),
     m_grenadeTimer(0.0f),
-    m_officerTimer(0.0f)
+    m_officerTimer(0.0f),
+	m_corrupted(0)
 {
     SetType( TypeDarwinian );
     m_grenadeTimer = syncfrand( 5.0f );
@@ -2173,6 +2174,12 @@ bool Darwinian::IsOnFire()
 }
 
 
+inline void SetTexture( const char *texName )
+{
+    int texId = g_app->m_resource->GetTexture(texName);
+    glBindTexture   ( GL_TEXTURE_2D, texId );
+}
+
 void Darwinian::Render( float _predictionTime, float _highDetail )
 {
     if( !m_enabled ) return;
@@ -2182,6 +2189,13 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         return;
     }
 
+	if ( m_corrupted )
+	{
+        int chosenIndex = 1 + m_id.GetUniqueId() % 4;
+        char chosenOuch[256];
+        sprintf( chosenOuch, "sprites/darwinian_ouch%d.bmp", chosenIndex );
+        SetTexture( chosenOuch );            
+	}
     RGBAColour colour;
     if( m_id.GetTeamId() >= 0 ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
 
@@ -2322,7 +2336,12 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             glTexCoord2i(0, 0);     glVertex3fv( (predictedPos - entityRight).GetData() );
         glEnd();
 
-        //glDisable( GL_BLEND );
+        if( m_corrupted )
+        {            
+            SetTexture( "sprites/darwinian.bmp" );            
+        }
+		
+		//glDisable( GL_BLEND );
 
         //
         // Draw a blue glow if we are under control

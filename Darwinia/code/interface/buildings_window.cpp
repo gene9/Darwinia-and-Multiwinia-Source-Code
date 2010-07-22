@@ -468,6 +468,7 @@ void BuildingEditWindow::Create()
     else if( building->m_type == Building::TypeIncubator )
     {
         CreateValueControl( LANGUAGEPHRASE("editor_spirits"), InputField::TypeInt, &((Incubator *) building)->m_numStartingSpirits, y+=buttonPitch, 1, 0, 1000 );
+        CreateValueControl( LANGUAGEPHRASE("editor_damaged"), InputField::TypeInt, &((Incubator *) building)->m_renderDamaged, y+=buttonPitch, 1, 0, 1);
     }
     else if( building->m_type == Building::TypeEscapeRocket )
     {

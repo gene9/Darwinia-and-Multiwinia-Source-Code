@@ -41,6 +41,7 @@ public:
     int         m_state;
     bool        m_promoted;
     Vector3     m_wayPoint;
+	int			m_corrupted;
 
 protected:
     float           m_retargetTimer;
