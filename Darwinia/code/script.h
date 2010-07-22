@@ -54,6 +54,7 @@ public:
 		OpDestroyBuilding,
 		OpActivateTrunkPort,
 		OpActivateTrunkPortFull,
+		OpSetTeamColour,
 		OpNumOps
 	};
 
@@ -129,6 +130,8 @@ protected:
 
 	void RunCommand_DestroyBuilding( int _buildingId, float _intensity );
 	void RunCommand_ActivateTrunkPort( int _buildingId, bool _fullActivation );
+
+	void RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _blue );
 
 public:
     Script();

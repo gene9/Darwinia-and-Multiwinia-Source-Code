@@ -15,6 +15,7 @@
 #define TEAM_FLAG_PLAYER_SPAWN_TEAM		1		//Team 2 incubators spawn darwinians on this team
 #define TEAM_FLAG_EGGWINIANS			2		//Eggs belonging to this team will spawn darwinians
 #define TEAM_FLAG_SOULHARVEST			4		//Darwinians on this team will gather souls and return them to incubators
+#define TEAM_FLAG_SPAWNPOINTINCUBATION	8		//Engineers and SoulHarvest Darwinians can use spawn points as though they were incubators
 
 class Building;
 class TextReader;

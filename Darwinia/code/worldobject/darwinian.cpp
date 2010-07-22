@@ -34,6 +34,7 @@
 #include "worldobject/goddish.h"
 #include "worldobject/rocket.h"
 #include "worldobject/incubator.h"
+#include "worldobject/spawnpoint.h"
 
 Darwinian::Darwinian()
 :   Entity(),
@@ -1103,13 +1104,13 @@ bool Darwinian::AdvanceFollowingOfficer()
 
 bool Darwinian::AdvanceCarryingSpirit()
 {
-    Incubator *incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
+    Building *building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
 
-    if( !incubator )
+    if( !building )
     {
         bool found = SearchForIncubator();
-        incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
-        if( !incubator )
+        building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
+        if( !building )
         {
             // We can't find a friendly incubator, so go into holding pattern
             m_state = StateIdle;
@@ -1117,25 +1118,54 @@ bool Darwinian::AdvanceCarryingSpirit()
         }
     }
 
-
-	Vector3 tempVector3;
-    incubator->GetExitPoint( m_wayPoint, tempVector3 );
-    bool arrived = AdvanceToTargetPosition();
-    if( arrived )
+	if( building && building->m_type == Building::TypeIncubator )
     {
-        // Arrived at our incubator, drop spirit off here one at a time
-        if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+        Incubator *incubator = (Incubator *) building;
+		Vector3 tempVector3;
+		incubator->GetExitPoint( m_wayPoint, tempVector3 );
+
+		bool arrived = AdvanceToTargetPosition();
+		if( arrived )
+		{
+			// Arrived at our incubator, drop spirit off here one at a time
+			if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+			{
+				Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+				incubator->AddSpirit( spirit );
+				g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
+				m_spiritId = -1;
+			}
+			m_state = StateIdle;
+		}
+	}
+
+	if( building && building->m_type == Building::TypeSpawnPoint )
+    {
+        SpawnPoint *spawnPoint = (SpawnPoint *)building;
+        m_wayPoint = building->m_pos + building->m_front * 50;
+        m_wayPoint = PushFromObstructions( m_wayPoint, false );
+        m_wayPoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_wayPoint.x, m_wayPoint.z );
+        
+        bool arrived = AdvanceToTargetPosition();
+        if( arrived )
         {
-			Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
-            incubator->AddSpirit( spirit );
-            g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
-            m_spiritId = -1;
-        }
-        m_state = StateIdle;
+			// Arrived at our incubator, drop spirit off here one at a time
+			if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
+			{
+				Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+				spawnPoint->SpawnDarwinian();
+				g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
+				m_spiritId = -1;
+                g_app->m_soundSystem->TriggerEntityEvent( this, "DropSpirit" );
+			}
+			m_state = StateIdle;
+        }    
     }
 
     return false;
 }
+
+
 
 bool Darwinian::SearchForIncubator()
 {
@@ -1163,12 +1193,25 @@ bool Darwinian::SearchForIncubator()
                     found = true;
                 }
             }
+
+            if( building->m_type == Building::TypeSpawnPoint &&
+				g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SPAWNPOINTINCUBATION &&
+                g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
+            {
+                double distance = ( building->m_pos - m_pos ).Mag();
+                if( distance < nearest )
+                {
+                    m_buildingId = building->m_id.GetUniqueId();                    
+                    nearest = distance;
+                    found = true;
+                }                    
+            }
         }
-    }
+	}
 
     return found;
-
 }
+
 void Darwinian::BoardRocket( int _buildingId )
 {
     m_state = StateBoardingRocket;

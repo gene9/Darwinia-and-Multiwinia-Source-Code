@@ -31,6 +31,7 @@
 #include "sound/soundsystem.h"
 
 #include "worldobject/incubator.h"
+#include "worldobject/spawnpoint.h"
 #include "worldobject/controltower.h"
 #include "worldobject/engineer.h"
 #include "worldobject/bridge.h"
@@ -632,8 +633,21 @@ bool Engineer::SearchForIncubator()
                     found = true;
                 }
             }
+
+            if( building->m_type == Building::TypeSpawnPoint &&
+				g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SPAWNPOINTINCUBATION &&
+                g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
+            {
+                double distance = ( building->m_pos - m_pos ).Mag();
+                if( distance < nearest )
+                {
+                    m_buildingId = building->m_id.GetUniqueId();                    
+                    nearest = distance;
+                    found = true;
+                }                    
+            }
         }
-    }
+	}
 
     return found;
 }
@@ -641,13 +655,13 @@ bool Engineer::SearchForIncubator()
 
 bool Engineer::AdvanceToIncubator()
 {
-    Incubator *incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
+    Building *building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
 
-    if( !incubator )
+    if( !building )
     {
         bool found = SearchForIncubator();
-        incubator = (Incubator *) g_app->m_location->GetBuilding( m_buildingId );
-        if( !incubator )
+        building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
+        if( !building )
         {
             // We can't find a friendly incubator, so go into holding pattern
             m_state = StateIdle;
@@ -655,28 +669,66 @@ bool Engineer::AdvanceToIncubator()
         }
     }
 
-
-    incubator->GetDockPoint( m_targetPos, m_targetFront );
-    bool arrived = AdvanceToTargetPos();
-    if( arrived )
+	if( building && building->m_type == Building::TypeIncubator )
     {
-        m_front = m_targetFront;
+        Incubator *incubator = (Incubator *) building;
+        incubator->GetDockPoint( m_targetPos, m_targetFront );
 
-        // Arrived at our incubator, drop spirit off here one at a time
-        int spiritId = m_spirits[0];
-        if( g_app->m_location->m_spirits.ValidIndex(spiritId) )
-        {
-            Spirit *s = g_app->m_location->m_spirits.GetPointer( spiritId );
-            incubator->AddSpirit( s );
-            g_app->m_location->m_spirits.MarkNotUsed( spiritId );
-            m_spirits.RemoveData(0);
-        }
+		bool arrived = AdvanceToTargetPos();
+		if( arrived )
+		{
+			m_front = m_targetFront;
 
-        if( m_spirits.Size() == 0 )
+			// Arrived at our incubator, drop spirit off here one at a time
+			int spiritId = m_spirits[0];
+			if( g_app->m_location->m_spirits.ValidIndex(spiritId) )
+			{
+				Spirit *s = g_app->m_location->m_spirits.GetPointer( spiritId );
+				incubator->AddSpirit( s );
+				g_app->m_location->m_spirits.MarkNotUsed( spiritId );
+				m_spirits.RemoveData(0);
+			}
+
+			if( m_spirits.Size() == 0 )
+			{
+				// Return to spirit field
+				m_state = StateToWaypoint;
+			}
+		}
+	}
+
+	if( building && building->m_type == Building::TypeSpawnPoint )
+    {
+        SpawnPoint *spawnPoint = (SpawnPoint *)building;
+        m_targetPos = building->m_pos + building->m_front * 50;
+        m_targetPos = PushFromObstructions( m_targetPos, false );
+        m_targetPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue( m_targetPos.x, m_targetPos.z );
+        m_targetFront = building->m_front;
+        
+        bool arrived = AdvanceToTargetPos();
+        if( arrived )
         {
-            // Return to spirit field
-            m_state = StateToWaypoint;
-        }
+            m_front = m_targetFront;
+
+            // Arrived at our incubator, drop spirit off here one at a time
+            int spiritId = m_spirits[0];
+            if( g_app->m_location->m_spirits.ValidIndex(spiritId) )
+            {
+                Spirit *s = g_app->m_location->m_spirits.GetPointer( spiritId );
+                g_app->m_location->m_spirits.MarkNotUsed( spiritId );
+                m_spirits.RemoveData(0);
+
+                spawnPoint->SpawnDarwinian();   
+
+                g_app->m_soundSystem->TriggerEntityEvent( this, "DropSpirit" );
+            }
+
+            if( m_spirits.Size() == 0 )
+            {
+                // Return to spirit field        
+                m_state = StateToWaypoint;
+            }
+        }    
     }
 
     return false;

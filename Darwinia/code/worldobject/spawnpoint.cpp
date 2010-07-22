@@ -673,6 +673,27 @@ bool SpawnPoint::Advance()
     return SpawnBuilding::Advance();
 }
 
+void SpawnPoint::SpawnDarwinian()
+{
+    if( m_id.GetTeamId() == 255 )
+    {
+        return;
+    }
+
+    Matrix34 mat( m_front, m_up, m_pos );
+    Matrix34 doorMat = m_doorMarker->GetWorldMatrix(mat);
+
+    Vector3 exitPos = doorMat.pos;
+    Vector3 exitVel = g_zeroVector;
+    
+    WorldObjectId spawned = g_app->m_location->SpawnEntities( exitPos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, exitVel, 0.0 );
+    Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawned, Entity::TypeDarwinian );
+    if( darwinian )
+    {
+        darwinian->m_onGround = false;
+    }
+}
+
 
 void SpawnPoint::Render( float _predictionTime )
 {

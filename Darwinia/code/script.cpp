@@ -11,6 +11,7 @@
 #include "lib/filesys_utils.h"
 #include "lib/preferences.h"
 #include "lib/window_manager.h"
+#include "lib/shape.h"
 
 #include "app.h"
 #include "camera.h"
@@ -26,6 +27,8 @@
 #include "taskmanager_interface.h"
 #include "demoendsequence.h"
 #include "tutorial.h"
+#include "team.h"
+#include "unit.h"
 
 #include "loaders/credits_loader.h"
 
@@ -34,6 +37,7 @@
 #include "worldobject/constructionyard.h"
 #include "worldobject/goddish.h"
 #include "worldobject/rocket.h"
+#include "worldobject/centipede.h"
 
 
 
@@ -567,6 +571,39 @@ void Script::RunCommand_ActivateTrunkPort( int _buildingId, bool _fullActivation
 	}
 }
 
+void Script::RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _blue )
+{
+	if ( _teamID < 0 || _teamID >= NUM_TEAMS ) { return; }
+
+	RGBAColour teamColour = RGBAColour(_red, _green, _blue);
+	g_app->m_location->m_teams[_teamID].m_colour = teamColour;
+	for ( int i = 0; i < g_app->m_location->m_teams[_teamID].m_units.Size(); i++ )
+	{
+		for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.Size(); j++ )
+		{
+			Entity *entity = g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.GetData(j);
+			entity->m_shape->Recolour(teamColour);
+			if ( entity->m_type == Entity::TypeCentipede )
+			{
+				Centipede *centipede = (Centipede *) entity;
+				centipede->s_shapeHead->Recolour(teamColour);
+				centipede->s_shapeBody->Recolour(teamColour);
+			}
+		}
+	}
+	for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_others.Size(); j++ )
+	{
+		Entity *entity = g_app->m_location->m_teams[_teamID].m_others.GetData(j);
+		entity->m_shape->Recolour(teamColour);
+		if ( entity->m_type == Entity::TypeCentipede )
+		{
+			Centipede *centipede = (Centipede *) entity;
+			centipede->s_shapeHead->Recolour(teamColour);
+			centipede->s_shapeBody->Recolour(teamColour);
+		}
+	}
+}
+
 // Opens a script file and returns. The script will only actually be run when
 // Script::Advance gets called
 void Script::RunScript(char *_filename)
@@ -841,7 +878,16 @@ void Script::AdvanceScript()
 			RunCommand_ActivateTrunkPort((int)nextFloat, opCode == OpActivateTrunkPortFull );
 			break;
 		}
+		case OpSetTeamColour:
+		{
+			int teamID = atoi(m_in->GetNextToken());
+			int red = atoi(m_in->GetNextToken());
+			int green = atoi(m_in->GetNextToken());
+			int blue = atoi(m_in->GetNextToken());
 
+			RunCommand_SetTeamColour(teamID, red, green, blue);
+			break;
+		}
 		default:				    DarwiniaDebugAssert(false);									break;
 	}
 }
@@ -1045,7 +1091,8 @@ static char *g_opCodeNames[] =
     "PermitEscape",
 	"DestroyBuilding",
 	"ActivateTrunkPort",
-	"ActivateTrunkPortFull"
+	"ActivateTrunkPortFull",
+	"TeamSetColour"
 };
 
 
