@@ -1,0 +1,29 @@
+TeamColours_StartDefinition
+	# ID     Type R   G   B
+	# ========================
+	  0   100 255 100
+	  1   255 50 50
+	  2   255 255 50
+	  3   120 180 255
+	  4   255 150 0
+	  5   150 0 255
+	  6   70 200 200
+	  7   255 150 255
+	  8   10 10 10
+	  9   200 200 200
+TeamColours_EndDefinition
+
+TeamAlliances_StartDefinition
+	# ID1  ID2   Allied?
+	# ===================
+	  0   2   1
+	  2   0   1
+TeamAlliances_EndDefinition
+
+TeamFlags_StartDefinition
+	# ID     Flags
+	# ========================
+	  0    PlayerSpawnTeam  SoulHarvest  SpawnPointIncubation
+	  2    SpawnPointIncubation 
+TeamFlags_EndDefinition
+

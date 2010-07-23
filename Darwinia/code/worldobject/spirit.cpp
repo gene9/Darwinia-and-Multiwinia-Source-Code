@@ -243,6 +243,7 @@ void Spirit::CollectorDrops()
     m_hover.Zero();
     m_state = StateFloating;
     m_pushFromBuildings = true;
+	m_timeSync = 120.0f + syncsfrand(60.0f);
 //    Begin();
     g_app->m_soundSystem->TriggerOtherEvent( this, "Dropped", SoundSourceBlueprint::TypeSpirit );
 }

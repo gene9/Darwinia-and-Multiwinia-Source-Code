@@ -721,7 +721,7 @@ bool Engineer::AdvanceToIncubator()
                 spawnPoint->SpawnDarwinian();   
 
                 g_app->m_soundSystem->TriggerEntityEvent( this, "DropSpirit" );
-            }
+			} else { m_spirits.RemoveData(0); }
 
             if( m_spirits.Size() == 0 )
             {

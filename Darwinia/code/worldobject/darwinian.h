@@ -36,7 +36,8 @@ public:
         StateAttackingBuilding,                        // Eg attacking rocket in demo2
         StateOnFire,
 		StateCarryingSpirit,
-		StateToEgg
+		StateToEgg,
+		StateHarvestingSoul
     };
 
     int         m_state;
@@ -50,6 +51,7 @@ protected:
     WorldObjectId   m_armourId;
     WorldObjectId   m_officerId;
     int             m_spiritId;
+    int             m_soulId;
     int             m_buildingId;
     int             m_portId;
     WorldObjectId   m_boxKiteId;
@@ -78,6 +80,7 @@ protected:
     bool        SearchForRandomPosition();
     bool        SearchForThreats();
     bool        SearchForSpirits();
+    bool        SearchForSouls();
     bool        SearchForPorts();
     bool        SearchForOfficers();
     bool        SearchForArmour();
@@ -103,6 +106,7 @@ protected:
     bool        AdvanceOnFire           ();
 	bool		AdvanceCarryingSpirit	();
 	bool		AdvanceToEgg			();
+	bool		AdvanceHarvestingSoul	();
     bool        AdvanceToTargetPosition	();
 
 public:
