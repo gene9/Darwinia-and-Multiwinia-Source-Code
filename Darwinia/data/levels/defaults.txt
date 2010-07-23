@@ -1,3 +1,5 @@
+#Default: Taken from Multiwinia
+
 TeamColours_StartDefinition
 	# ID     Type R   G   B
 	# ========================
@@ -13,6 +15,7 @@ TeamColours_StartDefinition
 	  9   200 200 200
 TeamColours_EndDefinition
 
+# Default: Green (0) is allied to Player (2)
 TeamAlliances_StartDefinition
 	# ID1  ID2   Allied?
 	# ===================
@@ -20,10 +23,10 @@ TeamAlliances_StartDefinition
 	  2   0   1
 TeamAlliances_EndDefinition
 
+# Default: Player owned incubators spawn green darwinians (0)
 TeamFlags_StartDefinition
 	# ID     Flags
 	# ========================
-	  0    PlayerSpawnTeam  SoulHarvest  SpawnPointIncubation
-	  2    SpawnPointIncubation 
+	  0    PlayerSpawnTeam 
 TeamFlags_EndDefinition
 
