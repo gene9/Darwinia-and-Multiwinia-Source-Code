@@ -35,6 +35,7 @@
 #include "worldobject/rocket.h"
 #include "worldobject/incubator.h"
 #include "worldobject/spawnpoint.h"
+#include "worldobject/egg.h"
 
 Darwinian::Darwinian()
 :   Entity(),
@@ -143,6 +144,7 @@ bool Darwinian::SearchForNewTask()
         case StateOperatingPort:
         case StateCombat:
         case StateCarryingSpirit:
+        case StateToEgg:
             if( !newTargetFound )       newTargetFound = SearchForThreats();
             break;
 
@@ -204,6 +206,7 @@ bool Darwinian::Advance( Unit *_unit )
             case StateBoardingRocket :      amIDead = AdvanceBoardingRocket();      break;
             case StateAttackingBuilding :   amIDead = AdvanceAttackingBuilding();   break;
             case StateCarryingSpirit :      amIDead = AdvanceCarryingSpirit();      break;
+            case StateToEgg :               amIDead = AdvanceToEgg();	            break;
         }
     }
 
@@ -215,23 +218,21 @@ bool Darwinian::Advance( Unit *_unit )
     }
 	if ( g_app->m_location->m_spirits.ValidIndex( m_spiritId ) ) {
 		Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
-		if( s && s->m_state == Spirit::StateAttached && (m_state != StateCarryingSpirit || m_dead) )
+		if( s && s->m_state == Spirit::StateAttached && ((m_state != StateCarryingSpirit && m_state != StateToEgg) || m_dead) )
 		{
-			if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
-			{
-				//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
-				s->CollectorDrops();
-				m_spiritId = -1;
-			}
+			//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+			s->CollectorDrops();
+			m_spiritId = -1;
 		}
-	}
+	} else { m_spiritId = -1; }
+
     if( g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
     {
         Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
         if( spirit && spirit->m_state == Spirit::StateAttached )
         {
             spirit->m_pos = m_pos;
-			spirit->m_pos.y += 4.0f;
+			spirit->m_pos.y += 10.0f;
             spirit->m_vel = m_vel;
 		}
     }
@@ -652,7 +653,8 @@ bool Darwinian::AdvanceCombat()
 bool Darwinian::AdvanceWorshipSpirit()
 {
 	bool captureSpirit = false;
-	if ( SearchForIncubator() && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SOULHARVEST) ) { captureSpirit = true; }
+	if ( (SearchForIncubator() || (SearchForEggs() && g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_EGGWINIANS) ) &&
+		(g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SOULHARVEST) ) { captureSpirit = true; }
 
     START_PROFILE( g_app->m_profiler, "AdvanceWorship" );
 
@@ -662,6 +664,7 @@ bool Darwinian::AdvanceWorshipSpirit()
     if( !g_app->m_location->m_spirits.ValidIndex(m_spiritId) )
     {
         m_state = StateIdle;
+		m_spiritId = -1;
         m_retargetTimer = 3.0f;
         END_PROFILE( g_app->m_profiler, "AdvanceWorship" );
         return false;
@@ -672,6 +675,7 @@ bool Darwinian::AdvanceWorshipSpirit()
         spirit->m_state != Spirit::StateFloating )
     {
         m_state = StateIdle;
+		m_spiritId = -1;
         m_retargetTimer = 3.0f;
 
         if( m_boxKiteId.IsValid() )
@@ -708,10 +712,6 @@ bool Darwinian::AdvanceWorshipSpirit()
         m_front = ( spirit->m_pos - m_pos ).Normalise();
     }
 
-
-    //
-    // Possibly spawn a boxkite to guide the spirit to heaven
-
 	if ( captureSpirit )
 	{
 		Vector3 vectorRemaining = m_wayPoint - m_pos;
@@ -721,13 +721,17 @@ bool Darwinian::AdvanceWorshipSpirit()
 		{
 			spirit->CollectorArrives();
 			//m_spiritId = spirit->m_id.GetUniqueId();
-			m_state = StateCarryingSpirit;
+			if ( SearchForIncubator() ) { m_state = StateCarryingSpirit; }
+			else if ( SearchForEggs() ) { m_state = StateToEgg; }
 			END_PROFILE( g_app->m_profiler, "AdvanceWorship" );
 			return false;
 		}
 	}
 
-    if( areWeThere && !m_boxKiteId.IsValid() )
+    //
+    // Possibly spawn a boxkite to guide the spirit to heaven
+
+	if( areWeThere && !m_boxKiteId.IsValid() )
     {
         bool existingKiteFound = false;
 
@@ -1210,6 +1214,121 @@ bool Darwinian::SearchForIncubator()
 	}
 
     return found;
+}
+WorldObjectId Darwinian::FindNearbyEgg( Vector3 const &_pos )
+{
+    int numFound;
+    WorldObjectId *ids = g_app->m_location->m_entityGrid->GetFriends( _pos.x, _pos.z, DARWINIAN_INCUBATOR_SEARCH_RADIUS, &numFound, m_id.GetTeamId() );
+
+    //
+    // Build a list of candidates within range
+
+    LList<WorldObjectId> eggIds;
+
+    for( int i = 0; i < numFound; ++i )
+    {
+        WorldObjectId id = ids[i];
+        Egg *egg = (Egg *) g_app->m_location->GetEntitySafe( id, Entity::TypeEgg );
+
+        if( egg &&
+            egg->m_state == Egg::StateDormant &&
+            egg->m_onGround )
+        {
+            eggIds.PutData( id );
+        }
+    }
+
+
+    //
+    // Chose one randomly
+
+    if( eggIds.Size() > 0 )
+    {
+        int chosenIndex = syncfrand( eggIds.Size() );
+        WorldObjectId *eggId = eggIds.GetPointer(chosenIndex);
+        return *eggId;
+    }
+    else
+    {
+        return WorldObjectId();
+    }
+}
+
+
+bool Darwinian::SearchForEggs()
+{
+	START_PROFILE(g_app->m_profiler, "SearchForEggs");
+
+    WorldObjectId eggId = FindNearbyEgg( m_pos );
+
+    if( eggId.IsValid() )
+    {
+        m_eggId = eggId;
+		Egg *theEgg = (Egg *) g_app->m_location->GetEntitySafe( m_eggId, Entity::TypeEgg );
+		m_wayPoint = theEgg->m_pos;
+        //m_state = StateToEgg;
+		END_PROFILE(g_app->m_profiler, "SearchForEggs");
+        return true;
+    }
+
+	END_PROFILE(g_app->m_profiler, "SearchFprEggs");
+    return false;
+}
+
+bool Darwinian::AdvanceToEgg()
+{
+	START_PROFILE(g_app->m_profiler, "AdvanceToEgg");
+    Egg *theEgg = (Egg *) g_app->m_location->GetEntitySafe( m_eggId, Entity::TypeEgg );
+
+    if( !theEgg || theEgg->m_state == Egg::StateFertilised )
+    {
+        bool found = SearchForEggs();
+        if( !found )
+        {
+            // We can't find any eggs, so go into holding pattern
+            if( g_app->m_location->m_spirits.ValidIndex( m_spiritId ) )
+            {
+                Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+                if( spirit->m_state == Spirit::StateAttached )
+                {
+                    spirit->CollectorDrops();
+                }
+                m_spiritId = -1;
+            }
+            m_state = StateIdle;
+			m_wayPoint = m_pos;
+            END_PROFILE(g_app->m_profiler, "AdvanceToEgg");
+            return false;
+        }
+    }
+
+    if( !g_app->m_location->m_spirits.ValidIndex( m_spiritId ) )
+    {
+        m_spiritId = -1;
+        m_state = StateIdle;
+        END_PROFILE(g_app->m_profiler, "AdvanceToEgg");
+        return false;
+    }
+
+    //
+    // At this point we MUST have found an egg, otherwise we'd have returned by now
+
+    theEgg = (Egg *) g_app->m_location->GetEntitySafe( m_eggId, Entity::TypeEgg );
+    DarwiniaDebugAssert( theEgg );
+
+	m_wayPoint = theEgg->m_pos;
+    bool arrived = AdvanceToTargetPosition();
+
+    if( arrived )
+    {
+        theEgg->Fertilise( m_spiritId );
+        m_spiritId = -1;
+        m_eggId.SetInvalid();
+		m_state = StateIdle;
+    }
+
+	END_PROFILE(g_app->m_profiler, "AdvanceToEgg");
+    return false;
 }
 
 void Darwinian::BoardRocket( int _buildingId )
@@ -2241,7 +2360,11 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
 	}
     RGBAColour colour;
     if( m_id.GetTeamId() >= 0 ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
-
+	if ( m_corrupted && frand() < 0.1 )
+	{
+		int t = floor(frand(NUM_TEAMS));
+		colour = g_app->m_location->m_teams[ t ].m_colour;
+	}
     Vector3 predictedPos = m_pos + m_vel * _predictionTime;;
     Vector3 entityUp = g_upVector;
 

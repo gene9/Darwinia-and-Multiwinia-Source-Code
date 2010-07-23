@@ -35,7 +35,8 @@ public:
         StateWatchingSpectacle,
         StateAttackingBuilding,                        // Eg attacking rocket in demo2
         StateOnFire,
-		StateCarryingSpirit
+		StateCarryingSpirit,
+		StateToEgg
     };
 
     int         m_state;
@@ -52,6 +53,7 @@ protected:
     int             m_buildingId;
     int             m_portId;
     WorldObjectId   m_boxKiteId;
+	WorldObjectId	m_eggId;
 
     float       m_threatRange;
     bool        m_scared;
@@ -80,7 +82,9 @@ protected:
     bool        SearchForOfficers();
     bool        SearchForArmour();
 	bool		SearchForIncubator();
+	bool		SearchForEggs();
     bool        BeginVictoryDance();
+	WorldObjectId FindNearbyEgg( Vector3 const &_pos );
 
     bool        AdvanceIdle             ();
     bool        AdvanceApproachingPort  ();
@@ -98,8 +102,8 @@ protected:
     bool        AdvanceAttackingBuilding();
     bool        AdvanceOnFire           ();
 	bool		AdvanceCarryingSpirit	();
-
-    bool        AdvanceToTargetPosition();
+	bool		AdvanceToEgg			();
+    bool        AdvanceToTargetPosition	();
 
 public:
     Darwinian();

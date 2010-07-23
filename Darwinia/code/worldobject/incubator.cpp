@@ -155,7 +155,7 @@ void Incubator::SpawnEntity()
 
     WorldObjectId wob = g_app->m_location->SpawnEntities( exit.pos, teamId, -1, m_troopType, 1, exit.f, 0.0f );
 
-	if ( m_renderDamaged && frand() < 0.25 )
+	if ( (m_renderDamaged && frand() < 0.25) || g_app->m_location->m_levelFile->m_teamFlags[teamId] & TEAM_FLAG_PATTERNCORRUPTION )
 	{
 		Darwinian *dg = (Darwinian *) g_app->m_location->GetEntity(wob);
 		dg->m_corrupted = true;

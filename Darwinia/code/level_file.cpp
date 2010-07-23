@@ -729,11 +729,12 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
 		{
 			word = _in->GetNextToken();
 			int flag = 0;
-			if ( stricmp("PlayerSpawnTeam",word) == 0 ) { flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
-			else if ( stricmp("Eggwinians",word) == 0 ) { flag = TEAM_FLAG_EGGWINIANS; }
-			else if ( stricmp("SoulHarvest",word) == 0 ) { flag = TEAM_FLAG_SOULHARVEST; }
-			else if ( stricmp("SpawnPointIncubation",word) == 0 ) { flag = TEAM_FLAG_SPAWNPOINTINCUBATION; }
-			else { flag = atoi(word); }
+			if ( stricmp("PlayerSpawnTeam",word) == 0 )				{ flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
+			else if ( stricmp("Eggwinians",word) == 0 )				{ flag = TEAM_FLAG_EGGWINIANS; }
+			else if ( stricmp("SoulHarvest",word) == 0 )			{ flag = TEAM_FLAG_SOULHARVEST; }
+			else if ( stricmp("SpawnPointIncubation",word) == 0 )	{ flag = TEAM_FLAG_SPAWNPOINTINCUBATION; }
+			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
+			else { flag = 0; }
 
 			if ( teamID >= 0 && teamID < NUM_TEAMS )
 			{
@@ -1063,10 +1064,11 @@ void LevelFile::WriteTeamFlags(FileWriter *_out)
 			if ( m_teamFlags[i] > 0 )
 			{
 				_out->printf( "\t  %d   ", i);
-				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { _out->printf( " PlayerSpawnTeam "); }
-				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS ) { _out->printf( " Eggwinians "); }
-				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST ) { _out->printf( " SoulHarvest "); }
-				if ( m_teamFlags[i] & TEAM_FLAG_SPAWNPOINTINCUBATION ) { _out->printf( " SpawnPointIncubation "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM )		{ _out->printf( " PlayerSpawnTeam "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS )			{ _out->printf( " Eggwinians "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST )			{ _out->printf( " SoulHarvest "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SPAWNPOINTINCUBATION )	{ _out->printf( " SpawnPointIncubation "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_PATTERNCORRUPTION )		{ _out->printf( " PatternCorruption "); }
 				_out->printf( "\n");
 			}
         }

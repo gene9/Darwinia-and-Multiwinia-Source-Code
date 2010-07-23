@@ -579,27 +579,36 @@ void Script::RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _
 	g_app->m_location->m_teams[_teamID].m_colour = teamColour;
 	for ( int i = 0; i < g_app->m_location->m_teams[_teamID].m_units.Size(); i++ )
 	{
-		for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.Size(); j++ )
+		if ( g_app->m_location->m_teams[_teamID].m_units.ValidIndex(i) )
 		{
-			Entity *entity = g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.GetData(j);
-			entity->m_shape->Recolour(teamColour);
+			for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.Size(); j++ )
+			{
+				if ( g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.ValidIndex(j) )
+				{
+					Entity *entity = g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.GetData(j);
+					if ( entity->m_shape ) { entity->m_shape->Recolour(teamColour); }
+					if ( entity->m_type == Entity::TypeCentipede )
+					{
+						Centipede *centipede = (Centipede *) entity;
+						centipede->s_shapeHead->Recolour(teamColour);
+						centipede->s_shapeBody->Recolour(teamColour);
+					}
+				}
+			}
+		}
+	}
+	for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_others.Size(); j++ )
+	{
+		if ( g_app->m_location->m_teams[_teamID].m_others.ValidIndex(j) )
+		{
+			Entity *entity = g_app->m_location->m_teams[_teamID].m_others.GetData(j);
+			if ( entity->m_shape ) { entity->m_shape->Recolour(teamColour); }
 			if ( entity->m_type == Entity::TypeCentipede )
 			{
 				Centipede *centipede = (Centipede *) entity;
 				centipede->s_shapeHead->Recolour(teamColour);
 				centipede->s_shapeBody->Recolour(teamColour);
 			}
-		}
-	}
-	for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_others.Size(); j++ )
-	{
-		Entity *entity = g_app->m_location->m_teams[_teamID].m_others.GetData(j);
-		entity->m_shape->Recolour(teamColour);
-		if ( entity->m_type == Entity::TypeCentipede )
-		{
-			Centipede *centipede = (Centipede *) entity;
-			centipede->s_shapeHead->Recolour(teamColour);
-			centipede->s_shapeBody->Recolour(teamColour);
 		}
 	}
 }
@@ -880,7 +889,7 @@ void Script::AdvanceScript()
 		}
 		case OpSetTeamColour:
 		{
-			int teamID = atoi(m_in->GetNextToken());
+			int teamID = (int) nextFloat;
 			int red = atoi(m_in->GetNextToken());
 			int green = atoi(m_in->GetNextToken());
 			int blue = atoi(m_in->GetNextToken());
@@ -1092,7 +1101,7 @@ static char *g_opCodeNames[] =
 	"DestroyBuilding",
 	"ActivateTrunkPort",
 	"ActivateTrunkPortFull",
-	"TeamSetColour"
+	"SetTeamColour"
 };
 
 
