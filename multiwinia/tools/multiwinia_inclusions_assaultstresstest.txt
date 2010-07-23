@@ -1,1 +1,0 @@
-levels/mp_assault_stress.txt
