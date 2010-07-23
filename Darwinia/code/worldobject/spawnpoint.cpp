@@ -606,13 +606,7 @@ void SpawnPoint::TriggerSpirit( SpawnBuildingSpirit *_spirit )
     if( m_id.GetUniqueId() == _spirit->m_targetBuildingId )
     {
         // This spirit has arrived at its destination
-        if( m_id.GetTeamId() != 255 )
-        {
-            Matrix34 mat( m_front, m_up, m_pos );
-            Matrix34 doorMat = m_doorMarker->GetWorldMatrix(mat);
-            g_app->m_location->SpawnEntities( doorMat.pos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, g_zeroVector, 0.0f );
-        }
-
+		SpawnDarwinian();
         delete _spirit;
     }
     else
