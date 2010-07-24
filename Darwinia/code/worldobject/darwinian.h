@@ -44,6 +44,8 @@ public:
     bool        m_promoted;
     Vector3     m_wayPoint;
 	int			m_corrupted;
+	bool		m_soulless;
+	bool		m_soulHarvested;
 
 protected:
     float           m_retargetTimer;

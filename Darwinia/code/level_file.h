@@ -12,11 +12,14 @@
 #define MAX_FILENAME_LEN			256
 #define MAGIC_MOUNT_NAME_START_POS	"CamPosBefore"
 
-#define TEAM_FLAG_PLAYER_SPAWN_TEAM		1		//Team 2 incubators spawn darwinians on this team
-#define TEAM_FLAG_EGGWINIANS			2		//Eggs belonging to this team will spawn darwinians
-#define TEAM_FLAG_SOULHARVEST			4		//Darwinians on this team will gather souls and return them to incubators
-#define TEAM_FLAG_SPAWNPOINTINCUBATION	8		//Engineers and SoulHarvest Darwinians can use spawn points as though they were incubators
-#define TEAM_FLAG_PATTERNCORRUPTION		16		//All darwinians spawn corrupted
+//Byte 1
+#define TEAM_FLAG_PLAYER_SPAWN_TEAM				1		//Team 2 incubators spawn darwinians on this team
+#define TEAM_FLAG_EGGWINIANS					2		//Eggs belonging to this team will spawn darwinians
+#define TEAM_FLAG_SOULHARVEST					4		//Darwinians on this team will gather souls and return them to incubators
+#define TEAM_FLAG_SPAWNPOINTINCUBATION			8		//Engineers and SoulHarvest Darwinians can use spawn points as though they were incubators
+#define TEAM_FLAG_PATTERNCORRUPTION				16		//All darwinians spawn corrupted
+#define TEAM_FLAG_EVILTREESPAWNTEAM				32		//Team which evil trees will use to spawn soulless darwinians instead of ghosts
+#define TEAM_FLAG_SOULLESS						64		//Darwinians on this team always spawn without souls
 
 class Building;
 class TextReader;
@@ -255,6 +258,9 @@ public:
 
     void                GenerateInstantUnits();
     void                GenerateDynamicBuildings();
+
+	void				SetFlag				( char _teamId, int _flag, bool _flagState );
+	void				SetAlliance			( char _teamId, char _partnerId, bool _allianceState );
 };
 
 

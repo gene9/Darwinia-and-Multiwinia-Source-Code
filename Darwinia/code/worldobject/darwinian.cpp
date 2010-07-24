@@ -56,7 +56,9 @@ Darwinian::Darwinian()
     m_grenadeTimer(0.0f),
     m_officerTimer(0.0f),
 	m_corrupted(0),
-	m_soulId(0)
+	m_soulId(0),
+	m_soulless(false),
+	m_soulHarvested(false)
 {
     SetType( TypeDarwinian );
     m_grenadeTimer = syncfrand( 5.0f );
@@ -83,7 +85,30 @@ void Darwinian::ChangeHealth( int _amount )
 
     bool dead = m_dead;
 
-    Entity::ChangeHealth( _amount );
+    //Entity::ChangeHealth( _amount );
+    if( !m_dead )
+    {
+        if( _amount < 0 )
+        {
+            g_app->m_soundSystem->TriggerEntityEvent( this, "LoseHealth" );
+        }
+
+        if( m_stats[StatHealth] + _amount <= 0 )
+        {
+            m_stats[StatHealth] = 100;
+            m_dead = true;
+            g_app->m_soundSystem->TriggerEntityEvent( this, "Die" );
+			if ( !m_soulless ) { g_app->m_location->SpawnSpirit( m_pos, m_vel * 0.5f, m_id.GetTeamId(), m_id ); }
+        }
+        else if( m_stats[StatHealth] + _amount > 255 )
+        {
+            m_stats[StatHealth] = 255;
+        }
+        else
+        {
+            m_stats[StatHealth] += _amount;
+        }
+    }
 
     if( !dead && m_dead )
     {
@@ -191,7 +216,6 @@ bool Darwinian::Advance( Unit *_unit )
 
         //
         // Do what we're supposed to do
-
         switch( m_state )
         {
             case StateIdle :                amIDead = AdvanceIdle();                break;
@@ -228,10 +252,11 @@ bool Darwinian::Advance( Unit *_unit )
 		if( s && s->m_state == Spirit::StateAttached && ((m_state != StateCarryingSpirit && m_state != StateToEgg) || m_dead) )
 		{
 			//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
-			s->CollectorDrops();
+			if ( m_soulHarvested ) { s->CollectorDrops(); }
+			m_soulHarvested = false;
 			m_soulId = -1;
 		}
-	} else { m_soulId = -1; }
+	} else { m_soulId = -1; m_soulHarvested = false; }
 
 	// Move the soul to us if carrying one
     if( g_app->m_location->m_spirits.ValidIndex(m_soulId) )
@@ -825,6 +850,7 @@ bool Darwinian::AdvanceHarvestingSoul()
 		//m_spiritId = spirit->m_id.GetUniqueId();
 		if ( SearchForIncubator() ) { m_state = StateCarryingSpirit; }
 		else if ( SearchForEggs() ) { m_state = StateToEgg; }
+		m_soulHarvested = true;
 		END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
 		return false;
 	}
@@ -1200,6 +1226,7 @@ bool Darwinian::AdvanceCarryingSpirit()
 				incubator->AddSpirit( spirit );
 				g_app->m_location->m_spirits.MarkNotUsed( m_soulId );
 				m_soulId = -1;
+				m_soulHarvested = false;
 			}
 			m_state = StateIdle;
 		}
@@ -1223,6 +1250,7 @@ bool Darwinian::AdvanceCarryingSpirit()
 				g_app->m_location->m_spirits.MarkNotUsed( m_soulId );
 				m_soulId = -1;
                 g_app->m_soundSystem->TriggerEntityEvent( this, "DropSpirit" );
+				m_soulHarvested = false;
 			}
 			m_state = StateIdle;
         }    
@@ -1377,6 +1405,7 @@ bool Darwinian::AdvanceToEgg()
         m_soulId = -1;
         m_eggId.SetInvalid();
 		m_state = StateIdle;
+		m_soulHarvested = false;
     }
 
 	END_PROFILE(g_app->m_profiler, "AdvanceToEgg");

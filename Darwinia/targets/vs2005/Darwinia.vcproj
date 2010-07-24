@@ -1950,6 +1950,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\code\interface\teamwindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\code\interface\teamwindow.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\code\interface\tree_window.cpp"
 				>
 				<FileConfiguration

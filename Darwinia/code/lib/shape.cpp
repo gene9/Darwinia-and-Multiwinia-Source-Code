@@ -1589,12 +1589,13 @@ void ShapeFragment::Recolour ( RGBAColour _teamColour )
 	for ( int i = 0; i < m_numColours; i++ )
 	{
 		float maxFactor = (float) m_colours[i].r + (float) m_colours[i].g + (float) m_colours[i].b;
-		maxFactor = maxFactor / (192.0*3.0); // Increasing the first number here makes models darker, lowering it makes them lighter
+		float baseFactor = (float) _teamColour.r + (float) _teamColour.g + (float) _teamColour.b;
+		maxFactor = maxFactor / baseFactor; // Increasing the first number here makes models darker, lowering it makes them lighter
 
 		m_colours[i].r = (char) min(((float)_teamColour.r * maxFactor),255.0);
 		m_colours[i].g = (char) min(((float)_teamColour.g * maxFactor),255.0);
 		m_colours[i].b = (char) min(((float)_teamColour.b * maxFactor),255.0);
-
+		//m_colours[i] = m_colours[i] * 0.7;
 	}
 
 	/*

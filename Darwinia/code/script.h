@@ -55,6 +55,9 @@ public:
 		OpActivateTrunkPort,
 		OpActivateTrunkPortFull,
 		OpSetTeamColour,
+		OpSetAlliance,
+		OpChangeFlag,
+		OpChangeAvatar,
 		OpNumOps
 	};
 
@@ -131,7 +134,10 @@ protected:
 	void RunCommand_DestroyBuilding( int _buildingId, float _intensity );
 	void RunCommand_ActivateTrunkPort( int _buildingId, bool _fullActivation );
 
-	void RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _blue );
+	void RunCommand_SetTeamColour		( int _teamID, int _red, int _green, int _blue );
+	void RunCommand_SetAlliance			( int _teamId, int _partnerId, bool _allianceState );
+	void RunCommand_ChangeFlag			( int _teamId, int _flag, bool _flagState );
+	void RunCommand_ChangeAvatar		( char *avatar );
 
 public:
     Script();

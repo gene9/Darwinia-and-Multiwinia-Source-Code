@@ -240,7 +240,7 @@ void Spam::SpawnInfection()
         Vector3 vel = g_upVector;
         vel += Vector3( syncsfrand(1.0f), syncfrand(2.0f), syncsfrand(1.0f) );
         vel.SetLength( 100.0f );
-		Team *spam_team = g_app->m_location->GetMyTeam();
+		//Team spam_team = g_app->m_location->GetMyTeam();
 
         SpamInfection *infection = new SpamInfection();
         infection->m_pos = m_centrePos;
@@ -483,8 +483,9 @@ void SpamInfection::AdvanceAttackingEntity()
     //
     // Is our target alive and well?
 
+	bool friendlyTarget = g_app->m_location->IsFriend(m_targetId.GetTeamId(),m_id.GetTeamId());
     Entity *target = g_app->m_location->GetEntity( m_targetId );
-    if( !target || target->m_dead )
+    if( !target || target->m_dead || friendlyTarget )
     {
         m_state = StateIdle;
         return;
@@ -501,7 +502,7 @@ void SpamInfection::AdvanceAttackingEntity()
     {
         //if( m_targetId.GetTeamId() != m_id.GetTeamId() )
 		//bool friendly
-		if (m_targetId.GetTeamId() != m_id.GetTeamId())
+		if (m_targetId.GetTeamId() != m_id.GetTeamId() && (Entity::TypeDarwinian))
         {
             // Green darwinian
             int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian );
@@ -517,7 +518,7 @@ void SpamInfection::AdvanceAttackingEntity()
                 target->ChangeHealth( -999 );
             }
         }
-		else if( (m_targetId.GetTeamId() != m_id.GetTeamId()) && !(Entity::TypeDarwinian) )
+		else if( (m_targetId.GetTeamId() != m_id.GetTeamId()))
         {
             // Player
             target->ChangeHealth( -999 );
@@ -566,7 +567,8 @@ void SpamInfection::AdvanceAttackingSpirit()
     if( arrived )
     {
         int entityType = Entity::TypeVirii;
-        if( syncfrand(20.0f) < 1.0f ) entityType = Entity::TypeSpider;
+		if( syncfrand(20.0f) < 5.0f ) entityType = Entity::TypeDarwinian;
+        else if( syncfrand(20.0f) < 1.0f ) entityType = Entity::TypeSpider;
         g_app->m_location->SpawnEntities( spirit->m_pos, m_id.GetTeamId(), -1, entityType, 1, g_zeroVector, 0.0f, 200.0f );
         g_app->m_location->m_spirits.MarkNotUsed(m_spiritId);
 
@@ -594,7 +596,7 @@ bool SpamInfection::AdvanceToTargetPosition()
         m_positionHistory.RemoveData(i);
     }
 
-    Vector3 targetVel = ( m_targetPos - m_pos ).SetLength( 200.0f );
+    Vector3 targetVel = ( m_targetPos - m_pos ).SetLength( 100.0f );
     float factor = SERVER_ADVANCE_PERIOD * 0.5f;
     m_vel = m_vel * (1.0f-factor) + targetVel * factor;
     m_pos += m_vel * SERVER_ADVANCE_PERIOD;

@@ -130,6 +130,10 @@ void MainEditWindow::Create()
     button->SetShortProperties(LANGUAGEPHRASE("editor_editcameramounts"), 7, y += buttonYPitch, m_w - 15 );
     RegisterButton(button);
 
+	button = new MainEditWindowButton(LocationEditor::ModeTeam);
+    button->SetShortProperties(LANGUAGEPHRASE("editor_editteams"), 7, y += buttonYPitch, m_w - 15 );
+    RegisterButton(button);
+
 	y += 6;
 
 	button = new MainEditWindowButton(MainEditWindowButton::TypeSave);

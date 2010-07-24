@@ -599,9 +599,10 @@ void Engineer::CollectSpirit( int _spiritId )
     if( g_app->m_location->m_spirits.ValidIndex(_spiritId) )
     {
         Spirit *spirit = g_app->m_location->m_spirits.GetPointer(_spiritId);
-
-        spirit->CollectorArrives();
-        m_spirits.PutData( _spiritId );
+		if ( spirit->m_state == Spirit::StateBirth || spirit->m_state == Spirit::StateFloating ) {
+			spirit->CollectorArrives();
+			m_spirits.PutData( _spiritId );
+		}
     }
 }
 

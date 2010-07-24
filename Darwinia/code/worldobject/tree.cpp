@@ -13,6 +13,8 @@
 #include "lib/preferences.h"
 
 #include "worldobject/tree.h"
+#include "worldobject/souldestroyer.h"
+#include "worldobject/darwinian.h"
 
 #include "sound/soundsystem.h"
 
@@ -23,6 +25,7 @@
 #include "location.h"
 #include "level_file.h"
 #include "obstruction_grid.h"
+#include "entity_grid.h"
 #include "global_world.h"
 #include "main.h"
 
@@ -46,7 +49,8 @@ Tree::Tree()
     m_fireDamage(0.0f),
     m_burnSoundPlaying(false),
 	m_leafDropRate(0),
-	m_spiritDropRate(0)
+	m_spiritDropRate(0),
+	m_evil(0)
 {
     m_type = TypeTree;
 }
@@ -73,6 +77,7 @@ void Tree::Initialise( Building *_template )
     m_leafColour = tree->m_leafColour;
 	m_leafDropRate = tree->m_leafDropRate;
 	m_spiritDropRate = tree->m_spiritDropRate;
+	m_evil = tree->m_evil;
 }
 
 
@@ -198,7 +203,7 @@ bool Tree::Advance()
 				g_app->m_particleSystem->CreateParticle( fireSpawn, g_zeroVector, Particle::TypeLeaf, -1.0f, RGBAColour (m_leafColourArray[0], m_leafColourArray[1], m_leafColourArray[2] ) );
 			}
 		}
-        if ( m_spiritDropRate > 0 )
+        if ( m_spiritDropRate > 0 && !m_evil )
         {
             // drop some spirits
             if( syncrand() % (51-m_spiritDropRate) == 0 )
@@ -218,9 +223,63 @@ bool Tree::Advance()
             }
         }
 	}
+	if ( m_evil ) { return AdvanceEvil(); }
     return false;
 }
 
+bool Tree::AdvanceEvil ()
+{
+    double range = GetActualHeight(0.0f) / 2.0;
+    if( syncfrand(10.0) < 0.2 )
+    {
+		int myTeam = 255;
+		for ( int i = 0; i < NUM_TEAMS; i++ ) { if ( g_app->m_location->m_levelFile->m_teamFlags[i] & TEAM_FLAG_EVILTREESPAWNTEAM ) { myTeam = i; } }
+
+		WorldObjectId id = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 0, range, myTeam );
+
+        Darwinian *darwinian = (Darwinian *)g_app->m_location->GetEntitySafe( id, Entity::TypeDarwinian );
+        if( darwinian && darwinian->m_state != Darwinian::StateOperatingPort )
+        {                    
+            bool killed = false;
+            bool dead = darwinian->m_dead;
+            darwinian->ChangeHealth( -999 );            
+            if( !dead && darwinian->m_dead ) killed = true;
+
+            if( killed )
+            {
+                // Eat the spirit
+                int spiritIndex = g_app->m_location->GetSpirit( darwinian->m_id );
+                if( spiritIndex != -1 )
+                {
+                    g_app->m_location->m_spirits.MarkNotUsed( spiritIndex );
+					if ( myTeam == 255 )
+					{
+						// Create a zombie
+						Zombie *zombie = new Zombie();
+						zombie->m_pos = darwinian->m_pos;
+						zombie->m_front = darwinian->m_front;
+						zombie->m_up = g_upVector;
+						zombie->m_up.RotateAround( zombie->m_front * syncsfrand(1) );
+						zombie->m_vel = m_vel * 0.5;
+						zombie->m_vel.y = 20.0 + syncfrand(25.0);
+						int index = g_app->m_location->m_effects.PutData( zombie );
+						zombie->m_id.Set( darwinian->m_id.GetTeamId(), UNIT_EFFECTS, index, -1 );
+						zombie->m_id.GenerateUniqueId();
+					}
+					else
+					{
+						// Create a deadwinian
+						WorldObjectId wid = g_app->m_location->SpawnEntities(darwinian->m_pos, myTeam, -1, Entity::TypeDarwinian, 1, darwinian->m_vel*0.5,0);
+						Darwinian *newguy = (Darwinian *) g_app->m_location->GetEntity(wid);
+						newguy->m_front = darwinian->m_front;
+						newguy->m_soulless = true;
+					}
+                }
+            }                            
+        }
+    }
+	return false;
+}
 float Tree::GetActualHeight( float _predictionTime )
 {
     float predictedOnFire = m_onFire;
@@ -595,6 +654,10 @@ void Tree::Read( TextReader *_in, bool _dynamic )
 	{
 		m_spiritDropRate = atoi( _in->GetNextToken() );
 	}
+	if( _in->TokenAvailable() )
+	{
+		m_evil = atoi( _in->GetNextToken() );
+	}
 }
 
 void Tree::Write( FileWriter *_out )
@@ -611,5 +674,6 @@ void Tree::Write( FileWriter *_out )
     _out->printf( "%-12d", m_leafColour);
 	_out->printf( "%-8d", m_leafDropRate);
 	_out->printf( "%-8d", m_spiritDropRate);
+	_out->printf( "%-8d", m_evil);
 }
 

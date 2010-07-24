@@ -27,6 +27,6 @@ TeamAlliances_EndDefinition
 TeamFlags_StartDefinition
 	# ID     Flags
 	# ========================
-	  0    PlayerSpawnTeam 
+	  0    PlayerSpawnTeam
 TeamFlags_EndDefinition
 

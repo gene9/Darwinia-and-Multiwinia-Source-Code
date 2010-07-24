@@ -81,6 +81,26 @@ char const *CamAnimNode::GetTransitModeName(int _modeId)
 // Private Methods
 // ***************
 
+void LevelFile::SetFlag(char _teamId, int _flag, bool _flagState)
+{
+	if ( _flag == TEAM_FLAG_PLAYER_SPAWN_TEAM && _flagState) { // Only one team per map can have this flag so clear it now
+		for ( int i = 0; i < NUM_TEAMS; i++ ) { if ( m_teamFlags[_teamId] & _flag ) { m_teamFlags[_teamId] = m_teamFlags[_teamId] - _flag; } }
+	}
+
+	if ( _flagState ) {
+		m_teamFlags[_teamId] = m_teamFlags[_teamId] | _flag;
+	} else if ( m_teamFlags[_teamId] & _flag ) {
+		m_teamFlags[_teamId] = m_teamFlags[_teamId] - _flag;
+	}
+}
+
+void LevelFile::SetAlliance(char _teamId, char _partnerId, bool _allianceState )
+{
+	if ( _teamId == _partnerId ) { return; } // Sanity check - no declaring war on yourself
+	m_teamAlliances[_teamId][_partnerId] = _allianceState;
+	m_teamAlliances[_partnerId][_teamId] = _allianceState;
+}
+
 void LevelFile::ParseMissionFile(char const *_filename)
 {
 	TextReader *in = NULL;
@@ -734,14 +754,13 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
 			else if ( stricmp("SoulHarvest",word) == 0 )			{ flag = TEAM_FLAG_SOULHARVEST; }
 			else if ( stricmp("SpawnPointIncubation",word) == 0 )	{ flag = TEAM_FLAG_SPAWNPOINTINCUBATION; }
 			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
+			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
+			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
 			else { flag = 0; }
-
+			// UPDATE MATCHING STATEMENT IN SCRIPT::ADVANCESCRIPT TOO OR THE CHANGEFLAG FUNCTION WONT WORK!
 			if ( teamID >= 0 && teamID < NUM_TEAMS )
 			{
-				if ( flag == TEAM_FLAG_PLAYER_SPAWN_TEAM ) { // Only one team per map can have this flag
-					for ( int i = 0; i < NUM_TEAMS; i++ ) { if ( m_teamFlags[teamID] & flag ) { m_teamFlags[teamID] = m_teamFlags[teamID] - flag; } }
-				}
-				m_teamFlags[teamID] = m_teamFlags[teamID] | flag;
+				SetFlag(teamID, flag, 1);
 			}
 		}
  	}
@@ -1069,6 +1088,8 @@ void LevelFile::WriteTeamFlags(FileWriter *_out)
 				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST )			{ _out->printf( " SoulHarvest "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_SPAWNPOINTINCUBATION )	{ _out->printf( " SpawnPointIncubation "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_PATTERNCORRUPTION )		{ _out->printf( " PatternCorruption "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_EVILTREESPAWNTEAM )		{ _out->printf( " EvilTreeSpawnTeam "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SOULLESS )				{ _out->printf( " Soulless "); }
 				_out->printf( "\n");
 			}
         }
