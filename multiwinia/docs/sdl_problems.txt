@@ -1,6 +1,0 @@
-SDL Problems:
-
-- No mouse scroll wheel support
-- No ability to set mouse cursor position
-- Have to poll for events once per frame
-- Timer not high enough res
