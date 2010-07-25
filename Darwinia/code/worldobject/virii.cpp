@@ -824,7 +824,6 @@ void Virii::ListSoundEvents( LList<char *> *_list )
     _list->PutData( "ChangeDirection" );
 }
 
-
 void Virii::Render( float predictionTime, int teamId, int _detail )
 {
     predictionTime += SERVER_ADVANCE_PERIOD;
@@ -838,6 +837,10 @@ void Virii::Render( float predictionTime, int teamId, int _detail )
     float health = (float) m_stats[StatHealth] / (float) EntityBlueprint::GetStat( m_type, StatHealth );
 
     RGBAColour wormColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health;
+    //if( max(max(wormColour.r,wormColour.g),wormColour.b) < 128 )
+    //{
+    //    wormColour = RGBAColour(255,255,255);
+    //}
     //RGBAColour glowColour( 200, 100, 100 );
     RGBAColour glowColour = wormColour;
     wormColour.a = 200;
@@ -904,11 +907,10 @@ void Virii::Render( float predictionTime, int teamId, int _detail )
 
         //
         // Worm shape
-
         int newCol = wormColour.a - distance;
         if( newCol < 0 ) newCol = 0;
         wormColour.a = newCol;
-        glColor4ubv ( wormColour.GetData() );
+		glColor4ubv ( wormColour.GetData() );
 
         glTexCoord2f( 0.0f, wormTexYpos );      glVertex3fv( (prevPos.m_pos - wormRightAngle).GetData() );
         glTexCoord2f( wormTexW, wormTexYpos );  glVertex3fv( (prevPos.m_pos + wormRightAngle).GetData() );

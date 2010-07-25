@@ -501,7 +501,15 @@ void Team::RenderVirii(float _predictionTime)
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 
 	glEnable		( GL_BLEND );
-	glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+    //if( max(max(m_colour.r,m_colour.g),m_colour.b) < 128 )
+    //{
+    //    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+    //}
+    //else
+    //{
+	    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+    //}
+//	glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
     glDepthMask     ( false );
 	glDisable		( GL_CULL_FACE );
     glBegin         ( GL_QUADS );

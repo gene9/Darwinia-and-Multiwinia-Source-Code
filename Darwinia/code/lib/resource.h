@@ -62,6 +62,7 @@ public:
 
 	// *** Textures ***
 	int             GetTexture			(char const *_name, bool _mipMapping=true, bool _masked=true);
+	int             GetTextureWithAlpha	(char const *_name, bool _mipMapping=true);
     bool            DoesTextureExist    (char const *_name);
 	void			DeleteTexture		(char const *_name);
 

@@ -82,7 +82,8 @@ Location::Location()
     m_water(NULL),
     m_lastSliceProcessed(0),
 	m_teams(NULL),
-    m_christmasTimer(-99.9f)
+    m_christmasTimer(-99.9f),
+	m_isSnowing(false)
 {
     m_spirits.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_lasers.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
@@ -288,6 +289,12 @@ WorldObjectId Location::SpawnEntities( Vector3 const &_pos, unsigned char _teamI
         m_entityGrid->AddObject( s->m_id, s->m_pos.x, s->m_pos.z, s->m_radius );
 
         entityId = s->m_id;
+		if ( s->m_type == Entity::TypeDarwinian && _teamId >= 0 && _teamId <= NUM_TEAMS )
+		{
+			Darwinian *darwinian = (Darwinian *)s;
+			if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
+			if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_SOULLESS ) { darwinian->m_soulless = true; }
+		}
     }
 
     if( _unitId != -1 )
@@ -879,8 +886,7 @@ void Location::Advance( int _slice )
 		DoMissionCompleteActions();
 	}
 
-
-    if( ChristmasModEnabled() == 1 )
+    if( ChristmasModEnabled() == 1 || m_isSnowing)
     {
         AdvanceChristmas();
     }
@@ -1910,8 +1916,12 @@ void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel )
 
 void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
 {
-    int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeLaser );
-    float lifetime = 0.0f;
+    int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeLaser );
+	if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
+	{
+		laserResearch = max(laserResearch, g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeLaser ));
+	}
+	float lifetime = 0.0f;
     switch( laserResearch )
     {
         case 0 :        lifetime = 0.2f;            break;
@@ -1941,7 +1951,11 @@ void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned cha
 
 void Location::FireSubversion( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
 {
-    int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeLaser );
+    int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeController );
+	if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
+	{
+		laserResearch = max(laserResearch, g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeController ));
+	}
     float lifetime = 0.0f;
     switch( laserResearch )
     {

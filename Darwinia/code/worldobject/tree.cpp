@@ -412,12 +412,33 @@ void Tree::RenderAlphas( float _predictionTime )
     glEnable        ( GL_TEXTURE_2D );
     glEnable        ( GL_BLEND );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
-    glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/laser.bmp" ) );
+    glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTextureWithAlpha( "textures/tree.bmp" ) );
 	glTexParameteri	( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri	( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     glDisable       ( GL_CULL_FACE );
     glDepthMask     ( false );
 
+    if( m_evil )
+    {
+        m_branchColourArray[0] = 0;
+        m_branchColourArray[1] = 0;
+        m_branchColourArray[2] = 0;
+        m_branchColourArray[3] = 200;
+
+        m_leafColourArray[0] = 0;
+        m_leafColourArray[1] = 0;
+        m_leafColourArray[2] = 0;
+        m_leafColourArray[3] = 0;
+                        
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );        
+
+        actualHeight *= ( 1.0 + sin((GetHighResTime() + m_id.GetUniqueId() * 2) * 2) * 0.01 );
+    }
+    else
+    {
+        actualHeight *= ( 1.0 + sin((GetHighResTime() + m_id.GetUniqueId() * 2) * 2) * 0.003 );
+    }
+    
     glMatrixMode    ( GL_MODELVIEW );
 	glPushMatrix    ();
     Matrix34 mat    ( m_front, g_upVector, m_pos );
@@ -434,7 +455,7 @@ void Tree::RenderAlphas( float _predictionTime )
     glColor4ubv     ( m_branchColourArray );
     glCallList      ( m_branchDisplayListId );
 
-    if( Location::ChristmasModEnabled() != 1 )
+    if( Location::ChristmasModEnabled() != 1 && !m_evil )
     {
         glColor4ubv     ( m_leafColourArray );
         glCallList      ( m_leafDisplayListId );

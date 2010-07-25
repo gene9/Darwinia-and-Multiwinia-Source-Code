@@ -89,6 +89,13 @@ bool LocationInput::GetObjectUnderMouse( WorldObjectId &_id, int _teamId )
 	int unitId = g_app->m_location->GetUnitId( rayStart, rayDir, _teamId, &unitDist );
     WorldObjectId entId = g_app->m_location->GetEntityId( rayStart, rayDir, _teamId, &entDist );
 
+	// Stop us selecting a darwinian on team 2
+	if ( entId.IsValid() && _teamId == 2 )
+	{
+		Entity *entity = g_app->m_location->GetEntity(entId);
+		if ( entity && entity->m_type == Entity::TypeDarwinian ) { entId.SetInvalid(); }
+	}
+
     //
     // Look for Darwinians if we are running an officer program
     if( !entId.IsValid() )

@@ -76,8 +76,23 @@ void Darwinian::Begin()
     m_centrePos.Set(0,2,0);
     m_radius = 4.0f;
 
+	float subversionLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeController);
+	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
+	{
+		subversionLevel = max(subversionLevel, g_app->m_globalWorld->m_research->CurrentLevel(2,GlobalResearch::TypeController));
+	}
+
+	float laserLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeLaser);
+	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
+	{
+		laserLevel = max(laserLevel, g_app->m_globalWorld->m_research->CurrentLevel(2,GlobalResearch::TypeLaser));
+	}
+
+	// L1 = 25%, L2 = 50%, L3 = 75%, L4+ = 100% armed with subversion instead of lasers
+	if ( frand() < subversionLevel/(subversionLevel+laserLevel) ) { m_subversive = true; }
+
 	// DEBUG
-	if ( m_id.GetTeamId() == 0 ) { m_subversive = true; }
+	//if ( m_id.GetTeamId() == 0 ) { m_subversive = true; }
 }
 
 
@@ -556,10 +571,12 @@ bool Darwinian::AdvanceCombat()
     // Move away from our threat if we're an ordinary Darwinian
     // Move towards our threat if we're a Soldier Darwinian
 
-    bool soldier = m_id.GetTeamId() == 1 ||
-                    g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 2;
-
-	soldier = true; // DEBUG
+    bool soldier = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 2;
+	if ( !soldier && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()]  & TEAM_FLAG_PLAYER_SPAWN_TEAM) )
+	{
+		soldier = g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeDarwinian ) > 2;
+	}
+	//soldier = true; // DEBUG
 
     if( soldier && !m_scared )
     {
@@ -643,8 +660,8 @@ bool Darwinian::AdvanceCombat()
         // NEVER throw grenades if there are people from team 2 nearby (ie the player's squad, officers, engineers)
         // NEVER throw grenades if the target area is too steep - Darwinians just can't fucking aim on cliffs
 
-        bool hasGrenade = m_id.GetTeamId() == 1 ||
-                            g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 3;
+        bool hasGrenade = (g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 3 && !m_subversive);
+
         if( hasGrenade )
         {
             START_PROFILE( g_app->m_profiler, "ThrowGrenade" );
@@ -2496,14 +2513,6 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         return;
     }
 
-	if ( m_corrupted )
-	{
-        int chosenIndex = 1 + m_id.GetUniqueId() % 4;
-        char chosenOuch[256];
-        sprintf( chosenOuch, "sprites/darwinian_ouch%d.bmp", chosenIndex );
-        SetTexture( chosenOuch );            
-	}
-
     RGBAColour colour = RGBAColour(255,255,255);
     if( m_id.GetTeamId() >= 0 && m_id.GetTeamId() < NUM_TEAMS ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
 	if ( m_corrupted && frand() < 0.025 )
@@ -2511,11 +2520,24 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
 		int t = floor(frand(NUM_TEAMS));
 		colour = g_app->m_location->m_teams[ t ].m_colour;
 	}
-
 	if ( m_colourTimer > 0 && m_oldTeamId != 255 && m_oldTeamId != m_id.GetTeamId() )
 	{
 		if ( (int) (m_colourTimer*10.0) % 10 < 5 ) { colour = g_app->m_location->m_teams[ m_oldTeamId ].m_colour; }
 	}
+
+	if ( m_soulless )
+	{
+        SetTexture( "sprites/soulless.bmp" ); 
+		colour.a = 64;
+	}
+	else if ( m_corrupted )
+	{
+        int chosenIndex = 1 + m_id.GetUniqueId() % 4;
+        char chosenOuch[256];
+        sprintf( chosenOuch, "sprites/darwinian_ouch%d.bmp", chosenIndex );
+        SetTexture( chosenOuch );            
+	}
+
 	Vector3 predictedPos = m_pos + m_vel * _predictionTime;;
     Vector3 entityUp = g_upVector;
 
@@ -2626,7 +2648,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         float health = (float) m_stats[StatHealth] / maxHealth;
         if( health > 1.0f ) health = 1.0f;
 		colour *= 0.3f + 0.7f * health;
-        colour.a = 255;
+		if ( !m_soulless ) { colour.a = 255; }
 
         if( m_dead )
         {
@@ -2653,7 +2675,7 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
             glTexCoord2i(0, 0);     glVertex3fv( (predictedPos - entityRight).GetData() );
         glEnd();
 
-        if( m_corrupted )
+        if( m_corrupted || m_soulless )
         {            
             SetTexture( "sprites/darwinian.bmp" );            
         }

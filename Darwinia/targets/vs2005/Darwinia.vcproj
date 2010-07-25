@@ -6657,6 +6657,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\code\worldobject\snowbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\snowbox.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\code\worldobject\souldestroyer.cpp"
 					>
 					<FileConfiguration

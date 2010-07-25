@@ -248,6 +248,52 @@ int Resource::GetTexture( char const *_name, bool _mipMapping, bool _masked )
     return theTexture;
 }
 
+int Resource::GetTextureWithAlpha( char const *_name, bool _mipMapping )
+{
+    // First lookup this name in the BTree of existing textures
+	int theTexture = m_textures.GetData( _name, -1 );
+
+	// If the texture wasn't there, then look in our bitmap store
+	if (theTexture == -1)
+	{
+		BitmapRGBA *bmp = m_bitmaps.GetData(_name);
+		if (bmp)
+		{
+		    bmp->ConvertColourToAlpha();
+			theTexture = bmp->ConvertToTexture(_mipMapping);
+		    m_textures.PutData(_name, theTexture);
+		}
+	}
+
+	// If we still didn't find it, try to load it from a file on the disk
+    if( theTexture == -1 )
+    {
+	    char fullPath[512];
+        sprintf( fullPath, "%s", _name );
+		strlwr(fullPath);
+        BinaryReader *reader = GetBinaryReader(fullPath);
+
+        if( reader )
+        {
+		    char const *extension = GetExtensionPart(fullPath);
+            BitmapRGBA bmp(reader, extension);
+		    delete reader;
+
+		    bmp.ConvertColourToAlpha();
+		    theTexture = bmp.ConvertToTexture(_mipMapping);
+		    m_textures.PutData(_name, theTexture);
+        }
+	}
+
+    if( theTexture == -1 )
+    {
+        char errorString[512];
+        sprintf( errorString, "Failed to load texture %s", _name );
+        DarwiniaReleaseAssert( false, errorString );
+    }
+
+    return theTexture;
+}
 
 bool Resource::DoesTextureExist(char const *_name)
 {

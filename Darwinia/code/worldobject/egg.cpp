@@ -208,8 +208,8 @@ bool Egg::Advance( Unit *_unit )
 						}
 					}
 					WorldObjectId wid = g_app->m_location->SpawnEntities( m_pos, spawnTeam, -1, Entity::TypeDarwinian, 1, g_zeroVector, 0.0f, 200.0f );
-					Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntity(wid);
-					if ( g_app->m_location->m_levelFile->m_teamFlags[spawnTeam] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
+					//Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntity(wid);
+					//if ( g_app->m_location->m_levelFile->m_teamFlags[spawnTeam] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
 
 				} else {
 					g_app->m_location->SpawnEntities( m_pos, m_id.GetTeamId(), -1, Entity::TypeVirii, 4, g_zeroVector, 0.0f, 200.0f );

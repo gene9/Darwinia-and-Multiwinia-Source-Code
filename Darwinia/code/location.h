@@ -91,6 +91,7 @@ public:
     SliceDArray     <SubversionBeam>	m_subversion;
     SliceDArray     <WorldObject *>		m_effects;
 
+	bool			m_isSnowing;
 public:
     Location();
     ~Location();

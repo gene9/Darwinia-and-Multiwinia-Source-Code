@@ -687,7 +687,6 @@ void SpawnPoint::SpawnDarwinian()
     {
         darwinian->m_onGround = false;
     }
-	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
 }
 
 

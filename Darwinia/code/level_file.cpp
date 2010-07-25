@@ -1742,6 +1742,67 @@ void LevelFile::GenerateInstantUnits()
                             m_instantUnits.PutData( unit );
                         }
                     }
+                    else if( entity->m_type == Entity::TypeEngineer )
+                    {
+                        bool taskControlled = false;
+                        for( int i = 0; i < g_app->m_taskManager->m_tasks.Size(); ++i )
+                        {
+                            Task *task = g_app->m_taskManager->m_tasks[i];
+                            if( task->m_type == GlobalResearch::TypeEngineer &&
+                                task->m_objId == entity->m_id )
+                            {
+                                taskControlled = true;
+                                break;
+                            }
+                        }
+                        if( !taskControlled )
+                        {
+                            Engineer *engineer = (Engineer *) entity;
+                            InstantUnit *unit = new InstantUnit();
+                            unit->m_type = Entity::TypeEngineer;
+                            unit->m_teamId = t;
+                            unit->m_posX = engineer->m_pos.x;
+                            unit->m_posZ = engineer->m_pos.z;
+                            unit->m_spread = 0;
+                            unit->m_number = 1;
+                            unit->m_inAUnit = false;
+							unit->m_state = Engineer::StateIdle;
+                            m_instantUnits.PutData( unit );
+                        }
+                    }
+					else if( entity->m_type == Entity::TypeDarwinian ||
+						entity->m_type == Entity::TypeEgg ||
+						entity->m_type == Entity::TypeVirii )
+                    {
+                        bool insideSpawnArea = ( entity->m_pos - entity->m_spawnPoint ).Mag() < entity->m_roamRange;
+
+                        InstantUnit *unit = new InstantUnit();
+                        unit->m_type = entity->m_type;
+                        unit->m_teamId = t;
+                        unit->m_posX = insideSpawnArea ? entity->m_spawnPoint.x : entity->m_pos.x;
+                        unit->m_posZ = insideSpawnArea ? entity->m_spawnPoint.z : entity->m_pos.z;
+                        unit->m_spread = insideSpawnArea ? entity->m_roamRange : 0;
+                        unit->m_number = 1;
+                        unit->m_inAUnit = false;
+                        unit->m_routeId = entity->m_routeId;
+                        unit->m_routeWaypointId = entity->m_routeWayPointId;
+
+                        if( entity->m_type == Entity::TypeDarwinian )
+                        {
+                            Darwinian *darwinian = (Darwinian *) entity;
+                            unit->m_posX = darwinian->m_pos.x;
+                            unit->m_posZ = darwinian->m_pos.z;
+                            unit->m_waypointX = darwinian->m_wayPoint.x;
+                            unit->m_waypointZ = darwinian->m_wayPoint.z;
+                            unit->m_spread = 0.0f; // Darwinians should be placed exactly where they were when the game was saved
+                            if( darwinian->m_state == Darwinian::StateFollowingOrders )
+                            {
+                                unit->m_state = Darwinian::StateFollowingOrders;
+                            }
+                        }
+
+                        m_instantUnits.PutData( unit );
+                    }
                 }
             }
         }

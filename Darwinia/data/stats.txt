@@ -30,4 +30,4 @@ Armour              255     60      5
 SoulDestroyer       255     150     1
 TriffidEgg          50      100     1
 AI                  255     255     255
-
+SnowBox             255     255     255

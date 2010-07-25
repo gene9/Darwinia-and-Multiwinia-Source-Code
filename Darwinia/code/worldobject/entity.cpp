@@ -52,6 +52,7 @@
 #include "worldobject/triffid.h"
 #include "worldobject/ai.h"
 #include "worldobject/laserfence.h"
+#include "worldobject/snowbox.h"
 
 
 
@@ -664,6 +665,7 @@ Entity *Entity::NewEntity( int _troopType )
         case Entity::TypeSoulDestroyer:         entity = new SoulDestroyer();       break;
         case Entity::TypeTriffidEgg:            entity = new TriffidEgg();          break;
         case Entity::TypeAI:                    entity = new AI();                  break;
+        case Entity::TypeSnowBox:               entity = new SnowBox();             break;
 
         default:                                DarwiniaDebugAssert(false);
     }
@@ -708,7 +710,8 @@ char *Entity::GetTypeName( int _troopType )
                                                 "Armour",
                                                 "SoulDestroyer",
                                                 "TriffidEgg",
-                                                "AI"
+                                                "AI",
+												"SnowBox"
                                                 };
 
     DarwiniaDebugAssert( _troopType >= 0 && _troopType < NumEntityTypes );

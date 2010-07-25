@@ -39,6 +39,7 @@ public:
         TypeSoulDestroyer,
         TypeTriffidEgg,
         TypeAI,
+		TypeSnowBox,
         NumEntityTypes
     };
 
