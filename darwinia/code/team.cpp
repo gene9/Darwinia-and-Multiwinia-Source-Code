@@ -462,12 +462,12 @@ void Team::Render()
     // Render Virii
 
 	CHECK_OPENGL_STATE();
-    if( m_teamId == 1 && m_teamType == TeamTypeCPU )
-    {
+    //if( m_teamId == 1 && m_teamType == TeamTypeCPU )
+    //{
         START_PROFILE(g_app->m_profiler, "Render Virii");
         RenderVirii(timeSinceAdvance);
         END_PROFILE(g_app->m_profiler, "Render Virii");
-    }
+    //}
 	CHECK_OPENGL_STATE();
 
 

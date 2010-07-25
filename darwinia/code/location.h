@@ -77,6 +77,7 @@ public:
     EntityGrid      *m_entityGrid;
     ObstructionGrid *m_obstructionGrid;
 	LevelFile		*m_levelFile;
+	LevelFile		*m_teamFile;
     Clouds          *m_clouds;
     Water           *m_water;
 

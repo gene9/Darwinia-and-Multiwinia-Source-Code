@@ -17,6 +17,17 @@ CameraMounts_EndDefinition
 CameraAnimations_StartDefinition
 CameraAnimations_EndDefinition
 
+TeamColours_StartDefinition
+0 0 255 0
+1 255 0 0
+2 0 0 255
+3 255 128 0
+4 200 200 15
+5 0 200 200
+6 200 0 200
+7 200 200 200
+TeamColours_EndDefinition
+
 Buildings_StartDefinition
 	# Type              id      x       z       tm      rx      rz      isGlobal
 	# ==========================================================================

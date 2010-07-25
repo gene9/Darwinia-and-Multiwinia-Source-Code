@@ -7,12 +7,12 @@
 
 // === PICK ONE OF THESE TARGETS ===
 
-#define TARGET_FULLGAME
+//#define TARGET_FULLGAME
 //#define TARGET_DEMOGAME
 //#define TARGET_PURITYCONTROL
 //#define TARGET_DEMO2
 //#define TARGET_DEBUG
-//#define TARGET_VISTA
+#define TARGET_VISTA
 //#define TARGET_VISTA_DEMO2
 
 // === PICK ONE OF THESE TARGETS ===
@@ -30,6 +30,7 @@
     #define LOCATION_EDITOR
     #define TARGET_OS_VISTA
     #define ATTRACTMODE_ENABLED
+	#define CHEATMENU_ENABLED
 #endif
 
 #ifdef TARGET_FULLGAME

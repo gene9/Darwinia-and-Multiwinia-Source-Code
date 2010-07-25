@@ -11,13 +11,16 @@
 #include "app.h"
 #include "globals.h"
 #include "location.h"
+#include "level_file.h"
 #include "particle_system.h"
 #include "global_world.h"
 #include "camera.h"
+#include "main.h"
 
 #include "sound/soundsystem.h"
 
 #include "worldobject/incubator.h"
+#include "worldobject/darwinian.h"
 
 
 
@@ -26,7 +29,8 @@ Incubator::Incubator()
     m_spiritCentre(NULL),
     m_troopType(Entity::TypeDarwinian),
     m_timer(INCUBATOR_PROCESSTIME),
-    m_numStartingSpirits(0)
+    m_numStartingSpirits(0),
+	m_renderDamaged(0)
 {
     m_type = TypeIncubator;
 
@@ -64,8 +68,9 @@ void Incubator::Initialise( Building *_template )
     Vector3 spiritCentre = m_spiritCentre->GetWorldMatrix(mat).pos;
 
     m_numStartingSpirits = ((Incubator *) _template)->m_numStartingSpirits;
+    m_renderDamaged = ((Incubator *) _template)->m_renderDamaged;
 
-    for( int i = 0; i < m_numStartingSpirits; ++i )
+	for( int i = 0; i < m_numStartingSpirits; ++i )
     {
         Spirit *s = m_spirits.GetPointer();
         s->m_pos = spiritCentre + Vector3(sfrand(20.0f), sfrand(20.0f), sfrand(20.0f) );
@@ -140,11 +145,21 @@ void Incubator::SpawnEntity()
     //
     // Spawn the entity
     int teamId = m_id.GetTeamId();
-    if( teamId == 2 ) teamId = 0;               // Green rather than yellow
 
-    g_app->m_location->SpawnEntities( exit.pos, teamId, -1, m_troopType, 1, exit.f, 0.0f );
+    //if( teamId == 2 ) teamId = 0;               // Green rather than yellow
+	if ( teamId == 2 ) { // Instead of hardcoding, look up the team we need to use based on team flags
+		for ( int i = 0; i < NUM_TEAMS; i++ ) {
+			if ( g_app->m_location->m_levelFile->m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { teamId = i; }
+		}
+	}
 
+    WorldObjectId wob = g_app->m_location->SpawnEntities( exit.pos, teamId, -1, m_troopType, 1, exit.f, 0.0f );
 
+	if ( m_renderDamaged && frand() < 0.25 )
+	{
+		Darwinian *dg = (Darwinian *) g_app->m_location->GetEntity(wob);
+		dg->m_corrupted = true;
+	}
     //
     // Remove a spirit
     Vector3 spiritPos;
@@ -213,7 +228,14 @@ void Incubator::GetDockPoint( Vector3 &_pos, Vector3 &_front )
     _front = dock.f;
 }
 
-
+void Incubator::GetExitPoint( Vector3 &_pos, Vector3 &_front )
+{
+    Matrix34 mat( m_front, g_upVector, m_pos );
+    Matrix34 dock = m_exit->GetWorldMatrix( mat );
+    _pos = dock.pos;
+    _pos = PushFromBuilding( _pos, 5.0f );
+    _front = dock.f;
+}
 int Incubator::NumSpiritsInside()
 {
     return m_spirits.NumUsed();
@@ -228,6 +250,12 @@ void Incubator::Read( TextReader *_in, bool _dynamic )
     {
         m_numStartingSpirits = atoi( _in->GetNextToken() );
     }
+
+    if( _in->TokenAvailable() )
+    {
+		m_renderDamaged = atoi( _in->GetNextToken() );
+    }
+
 }
 
 
@@ -236,12 +264,34 @@ void Incubator::Write( FileWriter *_out )
     Building::Write( _out );
 
     _out->printf( "%6d", m_numStartingSpirits );
+	_out->printf( "%6d", m_renderDamaged );
 }
 
 
 void Incubator::Render( float _predictionTime )
 {
-    Building::Render( _predictionTime );
+	Matrix34 mat(m_front, m_up, m_pos);
+
+    //
+    // If we are damaged, flicked in and out based on our health
+
+    if( m_renderDamaged )
+    {
+        float timeIndex = g_gameTime + m_id.GetUniqueId() * 10;
+        float thefrand = frand();
+        if      ( thefrand > 0.7f ) mat.f *= ( 1.0f - sinf(timeIndex) * 0.7f );
+        else if ( thefrand > 0.4f ) mat.u *= ( 1.0f - sinf(timeIndex) * 0.5f );
+        else                        mat.r *= ( 1.0f - sinf(timeIndex) * 0.7f );
+        glEnable( GL_BLEND );
+        glBlendFunc( GL_ONE, GL_ONE );
+    }
+
+    m_shape->Render(_predictionTime, mat);
+
+    glDisable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	
+	Building::Render( _predictionTime );
 
 //    Vector3 dockPos, dockFront;
 //    GetDockPoint( dockPos, dockFront );

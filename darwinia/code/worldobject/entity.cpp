@@ -349,6 +349,9 @@ void Entity::Begin()
 
     if( m_shape )
     {
+		if ( !m_shape->isTeamColoured ) {
+			m_shape = g_app->m_resource->GetShape( m_shape->m_name, m_id.GetTeamId(), m_shape->m_animating );
+		}
         m_centrePos = m_shape->CalculateCentre( g_identityMatrix34 );
         m_radius = m_shape->CalculateRadius( g_identityMatrix34, m_centrePos );
     }

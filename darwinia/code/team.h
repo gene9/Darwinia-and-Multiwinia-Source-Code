@@ -29,10 +29,15 @@ public:
 
     int                         m_teamId;
     int                         m_teamType;
+	//const char					m_teamFileName;
+	int m_teamcolour_R;
+	int m_teamcolour_G;
+	int m_teamcolour_B;
 
     FastDArray  <Unit *>        m_units;
     SliceDArray <Entity *>      m_others;
     LList       <WorldObjectId> m_specials;             // Officers and tanks for quick lookup
+	LList		<Team *>		m_teamZero;
 
     RGBAColour               m_colour;
 
@@ -45,7 +50,9 @@ public:
 public:
     Team();
 
+	void SetTeamColor	(int _teamId, int _teamcolour_R, int _teamcolour_G, int _teamcolour_B);
     void Initialise     (int _teamId);                  // Call when this team enters the game
+	//void GetTeam();
     void SetTeamType    (int _teamType);
 
     void SelectUnit     (int _unitId, int _entityId, int _buildingId );

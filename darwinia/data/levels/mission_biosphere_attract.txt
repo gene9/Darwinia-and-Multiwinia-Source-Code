@@ -48,6 +48,17 @@ InstantUnits_StartDefinition
 	Darwinian        0   832.0  1500.3     10    0      -1   112.9     0.0     0.0
 InstantUnits_EndDefinition
 
+TeamColours_StartDefinition
+0 0 255 0
+1 255 0 0
+2 0 0 255
+3 255 128 0
+4 200 200 15
+5 0 200 200
+6 200 0 200
+7 200 200 200
+TeamColours_EndDefinition
+
 PrimaryObjectives_StartDefinition
 	BuildingOnline :biosphere,90 	biosphere_objective1	biosphere_intro.txt
 	BuildingOnline :biosphere,117 	objective_capture_trunk

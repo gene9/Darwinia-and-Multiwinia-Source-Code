@@ -118,6 +118,7 @@ public:
     void RenderAlphas   ( float _predictionTime );
     void RenderPorts    ();
 
+	void SpawnDarwinian ();
 };
 
 

@@ -1368,7 +1368,8 @@ GlobalWorld::GlobalWorld()
 	m_locationRequested(-1),
     m_myTeamId(255),
     m_editorMode(0),
-    m_editorSelectionId(-1)
+    m_editorSelectionId(-1),
+	invulCheat(false)
 {
     m_globalInternet = new GlobalInternet();
     m_sphereWorld = new SphereWorld();
@@ -1743,6 +1744,15 @@ void GlobalWorld::WriteLocations( FileWriter *_out )
     _out->printf( "Locations_EndDefinition\n\n" );
 }
 
+void GlobalWorld::WriteAvatar( FileWriter *_out )
+{
+    _out->printf( "Avatar_StartDefinition\n" );
+    _out->printf( "\t# Current Avatar\n" );
+    _out->printf( "\t# ==================================================================\n" );
+
+	_out->printf("\t%s", g_app->m_sepulveda->m_currentAvatar);
+    _out->printf( "Avatar_EndDefinition\n\n" );
+}
 
 void GlobalWorld::WriteBuildings( FileWriter *_out )
 {
@@ -1803,6 +1813,21 @@ void GlobalWorld::ParseLocations( TextReader *_in )
     }
 }
 
+void GlobalWorld::ParseAvatar( TextReader *_in )
+{
+    while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+
+		char *word = _in->GetNextToken();
+
+		if (stricmp(word, "Avatar_EndDefinition") == 0)
+		{
+			return;
+		}
+		g_app->m_sepulveda->LoadAvatar(word);
+    }
+}
 
 void GlobalWorld::ParseBuildings( TextReader *_in )
 {
@@ -1918,7 +1943,11 @@ void GlobalWorld::LoadGame( char *_filename )
             {
                 ParseTutorial( in );
             }
-        }
+            else if (stricmp("avatar_startdefinition", word) == 0)
+            {
+                ParseAvatar( in );
+            }
+       }
     }
 
 	delete in;
@@ -2023,6 +2052,7 @@ void GlobalWorld::SaveGame( char *_filename )
     m_research->Write(out);
     WriteTutorial(out);
     WriteEvents(out);
+	WriteAvatar(out);
 
     delete out;
 }

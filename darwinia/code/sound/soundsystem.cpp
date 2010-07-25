@@ -107,6 +107,7 @@ void SoundSourceBlueprint::ListSoundEvents( int _type, LList<char *> *_list )
             _list->PutData( "Richochet" );
             _list->PutData( "HitGround" );
             _list->PutData( "HitEntity" );
+			_list->PutData( "InjuredEntity" );
             _list->PutData( "HitBuilding" );
             break;
 

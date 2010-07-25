@@ -257,17 +257,20 @@ public:
 
     int                                     m_editorMode;
     int                                     m_editorSelectionId;
+	bool									invulCheat;
 
 protected:
     void			WriteLocations			(FileWriter *_out);
     void			WriteBuildings			(FileWriter *_out);
     void            WriteEvents             (FileWriter *_out);
     void            WriteTutorial           (FileWriter *_out);
+    void            WriteAvatar             (FileWriter *_out);
 
     void			ParseLocations			(TextReader *_in);
     void			ParseBuildings			(TextReader *_in);
     void            ParseEvents             (TextReader *_in);
     void            ParseTutorial           (TextReader *_in);
+	void			ParseAvatar				(TextReader *_in);
 
 	void			AddLevelBuildingToGlobalBuildings   (Building *_building, int _locId);
 

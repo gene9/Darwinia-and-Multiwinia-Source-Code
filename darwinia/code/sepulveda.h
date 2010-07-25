@@ -80,6 +80,10 @@ public:
     bool IsVisible  ();             // Is the text box visible at all
 
     bool ChatLogVisible     ();
+
+	void LoadAvatar			( char *_imageName );
+	char *m_currentAvatar;
+	int m_picsFound;
 };
 
 

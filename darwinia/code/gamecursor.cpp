@@ -629,7 +629,7 @@ void GameCursor::FindScreenEdge( Vector2 const &_line, float *_posX, float *_pos
     }
 
     // We should never ever get here
-    DarwiniaDebugAssert( false );
+//    DarwiniaDebugAssert( false );
     *_posX = 0;
     *_posY = 0;
 }

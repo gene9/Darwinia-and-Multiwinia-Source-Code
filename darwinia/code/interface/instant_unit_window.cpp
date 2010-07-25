@@ -166,17 +166,26 @@ void InstantUnitEditWindow::Create()
 
 	y += buttonPitch;
 
+	int rows = 0;
     for( int i = 0; i < 3; ++i )
     {
-        char name[64];
-        int w = m_w/3 - 8;
-        sprintf( name, "T%d", i);
-        TeamButton1 *tb = new TeamButton1(i);
-        tb->SetShortProperties(name, 10 + (i*w) + (i*2), y, w);
-        RegisterButton(tb);
+		int j = 0;
+		while ( i+(j*3) < NUM_TEAMS )
+		{
+			char name[64];
+			int w = m_w/3 - 8;
+			sprintf( name, "T%d", i + (j*3));
+			if ( i + (j*3) < NUM_TEAMS ) {
+				TeamButton1 *tb = new TeamButton1(i+(j*3));
+				tb->SetShortProperties(name, 10 + (i*w) + (i*2), y + (j*buttonPitch), w);
+				RegisterButton(tb);
+			}
+			rows = max(rows,j);
+			j++;
+		}
     }
 
-	y += 7;
+	y = y + 7 + (rows*buttonPitch);
 
 	InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(
 						g_app->m_locationEditor->m_selectionId);

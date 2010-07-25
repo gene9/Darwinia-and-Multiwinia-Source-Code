@@ -270,7 +270,7 @@ void BuildingEditWindow::Create()
     RegisterButton(lb);
 
 	y += buttonPitch;
-
+/*
     for( int i = -1; i < 3; ++i )
     {
         char name[256];
@@ -280,6 +280,27 @@ void BuildingEditWindow::Create()
         tb->SetShortProperties(name, 61 + (float)i*((float)w + 1.0f), y, w - 2);
         RegisterButton(tb);
     }
+*/
+	int rows = 0;
+    for( int i = 0; i < 3; ++i )
+    {
+		int j = 0;
+		while ( i+(j*3) < NUM_TEAMS )
+		{
+			char name[64];
+			int w = m_w/3 - 8;
+			sprintf( name, "T%d", i + (j*3));
+			if ( i + (j*3) < NUM_TEAMS ) {
+				TeamButton *tb = new TeamButton(i+(j*3));
+				tb->SetShortProperties(name, 10 + (i*w) + (i*2), y + (j*buttonPitch), w);
+				RegisterButton(tb);
+			}
+			rows = max(rows,j);
+			j++;
+		}
+    }
+
+	y = y + 7 + (rows*buttonPitch);
 
 	CreateValueControl(LANGUAGEPHRASE("editor_dynamic"), InputField::TypeChar, &building->m_dynamic, y += buttonPitch,
 					   1.0f, 0, 1);
@@ -468,6 +489,7 @@ void BuildingEditWindow::Create()
     else if( building->m_type == Building::TypeIncubator )
     {
         CreateValueControl( LANGUAGEPHRASE("editor_spirits"), InputField::TypeInt, &((Incubator *) building)->m_numStartingSpirits, y+=buttonPitch, 1, 0, 1000 );
+        CreateValueControl( LANGUAGEPHRASE("editor_damaged"), InputField::TypeInt, &((Incubator *) building)->m_renderDamaged, y+=buttonPitch, 1, 0, 1);
     }
     else if( building->m_type == Building::TypeEscapeRocket )
     {

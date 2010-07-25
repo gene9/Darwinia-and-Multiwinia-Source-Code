@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="unrar"
 	ProjectGUID="{15DE27C2-B679-4802-93E8-5D4D07173819}"
 	RootNamespace="Unrar"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform

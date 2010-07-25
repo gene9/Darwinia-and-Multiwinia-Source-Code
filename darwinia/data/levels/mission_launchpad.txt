@@ -44,6 +44,17 @@ CameraMounts_StartDefinition
 	lastshot2       1588.59 1834.89 1906.14 0.01 -1.00 -0.01 0.02 -0.01 1.00
 CameraMounts_EndDefinition
 
+TeamColours_StartDefinition
+0 0 255 0
+1 255 0 0
+2 0 0 255
+3 255 128 0
+4 200 200 15
+5 0 200 200
+6 200 0 200
+7 200 200 200
+TeamColours_EndDefinition
+
 CameraAnimations_StartDefinition
 CameraAnimations_EndDefinition
 

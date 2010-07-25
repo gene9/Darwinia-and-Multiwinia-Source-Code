@@ -387,6 +387,10 @@ void Squadie::ChangeHealth( int _amount )
 {
     bool dead = m_dead;
 
+	if (g_app->m_globalWorld->invulCheat && !m_dead) //WEAR A DAMN CONDOM!
+	{
+		return;
+	}
     if( !m_dead )
     {
         if( _amount < 0 )

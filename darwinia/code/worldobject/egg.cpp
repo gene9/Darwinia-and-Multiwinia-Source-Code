@@ -6,9 +6,11 @@
 #include "sound/soundsystem.h"
 
 #include "worldobject/egg.h"
+#include "worldobject/darwinian.h"
 
 #include "app.h"
 #include "camera.h"
+#include "level_file.h"
 #include "location.h"
 #include "main.h"
 #include "team.h"
@@ -196,7 +198,22 @@ bool Egg::Advance( Unit *_unit )
             if( m_timer >= 15.0f )
             {
                 g_app->m_location->m_spirits.MarkNotUsed( m_spiritId );
-                g_app->m_location->SpawnEntities( m_pos, m_id.GetTeamId(), -1, Entity::TypeVirii, 4, g_zeroVector, 0.0f, 200.0f );
+				if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_EGGWINIANS ) {
+					char spawnTeam =  m_id.GetTeamId();
+					if ( m_id.GetTeamId() == 2 ) // We are the player so find the team we are supposed to spawn instead (defaults to 0/green)
+					{
+						for ( int i = 0; i < NUM_TEAMS; i++ )
+						{
+							if ( g_app->m_location->m_levelFile->m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { spawnTeam = i; }
+						}
+					}
+					WorldObjectId wid = g_app->m_location->SpawnEntities( m_pos, spawnTeam, -1, Entity::TypeDarwinian, 1, g_zeroVector, 0.0f, 200.0f );
+					Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntity(wid);
+					if ( g_app->m_location->m_levelFile->m_teamFlags[spawnTeam] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
+
+				} else {
+					g_app->m_location->SpawnEntities( m_pos, m_id.GetTeamId(), -1, Entity::TypeVirii, 4, g_zeroVector, 0.0f, 200.0f );
+				}
                 return true;
             }
         }

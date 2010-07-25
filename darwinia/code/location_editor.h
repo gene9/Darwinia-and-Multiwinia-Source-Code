@@ -40,6 +40,7 @@ public:
 		ModeLight,				// 4
 		ModeInstantUnit,		// 5
         ModeCameraMount,        // 6
+		ModeTeam,				// 7
 		ModeNumModes
 	};
 
@@ -61,6 +62,7 @@ private:
 	void			AdvanceModeLight();
 	void			AdvanceModeInstantUnit();
 	void			AdvanceModeCameraMount();
+	void			AdvanceModeTeam();
 
 	void			RenderUnit(InstantUnit *_iu);
 

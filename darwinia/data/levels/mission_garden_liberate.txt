@@ -30,6 +30,17 @@ InstantUnits_StartDefinition
 	Darwinian        0  1252.7  1353.9     20    0      -1   104.8     0.0     0.0
 InstantUnits_EndDefinition
 
+TeamColours_StartDefinition
+0 0 255 0
+1 255 0 0
+2 0 0 255
+3 255 128 0
+4 200 200 15
+5 0 200 200
+6 200 0 200
+7 200 200 200
+TeamColours_EndDefinition
+
 PrimaryObjectives_StartDefinition
 	BuildingOnline :garden,8 	objective_capture_trunk
 	ResearchOwned :Grenade 	objective_research

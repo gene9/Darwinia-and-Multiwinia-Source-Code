@@ -14,6 +14,7 @@
 #include "app.h"
 #include "camera.h"
 #include "location.h"
+#include "level_file.h"
 #include "entity_grid.h"
 #include "team.h"
 #include "location_editor.h"
@@ -605,13 +606,7 @@ void SpawnPoint::TriggerSpirit( SpawnBuildingSpirit *_spirit )
     if( m_id.GetUniqueId() == _spirit->m_targetBuildingId )
     {
         // This spirit has arrived at its destination
-        if( m_id.GetTeamId() != 255 )
-        {
-            Matrix34 mat( m_front, m_up, m_pos );
-            Matrix34 doorMat = m_doorMarker->GetWorldMatrix(mat);
-            g_app->m_location->SpawnEntities( doorMat.pos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, g_zeroVector, 0.0f );
-        }
-
+		SpawnDarwinian();
         delete _spirit;
     }
     else
@@ -671,6 +666,29 @@ bool SpawnPoint::Advance()
     END_PROFILE( g_app->m_profiler, "SpawnDarwinians" );
 
     return SpawnBuilding::Advance();
+}
+
+void SpawnPoint::SpawnDarwinian()
+{
+    if( m_id.GetTeamId() == 255 )
+    {
+        return;
+    }
+
+    Matrix34 mat( m_front, m_up, m_pos );
+    Matrix34 doorMat = m_doorMarker->GetWorldMatrix(mat);
+
+    Vector3 exitPos = doorMat.pos;
+    Vector3 exitVel; //= g_zeroVector;
+	exitVel.x = 0, exitVel.y = 10, exitVel.z = 0;
+    
+    WorldObjectId spawned = g_app->m_location->SpawnEntities( exitPos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, exitVel, 0.0 );
+    Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawned, Entity::TypeDarwinian );
+    if( darwinian )
+    {
+        darwinian->m_onGround = false;
+    }
+	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = true; }
 }
 
 

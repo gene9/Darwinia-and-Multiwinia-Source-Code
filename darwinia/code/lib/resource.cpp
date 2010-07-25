@@ -24,6 +24,7 @@
 #include "location.h"
 #include "renderer.h"
 #include "water.h"
+#include "team.h"
 
 
 Resource::Resource()
@@ -300,12 +301,38 @@ Shape *Resource::GetShape( char const *_name )
     return theShape;
 }
 
+Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating )
+{
+	char *fullName = new char[128];
+	if ( !_animating ) {
+		sprintf(fullName, "%s %c", _name, _teamID);
+	} else {
+		sprintf(fullName, "%s", _name);
+	}
+
+	Shape *theShape = m_shapes.GetData( fullName );
+	
+	// If we haven't loaded the shape before, or _makeNew is true, then
+	// try to load it from the disk
+    if( !theShape || _animating)
+    {
+		theShape = GetShapeCopy(_name, false);
+		m_shapes.PutData( fullName, theShape );
+	}
+
+	theShape->Recolour(g_app->m_location->m_teams[_teamID].m_colour);
+    return theShape;
+}
 
 Shape *Resource::GetShapeCopy( char const *_name, bool _animating )
 {
 	char fullPath[512];
 	Shape *theShape = NULL;
 
+	while ( strcspn(_name, "/") != strlen(_name) )
+	{
+		_name = _name + strcspn(_name, "/")+1;
+	}
     if( m_modName )
     {
         sprintf( fullPath, "%smods/%s/shapes/%s", g_app->GetProfileDirectory(), m_modName, _name );

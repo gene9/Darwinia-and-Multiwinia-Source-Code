@@ -741,7 +741,7 @@ bool Shockwave::Advance()
 			{
 				if( syncfrand() < 0.1f )
 				{
-					((Darwinian *)ent)->SetFire();
+					ent->ChangeHealth( -40 * fraction );//((Darwinian *)ent)->SetFire();
 				}
 				else
 				{

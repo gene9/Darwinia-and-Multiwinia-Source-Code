@@ -41,12 +41,14 @@
 
 #include "interface/prefs_other_window.h"
 
+#include "worldobject/entity.h"
 #include "worldobject/insertion_squad.h"
 #include "worldobject/officer.h"
 #include "worldobject/darwinian.h"
 #include "worldobject/researchitem.h"
 #include "worldobject/trunkport.h"
 #include "worldobject/engineer.h"
+#include "worldobject/spam.h"
 
 
 Task::Task()
@@ -141,7 +143,8 @@ void Task::TargetArmour( Vector3 const &_pos )
 #ifndef DEMOBUILD
     int teamId = g_app->m_globalWorld->m_myTeamId;
 
-    m_objId = g_app->m_location->SpawnEntities( _pos, teamId, -1, Entity::TypeArmour, 1, g_zeroVector, 0 );
+	Vector3 pos = _pos;
+	m_objId = g_app->m_location->SpawnEntities( pos, teamId, -1, Entity::TypeArmour, 1, g_zeroVector, 0 );
     g_app->m_location->m_teams[teamId].SelectUnit( -1, m_objId.GetIndex(), -1 );
 
     m_state = StateRunning;
@@ -387,18 +390,28 @@ void Task::Stop()
         case GlobalResearch::TypeSquad:
         {
             Unit *unit = g_app->m_location->GetUnit( m_objId );
-            if( unit )
-            {
-                for( int i = 0; i < unit->m_entities.Size(); ++i )
-                {
-                    if( unit->m_entities.ValidIndex(i) )
-                    {
-                        Entity *entity = unit->m_entities[i];
-                        int health = entity->m_stats[Entity::StatHealth];
-                        entity->ChangeHealth( -1000 );
-                    }
-                }
-            }
+				if( unit )
+				{
+					for( int i = 0; i < unit->m_entities.Size(); ++i )
+					{
+						if( unit->m_entities.ValidIndex(i) )
+						{
+							if (g_app->m_globalWorld->invulCheat) {
+								g_app->m_globalWorld->invulCheat = false; //Invulnerable only to enemy attacks, not termination.
+								Entity *entity = unit->m_entities[i];
+								int health = entity->m_stats[Entity::StatHealth];
+								entity->m_dead = true;
+								entity->ChangeHealth( -1000 );
+								g_app->m_globalWorld->invulCheat = true;
+							} else {
+								Entity *entity = unit->m_entities[i];
+								int health = entity->m_stats[Entity::StatHealth];
+								entity->ChangeHealth( -1000 );
+						}
+					}
+				}
+			}
+
             break;
         }
 

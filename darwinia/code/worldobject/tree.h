@@ -36,6 +36,8 @@ public:
     int     m_leafColour;
     int     m_branchColour;
 	int		m_leafDropRate;
+	int		m_spiritDropRate;
+	int		m_evil;
 
 public:
     Tree();
@@ -45,6 +47,7 @@ public:
     void SetDetail      ( int _detail );
 
     bool Advance        ();
+    bool AdvanceEvil    ();
 
 	void DeleteDisplayLists();
     void Generate       ();

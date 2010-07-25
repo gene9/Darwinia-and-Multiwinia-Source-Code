@@ -14,8 +14,7 @@
 #include "camera.h"
 #include "renderer.h"
 #include "taskmanager.h"
-
-
+#include "worldobject/insertion_squad.h"
 
 #ifdef CHEATMENU_ENABLED
 
@@ -290,6 +289,18 @@ class SpawnPortsButton : public DarwiniaButton
     }
 };
 
+class SquaddieInvulnerabilityButton : public DarwiniaButton
+{
+	void MouseUp()
+	{
+		if (!g_app->m_globalWorld->invulCheat) {
+		g_app->m_globalWorld->invulCheat = true;
+		} else {
+		g_app->m_globalWorld->invulCheat = false;
+		}
+	}
+};
+
 #ifdef PROFILER_ENABLED
 class ProfilerCreateButton : public DarwiniaButton
 {
@@ -354,6 +365,10 @@ void CheatWindow::Create()
     AllowArbitraryPlacementButton *allowPlacement = new AllowArbitraryPlacementButton();
     allowPlacement->SetShortProperties( "Allow Arbitrary Placement", 10, y += 20, m_w - 20 );
     RegisterButton( allowPlacement );
+
+	SquaddieInvulnerabilityButton *squaddieInvul = new SquaddieInvulnerabilityButton();
+	squaddieInvul->SetShortProperties( "Squaddie Invulnerability", 10, y += 20, m_w - 20);
+	RegisterButton( squaddieInvul );
 
     EnableGeneratorAndMineButton *enable = new EnableGeneratorAndMineButton();
     enable->SetShortProperties( "Enable Generator and Mine", 10, y += 20, m_w - 20 );

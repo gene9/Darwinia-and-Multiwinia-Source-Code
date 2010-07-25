@@ -30,8 +30,6 @@ protected:
     int             m_numSpiritsEaten;
     float           m_lastAdvance;
 
-    static Shape    *s_shapeBody;
-    static Shape    *s_shapeHead;
 
 protected:
     bool        SearchForRandomPosition();
@@ -60,6 +58,9 @@ public:
     void Attack             ( Vector3 const &_pos );
 
     void ListSoundEvents    ( LList<char *> *_list );
+
+    Shape			*s_shapeBody;
+    Shape			*s_shapeHead;
 };
 
 

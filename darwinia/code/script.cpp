@@ -11,6 +11,7 @@
 #include "lib/filesys_utils.h"
 #include "lib/preferences.h"
 #include "lib/window_manager.h"
+#include "lib/shape.h"
 
 #include "app.h"
 #include "camera.h"
@@ -26,6 +27,8 @@
 #include "taskmanager_interface.h"
 #include "demoendsequence.h"
 #include "tutorial.h"
+#include "team.h"
+#include "unit.h"
 
 #include "loaders/credits_loader.h"
 
@@ -34,6 +37,7 @@
 #include "worldobject/constructionyard.h"
 #include "worldobject/goddish.h"
 #include "worldobject/rocket.h"
+#include "worldobject/centipede.h"
 
 
 
@@ -567,6 +571,70 @@ void Script::RunCommand_ActivateTrunkPort( int _buildingId, bool _fullActivation
 	}
 }
 
+void Script::RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _blue )
+{
+	if ( _teamID < 0 || _teamID >= NUM_TEAMS ) { return; }
+
+	RGBAColour teamColour = RGBAColour(_red, _green, _blue);
+	g_app->m_location->m_teams[_teamID].m_colour = teamColour;
+	for ( int i = 0; i < g_app->m_location->m_teams[_teamID].m_units.Size(); i++ )
+	{
+		if ( g_app->m_location->m_teams[_teamID].m_units.ValidIndex(i) )
+		{
+			for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.Size(); j++ )
+			{
+				if ( g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.ValidIndex(j) )
+				{
+					Entity *entity = g_app->m_location->m_teams[_teamID].m_units[i]->m_entities.GetData(j);
+					if ( entity->m_shape ) { entity->m_shape->Recolour(teamColour); }
+					if ( entity->m_type == Entity::TypeCentipede )
+					{
+						Centipede *centipede = (Centipede *) entity;
+						centipede->s_shapeHead->Recolour(teamColour);
+						centipede->s_shapeBody->Recolour(teamColour);
+					}
+				}
+			}
+		}
+	}
+	for ( int j = 0; j < g_app->m_location->m_teams[_teamID].m_others.Size(); j++ )
+	{
+		if ( g_app->m_location->m_teams[_teamID].m_others.ValidIndex(j) )
+		{
+			Entity *entity = g_app->m_location->m_teams[_teamID].m_others.GetData(j);
+			if ( entity->m_shape ) { entity->m_shape->Recolour(teamColour); }
+			if ( entity->m_type == Entity::TypeCentipede )
+			{
+				Centipede *centipede = (Centipede *) entity;
+				centipede->s_shapeHead->Recolour(teamColour);
+				centipede->s_shapeBody->Recolour(teamColour);
+			}
+		}
+	}
+}
+
+void Script::RunCommand_SetAlliance(int _teamId, int _partnerId, bool _allianceState )
+{
+	if ( _teamId < 0 || _teamId >= NUM_TEAMS ) { return; }
+	if ( _partnerId < 0 || _partnerId >= NUM_TEAMS ) { return; }
+
+	g_app->m_location->m_levelFile->SetAlliance(_teamId, _partnerId, _allianceState);
+}
+
+void Script::RunCommand_ChangeFlag(int _teamId, int _flag, bool _flagState )
+{
+	if ( _teamId < 0 || _teamId >= NUM_TEAMS ) { return; }
+	if ( _flag < 0 ) { return; }
+
+	g_app->m_location->m_levelFile->SetFlag(_teamId, _flag, _flagState);
+}
+
+void Script::RunCommand_ChangeAvatar ( char *avatar )
+{
+	g_app->m_sepulveda->LoadAvatar(avatar);
+	sprintf(g_app->m_sepulveda->m_currentAvatar,"%s",avatar);
+}
+
 // Opens a script file and returns. The script will only actually be run when
 // Script::Advance gets called
 void Script::RunScript(char *_filename)
@@ -841,6 +909,49 @@ void Script::AdvanceScript()
 			RunCommand_ActivateTrunkPort((int)nextFloat, opCode == OpActivateTrunkPortFull );
 			break;
 		}
+		case OpSetTeamColour:
+		{
+			int teamID = (int) nextFloat;
+			int red = atoi(m_in->GetNextToken());
+			int green = atoi(m_in->GetNextToken());
+			int blue = atoi(m_in->GetNextToken());
+
+			RunCommand_SetTeamColour(teamID, red, green, blue);
+			break;
+		}
+		case OpSetAlliance:
+		{
+			int teamId = (int) nextFloat;
+			int partnerId = atoi(m_in->GetNextToken());
+			int allianceState = atoi(m_in->GetNextToken());
+			if ( allianceState > 0 ) { RunCommand_SetAlliance(teamId, partnerId, true); }
+			else { RunCommand_SetAlliance(teamId, partnerId, false); }
+			break;
+		}
+		case OpChangeFlag:
+		{
+			int teamId = (int) nextFloat;
+			char *word = m_in->GetNextToken();
+			int flag = 0;
+			if ( stricmp("PlayerSpawnTeam",word) == 0 )				{ flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
+			else if ( stricmp("Eggwinians",word) == 0 )				{ flag = TEAM_FLAG_EGGWINIANS; }
+			else if ( stricmp("SoulHarvest",word) == 0 )			{ flag = TEAM_FLAG_SOULHARVEST; }
+			else if ( stricmp("SpawnPointIncubation",word) == 0 )	{ flag = TEAM_FLAG_SPAWNPOINTINCUBATION; }
+			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
+			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
+			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
+			else { flag = 0; }
+
+			int flagState = atoi(m_in->GetNextToken());
+			if ( flagState > 0 ) { RunCommand_ChangeFlag(teamId, flag, true); }
+			else { RunCommand_ChangeFlag(teamId, flag, false); }
+			break;
+		}
+		case OpChangeAvatar:
+		{
+			RunCommand_ChangeAvatar( nextWord );
+			break;
+		}
 
 		default:				    DarwiniaDebugAssert(false);									break;
 	}
@@ -1045,7 +1156,11 @@ static char *g_opCodeNames[] =
     "PermitEscape",
 	"DestroyBuilding",
 	"ActivateTrunkPort",
-	"ActivateTrunkPortFull"
+	"ActivateTrunkPortFull",
+	"SetTeamColour",
+	"SetAlliance",
+	"ChangeFlag",
+	"ChangeAvatar"
 };
 
 

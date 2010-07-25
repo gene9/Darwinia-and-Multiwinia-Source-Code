@@ -11,6 +11,7 @@
 #include "interface/landscape_window.h"
 #include "interface/lights_window.h"
 #include "interface/tree_window.h"
+#include "interface/teamwindow.h"
 
 #include "lib/3d_sprite.h"
 #include "lib/debug_render.h"
@@ -240,6 +241,10 @@ void LocationEditor::CreateEditWindowForMode(int _mode)
 //				otherWin->m_y = g_app->m_renderer->ScreenH() - window->m_h;
 //				EclRegisterWindow(otherWin);
 			}
+			break;
+		case LocationEditor::ModeTeam:
+			window = new TeamEditWindow(LANGUAGEPHRASE("editor_teams"));
+			window->m_w = 220;
 			break;
 	}
 
@@ -547,7 +552,6 @@ void LocationEditor::AdvanceModeBuilding()
 		}
 	}
 }
-
 
 void LocationEditor::AdvanceModeLight()
 {

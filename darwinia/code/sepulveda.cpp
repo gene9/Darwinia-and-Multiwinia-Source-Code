@@ -18,6 +18,7 @@
 #include "lib/math_utils.h"
 #include "lib/shape.h"
 #include "lib/string_utils.h"
+#include "lib/filesys_utils.h"
 
 #include "app.h"
 #include "camera.h"
@@ -37,6 +38,31 @@
 
 
 
+void Sepulveda::LoadAvatar ( char *_imageName )
+{
+	int i = 1;
+
+    char filename[256];
+    sprintf( filename, "sepulveda/%s1.bmp",_imageName );
+	
+	char dataFileName[256];
+	char modFileName[256];
+
+    sprintf( dataFileName, "data/%s", filename );
+    sprintf( modFileName, "%smods/%s/%s", g_app->GetProfileDirectory(), g_app->m_resource->GetModName(), filename );
+
+	while ( DoesFileExist(dataFileName) || DoesFileExist(modFileName) )
+    {
+        g_app->m_resource->GetTexture( filename, true, false );
+
+		i++;
+		sprintf( filename, "sepulveda/%s%d.bmp",_imageName, i );
+		sprintf( dataFileName, "data/%s", filename );
+		sprintf( modFileName, "%smods/%s/%s", g_app->GetProfileDirectory(), g_app->m_resource->GetModName(), filename );
+    }
+	m_picsFound = i-1;
+}
+
 Sepulveda::Sepulveda()
 :   m_timeSync(0.0),
 	m_gestureDemo(NULL),
@@ -51,12 +77,18 @@ Sepulveda::Sepulveda()
     //
     // Pre-cache sepulveda images to avoid stuttering on load
 
-    for( int i = 0; i < 5; ++i )
-    {
-        char filename[256];
-        sprintf( filename, "sepulveda/sepulveda%d.bmp", i+1 );
-        g_app->m_resource->GetTexture( filename, true, false );
-    }
+	m_currentAvatar = new char[512];
+	sprintf(m_currentAvatar,"sepulveda");
+
+	LoadAvatar("sepulveda");
+	//int i = 0;
+    //char filename[256];
+    //sprintf( filename, "sepulveda/sepulveda%d.bmp", i+1 );
+	//while ( 
+    //for( int i = 0; i < 5; ++i )
+    //{
+    //    g_app->m_resource->GetTexture( filename, true, false );
+    //}
 
     m_caption[0] = '\x0';
 
@@ -906,13 +938,15 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     {
         previousPicIndex = picIndex;
 
+		/*
         if( frand(6.0f) < 1.0f )        zoomFactor = frand(0.1f);
         if( frand(6.0f) < 1.0f )        offsetX = sfrand(0.1f);
 
         if      ( frand(10.0f) < 1.0f ) picIndex = 5;           // mouth open
         else if ( frand(10.0f) < 1.0f ) picIndex = 4;           // eyes shut
         else                            picIndex = 1 + ( darwiniaRandom() % 3 );
-
+		*/
+		picIndex = 1 + ( darwiniaRandom() % m_picsFound );
         picTimer = timeNow;
     }
 
@@ -939,7 +973,7 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     //
     // Render current pic
 
-    sprintf( filename, "sepulveda/sepulveda%d.bmp", picIndex );
+    sprintf( filename, "sepulveda/%s%d.bmp", m_currentAvatar, picIndex );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename, true, false ) );
 
     glColor4f( 1.0f, 1.0f, 1.0f, _alpha );
@@ -958,7 +992,7 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     {
         float previousAlpha = _alpha;
         previousAlpha *= ( 1.0f - ( timeNow - picTimer ) / frameTime );
-        sprintf( filename, "sepulveda/sepulveda%d.bmp", previousPicIndex );
+        sprintf( filename, "sepulveda/%s%d.bmp", m_currentAvatar, previousPicIndex );
         glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename ) );
 
         previousAlpha *= 0.75f;

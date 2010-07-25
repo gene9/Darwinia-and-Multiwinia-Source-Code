@@ -22,5 +22,5 @@ InstantUnits_StartDefinition
 InstantUnits_EndDefinition
 
 PrimaryObjectives_StartDefinition
-	BuildingOnline :sandbox,2 
+	AlwaysTrue	sandbox_objective
 PrimaryObjectives_EndDefinition

@@ -24,16 +24,16 @@ Buildings_EndDefinition
 
 Research_StartDefinition
 	Research Darwinian      0       4
-    Research Squad          0       3
-	Research Engineer       0       3
-    Research Laser          0       3
-	Research Grenade		0		3
-	Research Rocket			0		3
-	Research AirStrike		0		3
-	Research Controller		0		0
-	Research Officer		0		3
-    Research Armour         0       2
-    Research TaskManager    0       4
+    	Research Squad          0       4
+	Research Engineer       0       10
+    	Research Laser          0       4
+	Research Grenade	0	25
+	Research Rocket		0	3
+	Research AirStrike	0	4
+	Research Controller	0	0
+	Research Officer	0	4
+    	Research Armour         0       4
+    	Research TaskManager    0       7
     CurrentResearch         Squad
 Research_EndDefinition
 

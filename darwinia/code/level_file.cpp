@@ -81,6 +81,26 @@ char const *CamAnimNode::GetTransitModeName(int _modeId)
 // Private Methods
 // ***************
 
+void LevelFile::SetFlag(char _teamId, int _flag, bool _flagState)
+{
+	if ( _flag == TEAM_FLAG_PLAYER_SPAWN_TEAM && _flagState) { // Only one team per map can have this flag so clear it now
+		for ( int i = 0; i < NUM_TEAMS; i++ ) { if ( m_teamFlags[_teamId] & _flag ) { m_teamFlags[_teamId] = m_teamFlags[_teamId] - _flag; } }
+	}
+
+	if ( _flagState ) {
+		m_teamFlags[_teamId] = m_teamFlags[_teamId] | _flag;
+	} else if ( m_teamFlags[_teamId] & _flag ) {
+		m_teamFlags[_teamId] = m_teamFlags[_teamId] - _flag;
+	}
+}
+
+void LevelFile::SetAlliance(char _teamId, char _partnerId, bool _allianceState )
+{
+	if ( _teamId == _partnerId ) { return; } // Sanity check - no declaring war on yourself
+	m_teamAlliances[_teamId][_partnerId] = _allianceState;
+	m_teamAlliances[_partnerId][_teamId] = _allianceState;
+}
+
 void LevelFile::ParseMissionFile(char const *_filename)
 {
 	TextReader *in = NULL;
@@ -144,6 +164,18 @@ void LevelFile::ParseMissionFile(char const *_filename)
 		else if (stricmp("Difficulty_StartDefinition", word) == 0)
 		{
 			ParseDifficulty(in);
+		}
+		else if (stricmp("TeamColours_StartDefinition", word) == 0)
+		{
+			ParseTeamColours(in);
+		}
+		else if (stricmp("TeamAlliances_StartDefinition", word) == 0)
+		{
+			ParseTeamAlliances(in);
+		}
+		else if (stricmp("TeamFlags_StartDefinition", word) == 0)
+		{
+			ParseTeamFlags(in);
 		}
 		else
 		{
@@ -645,6 +677,94 @@ void LevelFile::ParseLights(TextReader *_in)
  	}
 }
 
+void LevelFile::ParseTeamColours(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamColours_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID = atoi(word);
+
+		if ( teamID >= 0 && teamID <= NUM_TEAMS )
+		{
+			char *red = _in->GetNextToken();
+			char *green = _in->GetNextToken();
+			char *blue = _in->GetNextToken();
+			m_teamColours[teamID] = RGBAColour(atoi(red), atoi(green), atoi(blue));
+		}
+ 	}
+}
+
+void LevelFile::ParseTeamAlliances(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamAlliances_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID1 = atoi(word);
+
+		if (!_in->TokenAvailable()) continue;
+		word = _in->GetNextToken();
+		int teamID2 = atoi(word);
+
+		if (!_in->TokenAvailable()) continue;
+		word = _in->GetNextToken();
+		int teamState = atoi(word);
+
+		if ( teamID1 >= 0 && teamID1 < NUM_TEAMS && teamID2 >= 0 && teamID2 < NUM_TEAMS)
+		{
+			if ( teamState > 0 ) { m_teamAlliances[ teamID1 ][ teamID2 ] = true; }
+			else  { m_teamAlliances[ teamID1 ][ teamID2 ] = false; }
+		}
+ 	}
+}
+
+void LevelFile::ParseTeamFlags(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamFlags_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID = atoi(word);
+
+		while (_in->TokenAvailable())
+		{
+			word = _in->GetNextToken();
+			int flag = 0;
+			if ( stricmp("PlayerSpawnTeam",word) == 0 )				{ flag = TEAM_FLAG_PLAYER_SPAWN_TEAM; }
+			else if ( stricmp("Eggwinians",word) == 0 )				{ flag = TEAM_FLAG_EGGWINIANS; }
+			else if ( stricmp("SoulHarvest",word) == 0 )			{ flag = TEAM_FLAG_SOULHARVEST; }
+			else if ( stricmp("SpawnPointIncubation",word) == 0 )	{ flag = TEAM_FLAG_SPAWNPOINTINCUBATION; }
+			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
+			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
+			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
+			else { flag = 0; }
+			// UPDATE MATCHING STATEMENT IN SCRIPT::ADVANCESCRIPT TOO OR THE CHANGEFLAG FUNCTION WONT WORK!
+			if ( teamID >= 0 && teamID < NUM_TEAMS )
+			{
+				SetFlag(teamID, flag, 1);
+			}
+		}
+ 	}
+}
 
 void LevelFile::ParseRoute(TextReader *_in, int _id)
 {
@@ -911,6 +1031,71 @@ void LevelFile::WriteLights(FileWriter *_out)
 	_out->printf( "Lights_EndDefinition\n\n");
 }
 
+void LevelFile::WriteTeamColours(FileWriter *_out)
+{
+	_out->printf( "TeamColours_StartDefinition\n");
+	_out->printf( "\t# ID     Type R   G   B\n");
+	_out->printf( "\t# ========================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+		    _out->printf( "\t  %d   %d %d %d\n",
+				    i, m_teamColours[i].r, m_teamColours[i].g, m_teamColours[i].b);
+        }
+    }
+
+	_out->printf( "TeamColours_EndDefinition\n\n");
+}
+void LevelFile::WriteTeamAlliances(FileWriter *_out)
+{
+	_out->printf( "TeamAlliances_StartDefinition\n");
+	_out->printf( "\t# ID1  ID2   Allied?\n");
+	_out->printf( "\t# ===================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+			for ( int j = 0; j < NUM_TEAMS; ++j )
+			{
+				if ( m_teamAlliances[i][j] && i != j ) {
+					_out->printf( "\t  %d   %d   %d\n",
+							i, j, 1);
+				}
+			}
+        }
+    }
+
+	_out->printf( "TeamAlliances_EndDefinition\n\n");
+}
+void LevelFile::WriteTeamFlags(FileWriter *_out)
+{
+	_out->printf( "TeamFlags_StartDefinition\n");
+	_out->printf( "\t# ID     Flags\n");
+	_out->printf( "\t# ========================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+			if ( m_teamFlags[i] > 0 )
+			{
+				_out->printf( "\t  %d   ", i);
+				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM )		{ _out->printf( " PlayerSpawnTeam "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS )			{ _out->printf( " Eggwinians "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST )			{ _out->printf( " SoulHarvest "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SPAWNPOINTINCUBATION )	{ _out->printf( " SpawnPointIncubation "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_PATTERNCORRUPTION )		{ _out->printf( " PatternCorruption "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_EVILTREESPAWNTEAM )		{ _out->printf( " EvilTreeSpawnTeam "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_SOULLESS )				{ _out->printf( " Soulless "); }
+				_out->printf( "\n");
+			}
+        }
+    }
+	_out->printf( "TeamFlags_EndDefinition\n\n");
+}
 
 void LevelFile::WriteCameraMounts(FileWriter *_out)
 {
@@ -1092,12 +1277,65 @@ void LevelFile::WritePrimaryObjectives(FileWriter *_out)
 // Public Methods
 // **************
 
+void LevelFile::SetDefaults()
+{
+	// Set all teams to white
+	m_teamColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
+	for ( int i = 0; i < NUM_TEAMS; i++ )
+	{
+		m_teamColours[i] = RGBAColour(255,255,255);
+	}
+
+	// Set all teams hostile except to themselves, and clear all flags
+	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
+	{
+		for ( int id2 = 0; id2 < NUM_TEAMS; id2++ )
+		{
+			if ( id1 == id2 ) {
+				m_teamAlliances[id1][id2] = true;
+			} else {
+				m_teamAlliances[id1][id2] = false;
+			}
+		}
+		m_teamFlags[id1] = 0; // Clear All Flags
+	}
+
+	ParseMissionFile("defaults.txt");
+
+	for ( int id1 = 0; id1 < NUM_TEAMS; id1++ )
+	{
+		m_teamAlliances[id1][id1] = true; // Sanity check to stop people making a team fight itself
+	}	
+
+	/*
+	m_teamColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
+	if ( NUM_TEAMS >  0 ) { m_teamColours[0] = RGBAColour( 100, 255, 100 ); }		// Normally Green AI
+    if ( NUM_TEAMS >  1 ) { m_teamColours[1] = RGBAColour( 255, 50 , 50 ); }		// Normally Virii (Red)
+	if ( NUM_TEAMS >  2 ) { m_teamColours[2] = RGBAColour( 255, 255, 50 ); }		// Normally Player (Yellow)
+	if ( NUM_TEAMS >  3 ) { m_teamColours[3] = RGBAColour( 120, 180, 255); }		// Blue
+    if ( NUM_TEAMS >  4 ) { m_teamColours[4] = RGBAColour( 255, 150, 0  ); }		// Orange
+    if ( NUM_TEAMS >  5 ) { m_teamColours[5] = RGBAColour( 150, 0, 255 ); }			// Purple
+    if ( NUM_TEAMS >  6 ) { m_teamColours[6] = RGBAColour( 70, 200, 200 ); }		// Cyan
+    if ( NUM_TEAMS >  7 ) { m_teamColours[7] = RGBAColour( 255, 150, 255 ); }		// Pink
+    if ( NUM_TEAMS >  8 ) { m_teamColours[8] = RGBAColour( 10,10,10 ); }			// Multiwinia Virus (Black)
+    if ( NUM_TEAMS >  9 ) { m_teamColours[9] = RGBAColour( 200,200,200 ); }			// Futurwinian (Whiteish)
+
+	
+	m_teamAlliances[0][2] = true;
+	m_teamAlliances[2][0] = true; // Ally Player with Green Team
+
+	m_teamFlags[0] = TEAM_FLAG_PLAYER_SPAWN_TEAM; // Player incubators spawn team 0 darwinians (green)
+	*/
+}
 LevelFile::LevelFile()
 {
 	sprintf(m_landscapeColourFilename,  "landscape_default.bmp" );
     sprintf(m_wavesColourFilename,      "waves_default.bmp" );
     sprintf(m_waterColourFilename,      "water_default.bmp" );
 	m_levelDifficulty = -1;
+
+	SetDefaults();
+
 }
 
 LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
@@ -1115,13 +1353,17 @@ LevelFile::LevelFile(char const *_missionFilename, char const *_mapFilename)
 	// level to what the preferences say).
 	g_app->UpdateDifficultyFromPreferences();
 
+	SetDefaults();
+
 	if (stricmp(_missionFilename, "null") != 0)
     {
         ParseMissionFile(m_missionFilename);
     }
-   	ParseMapFile(m_mapFilename);
+
+	ParseMapFile(m_mapFilename);
 
 	GenerateAutomaticObjectives();
+
 }
 
 
@@ -1199,6 +1441,9 @@ void LevelFile::SaveMissionFile(char const *_filename)
 	WriteRoutes(out);
 	WritePrimaryObjectives(out);
     WriteRunningPrograms(out);
+	WriteTeamColours(out);
+	WriteTeamAlliances(out);
+	WriteTeamFlags(out);
 
 	delete out;
 }

@@ -1450,6 +1450,8 @@ editor_budsize                         Bud Size
 editor_pushup                          PushUp
 editor_pushout                         PushOut
 editor_iterations                      Iterations
+editor_spiritdrop                      Drop Spirits?
+editor_evil                            Is Evil?
 
 editor_lights                          Lights
 editor_newlight                        New Light
@@ -1492,6 +1494,18 @@ editor_dynamic                         Dynamic
 editor_isglobal                        Is Global
 editor_buildingtype                    Building Type
 editor_createbuilding                  Create Building
+
+editor_editteams                       Edit Teams
+editor_teams                           Teams
+editor_teamally                        Ally
+editor_teamenemy                       Enemy
+editor_teamflag_playerspawnteam        PlayerSpawnTeam
+editor_teamflag_eggwinians             Eggwinians
+editor_teamflag_soulharvest            SoulHarvest
+editor_teamflag_spawnpointincubation   SpawnPointIncubation
+editor_teamflag_patterncorruption      PatternCorruption
+editor_teamflag_eviltreespawnteam      EvilTreeSpawnTeam
+editor_teamflag_soulless               Soulless
 
 editor_spirits                         Spirits
 editor_targetlocation                  Target Location
@@ -1541,6 +1555,7 @@ editor_spawnlimit                      Max Spawns
 editor_leafdrop                        Leaf Droprate
 editor_neveron                         Never On
 editor_switchonce                      Switch Once
+editor_damaged                         Damaged?
 
 spawnname_spawnvirii                   SpawnVirii
 spawnname_spawncentipedes              SpawnCentipedes

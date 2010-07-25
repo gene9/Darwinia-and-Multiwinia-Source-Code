@@ -24,6 +24,17 @@ Buildings_StartDefinition
 	Incubator           83      2075.51 3436.86 1       0.73    -0.68   1            0
 Buildings_EndDefinition
 
+TeamColours_StartDefinition
+0 0 255 0
+1 255 0 0
+2 0 0 255
+3 255 128 0
+4 200 200 15
+5 0 200 200
+6 200 0 200
+7 200 200 200
+TeamColours_EndDefinition
+
 InstantUnits_StartDefinition
 	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ
 	# ==================================================================================

@@ -1261,10 +1261,18 @@ void EnterLocation()
         {
             if( iAmAServer )
             {
-                g_app->m_clientToServer->RequestTeam( Team::TeamTypeCPU, -1 );
-                g_app->m_clientToServer->RequestTeam( Team::TeamTypeCPU, -1 );
+                g_app->m_clientToServer->RequestTeam( Team::TeamTypeCPU, -1 ); // 0 (Greenwinian)
+                g_app->m_clientToServer->RequestTeam( Team::TeamTypeCPU, -1 ); // 1 (Virii)
             }
-            g_app->m_clientToServer->RequestTeam( Team::TeamTypeLocalPlayer, -1 );
+            g_app->m_clientToServer->RequestTeam( Team::TeamTypeLocalPlayer, -1 ); // 2 (Player)
+
+			// Add the remaining teams here!
+			if ( iAmAServer )
+			{
+				for ( int i = 3; i < NUM_TEAMS; i++ ) {
+					g_app->m_clientToServer->RequestTeam( Team::TeamTypeCPU, -1 );
+				}
+			}
         }
     }
 

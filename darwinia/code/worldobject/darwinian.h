@@ -13,6 +13,7 @@
 #define DARWINIAN_SEARCHRANGE_PORTS         100.0f
 
 #define DARWINIAN_FEARRANGE                 200.0f
+#define DARWINIAN_INCUBATOR_SEARCH_RADIUS	1000.0f
 
 class Darwinian : public Entity
 {
@@ -33,12 +34,18 @@ public:
         StateBoardingRocket,
         StateWatchingSpectacle,
         StateAttackingBuilding,                        // Eg attacking rocket in demo2
-        StateOnFire
+        StateOnFire,
+		StateCarryingSpirit,
+		StateToEgg,
+		StateHarvestingSoul
     };
 
     int         m_state;
     bool        m_promoted;
     Vector3     m_wayPoint;
+	int			m_corrupted;
+	bool		m_soulless;
+	bool		m_soulHarvested;
 
 protected:
     float           m_retargetTimer;
@@ -46,9 +53,12 @@ protected:
     WorldObjectId   m_armourId;
     WorldObjectId   m_officerId;
     int             m_spiritId;
+    int             m_soulId;
     int             m_buildingId;
     int             m_portId;
     WorldObjectId   m_boxKiteId;
+	WorldObjectId	m_eggId;
+	WorldObjectId	m_targetId;
 
     float       m_threatRange;
     bool        m_scared;
@@ -73,10 +83,14 @@ protected:
     bool        SearchForRandomPosition();
     bool        SearchForThreats();
     bool        SearchForSpirits();
+    bool        SearchForSouls();
     bool        SearchForPorts();
     bool        SearchForOfficers();
     bool        SearchForArmour();
+	bool		SearchForIncubator();
+	bool		SearchForEggs();
     bool        BeginVictoryDance();
+	WorldObjectId FindNearbyEgg( Vector3 const &_pos );
 
     bool        AdvanceIdle             ();
     bool        AdvanceApproachingPort  ();
@@ -93,8 +107,10 @@ protected:
     bool        AdvanceBoardingRocket   ();
     bool        AdvanceAttackingBuilding();
     bool        AdvanceOnFire           ();
-
-    bool        AdvanceToTargetPosition();
+	bool		AdvanceCarryingSpirit	();
+	bool		AdvanceToEgg			();
+	bool		AdvanceHarvestingSoul	();
+    bool        AdvanceToTargetPosition	();
 
 public:
     Darwinian();
