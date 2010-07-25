@@ -450,6 +450,16 @@ bool Spider::AdvanceIdle()
 	return false;
 }
 
+bool Spider::AdvanceMoving()
+{
+    //
+    // Just wander around a bit
+
+	bool arrived = AdvanceToTarget();
+	if( arrived ) { m_vel.Zero(); m_state = StateIdle; }
+
+	return false;
+}
 
 bool Spider::AdvanceAttack()
 {
@@ -690,6 +700,7 @@ bool Spider::Advance(Unit *_unit)
             case StateEggLaying:    AdvanceEggLaying();     break;
             case StateAttack:       AdvanceAttack();        break;
             case StatePouncing:     AdvancePouncing();      break;
+            case StateMoving:	    AdvanceMoving();	    break;
 	    }
 
 

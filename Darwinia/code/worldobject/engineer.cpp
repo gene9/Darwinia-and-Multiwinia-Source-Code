@@ -608,7 +608,7 @@ void Engineer::CollectSpirit( int _spiritId )
 
 
 
-bool Engineer::SearchForIncubator()
+bool Engineer::SearchForIncubator( bool _includeAllies )
 {
     //
     // Source building lost, look for another incubator to bind to
@@ -620,8 +620,22 @@ bool Engineer::SearchForIncubator()
         if( g_app->m_location->m_buildings.ValidIndex(i) )
         {
             Building *building = g_app->m_location->m_buildings[i];
-            if( building->m_type == Building::TypeIncubator &&
-                g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
+
+			// Stage 1: Its always friendly if its ours
+			bool isFriendly = (building->m_id.GetTeamId() == m_id.GetTeamId());
+			// Stage 2: If we are the player and its our spawn team and its an ally, its friendly
+			if ( !isFriendly && m_id.GetTeamId() == 2 )
+			{
+				if ( g_app->m_location->m_levelFile->m_teamFlags[building->m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) {
+					isFriendly = g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() );
+				}
+			}
+			// Stage 3: On the second pass, include all allied structures as friends
+			if ( !isFriendly && _includeAllies ) {
+				isFriendly = g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() );
+			}
+
+            if( building->m_type == Building::TypeIncubator && isFriendly )
             {
                 float distance = ( building->m_pos - m_pos ).Mag();
                 int population = ((Incubator *)building)->NumSpiritsInside();
@@ -637,7 +651,7 @@ bool Engineer::SearchForIncubator()
 
             if( building->m_type == Building::TypeSpawnPoint &&
 				g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SPAWNPOINTINCUBATION &&
-                g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
+                isFriendly )
             {
                 double distance = ( building->m_pos - m_pos ).Mag();
                 if( distance < nearest )
@@ -650,6 +664,7 @@ bool Engineer::SearchForIncubator()
         }
 	}
 
+	if ( !found && !_includeAllies ) { return SearchForIncubator(true); }
     return found;
 }
 
@@ -801,7 +816,7 @@ bool Engineer::AdvanceResearching()
     //
     // Do some reprogramming
 
-    bool amIDone = item->Reprogram();
+    bool amIDone = item->Reprogram( m_id.GetTeamId() );
 
     if( amIDone )
     {

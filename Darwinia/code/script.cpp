@@ -432,14 +432,14 @@ void Script::RunCommand_GameOver()
 
 void Script::RunCommand_ResetResearch()
 {
-    m_darwinianResearchLevel = g_app->m_globalWorld->m_research->m_researchLevel[GlobalResearch::TypeDarwinian];
-    g_app->m_globalWorld->m_research->m_researchLevel[GlobalResearch::TypeDarwinian] = 1;
+    m_darwinianResearchLevel = g_app->m_globalWorld->m_research->m_researchLevel[2][GlobalResearch::TypeDarwinian];
+    g_app->m_globalWorld->m_research->m_researchLevel[2][GlobalResearch::TypeDarwinian] = 1;
 }
 
 
 void Script::RunCommand_RestoreResearch()
 {
-    g_app->m_globalWorld->m_research->m_researchLevel[GlobalResearch::TypeDarwinian] = m_darwinianResearchLevel;
+    g_app->m_globalWorld->m_research->m_researchLevel[2][GlobalResearch::TypeDarwinian] = m_darwinianResearchLevel;
 }
 
 

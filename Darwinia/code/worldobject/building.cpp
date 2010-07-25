@@ -66,6 +66,7 @@
 #include "worldobject/switch.h"
 #include "worldobject/generichub.h"
 #include "worldobject/feedingtube.h"
+#include "worldobject/controlstation.h"
 
 
 
@@ -811,6 +812,7 @@ Building *Building::CreateBuilding( int _type )
         case TypeDynamicHub:            building = new DynamicHub();            break;
         case TypeDynamicNode:           building = new DynamicNode();           break;
         case TypeFeedingTube:           building = new FeedingTube();           break;
+        case TypeControlStation:        building = new ControlStation();        break;
     };
 
 
@@ -898,7 +900,8 @@ char *Building::GetTypeName( int _type )
                                         "FenceSwitch",
                                         "DynamicHub",
                                         "DynamicNode",
-                                        "FeedingTube"
+                                        "FeedingTube",
+										"ControlStation"
                                     };
 
     if( _type >= 0 && _type < NumBuildingTypes )

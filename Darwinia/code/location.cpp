@@ -64,6 +64,7 @@
 #include "worldobject/snow.h"
 #include "worldobject/tree.h"
 #include "worldobject/insertion_squad.h"
+#include "worldobject/spider.h"
 
 #include "sound/soundsystem.h"
 
@@ -87,6 +88,7 @@ Location::Location()
     m_lasers.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_effects.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_buildings.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
+    m_subversion.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
 
     m_spirits.SetSize( 100 );
 
@@ -95,6 +97,7 @@ Location::Location()
     m_spirits.SetStepSize( 100 );
 	m_lasers.SetStepSize(100);
 	m_effects.SetSize(100);
+	m_subversion.SetStepSize(100);
 }
 
 // *** Destructor
@@ -155,6 +158,7 @@ void Location::Empty()
 	m_spirits.Empty();			// FastDArray <Spirit>
     m_lasers.Empty();
     m_effects.Empty();
+    m_subversion.Empty();
 
 	delete m_levelFile;			m_levelFile = NULL;
 	delete [] m_teams;			m_teams = NULL;
@@ -628,8 +632,9 @@ bool Location::IsWalkable( Vector3 const &_from, Vector3 const &_to, bool _evalu
 
 void Location::AdvanceWeapons( int _slice )
 {
-    START_PROFILE(g_app->m_profiler, "Advance Lasers");
     int startIndex, endIndex;
+
+	START_PROFILE(g_app->m_profiler, "Advance Lasers");
     m_lasers.GetNextSliceBounds(_slice, &startIndex, &endIndex);
     for( int i = startIndex; i <= endIndex; ++i )
     {
@@ -645,8 +650,23 @@ void Location::AdvanceWeapons( int _slice )
     }
     END_PROFILE(g_app->m_profiler, "Advance Lasers");
 
+	START_PROFILE(g_app->m_profiler, "Advance Subversion");
+    m_subversion.GetNextSliceBounds(_slice, &startIndex, &endIndex);
+    for( int i = startIndex; i <= endIndex; ++i )
+    {
+        if( m_subversion.ValidIndex(i) )
+        {
+            SubversionBeam *l = m_subversion.GetPointer(i);
+            bool remove = l->Advance();
+            if( remove )
+            {
+                m_subversion.MarkNotUsed(i);
+            }
+        }
+    }
+    END_PROFILE(g_app->m_profiler, "Advance Subversion");
 
-    START_PROFILE(g_app->m_profiler, "Advance Effects");
+	START_PROFILE(g_app->m_profiler, "Advance Effects");
     m_effects.GetNextSliceBounds(_slice, &startIndex, &endIndex);
     for( int i = startIndex; i <= endIndex; ++i )
     {
@@ -1319,6 +1339,23 @@ void Location::RenderWeapons()
 		}
 	}
 
+	for( int i = 0; i < m_subversion.Size(); ++i )
+	{
+		if( m_subversion.ValidIndex(i) )
+		{
+			SubversionBeam *l = m_subversion.GetPointer(i);
+
+			if( i > m_subversion.GetLastUpdated() )
+			{
+				l->Render( timeSinceAdvance + SERVER_ADVANCE_PERIOD );
+			}
+			else
+			{
+				l->Render( timeSinceAdvance );
+			}
+		}
+	}
+
 	glDisable		(GL_TEXTURE_2D);
 	glEnable		(GL_CULL_FACE);
 	glDepthMask     ( true );
@@ -1393,12 +1430,16 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
             }
         }
 
-        if( iu->m_type == Entity::TypeDarwinian && iu->m_number == 1 && iu->m_state == Darwinian::StateFollowingOrders )
-        {
-            Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawnedId, Entity::TypeDarwinian );
-            if( darwinian ) darwinian->GiveOrders( targetPos );
-        }
-        if( iu->m_type == Entity::TypeOfficer )
+        if( iu->m_type == Entity::TypeDarwinian )
+		{
+			Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawnedId, Entity::TypeDarwinian );
+			if ( iu->m_number == 1 && iu->m_state == Darwinian::StateFollowingOrders )
+			{
+				if( darwinian ) darwinian->GiveOrders( targetPos );
+			}
+			if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PATTERNCORRUPTION ) { darwinian->m_corrupted = 1; }
+		}
+        else if( iu->m_type == Entity::TypeOfficer )
         {
             Officer *officer = (Officer *) g_app->m_location->GetEntitySafe( spawnedId, Entity::TypeOfficer );
             if( iu->m_state == Officer::OrderGoto )
@@ -1410,7 +1451,7 @@ void Location::InitialiseTeam( unsigned char _teamId, unsigned char _teamType )
                 officer->m_orders = iu->m_state;
             }
         }
-        if( iu->m_type == Entity::TypeArmour )
+        else if( iu->m_type == Entity::TypeArmour )
         {
             Armour *armour = (Armour *) g_app->m_location->GetEntitySafe( spawnedId, Entity::TypeArmour );
             armour->SetWayPoint( targetPos );
@@ -1591,6 +1632,15 @@ void Location::UpdateTeam( unsigned char teamId, TeamControls const& teamControl
 					if( teamControls.m_unitSecondaryMode ) armour->SetOrders( teamControls.m_mousePos );
                     break;
                 }
+
+                case Entity::TypeSpider:
+                {
+                    Spider *spider = (Spider *) entity;
+					if ( unitMove ) { spider->m_targetPos = teamControls.m_mousePos; spider->m_state = Spider::StateMoving; }
+					if ( primaryFire ) { spider->m_pounceTarget = teamControls.m_mousePos; spider->m_state = Spider::StateAttack; }
+                    break;
+                }
+
             }
         }
     }
@@ -1872,6 +1922,37 @@ void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned cha
     }
 
     Laser *l = m_lasers.GetPointer();
+    l->m_pos = _pos;
+    l->m_vel = _vel;
+    l->m_fromTeamId = _teamId;
+    l->Initialise(lifetime);
+
+
+    //
+    // Create muzzle flash
+
+    Vector3 flashFront = _vel;
+    flashFront.Normalise();
+    MuzzleFlash *mf = new MuzzleFlash( _pos, flashFront, 20.0f * lifetime, 1.0f );
+    int index = m_effects.PutData( mf );
+    mf->m_id.Set( _teamId, UNIT_EFFECTS, index, -1 );
+    mf->m_id.GenerateUniqueId();
+}
+
+void Location::FireSubversion( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
+{
+    int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeLaser );
+    float lifetime = 0.0f;
+    switch( laserResearch )
+    {
+        case 0 :        lifetime = 0.2f;            break;
+        case 1 :        lifetime = 0.4f;            break;
+        case 2 :        lifetime = 0.6f;            break;
+        case 3 :        lifetime = 0.8f;            break;
+        case 4 :        lifetime = 1.0f;            break;
+    }
+
+    SubversionBeam *l = m_subversion.GetPointer();
     l->m_pos = _pos;
     l->m_vel = _vel;
     l->m_fromTeamId = _teamId;

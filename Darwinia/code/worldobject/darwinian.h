@@ -46,6 +46,10 @@ public:
 	int			m_corrupted;
 	bool		m_soulless;
 	bool		m_soulHarvested;
+	bool		m_subversive;
+	int			m_oldTeamId;
+	float		m_colourTimer;
+
 
 protected:
     float           m_retargetTimer;

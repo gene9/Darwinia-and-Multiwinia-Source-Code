@@ -2380,7 +2380,7 @@ void TaskManagerInterfaceIcons::RenderResearch()
             //
             // Render selection boxes
 
-            if( g_app->m_globalWorld->m_research->m_currentResearch == i )
+            if( g_app->m_globalWorld->m_research->m_currentResearch[2] == i )
             {
                 glColor4f( 0.05f, 0.05f, 0.5f, 0.4f );
                 glBegin( GL_QUADS );
@@ -2504,7 +2504,7 @@ void TaskManagerInterfaceIcons::RenderResearch()
                         glTexCoord2i(0,1);      glVertex2i( boxX, boxY+boxH );
                     glEnd();
                     float alpha = 1.0f;
-                    if( g_app->m_globalWorld->m_research->m_currentResearch == i )
+                    if( g_app->m_globalWorld->m_research->m_currentResearch[2] == i )
                     {
                         alpha = fabs(sinf(g_gameTime*2));
                     }
@@ -2534,7 +2534,7 @@ void TaskManagerInterfaceIcons::RenderResearch()
                         glTexCoord2i(10,1);      glVertex2i( boxX+researchProgress*boxScale, boxY+boxH );
                         glTexCoord2i(0,1);      glVertex2i( boxX, boxY+boxH );
                     glEnd();
-                    if( g_app->m_globalWorld->m_research->m_currentResearch == i )
+                    if( g_app->m_globalWorld->m_research->m_currentResearch[2] == i )
                     {
                         float alpha = fabs(sinf(g_gameTime*2));
                         glColor4f( 0.9f, 0.9f, 1.0f, alpha );

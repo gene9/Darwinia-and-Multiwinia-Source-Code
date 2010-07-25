@@ -219,4 +219,27 @@ public:
     void Render( float _predictionTime );
 };
 
+
+// ****************************************************************************
+//  Class SubversionBeam
+// ****************************************************************************
+
+class SubversionBeam : public WorldObject
+{
+public:
+    unsigned char m_fromTeamId;
+
+protected:
+    float   m_life;
+    bool    m_harmless;                 // becomes true after hitting someone
+    bool    m_bounced;
+
+public:
+    SubversionBeam() {}
+
+    void Initialise(float _lifeTime);
+    bool Advance();
+    void Render( float predictionTime );
+};
+
 #endif

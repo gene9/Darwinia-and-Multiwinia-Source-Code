@@ -84,11 +84,12 @@ public:
 
     float           m_christmasTimer;
 
-	FastDArray		<Light *>		m_lights;
-    SliceDArray     <Building *>    m_buildings;
-    SliceDArray     <Spirit>        m_spirits;
-    SliceDArray     <Laser>         m_lasers;
-    SliceDArray     <WorldObject *> m_effects;
+	FastDArray		<Light *>			m_lights;
+    SliceDArray     <Building *>		m_buildings;
+    SliceDArray     <Spirit>			m_spirits;
+    SliceDArray     <Laser>				m_lasers;
+    SliceDArray     <SubversionBeam>	m_subversion;
+    SliceDArray     <WorldObject *>		m_effects;
 
 public:
     Location();
@@ -119,6 +120,7 @@ public:
     void ThrowWeapon        ( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId );
     void FireRocket         ( Vector3 const &_pos, Vector3 const &_target, unsigned char _fromTeamId );
     void FireLaser          ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId );
+    void FireSubversion     ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId );
     void FireTurretShell    ( Vector3 const &_pos, Vector3 const &_vel );
     void Bang               ( Vector3 const &_pos, float _range, float _damage );
     void CreateShockwave    ( Vector3 const &_pos, float _size, unsigned char _teamId=255 );

@@ -58,7 +58,10 @@ Darwinian::Darwinian()
 	m_corrupted(0),
 	m_soulId(0),
 	m_soulless(false),
-	m_soulHarvested(false)
+	m_soulHarvested(false),
+	m_subversive(false),
+	m_oldTeamId(255),
+	m_colourTimer(0)
 {
     SetType( TypeDarwinian );
     m_grenadeTimer = syncfrand( 5.0f );
@@ -72,6 +75,9 @@ void Darwinian::Begin()
     m_wayPoint = m_pos;
     m_centrePos.Set(0,2,0);
     m_radius = 4.0f;
+
+	// DEBUG
+	if ( m_id.GetTeamId() == 0 ) { m_subversive = true; }
 }
 
 
@@ -193,6 +199,8 @@ bool Darwinian::Advance( Unit *_unit )
     {
         return true;
     }
+
+	if ( m_colourTimer > 0 ) { m_colourTimer -= SERVER_ADVANCE_PERIOD; }
 
     bool amIDead = Entity::Advance( _unit );
 
@@ -551,6 +559,8 @@ bool Darwinian::AdvanceCombat()
     bool soldier = m_id.GetTeamId() == 1 ||
                     g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 2;
 
+	soldier = true; // DEBUG
+
     if( soldier && !m_scared )
     {
 //        bool arrived = AdvanceToTargetPosition();
@@ -615,7 +625,14 @@ bool Darwinian::AdvanceCombat()
 
         if( soldier && (syncrand() % 10) == 0 )
         {
-            Attack( threat->m_pos + Vector3(0,2,0) );
+			if ( m_subversive )
+			{
+				Attack( threat->m_pos + Vector3(0,2,0), true );
+			}
+			else
+			{
+				Attack( threat->m_pos + Vector3(0,2,0) );
+			}
         }
 
 
@@ -1588,7 +1605,7 @@ bool Darwinian::SearchForOfficers()
     //
     // Red Darwinians don't respond to officers
 
-    if( m_id.GetTeamId() == 1 ) return false;
+    //if( m_id.GetTeamId() == 1 ) return false;
 
 
     START_PROFILE( g_app->m_profiler, "SearchOfficers" );
@@ -1617,38 +1634,41 @@ bool Darwinian::SearchForOfficers()
     // Build a list of nearby officers with GOTO orders set
     // Also find the nearest officer with FOLLOW orders set
 
-    Team *team = g_app->m_location->GetMyTeam();
+	LList<WorldObjectId> officers;
+	float nearest = 99999.9f;
+	WorldObjectId nearestId;
 
-    if( team )
-    {
-        LList<WorldObjectId> officers;
-        float nearest = 99999.9f;
-        WorldObjectId nearestId;
+	for ( int t = 0; t < NUM_TEAMS; t++ )
+	{
+		Team *team = &g_app->m_location->m_teams[t];
 
-        for( int i = 0; i < team->m_specials.Size(); ++i )
-        {
-            WorldObjectId id = *team->m_specials.GetPointer(i);
-            Entity *entity = g_app->m_location->GetEntity( id );
-            if( entity &&
-               !entity->m_dead &&
-                entity->m_type == Entity::TypeOfficer )
-            {
-                Officer *officer = (Officer *) entity;
-                float distance = ( officer->m_pos - m_pos ).Mag();
-                if( distance < DARWINIAN_SEARCHRANGE_OFFICERS &&
-                    officer->m_orders == Officer::OrderGoto )
-                {
-                    officers.PutData( id );
-                }
-                else if( officer->m_orders == Officer::OrderFollow &&
-                         distance > 50.0f && distance < nearest )
-                {
-                    nearest = distance;
-                    nearestId = id;
-                }
-            }
-        }
+		if( team && g_app->m_location->IsFriend(t,m_id.GetTeamId()) )
+		{
 
+			for( int i = 0; i < team->m_specials.Size(); ++i )
+			{
+				WorldObjectId id = *team->m_specials.GetPointer(i);
+				Entity *entity = g_app->m_location->GetEntity( id );
+				if( entity &&
+				   !entity->m_dead &&
+					entity->m_type == Entity::TypeOfficer )
+				{
+					Officer *officer = (Officer *) entity;
+					float distance = ( officer->m_pos - m_pos ).Mag();
+					if( distance < DARWINIAN_SEARCHRANGE_OFFICERS &&
+						officer->m_orders == Officer::OrderGoto )
+					{
+						officers.PutData( id );
+					}
+					else if( officer->m_orders == Officer::OrderFollow &&
+							 distance > 50.0f && distance < nearest )
+					{
+						nearest = distance;
+						nearestId = id;
+					}
+				}
+			}
+		}
 
         //
         // Select a GOTO officer randomly
@@ -2483,14 +2503,20 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         sprintf( chosenOuch, "sprites/darwinian_ouch%d.bmp", chosenIndex );
         SetTexture( chosenOuch );            
 	}
-    RGBAColour colour;
-    if( m_id.GetTeamId() >= 0 ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
-	if ( m_corrupted && frand() < 0.1 )
+
+    RGBAColour colour = RGBAColour(255,255,255);
+    if( m_id.GetTeamId() >= 0 && m_id.GetTeamId() < NUM_TEAMS ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
+	if ( m_corrupted && frand() < 0.025 )
 	{
 		int t = floor(frand(NUM_TEAMS));
 		colour = g_app->m_location->m_teams[ t ].m_colour;
 	}
-    Vector3 predictedPos = m_pos + m_vel * _predictionTime;;
+
+	if ( m_colourTimer > 0 && m_oldTeamId != 255 && m_oldTeamId != m_id.GetTeamId() )
+	{
+		if ( (int) (m_colourTimer*10.0) % 10 < 5 ) { colour = g_app->m_location->m_teams[ m_oldTeamId ].m_colour; }
+	}
+	Vector3 predictedPos = m_pos + m_vel * _predictionTime;;
     Vector3 entityUp = g_upVector;
 
     if( _highDetail > 0.0f )
@@ -2779,6 +2805,27 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
         }
     }
 
+	//
+	// Render subversion head gear
+    if( m_subversive )
+    {
+		if( m_id.GetTeamId() >= 0 && m_id.GetTeamId() < NUM_TEAMS ) colour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
+        int santaHatId = g_app->m_resource->GetTexture( "sprites/brainwaves.bmp" );
+        glBindTexture( GL_TEXTURE_2D, santaHatId );
+        //glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+        glColor4ubv(colour.GetData());
+        predictedPos += entityUp * 0.75f;
+        predictedPos += m_front * 0.01f;
+        entityRight *= 0.65f;
+        entityUp *= 0.65f;
+        glBegin(GL_QUADS);
+            glTexCoord2i(0, 1);     glVertex3fv( (predictedPos - entityRight + entityUp).GetData() );
+            glTexCoord2i(1, 1);     glVertex3fv( (predictedPos + entityRight + entityUp).GetData() );
+            glTexCoord2i(1, 0);     glVertex3fv( (predictedPos + entityRight).GetData() );
+            glTexCoord2i(0, 0);     glVertex3fv( (predictedPos - entityRight).GetData() );
+        glEnd();
+        glBindTexture( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "sprites/darwinian.bmp" ) );
+    }
     //
     // Render our box kite if we have one
 

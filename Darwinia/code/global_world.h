@@ -5,6 +5,7 @@
 #include "lib/fast_darray.h"
 #include "lib/sphere_renderer.h"
 #include "lib/matrix34.h"
+#include "globals.h"
 
 class FileWriter;
 class TextReader;
@@ -171,37 +172,54 @@ public:
         TypeArmour,
         TypeTaskManager,
         TypeEngineer,
+		TypeSpider,
         NumResearchItems
     };
 
-    int     m_researchLevel     [NumResearchItems];
-    int     m_researchProgress  [NumResearchItems];
-    int     m_currentResearch;
-    int     m_researchPoints;
-    float   m_researchTimer;
+    int     m_researchLevel     [NUM_TEAMS][NumResearchItems];
+    int     m_researchProgress  [NUM_TEAMS][NumResearchItems];
+    int     m_currentResearch	[NUM_TEAMS];
+    int     m_researchPoints	[NUM_TEAMS];
+    float   m_researchTimer		[NUM_TEAMS];
 
 public:
     GlobalResearch();
 
-    bool    HasResearch         ( int _type );
-    int     CurrentProgress     ( int _type );
-    int     CurrentLevel        ( int _type );
+	bool	HasResearch			( int _type )				 { return HasResearch(2,_type); };
+	int     CurrentProgress     ( int _type )				 { return CurrentProgress(2,_type); };
+	int     CurrentLevel	    ( int _type )				 { return CurrentLevel(2,_type); };
 
-    void    AddResearch         ( int _type );
-    void    SetCurrentProgress  ( int _type, int _progress );
+    bool    HasResearch         ( char _team, int _type );
+    int     CurrentProgress     ( char _team, int _type );
+    int     CurrentLevel        ( char _team, int _type );
 
-    void    IncreaseProgress    ( int _amount );
-    void    DecreaseProgress    ( int _amount );
+
+	void	AddResearch			( int _type )				 { AddResearch(2,_type); };
+	void	SetCurrentProgress	( int _type, int _progress ) { SetCurrentProgress(2,_type,_progress); };
+
+	void    AddResearch         ( char _team, int _type );
+    void    SetCurrentProgress  ( char _team, int _type, int _progress );
+
+
+	void	IncreaseProgress	( int _amount )				 { IncreaseProgress(2,_amount); };
+	void	DecreaseProgress	( int _amount )				 { DecreaseProgress(2,_amount); };
+
+	void    IncreaseProgress    ( char _team, int _amount );
+    void    DecreaseProgress    ( char _team, int _amount );
     int     RequiredProgress    ( int _level );             // Progress required to reach this level
 
     void    EvaluateLevel       ( int _type );
 
-    void    SetCurrentResearch  ( int _type );
-    void    GiveResearchPoints  ( int _numPoints );
+	void    SetCurrentResearch  ( int _type )				 { return SetCurrentResearch(2,_type); };
+	void    GiveResearchPoints  ( int _numPoints )			 { return GiveResearchPoints(2,_numPoints); };
+    void    SetCurrentResearch  ( char _team, int _type );
+    void    GiveResearchPoints  ( char _team, int _numPoints );
     void    AdvanceResearch     ();
 
     void    Write               ( FileWriter *_out );
     void    Read                ( TextReader *_in );
+    void    WriteTeam           ( FileWriter *_out );
+    void    ReadTeam            ( TextReader *_in );
 
     static char *GetTypeName    ( int _type );
     static int   GetType        ( char *_name );

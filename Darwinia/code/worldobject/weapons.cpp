@@ -1242,3 +1242,190 @@ void TurretShell::Render( float predictionTime )
     glEnable( GL_BLEND );
 }
 
+// ****************************************************************************
+//  Class SubversionBeam
+// ****************************************************************************
+
+void SubversionBeam::Initialise(float _lifeTime)
+{
+    m_life = _lifeTime;
+    m_harmless = false;
+    m_bounced = false;
+
+    g_app->m_soundSystem->TriggerOtherEvent( this, "Create", SoundSourceBlueprint::TypeLaser );
+}
+
+
+bool SubversionBeam::Advance()
+{
+    m_life -= SERVER_ADVANCE_PERIOD;
+    if( m_life <= 0.0f )
+    {
+        return true;
+    }
+
+    Vector3 oldPos = m_pos;
+    m_pos += m_vel * SERVER_ADVANCE_PERIOD;
+
+    //
+    // Detect collisions with landscape / buildings / people
+
+    float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z);
+
+    if (m_pos.y <= landHeight )
+    {
+        if( m_bounced )
+        {
+            // Second richochet, so die
+            return true;
+        }
+        else
+        {
+            // Richochet
+            Vector3 hitPoint;
+            Vector3 vel = m_vel;
+            vel.Normalise();
+            g_app->m_location->m_landscape.RayHit( oldPos, vel, &hitPoint );
+            float distanceTravelled = (hitPoint - oldPos).Mag();
+            float distanceTotal = (m_vel * SERVER_ADVANCE_PERIOD).Mag();
+
+            Vector3 normal = g_app->m_location->m_landscape.m_normalMap->GetValue(hitPoint.x, hitPoint.z);
+            Vector3 incomingVel = m_vel * -1.0f;
+            float dotProd = normal * incomingVel;
+            m_vel = 2.0f * dotProd * normal - incomingVel;
+
+            m_pos = hitPoint;
+            Vector3 distanceRemaining = m_vel;
+            distanceRemaining.SetLength( distanceTotal - distanceTravelled );
+
+            m_pos += distanceRemaining;
+            g_app->m_soundSystem->TriggerOtherEvent( this, "Richochet", SoundSourceBlueprint::TypeLaser );
+
+            m_bounced = true;
+        }
+    }
+    else if ( m_pos.x < 0 || m_pos.x > g_app->m_location->m_landscape.GetWorldSizeX() ||
+              m_pos.z < 0 || m_pos.z > g_app->m_location->m_landscape.GetWorldSizeZ() )
+    {
+        // Outside game world
+        return true;
+    }
+    else
+    {
+        //
+        // Detect collisions with buildings
+
+        Vector3 rayDir = m_vel;
+        rayDir.Normalise();
+        Vector3 hitPos(0,0,0);
+        Vector3 hitNorm(0,0,0);
+
+        LList<int> *nearbyBuildings = g_app->m_location->m_obstructionGrid->GetBuildings( m_pos.x, m_pos.z );
+        for( int i = 0; i < nearbyBuildings->Size(); ++i )
+        {
+            Building *building = g_app->m_location->GetBuilding( nearbyBuildings->GetData(i) );
+            if( building->DoesRayHit( m_pos, rayDir, (m_vel * SERVER_ADVANCE_PERIOD).Mag(), &hitPos, &hitNorm ) )
+            {
+                Vector3 vel( -m_vel/15.0f );
+                vel.x += sfrand(10.0f);
+                vel.y += sfrand(10.0f);
+                vel.z += sfrand(10.0f);
+                g_app->m_particleSystem->CreateParticle( m_pos, vel, Particle::TypeRocketTrail );
+                g_app->m_soundSystem->TriggerOtherEvent( this, "HitBuilding", SoundSourceBlueprint::TypeLaser );
+                return true;
+            }
+        }
+
+
+        //
+        // Detect collisions with entities
+
+        if( !m_harmless )
+        {
+		    Vector3 halfDelta = m_vel * (SERVER_ADVANCE_PERIOD * 0.5f);
+		    Vector3 rayStart = m_pos - halfDelta;
+		    Vector3 rayEnd = m_pos + halfDelta;
+            int numFound;
+            float maxRadius = halfDelta.Mag() * 2.0f;
+            WorldObjectId *ids = g_app->m_location->m_entityGrid->GetEnemies( m_pos.x, m_pos.z, maxRadius, &numFound, m_fromTeamId );
+            for (int i = 0; i < numFound; ++i)
+            {
+                WorldObjectId id = ids[i];
+                WorldObject *wobj = g_app->m_location->GetEntity(id);
+			    Entity *entity = (Entity *) wobj;
+
+			    if( PointSegDist2D(Vector2(entity->m_pos), Vector2(rayStart), Vector2(rayEnd)) < 10.0f )
+                {
+                    g_app->m_soundSystem->TriggerOtherEvent( this, "HitEntity", SoundSourceBlueprint::TypeLaser );
+					if( entity->m_type == Entity::TypeDarwinian )
+					{
+                        WorldObjectId id = g_app->m_location->SpawnEntities( entity->m_pos, m_fromTeamId, -1, Entity::TypeDarwinian, 1, entity->m_vel, 0.0 );            
+                        entity->m_dead = true;
+
+						Darwinian *victim = (Darwinian *) entity;
+                        Darwinian *d = (Darwinian *)g_app->m_location->GetEntitySafe( id, Entity::TypeDarwinian );
+					
+						d->m_corrupted = victim->m_corrupted;
+						d->m_soulless = victim->m_soulless;
+						d->m_colourTimer = 4;
+						d->m_oldTeamId = victim->m_id.GetTeamId();
+
+                        m_harmless = true;
+                    }
+                    return false;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+
+void SubversionBeam::Render( float predictionTime )
+{
+    Vector3 predictedPos = m_pos + m_vel * predictionTime;
+
+    //
+    // No richochet occurred recently
+	Vector3 lengthVector = m_vel;
+	lengthVector.SetLength(10.0f);
+    Vector3 fromPos = predictedPos;
+    Vector3 toPos = predictedPos - lengthVector;
+
+    Vector3 midPoint        = fromPos + (toPos - fromPos)/2.0f;
+    Vector3 camToMidPoint   = g_app->m_camera->GetPos() - midPoint;
+    float   camDistSqd      = camToMidPoint.MagSquared();
+    Vector3 rightAngle      = (camToMidPoint ^ ( midPoint - toPos )).Normalise();
+
+    rightAngle *= 0.8f;
+
+    glEnd();
+    glBindTexture	(GL_TEXTURE_2D, g_app->m_resource->GetTexture("textures/subversion.bmp"));
+    glBegin( GL_QUADS );
+    rightAngle *= 2.0;
+	
+    if( m_fromTeamId == -1 || m_fromTeamId == 255 ) return;
+
+	RGBAColour const &colour = g_app->m_location->m_teams[ m_fromTeamId ].m_colour;
+    glColor4ub( colour.r, colour.g, colour.b, 255 );
+
+    glBegin( GL_QUADS );
+        for( int i = 0; i < 5; ++i )
+        {
+            glTexCoord2i(0,0);      glVertex3fv( (fromPos - rightAngle).GetData() );
+            glTexCoord2i(0,1);      glVertex3fv( (fromPos + rightAngle).GetData() );
+            glTexCoord2i(1,1);      glVertex3fv( (toPos + rightAngle).GetData() );
+            glTexCoord2i(1,0);      glVertex3fv( (toPos - rightAngle).GetData() );
+        }
+    glEnd();
+
+    if( camDistSqd < 200.0f )
+    {
+        g_app->m_camera->CreateCameraShake( 0.5f );
+    }
+
+    glEnd();
+    glBindTexture	(GL_TEXTURE_2D, g_app->m_resource->GetTexture("textures/laser.bmp", false));
+    glBegin( GL_QUADS );
+}

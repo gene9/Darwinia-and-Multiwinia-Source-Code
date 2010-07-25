@@ -28,6 +28,7 @@
 #include "worldobject/switch.h"
 #include "worldobject/laserfence.h"
 #include "worldobject/generichub.h"
+#include "worldobject/spider.h"
 
 #include "app.h"
 #include "camera.h"
@@ -1042,7 +1043,7 @@ void LevelFile::WriteTeamColours(FileWriter *_out)
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
 		    _out->printf( "\t  %d   %d %d %d\n",
-				    i, m_teamColours[i].r, m_teamColours[i].g, m_teamColours[i].b);
+				    i, g_app->m_location->m_teams[i].m_colour.r, g_app->m_location->m_teams[i].m_colour.g, g_app->m_location->m_teams[i].m_colour.b);
         }
     }
 
@@ -1706,6 +1707,38 @@ void LevelFile::GenerateInstantUnits()
                             unit->m_waypointZ = armour->m_wayPoint.z;
                             unit->m_routeId = armour->m_routeId;
                             unit->m_routeWaypointId = armour->m_routeWayPointId;
+                            m_instantUnits.PutData( unit );
+                        }
+                    }
+                    else if( entity->m_type == Entity::TypeSpider )
+                    {
+                        bool taskControlled = false;
+                        for( int i = 0; i < g_app->m_taskManager->m_tasks.Size(); ++i )
+                        {
+                            Task *task = g_app->m_taskManager->m_tasks[i];
+                            if( task->m_type == GlobalResearch::TypeSpider &&
+                                task->m_objId == entity->m_id )
+                            {
+                                taskControlled = true;
+                                break;
+                            }
+                        }
+                        if( !taskControlled )
+                        {
+                            Spider *spider = (Spider *) entity;
+                            InstantUnit *unit = new InstantUnit();
+                            unit->m_type = Entity::TypeSpider;
+                            unit->m_teamId = t;
+                            unit->m_posX = spider->m_pos.x;
+                            unit->m_posZ = spider->m_pos.z;
+                            unit->m_spread = 0;
+                            unit->m_number = 1;
+                            unit->m_inAUnit = false;
+                            unit->m_state = spider->m_state;
+                            unit->m_waypointX = spider->m_targetPos.x;
+                            unit->m_waypointZ = spider->m_targetPos.z;
+                            unit->m_routeId = spider->m_routeId;
+                            unit->m_routeWaypointId = spider->m_routeWayPointId;
                             m_instantUnits.PutData( unit );
                         }
                     }

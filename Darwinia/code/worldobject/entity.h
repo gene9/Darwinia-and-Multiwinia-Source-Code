@@ -90,7 +90,7 @@ public:
     virtual void AdvanceInWater     ( Unit *_unit );
 
     virtual void ChangeHealth       ( int amount );
-    virtual void Attack             ( Vector3 const &pos );
+    virtual void Attack             ( Vector3 const &pos, bool _subversion = false );
 
     virtual bool IsInView ();
 

@@ -4789,6 +4789,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\code\worldobject\controlstation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\controlstation.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\code\worldobject\controltower.cpp"
 					>
 					<FileConfiguration

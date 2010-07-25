@@ -81,6 +81,7 @@ public:
         TypeDynamicHub,
         TypeDynamicNode,
         TypeFeedingTube,
+		TypeControlStation,
 		NumBuildingTypes
     };
 

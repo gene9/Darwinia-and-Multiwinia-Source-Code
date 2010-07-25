@@ -52,7 +52,7 @@ protected:
     bool SearchForControlTowers();
     bool SearchForBridges();
     bool SearchForResearchItems();
-    bool SearchForIncubator();
+    bool SearchForIncubator( bool _includeAllies = false );
 
     bool AdvanceIdle            ();
     bool AdvanceToWaypoint      ();

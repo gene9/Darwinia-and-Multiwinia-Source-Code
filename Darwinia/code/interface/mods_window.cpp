@@ -176,7 +176,11 @@ class NewModButton : public DarwiniaButton
         g_app->m_globalWorld = new GlobalWorld();
         for( int i = 0; i < GlobalResearch::NumResearchItems; ++i )
         {
-            g_app->m_globalWorld->m_research->m_researchLevel[i] = 2;
+			for ( int j = 0; j < NUM_TEAMS; j++ )
+			{
+				g_app->m_globalWorld->m_research->m_researchLevel[j][i] = 0;
+			}
+			g_app->m_globalWorld->m_research->m_researchLevel[2][i] = 2;
         }
         g_app->m_globalWorld->SaveGame( "game.txt" );
 

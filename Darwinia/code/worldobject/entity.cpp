@@ -180,7 +180,7 @@ void Entity::ChangeHealth( int amount )
 }
 
 
-void Entity::Attack( Vector3 const &pos )
+void Entity::Attack( Vector3 const &pos, bool _subversion )
 {
     if( m_reloading == 0.0f )
     {
@@ -190,7 +190,11 @@ void Entity::Attack( Vector3 const &pos )
 		Vector3 fromPos = m_pos;
 		fromPos.y += 2.0f;
 		Vector3 velocity = (toPos - fromPos).SetLength(200.0f);
-		g_app->m_location->FireLaser( fromPos, velocity, m_id.GetTeamId() );
+		if ( _subversion ) {
+			g_app->m_location->FireSubversion( fromPos, velocity, m_id.GetTeamId() );
+		} else {
+			g_app->m_location->FireLaser( fromPos, velocity, m_id.GetTeamId() );
+		}
 
         m_reloading = m_stats[StatRate];
         m_justFired = true;

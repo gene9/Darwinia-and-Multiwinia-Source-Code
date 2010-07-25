@@ -38,10 +38,13 @@ public:
 		StateIdle,
         StateEggLaying,
         StateAttack,
-        StatePouncing
+        StatePouncing,
+		StateMoving
 	};
 
 	int				m_state;
+	Vector3			m_targetPos;
+    Vector3         m_pounceTarget;
 
 protected:
 	SpiderParameters m_parameters[3];
@@ -53,7 +56,6 @@ protected:
 
 	float			m_speed;
 	float			m_targetHoverHeight;
-	Vector3			m_targetPos;
 	Vector3			m_up;
 
 	float			m_pounceStartTime;
@@ -68,7 +70,6 @@ protected:
 protected:          // AI stuff
 
     float           m_retargetTimer;
-    Vector3         m_pounceTarget;
     int             m_spiritId;
 
 	bool	SearchForRandomPos();
@@ -79,6 +80,7 @@ protected:          // AI stuff
     bool    AdvanceEggLaying();
     bool    AdvanceAttack();
     bool    AdvancePouncing();
+    bool    AdvanceMoving();
 
     bool    FaceTarget();
 	bool	AdvanceToTarget();

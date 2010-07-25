@@ -61,6 +61,7 @@ void Sepulveda::LoadAvatar ( char *_imageName )
 		sprintf( modFileName, "%smods/%s/%s", g_app->GetProfileDirectory(), g_app->m_resource->GetModName(), filename );
     }
 	m_picsFound = i-1;
+	//DarwiniaReleaseAssert(m_picsFound == 0, "Unable to load avatar: %s", _imageName );
 }
 
 Sepulveda::Sepulveda()
@@ -917,6 +918,8 @@ void Sepulveda::RenderTextBoxTaskManagerMode()
 
 void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha )
 {
+	if ( m_picsFound == 0 ) { LoadAvatar("sepulveda"); }
+
     if( _alpha <= 0.0f ) return;
 
     char filename[256];

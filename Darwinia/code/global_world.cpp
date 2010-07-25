@@ -25,6 +25,7 @@
 #include "camera.h"
 #include "global_internet.h"
 #include "global_world.h"
+#include "globals.h"
 #include "landscape.h"
 #include "level_file.h"
 #include "location.h"
@@ -532,44 +533,48 @@ void GlobalEvent::Write(FileWriter *_out)
 // ****************************************************************************
 
 GlobalResearch::GlobalResearch()
-:   m_researchPoints(0),
-    m_researchTimer(0.0f)
 {
-    for(int i = 0; i < NumResearchItems; ++i )
-    {
-        m_researchLevel[i] = 0;
-        m_researchProgress[i] = 0;
-    }
+	for ( int j = 0; j < NUM_TEAMS; j++ )
+	{
+		for(int i = 0; i < NumResearchItems; ++i )
+		{
+			m_researchLevel[j][i] = 0;
+			m_researchProgress[j][i] = 0;
+		}
+		m_currentResearch[j] = TypeSquad;
+		m_researchPoints[j] = 0;
+		m_researchTimer[j] = 0.0;
+	}
 
-    m_currentResearch = TypeSquad;
+    //m_currentResearch = TypeSquad;
 }
 
 
-void GlobalResearch::AddResearch( int _type )
+void GlobalResearch::AddResearch( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    if( m_researchLevel[_type] < 1 )
+    if( m_researchLevel[_team][_type] < 1 )
     {
-        m_researchProgress[_type] = RequiredProgress(0);
+        m_researchProgress[_team][_type] = RequiredProgress(0);
         EvaluateLevel( _type );
     }
 }
 
 
-bool GlobalResearch::HasResearch( int _type )
+bool GlobalResearch::HasResearch( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    return( m_researchLevel[_type] > 0 );
+    return( m_researchLevel[_team][_type] > 0 );
 }
 
 
-int GlobalResearch::CurrentProgress ( int _type )
+int GlobalResearch::CurrentProgress ( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    return m_researchProgress[_type];
+    return m_researchProgress[_team][_type];
 }
 
 
@@ -585,118 +590,132 @@ int GlobalResearch::RequiredProgress( int _level )
 
 void GlobalResearch::EvaluateLevel( int _type )
 {
-    int currentLevel = m_researchLevel[_type];
+	for ( int j = 0; j < NUM_TEAMS; j++ )
+	{
+		int currentLevel = m_researchLevel[j][_type];
 
-    if( currentLevel < 4 )
-    {
-        int newLevel = 0;
+		if( currentLevel < 4 )
+		{
+			int newLevel = 0;
 
-        int requiredProgress = RequiredProgress(currentLevel);
+			int requiredProgress = RequiredProgress(currentLevel);
 
-        if( m_researchProgress[_type] >= requiredProgress )
-        {
-            // Level change has just occurred
-            m_researchLevel[_type]++;
-            m_researchProgress[_type] -= requiredProgress;
+			if( m_researchProgress[j][_type] >= requiredProgress )
+			{
+				// Level change has just occurred
+				m_researchLevel[j][_type]++;
+				m_researchProgress[j][_type] -= requiredProgress;
 
-            char sepStringId[256];
-            sprintf( sepStringId, "research_%s_v%d", GetTypeName(_type), m_researchLevel[_type] );
-            strlwr( sepStringId );
+				if ( j == 2 )
+				{
+					char sepStringId[256];
+					sprintf( sepStringId, "research_%s_v%d", GetTypeName(_type), m_researchLevel[_type] );
+					strlwr( sepStringId );
 
-            if( ISLANGUAGEPHRASE( sepStringId ) )
-            {
-                g_app->m_sepulveda->Say( sepStringId );
-            }
+					if( ISLANGUAGEPHRASE( sepStringId ) )
+					{
+						g_app->m_sepulveda->Say( sepStringId );
+					}
 
-            if( currentLevel > 0 )
-            {
-                // This action should only go off if a player UPGRADES an existing research item
-                // Not if he finds a new one
-                g_app->m_helpSystem->PlayerDoneAction( HelpSystem::ResearchUpgrade );
-                g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, _type, 4.0f );
-            }
-        }
+					if( currentLevel > 0 )
+					{
+						// This action should only go off if a player UPGRADES an existing research item
+						// Not if he finds a new one
+						g_app->m_helpSystem->PlayerDoneAction( HelpSystem::ResearchUpgrade );
+						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, _type, 4.0f );
+					}
+				}
+			}
+		}
     }
 }
 
 
-void GlobalResearch::SetCurrentResearch( int _type )
+void GlobalResearch::SetCurrentResearch( char _team, int _type )
 {
-    int currentLevel = m_researchLevel[_type];
+    int currentLevel = m_researchLevel[_team][_type];
 
     if( currentLevel == 4 )
     {
-        // Fully researched already
-        g_app->m_sepulveda->Say( "research_nomorepossible" );
+		if ( _team == 2 ) {
+	        // Fully researched already
+		    g_app->m_sepulveda->Say( "research_nomorepossible" );
+		}
         return;
     }
 
 
-    if( m_currentResearch != _type )
+    if( m_currentResearch[_team] != _type )
     {
-        m_currentResearch = _type;
+        m_currentResearch[_team] = _type;
 
-        char sepStringId[256];
-        sprintf( sepStringId, "research_%s", GetTypeName(_type) );
-        strlwr( sepStringId );
+		if ( _team == 2 )
+		{
+			char sepStringId[256];
+			sprintf( sepStringId, "research_%s", GetTypeName(_type) );
+			strlwr( sepStringId );
 
-        if( ISLANGUAGEPHRASE( sepStringId ) )
-        {
-            g_app->m_sepulveda->Say( sepStringId );
-        }
+			if( ISLANGUAGEPHRASE( sepStringId ) )
+			{
+				g_app->m_sepulveda->Say( sepStringId );
+			}
+		}
     }
 }
 
 
-void GlobalResearch::GiveResearchPoints( int _numPoints )
+void GlobalResearch::GiveResearchPoints( char _team, int _numPoints )
 {
-    m_researchPoints += _numPoints;
+    m_researchPoints[_team] += _numPoints;
 }
 
 
 void GlobalResearch::AdvanceResearch()
 {
-    if( m_researchPoints > 0 && CurrentLevel(m_currentResearch) < 4 )
-    {
-        m_researchTimer -= g_advanceTime;
-        if( m_researchTimer <= 0.0f )
-        {
-            m_researchTimer = GLOBALRESEARCH_TIMEPERPOINT;
-            IncreaseProgress( 1 );
-            --m_researchPoints;
-        }
-    }
+	for ( int j = 0; j < NUM_TEAMS; j++ )
+	{
+		if( m_researchPoints[j] > 0 && CurrentLevel(j,m_currentResearch[j]) < 4 )
+		{
+			m_researchTimer[j] -= g_advanceTime;
+			if( m_researchTimer[j] <= 0.0f )
+			{
+				m_researchTimer[j] = GLOBALRESEARCH_TIMEPERPOINT;
+				IncreaseProgress(j, 1 );
+				--m_researchPoints[j];
+			}
+		}
+	}
 }
 
 
-void GlobalResearch::SetCurrentProgress( int _type, int _progress )
+void GlobalResearch::SetCurrentProgress( char _team, int _type, int _progress )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    m_researchProgress[_type] = _progress;
+    m_researchProgress[_team][_type] = _progress;
     EvaluateLevel( _type );
 }
 
 
-void GlobalResearch::IncreaseProgress  ( int _amount )
+void GlobalResearch::IncreaseProgress  ( char _team, int _amount )
 {
-    m_researchProgress[m_currentResearch] += _amount;
-    EvaluateLevel( m_currentResearch );
+    m_researchProgress[_team][m_currentResearch[_team]] += _amount;
+    EvaluateLevel( m_currentResearch[_team] );
 }
 
 
-void GlobalResearch::DecreaseProgress( int _amount )
+void GlobalResearch::DecreaseProgress( char _team, int _amount )
 {
-    m_researchProgress[m_currentResearch] -= _amount;
-    EvaluateLevel( m_currentResearch );
+    m_researchProgress[_team][m_currentResearch[_team]] -= _amount;
+    EvaluateLevel( m_currentResearch[_team] );
 }
 
 
-int GlobalResearch::CurrentLevel( int _type )
+int GlobalResearch::CurrentLevel( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    return m_researchLevel[_type];
+    return m_researchLevel[_team][_type];
 }
 
 
@@ -709,11 +728,30 @@ void GlobalResearch::Write(FileWriter *_out)
         _out->printf( "\tResearch %s %d %d\n", GetTypeName(i), CurrentProgress(i), CurrentLevel(i) );
     }
 
-    _out->printf( "\tCurrentResearch %s\n", GetTypeName(m_currentResearch) );
-    _out->printf( "\tCurrentPoints %d\n", m_researchPoints );
+    _out->printf( "\tCurrentResearch %s\n", GetTypeName(m_currentResearch[2]) );
+    _out->printf( "\tCurrentPoints %d\n", m_researchPoints[2] );
     _out->printf( "Research_EndDefinition\n\n" );
 }
 
+void GlobalResearch::WriteTeam(FileWriter *_out)
+{
+    _out->printf( "TeamResearch_StartDefinition\n" );
+
+    for( int i = 0; i < NumResearchItems; ++i )
+    {
+		for ( int j = 0; j < NUM_TEAMS; j++ )
+		{
+			_out->printf( "\tResearch %d %s %d %d\n", j, GetTypeName(i), CurrentProgress(j,i), CurrentLevel(j,i) );
+		}
+    }
+	
+	for ( int j = 0; j < NUM_TEAMS; j++ )
+	{
+		_out->printf( "\tCurrentResearch %d %s\n", j, GetTypeName(m_currentResearch[j]) );
+		_out->printf( "\tCurrentPoints %d %d\n", j, m_researchPoints[j] );
+	}
+    _out->printf( "TeamResearch_EndDefinition\n\n" );
+}
 
 void GlobalResearch::Read( TextReader *_in )
 {
@@ -733,19 +771,19 @@ void GlobalResearch::Read( TextReader *_in )
             int level = atoi( _in->GetNextToken() );
 
             int researchType = GetType( type );
-            m_researchLevel[researchType] = level;
+            m_researchLevel[2][researchType] = level;
             SetCurrentProgress( researchType, progress );
         }
         else if( stricmp(word, "CurrentResearch" ) == 0 )
         {
             char *type = _in->GetNextToken();
             int researchType = GetType( type );
-            m_currentResearch = researchType;
+            m_currentResearch[2] = researchType;
         }
         else if( stricmp(word, "CurrentPoints" ) == 0 )
         {
             int points = atoi( _in->GetNextToken() );
-            m_researchPoints = points;
+            m_researchPoints[2] = points;
         }
         else
         {
@@ -753,7 +791,47 @@ void GlobalResearch::Read( TextReader *_in )
         }
     }
 }
+void GlobalResearch::ReadTeam( TextReader *_in )
+{
+    while(_in->ReadLine())
+    {
+        if(!_in->TokenAvailable()) continue;
+        char *word = _in->GetNextToken();
 
+        if( stricmp(word, "teamresearch_enddefinition") == 0)
+        {
+            return;
+        }
+        else if( stricmp(word, "Research" ) == 0 )
+        {
+			int team = atoi(_in->GetNextToken());
+            char *type = _in->GetNextToken();
+            int progress = atoi( _in->GetNextToken() );
+            int level = atoi( _in->GetNextToken() );
+
+            int researchType = GetType( type );
+            m_researchLevel[team][researchType] = level;
+            SetCurrentProgress( team, researchType, progress );
+        }
+        else if( stricmp(word, "CurrentResearch" ) == 0 )
+        {
+			int team = atoi(_in->GetNextToken());
+            char *type = _in->GetNextToken();
+            int researchType = GetType( type );
+            m_currentResearch[team]= researchType;
+        }
+        else if( stricmp(word, "CurrentPoints" ) == 0 )
+        {
+			int team = atoi(_in->GetNextToken());
+            int points = atoi( _in->GetNextToken() );
+            m_researchPoints[team] = points;
+        }
+        else
+        {
+            DarwiniaReleaseAssert( false, "Error loading GlobalResearch" );
+        }
+    }
+}
 char *GlobalResearch::GetTypeName( int _type )
 {
     char *names[] = {
@@ -767,7 +845,8 @@ char *GlobalResearch::GetTypeName( int _type )
                         "AirStrike",
                         "Armour",
                         "TaskManager",
-                        "Engineer"
+                        "Engineer",
+						"Spider"
                     };
 
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
@@ -1938,6 +2017,10 @@ void GlobalWorld::LoadGame( char *_filename )
             {
                 m_research->Read( in );
             }
+            else if (stricmp("teamresearch_startdefinition", word) == 0)
+            {
+                m_research->ReadTeam( in );
+            }
             else if (stricmp("tutorial_startdefinition", word) == 0)
             {
                 ParseTutorial( in );
@@ -2049,6 +2132,7 @@ void GlobalWorld::SaveGame( char *_filename )
     WriteLocations(out);
     WriteBuildings(out);
     m_research->Write(out);
+    m_research->WriteTeam(out);
     WriteTutorial(out);
     WriteEvents(out);
 	WriteAvatar(out);

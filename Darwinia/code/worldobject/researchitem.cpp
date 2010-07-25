@@ -95,22 +95,28 @@ bool ResearchItem::Advance()
         Matrix34 mat( m_front, m_up, m_pos );
         g_explosionManager.AddExplosion( m_shape, mat, 1.0f );
 
-        int existingLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_researchType );
 
-        g_app->m_globalWorld->m_research->AddResearch( m_researchType );
-        g_app->m_globalWorld->m_research->m_researchLevel[ m_researchType ] = m_level;
+		if ( m_id.GetTeamId() > 0 &&  m_id.GetTeamId() < NUM_TEAMS )
+		{
+			int existingLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), m_researchType );
 
-        g_app->m_soundSystem->TriggerBuildingEvent( this, "AquireResearch" );
+			g_app->m_globalWorld->m_research->AddResearch( m_id.GetTeamId(), m_researchType );
+	        g_app->m_globalWorld->m_research->m_researchLevel[m_id.GetTeamId()][ m_researchType ] = m_level;
 
-        if( existingLevel == 0 )
-        {
-            g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f );
-        }
-        else
-        {
-            g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f );
-        }
+			g_app->m_soundSystem->TriggerBuildingEvent( this, "AquireResearch" );
 
+			if ( m_id.GetTeamId() == 2 )
+			{
+				if( existingLevel == 0 )
+				{
+					g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f );
+				}
+				else
+				{
+					g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f );
+				}
+			}
+		}
         return true;
     }
 
@@ -124,10 +130,15 @@ bool ResearchItem::NeedsReprogram()
 }
 
 
-bool ResearchItem::Reprogram()
+bool ResearchItem::Reprogram( char _teamId )
 {
+	// If someone else takes over reprogramming, reset the progress
+	if ( _teamId != m_id.GetTeamId() )
+	{
+		m_id.SetTeamId(_teamId);
+		m_reprogrammed = 100.0f;
+	}
     m_reprogrammed -= SERVER_ADVANCE_PERIOD * 3.0f;
-
     return( m_reprogrammed <= 0.0f );
 }
 

@@ -29,7 +29,7 @@ public:
     bool RenderPixelEffect	( float _predictionTime );
 
     bool NeedsReprogram     ();
-    bool Reprogram          ();
+    bool Reprogram          ( char _teamId );
 
     void Read				( TextReader *_in, bool _dynamic );
     void Write				( FileWriter *_out );
