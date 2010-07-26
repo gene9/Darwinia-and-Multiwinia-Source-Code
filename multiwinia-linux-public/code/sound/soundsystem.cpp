@@ -35,8 +35,11 @@
 #include "sound/sound_library_3d_xaudio.h"
 #endif
 
-#include "sound/sound_library_3d_software.h"
+#ifdef HAVE_OPENAL
+#include "sound/sound_library_3d_openal.h"
+#endif
 
+#include "sound/sound_library_3d_software.h"
 
 #include "app.h"
 #include "main.h"
@@ -462,8 +465,23 @@ void SoundSystem::RestartSoundLibraryInternal()
 		}
 	}
 #else
-	g_soundLibrary2d = new SoundLibrary2dSDL;
-	g_soundLibrary3d = new SoundLibrary3dSoftware();
+	if (stricmp(libName, "none") == 0)
+	{
+		g_soundLibrary2d = new SoundLibrary2dNoSound;
+		g_soundLibrary3d = new SoundLibrary3dNoSound;
+	}
+#ifdef HAVE_OPENAL
+	else if (stricmp(libName, "openal") == 0)
+	{
+		g_soundLibrary2d = new SoundLibrary2dNoSound;
+		g_soundLibrary3d = new SoundLibrary3dOpenAL();
+	}
+#endif
+	else
+	{
+		g_soundLibrary2d = new SoundLibrary2dSDL;
+		g_soundLibrary3d = new SoundLibrary3dSoftware();
+	}
 #endif	
 	
     g_soundLibrary3d->SetMasterVolume( volume );
