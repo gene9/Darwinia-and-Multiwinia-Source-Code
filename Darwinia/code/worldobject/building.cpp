@@ -67,6 +67,7 @@
 #include "worldobject/generichub.h"
 #include "worldobject/feedingtube.h"
 #include "worldobject/controlstation.h"
+#include "worldobject/researchcrate.h"
 
 
 
@@ -814,11 +815,13 @@ Building *Building::CreateBuilding( int _type )
         case TypeFeedingTube:           building = new FeedingTube();           break;
         case TypeControlStation:        building = new ControlStation();        break;
         case TypeSpawnPointRandom:      building = new SpawnPointRandom();      break;
+		case TypeResearchCrate:         building = new ResearchCrate();         break;
     };
 
 
     if( _type == TypeRadarDish ||
         _type == TypeControlTower ||
+        _type == TypeControlStation ||
         _type == TypeTrunkPort ||
         _type == TypeIncubator ||
         _type == TypeDynamicHub ||
@@ -903,7 +906,8 @@ char *Building::GetTypeName( int _type )
                                         "DynamicNode",
                                         "FeedingTube",
 										"ControlStation",
-										"SpawnPointRandom"
+										"SpawnPointRandom",
+										"ResearchCrate"
                                     };
 
     if( _type >= 0 && _type < NumBuildingTypes )

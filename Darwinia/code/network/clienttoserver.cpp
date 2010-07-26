@@ -526,7 +526,7 @@ void ClientToServer::ProcessServerUpdates( ServerToClientLetter *letter )
             {
                 Building *building = g_app->m_location->GetBuilding( update->m_buildingId );
                 if( building &&
-                    building->m_id.GetTeamId() == update->m_teamId &&
+                    g_app->m_location->IsFriend(building->m_id.GetTeamId(),update->m_teamId) &&
                     building->m_type == Building::TypeRadarDish )
                 {
                     RadarDish *radarDish = (RadarDish *) building;

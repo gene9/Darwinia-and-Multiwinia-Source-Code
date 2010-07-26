@@ -1,0 +1,66 @@
+Locations_StartDefinition
+	# Id  Avail                   mapFile                    missionFile
+	# ==================================================================
+	   0    1             map_corruption.txt                   mission_corruption.txt
+	   1    1                   map_nest.txt                         mission_nest.txt
+	   2    1             map_subversion.txt                   mission_subversion.txt
+Locations_EndDefinition
+
+Buildings_StartDefinition
+	# Id  teamId  locId   type   link  online
+	# =======================================
+Buildings_EndDefinition
+
+TeamResearch_StartDefinition
+	Research 0 Darwinian 0 2
+	Research 1 Darwinian 0 2
+	Research 2 Darwinian 0 3
+	Research 3 Darwinian 0 2
+	Research 4 Darwinian 0 2
+	Research 5 Darwinian 0 2
+	Research 6 Darwinian 0 2
+	Research 7 Darwinian 0 2
+	Research 8 Darwinian 0 2
+	Research 9 Darwinian 0 2
+	Research 2 Officer 0 2
+	Research 0 Laser 0 1
+	Research 1 Laser 0 1
+	Research 2 Laser 0 2
+	Research 3 Laser 0 1
+	Research 4 Laser 0 1
+	Research 5 Laser 0 1
+	Research 6 Laser 0 1
+	Research 7 Laser 0 1
+	Research 8 Laser 0 1
+	Research 9 Laser 0 1
+	CurrentResearch 0 Laser
+	CurrentPoints 0 0
+	CurrentResearch 1 Laser
+	CurrentPoints 1 0
+	CurrentResearch 2 Laser
+	CurrentPoints 2 0
+	CurrentResearch 3 Laser
+	CurrentPoints 3 0
+	CurrentResearch 4 Laser
+	CurrentPoints 4 0
+	CurrentResearch 5 Laser
+	CurrentPoints 5 0
+	CurrentResearch 6 Laser
+	CurrentPoints 6 0
+	CurrentResearch 7 Laser
+	CurrentPoints 7 0
+	CurrentResearch 8 Laser
+	CurrentPoints 8 0
+	CurrentResearch 9 Laser
+	CurrentPoints 9 0
+TeamResearch_EndDefinition
+
+Events_StartDefinition
+Events_EndDefinition
+
+Avatar_StartDefinition
+	# Current Avatar
+	# ==================================================================
+	sepulveda
+Avatar_EndDefinition
+

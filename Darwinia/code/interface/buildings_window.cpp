@@ -28,6 +28,7 @@
 #include "worldobject/rocket.h"
 #include "worldobject/generichub.h"
 #include "worldobject/switch.h"
+#include "worldobject/researchcrate.h"
 
 #include "app.h"
 #include "camera.h"
@@ -385,6 +386,18 @@ void BuildingEditWindow::Create()
         menu->RegisterInt( &((ResearchItem *)building)->m_researchType );
         RegisterButton( menu );
         CreateValueControl( LANGUAGEPHRASE("editor_level"), InputField::TypeInt, &((ResearchItem *)building)->m_level, y+=buttonPitch, 1, 0, 4 );
+    }
+    else if(building->m_type == Building::TypeResearchCrate )
+    {
+        DropDownMenu *menu = new DropDownMenu(true);
+        menu->SetShortProperties( LANGUAGEPHRASE("editor_research"), 10, y+=buttonPitch, m_w-20 );
+        for( int i = 0; i < GlobalResearch::NumResearchItems; ++i )
+        {
+            menu->AddOption( GlobalResearch::GetTypeNameTranslated( i ), i );
+        }
+        menu->RegisterInt( &((ResearchCrate *)building)->m_researchType );
+        RegisterButton( menu );
+        CreateValueControl( LANGUAGEPHRASE("editor_level"), InputField::TypeInt, &((ResearchCrate *)building)->m_level, y+=buttonPitch, 1, 0, 4 );
     }
     else if( building->m_type == Building::TypeTriffid )
     {

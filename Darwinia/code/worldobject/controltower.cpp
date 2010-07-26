@@ -297,7 +297,7 @@ void ControlTower::RenderAlphas ( float _predictionTime )
             if( g_app->m_location->m_buildings.ValidIndex(i) )
             {
                 Building *building = g_app->m_location->m_buildings[i];
-                if( building && building->m_type == TypeControlTower )
+                if( building && (building->m_type == TypeControlTower || building->m_type == TypeControlStation) )
                 {
                     float camDist = (building->m_pos - g_app->m_camera->GetPos()).Mag();
                     if( camDist < nearest ) nearest = camDist;

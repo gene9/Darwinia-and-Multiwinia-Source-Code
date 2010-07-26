@@ -1327,11 +1327,12 @@ void TaskManagerInterfaceIcons::RenderTaskManager()
 
 void TaskManagerInterfaceIcons::RenderCreateTaskMenu()
 {
-    int numRunnableTasks = 4;
+    int numRunnableTasks = 5;
     int runnableTaskType[] = {  GlobalResearch::TypeSquad,
                                 GlobalResearch::TypeEngineer,
                                 GlobalResearch::TypeOfficer,
-                                GlobalResearch::TypeArmour };
+                                GlobalResearch::TypeArmour,
+								GlobalResearch::TypeSpider };
 
     int numAvailable = 0;
     for( int i = 0; i < numRunnableTasks; ++i )

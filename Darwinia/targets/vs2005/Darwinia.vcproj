@@ -5333,6 +5333,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\code\worldobject\researchcrate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\researchcrate.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\code\worldobject\researchitem.cpp"
 					>
 					<FileConfiguration

@@ -1769,7 +1769,8 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
             Building *building = m_buildings.GetData(i);
             bool teamMatch = ( teamId == 255 ||
                                building->m_id.GetTeamId() == 255 ||
-                               teamId == building->m_id.GetTeamId() );
+							   g_app->m_location->IsFriend(teamId, building->m_id.GetTeamId()) );
+                               //teamId == building->m_id.GetTeamId() );
 
             if( building->m_type != Building::TypeControlTower && teamMatch )
             {

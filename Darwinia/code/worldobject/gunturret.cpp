@@ -293,7 +293,7 @@ bool GunTurret::Advance()
 
     if( underPlayerControl )
     {
-        if( m_id.GetTeamId() != 2 )
+        if( !g_app->m_location->IsFriend(m_id.GetTeamId(),2) )
         {
             // Player has lost control of the building
             team->SelectUnit( -1, -1, -1 );

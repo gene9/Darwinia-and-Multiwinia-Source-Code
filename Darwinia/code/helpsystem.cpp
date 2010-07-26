@@ -117,10 +117,13 @@ namespace {
 	{
 		bool IsActionAvailable()
 		{
-			Unit *unit = g_app->m_location->GetMyTeam()->GetMyUnit();
-			if( unit && unit->m_troopType == Entity::TypeInsertionSquadie )
+			if ( g_app->m_location->GetMyTeam() )
 			{
-				return true;
+				Unit *unit = g_app->m_location->GetMyTeam()->GetMyUnit();
+				if( unit && unit->m_troopType == Entity::TypeInsertionSquadie )
+				{
+					return true;
+				}
 			}
 			return false;
 		}

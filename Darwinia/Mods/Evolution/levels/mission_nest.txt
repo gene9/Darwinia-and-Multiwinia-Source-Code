@@ -1,0 +1,64 @@
+Difficulty_StartDefinition
+	CreatedAsDifficulty 1
+Difficulty_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrunkPort           0       775.42  950.32  8       0.54    0.84    1       -1      
+	ResearchCrate       28      1029.04 1157.40 1       0.38    0.36    0       Spider      1
+	Incubator           39      2269.60 677.50  8       -0.28   0.96    1            0     0     0
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	Darwinian        0  2543.4  1619.8     60    0      -1    50.0     0.0     0.0   -1   -1
+	Virii            8  2269.9  1611.3     20    0      -1   100.0     0.0     0.0   -1   -1
+	Virii            8  1410.2   986.1     30    0      -1   100.0     0.0     0.0   -1   -1
+	Spider           8  1089.9  1169.4      5    0      -1   150.0     0.0     0.0   -1   -1
+	Virii            8  2183.4   759.5     30    0      -1   100.0     0.0     0.0   -1   -1
+InstantUnits_EndDefinition
+
+Routes_StartDefinition
+Routes_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition
+
+TeamColours_StartDefinition
+	# ID    	R     	G     	B
+	# ==============================
+	       0	   255	    50	    50
+	       1	   100	   250	   100
+	       2	   255	    50	    50
+	       4	   255	   255	    50
+TeamColours_EndDefinition
+
+TeamAlliances_StartDefinition
+	# ID1   	ID2   	Allied?
+	# =======================
+	       0	     4	     1
+	       1	     4	     1
+	       2	     4	     1
+	       4	     0	     1
+	       4	     1	     1
+	       4	     2	     1
+TeamAlliances_EndDefinition
+
+TeamFlags_StartDefinition
+	# ID    	Flags
+	# =========================================================================
+	       0	 PlayerSpawnTeam  SoulHarvest 
+	       2	 SoulHarvest 
+TeamFlags_EndDefinition
+

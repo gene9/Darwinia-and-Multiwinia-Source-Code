@@ -11,6 +11,8 @@ class ControlStation : public Building
 {
 protected:
 	int		m_controlBuildingId;
+	bool	m_scored;
+    ShapeMarker     *m_lightPos;
 
 public:
 	ControlStation();

@@ -84,6 +84,7 @@ void Task::Target( Vector3 const &_pos )
         case GlobalResearch::TypeEngineer:      TargetEngineer( _pos );     break;
         case GlobalResearch::TypeOfficer:       TargetOfficer( _pos );      break;
         case GlobalResearch::TypeArmour:        TargetArmour( _pos );       break;
+        case GlobalResearch::TypeSpider:        TargetSpider( _pos );        break;
     }
 }
 
@@ -135,6 +136,18 @@ void Task::TargetEngineer( Vector3 const &_pos )
     g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureSuccess", SoundSourceBlueprint::TypeGesture );
 }
 
+void Task::TargetSpider( Vector3 const &_pos )
+{
+    int teamId = g_app->m_globalWorld->m_myTeamId;
+
+	Vector3 pos = _pos;
+	pos.y += 10.0f;
+    m_objId = g_app->m_location->SpawnEntities( pos, teamId, -1, Entity::TypeSpider, 1, g_zeroVector, 0 );
+    g_app->m_location->m_teams[teamId].SelectUnit( -1, m_objId.GetIndex(), -1 );
+
+    m_state = StateRunning;
+    g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureSuccess", SoundSourceBlueprint::TypeGesture );
+}
 
 void Task::TargetArmour( Vector3 const &_pos )
 {
@@ -290,7 +303,6 @@ bool Task::Advance()
         switch( m_type )
         {
             case GlobalResearch::TypeSquad:
-            case GlobalResearch::TypeController:
             {
                 Unit *unit = g_app->m_location->GetUnit( m_objId );
                 if( !unit || unit->NumAliveEntities() == 0 )
@@ -306,6 +318,7 @@ bool Task::Advance()
 
             case GlobalResearch::TypeEngineer:
             case GlobalResearch::TypeArmour:
+            case GlobalResearch::TypeSpider:
             {
                 Entity *entity = g_app->m_location->GetEntity( m_objId );
                 if( !entity || entity->m_dead )
@@ -351,23 +364,9 @@ void Task::SwitchTo()
 
         case GlobalResearch::TypeEngineer:
         case GlobalResearch::TypeArmour:
+        case GlobalResearch::TypeSpider:
         {
             g_app->m_location->m_teams[teamId].SelectUnit( -1, m_objId.GetIndex(), -1 );
-            break;
-        }
-
-        case GlobalResearch::TypeController:
-        {
-            for( int i = 0; i < g_app->m_taskManager->m_tasks.Size(); ++i )
-            {
-                Task *task = g_app->m_taskManager->m_tasks.GetData(i);
-                if( task->m_type == GlobalResearch::TypeSquad &&
-                    task->m_objId == m_objId )
-                {
-                    g_app->m_taskManager->SelectTask( task->m_id );
-                    break;
-                }
-            }
             break;
         }
 
@@ -404,6 +403,7 @@ void Task::Stop()
 
         case GlobalResearch::TypeEngineer:
         case GlobalResearch::TypeArmour:
+        case GlobalResearch::TypeSpider:
         {
             Entity *entity = (Entity *) g_app->m_location->GetEntity( m_objId );
             if( entity )
@@ -474,6 +474,7 @@ bool TaskManager::RunTask( int _type )
         case GlobalResearch::TypeOfficer:
 #ifndef DEMOBUILD
         case GlobalResearch::TypeArmour:
+        case GlobalResearch::TypeSpider:
 #endif
         {
             Task *task = new Task();
@@ -485,43 +486,6 @@ bool TaskManager::RunTask( int _type )
                 g_app->m_location->m_teams[teamId].SelectUnit( -1, -1, -1 );
             }
             return success;
-        }
-
-        case GlobalResearch::TypeController:
-        {
-            Task *task = GetCurrentTask();
-            if( task && task->m_type == GlobalResearch::TypeSquad )
-            {
-                Unit *unit = g_app->m_location->GetUnit( task->m_objId );
-                if( unit && unit->m_troopType == Entity::TypeInsertionSquadie )
-                {
-                    InsertionSquad *squad = (InsertionSquad *) unit;
-                    squad->SetWeaponType( _type );
-
-                    if( !GetTask( squad->m_controllerId ) )
-                    {
-                        Task *controller = new Task();
-                        controller->m_type = _type;
-                        controller->m_objId = WorldObjectId( squad->m_teamId, squad->m_unitId, -1, -1 );
-                        controller->m_route = new Route(-1);
-                        controller->m_route->AddWayPoint( squad->m_centrePos );
-                        bool success = RunTask( controller );
-                        if( success )
-                        {
-                            squad->m_controllerId = controller->m_id;
-                            SelectTask( task->m_id );
-                            g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageSuccess, _type, 2.5f );
-                        }
-                        return success;
-                    }
-
-                    return true;
-                }
-            }
-
-            g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageFailure, -1, 2.5f );
-            g_app->m_sepulveda->Say( "task_manager_needsquadfirst" );
-            return false;
         }
 
         case GlobalResearch::TypeGrenade:
@@ -831,6 +795,7 @@ LList <TaskTargetArea> *TaskManager::GetTargetArea( int _id )
         switch( task->m_type )
         {
             case GlobalResearch::TypeArmour:
+            case GlobalResearch::TypeSpider:
             {
                 for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
                 {

@@ -909,8 +909,9 @@ bool Darwinian::AdvanceApproachingPort()
     // Check the port is still available
 
     Building *building = g_app->m_location->GetBuilding( m_buildingId );
-    if( !building )
+    if( !building || building->GetNumPortsOccupied() >= building->GetNumPorts() )
     {
+		m_wayPoint = m_pos;
         m_state = StateIdle;
         return false;
     }
@@ -1324,7 +1325,7 @@ bool Darwinian::SearchForIncubator()
                 int population = ((Incubator *)building)->NumSpiritsInside();
                 distance += population * 10;
 
-                if( distance < nearest )
+                if( distance < nearest && g_app->m_location->IsWalkable(m_pos, building->m_pos) )
                 {
                     m_buildingId = building->m_id.GetUniqueId();
                     nearest = distance;
@@ -1337,7 +1338,7 @@ bool Darwinian::SearchForIncubator()
                 g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
             {
                 double distance = ( building->m_pos - m_pos ).Mag();
-                if( distance < nearest )
+                if( distance < nearest && g_app->m_location->IsWalkable(m_pos, building->m_pos) )
                 {
                     m_buildingId = building->m_id.GetUniqueId();                    
                     nearest = distance;
@@ -1927,6 +1928,11 @@ bool Darwinian::SearchForThreats()
     {
         Building *building = g_app->m_location->GetBuilding( m_buildingId );
         if( building && building->m_type == Building::TypeGunTurret )
+        {
+            END_PROFILE( g_app->m_profiler, "SearchThreats" );
+            return false;
+        }
+        else if( building && building->m_type == Building::TypeResearchCrate )
         {
             END_PROFILE( g_app->m_profiler, "SearchThreats" );
             return false;

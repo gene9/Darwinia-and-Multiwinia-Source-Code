@@ -83,6 +83,7 @@ public:
         TypeFeedingTube,
 		TypeControlStation,
 		TypeSpawnPointRandom,
+		TypeResearchCrate,
 		NumBuildingTypes
     };
 

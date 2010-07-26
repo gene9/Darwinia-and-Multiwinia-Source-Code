@@ -44,6 +44,7 @@ public:
     void    TargetEngineer      ( Vector3 const &_pos );
     void    TargetOfficer       ( Vector3 const &_pos );
     void    TargetArmour        ( Vector3 const &_pos );
+    void    TargetSpider        ( Vector3 const &_pos );
 
     WorldObjectId        Promote         ( WorldObjectId _id );
     static WorldObjectId Demote          ( WorldObjectId _id );
