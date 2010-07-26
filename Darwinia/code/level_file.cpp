@@ -1047,7 +1047,7 @@ void LevelFile::WriteTeamColours(FileWriter *_out)
     {
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
-			if ( m_defaultColours[i] != m_teamColours[i] )
+			if ( m_defaultColours[i] != g_app->m_location->m_teams[i].m_colour )
 			{
 				_out->printf( "\t  %6d\t%6d\t%6d\t%6d\n",
 				    i, g_app->m_location->m_teams[i].m_colour.r, g_app->m_location->m_teams[i].m_colour.g, g_app->m_location->m_teams[i].m_colour.b);

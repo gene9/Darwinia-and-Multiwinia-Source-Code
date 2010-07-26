@@ -31,7 +31,7 @@ Incubator::Incubator()
     m_timer(INCUBATOR_PROCESSTIME),
     m_numStartingSpirits(0),
 	m_renderDamaged(0),
-	m_teamSpawner(false)
+	m_teamSpawner(0)
 {
     m_type = TypeIncubator;
 
@@ -268,8 +268,7 @@ void Incubator::Read( TextReader *_in, bool _dynamic )
     }
     if( _in->TokenAvailable() )
     {
-		int temp = atoi( _in->GetNextToken() );
-		if ( temp > 0 ) { m_teamSpawner = true; }
+		m_teamSpawner = atoi( _in->GetNextToken() );
     }
 }
 
@@ -280,11 +279,7 @@ void Incubator::Write( FileWriter *_out )
 
     _out->printf( "%6d", m_numStartingSpirits );
 	_out->printf( "%6d", m_renderDamaged );
-	if ( m_teamSpawner ) {
-		_out->printf( "%6d", 0 );
-	} else {
-		_out->printf( "%6d", 1 );
-	}
+	_out->printf( "%6d", m_teamSpawner );
 }
 
 

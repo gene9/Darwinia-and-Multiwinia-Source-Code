@@ -606,8 +606,8 @@ void Script::RunCommand_SetTeamColour ( int _teamID, int _red, int _green, int _
 			if ( entity->m_type == Entity::TypeCentipede )
 			{
 				Centipede *centipede = (Centipede *) entity;
-				centipede->s_shapeHead->Recolour(teamColour);
-				centipede->s_shapeBody->Recolour(teamColour);
+				centipede->s_shapeHead->Recolour(teamColour * 0.7);
+				centipede->s_shapeBody->Recolour(teamColour * 0.7);
 			}
 		}
 	}

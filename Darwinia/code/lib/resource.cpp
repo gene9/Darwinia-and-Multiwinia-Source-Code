@@ -347,7 +347,7 @@ Shape *Resource::GetShape( char const *_name )
     return theShape;
 }
 
-Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating )
+Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating, float _colourScale )
 {
 	char *fullName = new char[128];
 	if ( !_animating ) {
@@ -366,7 +366,7 @@ Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating )
 		m_shapes.PutData( fullName, theShape );
 	}
 
-	theShape->Recolour(g_app->m_location->m_teams[_teamID].m_colour);
+	theShape->Recolour(g_app->m_location->m_teams[_teamID].m_colour * _colourScale );
     return theShape;
 }
 

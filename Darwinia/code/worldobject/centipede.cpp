@@ -52,10 +52,10 @@ Centipede::Centipede()
 void Centipede::Begin()
 {
 	if ( !s_shapeBody->isTeamColoured ) {
-		s_shapeBody = g_app->m_resource->GetShape( s_shapeBody->m_name, m_id.GetTeamId(), s_shapeBody->m_animating );
+		s_shapeBody = g_app->m_resource->GetShape( s_shapeBody->m_name, m_id.GetTeamId(), s_shapeBody->m_animating, 0.7 );
 	}
 	if ( !s_shapeHead->isTeamColoured ) {
-		s_shapeHead = g_app->m_resource->GetShape( s_shapeHead->m_name, m_id.GetTeamId(), s_shapeHead->m_animating );
+		s_shapeHead = g_app->m_resource->GetShape( s_shapeHead->m_name, m_id.GetTeamId(), s_shapeHead->m_animating, 0.7 );
 	}
 
 	Entity::Begin();

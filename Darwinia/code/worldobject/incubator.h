@@ -35,7 +35,7 @@ protected:
 
 public:
     int             m_numStartingSpirits;
-	bool			m_teamSpawner;
+	int				m_teamSpawner;
 
 public:
     Incubator();
