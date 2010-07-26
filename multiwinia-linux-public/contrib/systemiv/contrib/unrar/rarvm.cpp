@@ -11,7 +11,7 @@ RarVM::RarVM()
 
 RarVM::~RarVM()
 {
-  delete Mem;
+  delete[] Mem;
 }
 
 

@@ -59,6 +59,7 @@ public:
 #endif
 
         if( parent->m_soundLib == 0 ) g_prefsManager->SetString( SOUND_LIBRARY, "software" );
+        else if ( parent->m_soundLib == 2) g_prefsManager->SetString( SOUND_LIBRARY, "openal" );
         else                          g_prefsManager->SetString( SOUND_LIBRARY, "dsound" );
         
         g_app->m_soundSystem->RestartSoundLibrary();
@@ -132,6 +133,16 @@ public:
             const char *lib = g_prefsManager->GetString( SOUND_LIBRARY, NULL );
             if( !lib ||
                 strcmp( lib, "software" ) == 0 )
+            {
+                soundLibMatch = true;
+            }
+        }
+        else if ( parent->m_soundLib == 2)
+        {
+            const char *lib = g_prefsManager->GetString( SOUND_LIBRARY, NULL );
+            if( !lib ||
+                strlen(lib) == 0 ||
+                strcmp( lib, "openal" ) == 0 )
             {
                 soundLibMatch = true;
             }
@@ -261,6 +272,8 @@ void PrefsSoundWindow::ReadValues()
 
 #ifdef TARGET_OS_MACOSX 
 	const char *defaultSoundLib = "software";
+#elif TARGET_OS_LINUX
+	const char *defaultSoundLib = "openal";
 #else
 	const char *defaultSoundLib = "dsound";
 #endif
@@ -268,6 +281,7 @@ void PrefsSoundWindow::ReadValues()
     const char *soundLib  = g_prefsManager->GetString( SOUND_LIBRARY, defaultSoundLib );
     
     if( soundLib && stricmp( soundLib, "dsound" ) == 0 ) m_soundLib = 1;
+    else if( soundLib && stricmp( soundLib, "openal" ) == 0 ) m_soundLib = 2;
     else                                     m_soundLib = 0;
 }
 
@@ -311,6 +325,9 @@ void PrefsSoundWindow::Create()
     m_menuSoundLib->AddOption( "dialog_directsound", 1 );
 #else
     m_menuSoundLib->AddOption( "dialog_softwaresound", 0 );
+#endif
+#ifdef HAVE_OPENAL
+	m_menuSoundLib->AddOption( "dialog_openalsound", 2 );
 #endif
     m_menuSoundLib->RegisterInt( &m_soundLib );
 	m_menuSoundLib->m_fontSize = fontSize;

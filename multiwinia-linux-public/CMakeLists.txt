@@ -512,10 +512,14 @@ code/sound/sound_instance.h
 code/sound/sound_instance.cpp
 code/sound/sound_library_2d.h
 code/sound/sound_library_2d.cpp
-code/sound/sound_library_2d_sdl.h #TODO: Actually get sound to work
+code/sound/sound_library_2d_sdl.h
 code/sound/sound_library_2d_sdl.cpp
 code/sound/sound_library_3d.h
 code/sound/sound_library_3d.cpp
+##### OPENAL BEGIN
+code/sound/sound_library_3d_openal.h
+code/sound/sound_library_3d_openal.cpp
+##### OPENAL END
 code/sound/sound_library_3d_software.h
 code/sound/sound_library_3d_software.cpp
 code/sound/sound_parameter.h
@@ -793,6 +797,7 @@ SDL
 GL
 GLU
 png
+openal
 vorbisfile
 vorbis
 ogg

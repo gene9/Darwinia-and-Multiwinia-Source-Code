@@ -455,6 +455,10 @@ inline double iv_abs( double x ) { if( x >= 0.0 ) return x;	else return -x; }
 
 	#undef AVI_GENERATOR
 	#undef SOUND_EDITOR
+	
+	//We want OpenAL support
+	#define HAVE_OPENAL
+	
 	// The use of INVOKE_CALLBACK_FROM_SOUND_THREAD greatly reduces
 	// crackling (but is somewhat unstable if the audio device is misconfigured)
 	#define INVOKE_CALLBACK_FROM_SOUND_THREAD
