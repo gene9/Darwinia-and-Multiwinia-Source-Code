@@ -82,6 +82,7 @@ public:
         TypeDynamicNode,
         TypeFeedingTube,
 		TypeControlStation,
+		TypeSpawnPointRandom,
 		NumBuildingTypes
     };
 

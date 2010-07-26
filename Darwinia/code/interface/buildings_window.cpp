@@ -441,7 +441,8 @@ void BuildingEditWindow::Create()
     }
     else if( building->m_type == Building::TypeSpawnLink ||
              building->m_type == Building::TypeSpawnPointMaster ||
-             building->m_type == Building::TypeSpawnPoint )
+             building->m_type == Building::TypeSpawnPoint ||
+             building->m_type == Building::TypeSpawnPointRandom )
     {
         class ClearLinksButton: public DarwiniaButton
         {
@@ -488,8 +489,9 @@ void BuildingEditWindow::Create()
     }
     else if( building->m_type == Building::TypeIncubator )
     {
-        CreateValueControl( LANGUAGEPHRASE("editor_spirits"), InputField::TypeInt, &((Incubator *) building)->m_numStartingSpirits, y+=buttonPitch, 1, 0, 1000 );
-        CreateValueControl( LANGUAGEPHRASE("editor_damaged"), InputField::TypeInt, &((Incubator *) building)->m_renderDamaged, y+=buttonPitch, 1, 0, 1);
+        CreateValueControl( LANGUAGEPHRASE("editor_spirits"),   InputField::TypeInt, &((Incubator *) building)->m_numStartingSpirits, y+=buttonPitch, 1, 0, 1000 );
+        CreateValueControl( LANGUAGEPHRASE("editor_damaged"),   InputField::TypeInt, &((Incubator *) building)->m_renderDamaged, y+=buttonPitch, 1, 0, 1);
+        CreateValueControl( LANGUAGEPHRASE("editor_teamspawn"), InputField::TypeInt, &((Incubator *) building)->m_teamSpawner, y+=buttonPitch, 1, 0, 1);
     }
     else if( building->m_type == Building::TypeEscapeRocket )
     {

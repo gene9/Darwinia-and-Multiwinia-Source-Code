@@ -1556,6 +1556,7 @@ editor_leafdrop                        Leaf Droprate
 editor_neveron                         Never On
 editor_switchonce                      Switch Once
 editor_damaged                         Damaged?
+editor_teamspawn                       Team Spawn?
 
 spawnname_spawnvirii                   SpawnVirii
 spawnname_spawncentipedes              SpawnCentipedes

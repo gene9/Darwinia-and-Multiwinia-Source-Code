@@ -1248,7 +1248,7 @@ void TurretShell::Render( float predictionTime )
 
 void SubversionBeam::Initialise(float _lifeTime)
 {
-    m_life = _lifeTime;
+    m_life = _lifeTime * 2;
     m_harmless = false;
     m_bounced = false;
 
@@ -1265,7 +1265,7 @@ bool SubversionBeam::Advance()
     }
 
     Vector3 oldPos = m_pos;
-    m_pos += m_vel * SERVER_ADVANCE_PERIOD;
+    m_pos += (m_vel/2) * SERVER_ADVANCE_PERIOD;
 
     //
     // Detect collisions with landscape / buildings / people
@@ -1367,6 +1367,8 @@ bool SubversionBeam::Advance()
 					
 						d->m_corrupted = victim->m_corrupted;
 						d->m_soulless = victim->m_soulless;
+						d->m_subversive = victim->m_subversive;
+
 						d->m_colourTimer = 4;
 						d->m_oldTeamId = victim->m_id.GetTeamId();
 

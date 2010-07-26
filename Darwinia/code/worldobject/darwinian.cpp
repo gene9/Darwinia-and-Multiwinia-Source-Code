@@ -660,7 +660,14 @@ bool Darwinian::AdvanceCombat()
         // NEVER throw grenades if there are people from team 2 nearby (ie the player's squad, officers, engineers)
         // NEVER throw grenades if the target area is too steep - Darwinians just can't fucking aim on cliffs
 
-        bool hasGrenade = (g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 3 && !m_subversive);
+		bool hasGrenade = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 3;
+		if ( !hasGrenade && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()]  & TEAM_FLAG_PLAYER_SPAWN_TEAM) )
+		{
+			hasGrenade = g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeDarwinian ) > 3;
+		}
+		if ( m_subversive ) { hasGrenade = false; }
+
+        //bool hasGrenade = (g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 3 && !m_subversive);
 
         if( hasGrenade )
         {
@@ -672,7 +679,10 @@ bool Darwinian::AdvanceCombat()
                 float distanceToTarget = ( threat->m_pos - m_pos ).Mag();
                 if( distanceToTarget > 75.0f )
                 {
-                    bool includeTeams[] = { false, false, true, false, false, false, false, false };
+					bool *includeTeams = new bool[NUM_TEAMS];
+					for ( int i = 0; i < NUM_TEAMS; i++ ) { includeTeams[i] = false; }
+					includeTeams[2] = true;
+                    //bool includeTeams[] = { false, false, true, false, false, false, false, false };
                     int numPlayers = g_app->m_location->m_entityGrid->GetNumNeighbours( threat->m_pos.x, threat->m_pos.z, 50.0f, includeTeams );
                     if( numPlayers == 0 )
                     {
@@ -1266,7 +1276,7 @@ bool Darwinian::AdvanceCarryingSpirit()
 		}
 	}
 
-	if( building && building->m_type == Building::TypeSpawnPoint )
+	if( building && (building->m_type == Building::TypeSpawnPoint || building->m_type == Building::TypeSpawnPointRandom) )
     {
         SpawnPoint *spawnPoint = (SpawnPoint *)building;
         m_wayPoint = building->m_pos + building->m_front * 50;
@@ -1322,7 +1332,7 @@ bool Darwinian::SearchForIncubator()
                 }
             }
 
-            if( building->m_type == Building::TypeSpawnPoint &&
+            if( (building->m_type == Building::TypeSpawnPoint || building->m_type == Building::TypeSpawnPointRandom) &&
 				g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SPAWNPOINTINCUBATION &&
                 g_app->m_location->IsFriend( building->m_id.GetTeamId(), m_id.GetTeamId() ) )
             {
@@ -2518,17 +2528,21 @@ void Darwinian::Render( float _predictionTime, float _highDetail )
 	if ( m_corrupted && frand() < 0.025 )
 	{
 		int t = floor(frand(NUM_TEAMS));
+		if ( t < 0 || t >= NUM_TEAMS ) { t = 0; }
 		colour = g_app->m_location->m_teams[ t ].m_colour;
 	}
 	if ( m_colourTimer > 0 && m_oldTeamId != 255 && m_oldTeamId != m_id.GetTeamId() )
 	{
-		if ( (int) (m_colourTimer*10.0) % 10 < 5 ) { colour = g_app->m_location->m_teams[ m_oldTeamId ].m_colour; }
+		float timeLeft = m_colourTimer / 4.0;
+		RGBAColour c1 = g_app->m_location->m_teams[ m_oldTeamId ].m_colour * timeLeft;
+		RGBAColour c2 = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * (1 - timeLeft);
+		colour = c1 + c2;
 	}
 
 	if ( m_soulless )
 	{
         SetTexture( "sprites/soulless.bmp" ); 
-		colour.a = 64;
+		colour.a = 192;
 	}
 	else if ( m_corrupted )
 	{

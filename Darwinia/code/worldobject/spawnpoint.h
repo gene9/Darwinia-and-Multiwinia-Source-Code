@@ -119,8 +119,14 @@ public:
     void RenderPorts    ();
 
 	void SpawnDarwinian ();
+	bool m_teamSpawner;
 };
 
+class SpawnPointRandom : public SpawnPoint
+{
+public:
+    SpawnPointRandom();
+};
 
 // ============================================================================
 

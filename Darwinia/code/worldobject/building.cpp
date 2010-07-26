@@ -813,6 +813,7 @@ Building *Building::CreateBuilding( int _type )
         case TypeDynamicNode:           building = new DynamicNode();           break;
         case TypeFeedingTube:           building = new FeedingTube();           break;
         case TypeControlStation:        building = new ControlStation();        break;
+        case TypeSpawnPointRandom:      building = new SpawnPointRandom();      break;
     };
 
 
@@ -901,7 +902,8 @@ char *Building::GetTypeName( int _type )
                                         "DynamicHub",
                                         "DynamicNode",
                                         "FeedingTube",
-										"ControlStation"
+										"ControlStation",
+										"SpawnPointRandom"
                                     };
 
     if( _type >= 0 && _type < NumBuildingTypes )

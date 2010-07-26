@@ -837,12 +837,12 @@ void Virii::Render( float predictionTime, int teamId, int _detail )
     float health = (float) m_stats[StatHealth] / (float) EntityBlueprint::GetStat( m_type, StatHealth );
 
     RGBAColour wormColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health;
-    //if( max(max(wormColour.r,wormColour.g),wormColour.b) < 128 )
-    //{
-    //    wormColour = RGBAColour(255,255,255);
-    //}
+    if( max(max(wormColour.r,wormColour.g),wormColour.b) < 128 )
+    {
+        wormColour *= -1;
+    }
     //RGBAColour glowColour( 200, 100, 100 );
-    RGBAColour glowColour = wormColour;
+    RGBAColour glowColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health; // Ignores the colour swap above
     wormColour.a = 200;
     glowColour.a = 150;
 

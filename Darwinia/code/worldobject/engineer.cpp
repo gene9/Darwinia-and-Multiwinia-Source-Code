@@ -149,7 +149,8 @@ bool Engineer::SearchForControlTowers()
             {
                 ControlTower *ct = (ControlTower *) building;
                 Vector3 pos, front;
-                if( (ct->m_id.GetTeamId() != m_id.GetTeamId() || ct->m_ownership < 100.0f) &&
+                //if( (ct->m_id.GetTeamId() != m_id.GetTeamId() || ct->m_ownership < 100.0f) &&
+				if ( (!g_app->m_location->IsFriend(ct->m_id.GetTeamId(), m_id.GetTeamId()) || ct->m_ownership < 100.0f ) &&
                     ct->GetAvailablePosition(pos, front) != -1 )
                 {
                     float theDist = (building->m_pos - m_pos).Mag();
@@ -649,7 +650,7 @@ bool Engineer::SearchForIncubator( bool _includeAllies )
                 }
             }
 
-            if( building->m_type == Building::TypeSpawnPoint &&
+            if( (building->m_type == Building::TypeSpawnPoint || building->m_type == Building::TypeSpawnPointRandom) &&
 				g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SPAWNPOINTINCUBATION &&
                 isFriendly )
             {
@@ -713,7 +714,7 @@ bool Engineer::AdvanceToIncubator()
 		}
 	}
 
-	if( building && building->m_type == Building::TypeSpawnPoint )
+	if( building && (building->m_type == Building::TypeSpawnPoint || building->m_type == Building::TypeSpawnPointRandom) )
     {
         SpawnPoint *spawnPoint = (SpawnPoint *)building;
         m_targetPos = building->m_pos + building->m_front * 50;

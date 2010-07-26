@@ -30,7 +30,8 @@ Incubator::Incubator()
     m_troopType(Entity::TypeDarwinian),
     m_timer(INCUBATOR_PROCESSTIME),
     m_numStartingSpirits(0),
-	m_renderDamaged(0)
+	m_renderDamaged(0),
+	m_teamSpawner(false)
 {
     m_type = TypeIncubator;
 
@@ -69,6 +70,7 @@ void Incubator::Initialise( Building *_template )
 
     m_numStartingSpirits = ((Incubator *) _template)->m_numStartingSpirits;
     m_renderDamaged = ((Incubator *) _template)->m_renderDamaged;
+	m_teamSpawner = ((Incubator *) _template)->m_teamSpawner;
 
 	for( int i = 0; i < m_numStartingSpirits; ++i )
     {
@@ -146,6 +148,15 @@ void Incubator::SpawnEntity()
     // Spawn the entity
     int teamId = m_id.GetTeamId();
 
+	if ( m_teamSpawner )
+	{
+		teamId = 255;
+		while ( !g_app->m_location->IsFriend(m_id.GetTeamId(),teamId) )
+		{
+			teamId = (int) floor(frand(NUM_TEAMS));
+			if ( teamId < 0 || teamId > NUM_TEAMS ) { teamId = 255; }
+		}
+	}
     //if( teamId == 2 ) teamId = 0;               // Green rather than yellow
 	if ( teamId == 2 ) { // Instead of hardcoding, look up the team we need to use based on team flags
 		for ( int i = 0; i < NUM_TEAMS; i++ ) {
@@ -255,7 +266,11 @@ void Incubator::Read( TextReader *_in, bool _dynamic )
     {
 		m_renderDamaged = atoi( _in->GetNextToken() );
     }
-
+    if( _in->TokenAvailable() )
+    {
+		int temp = atoi( _in->GetNextToken() );
+		if ( temp > 0 ) { m_teamSpawner = true; }
+    }
 }
 
 
@@ -265,6 +280,11 @@ void Incubator::Write( FileWriter *_out )
 
     _out->printf( "%6d", m_numStartingSpirits );
 	_out->printf( "%6d", m_renderDamaged );
+	if ( m_teamSpawner ) {
+		_out->printf( "%6d", 0 );
+	} else {
+		_out->printf( "%6d", 1 );
+	}
 }
 
 

@@ -226,7 +226,7 @@ LList<int> *SpawnBuilding::ExploreLinks()
 {
     LList<int> *result = new LList<int>();
 
-    if( m_type == TypeSpawnPoint )
+    if( m_type == TypeSpawnPoint || m_type == TypeSpawnPointRandom )
     {
         result->PutData( m_id.GetUniqueId() );
     }
@@ -495,7 +495,8 @@ SpawnPoint::SpawnPoint()
     m_spawnTimer(0.0f),
     m_evaluateTimer(0.0f),
     m_numFriendsNearby(0),
-    m_populationLock(-1)
+    m_populationLock(-1),
+	m_teamSpawner(false)
 {
     m_type = Building::TypeSpawnPoint;
 
@@ -681,7 +682,23 @@ void SpawnPoint::SpawnDarwinian()
     Vector3 exitPos = doorMat.pos;
     Vector3 exitVel = g_zeroVector;
     
-    WorldObjectId spawned = g_app->m_location->SpawnEntities( exitPos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, exitVel, 0.0 );
+	int teamId = m_id.GetTeamId();
+	if ( m_teamSpawner )
+	{
+		teamId = 255;
+		while ( !g_app->m_location->IsFriend(m_id.GetTeamId(),teamId) )
+		{
+			teamId = (int) floor(frand(NUM_TEAMS));
+			if ( teamId < 0 || teamId > NUM_TEAMS ) { teamId = 255; }
+		}
+	}
+	if ( teamId == 2 ) { // Instead of hardcoding, look up the team we need to use based on team flags
+		for ( int i = 0; i < NUM_TEAMS; i++ ) {
+			if ( g_app->m_location->m_levelFile->m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) { teamId = i; }
+		}
+	}
+
+    WorldObjectId spawned = g_app->m_location->SpawnEntities( exitPos, teamId, -1, Entity::TypeDarwinian, 1, exitVel, 0.0 );
     Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawned, Entity::TypeDarwinian );
     if( darwinian )
     {
@@ -798,6 +815,13 @@ void SpawnPoint::RenderPorts()
     glDisable       ( GL_TEXTURE_2D );
     glEnable        ( GL_CULL_FACE );
 
+}
+
+SpawnPointRandom::SpawnPointRandom()
+{
+	SpawnPoint::SpawnPoint();
+	m_teamSpawner = true;
+    m_type = Building::TypeSpawnPointRandom;
 }
 
 

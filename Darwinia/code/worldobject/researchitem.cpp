@@ -82,9 +82,11 @@ bool ResearchItem::Advance()
         m_vel.Zero();
     }
 
+	if ( m_id.GetTeamId() < 0 || m_id.GetTeamId() >= NUM_TEAMS ) { return false; }
+
     if( m_researchType > -1 &&
-        g_app->m_globalWorld->m_research->HasResearch( m_researchType ) &&
-        g_app->m_globalWorld->m_research->CurrentLevel( m_researchType ) >= m_level )
+        g_app->m_globalWorld->m_research->HasResearch(m_id.GetTeamId(), m_researchType ) &&
+        g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),  m_researchType ) >= m_level )
     {
         return true;
     }
@@ -96,24 +98,27 @@ bool ResearchItem::Advance()
         g_explosionManager.AddExplosion( m_shape, mat, 1.0f );
 
 
-		if ( m_id.GetTeamId() > 0 &&  m_id.GetTeamId() < NUM_TEAMS )
+		for ( int i = 0; i < NUM_TEAMS; i++ )
 		{
-			int existingLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), m_researchType );
-
-			g_app->m_globalWorld->m_research->AddResearch( m_id.GetTeamId(), m_researchType );
-	        g_app->m_globalWorld->m_research->m_researchLevel[m_id.GetTeamId()][ m_researchType ] = m_level;
-
-			g_app->m_soundSystem->TriggerBuildingEvent( this, "AquireResearch" );
-
-			if ( m_id.GetTeamId() == 2 )
+			if ( g_app->m_location->IsFriend(m_id.GetTeamId(), i) )
 			{
-				if( existingLevel == 0 )
+				int existingLevel = g_app->m_globalWorld->m_research->CurrentLevel( i, m_researchType );
+
+				g_app->m_globalWorld->m_research->AddResearch( i, m_researchType );
+				g_app->m_globalWorld->m_research->m_researchLevel[i][ m_researchType ] = m_level;
+
+				g_app->m_soundSystem->TriggerBuildingEvent( this, "AquireResearch" );
+
+				if ( m_id.GetTeamId() == 2 )
 				{
-					g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f );
-				}
-				else
-				{
-					g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f );
+					if( existingLevel == 0 )
+					{
+						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f );
+					}
+					else
+					{
+						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f );
+					}
 				}
 			}
 		}
@@ -133,7 +138,8 @@ bool ResearchItem::NeedsReprogram()
 bool ResearchItem::Reprogram( char _teamId )
 {
 	// If someone else takes over reprogramming, reset the progress
-	if ( _teamId != m_id.GetTeamId() )
+	//if ( _teamId != m_id.GetTeamId() )
+	if ( !g_app->m_location->IsFriend(_teamId, m_id.GetTeamId()) )
 	{
 		m_id.SetTeamId(_teamId);
 		m_reprogrammed = 100.0f;

@@ -183,7 +183,8 @@ void ControlTower::BeginReprogram( int _position )
 
 bool ControlTower::Reprogram( int _teamId )
 {
-    if( _teamId != m_id.GetTeamId() )
+    //if( _teamId != m_id.GetTeamId() )
+	if ( !g_app->m_location->IsFriend(_teamId, m_id.GetTeamId()) )
     {
         // Removing someone elses control
         m_ownership -= 0.1f;

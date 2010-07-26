@@ -238,6 +238,9 @@ public:
 	bool				m_teamAlliances[NUM_TEAMS][NUM_TEAMS];
 	int					m_teamFlags[NUM_TEAMS];
 
+	RGBAColour			*m_defaultColours;
+	bool				m_defaultAlliances[NUM_TEAMS][NUM_TEAMS];
+	int					m_defaultFlags[NUM_TEAMS];
 
 	LandscapeDef		m_landscape;
 

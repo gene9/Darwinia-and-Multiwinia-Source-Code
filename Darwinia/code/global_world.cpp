@@ -1828,7 +1828,7 @@ void GlobalWorld::WriteAvatar( FileWriter *_out )
     _out->printf( "\t# Current Avatar\n" );
     _out->printf( "\t# ==================================================================\n" );
 
-	_out->printf("\t%s", g_app->m_sepulveda->m_currentAvatar);
+	_out->printf("\t%s\n", g_app->m_sepulveda->m_currentAvatar);
     _out->printf( "Avatar_EndDefinition\n\n" );
 }
 
@@ -1859,7 +1859,7 @@ void GlobalWorld::WriteEvents(FileWriter *_out)
         ge->Write(_out);
     }
 
-    _out->printf( "Events_EndDefinition\n" );
+    _out->printf( "Events_EndDefinition\n\n" );
 }
 
 

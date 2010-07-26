@@ -880,8 +880,9 @@ LList <TaskTargetArea> *TaskManager::GetTargetArea( int _id )
                     {
                         Building *building = g_app->m_location->m_buildings[i];
                         if( building &&
-                            building->m_type == Building::TypeControlTower &&
-                            building->m_id.GetTeamId() == g_app->m_location->GetMyTeam()->m_teamId )
+							(building->m_type == Building::TypeControlTower || building->m_type == Building::TypeControlStation)  &&
+							g_app->m_location->IsFriend(building->m_id.GetTeamId(), g_app->m_location->GetMyTeam()->m_teamId) )
+                            //building->m_id.GetTeamId() == g_app->m_location->GetMyTeam()->m_teamId )
                         {
                             TaskTargetArea tta;
                             tta.m_centre = building->m_pos;

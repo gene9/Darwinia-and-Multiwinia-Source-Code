@@ -745,7 +745,7 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
         }
 
 		int teamID = atoi(word);
-
+		m_teamFlags[teamID] = 0; // Clear all flags before setting new ones
 		while (_in->TokenAvailable())
 		{
 			word = _in->GetNextToken();
@@ -757,7 +757,6 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
 			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
 			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
 			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
-			else { flag = 0; }
 			// UPDATE MATCHING STATEMENT IN SCRIPT::ADVANCESCRIPT TOO OR THE CHANGEFLAG FUNCTION WONT WORK!
 			if ( teamID >= 0 && teamID < NUM_TEAMS )
 			{
@@ -977,7 +976,13 @@ void LevelFile::GenerateAutomaticObjectives()
                             towerFound = true;
                             break;
                         }
-                    }
+                        if( thisBuilding->m_type == Building::TypeControlStation &&
+                            thisBuilding->GetBuildingLink() == building->m_id.GetUniqueId() )
+                        {
+                            towerFound = true;
+                            break;
+                        }
+                   }
 
                     if( towerFound )
                     {
@@ -1035,15 +1040,18 @@ void LevelFile::WriteLights(FileWriter *_out)
 void LevelFile::WriteTeamColours(FileWriter *_out)
 {
 	_out->printf( "TeamColours_StartDefinition\n");
-	_out->printf( "\t# ID     Type R   G   B\n");
-	_out->printf( "\t# ========================\n");
+	_out->printf( "\t# ID    \tR     \tG     \tB\n");
+	_out->printf( "\t# ==============================\n");
 
     if( g_app->m_location )
     {
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
-		    _out->printf( "\t  %d   %d %d %d\n",
+			if ( m_defaultColours[i] != m_teamColours[i] )
+			{
+				_out->printf( "\t  %6d\t%6d\t%6d\t%6d\n",
 				    i, g_app->m_location->m_teams[i].m_colour.r, g_app->m_location->m_teams[i].m_colour.g, g_app->m_location->m_teams[i].m_colour.b);
+			}
         }
     }
 
@@ -1052,8 +1060,8 @@ void LevelFile::WriteTeamColours(FileWriter *_out)
 void LevelFile::WriteTeamAlliances(FileWriter *_out)
 {
 	_out->printf( "TeamAlliances_StartDefinition\n");
-	_out->printf( "\t# ID1  ID2   Allied?\n");
-	_out->printf( "\t# ===================\n");
+	_out->printf( "\t# ID1   \tID2   \tAllied?\n");
+	_out->printf( "\t# =======================\n");
 
     if( g_app->m_location )
     {
@@ -1061,8 +1069,8 @@ void LevelFile::WriteTeamAlliances(FileWriter *_out)
 	    {
 			for ( int j = 0; j < NUM_TEAMS; ++j )
 			{
-				if ( m_teamAlliances[i][j] && i != j ) {
-					_out->printf( "\t  %d   %d   %d\n",
+				if ( m_teamAlliances[i][j] != m_defaultAlliances[i][j] && i != j ) {
+					_out->printf( "\t  %6d\t%6d\t%6d\n",
 							i, j, 1);
 				}
 			}
@@ -1074,16 +1082,16 @@ void LevelFile::WriteTeamAlliances(FileWriter *_out)
 void LevelFile::WriteTeamFlags(FileWriter *_out)
 {
 	_out->printf( "TeamFlags_StartDefinition\n");
-	_out->printf( "\t# ID     Flags\n");
-	_out->printf( "\t# ========================\n");
+	_out->printf( "\t# ID    \tFlags\n");
+	_out->printf( "\t# =========================================================================\n");
 
     if( g_app->m_location )
     {
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
-			if ( m_teamFlags[i] > 0 )
+			if ( m_teamFlags[i] != m_defaultFlags[i] )
 			{
-				_out->printf( "\t  %d   ", i);
+				_out->printf( "\t  %6d\t", i);
 				if ( m_teamFlags[i] & TEAM_FLAG_PLAYER_SPAWN_TEAM )		{ _out->printf( " PlayerSpawnTeam "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_EGGWINIANS )			{ _out->printf( " Eggwinians "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_SOULHARVEST )			{ _out->printf( " SoulHarvest "); }
@@ -1269,7 +1277,7 @@ void LevelFile::WritePrimaryObjectives(FileWriter *_out)
         _out->printf( "\n" );
 	}
 
-	_out->printf( "PrimaryObjectives_EndDefinition\n");
+	_out->printf( "PrimaryObjectives_EndDefinition\n\n");
 }
 
 
@@ -1308,6 +1316,17 @@ void LevelFile::SetDefaults()
 		m_teamAlliances[id1][id1] = true; // Sanity check to stop people making a team fight itself
 	}	
 
+	// Save the defaults for later
+	m_defaultColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
+	for ( int i = 0; i < NUM_TEAMS; i++ )
+	{
+		m_defaultColours[i] = RGBAColour(m_teamColours[i].r, m_teamColours[i].g, m_teamColours[i].b);
+		m_defaultFlags[i] = m_teamFlags[i];
+		for ( int j = 0; j < NUM_TEAMS; j++ )
+		{
+			m_defaultAlliances[i][j] = m_teamAlliances[i][j];
+		}
+	}
 	/*
 	m_teamColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
 	if ( NUM_TEAMS >  0 ) { m_teamColours[0] = RGBAColour( 100, 255, 100 ); }		// Normally Green AI
@@ -2053,7 +2072,7 @@ void LevelFile::WriteRunningPrograms(FileWriter *_out)
             }
         }
 
-	    _out->printf( "RunningPrograms_EndDefinition\n");
+	    _out->printf( "RunningPrograms_EndDefinition\n\n");
     }
 }
 
