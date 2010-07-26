@@ -502,7 +502,7 @@ void SpamInfection::AdvanceAttackingEntity()
     {
         //if( m_targetId.GetTeamId() != m_id.GetTeamId() )
 		//bool friendly
-		if (m_targetId.GetTeamId() != m_id.GetTeamId() && (Entity::TypeDarwinian))
+		if (m_targetId.GetTeamId() != m_id.GetTeamId() && (g_app->m_location->GetEntity(m_targetId)->m_type == Entity::TypeDarwinian) )
         {
             // Green darwinian
             int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian );
