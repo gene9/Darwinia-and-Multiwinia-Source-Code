@@ -13,7 +13,22 @@
 
 #include <MMSYSTEM.H>
 #include <DSOUND.H>
-#include <DXERR9.H>
+
+//#define OLD_DIRECTX_SDK
+
+#ifdef OLD_DIRECTX_SDK
+#include <dxerr9.h>
+#define DXGetErrorString DXGetErrorString9
+#define DXGetErrorDescription DXGetErrorDescription9
+#ifdef _MSC_VER
+#pragma comment (lib, "dxerr9.lib")
+#endif
+#else
+#include <dxerr.h>
+#ifdef _MSC_VER
+#pragma comment (lib, "dxerr.lib")
+#endif
+#endif
 
 #include "sound/sound_filter.h"
 #include "sound/sound_library_3d_dsound.h"
@@ -30,15 +45,15 @@ static char s_dxErrorMsg[512];
 #ifdef _DEBUG
 #define SOUNDASSERT(x, y, ...)  { if(x != DS_OK && x != S_FALSE) {  \
                                 sprintf( s_dxErrorMsg, "%s %s", \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
+                                DXGetErrorString(x),   \
+                                DXGetErrorDescription(x) );  \
                                 char msg[512];             \
                                 sprintf( msg, "DirectSound ERROR\n%s line %d\n\n%s\nError Code(%d) : %s\n%s",  \
                                 __FILE__, __LINE__,   \
                                 y,                    \
                                 x,                    \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
+                                DXGetErrorString(x),   \
+                                DXGetErrorDescription(x) );  \
                                 AppReleaseAssert( false, msg, __VA_ARGS__ );  } }
 #else
 #define SOUNDASSERT(x, y, ...)  SOUNDDEBUG(x, y, __VA_ARGS__)
@@ -46,15 +61,15 @@ static char s_dxErrorMsg[512];
 
 #define SOUNDDEBUG(x, y, ...)   { if(x != DS_OK && x != S_FALSE) {  \
                                 sprintf( s_dxErrorMsg, "%s %s", \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
+                                DXGetErrorString(x),   \
+                                DXGetErrorDescription(x) );  \
                                 char msg[512];             \
                                 sprintf( msg, "DirectSound ERROR, %s line %d, %s, Error Code(%d) : %s, %s\n",  \
                                 __FILE__, __LINE__,   \
                                 y,                    \
                                 x,                    \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
+                                DXGetErrorString(x),   \
+                                DXGetErrorDescription(x) );  \
                                 AppDebugOut( msg, __VA_ARGS__ );  } }
 
 
