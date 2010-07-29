@@ -954,8 +954,12 @@ void TaskManagerInterfaceGestures::RenderMessages()
             if( m_currentMessageType == MessageResearchUpgrade )
             {
                 int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_currentTaskType );
-                sprintf( fullMessage, "%s: %s v%d.0", message, taskName, researchLevel );
+                sprintf( fullMessage, "%%s s: %s v%d.0", g_app->m_location->m_teams[m_messageTeam].m_name, message, taskName, researchLevel );
             }
+			else if ( m_messageTeam != -1 )
+			{
+                sprintf( fullMessage, "%s %s: %s", g_app->m_location->m_teams[m_messageTeam].m_name, message, taskName );
+			}
             else
             {
                 sprintf( fullMessage, "%s: %s", message, taskName );

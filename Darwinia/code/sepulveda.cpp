@@ -42,6 +42,9 @@ void Sepulveda::LoadAvatar ( char *_imageName )
 {
 	int i = 1;
 
+	m_currentAvatar = new char[256];
+	sprintf(m_currentAvatar, "%s", _imageName);
+
     char filename[256];
     sprintf( filename, "sepulveda/%s1.bmp",_imageName );
 	
@@ -50,8 +53,9 @@ void Sepulveda::LoadAvatar ( char *_imageName )
 
     sprintf( dataFileName, "data/%s", filename );
     sprintf( modFileName, "%smods/%s/%s", g_app->GetProfileDirectory(), g_app->m_resource->GetModName(), filename );
+	MemMappedFile *mmfile = g_app->m_resource->GetUncompressedFile(dataFileName);
 
-	while ( DoesFileExist(dataFileName) || DoesFileExist(modFileName) )
+	while ( DoesFileExist(dataFileName) || DoesFileExist(modFileName) || mmfile )
     {
         g_app->m_resource->GetTexture( filename, true, false );
 
@@ -59,6 +63,8 @@ void Sepulveda::LoadAvatar ( char *_imageName )
 		sprintf( filename, "sepulveda/%s%d.bmp",_imageName, i );
 		sprintf( dataFileName, "data/%s", filename );
 		sprintf( modFileName, "%smods/%s/%s", g_app->GetProfileDirectory(), g_app->m_resource->GetModName(), filename );
+		mmfile = g_app->m_resource->GetUncompressedFile(dataFileName);
+
     }
 	m_picsFound = i-1;
 	//DarwiniaReleaseAssert(m_picsFound == 0, "Unable to load avatar: %s", _imageName );

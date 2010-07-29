@@ -79,6 +79,9 @@ public:
         NotInLocation,		// 4
 		DebugKey,			// 5
 		NeverTrue,			// 6
+		EnterLocation,		// 7
+		EnterLocationAlways,// 8
+		MissionComplete,
         NumConditions                                       // Remember to update GetTypeName
     };
     int     m_type;

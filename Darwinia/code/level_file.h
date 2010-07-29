@@ -175,9 +175,6 @@ class LevelFile
 private:
 	void				SetDefaults					();
 
-	void				ParseMissionFile			(char const *_filename);
-	void				ParseMapFile				(char const *_filename);
-
 	void				ParseCameraMounts			(TextReader *_in);
 	void				ParseCameraAnims			(TextReader *_in);
 	void				ParseBuildings              (TextReader *_in, bool _dynamic);
@@ -194,6 +191,7 @@ private:
 	void				ParseTeamColours            (TextReader *_in);
 	void				ParseTeamAlliances          (TextReader *_in);
 	void				ParseTeamFlags              (TextReader *_in);
+	void				ParseTeamNames              (TextReader *_in);
 
 	void				GenerateAutomaticObjectives	();
 
@@ -212,8 +210,12 @@ private:
 	void				WriteTeamColours			(FileWriter *_out);
 	void				WriteTeamAlliances			(FileWriter *_out);
 	void				WriteTeamFlags   			(FileWriter *_out);
+	void				WriteTeamNames   			(FileWriter *_out);
 
 public:
+	void				ParseMissionFile			(char const *_filename);
+	void				ParseMapFile				(char const *_filename);
+
 	char				m_missionFilename           [MAX_FILENAME_LEN];
 	char				m_mapFilename               [MAX_FILENAME_LEN];
 
@@ -264,6 +266,8 @@ public:
 
 	void				SetFlag				( char _teamId, int _flag, bool _flagState );
 	void				SetAlliance			( char _teamId, char _partnerId, bool _allianceState );
+
+	char				*m_teamNames[NUM_TEAMS];
 };
 
 

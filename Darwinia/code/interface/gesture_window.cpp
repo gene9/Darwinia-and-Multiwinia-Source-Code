@@ -5,6 +5,7 @@
 #include "lib/input/input.h"
 #include "lib/input/input_types.h"
 #include "lib/targetcursor.h"
+#include "lib/input/keydefs.h"
 
 #include "interface/gesture_window.h"
 
@@ -19,11 +20,21 @@
 
 class DrawGestureBox : public DarwiniaButton
 {
+protected:
+	int m_realX;
+	int m_realY;
+
 public:
+	DrawGestureBox::DrawGestureBox ()
+	{
+		m_realX = 0;
+		m_realY = 0;
+	}
+
     void RenderBorder( int realX, int realY, bool highlighted, bool clicked )
     {
         glEnable    ( GL_BLEND );
-        glDisable   ( GL_CULL_FACE );
+        //glDisable   ( GL_CULL_FACE );
 
         glColor4f   ( 0.0f, 0.0f, 0.0f, 0.5f );
         glBegin( GL_QUADS );
@@ -41,13 +52,13 @@ public:
             glVertex2i( realX, realY + m_h );
         glEnd();
 
-        glEnable    ( GL_CULL_FACE );
+        //glEnable    ( GL_CULL_FACE );
         glDisable   ( GL_BLEND );
     }
 
     void RenderGesture( int realX, int realY, bool highlighted, bool clicked )
     {
-/*        glColor4f   ( 0.0f, 0.0f, 1.0f, 1.0f );
+		glColor4f   ( 0.0f, 0.0f, 1.0f, 1.0f );
         glLineWidth ( 2.0f );
         glEnable    ( GL_LINE_SMOOTH );
         glEnable    ( GL_BLEND );
@@ -76,11 +87,13 @@ public:
         }
 
         glDisable   ( GL_BLEND );
-        glDisable   ( GL_LINE_SMOOTH );*/
+        glDisable   ( GL_LINE_SMOOTH );
+		glColor4f   ( 1.0f, 1.0f, 1.0f, 1.0f );
     }
 
     void Render( int realX, int realY, bool highlighted, bool clicked )
     {
+		m_realX = realX; m_realY = realY;
         RenderBorder    ( realX, realY, highlighted, clicked );
         RenderGesture   ( realX, realY, highlighted, clicked );
     }
@@ -92,8 +105,8 @@ public:
             g_app->m_gesture->BeginGesture();
         }
 
-        int x = g_target->X();
-        int y = g_target->Y();
+        int x = g_target->X() - m_realX;
+        int y = g_target->Y() - m_realY;
         g_app->m_gesture->AddSample( x, y );
     }
 
@@ -170,7 +183,23 @@ public:
             double maha = g_app->m_gesture->GetMahalanobisDistance( m_symbolIndex );
             g_editorFont.DrawText2D( realX + 5, realY + m_h - 6, 12, "%d", (int) maha );
             g_editorFont.DrawText2DRight( realX + m_w - 3, realY + m_h - 6, 10, "deviation" );
+
+            glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+            glColor4f( 1.0f, 1.0f, 0.0f, 1.0f );
+
         }
+    }
+
+    void MouseUp()
+    {
+        EclWindow *window = EclGetWindow("Gesture Editor");
+		if ( window )
+		{
+			int i = 0;
+			GestureWindow *gw = (GestureWindow *) window;
+			sscanf(m_name, "gesture%d", &i);
+			gw->m_trainingSymbol = i;
+		}
     }
 };
 
@@ -181,6 +210,7 @@ class SaveDataButton : public DarwiniaButton
     {
         g_app->m_gesture->SaveTrainingData( "gestures.txt" );
     }
+
 };
 
 
@@ -214,6 +244,7 @@ class RecordGestureDemoButton: public DarwiniaButton
 GestureWindow::GestureWindow( char *_name )
 :   DarwiniaWindow( _name )
 {
+	m_trainingSymbol = -1;
 }
 
 
@@ -222,12 +253,12 @@ void GestureWindow::Create()
     DarwiniaWindow::Create();
 
     DrawGestureBox *dgb = new DrawGestureBox();
-    int h = m_h - 180;
+    int h = m_h - 360;
     int w = h * 4 / 3;
     dgb->SetShortProperties( "DrawBox", 10, 30, w, h );
     RegisterButton( dgb );
 
-    int numSymbols = (m_w - 100) / 110;
+    int numSymbols = 2 * (m_w - 100) / 110;
 
     for( int i = 0; i < numSymbols; ++i )
     {
@@ -235,7 +266,12 @@ void GestureWindow::Create()
         gsb->m_symbolIndex = i;
         char name[64];
         sprintf( name, "gesture%d", i+1 );
-        gsb->SetShortProperties( name, 10 + i * 110, m_h - 135, 90, 120 );
+		int atY = 0;
+		if ( i % 2 == 1 ) {
+	        gsb->SetShortProperties( name, 10 + (int) floor((float) i/2.0) * 110, m_h - 135, 90, 120 );
+		} else {
+	        gsb->SetShortProperties( name, 10 + (int) floor((float) i/2.0) * 110, m_h - 275, 90, 120 );
+		}
         RegisterButton( gsb );
     }
 
@@ -264,7 +300,15 @@ void GestureWindow::Update()
 
 void GestureWindow::Keypress( int keyCode, bool shift, bool ctrl, bool alt )
 {
-    /*if (keyCode >= KEY_1 && keyCode <= KEY_9)
+	if ( keyCode == KEY_ENTER )
+	{
+		if ( m_trainingSymbol != -1 )
+		{
+			g_app->m_gesture->AddTrainingSample( m_trainingSymbol );
+			g_app->m_gesture->ClearMouseSamples();
+		}
+	}
+/*    if (keyCode >= KEY_1 && keyCode <= KEY_9)
     {
         int symbolId = keyCode - KEY_1;
         g_app->m_gesture->AddTrainingSample( symbolId );

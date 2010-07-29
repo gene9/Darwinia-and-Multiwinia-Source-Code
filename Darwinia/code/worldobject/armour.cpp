@@ -18,6 +18,7 @@
 #include "app.h"
 #include "renderer.h"
 #include "location.h"
+#include "level_file.h"
 #include "main.h"
 #include "particle_system.h"
 #include "explosion.h"
@@ -389,7 +390,7 @@ bool Armour::IsUnloading()
 
 int Armour::Capacity()
 {
-    int research = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeArmour );
+    int research = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeArmour );
     switch( research )
     {
         case 0:

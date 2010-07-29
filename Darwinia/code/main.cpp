@@ -1300,6 +1300,8 @@ void EnterLocation()
 	    g_app->m_camera->SetDebugMode(Camera::DebugModeAuto);
 	    g_app->m_camera->RequestMode(Camera::ModeFreeMovement);
 
+		g_app->m_globalWorld->EvaluateEvents();
+
 	    LocationGameLoop();
 #ifdef DEMOBUILD
 #ifndef DEMO2

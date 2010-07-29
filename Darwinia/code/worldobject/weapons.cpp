@@ -280,7 +280,7 @@ bool AirStrikeMarker::Advance()
             int unitId;
             Team *team = g_app->m_location->GetMyTeam();
 
-            int airStikeResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeAirStrike );
+            int airStikeResearch = g_app->m_globalWorld->m_research->CurrentLevel( teamId, GlobalResearch::TypeAirStrike );
             AirstrikeUnit *unit = (AirstrikeUnit *) team->NewUnit( Entity::TypeSpaceInvader, airStikeResearch, &unitId, m_pos );
             unit->m_effectId = m_id.GetIndex();
             m_airstrikeUnit.Set( teamId, unitId, -1, -1 );
@@ -400,7 +400,7 @@ bool Rocket::Advance()
     //
     // Have we run out of steam?
 
-    int rocketResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeRocket );
+    int rocketResearch = g_app->m_globalWorld->m_research->CurrentLevel( m_fromTeamId, GlobalResearch::TypeRocket );
     float maxLife = 0.0f;
     switch( rocketResearch )
     {
@@ -1357,7 +1357,7 @@ bool SubversionBeam::Advance()
 			    if( PointSegDist2D(Vector2(entity->m_pos), Vector2(rayStart), Vector2(rayEnd)) < 10.0f )
                 {
                     g_app->m_soundSystem->TriggerOtherEvent( this, "HitEntity", SoundSourceBlueprint::TypeLaser );
-					if( entity->m_type == Entity::TypeDarwinian )
+					if( entity->m_type == Entity::TypeDarwinian && !entity->m_dead )
 					{
                         WorldObjectId id = g_app->m_location->SpawnEntities( entity->m_pos, m_fromTeamId, -1, Entity::TypeDarwinian, 1, entity->m_vel, 0.0 );            
                         entity->m_dead = true;
@@ -1402,9 +1402,9 @@ void SubversionBeam::Render( float predictionTime )
 
     rightAngle *= 0.8f;
 
-    glEnd();
+    //glEnd();
     glBindTexture	(GL_TEXTURE_2D, g_app->m_resource->GetTexture("textures/subversion.bmp"));
-    glBegin( GL_QUADS );
+    //glBegin( GL_QUADS );
     rightAngle *= 2.0;
 	
     if( m_fromTeamId == -1 || m_fromTeamId == 255 ) return;
@@ -1427,7 +1427,7 @@ void SubversionBeam::Render( float predictionTime )
         g_app->m_camera->CreateCameraShake( 0.5f );
     }
 
-    glEnd();
+    //glEnd();
     glBindTexture	(GL_TEXTURE_2D, g_app->m_resource->GetTexture("textures/laser.bmp", false));
-    glBegin( GL_QUADS );
+    //glBegin( GL_QUADS );
 }

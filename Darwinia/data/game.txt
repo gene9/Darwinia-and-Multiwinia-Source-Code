@@ -42,9 +42,7 @@ Research_EndDefinition
 TeamResearch_StartDefinition
 #	Header		Team	Type		Prg	Level
 #	========================================================
-	Research	2	Darwinian	0	4
-	Research	2	Laser		0	3
-	Research	2	Grenade		0	2
+	Research	1	Darwinian	0	4
 TeamResearch_EndDefinition
 
 Events_StartDefinition

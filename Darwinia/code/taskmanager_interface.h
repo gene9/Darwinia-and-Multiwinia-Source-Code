@@ -69,7 +69,8 @@ public:
     float   m_messageTimer;                                         // "Run Program : Squad" or "Syntax Error"
     bool    m_viewingDefaultObjective;
     bool    m_lockTaskManager;
-    bool    m_quickUnitVisible;                                     // the quickunit creation is visible
+    bool    m_quickUnitVisible;										// the quickunit creation is visible
+	int		m_messageTeam;
 
     enum
     {
@@ -91,7 +92,7 @@ public:
 public:
     TaskManagerInterface();
 
-    void    SetCurrentMessage ( int _messageType, int _taskType, float _timer );
+    void    SetCurrentMessage ( int _messageType, int _taskType, float _timer, int _teamId = -1 );
 
     void    RunDefaultObjective ( GlobalEventCondition *_cond );            // Runs basic cut-scene for trunk ports + research items
 

@@ -77,16 +77,8 @@ void Darwinian::Begin()
     m_radius = 4.0f;
 
 	float subversionLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeController);
-	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
-	{
-		subversionLevel = max(subversionLevel, g_app->m_globalWorld->m_research->CurrentLevel(2,GlobalResearch::TypeController));
-	}
-
 	float laserLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeLaser);
 	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
-	{
-		laserLevel = max(laserLevel, g_app->m_globalWorld->m_research->CurrentLevel(2,GlobalResearch::TypeLaser));
-	}
 
 	// L1 = 25%, L2 = 50%, L3 = 75%, L4+ = 100% armed with subversion instead of lasers
 	if ( frand() < subversionLevel/(subversionLevel+laserLevel) ) { m_subversive = true; }
@@ -572,10 +564,6 @@ bool Darwinian::AdvanceCombat()
     // Move towards our threat if we're a Soldier Darwinian
 
     bool soldier = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 2;
-	if ( !soldier && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()]  & TEAM_FLAG_PLAYER_SPAWN_TEAM) )
-	{
-		soldier = g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeDarwinian ) > 2;
-	}
 	//soldier = true; // DEBUG
 
     if( soldier && !m_scared )
@@ -661,10 +649,6 @@ bool Darwinian::AdvanceCombat()
         // NEVER throw grenades if the target area is too steep - Darwinians just can't fucking aim on cliffs
 
 		bool hasGrenade = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 3;
-		if ( !hasGrenade && (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()]  & TEAM_FLAG_PLAYER_SPAWN_TEAM) )
-		{
-			hasGrenade = g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeDarwinian ) > 3;
-		}
 		if ( m_subversive ) { hasGrenade = false; }
 
         //bool hasGrenade = (g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 3 && !m_subversive);
@@ -1243,7 +1227,8 @@ bool Darwinian::AdvanceCarryingSpirit()
 {
     Building *building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
 
-    if( !building )
+	// Check the building is still friendly now too
+    if( !building || !g_app->m_location->IsFriend(m_id.GetTeamId(), building->m_id.GetTeamId()) )
     {
         bool found = SearchForIncubator();
         building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
@@ -2062,10 +2047,9 @@ bool Darwinian::SearchForThreats()
     if( entity && !entity->m_dead )
     {
         m_state = StateCombat;
-        bool soldier = m_id.GetTeamId() == 1 ||
-                        g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian ) > 2;
+        bool soldier = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 2;
 
-        if( !soldier ) m_scared = true;
+		if( !soldier ) m_scared = true;
         if( soldier )
         {
             m_scared = numEnemies > 5 && !friendsPresent;

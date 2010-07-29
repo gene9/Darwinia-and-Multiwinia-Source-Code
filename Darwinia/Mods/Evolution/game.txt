@@ -9,6 +9,8 @@ Locations_EndDefinition
 Buildings_StartDefinition
 	# Id  teamId  locId   type   link  online
 	# =======================================
+	  0	-1	1	11	-1	0
+	  6	-1	1	11	-1	0
 Buildings_EndDefinition
 
 TeamResearch_StartDefinition
@@ -56,6 +58,12 @@ TeamResearch_StartDefinition
 TeamResearch_EndDefinition
 
 Events_StartDefinition
+	Event	EnterLocation:1
+		Action RunScript nest_intro.txt
+	End
+	Event	MissionComplete:1
+		Action RunScript nest_reward.txt
+	End
 Events_EndDefinition
 
 Avatar_StartDefinition

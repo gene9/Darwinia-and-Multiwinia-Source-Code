@@ -5,6 +5,10 @@ Difficulty_EndDefinition
 CameraMounts_StartDefinition
 	# Name	          Pos                   Front          Up
 	# =========================================================================
+	start           2149.47  230.91 1853.30 0.75 -0.43 -0.50 0.35 0.90 -0.24
+	cambigisland    1477.57  320.23 1491.40 -0.72 -0.45 -0.53 -0.36 0.89 -0.27
+	camsmallisland  1942.91  214.02  970.97 0.54 -0.58 -0.62 0.38 0.82 -0.44
+	Camturrets      1564.47  137.05  915.49 -0.82 -0.41 0.39 -0.37 0.91 0.18
 CameraMounts_EndDefinition
 
 CameraAnimations_StartDefinition
@@ -13,8 +17,7 @@ CameraAnimations_EndDefinition
 Buildings_StartDefinition
 	# Type              id      x       z       tm      rx      rz      isGlobal
 	# ==========================================================================
-	TrunkPort           0       775.42  950.32  8       0.54    0.84    1       -1      
-	ResearchCrate       28      1029.04 1157.40 1       0.38    0.36    0       Spider      1
+	ResearchCrate       28      1029.04 1157.40 1       -0.70   -0.11   0       Spider      1
 	Incubator           39      2269.60 677.50  8       -0.28   0.96    1            0     0     0
 Buildings_EndDefinition
 
@@ -32,33 +35,22 @@ Routes_StartDefinition
 Routes_EndDefinition
 
 PrimaryObjectives_StartDefinition
-	NeverTrue 
+	BuildingOnline :nest,6 	objective_capture_trunk
+	BuildingOnline :nest,0 	objective_capture_trunk
 PrimaryObjectives_EndDefinition
 
 TeamColours_StartDefinition
 	# ID    	R     	G     	B
 	# ==============================
-	       0	   255	    50	    50
-	       1	   100	   250	   100
-	       2	   255	    50	    50
-	       4	   255	   255	    50
 TeamColours_EndDefinition
 
 TeamAlliances_StartDefinition
 	# ID1   	ID2   	Allied?
 	# =======================
-	       0	     4	     1
-	       1	     4	     1
-	       2	     4	     1
-	       4	     0	     1
-	       4	     1	     1
-	       4	     2	     1
 TeamAlliances_EndDefinition
 
 TeamFlags_StartDefinition
 	# ID    	Flags
 	# =========================================================================
-	       0	 PlayerSpawnTeam  SoulHarvest 
-	       2	 SoulHarvest 
 TeamFlags_EndDefinition
 

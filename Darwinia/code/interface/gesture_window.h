@@ -16,6 +16,8 @@ public:
     void Update();
 
     void Keypress( int keyCode, bool shift, bool ctrl, bool alt );
+
+	int m_trainingSymbol;
 };
 
 

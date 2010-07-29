@@ -142,7 +142,10 @@ char *GlobalEventCondition::GetTypeName( int _type )
                                 "ResearchOwned",
                                 "NotInLocation",
 								"DebugKey",
-								"NeverTrue"
+								"NeverTrue",
+								"EnterLocation",
+								"EnterLocationAlways",
+								"MissionComplete"
                            };
 
     DarwiniaDebugAssert( _type >= 0 && _type < NumConditions );
@@ -200,6 +203,19 @@ bool GlobalEventCondition::Evaluate()
 		case NeverTrue:
 			return false;
 
+		case EnterLocation:
+		case EnterLocationAlways:
+			if ( g_app->m_locationId != -1 ) {
+				if ( g_app->m_locationId == m_id ) { return true; }
+			}
+			break;
+
+		case MissionComplete:
+			if ( g_app->m_locationId != -1 ) {
+				if ( g_app->m_locationId == m_id && g_app->m_location->m_missionComplete ) { return true; }
+			}
+			break;
+
         default:
             DarwiniaDebugAssert(false);
     }
@@ -227,6 +243,9 @@ void GlobalEventCondition::Save( FileWriter *_out )
             break;
 
         case DebugKey:
+		case EnterLocation:
+		case EnterLocationAlways:
+		case MissionComplete:
             _out->printf( ":%d ", m_id);
             break;
     }
@@ -434,7 +453,8 @@ bool GlobalEvent::Execute()
 void GlobalEvent::MakeAlwaysTrue()
 {
     if( m_conditions.Size() == 1 &&
-        m_conditions[0]->m_type == GlobalEventCondition::AlwaysTrue )
+        ( m_conditions[0]->m_type == GlobalEventCondition::AlwaysTrue ||
+		m_conditions[0]->m_type == GlobalEventCondition::EnterLocationAlways) )
     {
         return;
     }
@@ -479,6 +499,9 @@ void GlobalEvent::Read( TextReader *_in )
                 break;
 
             case GlobalEventCondition::DebugKey:
+			case GlobalEventCondition::EnterLocation:
+			case GlobalEventCondition::EnterLocationAlways:
+			case GlobalEventCondition::MissionComplete:
                 condition->m_id = atoi( _in->GetNextToken() );
 				break;
 		}
@@ -566,7 +589,14 @@ bool GlobalResearch::HasResearch( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    return( m_researchLevel[_team][_type] > 0 );
+	bool hasResearch =  m_researchLevel[_team][_type] > 0;
+	if ( g_app->m_location )
+	{
+		if ( !hasResearch && g_app->m_location->m_levelFile->m_teamFlags[_team] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) {
+			hasResearch = m_researchLevel[2][_type] > 0; 
+		}
+	}
+    return( hasResearch );
 }
 
 
@@ -608,6 +638,14 @@ void GlobalResearch::EvaluateLevel( int _type )
 
 				if ( j == 2 )
 				{
+					for ( int i = 0; i < NUM_TEAMS; i++ )
+					{
+						if ( g_app->m_location->IsFriend(i,j) )
+						{
+							g_app->m_globalWorld->m_research->AddResearch( i, _type );
+							g_app->m_globalWorld->m_research->m_researchLevel[i][ _type ] = m_researchLevel[j][_type];
+						}
+					}
 					char sepStringId[256];
 					sprintf( sepStringId, "research_%s_v%d", GetTypeName(_type), m_researchLevel[_type] );
 					strlwr( sepStringId );
@@ -715,7 +753,15 @@ int GlobalResearch::CurrentLevel( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-    return m_researchLevel[_team][_type];
+	int level = m_researchLevel[_team][_type];
+	if ( g_app->m_location )
+	{
+		if ( g_app->m_location->m_levelFile->m_teamFlags[_team] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) {
+			level = max(level, m_researchLevel[2][_type]);
+		}
+	}
+
+    return level;
 }
 
 
@@ -741,7 +787,9 @@ void GlobalResearch::WriteTeam(FileWriter *_out)
     {
 		for ( int j = 0; j < NUM_TEAMS; j++ )
 		{
-			_out->printf( "\tResearch %d %s %d %d\n", j, GetTypeName(i), CurrentProgress(j,i), CurrentLevel(j,i) );
+			if ( CurrentProgress(j,i) > 0 || CurrentLevel(j,i) > 0 ) {
+				_out->printf( "\tResearch %d %s %d %d\n", j, GetTypeName(i), CurrentProgress(j,i), CurrentLevel(j,i) );
+			}
 		}
     }
 	

@@ -58,6 +58,7 @@ public:
 		OpSetAlliance,
 		OpChangeFlag,
 		OpChangeAvatar,
+		OpMergeMission,
 		OpNumOps
 	};
 
@@ -138,6 +139,7 @@ protected:
 	void RunCommand_SetAlliance			( int _teamId, int _partnerId, bool _allianceState );
 	void RunCommand_ChangeFlag			( int _teamId, int _flag, bool _flagState );
 	void RunCommand_ChangeAvatar		( char *avatar );
+	void RunCommand_MergeMission		( char *baseMap, char *baseMission, char *newMission );
 
 public:
     Script();

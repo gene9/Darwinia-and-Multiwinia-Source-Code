@@ -1,7 +1,7 @@
 #Default: Taken from Multiwinia
 
 TeamColours_StartDefinition
-	# ID     Type R   G   B
+	# ID  R   G   B
 	# ========================
 	  0   100 255 100
 	  1   255 50 50
@@ -30,3 +30,17 @@ TeamFlags_StartDefinition
 	  0    PlayerSpawnTeam
 TeamFlags_EndDefinition
 
+TeamNames_StartDefinition
+	# ID     Name
+	# ========================
+	  0   Darwinians
+	  1   Virii
+	  2   Player
+	  3   Blue Tribe
+	  4   Orange Tribe
+	  5   Purple Tribe
+	  6   Cyan Tribe
+	  7   Pink Tribe
+	  8   Black Tribe
+	  9   White Tribe
+TeamNames_EndDefinition

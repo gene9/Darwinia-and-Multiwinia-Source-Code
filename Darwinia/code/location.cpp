@@ -170,10 +170,13 @@ void Location::Empty()
 }
 
 
-void Location::LoadLevel(char const *missionFilename, char const *mapFilename)
+void Location::LoadLevel(char const *missionFilename, char const *mapFilename, bool overwrite)
 {
-	m_levelFile = new LevelFile(missionFilename, mapFilename);
-
+	if ( !m_levelFile || overwrite ) {
+		m_levelFile = new LevelFile(missionFilename, mapFilename);
+	} else {
+		m_levelFile->ParseMissionFile(missionFilename);
+	}
     //
     // Are the objectives already completed on entry?
     // If so, suppress congratulations message
@@ -1819,8 +1822,8 @@ void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _ty
     float distance = ( _target - _pos ).Mag();
     float force = sqrtf(distance) * 8.0f;
 
-    int grenadeResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeGrenade );
-    if( _fromTeamId == 1 ) grenadeResearch = 4;
+    int grenadeResearch = g_app->m_globalWorld->m_research->CurrentLevel( _fromTeamId, GlobalResearch::TypeGrenade );
+    //if( _fromTeamId == 1 ) grenadeResearch = 4;
 
 	float maxForce = ThrowableWeapon::GetMaxForce( grenadeResearch );
 
@@ -1918,10 +1921,6 @@ void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel )
 void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
 {
     int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeLaser );
-	if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
-	{
-		laserResearch = max(laserResearch, g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeLaser ));
-	}
 	float lifetime = 0.0f;
     switch( laserResearch )
     {
@@ -1953,10 +1952,6 @@ void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned cha
 void Location::FireSubversion( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
 {
     int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeController );
-	if ( g_app->m_location->m_levelFile->m_teamFlags[_teamId] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
-	{
-		laserResearch = max(laserResearch, g_app->m_globalWorld->m_research->CurrentLevel( 2, GlobalResearch::TypeController ));
-	}
     float lifetime = 0.0f;
     switch( laserResearch )
     {

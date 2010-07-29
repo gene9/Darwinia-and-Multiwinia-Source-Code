@@ -120,6 +120,8 @@ public:
 
 	void SpawnDarwinian ();
 	bool m_teamSpawner;
+	float m_glowFader;
+	int m_currentPort;
 };
 
 class SpawnPointRandom : public SpawnPoint

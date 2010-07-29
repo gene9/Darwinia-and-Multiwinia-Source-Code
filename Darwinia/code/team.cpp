@@ -21,6 +21,7 @@
 #include "app.h"
 #include "camera.h"
 #include "location.h"
+#include "level_file.h"
 #include "global_world.h"
 #include "main.h"
 #include "entity_grid.h"
@@ -56,6 +57,7 @@ Team::Team()
     m_others.SetTotalNumSlices( NUM_SLICES_PER_FRAME );
 	m_others.SetStepSize(100);
 	m_units.SetStepSize(5);
+	m_name = new char[256];
 }
 
 
@@ -63,6 +65,8 @@ void Team::Initialise(int _teamId)
 {
     m_teamId = _teamId;
 
+	sprintf(m_name, "%s", g_app->m_location->m_levelFile->m_teamNames[_teamId]);
+	//strcpy(m_name,g_app->m_location->m_levelFile->m_teamNames[_teamId]);
 
     //
     // Generate the ViriiFull bmp

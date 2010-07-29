@@ -185,6 +185,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="xinput.lib"
 				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_gl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -4838,6 +4839,14 @@
 				</File>
 				<File
 					RelativePath="..\..\code\worldobject\controltower.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\crate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\crate.h"
 					>
 				</File>
 				<File

@@ -69,7 +69,7 @@
 #ifdef TARGET_DEBUG
     #define DARWINIA_GAMETYPE "debug"
     #define LOCATION_EDITOR
-    #define SOUND_EDITOR
+    //#define SOUND_EDITOR
     #define CHEATMENU_ENABLED
     #define GESTURE_EDITOR
     //#define TEST_HARNESS_ENABLED

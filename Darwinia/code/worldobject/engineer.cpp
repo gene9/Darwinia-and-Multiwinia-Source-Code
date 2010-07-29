@@ -82,7 +82,7 @@ int Engineer::GetNumSpirits()
 
 int Engineer::GetMaxSpirits()
 {
-    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeEngineer );
+    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeEngineer );
     switch( engineerLevel )
     {
         case 0 :        return 0;
@@ -926,7 +926,7 @@ bool Engineer::AdvanceReprogramming()
 
 void Engineer::BeginBridge( Vector3 _to )
 {
-    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeEngineer );
+    int engineerLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeEngineer );
     if( engineerLevel < 5 ) return;
 
     //

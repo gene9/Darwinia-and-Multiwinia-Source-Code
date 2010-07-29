@@ -42,10 +42,8 @@ class Location
 {
 protected:
     int	 m_lastSliceProcessed;
-	bool m_missionComplete;
 
     void SetMyTeamId			( unsigned char _teamId );
-    void LoadLevel				( char const *_missionFilename, char const *_mapFilename );
 
     void AdvanceWeapons			( int _slice );
     void AdvanceBuildings		( int _slice );
@@ -73,7 +71,9 @@ protected:
     Vector3     FindValidSpawnPosition( Vector3 const &_pos, float _spread );
 
 public:
-    Landscape       m_landscape;
+    void LoadLevel				( char const *_missionFilename, char const *_mapFilename, bool overwrite = true );
+
+	Landscape       m_landscape;
     EntityGrid      *m_entityGrid;
     ObstructionGrid *m_obstructionGrid;
 	LevelFile		*m_levelFile;
@@ -92,6 +92,7 @@ public:
     SliceDArray     <WorldObject *>		m_effects;
 
 	bool			m_isSnowing;
+	bool			m_missionComplete;
 public:
     Location();
     ~Location();

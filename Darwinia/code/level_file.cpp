@@ -13,6 +13,7 @@
 #include "interface/prefs_other_window.h"
 
 #include "worldobject/researchitem.h"
+#include "worldobject/researchcrate.h"
 #include "worldobject/darwinian.h"
 #include "worldobject/officer.h"
 #include "worldobject/anthill.h"
@@ -177,6 +178,10 @@ void LevelFile::ParseMissionFile(char const *_filename)
 		else if (stricmp("TeamFlags_StartDefinition", word) == 0)
 		{
 			ParseTeamFlags(in);
+		}
+		else if (stricmp("TeamNames_StartDefinition", word) == 0)
+		{
+			ParseTeamNames(in);
 		}
 		else
 		{
@@ -702,6 +707,27 @@ void LevelFile::ParseTeamColours(TextReader *_in)
  	}
 }
 
+void LevelFile::ParseTeamNames(TextReader *_in)
+{
+	while(_in->ReadLine())
+	{
+		if (!_in->TokenAvailable()) continue;
+		char *word = _in->GetNextToken();
+
+        if (stricmp("TeamNames_EndDefinition", word) == 0)
+        {
+            return;
+        }
+
+		int teamID = atoi(word);
+
+		if ( teamID >= 0 && teamID <= NUM_TEAMS)
+		{
+			sprintf(m_teamNames[teamID], "%s", _in->GetNextToken());
+		}
+ 	}
+
+}
 void LevelFile::ParseTeamAlliances(TextReader *_in)
 {
 	while(_in->ReadLine())
@@ -852,7 +878,7 @@ void LevelFile::ParsePrimaryObjectives(TextReader *_in)
 		{
             case GlobalEventCondition::AlwaysTrue:
             case GlobalEventCondition::NotInLocation:
-				DarwiniaDebugAssert(false);
+				//DarwiniaDebugAssert(false);
                 break;
 
 			case GlobalEventCondition::BuildingOffline:
@@ -929,7 +955,7 @@ void LevelFile::GenerateAutomaticObjectives()
 			}
 
             if (primaryObjective->m_type == GlobalEventCondition::ResearchOwned &&
-                building->m_type == Building::TypeResearchItem &&
+                (building->m_type == Building::TypeResearchItem || building->m_type == Building::TypeResearchCrate ) &&
                 ((ResearchItem *)building)->m_researchType == primaryObjective->m_id )
             {
                 found = true;
@@ -944,7 +970,25 @@ void LevelFile::GenerateAutomaticObjectives()
 			if (building->m_type == Building::TypeResearchItem)
 			{
 				ResearchItem *item = (ResearchItem*) GetBuilding(building->m_id.GetUniqueId());
-                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( item->m_researchType );
+                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( building->m_id.GetTeamId(), item->m_researchType );
+                if( currentLevel == 0 /*|| currentLevel < item->m_level*/ )
+                {
+                    // NOTE : We SHOULD really allow objectives to be created when the current research level
+                    // is below that of this ResearchItem - eg we have level 1 and this item is level 2.
+                    // However GlobalEventCondition isn't currently able to store the level data, so it
+                    // ends up being an auto-completed objective.
+				    GlobalEventCondition *condition = new GlobalEventCondition();
+				    condition->m_locationId = locationId;
+                    condition->m_type = GlobalEventCondition::ResearchOwned;
+				    condition->m_id = item->m_researchType;
+                    condition->SetStringId( "objective_research" );
+				    m_secondaryObjectives.PutData(condition);
+                }
+			}
+			else if (building->m_type == Building::TypeResearchCrate)
+			{
+				ResearchCrate *item = (ResearchCrate*) GetBuilding(building->m_id.GetUniqueId());
+                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( building->m_id.GetTeamId(), item->m_researchType );
                 if( currentLevel == 0 /*|| currentLevel < item->m_level*/ )
                 {
                     // NOTE : We SHOULD really allow objectives to be created when the current research level
@@ -1057,6 +1101,23 @@ void LevelFile::WriteTeamColours(FileWriter *_out)
 
 	_out->printf( "TeamColours_EndDefinition\n\n");
 }
+void LevelFile::WriteTeamNames(FileWriter *_out)
+{
+	_out->printf( "TeamNames_StartDefinition\n");
+	_out->printf( "\t# ID    \tR     \tG     \tB\n");
+	_out->printf( "\t# ==============================\n");
+
+    if( g_app->m_location )
+    {
+	    for (int i = 0; i < NUM_TEAMS; ++i)
+	    {
+			_out->printf( "\t  %6d\t%s", i, g_app->m_location->m_teams[i].m_name);
+        }
+    }
+
+	_out->printf( "TeamNames_EndDefinition\n\n");
+}
+
 void LevelFile::WriteTeamAlliances(FileWriter *_out)
 {
 	_out->printf( "TeamAlliances_StartDefinition\n");
@@ -1288,6 +1349,7 @@ void LevelFile::WritePrimaryObjectives(FileWriter *_out)
 
 void LevelFile::SetDefaults()
 {
+
 	// Set all teams to white
 	m_teamColours = new RGBAColour[NUM_TEAMS]; // Now using Multiwinia Team Colours
 	for ( int i = 0; i < NUM_TEAMS; i++ )
@@ -1307,6 +1369,7 @@ void LevelFile::SetDefaults()
 			}
 		}
 		m_teamFlags[id1] = 0; // Clear All Flags
+		m_teamNames[id1] = new char[256];
 	}
 
 	ParseMissionFile("defaults.txt");
@@ -1464,6 +1527,7 @@ void LevelFile::SaveMissionFile(char const *_filename)
 	WriteTeamColours(out);
 	WriteTeamAlliances(out);
 	WriteTeamFlags(out);
+	WriteTeamNames(out);
 
 	delete out;
 }

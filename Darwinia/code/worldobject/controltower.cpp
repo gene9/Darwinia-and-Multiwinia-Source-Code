@@ -217,7 +217,9 @@ bool ControlTower::Reprogram( int _teamId )
 			        //g_app->m_sepulveda->Say("building_captured");
                     targetBuilding->ReprogramComplete();
                     SetTeamId( _teamId );
-				    g_app->m_globalWorld->m_research->GiveResearchPoints( GLOBALRESEARCH_POINTS_CONTROLTOWER );
+					if ( g_app->m_location->IsFriend( _teamId, 2) ) { // Friendly teams give points to the player
+					    g_app->m_globalWorld->m_research->GiveResearchPoints( GLOBALRESEARCH_POINTS_CONTROLTOWER );
+					}
 
                     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
                     if( gb )

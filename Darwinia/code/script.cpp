@@ -397,8 +397,13 @@ void Script::RunCommand_GiveResearch(char const *_name)
         int researchType = GlobalResearch::GetType( (char *) _name );
         if( researchType != -1 )
         {
-            g_app->m_globalWorld->m_research->AddResearch( researchType );
-            g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, researchType, 4.0f );
+			for ( int i = 0; i < NUM_TEAMS; i++ )
+			{
+				if ( g_app->m_location->IsFriend(i,2) ) {
+					g_app->m_globalWorld->m_research->AddResearch( researchType );
+					g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, researchType, 4.0f );
+				}
+			}
         }
     }
 }
@@ -634,6 +639,15 @@ void Script::RunCommand_ChangeAvatar ( char *avatar )
 	g_app->m_sepulveda->LoadAvatar(avatar);
 	sprintf(g_app->m_sepulveda->m_currentAvatar,"%s",avatar);
 }
+
+void Script::RunCommand_MergeMission ( char *baseMap, char *baseMission, char *newMission )
+{
+	Location *tempLocation = new Location();
+	tempLocation->LoadLevel(baseMission, baseMap);
+	tempLocation->LoadLevel(newMission, baseMap,false);
+	tempLocation->m_levelFile->SaveMissionFile(baseMission);
+}
+
 
 // Opens a script file and returns. The script will only actually be run when
 // Script::Advance gets called
@@ -952,6 +966,13 @@ void Script::AdvanceScript()
 			RunCommand_ChangeAvatar( nextWord );
 			break;
 		}
+		case OpMergeMission:
+		{
+			char *baseMission = m_in->GetNextToken();
+			char *mergeMission = m_in->GetNextToken();
+			RunCommand_MergeMission( nextWord, baseMission, mergeMission );
+			break;
+		}
 
 		default:				    DarwiniaDebugAssert(false);									break;
 	}
@@ -1160,7 +1181,8 @@ static char *g_opCodeNames[] =
 	"SetTeamColour",
 	"SetAlliance",
 	"ChangeFlag",
-	"ChangeAvatar"
+	"ChangeAvatar",
+	"MergeMission"
 };
 
 

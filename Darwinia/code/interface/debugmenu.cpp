@@ -442,8 +442,8 @@ void DebugKeyBindings::GestureButton()
     if (!EclGetWindow("Gesture Editor") )
     {
         GestureWindow *gesture = new GestureWindow("Gesture Editor");
-        gesture->m_w = 660;
-        gesture->m_h = 660;
+        gesture->m_w = 1024;
+        gesture->m_h = 768;
         gesture->m_x = 30;
         gesture->m_y = 30;
         EclRegisterWindow(gesture);

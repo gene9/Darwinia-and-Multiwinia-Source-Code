@@ -68,6 +68,7 @@
 #include "worldobject/feedingtube.h"
 #include "worldobject/controlstation.h"
 #include "worldobject/researchcrate.h"
+#include "worldobject/crate.h"
 
 
 
@@ -343,7 +344,7 @@ void Building::RenderLights()
 {
     if( m_id.GetTeamId() != 255 && m_lights.Size() > 0 )
     {
-        if( (g_app->m_clientToServer->m_lastValidSequenceIdFromServer % 10)/2 == m_id.GetTeamId() ||
+        if( (g_app->m_clientToServer->m_lastValidSequenceIdFromServer % NUM_TEAMS) == m_id.GetTeamId() ||
             g_app->m_editing )
         {
             for( int i = 0; i < m_lights.Size(); ++i )
@@ -816,6 +817,7 @@ Building *Building::CreateBuilding( int _type )
         case TypeControlStation:        building = new ControlStation();        break;
         case TypeSpawnPointRandom:      building = new SpawnPointRandom();      break;
 		case TypeResearchCrate:         building = new ResearchCrate();         break;
+		case TypeCrate:                 building = new Crate();                 break;
     };
 
 
@@ -907,7 +909,8 @@ char *Building::GetTypeName( int _type )
                                         "FeedingTube",
 										"ControlStation",
 										"SpawnPointRandom",
-										"ResearchCrate"
+										"ResearchCrate",
+										"Crate"
                                     };
 
     if( _type >= 0 && _type < NumBuildingTypes )

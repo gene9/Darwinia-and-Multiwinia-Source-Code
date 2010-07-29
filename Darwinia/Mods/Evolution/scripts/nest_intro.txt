@@ -1,0 +1,47 @@
+
+# central thing 90
+# trunk to dish 117
+# trunk to receiver 2
+# trunk to pattern buffer 1
+# trunk to yard 119
+# pop locks 86 82 88 79 114
+# random spawn point 37
+
+ChangeAvatar			darwinian
+
+WaitFade
+TriggerSound                    cutscene1
+
+CamMove                         cambigisland  15
+Say				nest_intro_1a
+Say				nest_intro_1b
+WaitCam
+
+Say				nest_intro_2a
+Say				nest_intro_2b
+Say				nest_intro_2c
+Say				nest_intro_2d
+WaitSay
+
+CamMove                         camsmallisland  10
+WaitCam
+
+Say				nest_intro_3a
+Say				nest_intro_3b
+Say				nest_intro_3c
+WaitSay
+
+CamMove                         camturrets  5
+WaitCam
+
+Say				nest_intro_4a
+Say				nest_intro_4b
+Say				nest_intro_4c
+WaitSay
+
+CamMove                         start 5
+WaitCam
+
+CamReset
+
+StopSound                       cutscene1

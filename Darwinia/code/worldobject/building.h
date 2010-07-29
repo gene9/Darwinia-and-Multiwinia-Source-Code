@@ -84,6 +84,7 @@ public:
 		TypeControlStation,
 		TypeSpawnPointRandom,
 		TypeResearchCrate,
+		TypeCrate,
 		NumBuildingTypes
     };
 

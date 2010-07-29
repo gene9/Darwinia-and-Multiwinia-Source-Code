@@ -93,11 +93,12 @@ TaskManagerInterface::TaskManagerInterface()
 }
 
 
-void TaskManagerInterface::SetCurrentMessage( int _messageType, int _taskType, float _timer )
+void TaskManagerInterface::SetCurrentMessage( int _messageType, int _taskType, float _timer, int _team )
 {
     m_currentMessageType = _messageType;
     m_currentTaskType = _taskType;
     m_messageTimer = GetHighResTime() + _timer;
+	m_messageTeam = _team;
 }
 
 

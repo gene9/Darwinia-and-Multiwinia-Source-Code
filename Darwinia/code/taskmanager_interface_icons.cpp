@@ -1145,14 +1145,18 @@ void TaskManagerInterfaceIcons::RenderMessages()
         //
         // Build string
 
-        char fullMessage[256];
+        char fullMessage[512];
         if( taskName )
         {
             if( m_currentMessageType == MessageResearchUpgrade )
             {
                 int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_currentTaskType );
-                sprintf( fullMessage, "%s: %s v%d.0", message, taskName, researchLevel );
+                sprintf( fullMessage, "%s %s: %s v%d.0", g_app->m_location->m_teams[m_messageTeam].m_name, message, taskName, researchLevel );
             }
+			else if ( m_messageTeam != -1 )
+			{
+                sprintf( fullMessage, "%s %s: %s", g_app->m_location->m_teams[m_messageTeam].m_name, message, taskName );
+			}
             else
             {
                 sprintf( fullMessage, "%s: %s", message, taskName );
@@ -2204,6 +2208,10 @@ void TaskManagerInterfaceIcons::RenderObjectives()
             bool completed = condition->Evaluate();
 
             char *descriptor = LANGUAGEPHRASE( condition->m_stringId );
+			// Debug
+			if ( condition->m_cutScene ) {
+				descriptor = condition->m_cutScene;
+			}
 
             g_gameFont.SetRenderOutline(true);
             glColor4f( 0.8f, 0.8f, 0.8f, 0.0f );

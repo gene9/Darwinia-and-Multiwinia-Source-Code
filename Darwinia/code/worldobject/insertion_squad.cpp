@@ -719,7 +719,7 @@ void Squadie::FireSecondaryWeapon( Vector3 const &_pos )
     InsertionSquad *squad = (InsertionSquad *) g_app->m_location->GetUnit( m_id );
     DarwiniaDebugAssert(squad);
 
-    if( g_app->m_globalWorld->m_research->HasResearch( squad->m_weaponType ) )
+    if( g_app->m_globalWorld->m_research->HasResearch( m_id.GetTeamId(), squad->m_weaponType ) )
     {
         Matrix34 mat( m_front, g_upVector, m_pos );
         Vector3 laserPos = m_laser->GetWorldMatrix( mat ).pos;
@@ -796,7 +796,7 @@ Vector3 Squadie::GetSecondaryWeaponTarget()
 	Vector3 right = front;
 	right.RotateAroundY( M_PI / 2.0f );
 
-	float force = ThrowableWeapon::GetMaxForce( g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeGrenade ) );
+	float force = ThrowableWeapon::GetMaxForce( g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeGrenade ) );
 	float maxRange = ThrowableWeapon::GetApproxMaxRange( force );
 
 	//float total = abs(details.x) + abs(details.y);

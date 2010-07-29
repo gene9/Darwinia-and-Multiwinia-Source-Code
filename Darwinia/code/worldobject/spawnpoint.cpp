@@ -210,6 +210,13 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
 
 void SpawnBuilding::SetBuildingLink( int _buildingId )
 {
+	// Dont allow a spawn building to link to a spawn point master
+	if ( g_app->m_location )
+	{
+		Building *building = g_app->m_location->GetBuilding(_buildingId);
+		if ( building && building->m_type == Building::TypeSpawnPointMaster ) { return; }
+	}
+
     SpawnBuildingLink *link = new SpawnBuildingLink();
     link->m_targetBuildingId = _buildingId;
     m_links.PutData( link );
@@ -496,7 +503,9 @@ SpawnPoint::SpawnPoint()
     m_evaluateTimer(0.0f),
     m_numFriendsNearby(0),
     m_populationLock(-1),
-	m_teamSpawner(false)
+	m_teamSpawner(false),
+	m_glowFader(4.0f),
+	m_currentPort(0)
 {
     m_type = Building::TypeSpawnPoint;
 
@@ -559,16 +568,48 @@ bool SpawnPoint::PopulationLocked()
 void SpawnPoint::RecalculateOwnership()
 {
     int teamCount[NUM_TEAMS];
-    memset( teamCount, 0, NUM_TEAMS*sizeof(int));
+	bool teamPresent[NUM_TEAMS];
+	for ( int i = 0; i < NUM_TEAMS; i++ )
+	{
+		teamCount[i] = 0;
+		teamPresent[i] = false;
+	}
 
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+		if( id.IsValid() ) {
+			teamPresent[id.GetTeamId()] = true;
+		}
+	}
+	/*
     for( int i = 0; i < GetNumPorts(); ++i )
     {
         WorldObjectId id = GetPortOccupant(i);
         if( id.IsValid() )
         {
-            teamCount[id.GetTeamId()] ++;
+			if ( m_id.GetTeamId() >= 0 && m_id.GetTeamId() < NUM_TEAMS && g_app->m_location->IsFriend(id.GetTeamId(),m_id.GetTeamId()) ) {
+	            teamCount[m_id.GetTeamId()] ++;
+			} else {
+	            teamCount[id.GetTeamId()] ++;
+			}
         }
     }
+*/
+
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+        if( id.IsValid() )
+        {
+			int lowestFriendlyTeam = id.GetTeamId();
+			for ( int j = 0; j < NUM_TEAMS; j++ )
+			{
+				if ( teamPresent[j] && j < lowestFriendlyTeam && g_app->m_location->IsFriend(id.GetTeamId(),j) ) { lowestFriendlyTeam = j; }
+			}
+			teamCount[lowestFriendlyTeam]++;
+		}
+	}
 
     int winningTeam = -1;
     for( int i = 0; i < NUM_TEAMS; ++i )
@@ -590,7 +631,7 @@ void SpawnPoint::RecalculateOwnership()
     {
         SetTeamId(255);
     }
-    else
+	else if ( !g_app->m_location->IsFriend(m_id.GetTeamId(),winningTeam) )
     {
         SetTeamId(winningTeam);
     }
@@ -626,7 +667,15 @@ bool SpawnPoint::PerformDepthSort( Vector3 &_centrePos )
 
 bool SpawnPoint::Advance()
 {
-    //
+
+	m_glowFader -= SERVER_ADVANCE_PERIOD;
+	if ( m_glowFader <= 0 ) {
+		m_glowFader = 4;
+		m_currentPort++;
+		if ( m_currentPort >= GetNumPorts() ) { m_currentPort = 0; }
+	}
+	
+	//
     // Re-evalulate our situation
 
     m_evaluateTimer -= SERVER_ADVANCE_PERIOD;
@@ -698,6 +747,8 @@ void SpawnPoint::SpawnDarwinian()
 		}
 	}
 
+	if ( teamId < 0 || teamId >= NUM_TEAMS ) { return; }
+
     WorldObjectId spawned = g_app->m_location->SpawnEntities( exitPos, teamId, -1, Entity::TypeDarwinian, 1, exitVel, 0.0 );
     Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe( spawned, Entity::TypeDarwinian );
     if( darwinian )
@@ -715,6 +766,24 @@ void SpawnPoint::Render( float _predictionTime )
 
 void SpawnPoint::RenderAlphas( float _predictionTime )
 {
+
+	int nextPort = m_currentPort + 1;
+	if ( nextPort >= GetNumPorts() ) { nextPort = 0; }
+
+	RGBAColour fromColour(153,51,25,255);
+	RGBAColour toColour(153,51,25,255);
+
+    WorldObjectId occupantId = GetPortOccupant(m_currentPort);
+	if( occupantId.IsValid() ) {
+        fromColour = g_app->m_location->m_teams[occupantId.GetTeamId()].m_colour;
+    }
+    occupantId = GetPortOccupant(nextPort);
+	if( occupantId.IsValid() ) {
+        toColour = g_app->m_location->m_teams[occupantId.GetTeamId()].m_colour;
+    }
+
+	RGBAColour glowColour = (fromColour * (m_glowFader/4)) + (toColour * ((4-m_glowFader)/4));
+
     SpawnBuilding::RenderAlphas( _predictionTime );
 
     Vector3 camUp = g_app->m_camera->GetUp();
@@ -746,9 +815,8 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
         float size = 10.0f + sinf(timeIndex+i*10) * 10.0f;
         size = max( size, 5.0f );
 
-        glColor4f( 0.6f, 0.2f, 0.1f, alpha);
-
         glBegin( GL_QUADS );
+			glColor4ub(glowColour.r,glowColour.g,glowColour.b,(int) (alpha*255.0));
             glTexCoord2i(0,0);      glVertex3fv( (pos - camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,0);      glVertex3fv( (pos + camRight * size + camUp * size).GetData() );
             glTexCoord2i(1,1);      glVertex3fv( (pos + camRight * size - camUp * size).GetData() );
@@ -756,6 +824,7 @@ void SpawnPoint::RenderAlphas( float _predictionTime )
         glEnd();
     }
 
+    glDisable       ( GL_BLEND );
     glDisable       ( GL_TEXTURE_2D );
     glDepthMask     ( true );
 }

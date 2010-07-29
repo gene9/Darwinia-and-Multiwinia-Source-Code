@@ -170,7 +170,7 @@ void Spam::RenderAlphas( float _predictionTime )
         //glColor4f( 0.9f, 0.2f, 0.2f, alpha);
 
 		RGBAColour spamColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
-		glColor4f(spamColour.r, spamColour.g, spamColour.b, alpha);
+		glColor4ub(spamColour.r, spamColour.g, spamColour.b, (int) (alpha*255));
 
         if( m_research ) glColor4f( 0.1f, 0.2f, 0.8f, alpha);
 
@@ -213,7 +213,7 @@ void Spam::RenderAlphas( float _predictionTime )
 	    //for (int i = 0; i < NUM_TEAMS; ++i)
 	   // {
 			RGBAColour spamColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
-			glColor4f((float) spamColour.r / 255.0,(float)  spamColour.g / 255.0,(float)  spamColour.b / 255.0, alpha);
+			glColor4ub(spamColour.r, spamColour.g, spamColour.b, (int) (alpha*255));
         //}
     //}
 
@@ -505,7 +505,7 @@ void SpamInfection::AdvanceAttackingEntity()
 		if (m_targetId.GetTeamId() != m_id.GetTeamId() && (g_app->m_location->GetEntity(m_targetId)->m_type == Entity::TypeDarwinian) )
         {
             // Green darwinian
-            int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeDarwinian );
+            int darwinianResearch = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian );
             if( darwinianResearch > 2 && syncfrand(10.0f) < 5.0f )
             {
                 g_app->m_location->SpawnEntities( target->m_pos, m_id.GetTeamId(), -1, Entity::TypeDarwinian, 1, target->m_vel, 0.0f );

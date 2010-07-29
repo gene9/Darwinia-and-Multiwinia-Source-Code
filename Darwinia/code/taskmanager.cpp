@@ -421,7 +421,13 @@ void Task::Stop()
 
 char *Task::GetTaskName( int _type )
 {
-    return GlobalResearch::GetTypeName( _type );
+	if ( _type >= 0 && _type <= GlobalResearch::NumResearchItems ) {
+	    return GlobalResearch::GetTypeName( _type );
+	} else {
+		char *title = new char[256];
+		sprintf(title,"Task %d",_type);
+		return title;
+	}
 }
 
 
@@ -581,6 +587,7 @@ int TaskManager::MapGestureToTask( int _gestureId )
         case 5 :        return GlobalResearch::TypeController;
         case 6 :        return GlobalResearch::TypeOfficer;
         case 7 :        return GlobalResearch::TypeArmour;
+        case 8 :        return GlobalResearch::TypeSpider;
 
         default :       return -1;
     }

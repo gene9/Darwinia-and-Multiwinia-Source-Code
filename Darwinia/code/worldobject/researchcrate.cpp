@@ -202,19 +202,18 @@ bool ResearchCrate::Advance()
 				g_app->m_globalWorld->m_research->m_researchLevel[i][ m_researchType ] = m_level;
 
 				g_app->m_soundSystem->TriggerBuildingEvent( this, "AquireResearch" );
-
-				if ( m_id.GetTeamId() == 2 )
-				{
-					if( existingLevel == 0 )
-					{
-						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f );
-					}
-					else
-					{
-						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f );
-					}
-				}
 			}
+		}
+		int teamId = m_id.GetTeamId();
+		if ( g_app->m_location->IsFriend(teamId,2) ) { teamId = 2; }
+		int existingLevel = g_app->m_globalWorld->m_research->CurrentLevel( teamId, m_researchType );
+		if( existingLevel == 0 )
+		{
+			g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearch, m_researchType, 4.0f, teamId );
+		}
+		else
+		{
+			g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, m_researchType, 4.0f, teamId );
 		}
         return true;
     }

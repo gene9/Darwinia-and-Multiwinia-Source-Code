@@ -108,7 +108,7 @@ void UserInput::Advance()
 #endif
 //
 #ifdef CHEATMENU_ENABLED
-    if( g_inputManager->controlEvent( ControlToggleCheatMenu ) ) DebugKeyBindings::CheatButton();
+    if( g_inputManager->controlEvent( ControlToggleCheatMenu ) ) DebugKeyBindings::DebugMenu();
 #endif
 
 //

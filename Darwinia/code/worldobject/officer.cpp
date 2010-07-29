@@ -650,7 +650,7 @@ void Officer::SetOrders( Vector3 const &_orders )
         else
         {
             float timeNow = GetHighResTime();
-            int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeOfficer );
+            int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeOfficer );
 
             if( timeNow > lastOrderSet + 0.3f )
             {
@@ -709,7 +709,7 @@ void Officer::SetNextMode()
     static float lastOrderSet = 0.0f;
 
     float timeNow = GetHighResTime();
-    int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeOfficer );
+    int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeOfficer );
 
     if( timeNow > lastOrderSet + 0.3f )
     {
@@ -766,7 +766,7 @@ void Officer::SetPreviousMode()
     static float lastOrderSet = 0.0f;
 
     float timeNow = GetHighResTime();
-    int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeOfficer );
+    int researchLevel = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeOfficer );
 
     if( timeNow > lastOrderSet + 0.3f )
     {
