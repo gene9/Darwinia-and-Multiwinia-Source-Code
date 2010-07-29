@@ -26,3 +26,18 @@ TeamFlags_StartDefinition
 	       0	 PlayerSpawnTeam  SoulHarvest 
 	       2	 SoulHarvest 
 TeamFlags_EndDefinition
+
+TeamNames_StartDefinition
+	# ID     Name
+	# ========================
+	  0   Red Tribe
+	  1   Green Tribe
+	  2   Red Tribe
+	  3   Blue Tribe
+	  4   Orange Tribe
+	  5   Purple Tribe
+	  6   Cyan Tribe
+	  7   Pink Tribe
+	  8   Virus
+	  9   White Tribe
+TeamNames_EndDefinition
