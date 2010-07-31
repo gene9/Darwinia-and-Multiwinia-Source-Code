@@ -178,8 +178,24 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
             Refresh();
         }
 	}
-	else if (keyCode >= KEY_0 && keyCode <= KEY_9)
+	else if (keyCode >=KEY_0 && keyCode <= KEY_9)
 	{
+		if (len < sizeof(m_buf) - 1)
+		{
+			char buf[2] = " ";
+			buf[0] = keyCode & 0xff;
+			strcat(m_buf, buf);
+		}
+
+        if( m_type == TypeString )
+        {
+			strcpy(m_string, m_buf);
+            Refresh();
+        }
+	}
+	else if (keyCode >=KEY_0_PAD && keyCode <= KEY_9_PAD)
+	{
+		keyCode -=48; // Convert to normal number
 		if (len < sizeof(m_buf) - 1)
 		{
 			char buf[2] = " ";

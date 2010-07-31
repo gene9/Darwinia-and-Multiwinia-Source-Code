@@ -7,8 +7,6 @@
 # pop locks 86 82 88 79 114
 # random spawn point 37
 
-ChangeAvatar			darwinian
-
 WaitFade
 TriggerSound                    cutscene1
 

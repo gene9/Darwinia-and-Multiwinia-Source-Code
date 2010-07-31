@@ -185,6 +185,12 @@ void ResearchItem::Render( float _predictionTime )
 
 void ResearchItem::RenderAlphas( float _predictionTime )
 {
+	if ( g_app->m_editing )
+	{
+        Matrix34 mat( m_front, m_up, m_pos );
+        m_centrePos = m_shape->CalculateCentre( mat );
+        m_radius = m_shape->CalculateRadius( mat, m_centrePos );
+	}
     Building::RenderAlphas( _predictionTime );
 
     Vector3 camUp = g_app->m_camera->GetUp();

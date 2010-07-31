@@ -211,7 +211,7 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
 void SpawnBuilding::SetBuildingLink( int _buildingId )
 {
 	// Dont allow a spawn building to link to a spawn point master
-	if ( g_app->m_location )
+	if ( (g_app->m_location) && (g_app->m_location->m_levelFile) )
 	{
 		Building *building = g_app->m_location->GetBuilding(_buildingId);
 		if ( building && building->m_type == Building::TypeSpawnPointMaster ) { return; }

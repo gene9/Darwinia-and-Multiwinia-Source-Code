@@ -61,6 +61,7 @@ GlobalLocation::GlobalLocation()
     m_numSpirits(0),
     m_missionCompleted(false)
 {
+	m_colour = RGBAColour(153, 51,25);
     strcpy( m_name, "none" );
     strcpy( m_mapFilename, "none" );
     strcpy( m_missionFilename, "none" );
@@ -567,6 +568,7 @@ GlobalResearch::GlobalResearch()
 		m_currentResearch[j] = TypeSquad;
 		m_researchPoints[j] = 0;
 		m_researchTimer[j] = 0.0;
+		m_researchTeam[j] = j;
 	}
 
     //m_currentResearch = TypeSquad;
@@ -589,7 +591,7 @@ bool GlobalResearch::HasResearch( char _team, int _type )
 {
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-	bool hasResearch =  m_researchLevel[_team][_type] > 0;
+	bool hasResearch =  (m_researchLevel[_team][_type] > 0) || (m_researchLevel[m_researchTeam[_team]][_type]) ;
 	if ( g_app->m_location )
 	{
 		if ( !hasResearch && g_app->m_location->m_levelFile->m_teamFlags[_team] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) {
@@ -751,10 +753,12 @@ void GlobalResearch::DecreaseProgress( char _team, int _amount )
 
 int GlobalResearch::CurrentLevel( char _team, int _type )
 {
+	if ( _type == -1 ) { return 4; }
+
     DarwiniaDebugAssert( _type >= 0 && _type < NumResearchItems );
 
-	int level = m_researchLevel[_team][_type];
-	if ( g_app->m_location )
+	int level = max(m_researchLevel[_team][_type],m_researchLevel[m_researchTeam[_team]][_type]);
+	if ( g_app->m_location && g_app->m_location->m_levelFile )
 	{
 		if ( g_app->m_location->m_levelFile->m_teamFlags[_team] & TEAM_FLAG_PLAYER_SPAWN_TEAM ) {
 			level = max(level, m_researchLevel[2][_type]);
@@ -774,7 +778,10 @@ void GlobalResearch::Write(FileWriter *_out)
         _out->printf( "\tResearch %s %d %d\n", GetTypeName(i), CurrentProgress(i), CurrentLevel(i) );
     }
 
-    _out->printf( "\tCurrentResearch %s\n", GetTypeName(m_currentResearch[2]) );
+	if ( m_currentResearch[2] != -1 )
+	{
+		_out->printf( "\tCurrentResearch %s\n", GetTypeName(m_currentResearch[2]) );
+	}
     _out->printf( "\tCurrentPoints %d\n", m_researchPoints[2] );
     _out->printf( "Research_EndDefinition\n\n" );
 }
@@ -795,8 +802,15 @@ void GlobalResearch::WriteTeam(FileWriter *_out)
 	
 	for ( int j = 0; j < NUM_TEAMS; j++ )
 	{
-		_out->printf( "\tCurrentResearch %d %s\n", j, GetTypeName(m_currentResearch[j]) );
-		_out->printf( "\tCurrentPoints %d %d\n", j, m_researchPoints[j] );
+		if ( m_currentResearch[j] != -1 ) {
+			_out->printf( "\tCurrentResearch %d %s\n", j, GetTypeName(m_currentResearch[j]) );
+		}
+		if ( m_researchPoints[j] > 0 ) {
+			_out->printf( "\tCurrentPoints %d %d\n", j, m_researchPoints[j] );
+		}
+		if ( m_researchTeam[j] != j ) {
+			_out->printf("\tUseTeamResearch\t%d\t%d\n", j, m_researchTeam[j]);
+		}
 	}
     _out->printf( "TeamResearch_EndDefinition\n\n" );
 }
@@ -873,6 +887,12 @@ void GlobalResearch::ReadTeam( TextReader *_in )
 			int team = atoi(_in->GetNextToken());
             int points = atoi( _in->GetNextToken() );
             m_researchPoints[team] = points;
+        }
+        else if( stricmp(word, "UseTeamResearch" ) == 0 )
+        {
+			int team = atoi(_in->GetNextToken());
+            int otherTeam = atoi( _in->GetNextToken() );
+            m_researchTeam[team] = otherTeam;
         }
         else
         {
@@ -1395,7 +1415,7 @@ void SphereWorld::RenderIslands()
     Vector3 camUp = g_app->m_camera->GetUp();
 
 //    glColor4f       ( 1.0f, 1.0f, 1.0f, 1.0f );
-    glColor4f       ( 0.6f, 0.2f, 0.1f, 1.0f);
+    //glColor4f       ( 0.6f, 0.2f, 0.1f, 1.0f);
     glDisable       ( GL_DEPTH_TEST );
     glDepthMask     ( false );
     glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
@@ -1408,6 +1428,7 @@ void SphereWorld::RenderIslands()
 		GlobalLocation *loc =g_app->m_globalWorld->m_locations.GetData(i);
         if( loc->m_available || g_app->m_editing )
         {
+			glColor3ub(loc->m_colour.r,loc->m_colour.g,loc->m_colour.b);
 		    Vector3 islandPos = g_app->m_globalWorld->GetLocationPosition(loc->m_id );
 
             int numRedraws = 5;
@@ -2249,8 +2270,16 @@ void GlobalWorld::LoadLocations(char *_filename)
         float posY      = atof( in->GetNextToken() );
         float posZ      = atof( in->GetNextToken() );
 
-        GlobalLocation *location = GetLocation( locIndex );
+		GlobalLocation *location = GetLocation( locIndex );
         if( location ) location->m_pos.Set( posX, posY, posZ );
+
+		if ( location && in->TokenAvailable() )
+		{
+			int red		= atoi( in->GetNextToken() );
+			int green	= atoi( in->GetNextToken() );
+			int blue	= atoi( in->GetNextToken() );
+			location->m_colour = RGBAColour(red,green,blue);
+		}
     }
 
     delete in;
@@ -2261,14 +2290,14 @@ void GlobalWorld::SaveLocations(char *_filename)
 {
     FileWriter *out = g_app->m_resource->GetFileWriter( _filename, false );
 
-    out->printf( "# ================================\n" );
-    out->printf( "# id   x        y        z\n" );
-    out->printf( "# ================================\n\n" );
+    out->printf( "# =============================================================\n" );
+    out->printf( "# id   x        y        z\tRed\tGreen\tBlue\n" );
+    out->printf( "# =============================================================\n\n" );
 
     for( int i = 0; i < m_locations.Size(); ++i )
     {
         GlobalLocation *loc = m_locations[i];
-        out->printf( "%-6d %-8.2f %-8.2f %-8.2f\n", loc->m_id, loc->m_pos.x, loc->m_pos.y, loc->m_pos.z );
+        out->printf( "%-6d %-8.2f %-8.2f %-8.2f\t%4d\t%4d\t%4d\n", loc->m_id, loc->m_pos.x, loc->m_pos.y, loc->m_pos.z, loc->m_colour.r, loc->m_colour.g, loc->m_colour.b );
     }
 
     delete out;

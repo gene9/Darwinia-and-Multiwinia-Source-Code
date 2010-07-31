@@ -36,6 +36,7 @@ public:
 public:
     GlobalLocation();
 
+	RGBAColour	m_colour;
     void    AddSpirits( int _count=1 );
 };
 
@@ -184,6 +185,7 @@ public:
     int     m_currentResearch	[NUM_TEAMS];
     int     m_researchPoints	[NUM_TEAMS];
     float   m_researchTimer		[NUM_TEAMS];
+	int		m_researchTeam		[NUM_TEAMS];
 
 public:
     GlobalResearch();

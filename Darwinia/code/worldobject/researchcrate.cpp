@@ -285,6 +285,13 @@ void ResearchCrate::Render( float _predictionTime )
 
 void ResearchCrate::RenderAlphas( float _predictionTime )
 {
+	if ( g_app->m_editing )
+	{
+        Matrix34 mat( m_front, m_up, m_pos );
+        m_centrePos = m_shape->CalculateCentre( mat );
+        m_radius = m_shape->CalculateRadius( mat, m_centrePos );
+	}
+
 	m_flashTimer -= SERVER_ADVANCE_PERIOD;
 
     Building::RenderAlphas( _predictionTime );

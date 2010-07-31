@@ -87,6 +87,5 @@ Buildings_StartDefinition
 	ControlTower        37      2184.30 842.62  8       -0.88   -0.47   1           29
 	ControlTower        38      1465.05 940.89  8       -0.80   -0.60   1            5
 	ControlStation      40      2206.58 634.07  8       0.83    0.56    1           39     0
-	ResearchCrate       41      2466.10 1700.17 8       -0.79   0.41    0       Spider      1
 Buildings_EndDefinition
 

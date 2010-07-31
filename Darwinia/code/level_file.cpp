@@ -195,7 +195,7 @@ void LevelFile::ParseMissionFile(char const *_filename)
 
 void LevelFile::ParseMapFile(char const *_levelFilename)
 {
-    char fullFilename[256];
+    char *fullFilename = new char[256];
     sprintf( fullFilename, "levels/%s", _levelFilename );
 	TextReader *in = g_app->m_resource->GetTextReader(fullFilename);
 	DarwiniaReleaseAssert(in && in->IsOpen(), "Invalid map file specified (%s)", _levelFilename);
@@ -1104,14 +1104,14 @@ void LevelFile::WriteTeamColours(FileWriter *_out)
 void LevelFile::WriteTeamNames(FileWriter *_out)
 {
 	_out->printf( "TeamNames_StartDefinition\n");
-	_out->printf( "\t# ID    \tR     \tG     \tB\n");
+	_out->printf( "\t# ID    \tName\n");
 	_out->printf( "\t# ==============================\n");
 
     if( g_app->m_location )
     {
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
-			_out->printf( "\t  %6d\t%s", i, g_app->m_location->m_teams[i].m_name);
+			_out->printf( "\t  %6d\t%s\n", i, g_app->m_location->m_teams[i].m_name);
         }
     }
 

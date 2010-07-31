@@ -13,6 +13,7 @@
 #include "lib/matrix34.h"
 #include "lib/shape.h"
 #include "lib/text_stream_readers.h"
+#include "lib/MS3DFile.h"
 
 #ifndef EXPORTER_BUILD
 #include "lib/resource.h"
@@ -1363,9 +1364,28 @@ void Shape::BuildDisplayList()
 #endif
 }
 
+void Shape::LoadMS3D ( char *_filename )
+{
+	CMS3DFile *ms3d = new CMS3DFile();
+	if ( !ms3d->LoadFromFile(_filename) ) { DarwiniaReleaseAssert(false,"Failed to load MS3D file: %s", _filename); }
+
+	char *newfile = new char[512];
+	sprintf(newfile,"%s.shp",_filename);
+
+	ms3d->SaveToShape(newfile);
+	TextFileReader in(newfile);
+	Load(&in); // Now reload it as a shape file
+}
 void Shape::Load(TextReader *_in)
 {
 	m_name = strdup(_in->GetFilename());
+	char *extension = new char[512];
+	extension = strdup(m_name);
+	while ( strcspn(extension, ".") != strlen(extension) )
+	{
+		extension = extension + strcspn(extension, ".")+1;
+	}
+	if ( strcmpi(extension,"ms3d") == 0 ) { LoadMS3D(m_name);  return; }
 
 	int const maxFrags = 100;
 	int const maxMarkers = 100;

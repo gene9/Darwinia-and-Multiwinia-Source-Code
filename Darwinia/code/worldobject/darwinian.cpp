@@ -78,9 +78,7 @@ void Darwinian::Begin()
 
 	float subversionLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeController);
 	float laserLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeLaser);
-	if ( g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_PLAYER_SPAWN_TEAM )
 
-	// L1 = 25%, L2 = 50%, L3 = 75%, L4+ = 100% armed with subversion instead of lasers
 	if ( frand() < subversionLevel/(subversionLevel+laserLevel) ) { m_subversive = true; }
 
 	// DEBUG

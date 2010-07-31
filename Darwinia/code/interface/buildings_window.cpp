@@ -141,7 +141,7 @@ public:
         {
             if( b->m_id.GetTeamId() == m_teamId )
             {
-                DarwiniaButton::Render( realX, realY, true, clicked );
+                DarwiniaButton::Render( realX, realY, true, true );
             }
             else
             {
@@ -295,6 +295,7 @@ void BuildingEditWindow::Create()
 				TeamButton *tb = new TeamButton(i+(j*3));
 				tb->SetShortProperties(name, 10 + (i*w) + (i*2), y + (j*buttonPitch), w);
 				RegisterButton(tb);
+				if ( building->m_id.GetTeamId() == i+(j*3) ) { tb->m_highlightedThisFrame = true; }
 			}
 			rows = max(rows,j);
 			j++;

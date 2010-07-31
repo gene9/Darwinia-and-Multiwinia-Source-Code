@@ -399,7 +399,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\..\..\..\$(ProjectName).exe"
+				AdditionalDependencies="xinput.lib"
+				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_dx.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (February 2007)\Lib\x86&quot;"
@@ -3183,6 +3184,14 @@
 				</File>
 				<File
 					RelativePath="..\..\code\lib\debug_render.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\lib\MS3DFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\lib\MS3DFile.h"
 					>
 				</File>
 				<File

@@ -839,10 +839,17 @@ void Virii::Render( float predictionTime, int teamId, int _detail )
     RGBAColour wormColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health;
     if( max(max(wormColour.r,wormColour.g),wormColour.b) < 128 )
     {
-        wormColour *= -1;
+			//wormColour = RGBAColour(0,0,0);
+			glEnd();
+			glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+			glBegin( GL_QUADS );
+		
+		//glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTextureWithAlpha( "sprites/virii2.bmp" ) );
+        //wormColour *= -1;
     }
     //RGBAColour glowColour( 200, 100, 100 );
-    RGBAColour glowColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health; // Ignores the colour swap above
+    //RGBAColour glowColour = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour * health;
+	RGBAColour glowColour = wormColour;
     wormColour.a = 200;
     glowColour.a = 150;
 

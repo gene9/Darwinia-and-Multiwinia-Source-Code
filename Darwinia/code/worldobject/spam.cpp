@@ -134,6 +134,12 @@ void Spam::RenderAlphas( float _predictionTime )
 {
     //g_editorFont.DrawText3DCentre( m_pos+Vector3(0,100,0), 10.0f, "timer %d", (int) m_timer );
     //g_editorFont.DrawText3DCentre( m_pos+Vector3(0,90,0), 10.0f, "Damage %d", (int) m_damage );
+	if ( g_app->m_editing )
+	{
+        Matrix34 mat( m_front, m_up, m_pos );
+        m_centrePos = m_shape->CalculateCentre( mat );
+        m_radius = m_shape->CalculateRadius( mat, m_centrePos );
+	}
 
     Vector3 camUp = g_app->m_camera->GetUp();
     Vector3 camRight = g_app->m_camera->GetRight();
@@ -651,7 +657,7 @@ void SpamInfection::Render( float _time )
             float alpha = 1.0f - i / (float) maxLength;
             alpha *= 0.75f;
 			RGBAColour spamColour = g_app->m_location->m_teams[m_id.GetTeamId()].m_colour;
-            glColor4f( spamColour.r, spamColour.g, spamColour.b, alpha );
+            glColor4ub( spamColour.r, spamColour.g, spamColour.b, (int) (alpha*255.0) );
             Vector3 thisPos = *m_positionHistory.GetPointer(i);
             Vector3 lastPos = *m_positionHistory.GetPointer(i-1);
             Vector3 rightAngle = (thisPos - lastPos) ^ ( camPos - thisPos );
@@ -667,7 +673,7 @@ void SpamInfection::Render( float _time )
         {
             //glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
 			RGBAColour spamColour = g_app->m_location->m_teams[m_id.GetTeamId()].m_colour;
-            glColor4f( spamColour.r, spamColour.g, spamColour.b, 1.0f );
+            glColor4ub( spamColour.r, spamColour.g, spamColour.b, 255 );
             Vector3 lastPos = *m_positionHistory.GetPointer(0);
             Vector3 thisPos = predictedPos;
             Vector3 rightAngle = (thisPos - lastPos) ^ ( camPos - thisPos );

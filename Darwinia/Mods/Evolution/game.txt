@@ -69,6 +69,6 @@ Events_EndDefinition
 Avatar_StartDefinition
 	# Current Avatar
 	# ==================================================================
-	sepulveda
+	darwinian
 Avatar_EndDefinition
 

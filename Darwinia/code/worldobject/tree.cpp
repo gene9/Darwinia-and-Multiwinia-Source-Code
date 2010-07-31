@@ -332,6 +332,20 @@ void Tree::Generate()
 
 	intToArray(m_branchColour, m_branchColourArray);
 	intToArray(m_leafColour, m_leafColourArray);
+#ifdef USE_DIRECT3D
+    if( m_evil )
+    {
+        m_branchColourArray[0] = 0;
+        m_branchColourArray[1] = 0;
+        m_branchColourArray[2] = 0;
+        m_branchColourArray[3] = 200;
+
+        m_leafColourArray[0] = 0;
+        m_leafColourArray[1] = 0;
+        m_leafColourArray[2] = 0;
+        m_leafColourArray[3] = 0;
+	}
+#endif
 
     int treeDetail = g_prefsManager->GetInt( "RenderTreeDetail", 1 );
     if( treeDetail > 1 )

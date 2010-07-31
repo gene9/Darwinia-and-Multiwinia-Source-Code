@@ -416,23 +416,25 @@ void LocationInput::AdvanceTeamControl()
                     InsertionSquad *squad = (InsertionSquad *)unit;
                     int currentWeapon = -1;
                     LList<int> weaponList;
-                    if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeGrenade ) )
-                    {
-                        if( squad->m_weaponType == GlobalResearch::TypeGrenade ) currentWeapon = weaponList.Size();
-                        weaponList.PutData( GlobalResearch::TypeGrenade );
-                    }
-                    if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeRocket ) )
-                    {
-                        if( squad->m_weaponType == GlobalResearch::TypeRocket ) currentWeapon = weaponList.Size();
-                        weaponList.PutData( GlobalResearch::TypeRocket );
-                    }
+					if ( squad->GetPointMan() )
+					{
+						if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeGrenade ) )
+						{
+							if( squad->m_weaponType == GlobalResearch::TypeGrenade ) currentWeapon = weaponList.Size();
+							weaponList.PutData( GlobalResearch::TypeGrenade );
+						}
+						if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeRocket ) )
+						{
+							if( squad->m_weaponType == GlobalResearch::TypeRocket ) currentWeapon = weaponList.Size();
+							weaponList.PutData( GlobalResearch::TypeRocket );
+						}
 
-                    if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeAirStrike ) )
-                    {
-                        if( squad->m_weaponType == GlobalResearch::TypeAirStrike ) currentWeapon = weaponList.Size();
-                        weaponList.PutData( GlobalResearch::TypeAirStrike );
-                    }
-
+						if( g_app->m_globalWorld->m_research->HasResearch( squad->GetPointMan()->m_id.GetTeamId(), GlobalResearch::TypeAirStrike ) )
+						{
+							if( squad->m_weaponType == GlobalResearch::TypeAirStrike ) currentWeapon = weaponList.Size();
+							weaponList.PutData( GlobalResearch::TypeAirStrike );
+						}
+					}
                     if( weaponList.Size() > 1 )
                     {
                         int oldWeapon = currentWeapon;

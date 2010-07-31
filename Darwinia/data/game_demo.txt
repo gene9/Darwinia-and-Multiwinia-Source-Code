@@ -25,6 +25,14 @@ Research_StartDefinition
     CurrentPoints           10
 Research_EndDefinition
 
+TeamResearch_StartDefinition
+#	Header		Team	Type		Prg	Level
+#	========================================================
+	Research	1	Darwinian	0	4
+	Research	1	Grenade		0	4
+	UseTeamResearch	0	2
+	UseTeamResearch	1	2
+TeamResearch_EndDefinition
 
 Events_StartDefinition
 Events_EndDefinition

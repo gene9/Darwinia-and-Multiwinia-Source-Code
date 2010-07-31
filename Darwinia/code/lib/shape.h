@@ -193,6 +193,7 @@ class Shape
 {
 protected:
 	void Load					(TextReader *_in);
+	void LoadMS3D				(char *_filename);
 	char						*m_displayListName;
 
 
