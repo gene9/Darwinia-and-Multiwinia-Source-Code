@@ -896,7 +896,7 @@ void GlobalResearch::ReadTeam( TextReader *_in )
         }
         else
         {
-            DarwiniaReleaseAssert( false, "Error loading GlobalResearch" );
+            DarwiniaReleaseAssert( false, "Error loading GlobalResearch (team)" );
         }
     }
 }
