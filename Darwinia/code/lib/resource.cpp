@@ -347,8 +347,41 @@ Shape *Resource::GetShape( char const *_name )
     return theShape;
 }
 
+Shape *Resource::GetShapeOrShape( char const *_name, char const *_failSafeName, char _teamID, bool _animating, float _colourScale )
+{
+	if ( !g_app->m_location->m_teams ) { return GetShape(_failSafeName); }
+
+	char *fullName = new char[128];
+	if ( !_animating && _teamID >= 0 && _teamID < NUM_TEAMS ) {
+		sprintf(fullName, "%s %d", _name, _teamID);
+	} else {
+		sprintf(fullName, "%s", _name);
+	}
+
+	Shape *theShape = m_shapes.GetData( fullName );
+	
+	// If we haven't loaded the shape before, or _makeNew is true, then
+	// try to load it from the disk
+    if( !theShape || _animating)
+    {
+		theShape = GetShapeCopy(_name, false, false);
+		if ( !theShape ) {
+			theShape = GetShapeCopy(_failSafeName, false);
+		}
+		m_shapes.PutData( fullName, theShape );
+	}
+
+	if ( _teamID >= 0 && _teamID < NUM_TEAMS )
+	{
+		theShape->Recolour(g_app->m_location->m_teams[_teamID].m_colour * _colourScale );
+	}
+    return theShape;
+}
+
 Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating, float _colourScale )
 {
+	if ( !g_app->m_location->m_teams ) { return GetShape(_name); }
+
 	char *fullName = new char[128];
 	if ( !_animating ) {
 		sprintf(fullName, "%s %c", _name, _teamID);
@@ -370,7 +403,7 @@ Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating, flo
     return theShape;
 }
 
-Shape *Resource::GetShapeCopy( char const *_name, bool _animating )
+Shape *Resource::GetShapeCopy( char const *_name, bool _animating, bool _assertOnFailure )
 {
 	char fullPath[512];
 	Shape *theShape = NULL;
@@ -408,12 +441,16 @@ Shape *Resource::GetShapeCopy( char const *_name, bool _animating )
 	if( !theShape )
 	{
 		MemMappedFile *file = m_resourceFiles.GetData(fullPath);
-		DarwiniaReleaseAssert(file, "Couldn't find shape file %s", fullPath);
-		TextDataReader reader((char*)file->m_data, file->m_size, file->m_filename);
-		theShape = new Shape(&reader, _animating);
+		if ( file ) {
+			DarwiniaReleaseAssert(file, "Couldn't find shape file %s", fullPath);
+			TextDataReader reader((char*)file->m_data, file->m_size, file->m_filename);
+			theShape = new Shape(&reader, _animating);
+		}
 	}
 
-    DarwiniaReleaseAssert( theShape, "Couldn't create shape file %s", _name );
+	if ( _assertOnFailure ) {
+		DarwiniaReleaseAssert( theShape, "Couldn't create shape file %s", _name );
+	}
     return theShape;
 }
 

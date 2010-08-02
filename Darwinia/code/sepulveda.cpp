@@ -959,6 +959,9 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
         picTimer = timeNow;
     }
 
+	clamp(picIndex,			0,	m_picsFound);
+	clamp(previousPicIndex, 0,	m_picsFound);
+
     glEnable        ( GL_TEXTURE_2D );
     glDepthMask     ( false );
 

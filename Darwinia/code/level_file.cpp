@@ -723,7 +723,8 @@ void LevelFile::ParseTeamNames(TextReader *_in)
 
 		if ( teamID >= 0 && teamID <= NUM_TEAMS)
 		{
-			sprintf(m_teamNames[teamID], "%s", _in->GetNextToken());
+			char *name = _in->GetRestOfLine();
+			sprintf(m_teamNames[teamID], "%s", name);
 		}
  	}
 
@@ -1111,7 +1112,9 @@ void LevelFile::WriteTeamNames(FileWriter *_out)
     {
 	    for (int i = 0; i < NUM_TEAMS; ++i)
 	    {
-			_out->printf( "\t  %6d\t%s\n", i, g_app->m_location->m_teams[i].m_name);
+			if ( stricmp(g_app->m_location->m_teams[i].m_name, m_teamNames[i]) != 0 ) {
+				_out->printf( "\t  %6d\t%s\n", i, g_app->m_location->m_teams[i].m_name);
+			}
         }
     }
 
@@ -1370,6 +1373,8 @@ void LevelFile::SetDefaults()
 		}
 		m_teamFlags[id1] = 0; // Clear All Flags
 		m_teamNames[id1] = new char[256];
+		sprintf(m_teamNames[id1], "%s", "Unnamed Team");
+		//m_teamNames[id1][255] = 0;
 	}
 
 	ParseMissionFile("defaults.txt");

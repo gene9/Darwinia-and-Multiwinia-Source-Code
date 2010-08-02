@@ -242,6 +242,7 @@ void Location::InitTeams()
 	for ( int t = 0; t < NUM_TEAMS; t += 1 )
 	{
 		m_teams[t].m_colour = m_levelFile->m_teamColours[t];
+		sprintf(m_teams[t].m_name, "%s", m_levelFile->m_teamNames[t]);
 	}
 
 }

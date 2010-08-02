@@ -57,7 +57,9 @@ Team::Team()
     m_others.SetTotalNumSlices( NUM_SLICES_PER_FRAME );
 	m_others.SetStepSize(100);
 	m_units.SetStepSize(5);
-	m_name = new char[256];
+	m_name = new char[256]; m_name[255] = 0;
+	sprintf(m_name,"Unnamed Team");
+
 }
 
 
@@ -65,7 +67,7 @@ void Team::Initialise(int _teamId)
 {
     m_teamId = _teamId;
 
-	sprintf(m_name, "%s", g_app->m_location->m_levelFile->m_teamNames[_teamId]);
+	//sprintf(m_name, "%s", g_app->m_location->m_levelFile->m_teamNames[_teamId]);
 	//strcpy(m_name,g_app->m_location->m_levelFile->m_teamNames[_teamId]);
 
     //

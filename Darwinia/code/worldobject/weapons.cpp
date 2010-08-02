@@ -1386,7 +1386,7 @@ bool SubversionBeam::Advance()
 
 void SubversionBeam::Render( float predictionTime )
 {
-    Vector3 predictedPos = m_pos + m_vel * predictionTime;
+    Vector3 predictedPos = m_pos + (m_vel/2) * predictionTime;
 
     //
     // No richochet occurred recently

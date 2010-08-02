@@ -29,6 +29,7 @@
 #include "worldobject/generichub.h"
 #include "worldobject/switch.h"
 #include "worldobject/researchcrate.h"
+#include "worldobject/gunturret.h"
 
 #include "app.h"
 #include "camera.h"
@@ -537,9 +538,23 @@ void BuildingEditWindow::Create()
 		CreateValueControl( LANGUAGEPHRASE("editor_switchonce"), InputField::TypeInt, &fs->m_lockable, y+=buttonPitch, 0, 1, 0 );
         CreateValueControl( LANGUAGEPHRASE("editor_script"), InputField::TypeString, &fs->m_script, y+=buttonPitch, 0, 0, 0 );
 	}
+	else if ( building->m_type == Building::TypeGunTurret )
+	{
+		GunTurret *gt = (GunTurret *)building;
+
+		DropDownMenu *menu = new DropDownMenu(true);
+        menu->SetShortProperties( LANGUAGEPHRASE("editor_mode"), 10, y+=buttonPitch, m_w-20 );
+        menu->AddOption( LANGUAGEPHRASE("buildingname_gunturret") );
+        menu->AddOption( LANGUAGEPHRASE("buildingname_rocketturret") );
+        menu->AddOption( LANGUAGEPHRASE("buildingname_grenadeturret") );
+        menu->AddOption( LANGUAGEPHRASE("buildingname_flameturret") );
+		menu->AddOption( LANGUAGEPHRASE("buildingname_subversionturret") );
+		menu->AddOption( LANGUAGEPHRASE("buildingname_laserturret") );
+        menu->RegisterInt( &gt->m_state );
+        RegisterButton( menu );
+	}
 
 }
-
 
 void BuildingEditWindow::Render( bool hasFocus )
 {

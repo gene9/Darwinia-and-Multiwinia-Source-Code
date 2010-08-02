@@ -288,7 +288,7 @@ void InsertionSquad::Attack( Vector3 pos, bool withGrenade )
             int randomIndex = syncfrand(canAttack.Size());
             int entityIndex = canAttack[randomIndex];
             canAttack.RemoveData(randomIndex);
-            Entity *ent = m_entities[entityIndex];
+            Squadie *ent = (Squadie *)m_entities[entityIndex];
     		ent->Attack( pos );
         }
     }

@@ -289,7 +289,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_d.exe"
+				AdditionalDependencies="xinput.lib"
+				OutputFile="$(OutDir)\..\..\..\$(ProjectName)_d_dx.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2006)\Lib\x86&quot;"

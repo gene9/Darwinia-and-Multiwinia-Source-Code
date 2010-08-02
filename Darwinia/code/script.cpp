@@ -637,7 +637,7 @@ void Script::RunCommand_ChangeFlag(int _teamId, int _flag, bool _flagState )
 void Script::RunCommand_ChangeAvatar ( char *avatar )
 {
 	g_app->m_sepulveda->LoadAvatar(avatar);
-	sprintf(g_app->m_sepulveda->m_currentAvatar,"%s",avatar);
+	//sprintf(g_app->m_sepulveda->m_currentAvatar,"%s",avatar);
 }
 
 void Script::RunCommand_MergeMission ( char *baseMap, char *baseMission, char *newMission )

@@ -76,7 +76,8 @@ public:
 	// *** Shapes ****
 	Shape			*GetShape			(char const *_name);		// Never produces an animatable shape because the one shape is shared between all people who call this function with the same shape name. If you want an animatable shape, call GetShapeCopy
 	Shape			*GetShape			(char const *_name, char _teamID, bool _animating, float _colourScale = 1.0 ); // Never produces an animatable shape because the one shape is shared between all people who call this function with the same shape name. If you want an animatable shape, call GetShapeCopy
-	Shape			*GetShapeCopy		(char const *_name, bool _animating);
+	Shape			*GetShapeOrShape	(char const *_name, char const *_failSafeName, char _teamID, bool _animating, float _colourScale = 1.0 ); // Never produces an animatable shape because the one shape is shared between all people who call this function with the same shape name. If you want an animatable shape, call GetShapeCopy
+	Shape			*GetShapeCopy		(char const *_name, bool _animating, bool _assertOnFailure = true);
 
 	// *** Normal resources ***
 	SoundStreamDecoder *GetSoundStreamDecoder(char const *_filename);	// Caller must delete the decoder when done

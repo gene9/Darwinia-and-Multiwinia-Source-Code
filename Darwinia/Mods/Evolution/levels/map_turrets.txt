@@ -1,0 +1,45 @@
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_default.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   355   0.00    777   1024  1.20   1.00     25      0  60799   1.00     0
+	   157   0.00    878   1024  1.20   1.00    200      1  73665   1.00     0
+	  1016   0.00   1563    384  1.20   1.00    200      1 112566   1.00     0
+	  1330   0.00   1436    384  1.20   1.00    200      1 150765   1.00     0
+	   677   0.00     37   1024  1.20   1.00    200      1 169813   1.00     0
+	   909   0.00     93   1024  1.20   1.00     50      0 191979   1.00     0
+	   729   0.00    571    512  1.20   1.00    200      1 227462   1.00     0
+	   977   0.00    776    512  1.20   1.00     50      1 274511   1.00     0
+	  1305   0.00     59    384  1.20   1.00    200      1 294327   1.00     0
+	  1536   0.00    200    384  1.20   1.00    200      1 302511   1.00     0
+	  1652   0.00    508    384  1.20   1.00    200      1 316294   1.00     0
+	  1490   0.00   1252    384  1.20   1.00    200      1 336693   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	GunTurret           0       1234.17 1043.24 1       0.73    -0.68   0       5   0.00 0.00 -6277438562204192500000000000000000000000000000000000000000000000000.00 -6277438562204192500000000000000000000000000000000000000000000000000.00 
+	GunTurret           1       1161.36 1003.14 1       0.54    -0.84   0       5   0.00 0.00 -6277438562204192500000000000000000000000000000000000000000000000000.00 -6277438562204192500000000000000000000000000000000000000000000000000.00 
+Buildings_EndDefinition
+

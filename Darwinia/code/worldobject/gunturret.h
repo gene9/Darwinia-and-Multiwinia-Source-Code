@@ -10,7 +10,18 @@
 #define GUNTURRET_NUMBARRELS        4
 #define GUNTURRET_OWNERSHIPTIMER    1.0f
 
+#define GUNTURRET_MINRANGE          100.0 
+#define GUNTURRET_MAXRANGE          300.0
+#define FLAMETURRET_MINRANGE        10.0
+#define FLAMETURRET_MAXRANGE        150.0
+#define ROCKETTURRET_MINRANGE       100.0
+#define ROCKETTURRET_MAXRANGE       200.0
+#define SUBVERSIONTURRET_MINRANGE   10.0f
+#define SUBVERSIONTURRET_MAXRANGE   150.0f
+#define LASERTURRET_MINRANGE		10.0f
+#define LASERTURRET_MAXRANGE		150.0f
 
+#define GUNTURRET_DEFAULT_TYPE		0		// See the enum further down for possible values here
 class GunTurret : public Building
 {
 protected:
@@ -35,6 +46,25 @@ protected:
     float           m_health;
     float           m_ownershipTimer;
 
+public:
+    int             m_state;
+	    // used for the grenade turret
+    Vector3         m_targetPos;
+    double          m_targetRadius; 
+    double          m_targetForce;
+    double          m_targetAngle;
+
+    enum
+    {
+        GunTurretTypeStandard = 0,
+        GunTurretTypeRocket,
+        GunTurretTypeMortar,
+        GunTurretTypeFlame,
+        GunTurretTypeSubversion,
+		GunTurretTypeLaser,
+        NumGunTurretTypes
+    };
+
 protected:
     void PrimaryFire();
     bool SearchForTargets();
@@ -52,6 +82,7 @@ public:
     bool Advance        ();
 
     Vector3 GetTarget   ();
+    void SetTarget( Vector3 _target );
 
     bool IsInView       ();
     void Render         ( float _predictionTime );
@@ -61,6 +92,17 @@ public:
                     float _rayLen, Vector3 *_pos, Vector3 *norm );
 
     void ListSoundEvents( LList<char *> *_list );
+
+    static char *GetTurretTypeName( int _type );
+    static char *GetTurretModelName( int _type );
+
+    double GetReloadTime();
+    double GetMinRange();
+    double GetMaxRange();
+
+    void Read   ( TextReader *_in, bool _dynamic );     
+    void Write  ( FileWriter *_out );	
+
 };
 
 
