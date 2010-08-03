@@ -52,7 +52,7 @@ protected:
     void    HideTaskManager             ();
 
     bool    ScreenZoneHighlighted   ( ScreenZone *_zone );
-    void    RunScreenZone           ( const char *_name, int _data );          // Occurs during click or keypress
+    void    RunScreenZone           ( const char *_name, int _data, WorldObjectId _object = WorldObjectId() );          // Occurs during click or keypress
 
     void    SetupRenderMatrices     ( int _screenId );
     void    ConvertMousePosition    ( float &_x, float &_y );

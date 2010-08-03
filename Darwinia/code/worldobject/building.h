@@ -105,6 +105,7 @@ public:
     static Shape        *s_controlPad;
     static ShapeMarker  *s_controlPadStatus;
 
+	int			m_minimumPorts;
 public:
     Building();
 
@@ -125,6 +126,8 @@ public:
     virtual void RenderPorts    ();
 	virtual void RenderHitCheck ();
     virtual void RenderLink     ();                             // ie link to another building
+
+	void RecalculateOwnership	();
 
     virtual bool PerformDepthSort( Vector3 &_centrePos );       // Return true if you plan to use transparencies
 

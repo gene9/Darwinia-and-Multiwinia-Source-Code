@@ -58,6 +58,8 @@ GunTurret::GunTurret()
     m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp" );
     m_barrel = g_app->m_resource->GetShape( "battlecannonbarrel.shp" );
 
+	m_targetRadius = 5.0f;
+
     m_barrelMount = m_turret->m_rootFragment->LookupMarker( "MarkerBarrel" );
     //DarwiniaReleaseAssert( m_barrelMount, "GunTurret: Can't get Marker(%s) from shape(%s), probably a corrupted file\n", barrelMountName, m_turret->m_name );
 
@@ -75,6 +77,7 @@ GunTurret::GunTurret()
         sprintf( name, "MarkerStatus0%d", i+1 );
         m_statusMarkers[i] = m_shape->m_rootFragment->LookupMarker( name );
     }
+	m_minimumPorts = 1;
 }
 
 void GunTurret::Initialise( Building *_template )
@@ -141,11 +144,11 @@ bool GunTurret::SearchForTargets()
 
     if( m_id.GetTeamId() != 255 )
     {
-        if( m_state == GunTurretTypeMortar )
-        {
-            m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x + m_targetPos.x, m_pos.z + m_targetPos.z, 0.0, m_targetRadius, m_id.GetTeamId() );
-        }
-        else
+        //if( m_state == GunTurretTypeMortar )
+        //{
+        //    m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x + m_targetPos.x, m_pos.z + m_targetPos.z, 0.0, m_targetRadius, m_id.GetTeamId() );
+        //}
+        //else
         {
            /* m_targetId = g_app->m_location->m_entityGrid->GetBestEnemy( m_pos.x, m_pos.z, 
                                                                         GetMinRange(), 
@@ -216,74 +219,20 @@ void GunTurret::SearchForRandomPos()
 
 void GunTurret::RecalculateOwnership()
 {
-    int teamCount[NUM_TEAMS];
-	bool teamPresent[NUM_TEAMS];
-	bool lowestFriendlyTeam[NUM_TEAMS];
-	
-	for ( int i = 0; i < NUM_TEAMS; i++ )
-	{
-		teamPresent[i] = false;
-		lowestFriendlyTeam[i] = i;
-		teamCount[i] = 0;
-	}
+	int oldTeam = m_id.GetTeamId();
+	Building::RecalculateOwnership();
 
-	for( int i = 0; i < GetNumPorts(); ++i )
-    {
-        WorldObjectId id = GetPortOccupant(i);
-        if( id.IsValid() )
-        {
-			teamPresent[id.GetTeamId()] = true;
-        }
-    }
-    int totalOccupiedPorts = 0;
-    for( int i = 0; i < GetNumPorts(); ++i )
-    {
-        WorldObjectId id = GetPortOccupant(i);
-        if( id.IsValid() )
-        {
-			for ( int j = 0; j < NUM_TEAMS; j++ )
-			{
-				if ( j < lowestFriendlyTeam[id.GetTeamId()] && teamPresent[j] && g_app->m_location->IsFriend(j,id.GetTeamId()) ) {
-					lowestFriendlyTeam[id.GetTeamId()] = j;
-				}
-			}
-            teamCount[lowestFriendlyTeam[id.GetTeamId()]] ++;
-			totalOccupiedPorts++;
-        }
-    }
+	if ( m_id.GetTeamId() == oldTeam ) { return; }
 
-    int winningTeam = -1;
-    for( int i = 0; i < NUM_TEAMS; ++i )
+    if( m_id.GetTeamId() == -1 )
     {
-        if( teamCount[i] > 0 &&
-            winningTeam == -1 )
-        {
-            winningTeam = i;
-        }
-        else if( winningTeam != -1 &&
-                 teamCount[i] > 0 &&
-                 teamCount[i] > teamCount[winningTeam] )
-        {
-            winningTeam = i;
-        }
+		m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp", -1, false);
+		m_barrel = g_app->m_resource->GetShapeOrShape( GetTurretModelName(m_state), "battlecannonbarrel.shp", -1, false );
     }
-
-    if( winningTeam == -1 )
+    else
     {
-		if ( m_id.GetTeamId() != 255 )
-		{
-			SetTeamId(255);
-			// Decolour
-			m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp", -1, false);
-			m_barrel = g_app->m_resource->GetShapeOrShape( GetTurretModelName(m_state), "battlecannonbarrel.shp", -1, false );
-		}
-    }
-    else if ( !g_app->m_location->IsFriend(m_id.GetTeamId(), winningTeam) )
-    {
-        SetTeamId(winningTeam);
-		// Now recolour
-		m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp", winningTeam, false);
-		m_barrel = g_app->m_resource->GetShapeOrShape( GetTurretModelName(m_state), "battlecannonbarrel.shp", winningTeam, false );
+		m_turret = g_app->m_resource->GetShape( "battlecannonturret.shp",  m_id.GetTeamId(), false);
+		m_barrel = g_app->m_resource->GetShapeOrShape( GetTurretModelName(m_state), "battlecannonbarrel.shp",  m_id.GetTeamId(), false );
     }
 }
 
@@ -296,8 +245,11 @@ void GunTurret::PrimaryFire()
 
     for( int i = 0; i < 2; ++i )
     {
-        if( GetPortOccupant(m_nextBarrel).IsValid() )
+		WorldObjectId gunnerId = GetPortOccupant(m_nextBarrel);
+        if( gunnerId.IsValid() )
         {
+			Darwinian *darwinian = (Darwinian *) g_app->m_location->GetEntitySafe(gunnerId, Entity::TypeDarwinian);
+			if ( darwinian ) { darwinian->m_fearless = max(darwinian->m_fearless,4.0f); }
             Matrix34 turretMat( m_turretFront, g_upVector, m_pos );
             Vector3 barrelMountPos = m_barrelMount->GetWorldMatrix(turretMat).pos;
             Vector3 barrelMountFront = m_barrelMount->GetWorldMatrix(turretMat).f;
@@ -310,12 +262,12 @@ void GunTurret::PrimaryFire()
             Vector3 shellVel = barrelMountFront.SetLength(500.0f);
             Vector3 rocketTarget = shellPos + shellVel;
 
-            Vector3 mortarTarget = m_pos + m_targetPos;
-            mortarTarget.x += syncsfrand( m_targetRadius );
-            mortarTarget.z += syncsfrand( m_targetRadius );
-            double force = m_targetForce * 1.0 + syncsfrand(0.1);
-
 			Vector3 fireVel = barrelMountFront.SetLength(100.0);
+
+			Vector3 nadePos = barrelMat.pos;
+            Vector3 nadeVel = barrelMountFront.SetLength(50.0f);
+            Vector3 nadeTarget = nadePos + fireVel;
+
 
             //g_app->m_location->FireTurretShell( shellPos, shellVel );
             int type = m_state;
@@ -323,12 +275,12 @@ void GunTurret::PrimaryFire()
         
             switch( type )
             {
-                case GunTurretTypeStandard:     g_app->m_location->FireTurretShell( shellPos - shellVel * SERVER_ADVANCE_PERIOD * 0.5f, shellVel);   break;
-                case GunTurretTypeRocket:       g_app->m_location->FireRocket( shellPos, rocketTarget, m_id.GetTeamId() );  break;
-                case GunTurretTypeMortar:       g_app->m_location->ThrowWeapon( shellPos, mortarTarget, EffectThrowableGrenade, m_id.GetTeamId() );    break;
-                //case GunTurretTypeFlame:        g_app->m_location->LaunchFireball( shellPos, fireVel, 1.0f, m_id.GetUniqueId());    break;
-                case GunTurretTypeSubversion:   g_app->m_location->FireSubversion( shellPos, shellVel / 4.0f, m_id.GetTeamId() ); break;
-                case GunTurretTypeLaser:		g_app->m_location->FireLaser( shellPos, shellVel / 4.0f, m_id.GetTeamId() ); break;
+                case GunTurretTypeStandard:     g_app->m_location->FireTurretShell( shellPos - shellVel * SERVER_ADVANCE_PERIOD * 0.5f, shellVel, true);   break;
+                case GunTurretTypeRocket:       g_app->m_location->FireRocket( shellPos, rocketTarget, m_id.GetTeamId(), true );  break;
+                case GunTurretTypeMortar:       g_app->m_location->ThrowWeapon( shellPos, nadeTarget, EffectThrowableGrenade, m_id.GetTeamId(), true );    break;
+                //case GunTurretTypeFlame:        g_app->m_location->LaunchFireball( shellPos, fireVel, 1.0f, m_id.GetUniqueId(), true);    break;
+                case GunTurretTypeSubversion:   g_app->m_location->FireSubversion( shellPos, shellVel / 4.0f, m_id.GetTeamId(), true ); break;
+                case GunTurretTypeLaser:		g_app->m_location->FireLaser( shellPos, shellVel / 4.0f, m_id.GetTeamId(), true ); break;
             }
 			fired = true;
 			m_fireTimer = GetReloadTime();
@@ -375,6 +327,7 @@ double GunTurret::GetMinRange()
     {
         case GunTurretTypeStandard:		return GUNTURRET_MINRANGE;
         case GunTurretTypeRocket:       return ROCKETTURRET_MINRANGE;
+        case GunTurretTypeMortar:		return MORTARTURRET_MINRANGE;
         case GunTurretTypeFlame:        return FLAMETURRET_MINRANGE;
         case GunTurretTypeSubversion:   return SUBVERSIONTURRET_MINRANGE;
         case GunTurretTypeLaser:		return LASERTURRET_MINRANGE;
@@ -389,6 +342,7 @@ double GunTurret::GetMaxRange()
     {
         case GunTurretTypeStandard:		return GUNTURRET_MAXRANGE;
         case GunTurretTypeRocket:       return ROCKETTURRET_MAXRANGE;
+        case GunTurretTypeMortar:		return MORTARTURRET_MAXRANGE;
         case GunTurretTypeFlame:        return FLAMETURRET_MAXRANGE;
         case GunTurretTypeSubversion:   return SUBVERSIONTURRET_MAXRANGE;
         case GunTurretTypeLaser:		return LASERTURRET_MAXRANGE;
@@ -756,7 +710,20 @@ char *GunTurret::GetTurretTypeName( int _type )
 
     return "buildingname_gunturret";
 }
+char *GunTurret::GetTurretTypeShortName( int _type )
+{
+    switch( _type )
+    {
+        case GunTurretTypeStandard:		return "gunturret";
+        case GunTurretTypeRocket:		return "rocketturret";
+        case GunTurretTypeMortar:		return "grenadeturret";
+        case GunTurretTypeFlame:		return "flameturret";
+        case GunTurretTypeSubversion:   return "subversionturret";
+        case GunTurretTypeLaser:		return "laserturret";
+    }
 
+    return "gunturret";
+}
 
 char *GunTurret::GetTurretModelName( int _type )
 {
@@ -781,7 +748,7 @@ void GunTurret::Read( TextReader *_in, bool _dynamic )
             m_targetPos.x = atof( _in->GetNextToken() );
             m_targetPos.z = atof( _in->GetNextToken() );
             m_targetRadius = atof( _in->GetNextToken() );
-            m_targetForce = atof( _in->GetNextToken() );
+            //m_targetForce = atof( _in->GetNextToken() );
         }
     }
 }
@@ -794,7 +761,7 @@ void GunTurret::Write( FileWriter *_out )
     _out->printf( "%-2.2f ", m_targetPos.x );
     _out->printf( "%-2.2f ", m_targetPos.z );
     _out->printf( "%-2.2f ", m_targetRadius );
-    _out->printf( "%-2.2f ", m_targetForce );
+    //_out->printf( "%-2.2f ", m_targetForce );
 
 }
 

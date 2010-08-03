@@ -34,6 +34,7 @@ Buildings_StartDefinition
 	  38    8      1      5     -1      0
 	  40  255      1     58     -1      0
 	  39    8      1     29     -1      0
+	   1    2      3     11     -1      1
 Buildings_EndDefinition
 
 Research_StartDefinition
@@ -41,11 +42,11 @@ Research_StartDefinition
 	Research Officer 0 2
 	Research Squad 0 0
 	Research Laser 0 4
-	Research Grenade 0 0
-	Research Rocket 0 0
+	Research Grenade 0 1
+	Research Rocket 0 1
 	Research Controller 0 4
 	Research AirStrike 0 0
-	Research Armour 0 0
+	Research Armour 0 4
 	Research TaskManager 0 0
 	Research Engineer 0 0
 	Research Spider 0 0

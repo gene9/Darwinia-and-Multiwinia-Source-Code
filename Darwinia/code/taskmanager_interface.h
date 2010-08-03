@@ -28,11 +28,11 @@ public:
     int     m_data;
     int     m_scrollZone;   // is this screenzone accessable using the zone scroll button on a pad?
 	bool	m_subZones;		// does the zone have sub icons? (ie, weapons)
-
+	WorldObjectId	m_object;
 public:
     ScreenZone( char *_name, char *_tooltip,
                 float _x, float _y, float _w, float _h,
-                int _data );
+                int _data, WorldObjectId wid = WorldObjectId(); );
 };
 
 

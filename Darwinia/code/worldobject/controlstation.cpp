@@ -56,64 +56,24 @@ bool ControlStation::Advance()
 
 }
 
+
 void ControlStation::RecalculateOwnership()
 {
-    int teamCount[NUM_TEAMS];
-    memset( teamCount, 0, NUM_TEAMS*sizeof(int));
+	int teamId = m_id.GetTeamId();
 
-    for( int i = 0; i < GetNumPorts(); ++i )
-    {
-        WorldObjectId id = GetPortOccupant(i);
-        if( id.IsValid() )
-        {
-            teamCount[id.GetTeamId()] ++;
-        }
-    }
+	Building::RecalculateOwnership();
+	if ( teamId == m_id.GetTeamId() ) { return; }
 
-    int winningTeam = -1;
-    int num = 2;
-
-	for( int i = 0; i < NUM_TEAMS; ++i )
-    {
-        if( teamCount[i] > num && 
-            winningTeam == -1 )
-        {
-            winningTeam = i;
-        }
-        else if( winningTeam != -1 && 
-                 teamCount[i] > num && 
-                 teamCount[i] > teamCount[winningTeam] )
-        {
-            winningTeam = i;
-        }
-    }
-	
 	Building *targetBuilding = g_app->m_location->GetBuilding( m_controlBuildingId );
-    if( winningTeam == -1 )
-    {
-        /*Building *b = g_app->m_location->GetBuilding( m_controlBuildingId );
-	    if( b )
-        {
-		    b->SetTeamId(255);
-        }*/
-		SetTeamId(255);
-    }
-    else if ( winningTeam != m_id.GetTeamId() )
-    {
-        Building *b = g_app->m_location->GetBuilding( m_controlBuildingId );
-	    if( b )
-        {
-		    b->SetTeamId(winningTeam);
-        }
-		SetTeamId(winningTeam);
-		if ( g_app->m_location->IsFriend(winningTeam,2) )
-		{
-			if ( !m_scored ) { g_app->m_globalWorld->m_research->GiveResearchPoints( GLOBALRESEARCH_POINTS_CONTROLTOWER ); m_scored = true; }
-			ReprogramComplete();
-			if ( targetBuilding ) { targetBuilding->ReprogramComplete(); }
-			g_app->SaveProfile( true, true );
-		}
-    }
+
+	if ( g_app->m_location->IsFriend(m_id.GetTeamId(), 2) )
+	{
+		ReprogramComplete();
+		if ( targetBuilding ) { targetBuilding->ReprogramComplete(); }
+		if ( !m_scored ) { g_app->m_globalWorld->m_research->GiveResearchPoints( GLOBALRESEARCH_POINTS_CONTROLTOWER ); m_scored = true; }
+		g_app->SaveProfile( true, true );
+	}
+
 }
 
 void ControlStation::SetBuildingLink(int _buildingId)

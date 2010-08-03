@@ -53,7 +53,7 @@
 
 ScreenZone::ScreenZone( char *_name, char *_tooltip,
                         float _x, float _y, float _w, float _h,
-                        int _data )
+                        int _data, WorldObjectId wid )
 :   m_x(_x),
     m_y(_y),
     m_w(_w),
@@ -66,6 +66,7 @@ ScreenZone::ScreenZone( char *_name, char *_tooltip,
     DarwiniaReleaseAssert( strlen(_tooltip) < sizeof(m_toolTip), "Tooltip too long : %s", _tooltip );
     strcpy( m_name, _name );
     strcpy( m_toolTip, _tooltip );
+	m_object = wid;
 }
 
 

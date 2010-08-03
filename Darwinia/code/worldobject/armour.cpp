@@ -36,7 +36,8 @@ Armour::Armour()
     m_state(StateIdle),
     m_numPassengers(0),
     m_previousUnloadTimer(0.0f),
-    m_newOrdersTimer(0.0f)
+    m_newOrdersTimer(0.0f),
+	m_currentWeapon(0)
 {
     SetType( TypeArmour );
 
@@ -130,6 +131,7 @@ void Armour::ConvertToGunTurret()
     int id = g_app->m_globalWorld->GenerateBuildingId();
     turret->m_id.SetUnitId( UNIT_BUILDINGS );
     turret->m_id.SetUniqueId( id );
+	turret->m_state = m_currentWeapon;
     g_app->m_location->m_obstructionGrid->CalculateAll();
 
     //

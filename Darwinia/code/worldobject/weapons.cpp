@@ -351,7 +351,7 @@ bool ControllerGrenade::Advance()
 //  Class Rocket
 // ****************************************************************************
 
-Rocket::Rocket(Vector3 _startPos, Vector3 _targetPos)
+Rocket::Rocket(Vector3 _startPos, Vector3 _targetPos, bool _turretFired)
 :   m_target(_targetPos),
     m_fromTeamId(255)
 {
@@ -362,6 +362,8 @@ Rocket::Rocket(Vector3 _startPos, Vector3 _targetPos)
 
     m_timer = GetHighResTime();
     m_type = EffectRocket;
+
+	m_isTurretFired = _turretFired;
 }
 
 
@@ -401,6 +403,7 @@ bool Rocket::Advance()
     // Have we run out of steam?
 
     int rocketResearch = g_app->m_globalWorld->m_research->CurrentLevel( m_fromTeamId, GlobalResearch::TypeRocket );
+	if ( m_isTurretFired ) { rocketResearch = 4; }
     float maxLife = 0.0f;
     switch( rocketResearch )
     {
@@ -422,12 +425,25 @@ bool Rocket::Advance()
 
     //
     // Have we hit the ground?
-
-    if (g_app->m_location->m_landscape.m_heightMap->GetValue(m_pos.x, m_pos.z) >= m_pos.y)
+    float landHeight = g_app->m_location->m_landscape.m_heightMap->GetValue( m_pos.x, m_pos.z );
+    if (landHeight >= m_pos.y)
     {
-        g_app->m_location->Bang( m_pos, 15.0f, 25.0f );
-        g_app->m_soundSystem->TriggerOtherEvent( this, "Explode", SoundSourceBlueprint::TypeRocket );
-        return true;
+		m_pos.Set(m_pos.x,landHeight+1.0f,m_pos.z);
+		//if ( m_isTurretFired )
+		{
+	        g_app->m_location->Bang( m_pos, 15.0f, 25.0f );
+		    g_app->m_soundSystem->TriggerOtherEvent( this, "Explode", SoundSourceBlueprint::TypeRocket );
+			return true;
+		}
+		/*
+		else
+		{
+            BounceOffLandscape();
+            m_vel *= 0.75f;
+            if( m_pos.y < landHeight + 1.0f ) m_pos.y = landHeight + 1.0f;
+			//TriggerSoundEvent( "Bounce" );
+		}
+		*/
     }
 
 

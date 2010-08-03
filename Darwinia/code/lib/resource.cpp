@@ -381,6 +381,7 @@ Shape *Resource::GetShapeOrShape( char const *_name, char const *_failSafeName, 
 Shape *Resource::GetShape( char const *_name, char _teamID, bool _animating, float _colourScale )
 {
 	if ( !g_app->m_location->m_teams ) { return GetShape(_name); }
+	if ( _teamID < 0 || _teamID >= NUM_TEAMS ) { return GetShape(_name); }
 
 	char *fullName = new char[128];
 	if ( !_animating ) {

@@ -49,6 +49,7 @@ public:
 	bool		m_subversive;
 	int			m_oldTeamId;
 	float		m_colourTimer;
+	float		m_fearless;		// Timer
 
 
 protected:

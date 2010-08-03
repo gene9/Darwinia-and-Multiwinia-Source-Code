@@ -119,11 +119,11 @@ public:
     void UpdateTeam         ( unsigned char teamId, TeamControls const& teamControls );
 
     int  SpawnSpirit        ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, WorldObjectId _id );
-    void ThrowWeapon        ( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId );
-    void FireRocket         ( Vector3 const &_pos, Vector3 const &_target, unsigned char _fromTeamId );
-    void FireLaser          ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId );
-    void FireSubversion     ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId );
-    void FireTurretShell    ( Vector3 const &_pos, Vector3 const &_vel );
+    void ThrowWeapon        ( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId, bool _isTurret = false );
+    void FireRocket         ( Vector3 const &_pos, Vector3 const &_target, unsigned char _fromTeamId, bool _isTurret = false );
+    void FireLaser          ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId, bool _isTurret = false );
+    void FireSubversion     ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId, bool _isTurret = false );
+    void FireTurretShell    ( Vector3 const &_pos, Vector3 const &_vel, bool _isTurret = false );
     void Bang               ( Vector3 const &_pos, float _range, float _damage );
     void CreateShockwave    ( Vector3 const &_pos, float _size, unsigned char _teamId=255 );
 

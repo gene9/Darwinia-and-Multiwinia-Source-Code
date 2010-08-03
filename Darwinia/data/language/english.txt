@@ -1622,6 +1622,11 @@ buildingname_spam                      Spam
 buildingname_goddish                   GodDish
 buildingname_staticshape               StaticShape
 
+buildingname_rocketturret		RocketTurret
+buildingname_grenadeturret		GrenadeTurret
+buildingname_flameturret		FlameTurret
+buildingname_subversionturret		SubversionTurret
+buildingname_laserturret		LaserTurret
 
 # =================================================
 # Bootloaders

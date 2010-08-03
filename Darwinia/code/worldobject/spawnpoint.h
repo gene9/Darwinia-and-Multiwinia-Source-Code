@@ -95,7 +95,7 @@ public:
 class SpawnPoint : public SpawnBuilding
 {
 protected:
-    void            RecalculateOwnership();
+    //void            RecalculateOwnership();
     bool            PopulationLocked();
 
 protected:

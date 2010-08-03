@@ -18,8 +18,11 @@ Buildings_EndDefinition
 InstantUnits_StartDefinition
 	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
 	# ==================================================================================
-	Darwinian        0  1140.6  1084.7     40    0      -1   100.0     0.0     0.0   -1   -1
-	Darwinian        6  1305.8   874.2     40    0      -1   100.0     0.0     0.0   -1   -1
+	Darwinian        0  1027.3  1132.6     10    0      -1    25.0     0.0     0.0   -1   -1
+	Darwinian        6  1352.3   836.9     40    0      -1   100.0     0.0     0.0   -1   -1
+	Darwinian        1  1141.0  1188.3     10    0      -1    25.0     0.0     0.0   -1   -1
+	Darwinian        3  1076.4  1113.3     10    0      -1    25.0     0.0     0.0   -1   -1
+	Darwinian        4  1079.5  1164.7     10    0      -1    25.0     0.0     0.0   -1   -1
 InstantUnits_EndDefinition
 
 Routes_StartDefinition
@@ -37,6 +40,34 @@ TeamColours_EndDefinition
 TeamAlliances_StartDefinition
 	# ID1   	ID2   	Allied?
 	# =======================
+	       0	     1	     1
+	       0	     3	     1
+	       0	     4	     1
+	       0	     5	     1
+	       1	     0	     1
+	       1	     2	     1
+	       1	     3	     1
+	       1	     4	     1
+	       1	     5	     1
+	       2	     1	     1
+	       2	     3	     1
+	       2	     4	     1
+	       2	     5	     1
+	       3	     0	     1
+	       3	     1	     1
+	       3	     2	     1
+	       3	     4	     1
+	       3	     5	     1
+	       4	     0	     1
+	       4	     1	     1
+	       4	     2	     1
+	       4	     3	     1
+	       4	     5	     1
+	       5	     0	     1
+	       5	     1	     1
+	       5	     2	     1
+	       5	     3	     1
+	       5	     4	     1
 TeamAlliances_EndDefinition
 
 TeamFlags_StartDefinition

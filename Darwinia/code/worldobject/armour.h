@@ -36,6 +36,7 @@ protected:
 public:
     Vector3         m_wayPoint;
     int             m_state;
+	int				m_currentWeapon;
 
 public:
     Armour();

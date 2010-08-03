@@ -1818,12 +1818,13 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
 }
 
 
-void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId )
+void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId, bool _isTurret )
 {
     float distance = ( _target - _pos ).Mag();
     float force = sqrtf(distance) * 8.0f;
 
     int grenadeResearch = g_app->m_globalWorld->m_research->CurrentLevel( _fromTeamId, GlobalResearch::TypeGrenade );
+	if ( _isTurret ) { grenadeResearch = 4; }
     //if( _fromTeamId == 1 ) grenadeResearch = 4;
 
 	float maxForce = ThrowableWeapon::GetMaxForce( grenadeResearch );
@@ -1861,9 +1862,9 @@ void Location::ThrowWeapon( Vector3 const &_pos, Vector3 const &_target, int _ty
 }
 
 
-void Location::FireRocket( Vector3 const &_pos, Vector3 const &_target, unsigned char _teamId )
+void Location::FireRocket( Vector3 const &_pos, Vector3 const &_target, unsigned char _teamId, bool _isTurret )
 {
-    Rocket *r = new Rocket(_pos, _target);
+    Rocket *r = new Rocket(_pos, _target, _isTurret);
     r->m_fromTeamId = _teamId;
 
     int weaponId = m_effects.PutData( r );
@@ -1884,9 +1885,11 @@ void Location::FireRocket( Vector3 const &_pos, Vector3 const &_target, unsigned
 }
 
 
-void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel )
+void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel, bool _isTurret )
 {
     int armourResearch = g_app->m_globalWorld->m_research->CurrentLevel( GlobalResearch::TypeArmour );
+	if ( _isTurret ) { armourResearch = 4; }
+
     float lifeTime = 0.0f;
     switch( armourResearch )
     {
@@ -1919,9 +1922,11 @@ void Location::FireTurretShell( Vector3 const &_pos, Vector3 const &_vel )
 }
 
 
-void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
+void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, bool _isTurret )
 {
     int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeLaser );
+	if ( _isTurret ) { laserResearch = 4; }
+
 	float lifetime = 0.0f;
     switch( laserResearch )
     {
@@ -1950,9 +1955,10 @@ void Location::FireLaser( Vector3 const &_pos, Vector3 const &_vel, unsigned cha
     mf->m_id.GenerateUniqueId();
 }
 
-void Location::FireSubversion( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
+void Location::FireSubversion( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, bool _isTurret )
 {
     int laserResearch = g_app->m_globalWorld->m_research->CurrentLevel( _teamId, GlobalResearch::TypeController );
+	if ( _isTurret ) { laserResearch = 4; }
     float lifetime = 0.0f;
     switch( laserResearch )
     {

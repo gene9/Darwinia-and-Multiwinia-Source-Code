@@ -205,6 +205,8 @@ bool Darwinian::Advance( Unit *_unit )
         return true;
     }
 
+	if ( m_fearless > 0 ) { m_fearless -= SERVER_ADVANCE_PERIOD; }
+
 	if ( m_colourTimer > 0 ) { m_colourTimer -= SERVER_ADVANCE_PERIOD; }
 
     bool amIDead = Entity::Advance( _unit );
@@ -1907,15 +1909,10 @@ bool Darwinian::SearchForThreats()
     // If we are running towards a Battle Cannon, this takes
     // priority over everything else
 
-    if( m_state == StateApproachingPort )
+    if( m_state == StateApproachingPort || m_state == StateOperatingPort )
     {
         Building *building = g_app->m_location->GetBuilding( m_buildingId );
         if( building && building->m_type == Building::TypeGunTurret )
-        {
-            END_PROFILE( g_app->m_profiler, "SearchThreats" );
-            return false;
-        }
-        else if( building && building->m_type == Building::TypeResearchCrate )
         {
             END_PROFILE( g_app->m_profiler, "SearchThreats" );
             return false;
@@ -2040,6 +2037,8 @@ bool Darwinian::SearchForThreats()
     //
     // Decide what to do with our threat
 
+	if ( m_fearless > 0 ) { m_scared = false; }
+
     Entity *entity = g_app->m_location->GetEntity( threatId );
 
     if( entity && !entity->m_dead )
@@ -2047,10 +2046,10 @@ bool Darwinian::SearchForThreats()
         m_state = StateCombat;
         bool soldier = g_app->m_globalWorld->m_research->CurrentLevel( m_id.GetTeamId(), GlobalResearch::TypeDarwinian ) > 2;
 
-		if( !soldier ) m_scared = true;
+		if( !soldier && m_fearless <= 0.0f ) m_scared = true;
         if( soldier )
         {
-            m_scared = numEnemies > 5 && !friendsPresent;
+            m_scared = numEnemies > 5 && !friendsPresent && m_fearless <= 0.0f;
         }
 
         if( entity->m_type == TypeSporeGenerator ||
@@ -2061,7 +2060,7 @@ bool Darwinian::SearchForThreats()
             entity->m_type == TypeInsertionSquadie ||
             entity->m_type == TypeArmour )
         {
-            m_scared = true;
+			if ( m_fearless <= 0.0f ) { m_scared = true; }
         }
 
         if( m_threatId != threatId )

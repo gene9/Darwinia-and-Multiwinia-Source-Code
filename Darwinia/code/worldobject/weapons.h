@@ -94,12 +94,13 @@ public:
 
     Shape   *m_shape;
     float    m_timer;
+	bool	m_isTurretFired;
 
 public:
     Vector3 m_target;
 
     Rocket() {}
-    Rocket(Vector3 _startPos, Vector3 _targetPos);
+    Rocket(Vector3 _startPos, Vector3 _targetPos, bool _turretFired = false);
 
     void Initialise ();
     bool Advance    ();

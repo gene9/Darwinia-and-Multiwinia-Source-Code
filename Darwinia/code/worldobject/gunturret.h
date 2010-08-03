@@ -4,14 +4,16 @@
 #include "worldobject/building.h"
 
 #define GUNTURRET_RETARGETTIMER     3.0f
-#define GUNTURRET_MINRANGE          100.0f
-#define GUNTURRET_MAXRANGE          300.0f
+//#define GUNTURRET_MINRANGE          100.0f
+//#define GUNTURRET_MAXRANGE          300.0f
 #define GUNTURRET_NUMSTATUSMARKERS  5
 #define GUNTURRET_NUMBARRELS        4
 #define GUNTURRET_OWNERSHIPTIMER    1.0f
 
 #define GUNTURRET_MINRANGE          100.0 
 #define GUNTURRET_MAXRANGE          300.0
+#define MORTARTURRET_MINRANGE       100.0 
+#define MORTARTURRET_MAXRANGE       200.0
 #define FLAMETURRET_MINRANGE        10.0
 #define FLAMETURRET_MAXRANGE        150.0
 #define ROCKETTURRET_MINRANGE       100.0
@@ -94,6 +96,7 @@ public:
     void ListSoundEvents( LList<char *> *_list );
 
     static char *GetTurretTypeName( int _type );
+    static char *GetTurretTypeShortName( int _type );
     static char *GetTurretModelName( int _type );
 
     double GetReloadTime();

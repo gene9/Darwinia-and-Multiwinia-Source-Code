@@ -30,6 +30,7 @@
 #include "worldobject/laserfence.h"
 #include "worldobject/generichub.h"
 #include "worldobject/spider.h"
+#include "worldobject/gunturret.h"
 
 #include "app.h"
 #include "camera.h"
@@ -1511,7 +1512,8 @@ void LevelFile::SaveMissionFile(char const *_filename)
 #ifdef TARGET_DEBUG
         out = new FileWriter( fullFilename, false );
 #else
-        out = new FileWriter( fullFilename, true );
+        //out = new FileWriter( fullFilename, true );
+        out = new FileWriter( fullFilename, false );
 #endif
     }
 
@@ -2009,6 +2011,10 @@ void LevelFile::GenerateDynamicBuildings()
                 {
                     ((AISpawnPoint *) building)->m_spawnLimit = ((AISpawnPoint *) locBuilding)->m_spawnLimit;
                 }
+                else if( building->m_type == Building::TypeGunTurret )
+                {
+                    ((GunTurret *) building)->m_state = ((GunTurret *) locBuilding)->m_state;
+                }
             }
         }
     }
@@ -2034,6 +2040,7 @@ void LevelFile::GenerateDynamicBuildings()
                     newBuilding->m_type = building->m_type;
                     newBuilding->m_dynamic = building->m_dynamic;
                     newBuilding->m_isGlobal = building->m_isGlobal;
+					if ( building->m_type == Building::TypeGunTurret ) { ((GunTurret *)newBuilding)->m_state  = ((GunTurret *)building)->m_state; }
                     m_buildings.PutData( newBuilding );
                 }
             }

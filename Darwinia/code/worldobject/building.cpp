@@ -84,7 +84,8 @@ Building::Building()
 	m_shape(NULL),
 	m_dynamic(false),
 	m_isGlobal(false),
-	m_destroyed(false)
+	m_destroyed(false),
+	m_minimumPorts(3)
 {
     if( !s_controlPad )
     {
@@ -110,6 +111,7 @@ void Building::Initialise( Building *_template )
     m_dynamic   = _template->m_dynamic;
     m_isGlobal  = _template->m_isGlobal;
 	m_destroyed = _template->m_destroyed;
+	m_minimumPorts = _template->m_minimumPorts;
 
     if( m_shape )
     {
@@ -249,7 +251,8 @@ void Building::ReprogramComplete()
     GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
     if( gb )
     {
-        gb->m_online = !gb->m_online;
+        //gb->m_online = !gb->m_online;
+		gb->m_online = true;
     }
 
     g_app->m_globalWorld->EvaluateEvents();
@@ -953,3 +956,76 @@ void Building::ListSoundEvents( LList<char *> *_list )
 }
 
 
+void Building::RecalculateOwnership()
+{
+	if ( GetNumPorts() == 0 ) { return; }
+
+    int teamCount[NUM_TEAMS];
+	bool teamPresent[NUM_TEAMS];
+	for ( int i = 0; i < NUM_TEAMS; i++ )
+	{
+		teamCount[i] = 0;
+		teamPresent[i] = false;
+	}
+
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+		if( id.IsValid() ) {
+			teamPresent[id.GetTeamId()] = true;
+		}
+	}
+	/*
+    for( int i = 0; i < GetNumPorts(); ++i )
+    {
+        WorldObjectId id = GetPortOccupant(i);
+        if( id.IsValid() )
+        {
+			if ( m_id.GetTeamId() >= 0 && m_id.GetTeamId() < NUM_TEAMS && g_app->m_location->IsFriend(id.GetTeamId(),m_id.GetTeamId()) ) {
+	            teamCount[m_id.GetTeamId()] ++;
+			} else {
+	            teamCount[id.GetTeamId()] ++;
+			}
+        }
+    }
+*/
+
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+        if( id.IsValid() )
+        {
+			int lowestFriendlyTeam = id.GetTeamId();
+			for ( int j = 0; j < NUM_TEAMS; j++ )
+			{
+				if ( teamPresent[j] && j < lowestFriendlyTeam && g_app->m_location->IsFriend(id.GetTeamId(),j) ) { lowestFriendlyTeam = j; }
+			}
+			teamCount[lowestFriendlyTeam]++;
+		}
+	}
+
+    int winningTeam = -1;
+    for( int i = 0; i < NUM_TEAMS; ++i )
+    {
+        if( teamCount[i] >= m_minimumPorts &&
+            winningTeam == -1 )
+        {
+            winningTeam = i;
+        }
+        else if( winningTeam != -1 &&
+                 teamCount[i] > m_minimumPorts &&
+                 teamCount[i] > teamCount[winningTeam] )
+        {
+            winningTeam = i;
+        }
+    }
+
+    if( winningTeam == -1 )
+    {
+        SetTeamId(255);
+    }
+	else if ( !g_app->m_location->IsFriend(m_id.GetTeamId(),winningTeam) )
+    {
+        SetTeamId(winningTeam);
+    }
+}

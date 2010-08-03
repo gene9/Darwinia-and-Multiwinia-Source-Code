@@ -52,6 +52,8 @@
 #include "worldobject/researchitem.h"
 #include "worldobject/trunkport.h"
 #include "worldobject/engineer.h"
+#include "worldobject/gunturret.h"
+#include "worldobject/armour.h"
 
 
 // ============================================================================
@@ -723,7 +725,7 @@ void TaskManagerInterfaceIcons::AdvanceScreenZones()
         ScreenZone *currentZone = m_screenZones[m_currentScreenZone];
         if( currentZone )
         {
-            RunScreenZone( currentZone->m_name, currentZone->m_data );
+            RunScreenZone( currentZone->m_name, currentZone->m_data, currentZone->m_object );
         }
     }
 }
@@ -751,7 +753,7 @@ void TaskManagerInterfaceIcons::AdvanceKeyboardShortcuts()
 }
 
 
-void TaskManagerInterfaceIcons::RunScreenZone( const char *_name, int _data )
+void TaskManagerInterfaceIcons::RunScreenZone( const char *_name, int _data, WorldObjectId _object )
 {
     //
     // New task buttons
@@ -847,6 +849,28 @@ void TaskManagerInterfaceIcons::RunScreenZone( const char *_name, int _data )
         }
     }
 
+    //
+    // Select turret buttons
+
+    if( stricmp( _name, "SelectTurret" ) == 0 )
+    {
+        //if( g_app->m_globalWorld->m_research->HasResearch( _data ) )
+        //{
+			Armour *armour = (Armour *) g_app->m_location->GetWorldObject(_object);
+			if ( armour )
+			{
+				armour->m_currentWeapon = _data;
+				//g_app->m_clientToServer->RequestRunProgram( g_app->m_globalWorld->m_myTeamId, _data );
+				g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureBegin", SoundSourceBlueprint::TypeGesture );
+				g_app->m_soundSystem->TriggerOtherEvent( NULL, "GestureSuccess", SoundSourceBlueprint::TypeGesture );
+				if( g_inputManager->getInputMode() == INPUT_MODE_GAMEPAD )
+				{
+					HideTaskManager();
+				}
+			}
+        //}
+
+    }
 
     //
     // Show screen
@@ -1608,6 +1632,12 @@ void TaskManagerInterfaceIcons::RenderRunningTasks()
         Task *task = g_app->m_taskManager->m_tasks[i];
         char bmpFilename[256];
         sprintf( bmpFilename, "icons/icon_%s.bmp", Task::GetTaskName(task->m_type) );
+		if ( task->m_type == GlobalResearch::TypeArmour ) {
+            Armour *armour = (Armour *) g_app->m_location->GetEntitySafe( task->m_objId, Entity::TypeArmour );
+			if ( armour ) {
+				sprintf( bmpFilename, "icons/icon_%s.bmp", GunTurret::GetTurretTypeShortName(armour->m_currentWeapon) );
+			}
+		}
         unsigned int texId = g_app->m_resource->GetTexture( bmpFilename );
 
         //
@@ -1713,7 +1743,7 @@ void TaskManagerInterfaceIcons::RenderRunningTasks()
                     if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) ) availableWeapons.PutData( GlobalResearch::TypeGrenade );
                     if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket ) ) availableWeapons.PutData( GlobalResearch::TypeRocket );
                     if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeAirStrike ) ) availableWeapons.PutData( GlobalResearch::TypeAirStrike );
-                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeController ) ) availableWeapons.PutData( GlobalResearch::TypeController );
+                    //if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeController ) ) availableWeapons.PutData( GlobalResearch::TypeController );
 
                     InsertionSquad *squad = (InsertionSquad *) unit;
                     int currentWeapon = -1;
@@ -1765,6 +1795,78 @@ void TaskManagerInterfaceIcons::RenderRunningTasks()
                         ScreenZone *zone = new ScreenZone( "SelectWeapon", LANGUAGEPHRASE(captionId),
                                                             weaponX - weaponSize/2, weaponY - weaponSize/2,
                                                             weaponSize, weaponSize, weaponType );
+                        m_newScreenZones.PutData( zone );
+						zone->m_scrollZone = 3;
+
+
+                        weaponX += weaponSize;
+                        weaponX += weaponGap;
+                    }
+
+                    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+                    glDisable       ( GL_TEXTURE_2D );
+                }
+                else if( task->m_type == GlobalResearch::TypeArmour )
+                {
+                    LList<int> availableWeapons;
+					availableWeapons.PutData( GunTurret::GunTurretTypeStandard );
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeGrenade ) )		availableWeapons.PutData( GunTurret::GunTurretTypeMortar );
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeRocket ) )		availableWeapons.PutData( GunTurret::GunTurretTypeRocket );
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeLaser ) )		availableWeapons.PutData( GunTurret::GunTurretTypeLaser );
+                    if( g_app->m_globalWorld->m_research->HasResearch( GlobalResearch::TypeController ) )	availableWeapons.PutData( GunTurret::GunTurretTypeSubversion );
+
+                    Armour *armour = (Armour *) entity;
+                    int currentWeapon = -1;
+					if( armour ) { currentWeapon = armour->m_currentWeapon; }
+					else { availableWeapons.Empty(); }
+
+
+                    float weaponSize = iconSize * 0.5f;
+                    float weaponGap = weaponSize * 0.15f;
+                    float weaponX = iconCentre.x + iconSize/1.2f;
+                    float weaponY = iconCentre.y + iconSize/5;
+
+                    glEnable        ( GL_TEXTURE_2D );
+
+					if( availableWeapons.Size() > 0 )
+					{
+						zone->m_subZones = true;
+					}
+
+                    for( int i = 0; i < availableWeapons.Size(); ++i )
+                    {
+                        int weaponType = availableWeapons[i];
+						sprintf( bmpFilename, "icons/icon_%s.bmp", GunTurret::GetTurretTypeShortName(weaponType) );
+                        texId = g_app->m_resource->GetTexture( bmpFilename );
+
+                        glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR );
+                        glColor4f       ( 0.9f, 0.9f, 0.9f, 0.0f );
+                        glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "icons/icon_shadow.bmp" ) );
+                        glBegin( GL_QUADS );
+                            glTexCoord2i( 0, 1 );           glVertex2f( weaponX - weaponSize/2, weaponY - weaponSize/2 );
+                            glTexCoord2i( 1, 1 );           glVertex2f( weaponX + weaponSize/2, weaponY - weaponSize/2 );
+                            glTexCoord2i( 1, 0 );           glVertex2f( weaponX + weaponSize/2, weaponY + weaponSize/2 );
+                            glTexCoord2i( 0, 0 );           glVertex2f( weaponX - weaponSize/2, weaponY + weaponSize/2 );
+                        glEnd();
+
+                        glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+
+                        glBindTexture( GL_TEXTURE_2D, texId );
+                        glColor4f( 1.0f, 1.0f, 1.0f, iconAlpha*0.3f );
+                        if( weaponType == currentWeapon ) glColor4f( 1.0f, 1.0f, 1.0f, iconAlpha );
+
+                        glBegin( GL_QUADS );
+                            glTexCoord2i( 0, 1 );           glVertex2f( weaponX - weaponSize/2, weaponY - weaponSize/2 );
+                            glTexCoord2i( 1, 1 );           glVertex2f( weaponX + weaponSize/2, weaponY - weaponSize/2 );
+                            glTexCoord2i( 1, 0 );           glVertex2f( weaponX + weaponSize/2, weaponY + weaponSize/2 );
+                            glTexCoord2i( 0, 0 );           glVertex2f( weaponX - weaponSize/2, weaponY + weaponSize/2 );
+                        glEnd();
+
+                        char captionId[256];
+                        sprintf( captionId, "newcontrols_select_%s", GunTurret::GetTurretTypeShortName(weaponType) );
+                        ScreenZone *zone = new ScreenZone( "SelectTurret", LANGUAGEPHRASE(captionId),
+                                                            weaponX - weaponSize/2, weaponY - weaponSize/2,
+                                                            weaponSize, weaponSize, weaponType, armour->m_id );
                         m_newScreenZones.PutData( zone );
 						zone->m_scrollZone = 3;
 
@@ -2209,9 +2311,9 @@ void TaskManagerInterfaceIcons::RenderObjectives()
 
             char *descriptor = LANGUAGEPHRASE( condition->m_stringId );
 			// Debug
-			if ( condition->m_cutScene ) {
-				descriptor = condition->m_cutScene;
-			}
+			//if ( condition->m_cutScene ) {
+			//	descriptor = condition->m_cutScene;
+			//}
 
             g_gameFont.SetRenderOutline(true);
             glColor4f( 0.8f, 0.8f, 0.8f, 0.0f );

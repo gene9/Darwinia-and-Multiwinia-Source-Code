@@ -547,6 +547,7 @@ void SolarPanel::Initialise( Building *_template )
 
 bool SolarPanel::Advance()
 {
+
     float fractionOccupied = (float) GetNumPortsOccupied() / (float) GetNumPorts();
 
     if( syncfrand(20.0f) <= fractionOccupied )
