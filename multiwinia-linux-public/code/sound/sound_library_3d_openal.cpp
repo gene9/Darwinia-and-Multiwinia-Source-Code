@@ -27,7 +27,7 @@
 //We keep a ring of buffers, updating them as their playback completes.
 static const int s_numChannelBuffers = 2;
 static bool s_listenerDirty = false;
-static bool s_shouldExit = false;
+static volatile bool s_shouldExit = false;
 
 static char s_dxErrorMsg[512];
 
@@ -189,8 +189,10 @@ SoundLibrary3dOpenAL::~SoundLibrary3dOpenAL()
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 	//
 	// Stop the thread
+	g_app->m_soundSystem->m_mutex.Unlock();
 	s_shouldExit = true;
 	while (s_shouldExit);
+	g_app->m_soundSystem->m_mutex.Lock();
 #endif
 	//
 	// Release secondary buffers
@@ -212,6 +214,12 @@ SoundLibrary3dOpenAL::~SoundLibrary3dOpenAL()
 	{
 		alDeleteBuffers(s_numChannelBuffers, m_musicChannel->m_buffer);
 	}
+
+	//
+	// Destroy the OpenAL device and context.
+	alcMakeContextCurrent(0);
+	alcDestroyContext(m_context);
+	alcCloseDevice(m_device);
 
 	//
 	// Delete temp buffer.
@@ -459,8 +467,9 @@ void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 	// Commit Volume changes
 	if (!NearlyEquals(channel->m_prevVolume, channel->m_volume) || m_forceVolumeUpdate )
 	{
-		float calculatedVolume = log2f((channel->m_volume)*0.1f+1.f);
+		float calculatedVolume = -(5.f-channel->m_volume*0.5f);//log2f((channel->m_volume)*0.1f+1.f);
 
+		calculatedVolume = expf(calculatedVolume);
         //float calculatedVolume = (_volume * 0.1f);
         //calculatedVolume += m_masterVolume;
 
@@ -519,7 +528,8 @@ void SoundLibrary3dOpenAL::CommitChangesGlobal()
 	//Update master volume
 	if (m_masterVolume != m_prevMasterVolume)
 	{
-		alListenerf(AL_GAIN,log2f(m_masterVolume/255.f+1.f));	//TODO: Replace with log2f(m_masterVolume) - log2f(255.f)
+		float calculatedVolume = expf(m_masterVolume*0.001);
+		alListenerf(AL_GAIN,calculatedVolume);
 	}
 }
 
