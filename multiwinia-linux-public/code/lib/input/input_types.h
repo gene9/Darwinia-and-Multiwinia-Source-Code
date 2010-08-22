@@ -64,4 +64,4 @@ enum InputMode {
 };
 
 
-#endif INCLUDED_INPUT_TYPES_H
+#endif //INCLUDED_INPUT_TYPES_H
