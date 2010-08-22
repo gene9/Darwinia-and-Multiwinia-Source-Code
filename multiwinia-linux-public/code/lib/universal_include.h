@@ -464,7 +464,10 @@ inline double iv_abs( double x ) { if( x >= 0.0 ) return x;	else return -x; }
 	#define INVOKE_CALLBACK_FROM_SOUND_THREAD
 	//Otherwise we crash.
 	#define SINGLE_THREADED_PROFILER
-	#define OPENGL_DEBUG_ASSERTS
+	
+	// There are issues with OPENGL_DEBUG_ASSERTS on dual-screen setups
+	// with a horizontal resolution of > ~2500 px.
+	//#define OPENGL_DEBUG_ASSERTS
 #endif
 
 #ifdef TARGET_OS_MACOSX
