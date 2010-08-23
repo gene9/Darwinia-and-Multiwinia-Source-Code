@@ -5,6 +5,7 @@
 
 export PATH=$PATH:/usr/bin:/bin:/usr/local/bin:/opt/kde/bin:/opt/kde3/bin:/usr/local/mozilla/bin:
 
+xdg-open "$@" || \
 x-www-browser "$@" || \
 www-browser "$@" || \
 kfmclient openURL "$@" || \
