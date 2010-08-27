@@ -44,7 +44,7 @@ protected:
 	void PopulateBuffer		(int _channel, int _fromSample, int _numSamples, bool _isMusic, char *buffer);
 	void CommitChangesGlobal	();							// Commits global volume changes.
 	void CommitChangesChannel	(OpenALChannel *channel);				// Commits all pos/or/vel etc changes
-	void AdvanceChannel		(int _channel, int _frameNum);
+	void AdvanceChannel		(int _channel);
 	void ActuallyResetChannel	(int _channel, OpenALChannel *channel);
 	int  GetNumFilters		(int _channel);
 	void Verify				();

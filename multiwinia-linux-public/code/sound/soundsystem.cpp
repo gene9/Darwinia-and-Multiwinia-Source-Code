@@ -417,10 +417,6 @@ void SoundSystem::RestartSoundLibraryInternal()
 	//
     // Shut down existing sound library
 
-    if( m_channels )
-        delete [] m_channels;
-    m_channels = NULL;
-    m_numChannels = 0;
     if( g_soundLibrary3d )
         delete g_soundLibrary3d;
     g_soundLibrary3d = NULL;
@@ -428,6 +424,14 @@ void SoundSystem::RestartSoundLibraryInternal()
         delete g_soundLibrary2d;
     g_soundLibrary2d = NULL;
 
+    //
+    // Delete the channels _after_ we shut the sound library down.
+    // If we're multithreaded, there are nasty crashes if we delete
+    // these before the system shuts down.
+    if( m_channels )
+        delete [] m_channels;
+    m_channels = NULL;
+    m_numChannels = 0;
 
     //
     // Start up a new sound library

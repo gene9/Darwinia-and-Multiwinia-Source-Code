@@ -167,6 +167,7 @@ static NetCallBackRetType SL3D_OpenALCallThread(void *ignored)
 	{
 		((SoundLibrary3dOpenAL*)g_soundLibrary3d)->ActuallyAdvance();
 	}
+
 	s_shouldExit = false;
 }
 #endif
@@ -239,11 +240,13 @@ bool SoundLibrary3dOpenAL::Initialise(int _mixFreq, int _numChannels, bool _hw3d
 	m_sampleRate = _mixFreq;
 
 	m_prevMasterVolume = m_masterVolume;
-	alListenerf(AL_GAIN,log2f(m_masterVolume/255.f));	//TODO: Replace with log2f(m_masterVolume) - log2f(255.f)
+	alListenerf(AL_GAIN, expf(m_masterVolume*0.001));
 
 	// Just use the default device for now.
 	m_device = alcOpenDevice(0);
-    m_context = alcCreateContext(m_device,0);
+
+	ALCint context_properties[] = {ALC_FREQUENCY, _mixFreq, ALC_MONO_SOURCES, _numChannels+4,0};
+    m_context = alcCreateContext(m_device,context_properties);
     
     alcMakeContextCurrent(m_context);
     
@@ -449,7 +452,8 @@ void SoundLibrary3dOpenAL::SetListenerPosition( Vector3 const &_pos,
 	
 	m_listenerFront = _front;
 	
-	m_listenerUp = _up;
+	m_listenerUp = _up * -1.f;	//OpenAL uses the same co-ordinate system as opengl, so
+					// this must be restored. (It is swapped in soundsystem.cpp)
 
 	s_listenerDirty = true;
 
@@ -466,6 +470,8 @@ void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 	// Don't bother updating when it's likely not needed.
 	if (channel->m_lastUpdate + (channel->m_numBufferSamples/s_numChannelBuffers)/channel->m_freq < GetHighResTime())	
 		alGetSourcei(channel->m_source, AL_BUFFERS_PROCESSED, &(channel->m_buffersProcessed));
+	else
+		channel->m_buffersProcessed = 0;			// Otherwise we can end up with a hang.
 
 	
 	// Commit Volume changes
@@ -474,8 +480,6 @@ void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 		float calculatedVolume = -(5.f-channel->m_volume*0.5f);//log2f((channel->m_volume)*0.1f+1.f);
 
 		calculatedVolume = expf(calculatedVolume);
-        //float calculatedVolume = (_volume * 0.1f);
-        //calculatedVolume += m_masterVolume;
 
 		if( calculatedVolume < 0.0f ) calculatedVolume = 0.0f;
 		if( calculatedVolume > 1.0f ) calculatedVolume = 1.0f;
@@ -573,13 +577,10 @@ void SoundLibrary3dOpenAL::PopulateBuffer(int _channel, int _fromSample, int _nu
 }
 
 
-void SoundLibrary3dOpenAL::AdvanceChannel(int _channel, int _frameNum)
+void SoundLibrary3dOpenAL::AdvanceChannel(int _channel)
 {
     int errCode;
 	OpenALChannel *channel;
-	
-	if ( (_channel & 3) != (_frameNum & 3) )
-		return;
 	
 	bool isMusicChannel = false;
 	if (_channel == m_musicChannelId) 
@@ -668,23 +669,34 @@ void SoundLibrary3dOpenAL::ActuallyAdvance()
 {
 //	Verify();
 
+#ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
+#ifdef SL3D_OPENAL_SLEEPY_THREAD
+	double nextwake = GetHighResTime() + 1.f;	//Maximum of 0.8 second sleep before updating sound system.
+
+	//Determine which channel will be the next to need a buffer refill.
+	for (int i = 0; i < m_numChannels; ++i)
+	{
+		double channelNextWake = m_channels[i].m_lastUpdate + (m_channels[i].m_numBufferSamples/s_numChannelBuffers)/m_channels[i].m_freq;
+		nextwake = (nextwake > channelNextWake)?channelNextWake:nextwake;
+	}
+	
+	// Check the music channel as well.
+	double musicNextWake = m_musicChannel->m_lastUpdate + (m_musicChannel->m_numBufferSamples/s_numChannelBuffers)/m_musicChannel->m_freq;
+	nextwake = (nextwake > musicNextWake)?musicNextWake:nextwake;
+
+	if (nextwake - GetHighResTime() > 0.02f)
+		Sleep((nextwake - GetHighResTime())*0.8f);
+#endif
+#endif
+
     START_PROFILE( "Commit Global");
     CommitChangesGlobal();
 	END_PROFILE( "Commit Global");
-
-	static int frameNum = 0;
-	++frameNum;
-	if (frameNum >= 4)
-	{
-		frameNum = 0;
-	}
 
 	// Commit channel-level changes _before_ locking the mutex.
 	START_PROFILE("Commit Channel");
 	for (int i = 0; i < m_numChannels; ++i)
 	{
-		if ( (i & 3) != (frameNum & 3) )
-			continue;
 		CommitChangesChannel(&m_channels[i]);
 	}
 	
@@ -696,7 +708,7 @@ void SoundLibrary3dOpenAL::ActuallyAdvance()
 	#endif
     for (int i = 0; i < m_numChannels; ++i)
     {
-		AdvanceChannel(i, frameNum);
+		AdvanceChannel(i);
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 		ActuallyResetChannel( i, &(m_channels[i]) );
 #endif
@@ -705,7 +717,9 @@ void SoundLibrary3dOpenAL::ActuallyAdvance()
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 	ActuallyResetChannel( m_musicChannelId, m_musicChannel );
 #endif
-	AdvanceChannel(m_musicChannelId, frameNum);
+	AdvanceChannel(m_musicChannelId);
+
+
 }
 
 void SoundLibrary3dOpenAL::Advance()
