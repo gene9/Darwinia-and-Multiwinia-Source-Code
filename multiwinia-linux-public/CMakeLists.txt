@@ -9,19 +9,24 @@ ${Multiwinia_SOURCE_DIR}/contrib/binreloc
 )
 
 #should be set, this cmake file does not support mac/win32
-add_definitions(-DTARGET_OS_LINUX)
+if (UNIX)
+	add_definitions(-DTARGET_OS_LINUX)
+	add_definitions(-DHAVE_SOCKET -DHAVE_SELECT -DHAVE_GETHOSTBYNAME -DHAVE_INET_NTOA)
+endif (UNIX)
 
-#Set if compiling for x86_64
-add_definitions(-DTARGET_ARCH_AMD64)
+#We only support amd64 and x86, so this hack works.
+if (TARGET_AMD64)
+	add_definitions(-DTARGET_ARCH_AMD64)
+endif (TARGET_AMD64)
 
-#Set if cross compiling (doesn't work)
-#add_definitions(-m32)
-#set_target_properties(Multiwinia PROPERTIES LINK_FLAGS -m32)
+#Set if cross compiling
+if (CROSS_X86)
+	add_definitions(-m32)
+	set(CMAKE_EXE_LINKER_FLAGS "-m32")
+endif (CROSS_X86)
 
-add_definitions(-DHAVE_SOCKET -DHAVE_SELECT -DHAVE_GETHOSTBYNAME -DHAVE_INET_NTOA)
 
-add_executable(Multiwinia
-#interface
+set(MULTIWINIA_INTERFACE_SRCS
 code/interface/chatinput_window.h
 code/interface/chatinput_window.cpp
 code/interface/cheat_window.h
@@ -115,7 +120,9 @@ code/interface/multiwiniaoptions_window.h
 code/interface/multiwiniaoptions_window.cpp
 code/interface/tree_window.h
 code/interface/tree_window.cpp
+)
 
+set(MULTIWINIA_LIB_SRCS
 #lib
 code/lib/auto_vector.h
 code/lib/debug_render.cpp
@@ -328,7 +335,9 @@ contrib/systemiv/lib/unicode/unicode_string.h
 contrib/systemiv/lib/unicode/unicode_string.cpp
 contrib/systemiv/lib/unicode/unicode_text_stream_reader.h
 contrib/systemiv/lib/unicode/unicode_text_stream_reader.cpp
+)
 
+set(MULTIWINIA_WORLDOBJECT_SRCS
 #worldobject
 code/worldobject/dustball.h
 code/worldobject/dustball.cpp
@@ -502,7 +511,9 @@ code/worldobject/tripod.h
 code/worldobject/tripod.cpp
 code/worldobject/virii.h
 code/worldobject/virii.cpp
+)
 
+SET(MULTIWINIA_SOUND_SRCS
 #sound
 code/sound/sample_cache.h
 code/sound/sample_cache.cpp
@@ -528,7 +539,9 @@ code/sound/sound_stream_decoder.h
 code/sound/sound_stream_decoder.cpp
 code/sound/soundsystem.h
 code/sound/soundsystem.cpp
+)
 
+set(MULTIWINIA_LOADERS_SRCS
 #loaders
 code/loaders/amiga_loader.h
 code/loaders/amiga_loader.cpp
@@ -552,8 +565,9 @@ code/loaders/soul_loader.h
 code/loaders/soul_loader.cpp
 code/loaders/speccy_loader.h
 code/loaders/speccy_loader.cpp
+)
 
-
+set(MULTIWINIA_NETWORK_SRCS
 #network
 code/network/bandwidth.h
 code/network/bandwidth.cpp
@@ -582,8 +596,10 @@ code/network/servertoclient.cpp
 code/network/servertoclientletter.h
 code/network/syncdiff.h
 code/network/syncdiff.cpp
+)
 
-#GameMenu TODO:Complete
+set(MULTIWINIA_GAMEMENU_SRCS
+#GameMenu
 code/UI/AchievementButton.h
 code/UI/AdvancedOptionsModeButton.h
 code/UI/AnyLevelSelectButton.h
@@ -658,8 +674,9 @@ code/UI/TutorialButton.h
 code/UI/UnlockFullGameButton.h
 code/UI/update_page_buttons.h
 code/UI/WaitingButton.h
+)
 
-
+set(MULTIWINIA_COMMON_SRCS
 #code
 code/3d_sierpinski_gasket.h
 code/3d_sierpinski_gasket.cpp
@@ -782,13 +799,24 @@ code/water.h
 code/water.cpp
 code/water_reflection.h
 code/water_reflection.cpp
+)
 
-
-
+set(MULTIWINIA_CONTRIB_SRCS
 #contrib/binreloc
 contrib/systemiv/contrib/binreloc/prefix.cpp
+)
 
 
+add_executable(Multiwinia
+${MULTIWINIA_INTERFACE_SRCS}
+${MULTIWINIA_LIB_SRCS}
+${MULTIWINIA_WORLDOBJECT_SRCS}
+${MULTIWINIA_SOUND_SRCS}
+${MULTIWINIA_LOADERS_SRCS}
+${MULTIWINIA_NETWORK_SRCS}
+${MULTIWINIA_GAMEMENU_SRCS}
+${MULTIWINIA_COMMON_SRCS}
+${MULTIWINIA_CONTRIB_SRCS}
 )
 
 target_link_libraries(Multiwinia
