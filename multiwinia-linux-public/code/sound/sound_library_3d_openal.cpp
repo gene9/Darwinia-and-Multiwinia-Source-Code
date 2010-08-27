@@ -460,8 +460,10 @@ void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 	// al calls are _really_ slow, so we should avoid wherever possible.
 	if (channel->m_silenceRemaining)
 		return;
-		
-	alGetSourcei(channel->m_source, AL_BUFFERS_PROCESSED, &(channel->m_buffersProcessed));
+	
+	// Don't bother updating when it's likely not needed.
+	if (channel->m_lastUpdate + channel->m_freq * channel->m_numBufferSamples/s_numChannelBuffers < GetHighResTime())	
+		alGetSourcei(channel->m_source, AL_BUFFERS_PROCESSED, &(channel->m_buffersProcessed));
 
 	
 	// Commit Volume changes
@@ -627,6 +629,8 @@ void SoundLibrary3dOpenAL::AdvanceChannel(int _channel, int _frameNum)
 		alSourcePlay( channel->m_source );
 	}
 	
+	channel->m_lastUpdate = GetHighResTime();
+
 }
 
 
