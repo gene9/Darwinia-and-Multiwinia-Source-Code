@@ -201,6 +201,7 @@ SoundLibrary3dOpenAL::~SoundLibrary3dOpenAL()
 	{
 		for( int i = 0; i < m_numChannels; ++i )
 		{
+			alDeleteSources(1, &m_channels[i].m_source);
 			alDeleteBuffers(s_numChannelBuffers, m_channels[i].m_buffer);
 		}
 		delete[] m_channels;
@@ -212,6 +213,7 @@ SoundLibrary3dOpenAL::~SoundLibrary3dOpenAL()
 
 	if( m_musicChannel )
 	{
+		alDeleteSources(1, &m_musicChannel->m_source);
 		alDeleteBuffers(s_numChannelBuffers, m_musicChannel->m_buffer);
 	}
 
