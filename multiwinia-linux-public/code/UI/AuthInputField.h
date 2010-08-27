@@ -62,7 +62,7 @@ public:
 					thisChar = m_buf.m_charstring[i];
                 }
 
-                glColor4f(255,255,255,255);
+                glColor4f(1.f,1.f,1.f,1.f);
                 g_titleFont.DrawText2D( xPos+fontSize / 3, yPos, fontSize, "%c", thisChar );
             }
 
