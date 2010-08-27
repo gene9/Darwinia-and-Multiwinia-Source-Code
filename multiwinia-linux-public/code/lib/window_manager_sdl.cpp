@@ -461,7 +461,7 @@ int main(int argc, char *argv[])
 {
 	g_windowManager = new WindowManagerSDL();
 	
-#if defined(TARGET_OS_LINUX)// && defined(TARGET_NO_CMAKE_HACKS)
+#if defined(TARGET_OS_LINUX)
 	SetupPathToProgram(SELFPATH);
 	ChangeToProgramDir(SELFPATH);
 #endif
@@ -484,7 +484,7 @@ int main(int argc, char *argv[])
 		        compiledVersion.major, compiledVersion.minor, compiledVersion.patch,
 		        linkedVersion->major, linkedVersion->minor, linkedVersion->patch);
 
-#if defined(TARGET_OS_LINUX) && defined(TARGET_NO_CMAKE_HACKS)
+#if defined(TARGET_OS_LINUX)
 	// Setup illegal memory access handler
 	// See debug_utils_gcc.cpp
 	SetupMemoryAccessHandlers();

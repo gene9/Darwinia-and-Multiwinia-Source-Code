@@ -459,6 +459,8 @@ char *HashMatrix34( const Matrix34 &value, char *buffer )
 // For the complete, darwinia version, see code/lib/debug_utils_linux.cpp
 #ifdef TARGET_OS_LINUX
 
+// The use of the signal handlers is interfering with upx, so it is conditionally disabled.
+
 static char *s_pathToProgram = 0;
 
 void SetupPathToProgram(const char *program)
@@ -469,6 +471,7 @@ void SetupPathToProgram(const char *program)
 
 static void fatalSignal(int signum, siginfo_t *siginfo, void *arg)
 {
+#ifdef TARGET_DEBUG_SIGNAL_HANDLER
 	static char msg[64];
 	AppReleaseExit(msg, "Got a fatal signal: %d\n", signum);
 
@@ -482,11 +485,13 @@ static void fatalSignal(int signum, siginfo_t *siginfo, void *arg)
 	g_windowManager->UnhideMousePointer();
 	g_windowManager->DestroyWin();
 #endif
+#endif
 }
 
 
 void SetupMemoryAccessHandlers()
 {
+#ifdef TARGET_DEBUG_SIGNAL_HANDLER
 	struct sigaction sa;
 
 	sa.sa_sigaction = fatalSignal;
@@ -495,5 +500,6 @@ void SetupMemoryAccessHandlers()
 
 	sigaction(SIGSEGV, &sa, 0);
 	sigaction(SIGBUS, &sa, 0);
+#endif
 }
 #endif
