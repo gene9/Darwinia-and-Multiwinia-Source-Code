@@ -464,7 +464,7 @@ void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 		return;
 	
 	// Don't bother updating when it's likely not needed.
-	if (channel->m_lastUpdate + channel->m_freq * channel->m_numBufferSamples/s_numChannelBuffers < GetHighResTime())	
+	if (channel->m_lastUpdate + (channel->m_numBufferSamples/s_numChannelBuffers)/channel->m_freq < GetHighResTime())	
 		alGetSourcei(channel->m_source, AL_BUFFERS_PROCESSED, &(channel->m_buffersProcessed));
 
 	
