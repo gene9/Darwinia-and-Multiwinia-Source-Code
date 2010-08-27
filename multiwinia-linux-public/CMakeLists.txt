@@ -803,7 +803,7 @@ code/water_reflection.cpp
 
 set(MULTIWINIA_CONTRIB_SRCS
 #contrib/binreloc
-contrib/systemiv/contrib/binreloc/prefix.cpp
+#contrib/systemiv/contrib/binreloc/prefix.cpp
 )
 
 

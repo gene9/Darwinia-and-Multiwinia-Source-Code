@@ -462,8 +462,8 @@ int main(int argc, char *argv[])
 	g_windowManager = new WindowManagerSDL();
 	
 #if defined(TARGET_OS_LINUX)
-	SetupPathToProgram(SELFPATH);
-	ChangeToProgramDir(SELFPATH);
+	//SetupPathToProgram(SELFPATH);
+	//ChangeToProgramDir(SELFPATH);
 #endif
 
 	if (argc > 1) {
