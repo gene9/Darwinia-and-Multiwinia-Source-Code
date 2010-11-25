@@ -33,6 +33,16 @@
 #define     NET_DARWINIA_COMMAND                      "bb"
 
 
+/*
+ * TODO: Replace these with the correct values from the map editor beta
+ *
+ * Other Developers: You may use these for compatability, but I _will_ change them to
+ * be compatible with the beta.
+ *
+ * Patches to do this are welcome, of course. :)
+ */
+
+#define     NET_DARWINIA_REQUESTMAP			"__RequestMap"
 
 /*
  *      CLIENT TO SERVER

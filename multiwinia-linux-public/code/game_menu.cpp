@@ -728,6 +728,41 @@ bool GameMenu::AddMap( TextReader *_in, char *_filename )
     return false;
 }
 
+//TODO: Replace this with the official version
+void GameMenu::RemoveMap( const char *filename )
+{
+	MapData *md;
+	for (int i = 0; i < m_allMaps.Size(); ++i)
+	{
+		if (!m_allMaps.ValidIndex(i)) continue;
+		if (!strcmp(filename, m_allMaps[i]->m_fileName))
+		{
+			//We've found it.
+			md = m_allMaps[i];
+			m_allMaps.RemoveData(i);
+			break;
+		}
+	}
+
+	for (int j = 0; j < Multiwinia::s_gameBlueprints.Size(); ++j)
+	{
+		if (!md->m_gameTypes[j])
+			continue;
+		for (int i = 0; i < m_maps[j].Size(); ++i)
+		{
+			if (!m_maps[j].ValidIndex(i)) continue;
+			if (!strcmp(filename, m_maps[j][i]->m_fileName))
+			{
+				m_maps[j].RemoveData(i);
+				break;
+			}
+		}
+	}
+
+	//TODO: Memory leak fix.
+
+}
+
 void GameMenu::CreateMapList()
 {
     LList<char *> *levels = g_app->m_resource->ListResources( "levels/", "mp_*", false );

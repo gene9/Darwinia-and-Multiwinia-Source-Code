@@ -139,6 +139,10 @@
 #include "worldobject/darwinian.h"
 #include "achievement_tracker.h"
 
+#ifdef LOCATION_EDITOR
+#include "mapfile.h"
+#endif
+
 #define TARGET_FRAME_RATE_INCREMENT 0.25
 
 

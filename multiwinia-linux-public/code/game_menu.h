@@ -90,6 +90,7 @@ public:
 
     void CreateMapList();
     bool AddMap( TextReader *_in, char *_filename );
+    void RemoveMap ( const char *_filename );
 
     int GetNumPlayers();
 

@@ -29,39 +29,6 @@ static const int s_numChannelBuffers = 2;
 static bool s_listenerDirty = false;
 static volatile bool s_shouldExit = false;
 
-static char s_dxErrorMsg[512];
-
-#ifdef _DEBUG
-#define SOUNDASSERT(x, y, ...)  { if(x != DS_OK && x != S_FALSE) {  \
-                                sprintf( s_dxErrorMsg, "%s %s", \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
-                                char msg[512];             \
-                                sprintf( msg, "OpenAL ERROR\n%s line %d\n\n%s\nError Code(%d) : %s\n%s",  \
-                                __FILE__, __LINE__,   \
-                                y,                    \
-                                x,                    \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
-                                AppReleaseAssert( false, msg, __VA_ARGS__ );  } }
-#else
-#define SOUNDASSERT(x, y, ...)  SOUNDDEBUG(x, y, __VA_ARGS__)
-#endif // _DEBUG
-
-#define SOUNDDEBUG(x, y, ...)   { if(x != DS_OK && x != S_FALSE) {  \
-                                sprintf( s_dxErrorMsg, "%s %s", \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
-                                char msg[512];             \
-                                sprintf( msg, "OpenAL ERROR, %s line %d, %s, Error Code(%d) : %s, %s\n",  \
-                                __FILE__, __LINE__,   \
-                                y,                    \
-                                x,                    \
-                                DXGetErrorString9(x),   \
-                                DXGetErrorDescription9(x) );  \
-                                AppDebugOut( msg, __VA_ARGS__ );  } }
-
-
 
 //*****************************************************************************
 // Class SoundLibFilter
@@ -89,10 +56,7 @@ public:
     ALuint			  	m_buffer[s_numChannelBuffers];
     ALuint				m_source;
 	unsigned int		m_numBufferSamples;
-    int                 m_lastSampleWritten;
-    float               m_channelHealth;
     int                 m_silenceRemaining;     // Stream has finished, must write m_numBufferSamples worth of silence    
-	long				m_simulatedPlayCursor;
 	double				m_lastUpdate;
 	int					m_buffersProcessed;
 
@@ -118,8 +82,6 @@ public:
 
 OpenALChannel::OpenALChannel()
 :	m_numBufferSamples(0),
-    m_lastSampleWritten(0),
-    m_channelHealth(0.0f),
     m_silenceRemaining(0),
     m_buffersProcessed(0),
 	m_freq(-1),
@@ -138,27 +100,6 @@ OpenALChannel::OpenALChannel()
 		m_buffer[i] = 0;
 	}
 }
-
-
-void OpenALChannel::UpdateSimulatedPlayCursor(long _playCursor)
-{
-	double timeNow = GetHighResTime();
-
-	if (_playCursor < 0)
-	{
-		double timeSinceLastUpdate = timeNow - m_lastUpdate;
-		m_simulatedPlayCursor += timeSinceLastUpdate * (double)m_freq * 2.0;
-		m_simulatedPlayCursor %= m_numBufferSamples * 2;
-		m_simulatedPlayCursor &= 0xfffffffe;
-	}
-	else
-	{
-		m_simulatedPlayCursor = _playCursor;
-	}
-
-	m_lastUpdate = timeNow;
-}
-
 
 #ifdef INVOKE_CALLBACK_FROM_SOUND_THREAD
 static NetCallBackRetType SL3D_OpenALCallThread(void *ignored)
@@ -282,8 +223,6 @@ bool SoundLibrary3dOpenAL::Initialise(int _mixFreq, int _numChannels, bool _hw3d
 		alGenSources(1, &(m_channels[i].m_source));
 
 		m_channels[i].m_numBufferSamples = _mainBufNumSamples;
-		m_channels[i].m_lastSampleWritten = 0;
-		m_channels[i].m_simulatedPlayCursor = -1;
 		m_channels[i].m_freq = _mixFreq;
 		m_channels[i].m_prevFreq = _mixFreq;
 
@@ -299,8 +238,6 @@ bool SoundLibrary3dOpenAL::Initialise(int _mixFreq, int _numChannels, bool _hw3d
 	alGenSources(1, &(m_musicChannel->m_source));
 
 	m_musicChannel->m_numBufferSamples = _musicBufNumSamples;
-	m_musicChannel->m_lastSampleWritten = m_musicChannel->m_numBufferSamples - 1;
-	m_musicChannel->m_simulatedPlayCursor = -1;
 	m_musicChannel->m_freq = _mixFreq;
 
 	SetChannel3DMode(m_musicChannelId, 2);
@@ -351,15 +288,7 @@ float SoundLibrary3dOpenAL::GetChannelHealth(int _channel)
 	OpenALChannel *channel;
 	if (_channel == m_musicChannelId) channel = m_musicChannel;
 	else				channel = &m_channels[_channel];
-
-    if( channel->m_channelHealth >= 0.5f )
-    {
-        return 1.0f;
-    }
-    else
-    {
-        return channel->m_channelHealth * 2.0f;
-    }
+	return 0.f;
 }
 
 
@@ -464,9 +393,6 @@ void SoundLibrary3dOpenAL::SetListenerPosition( Vector3 const &_pos,
 void SoundLibrary3dOpenAL::CommitChangesChannel(OpenALChannel *channel)
 {
 	// al calls are _really_ slow, so we should avoid wherever possible.
-	if (channel->m_silenceRemaining)
-		return;
-	
 	// Don't bother updating when it's likely not needed.
 	if (channel->m_lastUpdate + (channel->m_numBufferSamples/s_numChannelBuffers)/channel->m_freq < GetHighResTime())	
 		alGetSourcei(channel->m_source, AL_BUFFERS_PROCESSED, &(channel->m_buffersProcessed));
@@ -573,7 +499,6 @@ void SoundLibrary3dOpenAL::PopulateBuffer(int _channel, int _fromSample, int _nu
 		if (channel->m_dspFX[i].m_userFilter == NULL) continue;
 		channel->m_dspFX[i].m_userFilter->Process( (signed short *)buffer, _numSamples );
     }
-    channel->m_channelHealth = 1.0f - ( (float) _numSamples / (float) channel->m_numBufferSamples );
 }
 
 
@@ -597,12 +522,11 @@ void SoundLibrary3dOpenAL::AdvanceChannel(int _channel)
 
 	if (!channel->m_buffersProcessed)
 		return;
+
+
 	
 	char *data = m_tempBuffer;
 	
-	if (channel->m_buffersProcessed > 1)
-		AppDebugOut ("OAL BuffersProcessed (Channel %d) = %d\n", _channel, channel->m_buffersProcessed);
-		
 	while (channel->m_buffersProcessed--)
 	{	
 		ALuint currentBuffer = 0;
@@ -614,11 +538,12 @@ void SoundLibrary3dOpenAL::AdvanceChannel(int _channel)
 		
 		alSourceQueueBuffers(channel->m_source, 1, &currentBuffer);
 		
-		if (channel->m_silenceRemaining)
+		/*if (channel->m_silenceRemaining)
 		{
-			channel->m_silenceRemaining = 0;
+			//channel->m_silenceRemaining = 0;
+			AppDebugOut("OpenAL: Channel %d has silence remaining %d.\n",_channel, channel->m_silenceRemaining);
 			break;
-		}
+		}*/
 		
 
 		
@@ -783,6 +708,7 @@ void SoundLibrary3dOpenAL::ActuallyResetChannel( int _channel, OpenALChannel *ch
 	//
     // Populate our buffer
 	int buffersProcessed = s_numChannelBuffers;
+	channel->m_silenceRemaining = 0;
 	
 	char *data = m_tempBuffer;
 	
@@ -801,11 +727,11 @@ void SoundLibrary3dOpenAL::ActuallyResetChannel( int _channel, OpenALChannel *ch
 		
 		alSourceQueueBuffers(channel->m_source, 1, &currentBuffer);
 		
-		if (channel->m_silenceRemaining)
+		/*if (channel->m_silenceRemaining)
 		{
-			channel->m_silenceRemaining = 0;
+			//channel->m_silenceRemaining = 0;
 			break;
-		}
+		}*/
 	}
 	
 	//

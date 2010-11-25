@@ -86,6 +86,9 @@ public:
 
     bool                m_christmasMode;
 
+	//TODO: Check this with the IV editor beta.
+	bool		m_requestCustomMap;
+
 	struct 
 	{
 		int				m_colourId;
