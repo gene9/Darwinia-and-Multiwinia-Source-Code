@@ -30,6 +30,24 @@
 
 SDLMouseInputDriver *g_sdlMouseDriver = NULL;
 
+
+//We want to create a transparent mouse cursor.
+
+static SDL_Cursor *WMSDL_CreateInvisibleCursor()
+{
+	uint8_t data[] = {0x00};
+	uint8_t mask[] = {0x00};
+	return SDL_CreateCursor(data,mask,8,1,0,0);
+}
+
+static void WMSDL_FreeCursor(SDL_Cursor *c)
+{
+	return SDL_FreeCursor(c);
+}
+
+static SDL_Cursor *WMSDL_InvisibleCursor;
+
+
 // Uncomment if you want lots of output in debug mode.
 //#define VERBOSE_DEBUG
 
@@ -261,9 +279,18 @@ bool WindowManagerSDL::CreateWin(int _width, int _height, bool _windowed, int _c
 	const char *asciiTitle = unicodeTitle.GetCharArray();
 	SDL_WM_SetCaption(asciiTitle, asciiTitle);
 
+	WMSDL_InvisibleCursor = WMSDL_CreateInvisibleCursor();
+
 	//Reset the mouse pointer visibility when we recrate the window.
 	SDL_ShowCursor(m_mousePointerVisible);
 	
+	//Except if we want the touchscreen to work. 
+	if (!m_windowed && !m_mouseCaptured)
+	{
+		SDL_SetCursor(WMSDL_InvisibleCursor);
+		SDL_ShowCursor(1);
+	}
+
 	#ifdef TARGET_OS_LINUX
 	//We have to re-enable unicode whenever we re-create the window.
 	//As on linux we actually destroy the old window, such state is not
@@ -290,6 +317,7 @@ void WindowManagerSDL::DestroyWin()
 		SDL_GetMouseState(&m_x,&m_y);
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		SDL_WM_GrabInput(SDL_GRAB_OFF); //Just in case
+		WMSDL_FreeCursor(WMSDL_InvisibleCursor);
 #endif
 }
 
@@ -352,6 +380,12 @@ void WindowManagerSDL::CaptureMouse()
 	SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
 
+	if (!m_windowed && !m_mousePointerVisible)
+	{
+		SDL_SetCursor(0);
+		SDL_ShowCursor(false);
+	}
+
 	m_mouseCaptured = true;
 	m_tryingToCaptureMouse = false;
 }
@@ -363,6 +397,13 @@ void WindowManagerSDL::UncaptureMouse()
 	if (!m_mouseCaptured)
 		return;
 		
+
+	if (!m_windowed)
+	{
+		SDL_SetCursor(WMSDL_InvisibleCursor);
+		SDL_ShowCursor(true);
+	}
+
 #ifdef VERBOSE_DEBUG
 	AppDebugOut("Uncapturing mouse\n");
 #endif
@@ -378,7 +419,15 @@ void WindowManagerSDL::UncaptureMouse()
 
 void WindowManagerSDL::HideMousePointer()
 {
-	SDL_ShowCursor(false);
+	if (m_windowed || m_mouseCaptured)
+	{
+		SDL_SetCursor(0);
+		SDL_ShowCursor(false);
+	}
+	else
+	{
+		SDL_SetCursor(WMSDL_InvisibleCursor);
+	}
 	m_mousePointerVisible = false;
 }
 
