@@ -699,6 +699,7 @@ dialog_unavailable                     unavailable
 dialog_soundlibrary                    Sound Library
 dialog_directsound                     DirectSound
 dialog_softwaresound                   Software Sound
+dialog_openalsound                     OpenAL
 dialog_mixfrequency                    Mix Frequency
 dialog_11khz                           11 KHz Low
 dialog_22khz                           22 KHz Med
