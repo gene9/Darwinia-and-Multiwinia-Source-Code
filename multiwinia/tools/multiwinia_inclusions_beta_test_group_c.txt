@@ -1,6 +1,0 @@
-levels/mp_rocketriot_2P_4.txt
-levels/mp_rocketriot_2p_3.txt
-levels/mp_rocketriot_3p_1.txt
-thumbnails/mp_rocketriot_2P_4.bmp
-thumbnails/mp_rocketriot_2p_3.bmp
-thumbnails/mp_rocketriot_3p_1.bmp

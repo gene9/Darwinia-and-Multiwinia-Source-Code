@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="ogg_static"
 	ProjectGUID="{459161C2-8D74-4481-9972-AA8D1BC91C94}"
 	RootNamespace="ogg_static"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform

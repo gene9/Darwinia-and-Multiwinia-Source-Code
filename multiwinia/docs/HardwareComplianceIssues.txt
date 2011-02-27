@@ -1,3 +1,0 @@
-Johnny's Linux Machine:
-	- Multitexturing ARB not supported
-	- Mouse pointer background not tranparent

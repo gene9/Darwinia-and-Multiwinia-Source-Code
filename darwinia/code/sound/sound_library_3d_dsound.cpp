@@ -10,7 +10,8 @@
 
 #include <MMSYSTEM.H>
 #include <DSOUND.H>
-#include <DXERR9.H>
+//#include <DXERR9.H>
+#include <DXERR.H>
 
 #include "sound/sound_filter.h"
 #include "sound/sound_library_3d_dsound.h"
@@ -24,7 +25,7 @@
 
 static char s_dxErrorMsg[512];
 
-#define SOUNDASSERT(x, y)     { if(x != DS_OK && x != S_FALSE) {  \
+#define SOUNDASSERT(x, y)     { /*if(x != DS_OK && x != S_FALSE) {  \
                                 sprintf( s_dxErrorMsg, "%s %s", \
                                 DXGetErrorString9(x),   \
                                 DXGetErrorDescription9(x) );  \
@@ -34,7 +35,7 @@ static char s_dxErrorMsg[512];
                                 y,                    \
                                 DXGetErrorString9(x),   \
                                 DXGetErrorDescription9(x) );  \
-                                DarwiniaReleaseAssert( false, msg );  } }
+                                DarwiniaReleaseAssert( false, msg );  }*/ }
 
 
 

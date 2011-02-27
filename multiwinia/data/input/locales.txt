@@ -1,6 +1,0 @@
-
-1031     de_DE
-1033     en_US
-1036     fr_FR
-2057     en_UK
-4105     en_CA

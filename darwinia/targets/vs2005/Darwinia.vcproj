@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="darwinia"
 	ProjectGUID="{2BBCB77F-D308-45D1-9B57-F3350B5BBD6E}"
 	RootNamespace="Darwinia"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -89,6 +90,8 @@
 				GenerateMapFile="true"
 				MapFileName="$(OutDir)//Darwinia.map"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -110,9 +113,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -193,6 +193,8 @@
 				ProgramDatabaseFile="$(OutDir)/Darwinia.pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -214,9 +216,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -297,6 +296,8 @@
 				GenerateMapFile="true"
 				MapFileName="$(OutDir)//Darwinia.map"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -318,9 +319,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -407,6 +405,8 @@
 				ProgramDatabaseFile="$(OutDir)\..\..\..\$(ProjectName).pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 				Profile="true"
 			/>
@@ -429,9 +429,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -8014,10 +8011,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\GDF\Darwinia.rc"
-			>
-		</File>
-		<File
 			RelativePath="..\..\code\deform.cpp"
 			>
 		</File>
@@ -9667,10 +9660,6 @@
 		</File>
 		<File
 			RelativePath="..\..\code\user_input.h"
-			>
-		</File>
-		<File
-			RelativePath=".\version.rc"
 			>
 		</File>
 		<File
