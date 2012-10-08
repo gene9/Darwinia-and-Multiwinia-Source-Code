@@ -17,7 +17,8 @@
 
 StaticShape::StaticShape()
 :   Building(),
-    m_scale(1.0f)
+    m_scale(1.0f),
+	m_progress(1.0f)
 {
     m_type = TypeStaticShape;
 
@@ -33,6 +34,7 @@ void StaticShape::Initialise( Building *_template )
 
     m_scale = staticShape->m_scale;
     SetShapeName( staticShape->m_shapeName );
+	m_progress = staticShape->m_progress;
 }
 
 
@@ -138,7 +140,12 @@ void StaticShape::Render( float _predictionTime )
         mat.f *= m_scale;
 
         glEnable( GL_NORMALIZE );
-        m_shape->Render( _predictionTime, mat );
+		if ( m_progress >= 1.0f ) {
+	        m_shape->Render( _predictionTime, mat );
+		} else {
+			m_shape->RenderSpecial( _predictionTime, mat, m_progress );
+		}
+//		m_shape->RenderSpecial( _predictionTime, mat, 0.5f );
         glDisable( GL_NORMALIZE );
     }
     else
@@ -161,6 +168,10 @@ void StaticShape::Read( TextReader *_in, bool _dynamic )
     m_scale = atof( _in->GetNextToken() );
 
     SetShapeName( _in->GetNextToken() );
+
+	if ( _in->TokenAvailable() ) {
+		m_progress = atof( _in->GetNextToken() );
+	}
 }
 
 
@@ -170,5 +181,6 @@ void StaticShape::Write( FileWriter *_out )
 
     _out->printf( "%6.2f  ", m_scale );
     _out->printf( "%s  ", m_shapeName );
+    _out->printf( "%6.2f  ", m_progress );
 }
 

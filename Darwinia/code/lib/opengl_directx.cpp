@@ -1022,7 +1022,6 @@ void glEnd ()
 			DarwiniaDebugAssert(s_currentVertexNumber>2);
 			g_pd3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, s_currentVertexNumber / 3, s_vertices, sizeof(CustomVertex));
 			break;
-
 		case GL_TRIANGLE_STRIP:
 		case GL_QUAD_STRIP:
 			DarwiniaDebugAssert(s_currentVertexNumber>2);

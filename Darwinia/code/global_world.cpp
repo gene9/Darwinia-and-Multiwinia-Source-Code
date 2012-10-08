@@ -662,7 +662,7 @@ void GlobalResearch::EvaluateLevel( int _type )
 						// This action should only go off if a player UPGRADES an existing research item
 						// Not if he finds a new one
 						g_app->m_helpSystem->PlayerDoneAction( HelpSystem::ResearchUpgrade );
-						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, _type, 4.0f );
+						g_app->m_taskManagerInterface->SetCurrentMessage( TaskManagerInterface::MessageResearchUpgrade, _type, 4.0f, 2 );
 					}
 				}
 			}
@@ -1688,7 +1688,8 @@ void GlobalWorld::Render()
 {
     START_PROFILE(g_app->m_profiler, "Render Global World");
 
-	if( !g_app->m_editing ) m_globalInternet->Render();
+	//if( !g_app->m_editing ) m_globalInternet->Render();
+	m_globalInternet->Render();
 	CHECK_OPENGL_STATE();
     m_sphereWorld->Render();
 	CHECK_OPENGL_STATE();
@@ -2109,7 +2110,6 @@ void GlobalWorld::LoadGame( char *_filename )
 
     LoadLocations( "locations.txt" );
 
-
     //
     // Load all map files into memory
 
@@ -2135,7 +2135,8 @@ void GlobalWorld::LoadGame( char *_filename )
 		for (int j = 0; j < missionFileNames->Size(); ++j)
 		{
 			LevelFile levFile(missionFileNames->GetData(j), loc->m_mapFilename);
-
+			RGBAColour *rgb = new RGBAColour(levFile.m_teamColours[2].r,levFile.m_teamColours[2].b,levFile.m_teamColours[2].g);	// Reset the location colour
+			if ( loc->m_missionCompleted ) loc->m_colour.Set(rgb->r, rgb->g, rgb->b);
 			for( int b = 0; b < levFile.m_buildings.Size(); ++b )
 			{
 				Building *building = levFile.m_buildings[b];

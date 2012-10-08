@@ -954,6 +954,7 @@ void Script::AdvanceScript()
 			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
 			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
 			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
+			else if ( stricmp("DontWorshipSpirits",word) == 0 )		{ flag = TEAM_FLAG_DONTWORSHIPSPIRITS; }
 			else { flag = 0; }
 
 			int flagState = atoi(m_in->GetNextToken());

@@ -165,7 +165,9 @@ public:
     void WriteToFile			(FILE *_out) const;
 
 	void Render					(float _predictionTime);// Uses display list
-	void RenderSlow				();						// Doesn't use display list
+	void RenderSpecial			(float _prefictionTime, float renderFraction );		// Doesn't use display list
+	void RenderSlow				(float renderFraction = 1.0f);						// Doesn't use display list
+	void RenderWireframe		(float renderFraction = 1.0f);						// Doesn't use display list
 	void RenderHitCheck			(Matrix34 const &_transform);
 	void RenderMarkers			(Matrix34 const &_transform);
 
@@ -213,6 +215,7 @@ public:
     void WriteToFile			(FILE *_out) const;
 
 	void Render					(float _predictionTime, Matrix34 const &_transform);
+	void RenderSpecial			(float _predictionTime, Matrix34 const &_transform, float renderFraction);
 	void RenderHitCheck			(Matrix34 const &_transform);
 	void RenderMarkers			(Matrix34 const &_transform);
 

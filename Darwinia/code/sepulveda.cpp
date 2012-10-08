@@ -986,6 +986,7 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
     // Render current pic
 
     sprintf( filename, "sepulveda/%s%d.bmp", m_currentAvatar, picIndex );
+	DarwiniaReleaseAssert( g_app->m_resource->DoesTextureExist(filename), "Invalid texture: %s", filename );
     glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename, true, false ) );
 
     glColor4f( 1.0f, 1.0f, 1.0f, _alpha );
@@ -1005,6 +1006,7 @@ void Sepulveda::RenderFace( float _x, float _y, float _w, float _h, float _alpha
         float previousAlpha = _alpha;
         previousAlpha *= ( 1.0f - ( timeNow - picTimer ) / frameTime );
         sprintf( filename, "sepulveda/%s%d.bmp", m_currentAvatar, previousPicIndex );
+		DarwiniaReleaseAssert( g_app->m_resource->DoesTextureExist(filename), "Invalid texture: %s", filename );
         glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( filename ) );
 
         previousAlpha *= 0.75f;

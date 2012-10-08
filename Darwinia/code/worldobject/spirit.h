@@ -6,8 +6,51 @@
 
 #define SPIRIT_MAXNEARBYEGGS        8
 
+#define TYPE_SPIRIT		1
+#define TYPE_POLYGON	2
 
-class Spirit : public WorldObject
+// #################
+// ### CARRYABLE ###
+// #################
+
+class Carryable : public WorldObject
+{
+public:
+    unsigned char   m_teamId;
+    int             m_state;
+	int				m_type;
+
+protected:
+    float       m_timeSync;
+
+    Vector3     m_hover;
+    float       m_positionOffset;                       // Used to make them float around a bit
+    float       m_xaxisRate;
+    float       m_yaxisRate;
+    float       m_zaxisRate;
+
+    bool        m_pushFromBuildings;
+
+public:
+
+	Carryable();
+	~Carryable();
+
+    void Begin      ();
+
+	void CollectorArrives   ();                             // A collector is above me and picks me up
+    void CollectorDrops     ();                             // My collector has dropped me
+
+    void SkipStage();
+    void PushFromBuildings();
+
+};
+
+// ##############
+// ### SPIRIT ###
+// ##############
+
+class Spirit : public Carryable
 {
 public:
     enum
@@ -21,24 +64,12 @@ public:
         StateDeath                                      // Fade away
     };
 
-    unsigned char   m_teamId;
-    int             m_state;
     WorldObjectId   m_worldObjectId;                    // The Id of the entity that died
 
     WorldObjectId   m_nearbyEggs[SPIRIT_MAXNEARBYEGGS];
     int             m_numNearbyEggs;
     float           m_eggSearchTimer;                   // How often to re-search
 
-protected:
-    float       m_timeSync;
-
-    Vector3     m_hover;
-    float       m_positionOffset;                       // Used to make them float around a bit
-    float       m_xaxisRate;
-    float       m_yaxisRate;
-    float       m_zaxisRate;
-
-    bool        m_pushFromBuildings;
 
 public:
 
@@ -55,14 +86,41 @@ public:
     void InEgg();                                           // I have been used to fertilise an egg
     void EggDestroyed();                                    // My egg was destroyed, i'm now free
 
-    void SkipStage();
     void AddToGlobalWorld();
 
-    void PushFromBuildings();
 
     int             NumNearbyEggs();
     WorldObjectId  *GetNearbyEggs();
 };
 
+// ###############
+// ### POLYGON ###
+// ###############
+
+class LoosePolygon : public Carryable
+{
+public:
+    enum
+    {
+        StateUnknown,
+        StateBirth,                                     // Just been created, float to a certain height
+        StateFloating,                                  // Float around, can be captured
+        StateAttached,                                  // Attached to a garbage collector
+        StateDeath                                      // Fade away
+    };
+
+public:
+
+    LoosePolygon();
+    ~LoosePolygon();
+
+    void Begin      ();
+    bool Advance    ();
+    void Render     ( float predictionTime );
+
+    void CollectorArrives   ();                             // A collector is above me and picks me up
+    void CollectorDrops     ();                             // My collector has dropped me
+
+};
 
 #endif

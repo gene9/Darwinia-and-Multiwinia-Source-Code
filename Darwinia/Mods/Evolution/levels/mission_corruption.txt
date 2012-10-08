@@ -30,7 +30,7 @@ Routes_StartDefinition
 Routes_EndDefinition
 
 PrimaryObjectives_StartDefinition
-	NeverTrue 
+	AlwaysTrue 
 PrimaryObjectives_EndDefinition
 
 TeamColours_StartDefinition
@@ -47,4 +47,9 @@ TeamFlags_StartDefinition
 	# ID    	Flags
 	# =========================================================================
 TeamFlags_EndDefinition
+
+TeamNames_StartDefinition
+	# ID    	Name
+	# ==============================
+TeamNames_EndDefinition
 

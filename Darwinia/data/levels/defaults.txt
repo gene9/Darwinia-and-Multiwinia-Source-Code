@@ -28,6 +28,7 @@ TeamFlags_StartDefinition
 	# ID     Flags
 	# ========================
 	  0    PlayerSpawnTeam
+          1    DontWorshipSpirits 
 TeamFlags_EndDefinition
 
 TeamNames_StartDefinition

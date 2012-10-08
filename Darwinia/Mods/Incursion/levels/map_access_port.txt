@@ -1,0 +1,65 @@
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 12.00
+	outsideHeight -10.00
+	landColourFile landscape_icecaps.bmp
+	wavesColourFile waves_icecaps.bmp
+	waterColourFile water_icecaps.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	   355   0.00    423   1536  1.20   1.00    200      2 120616   1.00     0
+	    94   0.00     80   1024  1.20   1.00    200      2 150944   1.00     0
+	    72   0.00   1398    512  1.20   1.00    200      2 184320   1.00     0
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	Uplink              0       567.90  494.16  2       0.70    0.72    0            1  
+	PylonStart          1       617.01  482.45  3       0.22    -0.98   0       2       -1      
+	Pylon               2       685.91  366.18  3       -0.65   -0.76   0       3       
+	Pylon               3       790.28  346.48  3       0.24    -0.97   0       4       
+	Pylon               4       931.02  375.37  3       0.36    -0.93   0       5       
+	Pylon               5       1048.09 492.48  3       0.80    -0.61   0       6       
+	Pylon               6       1241.19 641.05  3       0.27    -0.96   0       7       
+	Pylon               7       1408.10 718.63  3       0.90    -0.43   0       8       
+	Pylon               8       1394.47 860.31  3       0.90    0.44    0       9       
+	Pylon               9       1282.53 1011.08 3       0.97    0.25    0       10      
+	Pylon               10      1205.63 1125.33 3       0.66    0.75    0       11      
+	Pylon               11      1098.07 1195.57 3       0.79    0.61    0       12      
+	PylonEnd            12      1084.93 1352.12 3       -0.94   -0.33   0       -1      
+	ControlStation      15      579.42  359.25  3       0.22    -0.98   1           -1     0
+	StaticShape         18      1016.77 1129.08 1       0.65    0.76    0         0.50  rockhead.shp    1.00  
+	StaticShape         17      829.65  1274.42 1       0.92    0.39    0         0.50  rockhead.shp    1.00  
+	StaticShape         19      758.60  1366.00 1       1.00    -0.10   0         0.50  rockhead.shp    1.00  
+	StaticShape         20      738.43  1520.01 1       0.80    -0.61   0         0.50  rockhead.shp    1.00  
+	StaticShape         21      854.49  1690.62 1       -0.03   -1.00   0         0.50  rockhead.shp    1.00  
+	StaticShape         22      563.76  490.90  1       0.67    0.74    0         1.25  rockhead.shp    1.00  
+	PylonStart          23      1084.93 1352.12 3       -0.94   -0.33   0       28      -1      
+	PylonStart          24      1084.93 1352.12 3       -0.94   -0.33   0       29      -1      
+	PylonStart          25      1084.93 1352.12 3       -0.94   -0.33   0       30      -1      
+	PylonStart          26      1084.93 1352.12 3       -0.94   -0.33   0       31      -1      
+	PylonStart          27      1084.93 1352.12 3       -0.94   -0.33   0       32      -1      
+	PylonEnd            28      1021.27 1138.35 1       0.50    0.87    0       -1      
+	PylonEnd            29      839.13  1277.16 1       0.99    0.15    0       -1      
+	PylonEnd            30      769.29  1367.38 1       1.00    0.00    0       -1      
+	PylonEnd            31      749.33  1519.72 1       1.00    -0.10   0       -1      
+	PylonEnd            32      863.18  1683.64 1       0.88    -0.48   0       -1      
+	StaticShape         33      1090.94 1354.67 1       0.80    -0.61   0         1.00  Pyramid.ms3d    1.00  
+Buildings_EndDefinition
+

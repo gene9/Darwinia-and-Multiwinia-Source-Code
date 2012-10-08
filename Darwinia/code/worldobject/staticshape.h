@@ -10,6 +10,7 @@ class StaticShape : public Building
 public:
     char    m_shapeName[256];
     float   m_scale;
+	float	m_progress;
 
 public:
     StaticShape();

@@ -42,9 +42,9 @@ void WriteSystemReport(FILE *_out);
 //	#define delete OverloadedDelete
 #endif
 
-#ifdef TRACK_MEMORY_LEAKS
-    #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
+//#ifdef TRACK_MEMORY_LEAKS
+//    #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//#endif
 
 void PrintMemoryLeaks();
 void GenerateBlackBox( char *_msg );

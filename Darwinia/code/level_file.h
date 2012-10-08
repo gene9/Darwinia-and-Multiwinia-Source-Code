@@ -20,6 +20,7 @@
 #define TEAM_FLAG_PATTERNCORRUPTION				16		//All darwinians spawn corrupted
 #define TEAM_FLAG_EVILTREESPAWNTEAM				32		//Team which evil trees will use to spawn soulless darwinians instead of ghosts
 #define TEAM_FLAG_SOULLESS						64		//Darwinians on this team always spawn without souls
+#define TEAM_FLAG_DONTWORSHIPSPIRITS			128		//Darwinians on this team wont worship spirits or launch kites
 
 class Building;
 class TextReader;

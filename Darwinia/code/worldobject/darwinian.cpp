@@ -21,6 +21,8 @@
 #include "global_world.h"
 #include "level_file.h"
 #include "obstruction_grid.h"
+#include "landscape.h"
+#include "landscape_renderer.h"
 
 #include "sound/soundsystem.h"
 
@@ -36,6 +38,7 @@
 #include "worldobject/incubator.h"
 #include "worldobject/spawnpoint.h"
 #include "worldobject/egg.h"
+#include "worldobject/generichub.h"
 
 Darwinian::Darwinian()
 :   Entity(),
@@ -79,7 +82,9 @@ void Darwinian::Begin()
 	float subversionLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeController);
 	float laserLevel = g_app->m_globalWorld->m_research->CurrentLevel(m_id.GetTeamId(),GlobalResearch::TypeLaser);
 
-	if ( frand() < subversionLevel/(subversionLevel+laserLevel) ) { m_subversive = true; }
+	if ( subversionLevel > 0.0f ){
+		if ( frand() < subversionLevel/(subversionLevel+laserLevel) ) { m_subversive = true; }
+	}
 
 	// DEBUG
 	//if ( m_id.GetTeamId() == 0 ) { m_subversive = true; }
@@ -160,6 +165,7 @@ bool Darwinian::SearchForNewTask()
             if( !newTargetFound )       newTargetFound = SearchForOfficers();
             if( !newTargetFound )       newTargetFound = SearchForSouls();
             if( !newTargetFound )       newTargetFound = SearchForSpirits();
+            if( !newTargetFound )       newTargetFound = SearchForPolygons();
             if( !newTargetFound )       newTargetFound = SearchForRandomPosition();
             break;
 
@@ -175,6 +181,7 @@ bool Darwinian::SearchForNewTask()
         case StateFollowingOrders:
         case StateFollowingOfficer:
 		case StateHarvestingSoul:
+		case StateHarvestingPolygon:
             if( !newTargetFound )       newTargetFound = SearchForThreats();
             if( !newTargetFound )       newTargetFound = SearchForPorts();
             break;
@@ -184,6 +191,7 @@ bool Darwinian::SearchForNewTask()
         case StateCombat:
         case StateCarryingSpirit:
         case StateToEgg:
+		case StateCarryingPolygon:
             if( !newTargetFound )       newTargetFound = SearchForThreats();
             break;
 
@@ -250,6 +258,8 @@ bool Darwinian::Advance( Unit *_unit )
             case StateCarryingSpirit :      amIDead = AdvanceCarryingSpirit();      break;
             case StateToEgg :               amIDead = AdvanceToEgg();	            break;
             case StateHarvestingSoul :      amIDead = AdvanceHarvestingSoul();      break;
+            case StateHarvestingPolygon :   amIDead = AdvanceHarvestingPolygon();   break;
+            case StateCarryingPolygon :     amIDead = AdvanceCarryingPolygon();     break;
         }
     }
 
@@ -261,30 +271,59 @@ bool Darwinian::Advance( Unit *_unit )
         m_boxKiteId.SetInvalid();
     }
 
-	// If we have a soul and are no longer carrying it back, release the soul
-	if ( g_app->m_location->m_spirits.ValidIndex( m_soulId ) ) {
-		Spirit *s = g_app->m_location->m_spirits.GetPointer( m_soulId );
-		if( s && s->m_state == Spirit::StateAttached && ((m_state != StateCarryingSpirit && m_state != StateToEgg) || m_dead) )
+	if ( m_polygonHarvested )
+	{
+		// If we have a soul and are no longer carrying it back, release the soul
+		if ( g_app->m_location->m_polygons.ValidIndex( m_soulId ) ) {
+			LoosePolygon *s = g_app->m_location->m_polygons.GetPointer( m_soulId );
+			if( s && s->m_state == LoosePolygon::StateAttached && (m_state != StateCarryingPolygon || m_dead) )
+			{
+				//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+				if ( m_soulHarvested ) { s->CollectorDrops(); }
+				m_soulHarvested = false;
+				m_polygonHarvested = false;
+				m_soulId = -1;
+			}
+		} else { m_soulId = -1; m_soulHarvested = false; m_polygonHarvested = false; }
+
+
+		// Move the soul to us if carrying one
+		if( g_app->m_location->m_polygons.ValidIndex(m_soulId) )
 		{
-			//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
-			if ( m_soulHarvested ) { s->CollectorDrops(); }
-			m_soulHarvested = false;
-			m_soulId = -1;
+			LoosePolygon *spirit = g_app->m_location->m_polygons.GetPointer( m_soulId );
+			if( spirit && spirit->m_state == LoosePolygon::StateAttached )
+			{
+				spirit->m_pos = m_pos;
+				spirit->m_pos.y += 10.0f;
+				spirit->m_vel = m_vel;
+			}
 		}
-	} else { m_soulId = -1; m_soulHarvested = false; }
+	} else if ( m_state != StateHarvestingPolygon ) {
+		// If we have a soul and are no longer carrying it back, release the soul
+		if ( g_app->m_location->m_spirits.ValidIndex( m_soulId ) ) {
+			Spirit *s = g_app->m_location->m_spirits.GetPointer( m_soulId );
+			if( s && s->m_state == Spirit::StateAttached && ((m_state != StateCarryingSpirit && m_state != StateToEgg) || m_dead) )
+			{
+				//Spirit *s = g_app->m_location->m_spirits.GetPointer( m_spiritId );
+				if ( m_soulHarvested ) { s->CollectorDrops(); }
+				m_soulHarvested = false;
+				m_soulId = -1;
+			}
+		} else { m_soulId = -1; m_soulHarvested = false; }
 
-	// Move the soul to us if carrying one
-    if( g_app->m_location->m_spirits.ValidIndex(m_soulId) )
-    {
-        Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_soulId );
-        if( spirit && spirit->m_state == Spirit::StateAttached )
-        {
-            spirit->m_pos = m_pos;
-			spirit->m_pos.y += 10.0f;
-            spirit->m_vel = m_vel;
+
+		// Move the soul to us if carrying one
+		if( g_app->m_location->m_spirits.ValidIndex(m_soulId) )
+		{
+			Spirit *spirit = g_app->m_location->m_spirits.GetPointer( m_soulId );
+			if( spirit && spirit->m_state == Spirit::StateAttached )
+			{
+				spirit->m_pos = m_pos;
+				spirit->m_pos.y += 10.0f;
+				spirit->m_vel = m_vel;
+			}
 		}
-    }
-
+	}
     if( !m_onGround ) AdvanceInAir( _unit );
 
     if( m_state == StateOnFire && !amIDead && !m_dead )
@@ -886,6 +925,81 @@ bool Darwinian::AdvanceHarvestingSoul()
     END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
     return false;
 }
+bool Darwinian::AdvanceHarvestingPolygon()
+{
+	bool captureSpirit = false;
+	if ( SearchForConstructionSite() ) { captureSpirit = true; }
+
+	if ( !captureSpirit )
+	{
+		m_state = StateIdle;
+		m_soulId = -1;
+		return false;
+	}
+    START_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
+
+    //
+    // Check our spirit is still there and valid
+
+    if( !g_app->m_location->m_polygons.ValidIndex(m_soulId) )
+    {
+        m_state = StateIdle;
+		m_soulId = -1;
+        m_retargetTimer = 3.0f;
+        END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
+        return false;
+    }
+
+    LoosePolygon *polygon = g_app->m_location->m_polygons.GetPointer(m_soulId);
+    if( polygon->m_state != LoosePolygon::StateBirth &&
+        polygon->m_state != LoosePolygon::StateFloating )
+    {
+        m_state = StateIdle;
+		m_soulId = -1;
+        m_retargetTimer = 3.0f;
+
+        END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
+        return false;
+    }
+
+
+    //
+    // Move to within range of our spirit
+
+    Vector3 targetVector = ( polygon->m_pos - m_pos );
+    float distance = targetVector.Mag();
+    targetVector.SetLength( distance );
+    Vector3 newWaypoint = m_pos + targetVector;
+    newWaypoint = PushFromObstructions( newWaypoint );
+    newWaypoint.y = g_app->m_location->m_landscape.m_heightMap->GetValue( newWaypoint.x, newWaypoint.z );
+    if( (newWaypoint - m_wayPoint).Mag() > 10.0f )
+    {
+        m_wayPoint = newWaypoint;
+    }
+
+    bool areWeThere = AdvanceToTargetPosition();
+    if( areWeThere )
+    {
+        m_front = ( polygon->m_pos - m_pos ).Normalise();
+    }
+
+	Vector3 vectorRemaining = m_wayPoint - m_pos;
+	vectorRemaining.y = 0;
+	distance = vectorRemaining.Mag();
+	if ( distance < 10.0f && (polygon->m_state == LoosePolygon::StateBirth || polygon->m_state == LoosePolygon::StateFloating) )
+	{
+		polygon->CollectorArrives();
+		//m_spiritId = spirit->m_id.GetUniqueId();
+		if ( SearchForConstructionSite() ) { m_state = StateCarryingPolygon; }
+		m_soulHarvested = true;
+		m_polygonHarvested = true;	// Flag for use elsewhere
+		END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
+		return false;
+	}
+
+    END_PROFILE( g_app->m_profiler, "AdvanceHarvest" );
+    return false;
+}
 
 bool Darwinian::AdvanceApproachingPort()
 {
@@ -1289,7 +1403,60 @@ bool Darwinian::AdvanceCarryingSpirit()
     return false;
 }
 
+bool Darwinian::AdvanceCarryingPolygon()
+{
+    Building *building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
 
+	// Check the building is still valid
+	if( !building || !(building->m_type == Building::TypeDynamicConstruction) )
+    {
+        bool found = SearchForConstructionSite();
+        building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
+        if( !building )
+        {
+            // We can't find a friendly incubator, so go into holding pattern
+            m_state = StateIdle;
+            return false;
+        }
+    }
+
+	DynamicConstruction *construction = (DynamicConstruction *) building;
+	if ( construction->m_progress>= 100.0f )
+	{
+        bool found = SearchForConstructionSite();
+        building = (Building *) g_app->m_location->GetBuilding( m_buildingId );
+        if( !building )
+        {
+            // We can't find a friendly incubator, so go into holding pattern
+            m_state = StateIdle;
+            return false;
+        }
+		construction = (DynamicConstruction *) building;
+	}
+
+	Vector3 tempVector3;
+	construction->GetPortPosition(0, m_wayPoint, tempVector3 );
+
+	bool arrived = AdvanceToTargetPosition();
+	if( arrived )
+	{
+		// Arrived at our incubator, drop spirit off here one at a time
+		if( g_app->m_location->m_polygons.ValidIndex(m_soulId) )
+		{
+			LoosePolygon *spirit = g_app->m_location->m_polygons.GetPointer( m_soulId );
+			construction->m_progress += construction->m_perTick;
+			g_app->m_location->m_polygons.MarkNotUsed( m_soulId );
+			m_soulId = -1;
+			m_soulHarvested = false;
+			m_polygonHarvested = false;
+		}
+		m_state = StateIdle;
+	}
+
+
+
+    return false;
+}
 
 bool Darwinian::SearchForIncubator()
 {
@@ -1335,6 +1502,37 @@ bool Darwinian::SearchForIncubator()
 
     return found;
 }
+bool Darwinian::SearchForConstructionSite()
+{
+    //
+    // Source building lost, look for another incubator to bind to
+    float nearest = DARWINIAN_INCUBATOR_SEARCH_RADIUS;
+    bool found = false;
+
+    for( int i = 0; i < g_app->m_location->m_buildings.Size(); ++i )
+    {
+        if( g_app->m_location->m_buildings.ValidIndex(i) )
+        {
+            Building *building = g_app->m_location->m_buildings[i];
+            if( building->m_type == Building::TypeDynamicConstruction && g_app->m_location->IsFriend(building->m_id.GetTeamId(), m_id.GetTeamId()) )
+            {
+				DynamicConstruction *site = (DynamicConstruction *) building;
+				if ( site->m_progress >= 100.0f ) { continue; }	// This one is done, ignore it
+                float distance = ( building->m_pos - m_pos ).Mag();
+
+                if( distance < nearest && g_app->m_location->IsWalkable(m_pos, building->m_pos) )
+                {
+                    m_buildingId = building->m_id.GetUniqueId();
+                    nearest = distance;
+                    found = true;
+                }
+            }
+        }
+	}
+
+    return found;
+}
+
 WorldObjectId Darwinian::FindNearbyEgg( Vector3 const &_pos )
 {
     int numFound;
@@ -1809,8 +2007,9 @@ bool Darwinian::SearchForSpirits()
 {
     // Red darwinians don't worship spirits
     //if( m_id.GetTeamId() == 1 ) return false;
+	if ( (g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_DONTWORSHIPSPIRITS) == 0 ) { return false; }
 
-    START_PROFILE( g_app->m_profiler, "SearchSpirits" );
+	START_PROFILE( g_app->m_profiler, "SearchSpirits" );
 
     Spirit *found = NULL;
     int spiritId = -1;
@@ -1890,6 +2089,46 @@ bool Darwinian::SearchForSouls()
     }
 
     END_PROFILE( g_app->m_profiler, "SearchSouls" );
+    return found;
+}
+bool Darwinian::SearchForPolygons()
+{
+
+    START_PROFILE( g_app->m_profiler, "SearchPolygons" );
+
+    LoosePolygon *found = NULL;
+    int spiritId = -1;
+
+    float closest = DARWINIAN_SEARCHRANGE_POLYGONS;
+
+    if( syncrand() % 5 == 0 )
+    {
+        for( int i = 0; i < g_app->m_location->m_polygons.Size(); ++i )
+        {
+            if( g_app->m_location->m_polygons.ValidIndex(i) )
+            {
+                LoosePolygon *s = g_app->m_location->m_polygons.GetPointer(i);
+                float theDist = ( s->m_pos - m_pos ).Mag();
+
+                if( theDist < closest &&
+                    ( s->m_state == LoosePolygon::StateBirth ||
+                      s->m_state == LoosePolygon::StateFloating ) )
+                {
+                    found = s;
+                    spiritId = i;
+                    closest = theDist;
+                }
+            }
+        }
+    }
+
+    if( found )
+    {
+        m_soulId = spiritId;
+        m_state = StateHarvestingPolygon;
+    }
+
+    END_PROFILE( g_app->m_profiler, "SearchPolygons" );
     return found;
 }
 

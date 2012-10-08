@@ -120,6 +120,8 @@ public:
 
 	virtual Vector3 GetCameraFocusPoint();	// used in unit tracking to determine the position the camera should look at
 	void FollowRoute();
+
+	void			TeamChanged();
 };
 
 

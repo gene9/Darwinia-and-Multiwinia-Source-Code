@@ -27,6 +27,7 @@
 #include "main.h"
 #include "entity_grid.h"
 #include "user_input.h"
+#include "team.h"
 
 #include "sound/soundsystem.h"
 
@@ -40,6 +41,7 @@ PowerBuilding::PowerBuilding()
     m_powerLink(-1),
     m_powerLocation(NULL)
 {
+	m_minimumPorts = 1;
 }
 
 void PowerBuilding::Initialise( Building *_template )
@@ -399,29 +401,36 @@ bool PylonStart::Advance()
     // Is the Generator online?
 
     bool generatorOnline = false;
+	bool generatorFound = false;
 
-    int generatorLocationId = g_app->m_globalWorld->GetLocationId("generator");
-    GlobalBuilding *globalRefinery = NULL;
+	// Removed the hardcoding for 'Generator' and adjusted to search for *any* active generator instead
+
+//    int generatorLocationId = g_app->m_globalWorld->GetLocationId("generator");
+//    GlobalBuilding *globalRefinery = NULL;
     for( int i = 0; i < g_app->m_globalWorld->m_buildings.Size(); ++i )
     {
         if( g_app->m_globalWorld->m_buildings.ValidIndex(i) )
         {
             GlobalBuilding *gb = g_app->m_globalWorld->m_buildings[i];
+			/*
             if( gb && gb->m_locationId == generatorLocationId &&
                 gb->m_type == TypeGenerator && gb->m_online )
+				*/
+			if ( gb && gb->m_type == TypeGenerator )
             {
-                generatorOnline = true;
+				generatorFound = true;
+				if ( gb->m_online ) generatorOnline = true;
                 break;
             }
         }
     }
 
-    if( generatorOnline )
+	// If no generator exists in the mod, assume one is present and turned on
+    if( generatorOnline || !generatorFound )
     {
-        //
         // Is our required building online yet?
         GlobalBuilding *globalBuilding = g_app->m_globalWorld->GetBuilding( m_reqBuildingId, g_app->m_locationId );
-        if( globalBuilding && globalBuilding->m_online )
+        if( m_reqBuildingId == -1 || (globalBuilding && globalBuilding->m_online) )
         {
             if( syncfrand() > 0.7f )
             {
@@ -548,6 +557,8 @@ void SolarPanel::Initialise( Building *_template )
 bool SolarPanel::Advance()
 {
 
+	RecalculateOwnershipIgnorePlayer();
+
     float fractionOccupied = (float) GetNumPortsOccupied() / (float) GetNumPorts();
 
     if( syncfrand(20.0f) <= fractionOccupied )
@@ -643,7 +654,11 @@ void SolarPanel::RenderAlphas( float _predictionTime )
         float glowHeight = 40.0f;
         float alphaValue = fabs(sinf(g_gameTime)) * fractionOccupied;
 
-        glColor4f       ( 0.2f, 0.4f, 0.9f, alphaValue );
+//		RGBAColour rgb = g_app->m_location->GetMyTeam()->m_colour;
+		RGBAColour rgb = g_app->m_location->m_teams[ m_id.GetTeamId() ].m_colour;
+
+        //glColor4f       ( 0.2f, 0.4f, 0.9f, alphaValue );
+		glColor4ub(rgb.r, rgb.g, rgb.b, (int) (255.0f * alphaValue));
         glEnable        ( GL_BLEND );
         glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
         glEnable        ( GL_TEXTURE_2D );

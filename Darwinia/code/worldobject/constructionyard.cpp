@@ -97,9 +97,13 @@ bool ConstructionYard::Advance()
                 m_numPrimitives = 0;
                 m_numSurges = 1;
 
+				unsigned char teamId = m_id.GetTeamId();
+				if ( teamId == -1 || g_app->m_location->IsFriend(teamId,2) ) { teamId = 2; }
                 Matrix34 mat( m_front, g_upVector, m_pos );
                 Matrix34 prim = m_primitives[5]->GetWorldMatrix( mat );
-                WorldObjectId objId = g_app->m_location->SpawnEntities( prim.pos, 2, -1, Entity::TypeArmour, 1, g_zeroVector, 0.0f );
+//                WorldObjectId objId = g_app->m_location->SpawnEntities( prim.pos, 2, -1, Entity::TypeArmour, 1, g_zeroVector, 0.0f );
+
+                WorldObjectId objId = g_app->m_location->SpawnEntities( prim.pos, teamId, -1, Entity::TypeArmour, 1, g_zeroVector, 0.0f );
                 Entity *entity = g_app->m_location->GetEntity( objId );
                 Armour *armour = (Armour *) entity;
                 armour->m_front.Set( 0, 0, 1 );

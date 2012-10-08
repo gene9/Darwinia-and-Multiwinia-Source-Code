@@ -367,6 +367,8 @@ bool Entity::Advance(Unit *_unit)
 {
     if( !m_enabled ) return false;
 
+	if ( m_id.HasTeamChanged() ) { TeamChanged(); }
+
     if( m_dead )
     {
         bool amIDead = AdvanceDead( _unit );
@@ -812,3 +814,13 @@ void Entity::FollowRoute()
     // continue towards the next waypoint instead.
     //
 }
+
+void Entity::TeamChanged()
+{
+	// We changed teams, update our colours
+    if( m_shape )
+    {
+		m_shape = g_app->m_resource->GetShape( m_shape->m_name, m_id.GetTeamId(), m_shape->m_animating );
+	}
+}
+

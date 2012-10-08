@@ -1,0 +1,24 @@
+
+########
+# NEST #
+########
+
+nest_intro_1a				This location is the most direct path out of our enclave.
+nest_intro_1b				Unfortunately, the way through is overrun by the virus.
+
+nest_intro_2a				This nest of spiders is our ultimate goal.
+nest_intro_2b				We need to clear the spiders out in order to reach the trunk port beyond.
+nest_intro_2c				The virus is deep rooted in these parts of the world, the trees themselves are twisted.
+nest_intro_2d				There is also something odd in the nest. Investigate it.
+
+nest_intro_3a				To reach the spiders, we will need to cross over to this island.
+nest_intro_3b				The incubator here has been damaged by the virus, but we should be able to recapture it.
+nest_intro_3c				We can use the spirits from the virii to boost our numbers for the final push
+
+nest_intro_4a				This area was one of Sepulveda's theme park zones
+nest_intro_4b				These turrets were to be used to defend against a landing here by insertion squads
+nest_intro_4c				The virus can't use them, but they are our only hope of taking on the spiders
+
+objective_nest_spider			Investigate Spider Nest
+objective_nest_trunk_1			Activate Corruption Trunk Port
+objective_nest_trunk_2			Activate Bridge Trunk Port

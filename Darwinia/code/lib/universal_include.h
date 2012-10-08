@@ -7,7 +7,7 @@
 
 // === PICK ONE OF THESE TARGETS ===
 
-#define TARGET_FULLGAME
+//#define TARGET_FULLGAME
 //#define TARGET_DEMOGAME
 //#define TARGET_PURITYCONTROL
 //#define TARGET_DEMO2
@@ -71,16 +71,17 @@
     #define LOCATION_EDITOR
     //#define SOUND_EDITOR
     #define CHEATMENU_ENABLED
-    #define GESTURE_EDITOR
+    //#define GESTURE_EDITOR
     //#define TEST_HARNESS_ENABLED
     //#define SCRIPT_TEST_ENABLED
     #define AVI_GENERATOR
-    //#define TRACK_MEMORY_LEAKS
+    #define TRACK_MEMORY_LEAKS
 	#define D3D_DEBUG_INFO
 #endif
 
 //#define PROMOTIONAL_BUILD                         // Their company logo is shown on screen
 
+/*
 #if !defined(TARGET_DEBUG) &&       \
     !defined(TARGET_FULLGAME) &&    \
     !defined(TARGET_DEMOGAME) &&    \
@@ -90,6 +91,7 @@
     !defined(TARGET_VISTA_DEMO2 )
 #error "Unknown target, cannot determine game type"
 #endif
+*/
 
 #ifndef PROFILER_ENABLED
 #define DARWINIA_VERSION_PROFILER "-np"

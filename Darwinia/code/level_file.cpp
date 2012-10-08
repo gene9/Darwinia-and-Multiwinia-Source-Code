@@ -785,6 +785,7 @@ void LevelFile::ParseTeamFlags(TextReader *_in)
 			else if ( stricmp("PatternCorruption",word) == 0 )		{ flag = TEAM_FLAG_PATTERNCORRUPTION; }
 			else if ( stricmp("EvilTreeSpawnTeam",word) == 0 )		{ flag = TEAM_FLAG_EVILTREESPAWNTEAM; }
 			else if ( stricmp("Soulless",word) == 0 )				{ flag = TEAM_FLAG_SOULLESS; }
+			else if ( stricmp("DontWorshipSpirits",word) == 0 )		{ flag = TEAM_FLAG_DONTWORSHIPSPIRITS; }
 			// UPDATE MATCHING STATEMENT IN SCRIPT::ADVANCESCRIPT TOO OR THE CHANGEFLAG FUNCTION WONT WORK!
 			if ( teamID >= 0 && teamID < NUM_TEAMS )
 			{
@@ -972,7 +973,7 @@ void LevelFile::GenerateAutomaticObjectives()
 			if (building->m_type == Building::TypeResearchItem)
 			{
 				ResearchItem *item = (ResearchItem*) GetBuilding(building->m_id.GetUniqueId());
-                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( building->m_id.GetTeamId(), item->m_researchType );
+                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( 2, item->m_researchType );
                 if( currentLevel == 0 /*|| currentLevel < item->m_level*/ )
                 {
                     // NOTE : We SHOULD really allow objectives to be created when the current research level
@@ -990,7 +991,7 @@ void LevelFile::GenerateAutomaticObjectives()
 			else if (building->m_type == Building::TypeResearchCrate)
 			{
 				ResearchCrate *item = (ResearchCrate*) GetBuilding(building->m_id.GetUniqueId());
-                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( building->m_id.GetTeamId(), item->m_researchType );
+                int currentLevel = g_app->m_globalWorld->m_research->CurrentLevel( 2, item->m_researchType );
                 if( currentLevel == 0 /*|| currentLevel < item->m_level*/ )
                 {
                     // NOTE : We SHOULD really allow objectives to be created when the current research level
@@ -1164,6 +1165,7 @@ void LevelFile::WriteTeamFlags(FileWriter *_out)
 				if ( m_teamFlags[i] & TEAM_FLAG_PATTERNCORRUPTION )		{ _out->printf( " PatternCorruption "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_EVILTREESPAWNTEAM )		{ _out->printf( " EvilTreeSpawnTeam "); }
 				if ( m_teamFlags[i] & TEAM_FLAG_SOULLESS )				{ _out->printf( " Soulless "); }
+				if ( m_teamFlags[i] & TEAM_FLAG_DONTWORSHIPSPIRITS )	{ _out->printf( " DontWorshipSpirits "); }
 				_out->printf( "\n");
 			}
         }
@@ -1512,8 +1514,8 @@ void LevelFile::SaveMissionFile(char const *_filename)
 #ifdef TARGET_DEBUG
         out = new FileWriter( fullFilename, false );
 #else
-        //out = new FileWriter( fullFilename, true );
-        out = new FileWriter( fullFilename, false );
+        out = new FileWriter( fullFilename, true );
+        //out = new FileWriter( fullFilename, false );
 #endif
     }
 

@@ -1,1 +1,1 @@
-MergeMission	map_nest.txt	mission_corruption.txt	reward_nest.txt
+MergeMission	map_corruption.txt	mission_corruption.txt	reward_nest.txt

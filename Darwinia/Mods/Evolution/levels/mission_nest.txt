@@ -17,8 +17,17 @@ CameraAnimations_EndDefinition
 Buildings_StartDefinition
 	# Type              id      x       z       tm      rx      rz      isGlobal
 	# ==========================================================================
-	ResearchCrate       28      1029.04 1157.40 1       -0.20   0.16    0       Spider      1
-	Incubator           39      2269.60 677.50  8       -0.28   0.96    1            0     0     0
+	ResearchCrate       28      1029.04 1157.40 8       0.22    0.73    1       Spider      1
+	Incubator           39      2269.60 677.50  8       -0.28   0.96    1            0     1     0
+	ControlStation      1       896.90  971.97  8       0.07    1.00    1            0     0
+	RadarDish           2       2293.14 1523.34 8       0.10    1.00    1       
+	ControlStation      3       2214.06 1548.15 8       -0.79   0.61    1            2     0
+	ControlStation      7       2581.91 1716.19 8       -0.92   0.40    1            6     0
+	RadarDish           29      2240.55 855.14  8       -0.14   -0.99   1       
+	RadarDish           30      2005.14 721.39  8       0.91    -0.42   1       
+	ControlStation      4       2039.74 795.36  8       0.76    0.64    1           30     0
+	ControlTower        37      2184.30 842.62  8       -0.88   -0.47   1           29
+	ControlStation      40      2206.58 634.07  8       0.83    0.56    1           39     0
 Buildings_EndDefinition
 
 InstantUnits_StartDefinition
@@ -35,13 +44,15 @@ Routes_StartDefinition
 Routes_EndDefinition
 
 PrimaryObjectives_StartDefinition
-	BuildingOnline :nest,6 	objective_capture_trunk
-	BuildingOnline :nest,0 	objective_capture_trunk
+	BuildingOnline :nest,6 	objective_nest_trunk_1
+	BuildingOnline :nest,0 	objective_nest_trunk_2
+	ResearchOwned  :Spider  objective_nest_spider
 PrimaryObjectives_EndDefinition
 
 TeamColours_StartDefinition
 	# ID    	R     	G     	B
 	# ==============================
+	       2	   255	    50	    50
 TeamColours_EndDefinition
 
 TeamAlliances_StartDefinition
@@ -53,4 +64,9 @@ TeamFlags_StartDefinition
 	# ID    	Flags
 	# =========================================================================
 TeamFlags_EndDefinition
+
+TeamNames_StartDefinition
+	# ID    	Name
+	# ==============================
+TeamNames_EndDefinition
 

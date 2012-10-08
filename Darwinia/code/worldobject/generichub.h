@@ -118,4 +118,41 @@ public:
     void Write          ( FileWriter *_out );
 };
 
+
+// ****************************************************************************
+// Class DynamicConstruction
+// ****************************************************************************
+
+class DynamicConstruction : public DynamicBase
+{
+protected:
+    bool m_finished;
+	int m_linkId;
+
+public:
+	float m_progress;
+	float m_perTick;
+
+public:
+    DynamicConstruction();
+
+
+    void Initialise     ( Building *_template );
+    bool Advance        ();
+
+    void Render         ( float _predictionTime );
+    void RenderPorts    ();
+    void RenderAlphas   ( float _predictionTime );
+
+    void ListSoundEvents( LList<char *> *_list );
+
+    void ReprogramComplete();
+
+    int  GetBuildingLink();                             // Allows a building to link to another
+    void SetBuildingLink( int _buildingId );            // eg control towers
+
+	void Read           ( TextReader *_in, bool _dynamic );
+    void Write          ( FileWriter *_out );
+};
+
 #endif

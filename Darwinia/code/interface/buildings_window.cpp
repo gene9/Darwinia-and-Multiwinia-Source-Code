@@ -30,6 +30,8 @@
 #include "worldobject/switch.h"
 #include "worldobject/researchcrate.h"
 #include "worldobject/gunturret.h"
+#include "worldobject/pixelmine.h"
+#include "worldobject/uplink.h"
 
 #include "app.h"
 #include "camera.h"
@@ -284,7 +286,7 @@ void BuildingEditWindow::Create()
     }
 */
 	int rows = 0;
-    for( int i = 0; i < 3; ++i )
+    for( int i = -1; i < 2; ++i )
     {
 		int j = 0;
 		while ( i+(j*3) < NUM_TEAMS )
@@ -294,7 +296,7 @@ void BuildingEditWindow::Create()
 			sprintf( name, "T%d", i + (j*3));
 			if ( i + (j*3) < NUM_TEAMS ) {
 				TeamButton *tb = new TeamButton(i+(j*3));
-				tb->SetShortProperties(name, 10 + (i*w) + (i*2), y + (j*buttonPitch), w);
+				tb->SetShortProperties(name, 12 + w + (i*w) + (i*2), y + (j*buttonPitch), w);
 				RegisterButton(tb);
 				if ( building->m_id.GetTeamId() == i+(j*3) ) { tb->m_highlightedThisFrame = true; }
 			}
@@ -325,6 +327,7 @@ void BuildingEditWindow::Create()
         inExtra->SetShortProperties(LANGUAGEPHRASE("editor_targetlocation"), 10, y += buttonPitch, m_w-20);
         TrunkPort *port = (TrunkPort *) building;
         inExtra->RegisterInt( &port->m_targetLocationId );
+		inExtra->m_lowBound = -1;	// Allow -1 as a location
         RegisterButton(inExtra);
     }
     else if (building->m_type == Building::TypeLaserFence)
@@ -531,6 +534,14 @@ void BuildingEditWindow::Create()
         CreateValueControl( LANGUAGEPHRASE("editor_shape"), InputField::TypeString, &node->m_shapeName, y+=buttonPitch, 0,0,0 );
         CreateValueControl( LANGUAGEPHRASE("editor_pointspersec"), InputField::TypeInt, &node->m_scoreValue, y+=buttonPitch, 1, 0, 1000 );
     }
+    else if( building->m_type == Building::TypeDynamicConstruction )
+    {
+        DynamicConstruction *construction = (DynamicConstruction *)building;
+
+        CreateValueControl( LANGUAGEPHRASE("editor_shape"), InputField::TypeString, &construction->m_shapeName, y+=buttonPitch, 0,0,0 );
+        CreateValueControl( LANGUAGEPHRASE("editor_progress"), InputField::TypeFloat, &construction->m_progress, y+=buttonPitch, 1,0,100 );
+        CreateValueControl( LANGUAGEPHRASE("editor_pertick"), InputField::TypeFloat, &construction->m_perTick, y+=buttonPitch, 1,0,100 );
+    }
 	else if( building->m_type == Building::TypeFenceSwitch )
 	{
 		FenceSwitch *fs = (FenceSwitch *)building;
@@ -553,7 +564,16 @@ void BuildingEditWindow::Create()
         menu->RegisterInt( &gt->m_state );
         RegisterButton( menu );
 	}
-
+	else if ( building->m_type == Building::TypePixelMine )
+	{
+		PixelMine *pixelmine = (PixelMine *)building;
+        CreateValueControl( LANGUAGEPHRASE("editor_period"), InputField::TypeFloat, &pixelmine->m_spawnDelay, y+=buttonPitch, 1,0,240 );
+	}
+	else if ( building->m_type == Building::TypeUplink )
+	{
+		Uplink *uplink = (Uplink *)building;
+        CreateValueControl( LANGUAGEPHRASE("editor_direction"), InputField::TypeInt, &uplink->m_direction, y+=buttonPitch, 1,-1,1 );
+	}
 }
 
 void BuildingEditWindow::Render( bool hasFocus )

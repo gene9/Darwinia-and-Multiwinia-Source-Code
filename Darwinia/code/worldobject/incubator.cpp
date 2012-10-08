@@ -145,12 +145,28 @@ void Incubator::SpawnEntity()
     Matrix34 exit = m_exit->GetWorldMatrix(mat);
 
     //
+    // Pick a spirit
+    Vector3 spiritPos;
+	int spiritIndex = -1;
+    for( int i = 0; i < m_spirits.Size(); ++i )
+    {
+        if( m_spirits.ValidIndex(i) )
+        {
+            spiritPos = m_spirits[i].m_pos;
+			spiritIndex = i;
+            //m_spirits.MarkNotUsed( i );
+            break;
+        }
+    }
+	
+	//
     // Spawn the entity
     int teamId = m_id.GetTeamId();
 
 	if ( m_teamSpawner )
 	{
-		teamId = 255;
+		//teamId = 255;
+		teamId = m_spirits.GetPointer(spiritIndex)->m_teamId;	// If the spirits team is friendly, spawn it back as its own colour
 		while ( !g_app->m_location->IsFriend(m_id.GetTeamId(),teamId) )
 		{
 			teamId = (int) floor(frand(NUM_TEAMS));
@@ -171,18 +187,7 @@ void Incubator::SpawnEntity()
 		Darwinian *dg = (Darwinian *) g_app->m_location->GetEntity(wob);
 		dg->m_corrupted = true;
 	}
-    //
-    // Remove a spirit
-    Vector3 spiritPos;
-    for( int i = 0; i < m_spirits.Size(); ++i )
-    {
-        if( m_spirits.ValidIndex(i) )
-        {
-            spiritPos = m_spirits[i].m_pos;
-            m_spirits.MarkNotUsed( i );
-            break;
-        }
-    }
+
 
 
     //
@@ -206,7 +211,8 @@ void Incubator::SpawnEntity()
     //
     // Sound effect
 
-    g_app->m_soundSystem->TriggerBuildingEvent( this, "SpawnEntity" );
+	m_spirits.MarkNotUsed( spiritIndex );
+	g_app->m_soundSystem->TriggerBuildingEvent( this, "SpawnEntity" );
 }
 
 

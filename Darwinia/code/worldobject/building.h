@@ -85,6 +85,9 @@ public:
 		TypeSpawnPointRandom,
 		TypeResearchCrate,
 		TypeCrate,
+		TypeDynamicConstruction,
+		TypePixelMine,
+		TypeUplink,
 		NumBuildingTypes
     };
 
@@ -106,6 +109,8 @@ public:
     static ShapeMarker  *s_controlPadStatus;
 
 	int			m_minimumPorts;
+	bool		m_underConstruction;
+
 public:
     Building();
 
@@ -128,6 +133,7 @@ public:
     virtual void RenderLink     ();                             // ie link to another building
 
 	void RecalculateOwnership	();
+	void RecalculateOwnershipIgnorePlayer	();					// Doesn't change ownership of friendly buildings to the player
 
     virtual bool PerformDepthSort( Vector3 &_centrePos );       // Return true if you plan to use transparencies
 

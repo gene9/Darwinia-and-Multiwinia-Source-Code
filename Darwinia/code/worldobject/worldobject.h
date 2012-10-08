@@ -19,6 +19,7 @@ class WorldObjectId
 {
 protected:
     unsigned char   m_teamId;
+	unsigned char	m_oldTeam;
     int             m_unitId;
     int             m_index;
     int             m_uniqueId;
@@ -33,7 +34,9 @@ public:
 
     void            SetInvalid();
 
-	void			SetTeamId   (unsigned char _teamId) { m_teamId = _teamId; }
+	void			SetTeamId   (unsigned char _teamId) { m_oldTeam = m_teamId; m_teamId = _teamId; }
+	bool			HasTeamChanged () { if (m_oldTeam == m_teamId ) { return false; } else { m_oldTeam = m_teamId; return true; } }
+
 	void			SetUnitId   (int _unitId)			{ m_unitId = _unitId; }
 	void			SetIndex    (int _index)			{ m_index = _index; }
 	void			SetUniqueId (int _uniqueId)		    { m_uniqueId = _uniqueId; }

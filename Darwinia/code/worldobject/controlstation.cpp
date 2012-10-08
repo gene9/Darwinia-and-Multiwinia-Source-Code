@@ -59,18 +59,35 @@ bool ControlStation::Advance()
 
 void ControlStation::RecalculateOwnership()
 {
-	int teamId = m_id.GetTeamId();
+	int oldTeamId = m_id.GetTeamId();
 
 	Building::RecalculateOwnership();
-	if ( teamId == m_id.GetTeamId() ) { return; }
+	if ( oldTeamId == m_id.GetTeamId() ) { return; }
 
 	Building *targetBuilding = g_app->m_location->GetBuilding( m_controlBuildingId );
+	
+
+	g_app->m_soundSystem->TriggerBuildingEvent( this, "ReprogramComplete" );
+	ReprogramComplete();
+
+	if ( targetBuilding ) {
+		targetBuilding->SetTeamId( m_id.GetTeamId() );
+	}
 
 	if ( g_app->m_location->IsFriend(m_id.GetTeamId(), 2) )
 	{
-		ReprogramComplete();
-		if ( targetBuilding ) { targetBuilding->ReprogramComplete(); }
+		if ( targetBuilding ) {
+			targetBuilding->Reprogram(100.0f);
+			targetBuilding->ReprogramComplete();
+		}
 		if ( !m_scored ) { g_app->m_globalWorld->m_research->GiveResearchPoints( GLOBALRESEARCH_POINTS_CONTROLTOWER ); m_scored = true; }
+
+		GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
+		if( gb )
+		{
+			gb->m_online = true;
+			g_app->m_globalWorld->EvaluateEvents();
+		}
 		g_app->SaveProfile( true, true );
 	}
 

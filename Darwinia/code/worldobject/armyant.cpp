@@ -17,6 +17,7 @@
 #include "particle_system.h"
 #include "entity_grid.h"
 #include "camera.h"
+#include "team.h"
 
 #include "worldobject/armyant.h"
 #include "worldobject/anthill.h"
@@ -43,6 +44,7 @@ ArmyAnt::ArmyAnt()
 void ArmyAnt::Begin()
 {
     Entity::Begin();
+	m_shape->isTeamColoured = false;
 
     m_onGround = true;
 
@@ -152,6 +154,9 @@ bool ArmyAnt::Advance( Unit *_unit )
         if( newIndex != currentIndex ) break;
     }
 
+	if ( !m_shapes[newIndex]->isTeamColoured ) {
+		m_shapes[newIndex] = g_app->m_resource->GetShape(m_shapes[newIndex]->m_name, m_id.GetTeamId(), m_shapes[newIndex]->m_animating);
+	}
     m_shape = m_shapes[newIndex];
 
     return amIDead;

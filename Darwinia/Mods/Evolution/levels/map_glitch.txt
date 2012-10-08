@@ -1,0 +1,60 @@
+Landscape_StartDefinition
+	worldSizeX 2000
+	worldSizeZ 2000
+	cellSize 9.87
+	outsideHeight -10.00
+	landColourFile landscape_earth.bmp
+	wavesColourFile waves_default.bmp
+	waterColourFile water_default.bmp
+Landscape_EndDefinition
+
+LandscapeTiles_StartDefinition
+	#                            frac  height desired gen         lowland
+	# x       y       z    size   dim  scale  height  method seed smooth  guideGrid
+	# =============================================================================
+	    24   0.00     20   1964  1.20   1.00    200      1 961773   1.00     4   AAAAADAEAAAAAAAAAAAAAAAIALACAAAAPPDHFMHJAFAAAAAAAAICLKGNPPAAAHCGEMFKBOAOAAAAAAACLBFKIOGPADBBBFIDIECLAMAAAAAAACBNGMGDFABAABAGCJBBAFAAAAAAAACODBDNCKMAAKAAAAAAAAAAAAAAACBCFFCEAEFNEOAAAAAAAAAAAAAAAJGLICAJAAAAAGAAAAAAAAAAAAAAALFPFNAIAAAAAAAAAAAAAAPPGPBOALGHCOAHAAAAAAAAAAAAAAAAGMCPDDEPKEACAAAAAAAAAAAAAMAAADCEEEGEDIAHAAAAAAAAAABLCKDHAAADKDFDHEFPBBAAAAAAADBODIFPDJACAAAPGKHMDFBEAAAAAAFBDCFMGGEBBCAAAABDDIPPAAAAAAAAAAABGKDKCNACAAAAAAAABCAAAAAAAAAAAAAAAAAAAA
+LandscapeTiles_EndDefinition
+
+LandFlattenAreas_StartDefinition
+	# x      y       z      size
+	# ==========================
+LandFlattenAreas_EndDefinition
+
+Lights_StartDefinition
+	# x      y      z        r      g      b
+	# =========================================
+	  0.55   0.60   0.59     0.69   0.69   0.69
+	  0.99   0.00   0.14     3.28   1.39   0.85
+Lights_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	TrunkPort           67      1593.53 689.00  1       -0.94   0.35    1       -1      
+	TrunkPort           68      393.93  1291.33 0       0.83    -0.56   1       -1      
+	Tree                69      1881.54 1672.02 255     1.00    0.00    0       156.31  3.00    0.43    1.19    6       99339   -11700096   -13472718   0       0       0       
+	Tree                70      1806.11 1686.06 255     1.00    0.00    0       171.66  3.00    0.43    1.19    6       57642   -11700096   -13472718   0       0       0       
+	Tree                71      1789.05 1747.61 255     1.00    0.00    0       156.28  3.00    0.43    1.19    6       57654   -11700096   -13472718   0       0       0       
+	Tree                72      490.08  1798.30 255     1.00    0.00    0       173.16  3.00    0.43    1.19    6       57703   -11700096   -13472718   0       0       0       
+	Tree                73      381.25  1790.45 255     1.00    0.00    0       157.78  3.00    0.43    1.19    6       57712   -11700096   -13472718   0       0       0       
+	Tree                74      378.58  1710.52 255     1.00    0.00    0       173.91  3.00    0.43    1.19    6       57734   -11700096   -13472718   0       0       0       
+	Tree                75      327.17  1726.27 255     1.00    0.00    0       158.52  3.00    0.43    1.19    6       57743   -11700096   -13472718   0       0       0       
+	Tree                76      237.13  394.75  255     1.00    0.00    0       175.40  3.00    0.43    1.19    6       57792   -11700096   -13472718   0       0       0       
+	Tree                77      201.55  403.69  255     1.00    0.00    0       160.02  3.00    0.43    1.19    6       57804   -11700096   -13472718   0       0       0       
+	Tree                78      192.58  448.40  255     1.00    0.00    0       144.64  3.00    0.43    1.19    6       57813   -11700096   -13472718   0       0       0       
+	Tree                79      161.35  453.95  255     1.00    0.00    0       176.15  3.00    0.43    1.19    6       57822   -11700096   -13472718   0       0       0       
+	Tree                80      1586.75 902.16  255     1.00    0.00    0       179.14  3.00    0.43    1.19    6       57941   -11700096   -13472718   0       0       0       
+	Tree                81      1618.54 180.77  255     1.00    0.00    0       164.51  3.00    0.43    1.19    6       57981   -11700096   -13472718   0       0       0       
+	Tree                82      1656.60 153.62  255     1.00    0.00    0       133.75  3.00    0.43    1.19    6       58002   -11700096   -13472718   0       0       0       
+	AITarget            83      1005.43 955.77  255     1.00    0.00    0       
+	AITarget            84      1565.94 1637.37 255     1.00    0.00    0       
+	AITarget            85      530.62  425.41  255     1.00    0.00    0       
+	AITarget            91      448.64  1249.83 255     1.00    0.00    0       
+	AITarget            92      705.49  1147.79 255     1.00    0.00    0       
+	AITarget            93      1538.35 725.64  255     1.00    0.00    0       
+	AITarget            94      1275.45 759.84  255     1.00    0.00    0       
+	AITarget            95      1411.63 376.12  255     1.00    0.00    0       
+	AITarget            96      622.38  1505.76 255     1.00    0.00    0       
+	Uplink              0       1443.96 1358.36 1       1.00    0.00    0           1  
+Buildings_EndDefinition
+

@@ -146,7 +146,7 @@ void SpawnBuilding::RenderAlphas( float _predictionTime )
     {
         SpawnBuildingLink *link = m_links[i];
         SpawnBuilding *building = (SpawnBuilding *) g_app->m_location->GetBuilding( link->m_targetBuildingId );
-        if( building )
+        if( building && !building->m_underConstruction )
         {
             Vector3 theirPos = building->GetSpiritLink();
 
@@ -566,11 +566,6 @@ bool SpawnPoint::PopulationLocked()
 
 void SpawnPoint::TriggerSpirit( SpawnBuildingSpirit *_spirit )
 {
-    if( m_id.GetTeamId() == 0 )
-    {
-        int b = 10;
-    }
-
     if( m_id.GetUniqueId() == _spirit->m_targetBuildingId )
     {
         // This spirit has arrived at its destination
@@ -664,7 +659,7 @@ void SpawnPoint::SpawnDarwinian()
 		while ( !g_app->m_location->IsFriend(m_id.GetTeamId(),teamId) )
 		{
 			teamId = (int) floor(frand(NUM_TEAMS));
-			if ( teamId < 0 || teamId > NUM_TEAMS ) { teamId = 255; }
+			if ( teamId < 0 || teamId >= NUM_TEAMS ) { teamId = 255; }
 		}
 	}
 	if ( teamId == 2 ) { // Instead of hardcoding, look up the team we need to use based on team flags
@@ -862,6 +857,8 @@ bool SpawnPopulationLock::Advance()
     // This only really applies to Green darwinians, as the player can arrange
     // it so an unlimited army gathers on a single island
 
+	// Stormchild: Overpopulation is now checked for all friends of the spawnlocks owning team
+
     if( GetHighResTime() > s_overpopulationTimer )
     {
         s_overpopulationTimer = GetHighResTime() + 1.0f;
@@ -876,10 +873,13 @@ bool SpawnPopulationLock::Advance()
                 if( building && building->m_type == TypeSpawnPopulationLock )
                 {
                     SpawnPopulationLock *lock = (SpawnPopulationLock *) building;
-                    if( lock->m_teamCount[0] > lock->m_originalMaxPopulation )
-                    {
-                        totalOverpopulation += (lock->m_teamCount[0] - lock->m_originalMaxPopulation);
-                    }
+					for ( int i = 0; i < NUM_TEAMS; i++ )
+					{
+						if( g_app->m_location->IsFriend(i,m_id.GetTeamId()) && lock->m_teamCount[i] > lock->m_originalMaxPopulation )
+						{
+							totalOverpopulation += (lock->m_teamCount[i] - lock->m_originalMaxPopulation);
+						}
+					}
                 }
             }
         }

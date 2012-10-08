@@ -14,6 +14,9 @@
 #include "lib/shape.h"
 #include "lib/text_stream_readers.h"
 #include "lib/MS3DFile.h"
+#include "lib/preferences.h"
+
+#include "main.h"
 
 #ifndef EXPORTER_BUILD
 #include "lib/resource.h"
@@ -21,6 +24,8 @@
 #endif
 
 #define USE_DISPLAY_LISTS
+
+#define COLOUR_SCALE 1.25
 
 // ****************************************************************************
 // Class ShapeMarker
@@ -881,6 +886,40 @@ void ShapeFragment::RegisterTriangles(ShapeTriangle *_tris, unsigned int _numTri
 	m_numTriangles = _numTris;
 }
 
+void ShapeFragment::RenderSpecial( float _predictionTime, float solidFraction )
+{
+#ifndef EXPORTER_BUILD
+	Matrix34 predictedTransform = m_transform;
+	predictedTransform.RotateAround(m_angVel * _predictionTime);
+	predictedTransform.pos += m_vel * _predictionTime;
+
+	bool matrixIsIdentity = predictedTransform == g_identityMatrix34;
+	if (!matrixIsIdentity)
+	{
+		glPushMatrix();
+		glMultMatrixf(predictedTransform.ConvertToOpenGLFormat());
+	}
+
+    glEnable        ( GL_BLEND );
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+	RenderWireframe ( solidFraction );
+	glDisable       (GL_BLEND);
+	glBlendFunc		( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+	RenderSlow ( solidFraction );
+
+    int numChildren = m_childFragments.Size();
+	for (int i = 0; i < numChildren; ++i)
+	{
+    	m_childFragments.GetData(i)->RenderSpecial(_predictionTime, solidFraction);
+	}
+
+	if (!matrixIsIdentity)
+	{
+		glPopMatrix();
+	}
+#endif
+}
 
 void ShapeFragment::Render(float _predictionTime)
 {
@@ -907,6 +946,7 @@ void ShapeFragment::Render(float _predictionTime)
 #endif
 	{
 		RenderSlow();
+		//RenderWireframe();
 	}
 
     int numChildren = m_childFragments.Size();
@@ -923,15 +963,20 @@ void ShapeFragment::Render(float _predictionTime)
 }
 
 
-void ShapeFragment::RenderSlow()
+void ShapeFragment::RenderSlow( float renderFraction )
 {
+	// Note: renderFraction is the fraction to render SOLID
 #ifndef EXPORTER_BUILD
 	if(!m_numTriangles) return;
+
+	int modLimit = (int) m_numTriangles * renderFraction;
+	
 	glBegin(GL_TRIANGLES);
 
 	int norm = 0;
 	for (int i = 0; i < m_numTriangles; i++)
 	{
+		if ( i >= modLimit ) { continue; }
 		VertexPosCol const *vertA = &m_vertices[m_triangles[i].v1];
 		VertexPosCol const *vertB = &m_vertices[m_triangles[i].v2];
 		VertexPosCol const *vertC = &m_vertices[m_triangles[i].v3];
@@ -973,6 +1018,101 @@ void ShapeFragment::RenderSlow()
                     m_colours[vertC->m_colId].b,
                     alpha );
 		glVertex3fv (m_positions[vertC->m_posId].GetData());
+		norm++;
+	}
+	glEnd();
+#endif
+}
+
+void ShapeFragment::RenderWireframe( float renderFraction )
+{
+	// Note: renderFraction is the fraction to render SOLID
+#ifndef EXPORTER_BUILD
+	if(!m_numTriangles) return;
+	glBegin(GL_LINES);
+
+	int modLimit = (int) m_numTriangles * renderFraction;
+
+	int norm = 0;
+	for (int i = 0; i < m_numTriangles; i++)
+	{
+		if ( i <= modLimit ) { norm++; continue; }
+
+		VertexPosCol const *vertA = &m_vertices[m_triangles[i].v1];
+		VertexPosCol const *vertB = &m_vertices[m_triangles[i].v2];
+		VertexPosCol const *vertC = &m_vertices[m_triangles[i].v3];
+
+		unsigned char alpha = 255;
+		if ( !g_app->m_editing )
+		{
+			float milliseconds = 1000 * (g_gameTime - (int) g_gameTime);
+			alpha = (char) (milliseconds /1000.0f * 255.0f);
+			if ( (int)g_gameTime % 2 == 1 ) alpha = 255 - alpha;
+		}
+
+//		unsigned char const alpha = 0;
+
+		/*/ calculate normal
+		float u[3],v[3],n[3],l;
+		u[0]=m_positions[vertB->m_posId].x-m_positions[vertA->m_posId].x;
+		u[1]=m_positions[vertB->m_posId].y-m_positions[vertA->m_posId].y;
+		u[2]=m_positions[vertB->m_posId].z-m_positions[vertA->m_posId].z;
+		v[0]=m_positions[vertC->m_posId].x-m_positions[vertA->m_posId].x;
+		v[1]=m_positions[vertC->m_posId].y-m_positions[vertA->m_posId].y;
+		v[2]=m_positions[vertC->m_posId].z-m_positions[vertA->m_posId].z;
+		n[0]=u[1]*v[2]-u[2]*v[1];
+		n[1]=-u[0]*v[2]+u[2]*v[0];
+		n[2]=u[0]*v[1]-u[1]*v[0];
+		l=(float)sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);
+		n[0]/=l; n[1]/=l; n[2]/=l;
+		glNormal3fv(n);*/
+
+		// A -> B
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertA->m_colId].r,
+                    m_colours[vertA->m_colId].g,
+                    m_colours[vertA->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertA->m_posId].GetData());
+
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertB->m_colId].r,
+                    m_colours[vertB->m_colId].g,
+                    m_colours[vertB->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertB->m_posId].GetData());
+
+		// B -> C
+
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertB->m_colId].r,
+                    m_colours[vertB->m_colId].g,
+                    m_colours[vertB->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertB->m_posId].GetData());
+
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertC->m_colId].r,
+                    m_colours[vertC->m_colId].g,
+                    m_colours[vertC->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertC->m_posId].GetData());
+
+		// C -> A
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertC->m_colId].r,
+                    m_colours[vertC->m_colId].g,
+                    m_colours[vertC->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertC->m_posId].GetData());
+
+		glNormal3fv(m_normals[norm].GetData());
+		glColor4ub (m_colours[vertA->m_colId].r,
+                    m_colours[vertA->m_colId].g,
+                    m_colours[vertA->m_colId].b,
+                    alpha );
+		glVertex3fv (m_positions[vertA->m_posId].GetData());
+
 		norm++;
 	}
 	glEnd();
@@ -1499,6 +1639,24 @@ void Shape::Render(float _predictionTime, Matrix34 const &_transform)
 #endif
 }
 
+void Shape::RenderSpecial(float _predictionTime, Matrix34 const &_transform, float renderFraction)
+{
+#ifndef EXPORTER_BUILD
+	glEnable        (GL_COLOR_MATERIAL);
+	glMatrixMode    (GL_MODELVIEW);
+	glPushMatrix    ();
+	glMultMatrixf   (_transform.ConvertToOpenGLFormat());
+
+	m_rootFragment->RenderSpecial(_predictionTime, renderFraction);
+
+	glDisable       (GL_COLOR_MATERIAL);
+	glMatrixMode    (GL_MODELVIEW);
+	glPopMatrix     ();
+
+//	RenderHitCheck(_transform);
+#endif
+}
+
 
 void Shape::RenderHitCheck(Matrix34 const &_transform)
 {
@@ -1605,17 +1763,78 @@ void Shape::Recolour ( RGBAColour _teamColour )
 
 void ShapeFragment::Recolour ( RGBAColour _teamColour )
 {
-
+//return;
 	for ( int i = 0; i < m_numColours; i++ )
 	{
-		float maxFactor = (float) m_colours[i].r + (float) m_colours[i].g + (float) m_colours[i].b;
-		float baseFactor = (float) _teamColour.r + (float) _teamColour.g + (float) _teamColour.b;
-		maxFactor = maxFactor / baseFactor; // Increasing the first number here makes models darker, lowering it makes them lighter
+		// Gather some info for some of the later methods
+		float colourScale = g_prefsManager->GetFloat("EntityColourScale",1.00f);
 
-		m_colours[i].r = (char) min(((float)_teamColour.r * maxFactor),255.0);
-		m_colours[i].g = (char) min(((float)_teamColour.g * maxFactor),255.0);
-		m_colours[i].b = (char) min(((float)_teamColour.b * maxFactor),255.0);
-		//m_colours[i] = m_colours[i] * 0.7;
+		float maxColour = max(max(m_colours[i].r,m_colours[i].g),m_colours[i].b);
+		float maxTeam = max(max(_teamColour.r,_teamColour.g),_teamColour.b);
+
+		clamp(maxColour,1,255);
+		clamp(maxTeam,1,255);
+
+		int colourMechanism = g_prefsManager->GetInt("AlternateColourMechanism",0);
+		switch ( colourMechanism )
+		{
+		case 0:	// Team scaled to model
+			m_colours[i].r = min(_teamColour.r / maxTeam * maxColour * colourScale,255);
+			m_colours[i].g = min(_teamColour.g / maxTeam * maxColour * colourScale,255);
+			m_colours[i].b = min(_teamColour.b / maxTeam * maxColour * colourScale,255);
+			break;
+		case 1: // Model scaled to team scalars (DONT USE FOR NON-MONOCOLOURED TEAMS)
+			{
+			int colourScales[3];	// High, Medium, Low
+			colourScales[0] = max(max(m_colours[i].r,m_colours[i].g),m_colours[i].b);
+			colourScales[2] = min(min(m_colours[i].r,m_colours[i].g),m_colours[i].b);
+			colourScales[1] = m_colours[i].r + m_colours[i].g + m_colours[i].b - colourScales[0] - colourScales[2];
+
+			int indices[3];			// Index into colourScales[] for Red, Green, Blue
+			if ( maxTeam == _teamColour.r ) {
+				indices[0] = 0;
+				if ( _teamColour.g > _teamColour.b ) { indices[1] = 1; indices[2] = 2; }
+				else { indices[1] = 2; indices[2] = 1; }
+			} else if ( maxTeam == _teamColour.g ) {
+				indices[1] = 0;
+				if ( _teamColour.r > _teamColour.b ) { indices[0] = 1; indices[2] = 2; }
+				else { indices[0] = 2; indices[2] = 1; }
+			} else {
+				indices[2] = 0;
+				if ( _teamColour.r > _teamColour.g ) { indices[0] = 1; indices[1] = 2; }
+				else { indices[0] = 2; indices[1] = 1; }
+			}
+
+			m_colours[i].r = min(colourScales[indices[0]] / maxColour * maxTeam * colourScale,255);
+			m_colours[i].g = min(colourScales[indices[1]] / maxColour * maxTeam * colourScale,255);
+			m_colours[i].b = min(colourScales[indices[2]] / maxColour * maxTeam * colourScale,255);
+			break;
+			}
+		case 2:	// Flat team colours
+			m_colours[i].r = min(_teamColour.r * colourScale,255);
+			m_colours[i].g = min(_teamColour.g * colourScale,255);
+			m_colours[i].b = min(_teamColour.b * colourScale,255);
+			break;
+		case 3:	// Use Red channel to scale team colour
+			colourScale = m_colours[i].r / 255.0f;
+			m_colours[i].r = min(_teamColour.r * colourScale,255);
+			m_colours[i].g = min(_teamColour.g * colourScale,255);
+			m_colours[i].b = min(_teamColour.b * colourScale,255);
+			break;
+		case 4:	// Use Green channel to scale team colour
+			colourScale = m_colours[i].g / 255.0f;
+			m_colours[i].r = min(_teamColour.r * colourScale,255);
+			m_colours[i].g = min(_teamColour.g * colourScale,255);
+			m_colours[i].b = min(_teamColour.b * colourScale,255);
+			break;
+		case 5:	// Use Blue channel to scale team colour
+			colourScale = m_colours[i].b / 255.0f;
+			m_colours[i].r = min(_teamColour.r * colourScale,255);
+			m_colours[i].g = min(_teamColour.g * colourScale,255);
+			m_colours[i].b = min(_teamColour.b * colourScale,255);
+			break;
+		}
+
 	}
 
 	/*

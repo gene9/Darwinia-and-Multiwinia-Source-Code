@@ -1,0 +1,56 @@
+Locations_StartDefinition
+	# Id  Avail                   mapFile                    missionFile
+	# ==================================================================
+	   0    1            map_access_port.txt                  mission_access_port.txt
+Locations_EndDefinition
+
+Buildings_StartDefinition
+	# Id  teamId  locId   type   link  online
+	# =======================================
+Buildings_EndDefinition
+
+Research_StartDefinition
+	Research Darwinian 0 2
+	Research Officer 0 2
+	Research Squad 0 2
+	Research Laser 0 2
+	Research Grenade 0 2
+	Research Rocket 0 2
+	Research Controller 0 2
+	Research AirStrike 0 2
+	Research Armour 0 2
+	Research TaskManager 0 2
+	Research Engineer 0 2
+	Research Spider 0 2
+	CurrentResearch Squad
+	CurrentPoints 0
+Research_EndDefinition
+
+TeamResearch_StartDefinition
+	Research 2 Darwinian 0 2
+	Research 2 Officer 0 2
+	Research 2 Squad 0 2
+	Research 2 Laser 0 2
+	Research 2 Grenade 0 2
+	Research 2 Rocket 0 2
+	Research 2 Controller 0 2
+	Research 2 AirStrike 0 2
+	Research 2 Armour 0 2
+	Research 2 TaskManager 0 2
+	Research 2 Engineer 0 2
+	Research 2 Spider 0 2
+	CurrentResearch 0 Squad
+	CurrentResearch 1 Squad
+	CurrentResearch 2 Squad
+	CurrentResearch 3 Squad
+	CurrentResearch 4 Squad
+	CurrentResearch 5 Squad
+	CurrentResearch 6 Squad
+	CurrentResearch 7 Squad
+	CurrentResearch 8 Squad
+	CurrentResearch 9 Squad
+TeamResearch_EndDefinition
+
+Events_StartDefinition
+Events_EndDefinition
+

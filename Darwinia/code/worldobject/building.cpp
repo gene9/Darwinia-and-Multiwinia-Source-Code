@@ -26,6 +26,7 @@
 #include "obstruction_grid.h"
 #include "particle_system.h"
 #include "explosion.h"
+#include "level_file.h"
 
 #include "sound/soundsystem.h"
 
@@ -69,8 +70,8 @@
 #include "worldobject/controlstation.h"
 #include "worldobject/researchcrate.h"
 #include "worldobject/crate.h"
-
-
+#include "worldobject/pixelmine.h"
+#include "worldobject/uplink.h"
 
 Shape *Building::s_controlPad = NULL;
 ShapeMarker *Building::s_controlPadStatus = NULL;
@@ -85,7 +86,8 @@ Building::Building()
 	m_dynamic(false),
 	m_isGlobal(false),
 	m_destroyed(false),
-	m_minimumPorts(3)
+	m_minimumPorts(3),
+	m_underConstruction(0)
 {
     if( !s_controlPad )
     {
@@ -821,6 +823,9 @@ Building *Building::CreateBuilding( int _type )
         case TypeSpawnPointRandom:      building = new SpawnPointRandom();      break;
 		case TypeResearchCrate:         building = new ResearchCrate();         break;
 		case TypeCrate:                 building = new Crate();                 break;
+        case TypeDynamicConstruction:   building = new DynamicConstruction();   break;
+		case TypePixelMine:				building = new PixelMine();				break;
+		case TypeUplink:				building = new Uplink();				break;
     };
 
 
@@ -913,7 +918,10 @@ char *Building::GetTypeName( int _type )
 										"ControlStation",
 										"SpawnPointRandom",
 										"ResearchCrate",
-										"Crate"
+										"Crate",
+										"DynamicConstruction",
+										"PixelMine",
+										"Uplink"
                                     };
 
     if( _type >= 0 && _type < NumBuildingTypes )
@@ -989,6 +997,73 @@ void Building::RecalculateOwnership()
         }
     }
 */
+
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+        if( id.IsValid() )
+        {
+			int lowestFriendlyTeam = id.GetTeamId();
+			if ( g_app->m_location->IsFriend(id.GetTeamId(), 2) )
+			{
+				lowestFriendlyTeam = 2;
+			}
+			else
+			{
+				for ( int j = 0; j < NUM_TEAMS; j++ )
+				{
+					if ( teamPresent[j] && j < lowestFriendlyTeam && g_app->m_location->IsFriend(id.GetTeamId(),j) ) { lowestFriendlyTeam = j; }
+				}
+			}
+			teamCount[lowestFriendlyTeam]++;
+		}
+	}
+
+    int winningTeam = -1;
+    for( int i = 0; i < NUM_TEAMS; ++i )
+    {
+        if( teamCount[i] >= m_minimumPorts &&
+            winningTeam == -1 )
+        {
+            winningTeam = i;
+        }
+        else if( winningTeam != -1 &&
+                 teamCount[i] > m_minimumPorts &&
+                 teamCount[i] > teamCount[winningTeam] )
+        {
+            winningTeam = i;
+        }
+    }
+
+    if( winningTeam == -1 )
+    {
+        SetTeamId(255);
+    }
+	else if ( !g_app->m_location->IsFriend(m_id.GetTeamId(),winningTeam) )
+    {
+        SetTeamId(winningTeam);
+    }
+}
+
+void Building::RecalculateOwnershipIgnorePlayer()
+{
+	if ( GetNumPorts() == 0 ) { return; }
+
+    int teamCount[NUM_TEAMS];
+	bool teamPresent[NUM_TEAMS];
+	for ( int i = 0; i < NUM_TEAMS; i++ )
+	{
+		teamCount[i] = 0;
+		teamPresent[i] = false;
+	}
+
+	for ( int i = 0; i < GetNumPorts(); i++ )
+	{
+        WorldObjectId id = GetPortOccupant(i);
+		if( id.IsValid() ) {
+			teamPresent[id.GetTeamId()] = true;
+		}
+	}
 
 	for ( int i = 0; i < GetNumPorts(); i++ )
 	{

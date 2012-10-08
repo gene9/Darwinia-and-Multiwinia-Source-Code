@@ -49,7 +49,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2006)\Include&quot;"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="_DEBUG,TARGET_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -155,7 +155,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="2"
 				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2006)\Include&quot;"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG,TARGET_FULLGAME"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -259,7 +259,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="_DEBUG,TARGET_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -366,7 +366,7 @@
 				InlineFunctionExpansion="2"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="..\..\contrib\XCrashReport;"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG,TARGET_FULLGAME"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="false"
@@ -5264,6 +5264,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\code\worldobject\pixelmine.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\pixelmine.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\code\worldobject\powerstation.cpp"
 					>
 					<FileConfiguration
@@ -6017,6 +6025,14 @@
 				</File>
 				<File
 					RelativePath="..\..\code\worldobject\upgrade_port.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\uplink.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\code\worldobject\uplink.h"
 					>
 				</File>
 				<File

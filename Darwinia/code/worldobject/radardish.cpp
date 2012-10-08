@@ -151,7 +151,8 @@ bool RadarDish::Advance ()
 	m_upperMount->m_transform.RotateAround(m_upperMount->m_angVel * SERVER_ADVANCE_PERIOD);
 	m_dish->m_transform.RotateAround(m_dish->m_angVel * SERVER_ADVANCE_PERIOD);
 
-    if( m_movementSoundsPlaying && m_horizontallyAligned && m_dish->m_angVel.Mag() < 0.05f )
+//    if( m_movementSoundsPlaying && m_horizontallyAligned && m_dish->m_angVel.Mag() < 0.05f )
+    if( m_movementSoundsPlaying && m_horizontallyAligned && m_verticallyAligned )
     {
         g_app->m_soundSystem->StopAllSounds( m_id, "RadarDish BeginRotation" );
         g_app->m_soundSystem->TriggerBuildingEvent( this, "EndRotation" );

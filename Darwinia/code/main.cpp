@@ -1191,7 +1191,7 @@ void RunBootLoaders()
 	if (g_app->HasBoughtGame() && g_prefsManager->GetInt("CurrentGameMode", 1 ) == 1) {
 		char *loaderName = g_prefsManager->GetString("BootLoader", "none");
 
-		if( stricmp( loaderName, "firsttime" ) == 0 )
+		if( stricmp( loaderName, "firsttime" ) == 0 || stricmp( loaderName, "firsttimealways" ) == 0)
 		{
 			g_app->m_startSequence = new StartSequence();
 			while( true )
@@ -1207,8 +1207,11 @@ void RunBootLoaders()
 			g_app->m_camera->SetTarget(Vector3(1000,500,1000), Vector3(0,-0.5f,-1));
 			g_app->m_camera->CutToTarget();
 
-			g_prefsManager->SetString( "BootLoader", "random" );
-			g_prefsManager->Save();
+			if ( stricmp( loaderName, "firsttime") == 0 )
+			{
+				g_prefsManager->SetString( "BootLoader", "random" );
+				g_prefsManager->Save();
+			}
 		}
 		else
 		{

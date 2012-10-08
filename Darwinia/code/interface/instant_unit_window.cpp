@@ -53,7 +53,7 @@ public:
     TeamButton1( int _teamId )
         :   m_teamId(_teamId)
     {
-        if( m_teamId == -1 ) m_teamId = -1;
+        if( m_teamId == -1 ) m_teamId = 255;
     }
 
     void MouseUp()
@@ -72,7 +72,7 @@ public:
         {
             if( iu->m_teamId == m_teamId )
             {
-                DarwiniaButton::Render( realX, realY, true, clicked );
+                DarwiniaButton::Render( realX, realY, true, true );
             }
             else
             {
@@ -153,6 +153,9 @@ void InstantUnitEditWindow::Create()
 {
 	DarwiniaWindow::Create();
 
+	InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(
+						g_app->m_locationEditor->m_selectionId);
+
 	int y = 4;
 	int buttonPitch = 18;
 
@@ -179,6 +182,7 @@ void InstantUnitEditWindow::Create()
 				TeamButton1 *tb = new TeamButton1(i+(j*3));
 				tb->SetShortProperties(name, 10 + (i*w) + (i*2), y + (j*buttonPitch), w);
 				RegisterButton(tb);
+				if ( iu->m_teamId == i+(j*3) ) { tb->m_highlightedThisFrame = true; }
 			}
 			rows = max(rows,j);
 			j++;
@@ -187,8 +191,6 @@ void InstantUnitEditWindow::Create()
 
 	y = y + 7 + (rows*buttonPitch);
 
-	InstantUnit *iu = g_app->m_location->m_levelFile->m_instantUnits.GetData(
-						g_app->m_locationEditor->m_selectionId);
     CreateValueControl( LANGUAGEPHRASE("editor_numentities"), InputField::TypeInt, &iu->m_number, y+=buttonPitch, 1, 1, 1000 );
     CreateValueControl( LANGUAGEPHRASE("editor_spread"), InputField::TypeFloat, &iu->m_spread, y+=buttonPitch, 1.0f, 0.0f, 1000.0f );
     CreateValueControl( LANGUAGEPHRASE("editor_inunit"), InputField::TypeChar, &iu->m_inAUnit, y+=buttonPitch, 1,0,1 );

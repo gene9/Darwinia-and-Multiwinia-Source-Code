@@ -1,0 +1,48 @@
+#Default: Taken from Multiwinia
+
+TeamColours_StartDefinition
+	# ID  R   G   B
+	# ========================
+	  0   100 255 100
+	  1   255 50 50
+	  2   255 255 50
+	  3   0 64 128
+	  4   255 150 0
+	  5   150 0 255
+	  6   70 200 200
+	  7   255 150 255
+	  8   10 10 10
+	  9   200 200 200
+TeamColours_EndDefinition
+
+# Default: Green (0) is allied to Player (2)
+TeamAlliances_StartDefinition
+	# ID1  ID2   Allied?
+	# ===================
+	  3   2   1
+	  2   3   1
+TeamAlliances_EndDefinition
+
+# Default: Player owned incubators spawn green darwinians (0)
+TeamFlags_StartDefinition
+	# ID     Flags
+	# ========================
+	  3    PlayerSpawnTeam DontWorshipSpirits Soulless
+          1    DontWorshipSpirits
+ 
+TeamFlags_EndDefinition
+
+TeamNames_StartDefinition
+	# ID     Name
+	# ========================
+	  0   Darwinians
+	  1   Virii
+	  2   Player
+	  3   Agent
+	  4   Orange Tribe
+	  5   Purple Tribe
+	  6   Cyan Tribe
+	  7   Pink Tribe
+	  8   Black Tribe
+	  9   White Tribe
+TeamNames_EndDefinition

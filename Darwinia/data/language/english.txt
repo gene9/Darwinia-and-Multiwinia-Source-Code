@@ -1557,6 +1557,8 @@ editor_neveron                         Never On
 editor_switchonce                      Switch Once
 editor_damaged                         Damaged?
 editor_teamspawn                       Team Spawn?
+editor_progress                        Progress
+editor_pertick                         Progress Per Tick
 
 spawnname_spawnvirii                   SpawnVirii
 spawnname_spawncentipedes              SpawnCentipedes
@@ -1621,6 +1623,9 @@ buildingname_scripttrigger             ScriptTrigger
 buildingname_spam                      Spam
 buildingname_goddish                   GodDish
 buildingname_staticshape               StaticShape
+
+buildingname_dynamicconstruction       DynamicConstruction
+buildingname_pixelmine                 PixelMine
 
 buildingname_rocketturret		RocketTurret
 buildingname_grenadeturret		GrenadeTurret

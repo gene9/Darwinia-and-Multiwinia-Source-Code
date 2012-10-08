@@ -12,6 +12,8 @@
 #define DARWINIAN_SEARCHRANGE_TURRETS       90.0f
 #define DARWINIAN_SEARCHRANGE_PORTS         100.0f
 
+#define DARWINIAN_SEARCHRANGE_POLYGONS      100.0f
+
 #define DARWINIAN_FEARRANGE                 200.0f
 #define DARWINIAN_INCUBATOR_SEARCH_RADIUS	1000.0f
 
@@ -37,7 +39,9 @@ public:
         StateOnFire,
 		StateCarryingSpirit,
 		StateToEgg,
-		StateHarvestingSoul
+		StateHarvestingSoul,
+		StateHarvestingPolygon,
+		StateCarryingPolygon
     };
 
     int         m_state;
@@ -46,6 +50,7 @@ public:
 	int			m_corrupted;
 	bool		m_soulless;
 	bool		m_soulHarvested;
+	bool		m_polygonHarvested;
 	bool		m_subversive;
 	int			m_oldTeamId;
 	float		m_colourTimer;
@@ -93,6 +98,8 @@ protected:
     bool        SearchForArmour();
 	bool		SearchForIncubator();
 	bool		SearchForEggs();
+	bool		SearchForPolygons();
+	bool		SearchForConstructionSite();
     bool        BeginVictoryDance();
 	WorldObjectId FindNearbyEgg( Vector3 const &_pos );
 
@@ -115,6 +122,8 @@ protected:
 	bool		AdvanceToEgg			();
 	bool		AdvanceHarvestingSoul	();
     bool        AdvanceToTargetPosition	();
+	bool		AdvanceHarvestingPolygon();
+	bool		AdvanceCarryingPolygon	();
 
 public:
     Darwinian();

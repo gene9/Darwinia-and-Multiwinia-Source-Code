@@ -518,8 +518,9 @@ bool Engineer::AdvanceIdle()
         if( !foundNewTarget )   foundNewTarget = SearchForResearchItems();
         if( !foundNewTarget )   foundNewTarget = SearchForControlTowers();
         if( !foundNewTarget )   foundNewTarget = SearchForBridges();
-        if( !foundNewTarget )   foundNewTarget = SearchForSpirits();
-
+		if ( !(g_app->m_location->m_levelFile->m_teamFlags[m_id.GetTeamId()] & TEAM_FLAG_SOULLESS) ) {
+			if( !foundNewTarget )   foundNewTarget = SearchForSpirits();
+		}
         if( foundNewTarget ) return false;
         m_retargetTimer = ENGINEER_RETARGETTIMER;
     }

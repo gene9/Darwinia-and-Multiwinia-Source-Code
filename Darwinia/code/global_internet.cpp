@@ -51,6 +51,7 @@ GlobalInternet::GlobalInternet()
     m_nearestNodeToCentre(-1),
     m_nearestDistance(FLT_MAX)
 {
+//    darwiniaSeedRandom(1);
     darwiniaSeedRandom(1);
     GenerateInternet();
 }

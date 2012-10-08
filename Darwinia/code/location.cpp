@@ -86,16 +86,19 @@ Location::Location()
 	m_isSnowing(false)
 {
     m_spirits.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
+    m_polygons.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_lasers.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_effects.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_buildings.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
     m_subversion.SetTotalNumSlices(NUM_SLICES_PER_FRAME);
 
     m_spirits.SetSize( 100 );
+    m_polygons.SetSize( 100 );
 
 	m_lights.SetStepSize(1);
 	m_buildings.SetStepSize(10);
     m_spirits.SetStepSize( 100 );
+    m_polygons.SetStepSize( 100 );
 	m_lasers.SetStepSize(100);
 	m_effects.SetSize(100);
 	m_subversion.SetStepSize(100);
@@ -157,6 +160,7 @@ void Location::Empty()
 	m_lights.Empty();			// LList <Light *>
 	m_buildings.Empty();		// LList <Building *>
 	m_spirits.Empty();			// FastDArray <Spirit>
+	m_polygons.Empty();
     m_lasers.Empty();
     m_effects.Empty();
     m_subversion.Empty();
@@ -369,7 +373,20 @@ int Location::SpawnSpirit( Vector3 const &_pos, Vector3 const &_vel, unsigned ch
 
     return index;
 }
+int Location::SpawnPolygon( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId )
+{
+    DarwiniaDebugAssert( _teamId < NUM_TEAMS );
 
+    int index = m_polygons.GetNextFree();
+    LoosePolygon *p = m_polygons.GetPointer( index );
+    p->m_pos = _pos + g_upVector;
+    p->m_vel = _vel;
+    p->m_teamId = _teamId;
+    p->m_id.Set( _teamId, UNIT_SPIRITS, index, -1 );
+    p->Begin();
+
+    return index;
+}
 
 //  *** GetSpirit
 int Location::GetSpirit( WorldObjectId _id )
@@ -394,7 +411,6 @@ int Location::GetSpirit( WorldObjectId _id )
     return -1;
 }
 
-
 WorldObject *Location::GetWorldObject( WorldObjectId _id )
 {
     switch( _id.GetUnitId() )
@@ -416,7 +432,15 @@ Spirit *Location::GetSpirit( int _index )
 
     return NULL;
 }
+LoosePolygon *Location::GetPolygon( int _index )
+{
+    if( m_polygons.ValidIndex( _index ) )
+    {
+        return &m_polygons[_index];
+    }
 
+    return NULL;
+}
 
 WorldObject *Location::GetEffect( WorldObjectId _id )
 {
@@ -801,6 +825,28 @@ void Location::AdvanceSpirits( int _slice )
     END_PROFILE(g_app->m_profiler, "Advance Spirits");
 }
 
+// *** AdvancePolygons
+void Location::AdvancePolygons( int _slice )
+{
+    START_PROFILE(g_app->m_profiler, "Advance Polygons");
+
+    int startIndex, endIndex;
+    m_polygons.GetNextSliceBounds(_slice, &startIndex, &endIndex);
+    for( int i = startIndex; i <= endIndex; ++i )
+    {
+        if( m_polygons.ValidIndex(i) )
+        {
+            LoosePolygon *p = m_polygons.GetPointer(i);
+            bool removeSpirit = p->Advance();
+            if( removeSpirit )
+            {
+                m_polygons.MarkNotUsed(i);
+            }
+        }
+    }
+
+    END_PROFILE(g_app->m_profiler, "Advance Polygons");
+}
 
 // *** AdvanceClouds
 void Location::AdvanceClouds( int _slice )
@@ -823,6 +869,8 @@ void Location::DoMissionCompleteActions()
 
 	GlobalLocation *gloc = g_app->m_globalWorld->GetLocation(g_app->m_locationId);
     gloc->m_missionCompleted = true;
+	RGBAColour *rgb = new RGBAColour(m_teams[2].m_colour.r,m_teams[2].m_colour.g,m_teams[2].m_colour.b);
+	gloc->m_colour = *(rgb);
 
     //gloc->m_missionAvailable = false;
 	//strcpy(gloc->m_missionFilename, "null");
@@ -872,7 +920,7 @@ void Location::Advance( int _slice )
 
 	#undef for
 	#pragma omp parallel for schedule(dynamic)
-	for(int step=0;step<=4;step++)
+	for(int step=0;step<=5;step++)
 	{
 		switch(step)
 		{
@@ -881,6 +929,7 @@ void Location::Advance( int _slice )
 			case 2: AdvanceBuildings    ( _slice ); break;
 			case 3: AdvanceSpirits      ( _slice ); break;
 			case 4: AdvanceClouds       ( _slice ); break;
+			case 5: AdvancePolygons		( _slice ); break;
 		}
 	}
 
@@ -996,7 +1045,42 @@ void Location::RenderSpirits()
     END_PROFILE(g_app->m_profiler, "Render Spirits");
 }
 
+void Location::RenderPolygons()
+{
+    START_PROFILE(g_app->m_profiler, "Render Polygons");
 
+    glDisable       ( GL_CULL_FACE );
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+    glEnable        ( GL_BLEND );
+    glDepthMask     ( false );
+
+    float timeSinceAdvance = g_predictionTime;
+    float numPerSlice = m_polygons.Size() / (float)NUM_SLICES_PER_FRAME;
+
+    for( int i = 0; i < m_polygons.Size(); ++i )
+    {
+        if( m_polygons.ValidIndex(i) )
+        {
+            LoosePolygon *r = m_polygons.GetPointer(i);
+
+            if( i > m_polygons.GetLastUpdated() )
+            {
+                r->Render( timeSinceAdvance + 0.1f );
+            }
+            else
+            {
+                r->Render( timeSinceAdvance );
+            }
+        }
+    }
+
+    glDepthMask     ( true );
+    glDisable       ( GL_BLEND );
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glEnable        ( GL_CULL_FACE );
+
+    END_PROFILE(g_app->m_profiler, "Render Polygons");
+}
 // *** RenderWater
 void Location::RenderWater()
 {
@@ -1052,6 +1136,8 @@ void Location::Render(bool renderWaterAndClouds)
         RenderWeapons();
 		CHECK_OPENGL_STATE();
     	RenderSpirits();
+		CHECK_OPENGL_STATE();
+    	RenderPolygons();
 		CHECK_OPENGL_STATE();
     }
 
@@ -1119,7 +1205,7 @@ void Location::RenderBuildings()
 	    if( m_buildings.ValidIndex(i) )
         {
             Building *building = m_buildings.GetData(i);
-            if( building->IsInView() )
+            if( building->IsInView() && !(building->m_underConstruction) )
             {
                 START_PROFILE( g_app->m_profiler, Building::GetTypeName( building->m_type ) );
                 if( i > m_buildings.GetLastUpdated() )
@@ -1193,7 +1279,7 @@ void Location::RenderBuildingAlphas()
 	    if( m_buildings.ValidIndex(i) )
         {
             Building *building = m_buildings.GetData(i);
-            if( building->IsInView() )
+            if( building->IsInView() && !(building->m_underConstruction) )
             {
                 Vector3 centrePos;
                 if( building->PerformDepthSort( centrePos ) )
@@ -1776,7 +1862,7 @@ int Location::GetBuildingId(Vector3 const &rayStart, Vector3 const &rayDir, unsi
 							   g_app->m_location->IsFriend(teamId, building->m_id.GetTeamId()) );
                                //teamId == building->m_id.GetTeamId() );
 
-            if( building->m_type != Building::TypeControlTower && teamMatch )
+			if( (building->m_type != Building::TypeControlTower && building->m_type != Building::TypeControlStation) && teamMatch )
             {
                 Vector3 hitPos;
                 bool rayHit = false;

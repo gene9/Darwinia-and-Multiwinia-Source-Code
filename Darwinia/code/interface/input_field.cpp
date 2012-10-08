@@ -209,6 +209,45 @@ void InputField::Keypress ( int keyCode, bool shift, bool ctrl, bool alt )
             Refresh();
         }
 	}
+	else if ( keyCode == KEY_MINUS || keyCode == KEY_MINUS_PAD )
+	{
+		if ( m_type == TypeString )
+		{
+			unsigned char key = '-';
+			if ( shift ) key = '_';
+            int location = strlen(m_buf);
+			m_buf[ location ] = key;
+			m_buf[ location+1 ] = '\x0';
+			strcpy(m_string, m_buf);
+			Refresh();
+		}
+		else if ( m_type == TypeInt || m_type == TypeFloat )
+		{
+			if (len < sizeof(m_buf) - 1)
+			{
+				char minus = '-';
+				if ( m_buf[0] == minus )
+				{
+					m_buf[0] = ' ';
+					char tempbuf[256];
+					for ( int i = 0; i < 255; i++ )
+					{
+						tempbuf[i] = m_buf[i+1];
+					}
+					tempbuf[255] = '\x0';
+					strcpy(m_buf, tempbuf);
+				}
+				else
+				{
+					char tempbuf[256];
+					sprintf(tempbuf, "-%s", m_buf);
+					tempbuf[255] = '\x0';
+					strcpy(m_buf, tempbuf);
+				}
+			}
+		}
+
+	}
     else
     {
         if( m_type == TypeString && keyCode >= KEY_A && keyCode <= KEY_Z )

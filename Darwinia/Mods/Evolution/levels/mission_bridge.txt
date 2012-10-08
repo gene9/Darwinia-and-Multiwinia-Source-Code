@@ -1,0 +1,56 @@
+Difficulty_StartDefinition
+	CreatedAsDifficulty 1
+Difficulty_EndDefinition
+
+CameraMounts_StartDefinition
+	# Name	          Pos                   Front          Up
+	# =========================================================================
+CameraMounts_EndDefinition
+
+CameraAnimations_StartDefinition
+CameraAnimations_EndDefinition
+
+Buildings_StartDefinition
+	# Type              id      x       z       tm      rx      rz      isGlobal
+	# ==========================================================================
+	AISpawnPoint        6       3694.83 385.87  0       -0.77   0.64    0       0      12     20     60     -1     -1    
+Buildings_EndDefinition
+
+InstantUnits_StartDefinition
+	# Type         team    x       z   count  inUnit state   spread  waypointX waypointZ  routeId
+	# ==================================================================================
+	Darwinian        0  3576.1   452.5     20    0      -1   100.0     0.0     0.0   -1   -1
+	Spider           8  3437.6   843.5      1    0      -1    50.0     0.0     0.0   -1   -1
+	Centipede        8  3175.0   672.0     10    1      -1   100.0     0.0     0.0   -1   -1
+	Virii            8  3244.5  1092.9     40    0      -1   100.0     0.0     0.0   -1   -1
+	Darwinian        8  3487.6  1271.6     30    0      -1   100.0     0.0     0.0   -1   -1
+InstantUnits_EndDefinition
+
+Routes_StartDefinition
+Routes_EndDefinition
+
+PrimaryObjectives_StartDefinition
+	NeverTrue 
+PrimaryObjectives_EndDefinition
+
+TeamColours_StartDefinition
+	# ID    	R     	G     	B
+	# ==============================
+TeamColours_EndDefinition
+
+TeamAlliances_StartDefinition
+	# ID1   	ID2   	Allied?
+	# =======================
+TeamAlliances_EndDefinition
+
+TeamFlags_StartDefinition
+	# ID    	Flags
+	# =========================================================================
+	       8	 Soulless 
+TeamFlags_EndDefinition
+
+TeamNames_StartDefinition
+	# ID    	Name
+	# ==============================
+TeamNames_EndDefinition
+

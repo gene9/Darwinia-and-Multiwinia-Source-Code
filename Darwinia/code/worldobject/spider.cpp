@@ -435,7 +435,7 @@ bool Spider::AdvanceIdle()
         bool foundNewTarget = false;
         if( !foundNewTarget ) foundNewTarget = SearchForEnemies();
         if( !foundNewTarget ) foundNewTarget = SearchForSpirits();
-        if( !foundNewTarget ) foundNewTarget = SearchForRandomPos();
+        if( !foundNewTarget && m_id.GetTeamId() != 2 ) foundNewTarget = SearchForRandomPos();	// Dont let player spiders wander off when idle
 
         if( foundNewTarget ) return false;
     }

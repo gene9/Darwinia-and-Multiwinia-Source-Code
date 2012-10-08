@@ -27,6 +27,7 @@ int WorldObjectId::s_nextUniqueId = 0;
 
 WorldObjectId::WorldObjectId()
 :   m_teamId(255),
+	m_oldTeam(255),
     m_unitId(-1),
     m_index(-1),
     m_uniqueId(-1)

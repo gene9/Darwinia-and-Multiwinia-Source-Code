@@ -43,8 +43,13 @@ void BlueprintBuilding::Initialise( Building *_template )
 
     m_buildingLink = blueprintBuilding->m_buildingLink;
 
-    if( m_id.GetTeamId() == 1 ) m_infected = 100.0f;
-    else                        m_infected = 0.0f;
+	if ( g_app->m_location->IsFriend(m_id.GetTeamId(), 2) ) {
+		m_infected = 0.0f;
+	} else {
+		m_infected = 100.0f;
+	}
+//    if( m_id.GetTeamId() == 1 ) m_infected = 100.0f;
+//    else                        m_infected = 0.0f;
 }
 
 
@@ -189,7 +194,15 @@ int BlueprintBuilding::GetBuildingLink()
 
 void BlueprintBuilding::SetBuildingLink( int _buildingId )
 {
-    m_buildingLink = _buildingId;
+	// Prevent invalid linkings
+	Building *building = g_app->m_location->GetBuilding( _buildingId );
+	if ( building )
+	{
+		if ( building->m_type == TypeBlueprintRelay || building->m_type == TypeBlueprintStore ) {
+			m_buildingLink = _buildingId;
+		}
+	}
+	m_buildingLink = -1;
 }
 
 
@@ -532,6 +545,10 @@ void BlueprintConsole::Initialise( Building *_template )
 
 void BlueprintConsole::RecalculateOwnership()
 {
+	Building::RecalculateOwnership();
+
+/*
+// Stormchild: Why is this here? It does the same job as Building::RecalculateOwnership()
     int teamCount[NUM_TEAMS];
     memset( teamCount, 0, NUM_TEAMS*sizeof(int));
 
@@ -568,6 +585,7 @@ void BlueprintConsole::RecalculateOwnership()
     {
         SetTeamId(winningTeam);
     }
+	*/
 }
 
 
@@ -591,8 +609,11 @@ bool BlueprintConsole::Advance()
 {
     RecalculateOwnership();
 
-    bool infected = ( m_id.GetTeamId() == 1 );
-    bool clean = ( m_id.GetTeamId() == 0 );
+    //bool infected = ( m_id.GetTeamId() == 1 );
+    //bool clean = ( m_id.GetTeamId() == 0 );
+
+	bool clean = g_app->m_location->IsFriend(m_id.GetTeamId(),2);
+	bool infected = m_id.GetTeamId() == -1 ? false : !clean;
 
     if( infected )  SendBlueprint( m_segment, true );
     if( clean )     SendBlueprint( m_segment, false );

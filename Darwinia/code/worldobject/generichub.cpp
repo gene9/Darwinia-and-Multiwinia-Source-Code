@@ -23,6 +23,7 @@
 #include "main.h"
 #include "entity_grid.h"
 #include "user_input.h"
+#include "team.h"
 
 #include "sound/soundsystem.h"
 
@@ -313,6 +314,230 @@ char *DynamicHub::GetObjectiveCounter()
 int DynamicHub::PointsPerHub()
 {
     return m_requiredScore / m_minActiveLinks;
+}
+
+// ****************************************************************************
+// Class DynamicConstruction
+// ****************************************************************************
+
+DynamicConstruction::DynamicConstruction()
+:   DynamicBase(),
+    m_finished(false),
+    m_progress(0.0f),
+	m_perTick(1.0f),
+	m_linkId(-1)
+{
+    m_type = TypeDynamicConstruction;
+	m_minimumPorts = 1;
+    //SetShape( g_app->m_resource->GetShape( "solarpanel.shp" ) );
+}
+
+void DynamicConstruction::Initialise( Building *_template )
+{
+    DynamicBase::Initialise( _template );
+    DynamicConstruction *nodeCopy = (DynamicConstruction *) _template;
+    m_progress = nodeCopy->m_progress;
+	m_perTick = nodeCopy->m_perTick;
+	m_linkId = nodeCopy->GetBuildingLink();
+}
+
+bool DynamicConstruction::Advance()
+{
+
+	RecalculateOwnership();
+
+	// This is the only place where a buildings m_construction can be set to true, as it is never saved and defaults to false
+	// We unset it later if the building is finished
+	if ( !m_finished ) {
+		if ( g_app->m_location->m_buildings.ValidIndex(m_linkId) )
+		{
+			Building *building = g_app->m_location->m_buildings.GetData(m_linkId);
+			DarwiniaDebugAssert( building );
+
+			building->m_underConstruction = true;
+
+		}
+	}
+
+	if ( !m_finished && m_progress >= 100.0f )
+	{
+		m_finished = true;
+		m_ports.Empty();	// Remove the darwinian pots
+
+		// Turn us on!
+        GlobalBuilding *gb = g_app->m_globalWorld->GetBuilding( m_id.GetUniqueId(), g_app->m_locationId );
+        if( gb && !gb->m_online )
+        {
+            gb->m_online = true;
+            g_app->m_globalWorld->EvaluateEvents();
+        }
+		
+		if ( m_linkId && g_app->m_location->m_buildings.ValidIndex(m_linkId) )
+		{
+			Building *building = g_app->m_location->m_buildings.GetData(m_linkId);
+			DarwiniaDebugAssert( building );
+
+			if ( g_app->m_location->IsFriend(m_id.GetTeamId(), 2) ) {
+				building->m_id.SetTeamId(2);	// A friendly team activated this, so make it a player controlled building
+			} else {
+				building->m_id.SetTeamId(m_id.GetTeamId());
+			}
+			building->m_underConstruction = false;
+			building->ReprogramComplete();
+		}
+	}
+    return DynamicBase::Advance();
+}
+
+
+void DynamicConstruction::RenderPorts()
+{
+	// Stolen from ControlStation
+    glDisable       ( GL_CULL_FACE );
+    glEnable        ( GL_TEXTURE_2D );
+    glBindTexture   ( GL_TEXTURE_2D, g_app->m_resource->GetTexture( "textures/starburst.bmp" ) );
+    glDepthMask     ( false );
+    glEnable        ( GL_BLEND );
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE );
+    glBegin         ( GL_QUADS );
+
+    for( int i = 0; i < GetNumPorts(); ++i )
+    {
+        Vector3 portPos;
+        Vector3 portFront;
+        GetPortPosition( i, portPos, portFront );
+
+        Vector3 portUp = g_upVector;
+        Matrix34 mat( portFront, portUp, portPos );
+         
+        //
+        // Render the status light
+
+        double size = 6.0;
+        Vector3 camR = g_app->m_camera->GetRight() * size;
+        Vector3 camU = g_app->m_camera->GetUp() * size;
+
+        Vector3 statusPos = s_controlPadStatus->GetWorldMatrix( mat ).pos;
+        statusPos.y = g_app->m_location->m_landscape.m_heightMap->GetValue(statusPos.x, statusPos.z);
+        statusPos.y += 5.0;
+        
+        WorldObjectId occupantId = GetPortOccupant(i);
+        if( !occupantId.IsValid() ) 
+        {
+            glColor4ub( 150, 150, 150, 255 );
+        }
+        else
+        {
+            RGBAColour teamColour = g_app->m_location->m_teams[occupantId.GetTeamId()].m_colour;
+            glColor4ubv( teamColour.GetData() );
+        }
+
+        glTexCoord2i( 0, 0 );           glVertex3fv( (statusPos - camR - camU).GetData() );
+        glTexCoord2i( 1, 0 );           glVertex3fv( (statusPos + camR - camU).GetData() );
+        glTexCoord2i( 1, 1 );           glVertex3fv( (statusPos + camR + camU).GetData() );
+        glTexCoord2i( 0, 1 );           glVertex3fv( (statusPos - camR + camU).GetData() );
+    }
+
+    glEnd           ();
+    glBlendFunc     ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glDisable       ( GL_BLEND );
+    glDepthMask     ( true );
+    glDisable       ( GL_TEXTURE_2D );
+    glEnable        ( GL_CULL_FACE );
+}
+
+
+void DynamicConstruction::Render( float _predictionTime )
+{
+	/*
+    if( g_app->m_editing )
+    {
+        m_up = g_app->m_location->m_landscape.m_normalMap->GetValue( m_pos.x, m_pos.z );
+        Vector3 right( 1, 0, 0 );
+        m_front = right ^ m_up;
+    }
+*/
+#ifdef DEBUG_RENDER_ENABLED
+	if (g_app->m_editing)
+	{
+		Vector3 pos(m_pos);
+		pos.y += 5.0f;
+		RenderArrow(pos, pos + m_front * 20.0f, 4.0f);
+	}
+#endif
+	
+	glShadeModel( GL_SMOOTH );
+    if( m_shape )
+    {
+		Matrix34 mat(m_front, m_up, m_pos);
+		// If we are done or we have a link, render full
+		if ( m_finished || g_app->m_location->m_buildings.ValidIndex(m_linkId) ) {
+			m_shape->Render(_predictionTime, mat);
+		} else {
+			// We have no link and are not finished, so we must be self-assembling, render special instead
+			m_shape->RenderSpecial(_predictionTime, mat, m_progress/100.0f);
+		}
+    }
+    else
+    {
+        RenderSphere( m_pos, 40.0f );
+    }
+
+	// If we aren't finished then we are responsible for rendering our linked building
+	if ( m_progress < 100.0f && m_linkId && g_app->m_location->m_buildings.ValidIndex(m_linkId) )
+	{
+		Building *building = g_app->m_location->m_buildings.GetData(m_linkId);
+		DarwiniaDebugAssert( building );
+
+		Matrix34 mat2(building->m_front, building->m_up, building->m_pos);
+		if ( building->m_shape ) { building->m_shape->RenderSpecial( _predictionTime, mat2, m_progress/100.0f ); }
+	}
+    //DynamicBase::Render( _predictionTime );
+    glShadeModel( GL_FLAT );
+}
+
+
+void DynamicConstruction::RenderAlphas( float _predictionTime )
+{
+    DynamicBase::RenderAlphas( _predictionTime );
+}
+
+
+void DynamicConstruction::ListSoundEvents( LList<char *> *_list )
+{
+    DynamicBase::ListSoundEvents( _list );
+
+    _list->PutData( "Operate" );
+}
+
+void DynamicConstruction::ReprogramComplete()
+{
+}
+
+void DynamicConstruction::Read( TextReader *_in, bool _dynamic )
+{
+    DynamicBase::Read( _in, _dynamic );
+    m_progress = atof( _in->GetNextToken() );
+	if ( _in->TokenAvailable() ) m_perTick = atof( _in->GetNextToken() );
+	if ( _in->TokenAvailable() ) m_linkId = atoi( _in->GetNextToken() );
+}
+
+void DynamicConstruction::Write( FileWriter *_out )
+{
+    DynamicBase::Write( _out );
+    _out->printf( "%6.2f", m_progress );
+	_out->printf( "%6.2f", m_perTick );
+	_out->printf( "%6d", m_linkId );
+}
+
+int DynamicConstruction::GetBuildingLink()
+{
+	return m_linkId;
+}
+
+void DynamicConstruction::SetBuildingLink( int _buildingId )
+{
+	m_linkId = _buildingId;
 }
 
 // ****************************************************************************

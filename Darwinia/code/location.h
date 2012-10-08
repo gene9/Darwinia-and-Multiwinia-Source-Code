@@ -33,13 +33,13 @@ class Light;
 class Team;
 class TeamControls;
 
-
 // ****************************************************************************
 //  Class Location
 // ****************************************************************************
 
 class Location
 {
+
 protected:
     int	 m_lastSliceProcessed;
 
@@ -50,6 +50,7 @@ protected:
     void AdvanceTeams			( int _slice );
     void AdvanceSpirits			( int _slice );
     void AdvanceClouds			( int _slice );
+    void AdvancePolygons		( int _slice );
 
     void RenderLandscape		();
     void RenderWeapons			();
@@ -61,6 +62,7 @@ protected:
     void RenderSpirits			();
     void RenderClouds			();
     void RenderWater			();
+    void RenderPolygons			();
 
     void InitLandscape			();
     void InitLights				();
@@ -87,6 +89,7 @@ public:
 	FastDArray		<Light *>			m_lights;
     SliceDArray     <Building *>		m_buildings;
     SliceDArray     <Spirit>			m_spirits;
+    SliceDArray     <LoosePolygon>		m_polygons;
     SliceDArray     <Laser>				m_lasers;
     SliceDArray     <SubversionBeam>	m_subversion;
     SliceDArray     <WorldObject *>		m_effects;
@@ -101,7 +104,7 @@ public:
     void InitBuildings			();
 	void Empty				();
 
-    void Advance            ( int _slice );
+	void Advance            ( int _slice );
     void Render             ( bool renderWaterAndClouds = true );
 
     void InitialiseTeam     ( unsigned char _teamId,
@@ -119,6 +122,7 @@ public:
     void UpdateTeam         ( unsigned char teamId, TeamControls const& teamControls );
 
     int  SpawnSpirit        ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId, WorldObjectId _id );
+    int  SpawnPolygon       ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _teamId );
     void ThrowWeapon        ( Vector3 const &_pos, Vector3 const &_target, int _type, unsigned char _fromTeamId, bool _isTurret = false );
     void FireRocket         ( Vector3 const &_pos, Vector3 const &_target, unsigned char _fromTeamId, bool _isTurret = false );
     void FireLaser          ( Vector3 const &_pos, Vector3 const &_vel, unsigned char _fromTeamId, bool _isTurret = false );
@@ -151,6 +155,7 @@ public:
     WorldObject *GetEffect      ( WorldObjectId _id );
     Building    *GetBuilding    ( int _id );
     Spirit      *GetSpirit      ( int _index );
+    LoosePolygon *GetPolygon     ( int _index );
 
     void SetupFog			();
     void SetupLights		();
